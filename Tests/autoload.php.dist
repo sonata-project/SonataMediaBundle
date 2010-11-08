@@ -1,0 +1,15 @@
+<?php
+
+$vendor_dir = __DIR__.'/../../../vendor';
+require_once $vendor_dir.'/symfony/src/Symfony/Component/HttpFoundation/UniversalClassLoader.php';
+
+use Symfony\Component\HttpFoundation\UniversalClassLoader;
+
+$loader = new UniversalClassLoader();
+$loader->registerNamespaces(array(
+    'Symfony'                        => __DIR__.'/../../../vendor/symfony/src',
+    'Bundle\\MediaBundle'            => __DIR__.'/../../..',
+    'Imagine'                        => __DIR__.'/../../../vendor/imagine/lib',
+));
+
+$loader->register();
