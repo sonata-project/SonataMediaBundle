@@ -1,10 +1,10 @@
-Prototype to easily manage media
+# Prototype to easily manage media
 
 ## Installation
 
 * Add MediaBundle to your src/Bundle dir
 
-    git submodule add git@github.com:sonata-project/MediaBundle.git src/Bundle/MediaBundle
+        git submodule add git@github.com:sonata-project/MediaBundle.git src/Bundle/MediaBundle
 
 * add the Imagine bundle (image management) and follow ImagineBundle README
 
@@ -12,45 +12,45 @@ Prototype to easily manage media
 
 * Add EasyExtendsBundle to your application kernel
 
-    // app/AppKernel.php
-    public function registerBundles()
-    {
-        return array(
-            // ...
-            new Bundle\MediaBundle\MediaBundle(),
-            // ...
-        );
-    }
+        // app/AppKernel.php
+        public function registerBundles()
+        {
+            return array(
+                // ...
+                new Bundle\MediaBundle\MediaBundle(),
+                // ...
+            );
+        }
 
 
 * Add this line into your config.yml file 
 
 
-    media.config:
-        class: Bundle\MediaBundle\Provider\Service
-        
-        settings:
-            cdn_enabled: false
-            cdn_path:     http://media.sonata-project.org
-            public_path: /uploads/media
-            private_path: /web/uploads/media
+        media.config:
+            class: Bundle\MediaBundle\Provider\Service
+
+            settings:
+                cdn_enabled: false
+                cdn_path:     http://media.sonata-project.org
+                public_path: /uploads/media
+                private_path: /web/uploads/media
 
 
-        providers:
-            image:
-                class: Bundle\MediaBundle\Provider\Image
-                formats:
-                    small: { width: 100 }
-                    big:   { width: 500 }
+            providers:
+                image:
+                    class: Bundle\MediaBundle\Provider\Image
+                    formats:
+                        small: { width: 100 }
+                        big:   { width: 500 }
 
-            youtube:
-                class: Bundle\MediaBundle\Provider\YouTube
-                formats:
-                    small: { width: 100 }
-                    big:   { width: 500 }
+                youtube:
+                    class: Bundle\MediaBundle\Provider\YouTube
+                    formats:
+                        small: { width: 100 }
+                        big:   { width: 500 }
 
-            dailymotion:
-                class: Bundle\MediaBundle\Provider\DailyMotion
-                formats:
-                    small: { width: 100 }
-                    big:   { width: 500 }
+                dailymotion:
+                    class: Bundle\MediaBundle\Provider\DailyMotion
+                    formats:
+                        small: { width: 100 }
+                        big:   { width: 500 }
