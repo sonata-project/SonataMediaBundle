@@ -52,6 +52,7 @@ class DailyMotion extends BaseProvider {
         $media->setAuthorName($metadata['author_name']);
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
+        $media->setContentType('video/x-flv');
     }
 
     public function postRemove(Media $media)

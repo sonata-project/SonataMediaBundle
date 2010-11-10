@@ -12,10 +12,27 @@
 namespace Bundle\MediaBundle\Entity;
 
 /**
- * Bundle\MediaBundle\Entity\BaseEntityMedia
+ * Bundle\MediaBundle\Entity\EntityMedia
  */
 class BaseEntityMedia
 {
+
+    /**
+     * @var integer $id
+     */
+    private $id;
+
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
     /**
      * @var string $classname
      */
@@ -37,9 +54,9 @@ class BaseEntityMedia
     private $is_main;
 
     /**
-     * @var integer $order
+     * @var integer $position
      */
-    private $order;
+    private $position;
 
     /**
      * @var datetime $updated_at
@@ -134,21 +151,21 @@ class BaseEntityMedia
     /**
      * Set order
      *
-     * @param integer $order
+     * @param integer $position
      */
-    public function setOrder($order)
+    public function setPosition($position)
     {
-        $this->order = $order;
+        $this->position = $position;
     }
 
     /**
      * Get order
      *
-     * @return integer $order
+     * @return integer $position
      */
-    public function getOrder()
+    public function getPosition()
     {
-        return $this->order;
+        return $this->position;
     }
 
     /**

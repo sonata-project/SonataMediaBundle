@@ -57,7 +57,8 @@ class Youtube extends BaseProvider {
         $media->setAuthorName($metadata['author_name']);
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
-
+        $media->setContentType('video/x-flv');
+        
         return $media;
     }
 

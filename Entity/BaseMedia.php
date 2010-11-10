@@ -13,13 +13,24 @@ namespace Bundle\MediaBundle\Entity;
 
 class BaseMedia {
 
-    const
-        STATUS_OK         = 1,
-        STATUS_SENDING    = 2,
-        STATUS_PENDING    = 3,
-        STATUS_ENCODING   = 4,
-        STATUS_ERROR      = 5;
 
+
+    /**
+     * @var integer $id
+     */
+    private $id;
+
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
     /**
      * @var string $name
      */
@@ -478,5 +489,54 @@ class BaseMedia {
     public function getCreatedAt()
     {
         return $this->created_at;
+    }
+    /**
+     * @var varchar $content_type
+     */
+    private $content_type;
+
+    /**
+     * @var integer $size
+     */
+    private $size;
+
+    /**
+     * Set content_type
+     *
+     * @param varchar $contentType
+     */
+    public function setContentType(\varchar $contentType)
+    {
+        $this->content_type = $contentType;
+    }
+
+    /**
+     * Get content_type
+     *
+     * @return varchar $contentType
+     */
+    public function getContentType()
+    {
+        return $this->content_type;
+    }
+
+    /**
+     * Set size
+     *
+     * @param integer $size
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+    }
+
+    /**
+     * Get size
+     *
+     * @return integer $size
+     */
+    public function getSize()
+    {
+        return $this->size;
     }
 }

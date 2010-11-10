@@ -19,6 +19,8 @@
         <field name="width"               column="price"             type="integer"  nullable="true" />
         <field name="height"              column="vat"               type="integer"  nullable="true" />
         <field name="length"              column="stock"             type="decimal"  nullable="true" />
+        <field name="content_type"        column="content_type"      type="varchar"  nullable="true" length="64" />
+        <field name="size"                column="size"              type="integer"  nullable="true" />
 
         <field name="copyright"           column="copyright"         type="string"  nullable="true" length="255"/>
         <field name="author_name"         column="author_name"       type="string"  nullable="true" length="255"/>

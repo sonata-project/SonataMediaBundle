@@ -79,6 +79,8 @@ class File extends BaseProvider {
         if(!$media->getProviderReference()) {
            $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension()); 
         }
+
+        $media->setContentType($media->getBinaryContent()->getMimeType());       
     }
 
     public function generatePublicUrl(Media $media, $format) {

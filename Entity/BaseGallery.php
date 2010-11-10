@@ -12,10 +12,27 @@
 namespace Bundle\MediaBundle\Entity;
 
 /**
- * Bundle\MediaBundle\Entity\BaseGallery
+ * Bundle\MediaBundle\Entity\Gallery
  */
 class BaseGallery
 {
+
+    /**
+     * @var integer $id
+     */
+    private $id;
+
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
     /**
      * @var string $name
      */
