@@ -114,7 +114,7 @@ class MediaHelper extends Helper
              'width' => $format_definition['width'],
          ), $options);
 
-         $options['src'] = sprintf('%s/%s', $base_media, $provider->generatePublicUrl($media, $format));
+         $options['src'] = sprintf('%s%s', $base_media, $provider->generatePublicUrl($media, $format));
 
          return $this->getTemplating()->render(
             sprintf('MediaBundle:Provider:thumbnail.twig', $media->getProviderName()),

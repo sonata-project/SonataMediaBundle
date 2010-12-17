@@ -22,8 +22,8 @@ class MediaExtension extends \Twig_Extension
         return array(
 
             // {% render media_object with { 'width': 2 }%}
-            new HelperTokenParser('media', '<media>, <format> with <attributes:hash>', 'templating.helper.media', 'media'),
-            new HelperTokenParser('thumbnail', '<media>, <format> with <attributes:hash>', 'templating.helper.media', 'thumbnail'),
+            new HelperTokenParser('media', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'media'),
+            new HelperTokenParser('thumbnail', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'thumbnail'),
         );
     }
 
