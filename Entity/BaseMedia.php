@@ -505,7 +505,7 @@ class BaseMedia {
      *
      * @param varchar $contentType
      */
-    public function setContentType(\varchar $contentType)
+    public function setContentType($contentType)
     {
         $this->content_type = $contentType;
     }

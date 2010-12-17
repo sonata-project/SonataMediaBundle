@@ -6,14 +6,16 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
-class Service implements EventSubscriber {
+class Service implements EventSubscriber
+{
 
-    protected
-        $providers = array(),
-        $settings = array();
+    protected $providers = array();
+
+    protected $settings = array();
 
 
-    public function getProvider($name) {
+    public function getProvider($name)
+    {
 
         if(!isset($this->providers[$name])) {
             throw new \RuntimeException(sprintf('unable to retrieve the provider named : %s', $name));
@@ -22,11 +24,13 @@ class Service implements EventSubscriber {
         return $this->providers[$name];
     }
 
-    public function addProvider($name, $instance) {
+    public function addProvider($name, $instance)
+    {
         $this->providers[$name] = $instance;
     }
 
-    public function getSubscribedEvents() {
+    public function getSubscribedEvents()
+    {
 
         return array(
             Events::prePersist,
@@ -111,6 +115,26 @@ class Service implements EventSubscriber {
 
         $this->getProvider($entity->getProviderName())->prePersist($entity);
 
+    }
+
+    public function setProviders($providers)
+    {
+        $this->providers = $providers;
+    }
+
+    public function getProviders()
+    {
+        return $this->providers;
+    }
+
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+    }
+
+    public function getSettings()
+    {
+        return $this->settings;
     }
 }
 

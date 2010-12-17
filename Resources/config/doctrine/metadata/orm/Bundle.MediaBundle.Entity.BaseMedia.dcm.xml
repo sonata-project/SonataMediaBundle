@@ -16,10 +16,10 @@
         <field name="provider_reference"  column="provider_reference"       type="string"   nullable="false" length="255"/>
         <field name="provider_metadata"   column="profiver_metadata"        type="array"    nullable="true" />
 
-        <field name="width"               column="price"             type="integer"  nullable="true" />
-        <field name="height"              column="vat"               type="integer"  nullable="true" />
-        <field name="length"              column="stock"             type="decimal"  nullable="true" />
-        <field name="content_type"        column="content_type"      type="varchar"  nullable="true" length="64" />
+        <field name="width"               column="width"             type="integer"  nullable="true" />
+        <field name="height"              column="height"            type="integer"  nullable="true" />
+        <field name="length"              column="length"            type="decimal"  nullable="true" />
+        <field name="content_type"        column="content_type"      type="string"   nullable="true" length="64" />
         <field name="size"                column="size"              type="integer"  nullable="true" />
 
         <field name="copyright"           column="copyright"         type="string"  nullable="true" length="255"/>

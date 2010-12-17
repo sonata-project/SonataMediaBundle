@@ -12,9 +12,11 @@ namespace Bundle\MediaBundle\Provider;
 
 use Bundle\MediaBundle\Entity\BaseMedia as Media;
 
-class File extends BaseProvider {
+class FileProvider extends BaseProvider
+{
 
-    public function getReferenceImage(Media $media) {
+    public function getReferenceImage(Media $media)
+    {
 
         return sprintf('%s/%s',
             $this->generatePrivatePath($media),
@@ -22,7 +24,8 @@ class File extends BaseProvider {
         );
     }
 
-    public function getAbsolutePath(Media $media) {
+    public function getAbsolutePath(Media $media)
+    {
 
         return $this->getReferenceImage($media);
     }
@@ -48,7 +51,8 @@ class File extends BaseProvider {
         $this->generateThumbnails($media);
     }
 
-    public function prePersist(Media $media) {
+    public function prePersist(Media $media)
+    {
 
         if(!$media->getBinaryContent()) {
 
@@ -83,7 +87,8 @@ class File extends BaseProvider {
         $media->setContentType($media->getBinaryContent()->getMimeType());       
     }
 
-    public function generatePublicUrl(Media $media, $format) {
+    public function generatePublicUrl(Media $media, $format)
+    {
 
         $path = sprintf('/media_bundle/images/files/%s/file.png',
             $format
@@ -97,7 +102,17 @@ class File extends BaseProvider {
         return $path;
     }
 
-    public function generatePrivateUrl(Media $media, $format) {
+    public function getHelperProperties(Media $media, $format, $options = array())
+    {
+        return array_merge(array(
+          'title'       => $media->getName(),
+          'thumbnail'   => $this->getReferenceImage($media),
+          'file'        => $this->getReferenceImage($media),
+        ), $options);
+    }
+
+    public function generatePrivateUrl(Media $media, $format)
+    {
 
         return false;
     }

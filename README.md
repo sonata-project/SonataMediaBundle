@@ -38,19 +38,19 @@
 
             providers:
                 image:
-                    class: Bundle\MediaBundle\Provider\Image
+                    class: Bundle\MediaBundle\Provider\ImageProvider
                     formats:
                         small: { width: 100 }
                         big:   { width: 500 }
 
                 youtube:
-                    class: Bundle\MediaBundle\Provider\YouTube
+                    class: Bundle\MediaBundle\Provider\YouTubeProvider
                     formats:
                         small: { width: 100 }
                         big:   { width: 500 }
 
                 dailymotion:
-                    class: Bundle\MediaBundle\Provider\DailyMotion
+                    class: Bundle\MediaBundle\Provider\DailyMotionProvider
                     formats:
                         small: { width: 100 }
                         big:   { width: 500 }

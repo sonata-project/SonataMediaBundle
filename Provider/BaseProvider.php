@@ -13,24 +13,34 @@ namespace Bundle\MediaBundle\Provider;
 
 use Bundle\MediaBundle\Entity\BaseMedia as Media;
 
-abstract class BaseProvider {
+abstract class BaseProvider
+{
 
     protected $formats = array();
     protected $settings = array();
 
-    public function __construct($name, $em, $settings = array()) {
+    public function __construct($name, $em, $settings = array())
+    {
 
         $this->name     = $name;
         $this->em       = $em;
         $this->settings = $settings;
     }
 
-    public function addFormat($name, $format) {
+    public function addFormat($name, $format)
+    {
 
         $this->formats[$name] = $format;
     }
 
-    public function requireThumbnails() {
+    public function getFormat($name)
+    {
+        
+        return isset($this->formats[$name]) ? $this->formats[$name] : false;
+    }
+
+    public function requireThumbnails()
+    {
         return true;
     }
 
@@ -39,7 +49,8 @@ abstract class BaseProvider {
      *
      * @return void
      */
-    public function generateThumbnails(Media $media) {
+    public function generateThumbnails(Media $media)
+    {
 
         if(!$this->requireThumbnails()) {
             return;
@@ -131,7 +142,10 @@ abstract class BaseProvider {
      */
     abstract function postPersist(Media $media);
 
-    public function generatePrivatePath(Media $media) {
+    abstract function getHelperProperties(Media $media, $format);
+    
+    public function generatePrivatePath(Media $media)
+    {
         $limit_first_level = 100000;
         $limit_second_level = 1000;
 
@@ -146,7 +160,8 @@ abstract class BaseProvider {
         return $path;
     }
 
-    public function generatePublicPath(Media $media) {
+    public function generatePublicPath(Media $media)
+    {
 
         $limit_first_level = 100000;
         $limit_second_level = 1000;
@@ -159,27 +174,24 @@ abstract class BaseProvider {
             $rep_second_level + 1
         );
 
-        if($this->settings['cdn_enabled']) {
-
-            $path = sprintf('%s%s', $this->settings['cdn_path'], $path);
-        }
-
         return $path;
     }
 
-    public function buildDirectory(Media $media) {
+    public function buildDirectory(Media $media)
+    {
         $path = $this->generatePrivatePath($media);
 
         if (!is_dir($path)) {
             if (!@mkdir($path, 0755, true)) {
-                throw new RuntimeException('unable to create directory : ' . $path);
+                throw new \RuntimeException('unable to create directory : ' . $path);
             }
         }
 
         return $path;
     }
 
-    public function generatePublicUrl(Media $media, $format) {
+    public function generatePublicUrl(Media $media, $format)
+    {
 
         return sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePublicPath($media),
@@ -188,7 +200,8 @@ abstract class BaseProvider {
         );
     }
 
-    public function generatePrivateUrl(Media $media, $format) {
+    public function generatePrivateUrl(Media $media, $format)
+    {
 
         return sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePrivatePath($media),
@@ -198,7 +211,8 @@ abstract class BaseProvider {
     }
 
     
-    public function getFormats() {
+    public function getFormats()
+    {
 
         return $this->formats;
     }

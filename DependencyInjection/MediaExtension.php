@@ -26,7 +26,8 @@ use Symfony\Component\Finder\Finder;
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaExtension extends Extension {
+class MediaExtension extends Extension
+{
 
     /**
      * Loads the url shortener configuration.
@@ -34,10 +35,12 @@ class MediaExtension extends Extension {
      * @param array            $config    An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function configLoad($config, ContainerBuilder $container) {
+    public function configLoad($config, ContainerBuilder $container)
+    {
 
         $definition = new Definition($config['class']);
-
+        $definition->addMethodCall('setSettings', array(isset($config['settings']) ? $config['settings'] : array()));
+        
         foreach($config['providers'] as $name => $provider) {
 
             $provider_name = sprintf('media.provider.%s', $name);
@@ -65,6 +68,25 @@ class MediaExtension extends Extension {
         }
 
         $container->setDefinition('media.provider', $definition);
+
+        // register template helper
+        $definition = new Definition(
+            'Bundle\MediaBundle\Templating\Helper\MediaHelper',
+            array(
+                 new Reference('media.provider'),
+                 new Reference('templating')
+            )
+        );
+        $definition->addTag('templating.helper', array('alias' => 'media'));
+        $definition->addTag('templating.helper', array('alias' => 'thumbnail'));
+        
+        $container->setDefinition('templating.helper.media', $definition);
+
+        // register the twig extension
+        $container
+            ->register('twig.extension.media', 'Bundle\MediaBundle\Twig\Extension\MediaExtension')
+            ->addTag('twig.extension');
+
     }
 
     /**
@@ -72,17 +94,20 @@ class MediaExtension extends Extension {
      *
      * @return string The XSD base path
      */
-    public function getXsdValidationBasePath() {
+    public function getXsdValidationBasePath()
+    {
 
         return __DIR__.'/../Resources/config/schema';
     }
 
-    public function getNamespace() {
+    public function getNamespace()
+    {
 
         return 'http://www.sonata-project.org/schema/dic/media';
     }
 
-    public function getAlias() {
+    public function getAlias()
+    {
 
         return "media";
     }
