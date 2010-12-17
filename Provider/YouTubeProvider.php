@@ -137,7 +137,7 @@ class YoutubeProvider extends BaseProvider
     
     /**
      *
-     * @see f6MediaProvider::preSave
+     * @see BaseProvider::preSave
      */
     public function prePersist(Media $media)
     {

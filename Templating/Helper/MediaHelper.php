@@ -1,22 +1,22 @@
 <?php
 
+/*
+ * This file is part of the Sonata project.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Bundle\MediaBundle\Templating\Helper;
 
 use Symfony\Component\Templating\Helper\Helper;
 
-/*
- * This file is part of the Symfony framework.
- *
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
 
 /**
- * ActionsHelper manages action inclusions.
+ * MediaHelper manages action inclusions.
  *
- * @author Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author Thomas Rabaix <thomas.rabaix@sonata-project.com>
  */
 class MediaHelper extends Helper
 {
