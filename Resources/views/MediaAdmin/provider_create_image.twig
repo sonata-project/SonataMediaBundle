@@ -15,7 +15,7 @@ file that was distributed with this source code.
 
 {% block content %}
     {% block form %}
-        <form method="POST" action="{{ url(urls.create.url, {'provider' : provider_name }) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ url(urls.create.url, params) }}" enctype="multipart/form-data">
             {{ form|render_hidden }}
 
             <p>

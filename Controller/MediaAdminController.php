@@ -46,11 +46,18 @@ class MediaAdminController extends Controller
         $this->get('session')->start();
 
         $provider_name = $this->get('request')->get('provider');
+        $context       = $this->get('request')->get('context');
 
+        $params = array(
+            'provider' => $provider_name,
+            'context'  => $context
+        );
+        
         if(!$provider_name) {
             return $this->render('MediaBundle:MediaAdmin:select_provider.twig', array(
                 'providers' => $this->get('media.provider')->getProviders(),
-                'urls'      => $this->getUrls()
+                'urls'      => $this->getUrls(),
+                'params'    => $params
             ));
         }
 
@@ -71,6 +78,9 @@ class MediaAdminController extends Controller
             
             if($form->isValid()) {
 
+                if($context) {
+                    $media->setContext($context);
+                }
                 $this->get('media.provider')->prePersist($media);
                 $this->getEntityManager()->persist($media);
                 $this->getEntityManager()->flush();
@@ -81,11 +91,13 @@ class MediaAdminController extends Controller
         }
 
         $template = sprintf('MediaBundle:MediaAdmin:provider_create_%s.twig', $provider_name);
+
+
         
         return $this->render($template, array(
             'form'   => $form,
             'media'  => $media,
-            'provider_name' => $provider_name,
+            'params' => $params,
             'urls'   => $this->getUrls()
         ));
     }

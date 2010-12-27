@@ -12,7 +12,6 @@ namespace Bundle\MediaBundle\Provider;
 
 
 use Bundle\MediaBundle\Entity\BaseMedia as Media;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 
 class DailyMotionProvider extends BaseProvider
 {

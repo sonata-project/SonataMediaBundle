@@ -13,7 +13,7 @@ file that was distributed with this source code.
 
 {% block actions %}
     <ul>
-        <li><a href="{{ url(urls.create.url) }}">{% trans "link_action_create" from "BaseApplicationBundle" %}</a></li>
-        <li><a href="{{ url(urls.list.url) }}">{% trans "link_action_list" from "BaseApplicationBundle" %}</a></li>
+        <li><a href="{{ url(urls.create.url, params) }}">{% trans "link_action_create" from "BaseApplicationBundle" %}</a></li>
+        <li><a href="{{ url(urls.list.url, params) }}">{% trans "link_action_list" from "BaseApplicationBundle" %}</a></li>
     </ul>
 {% endblock %}

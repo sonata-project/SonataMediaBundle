@@ -14,7 +14,7 @@ file that was distributed with this source code.
 {% block content %}
     <ul>
         {% for code, provider in providers %}
-            <li><a href="{{ url(urls.create.url, {'provider': code}) }}">{{ provider.name }}</a></li>
+            <li><a href="{{ url(urls.create.url, {'provider': code, 'context': params.context}) }}">{{ provider.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
