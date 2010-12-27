@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://www.symfony-project.org/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+    <route id="media_admin_list" pattern="/">
+        <default key="_controller">MediaBundle:MediaAdmin:list</default>
+    </route>
+
+    <route id="media_admin_create" pattern="/create">
+        <default key="_controller">MediaBundle:MediaAdmin:create</default>
+    </route>
+
+    <route id="media_admin_batch" pattern="/batch">
+        <default key="_controller">MediaBundle:MediaAdmin:batch</default>
+    </route>
+
+    <route id="media_admin_update" pattern="/update">
+        <default key="_controller">MediaBundle:MediaAdmin:update</default>
+    </route>
+
+    <route id="media_admin_edit" pattern="/:id/edit">
+        <default key="_controller">MediaBundle:MediaAdmin:edit</default>
+    </route>
+
+    <route id="media_admin_delete" pattern="/:id/delete">
+        <default key="_controller">MediaBundle:MediaAdmin:delete</default>
+    </route>
+</routes>

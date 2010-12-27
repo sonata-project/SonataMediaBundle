@@ -1,0 +1,71 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'MediaBundle:MediaAdmin:provider_edit.twig' %}
+
+{% block title %}{% trans 'title_edit_dailymotion' from 'MediaBundle' %}{% endblock %}
+
+{% block content %}
+
+    {% block preview %}{% media media, 'admin' %}{% endblock %}
+    
+    {% block form %}
+        <form method="POST" action="{{ url(urls.update.url, {'id' : media.id }) }}">
+            {{ form|render_hidden }}
+
+            <p>
+                {{ form.binary_content|render_label }} <br />
+                {{ form.binary_content|render({'class' : 'title'}) }}
+                {{ form.binary_content|render_errors }}
+            </p>
+
+            <p>
+                {{ form.enabled|render_label }} <br />
+                {{ form.enabled|render({'class' : 'title'}) }}
+                {{ form.enabled|render_errors }}
+            </p>
+
+            <p>
+                {{ form.name|render_label }} <br />
+                {{ form.name|render({'class' : 'title'}) }}
+                {{ form.name|render_errors }}
+            </p>
+
+            <p>
+                {{ form.description|render_label }} <br />
+                {{ form.description|render({'class' : 'title'}) }}
+                {{ form.description|render_errors }}
+            </p>
+
+            <p>
+                {{ form.author_name|render_label }} <br />
+                {{ form.author_name|render({'class' : 'title'}) }}
+                {{ form.author_name|render_errors }}
+            </p>
+
+            <p>
+                {{ form.copyright|render_label }} <br />
+                {{ form.copyright|render({'class' : 'title'}) }}
+                {{ form.copyright|render_errors }}
+            </p>
+
+            <p>
+                {{ form.cdn_is_flushable|render_label }} <br />
+                {{ form.cdn_is_flushable|render({'class' : 'title'}) }}
+                {{ form.cdn_is_flushable|render_errors }}
+            </p>
+
+
+            <input type="submit" value="{% trans 'btn_update' from 'MediaBundle' %}" />
+        </form>
+
+    {% endblock %}
+{% endblock %}

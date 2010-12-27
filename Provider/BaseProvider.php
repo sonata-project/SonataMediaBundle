@@ -88,10 +88,12 @@ abstract class BaseProvider
             // TODO : this should be configured as a DI service
             $image = new \Imagine\Image($image_reference);
 
+            $height = isset($settings['height']) ? $settings['height'] :  null;
+            
             // resize the thumbnail
             $processor = new \Imagine\Processor();
             $processor
-                ->resize($settings['width'], $settings['constraint'] ? $settings['constraint'] :  $settings['height'])
+                ->resize($settings['width'], $height, !$height ? \Imagine\GD\Command\Resize::INFER_HEIGHT : null)
                 ->save($filename)
                 ->process($image);
             
@@ -133,6 +135,19 @@ abstract class BaseProvider
      * @return void
      */
     abstract function postRemove(Media $media);
+
+    /**
+     * build the related create form
+     *
+     */
+    abstract function buildCreateForm($form);
+
+    /**
+     * build the related create form
+     *
+     */
+    abstract function buildEditForm($form);
+
 
     /**
      *
@@ -215,5 +230,15 @@ abstract class BaseProvider
     {
 
         return $this->formats;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }

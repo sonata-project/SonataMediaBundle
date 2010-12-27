@@ -30,10 +30,41 @@ class FileProvider extends BaseProvider
         return $this->getReferenceImage($media);
     }
 
-    public function requireThumbnails() {
+    public function requireThumbnails()
+    {
         return false;
     }
 
+    /**
+     * build the related create form
+     *
+     */
+    function buildEditForm($form)
+    {
+        $form->add(new \Symfony\Component\Form\TextField('name'));
+        $form->add(new \Symfony\Component\Form\CheckboxField('enabled'));
+        $form->add(new \Symfony\Component\Form\TextField('author_name'));
+        $form->add(new \Symfony\Component\Form\CheckboxField('cdn_is_flushable'));
+        $form->add(new \Symfony\Component\Form\TextareaField('description'));
+        $form->add(new \Symfony\Component\Form\TextField('copyright'));
+
+        $form->add(new \Symfony\Component\Form\FileField('binary_content', array(
+            'secret' => 'file'
+        )));
+
+    }
+
+    /**
+     * build the related create form
+     *
+     */
+    function buildCreateForm($form)
+    {
+        $form->add(new \Symfony\Component\Form\FileField('binary_content', array(
+            'secret' => 'file'
+        )));
+    }
+    
     public function postPersist(Media $media)
     {
 
@@ -51,9 +82,26 @@ class FileProvider extends BaseProvider
         $this->generateThumbnails($media);
     }
 
-    public function prePersist(Media $media)
+    public function postUpdate(Media $media)
     {
+        if(!$media->getBinaryContent()) {
+            return;
+        }
 
+        $this->fixBinaryContent($media);
+
+        $filename = sprintf('%s/%s',
+            $this->buildDirectory($media),
+            $media->getProviderReference()
+        );
+
+        copy($media->getBinaryContent()->getPath(), $filename);
+
+        $this->generateThumbnails($media);
+    }
+
+    public function fixBinaryContent($media)
+    {
         if(!$media->getBinaryContent()) {
 
             return;
@@ -66,14 +114,25 @@ class FileProvider extends BaseProvider
                 throw new RuntimeException('The file does not exist : ' . $media->getBinaryContent());
             }
 
-            $infos = pathinfo($media->getBinaryContent());
-            $binary_content = new \Symfony\Component\HttpFoundation\File\File($infos['basename']);
+            $binary_content = new \Symfony\Component\HttpFoundation\File\File($media->getBinaryContent());
 
             $media->setBinaryContent($binary_content);
         }
+    }
+
+    public function prePersist(Media $media)
+    {
+
+        $this->fixBinaryContent($media);
 
         $media->setProviderName($this->name);
-        
+        $media->setProviderStatus(Media::STATUS_OK);
+
+        if(!$media->getBinaryContent()) {
+
+            return;
+        }
+
         // this is the original name
         if(!$media->getName()) {
             $media->setName($media->getBinaryContent()->getName());
@@ -81,10 +140,13 @@ class FileProvider extends BaseProvider
 
         // this is the name used to store the file
         if(!$media->getProviderReference()) {
-           $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension()); 
+           $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
         }
 
-        $media->setContentType($media->getBinaryContent()->getMimeType());       
+        $media->setContentType($media->getBinaryContent()->getMimeType());
+        $media->setSize($media->getBinaryContent()->size());
+
+        $media->setCreatedAt(new \Datetime());
     }
 
     public function generatePublicUrl(Media $media, $format)
@@ -130,20 +192,29 @@ class FileProvider extends BaseProvider
         }
     }
 
-    public function postUpdate(Media $media)
-    {
-
-    }
-
     public function preUpdate(Media $media)
     {
 
+        $this->fixBinaryContent($media);
+        
+        if(!$media->getBinaryContent()) {
+
+            return;
+        }
+                
+        // this is the name used to store the file
+        if(!$media->getProviderReference()) {
+           $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
+        }
+
+
+        $media->setContentType($media->getBinaryContent()->getMimeType());
+        $media->setSize($media->getBinaryContent()->size());
+        $media->setUpdatedAt(new \Datetime());
     }
 
     public function preRemove(Media $media)
     {
 
     }
-
-
 }

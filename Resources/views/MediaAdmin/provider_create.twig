@@ -1,0 +1,19 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'BaseApplicationBundle::layout.twig' %}
+
+{% block actions %}
+    <ul>
+        <li><a href="{{ url(urls.create.url) }}">{% trans "link_action_create" from "BaseApplicationBundle" %}</a></li>
+        <li><a href="{{ url(urls.list.url) }}">{% trans "link_action_list" from "BaseApplicationBundle" %}</a></li>
+    </ul>
+{% endblock %}

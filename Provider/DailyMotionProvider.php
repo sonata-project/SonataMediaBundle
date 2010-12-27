@@ -12,6 +12,7 @@ namespace Bundle\MediaBundle\Provider;
 
 
 use Bundle\MediaBundle\Entity\BaseMedia as Media;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 class DailyMotionProvider extends BaseProvider
 {
@@ -26,6 +27,33 @@ class DailyMotionProvider extends BaseProvider
     {
 
         return sprintf('http://www.dailymotion.com/swf/video/%s', $media->getProviderReference());
+    }
+
+
+    /**
+     * build the related create form
+     *
+     */
+    function buildEditForm($form)
+    {
+        $form->add(new \Symfony\Component\Form\TextField('name'));
+        $form->add(new \Symfony\Component\Form\CheckboxField('enabled'));
+        $form->add(new \Symfony\Component\Form\TextField('author_name'));
+        $form->add(new \Symfony\Component\Form\CheckboxField('cdn_is_flushable'));
+        $form->add(new \Symfony\Component\Form\TextareaField('description'));
+        $form->add(new \Symfony\Component\Form\TextField('copyright'));
+
+        $form->add(new \Symfony\Component\Form\TextField('binary_content'));
+
+    }
+
+    /**
+     * build the related create form
+     *
+     */
+    function buildCreateForm($form)
+    {
+        $form->add(new \Symfony\Component\Form\TextField('binary_content'));
     }
 
     public function getHelperProperties(Media $media, $format, $options = array())
@@ -101,6 +129,49 @@ class DailyMotionProvider extends BaseProvider
             return;
         }
 
+        $metadata = $this->getMetadata($media);
+        
+        $media->setProviderName($this->name);
+        $media->setProviderMetadata($metadata);
+        $media->setProviderReference($media->getBinaryContent());
+        $media->setName($metadata['title']);
+        $media->setAuthorName($metadata['author_name']);
+        $media->setHeight($metadata['height']);
+        $media->setWidth($metadata['width']);
+        $media->setContentType('video/x-flv');
+        $media->setProviderStatus(Media::STATUS_OK);
+
+        $media->setCreatedAt(new \Datetime());
+
+    }
+
+    public function preUpdate(Media $media)
+    {
+        if (!$media->getBinaryContent()) {
+
+            return;
+        }
+
+        $metadata = $this->getMetadata($media);
+
+        $media->setProviderMetadata($metadata);
+        $media->setProviderReference($media->getBinaryContent());
+        $media->setHeight($metadata['height']);
+        $media->setWidth($metadata['width']);
+        $media->setProviderStatus(Media::STATUS_OK);
+        
+        $media->setUpdatedAt(new \Datetime());
+    }
+
+
+    public function getMetadata($media)
+    {
+
+        if (!$media->getBinaryContent()) {
+
+            return;
+        }
+
         $url = sprintf('http://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/%s&format=json', $media->getBinaryContent());
         $metadata = @file_get_contents($url);
 
@@ -114,14 +185,7 @@ class DailyMotionProvider extends BaseProvider
             throw new \RuntimeException('Unable to decode dailymotion video information for :' . $url);
         }
 
-        $media->setProviderName($this->name);
-        $media->setProviderMetadata($metadata);
-        $media->setProviderReference($media->getBinaryContent());
-        $media->setName($metadata['title']);
-        $media->setAuthorName($metadata['author_name']);
-        $media->setHeight($metadata['height']);
-        $media->setWidth($metadata['width']);
-        $media->setContentType('video/x-flv');
+        return $metadata;
     }
 
     public function postRemove(Media $media)
@@ -144,7 +208,7 @@ class DailyMotionProvider extends BaseProvider
 
     public function postUpdate(Media $media)
     {
-
+        $this->postPersist($media);
     }
 
     public function postPersist(Media $media)
@@ -154,11 +218,6 @@ class DailyMotionProvider extends BaseProvider
         }
 
         $this->generateThumbnails($media);
-    }
-
-    public function preUpdate(Media $media)
-    {
-
     }
 
     public function preRemove(Media $media)

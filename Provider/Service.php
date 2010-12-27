@@ -1,12 +1,27 @@
 <?php
 
+/*
+ * This file is part of the Sonata project.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+
 namespace Bundle\MediaBundle\Provider;
 
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Bundle\MediaBundle\Entity\BaseMedia as Media;
 
-class Service implements EventSubscriber
+/**
+ *
+ * It is not possible to use doctrine as the update event cannot update non updated fields ...
+ *
+ * @throws RuntimeException
+ *
+ */
+class Service
 {
 
     protected $providers = array();
@@ -29,91 +44,41 @@ class Service implements EventSubscriber
         $this->providers[$name] = $instance;
     }
 
-    public function getSubscribedEvents()
+
+    public function postUpdate(Media $media)
     {
 
-        return array(
-            Events::prePersist,
-            Events::preUpdate,
-            Events::preRemove,
-            Events::postUpdate,
-            Events::postRemove,
-            Events::postPersist,
-
-        );
+        $this->getProvider($media->getProviderName())->postUpdate($media);
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
+    public function postRemove(Media $media)
     {
-        $entity = $args->getEntity();
 
-        if(!$entity instanceof \Bundle\MediaBundle\Entity\BaseMedia) {
-
-            return;
-        }
-
-        $this->getProvider($entity->getProviderName())->postUpdate($entity);
+        $this->getProvider($media->getProviderName())->postRemove($media);
     }
 
-    public function postRemove(LifecycleEventArgs $args)
+    public function postPersist(Media $media)
     {
-        $entity = $args->getEntity();
 
-        if(!$entity instanceof \Bundle\MediaBundle\Entity\BaseMedia) {
-
-            return;
-        }
-
-        $this->getProvider($entity->getProviderName())->postRemove($entity);
+        $this->getProvider($media->getProviderName())->postPersist($media);
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function preUpdate(Media $media)
     {
-        $entity = $args->getEntity();
 
-        if(!$entity instanceof \Bundle\MediaBundle\Entity\BaseMedia) {
-
-            return;
-        }
-
-        $this->getProvider($entity->getProviderName())->postPersist($entity);
-
+        $this->getProvider($media->getProviderName())->preUpdate($media);
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preRemove(Media $media)
     {
-        $entity = $args->getEntity();
 
-        if(!$entity instanceof \Bundle\MediaBundle\Entity\BaseMedia) {
-
-            return;
-        }
-
-        $this->getProvider($entity->getProviderName())->preUpdate($entity);
+        $this->getProvider($media->getProviderName())->preRemove($media);
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function prePersist(Media $media)
     {
-        $entity = $args->getEntity();
 
-        if(!$entity instanceof \Bundle\MediaBundle\Entity\BaseMedia) {
-
-            return;
-        }
-
-        $this->getProvider($entity->getProviderName())->preRemove($entity);
-    }
-
-    public function prePersist(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-        if(!$entity instanceof \Bundle\MediaBundle\Entity\BaseMedia) {
-
-            return;
-        }
-
-        $this->getProvider($entity->getProviderName())->prePersist($entity);
+        $this->getProvider($media->getProviderName())->prePersist($media);
 
     }
 
@@ -135,6 +100,16 @@ class Service implements EventSubscriber
     public function getSettings()
     {
         return $this->settings;
+    }
+
+    public function getProviderList()
+    {
+        $choices = array();
+        foreach(array_keys($this->providers) as $name) {
+            $choices[$name] = $name;
+        }
+
+        return $choices;
     }
 }
 

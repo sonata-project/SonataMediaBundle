@@ -20,7 +20,7 @@ class MediaController extends Controller
     public function viewAction($id, $format = 'reference')
     {
 
-        $media = $em = $this->get('doctrine.orm.default_entity_manager')->find('MediaBundle:Media', $id);
+        $media = $this->get('doctrine.orm.default_entity_manager')->find('MediaBundle:Media', $id);
 
         if(!$media) {
             throw new NotFoundHttpException('unable to find the media with the id');

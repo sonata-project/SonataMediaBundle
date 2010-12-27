@@ -13,7 +13,11 @@ namespace Bundle\MediaBundle\Entity;
 
 class BaseMedia {
 
-
+    const  STATUS_OK          = 1;
+    const  STATUS_SENDING     = 2;
+    const  STATUS_PENDING     = 3;
+    const  STATUS_ERROR       = 4;
+    const  STATUS_ENCODING    = 4;
 
     /**
      * @var integer $id
@@ -44,7 +48,7 @@ class BaseMedia {
     /**
      * @var boolean $enabled
      */
-    private $enabled;
+    private $enabled = false;
 
     /**
      * @var string $provider_name
@@ -64,7 +68,7 @@ class BaseMedia {
     /**
      * @var array $provider_metadata
      */
-    private $provider_metadata;
+    private $provider_metadata = array();
 
     /**
      * @var integer $width
@@ -131,17 +135,21 @@ class BaseMedia {
         );
     }
     
-    public function setBinaryContent($binary_content) {
+    public function setBinaryContent($binary_content)
+    {
 
+        $this->provider_reference = null;
         $this->binary_content = $binary_content;
     }
 
-    public function getBinaryContent() {
+    public function getBinaryContent()
+    {
 
         return $this->binary_content;
     }
 
-    public function getMetadataValue($name, $default = null) {
+    public function getMetadataValue($name, $default = null)
+    {
         $metadata = $this->getProviderMetadata();
 
         if(!is_array($metadata)) {

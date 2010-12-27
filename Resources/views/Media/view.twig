@@ -28,9 +28,9 @@ file that was distributed with this source code.
 
 <h2>Formats</h2>
 <ul>
-    <li><a href="{% url 'media_view' with { 'id' : media.id, 'format' : 'reference'} %}">reference</li>
+    <li><a href="{{ url('media_view', { 'id' : media.id, 'format' : 'reference'}) }}">reference</li>
 
     {% for name, format in formats %}
-        <li><a href="{% url 'media_view' with { 'id' : media.id, 'format' : name} %}">{{ name }}</a></li>
+        <li><a href="{{ url('media_view', { 'id' : media.id, 'format' : name}) }}">{{ name }}</a></li>
     {% endfor %}
 </ul>

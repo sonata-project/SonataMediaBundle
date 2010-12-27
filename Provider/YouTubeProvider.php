@@ -134,7 +134,33 @@ class YoutubeProvider extends BaseProvider
 
         return $params;
     }
-    
+
+    /**
+     * build the related create form
+     *
+     */
+    function buildEditForm($form)
+    {
+        $form->add(new \Symfony\Component\Form\TextField('name'));
+        $form->add(new \Symfony\Component\Form\CheckboxField('enabled'));
+        $form->add(new \Symfony\Component\Form\TextField('author_name'));
+        $form->add(new \Symfony\Component\Form\CheckboxField('cdn_is_flushable'));
+        $form->add(new \Symfony\Component\Form\TextareaField('description'));
+        $form->add(new \Symfony\Component\Form\TextField('copyright'));
+
+        $form->add(new \Symfony\Component\Form\TextField('binary_content'));
+
+    }
+
+    /**
+     * build the related create form
+     *
+     */
+    function buildCreateForm($form)
+    {
+        $form->add(new \Symfony\Component\Form\TextField('binary_content'));
+    }
+
     /**
      *
      * @see BaseProvider::preSave
@@ -142,6 +168,47 @@ class YoutubeProvider extends BaseProvider
     public function prePersist(Media $media)
     {
 
+        if (!$media->getBinaryContent()) {
+
+            return;
+        }
+
+        $metadata = $this->getMetadata($media);
+        
+        $media->setProviderName($this->name);
+        $media->setProviderReference($media->getBinaryContent());
+        $media->setProviderMetadata($metadata);
+        $media->setName($metadata['title']);
+        $media->setAuthorName($metadata['author_name']);
+        $media->setHeight($metadata['height']);
+        $media->setWidth($metadata['width']);
+        $media->setContentType('video/x-flv');
+        $media->setProviderStatus(Media::STATUS_OK);
+
+        $media->setCreatedAt(new \Datetime());
+        
+    }
+
+    public function preUpdate(Media $media)
+    {
+        if (!$media->getBinaryContent()) {
+
+            return;
+        }
+
+        $metadata = $this->getMetadata($media);
+
+        $media->setProviderReference($media->getBinaryContent());
+        $media->setProviderMetadata($metadata);
+        $media->setHeight($metadata['height']);
+        $media->setWidth($metadata['width']);
+        $media->setProviderStatus(Media::STATUS_OK);
+
+        $media->setUpdatedAt(new \Datetime());
+    }
+
+    public function getMetadata(Media $media)
+    {
         if (!$media->getBinaryContent()) {
 
             return;
@@ -160,16 +227,7 @@ class YoutubeProvider extends BaseProvider
             throw new \RuntimeException('Unable to decode youtube video information for :' . $url);
         }
 
-        $media->setProviderName($this->name);
-        $media->setProviderReference($media->getBinaryContent());
-        $media->setProviderMetadata($metadata);
-        $media->setName($metadata['title']);
-        $media->setAuthorName($metadata['author_name']);
-        $media->setHeight($metadata['height']);
-        $media->setWidth($metadata['width']);
-        $media->setContentType('video/x-flv');
-        
-        return $media;
+        return $metadata;
     }
 
     public function postRemove(Media $media)
@@ -192,7 +250,7 @@ class YoutubeProvider extends BaseProvider
 
     public function postUpdate(Media $media)
     {
-
+        $this->postPersist($media);
     }
 
     public function postPersist(Media $media)
@@ -203,11 +261,6 @@ class YoutubeProvider extends BaseProvider
         }
 
         $this->generateThumbnails($media);
-    }
-
-    public function preUpdate(Media $media)
-    {
-
     }
 
     public function preRemove(Media $media)
