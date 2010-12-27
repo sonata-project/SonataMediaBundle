@@ -22,14 +22,9 @@ class MediaAdminController extends Controller
     protected $class = 'Application\MediaBundle\Entity\Media';
 
     protected $list_fields = array(
-        'id',
-        'image' => array('template' => 'MediaBundle:MediaAdmin:list_image.twig'),
-        'name',
+        'image'  => array('template' => 'MediaBundle:MediaAdmin:list_image.twig'),
+        'custom' => array('template' => 'MediaBundle:MediaAdmin:list_custom.twig'),
         'enabled',
-        'provider_name',
-        'dimension' => array('template' => 'MediaBundle:MediaAdmin:list_dimension.twig'),
-        'context',
-        'cdn_flush_at'
     );
 
     protected $form_fields = array(
@@ -45,7 +40,6 @@ class MediaAdminController extends Controller
 
     // don't know yet how to get this value
     protected $base_controller_name = 'MediaBundle:MediaAdmin';
-
 
     public function createAction($form = null)
     {
