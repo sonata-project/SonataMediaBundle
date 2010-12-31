@@ -38,90 +38,90 @@ class BaseMedia {
     /**
      * @var string $name
      */
-    private $name;
+    protected $name;
 
     /**
      * @var text $description
      */
-    private $description;
+    protected $description;
 
     /**
      * @var boolean $enabled
      */
-    private $enabled = false;
+    protected $enabled = false;
 
     /**
      * @var string $provider_name
      */
-    private $provider_name;
+    protected $provider_name;
 
     /**
      * @var integer $provider_status
      */
-    private $provider_status;
+    protected $provider_status;
 
     /**
      * @var string $provider_reference
      */
-    private $provider_reference;
+    protected $provider_reference;
 
     /**
      * @var array $provider_metadata
      */
-    private $provider_metadata = array();
+    protected $provider_metadata = array();
 
     /**
      * @var integer $width
      */
-    private $width;
+    protected $width;
 
     /**
      * @var integer $height
      */
-    private $height;
+    protected $height;
 
     /**
      * @var decimal $length
      */
-    private $length;
+    protected $length;
 
     /**
      * @var string $copyright
      */
-    private $copyright;
+    protected $copyright;
 
     /**
      * @var string $author_name
      */
-    private $author_name;
+    protected $author_name;
 
     /**
      * @var string $context
      */
-    private $context;
+    protected $context;
 
     /**
      * @var boolean $cdn_is_flushable
      */
-    private $cdn_is_flushable;
+    protected $cdn_is_flushable;
 
     /**
      * @var datetime $cdn_flush_at
      */
-    private $cdn_flush_at;
+    protected $cdn_flush_at;
 
     /**
      * @var datetime $updated_at
      */
-    private $updated_at;
+    protected $updated_at;
 
     /**
      * @var datetime $created_at
      */
-    private $created_at;
+    protected $created_at;
 
 
-    private $binary_content;
+    protected $binary_content;
 
 
     public static function getStatusList()
@@ -501,12 +501,12 @@ class BaseMedia {
     /**
      * @var varchar $content_type
      */
-    private $content_type;
+    protected $content_type;
 
     /**
      * @var integer $size
      */
-    private $size;
+    protected $size;
 
     /**
      * Set content_type

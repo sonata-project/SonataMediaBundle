@@ -147,6 +147,7 @@ class FileProvider extends BaseProvider
         $media->setSize($media->getBinaryContent()->size());
 
         $media->setCreatedAt(new \Datetime());
+        $media->setUpdatedAt(new \Datetime());
     }
 
     public function generatePublicUrl(Media $media, $format)

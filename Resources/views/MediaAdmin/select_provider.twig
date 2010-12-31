@@ -9,12 +9,14 @@ file that was distributed with this source code.
 
 #}
 
+{% extends 'BaseApplicationBundle::layout.twig' %}
+
 {% block title %}{% trans 'title_select_provider' from 'MediaBundle' %}{% endblock %}
 
 {% block content %}
     <ul>
         {% for code, provider in providers %}
-            <li><a href="{{ url(urls.create.url, {'provider': code, 'context': params.context}) }}">{{ provider.name }}</a></li>
+            <li><a href="{{ configuration.generateUrl('create', {'provider': code, 'context': params.context}) }}">{{ provider.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

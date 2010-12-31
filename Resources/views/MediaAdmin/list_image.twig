@@ -9,4 +9,4 @@ file that was distributed with this source code.
 
 #}
 
-<a href="{{ url(urls.edit.url, {'id' : object.id}) }}">{% thumbnail object, 'admin' with {'width': 75, 'height': 60} %}</a>
+<a href="{{ configuration.generateUrl('edit', {'id' : object.id}) }}">{% thumbnail object, 'admin' with {'width': 75, 'height': 60} %}</a>

@@ -19,28 +19,6 @@ use Symfony\Component\Form\Form;
 class MediaAdminController extends Controller
 {
 
-    protected $class = 'Application\MediaBundle\Entity\Media';
-
-    protected $list_fields = array(
-        'image'  => array('template' => 'MediaBundle:MediaAdmin:list_image.twig'),
-        'custom' => array('template' => 'MediaBundle:MediaAdmin:list_custom.twig'),
-        'enabled',
-    );
-
-    protected $form_fields = array(
-        'enabled',
-        'name',
-        'description',
-        'author_name',
-        'copyright',
-        'cdn_is_flushable'
-    );
-
-    protected $base_route = 'media_admin';
-
-    // don't know yet how to get this value
-    protected $base_controller_name = 'MediaBundle:MediaAdmin';
-
     public function createAction($form = null)
     {
         $this->get('session')->start();
@@ -55,9 +33,9 @@ class MediaAdminController extends Controller
         
         if(!$provider_name) {
             return $this->render('MediaBundle:MediaAdmin:select_provider.twig', array(
-                'providers' => $this->get('media.provider')->getProviders(),
-                'urls'      => $this->getUrls(),
-                'params'    => $params
+                'providers'         => $this->get('media.provider')->getProviders(),
+                'configuration'     => $this->configuration,
+                'params'            => $params
             ));
         }
 
@@ -82,11 +60,11 @@ class MediaAdminController extends Controller
                     $media->setContext($context);
                 }
                 $this->get('media.provider')->prePersist($media);
-                $this->getEntityManager()->persist($media);
-                $this->getEntityManager()->flush();
+                $this->configuration->getEntityManager()->persist($media);
+                $this->configuration->getEntityManager()->flush();
                 $this->get('media.provider')->postPersist($media);
 
-                return $this->redirect($this->generateUrl('media_admin_edit', array('id' => $media->getId())));
+                return $this->redirect($this->configuration->generateUrl('edit', array('id' => $media->getId())));
             }
         }
 
@@ -98,7 +76,7 @@ class MediaAdminController extends Controller
             'form'   => $form,
             'media'  => $media,
             'params' => $params,
-            'urls'   => $this->getUrls()
+            'configuration'     => $this->configuration,
         ));
     }
 
@@ -111,7 +89,7 @@ class MediaAdminController extends Controller
             $media = $id->getData();
             $form   = $id;
         } else {
-            $media = $this->get('doctrine.orm.default_entity_manager')->find($this->getClass(), $id);
+            $media = $this->configuration->getObject($this->get('request')->get('id'));
 
             if(!$media) {
                 throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
@@ -128,7 +106,7 @@ class MediaAdminController extends Controller
         return $this->render($template, array(
             'form'   => $form,
             'media'  => $media,
-            'urls'   => $this->getUrls()
+            'configuration'     => $this->configuration,
         ));
     }
 
@@ -141,7 +119,7 @@ class MediaAdminController extends Controller
            throw new \RuntimeException('invalid request type, POST expected');
         }
 
-        $media = $this->get('doctrine.orm.default_entity_manager')->find($this->getClass(), $this->get('request')->get('id'));
+        $media = $this->configuration->getObject($this->get('request')->get('id'));
 
         if(!$media) {
             throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $this->get('request')->get('id')));
@@ -157,14 +135,11 @@ class MediaAdminController extends Controller
         if($form->isValid()) {
 
             $this->get('media.provider')->preUpdate($media);
-            $this->getEntityManager()->persist($form->getData());
-            $this->getEntityManager()->flush();
+            $this->configuration->getEntityManager()->persist($form->getData());
+            $this->configuration->getEntityManager()->flush();
             $this->get('media.provider')->postUpdate($media);
 
-            // redirect to edit mode
-            $url = $this->getUrl('edit');
-
-            return $this->redirect($this->generateUrl($url['url'], array('id' => $media->getId())));
+            return $this->redirect($this->configuration->generateUrl('edit', array('id' => $media->getId())));
         }
 
         return $this->forward(sprintf('%s:edit', $this->getBaseControllerName()), array(

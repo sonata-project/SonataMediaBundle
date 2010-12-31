@@ -141,6 +141,7 @@ class DailyMotionProvider extends BaseProvider
         $media->setProviderStatus(Media::STATUS_OK);
 
         $media->setCreatedAt(new \Datetime());
+        $media->setUpdatedAt(new \Datetime());
 
     }
 

@@ -12,9 +12,11 @@ file that was distributed with this source code.
 {% extends 'BaseApplicationBundle::layout.twig' %}
 
 {% block actions %}
-    <ul>
-        <li><a href="{{ url(urls.create.url) }}">{% trans "link_action_create" from "BaseApplicationBundle" %}</a></li>
-        <li><a href="{{ url(urls.list.url) }}">{% trans "link_action_list" from "BaseApplicationBundle" %}</a></li>
-    </ul>
+    <div class="sonata-actions">
+        <ul>
+            <li class="sonata-action-element"><a href="{{ configuration.generateUrl('create', params) }}">{% trans "link_action_create" from "BaseApplicationBundle" %}</a></li>
+            <li class="sonata-action-element"><a href="{{ configuration.generateUrl('list', params) }}">{% trans "link_action_list" from "BaseApplicationBundle" %}</a></li>
+        </ul>
+    </div>
 {% endblock %}
 

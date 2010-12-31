@@ -14,7 +14,7 @@ file that was distributed with this source code.
 {% block title %}{% trans 'title_add_file' from 'MediaBundle' %}{% endblock %}
 
 {% block form %}
-    <form method="POST" action="{{ url(urls.create.url, params) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ configuration.generateUrl('create', params) }}" enctype="multipart/form-data">
         {{ form|render_hidden }}
 
         <p>

@@ -18,7 +18,7 @@ file that was distributed with this source code.
     {% block preview %}{% media media, 'admin' %}{% endblock %}
     
     {% block form %}
-        <form method="POST" action="{{ url(urls.update.url, {'id' : media.id }) }}">
+        <form method="POST" action="{{ configuration.generateUrl('update', {'id' : media.id }) }}">
             {{ form|render_hidden }}
 
             <p>

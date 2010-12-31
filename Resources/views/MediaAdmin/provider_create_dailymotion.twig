@@ -14,7 +14,7 @@ file that was distributed with this source code.
 {% block title %}{% trans 'title_add_dailymotion' from 'MediaBundle' %}{% endblock %}
 
 {% block form %}
-    <form method="POST" action="{{ url(urls.create.url, params) }}">
+    <form method="POST" action="{{ configuration.generateUrl('create', params) }}">
         {{ form|render_hidden }}
 
         <p>
