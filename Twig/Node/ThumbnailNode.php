@@ -18,7 +18,7 @@ class ThumbnailNode extends \Twig_Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write("echo \$this->env->getExtension('templating')->getContainer()->get('templating.helper.thumbnail')->thumbail(")
+            ->write("echo \$this->env->getExtension('templating')->getContainer()->get('templating.helper.media')->thumbnail(")
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))

@@ -41,7 +41,7 @@ class MediaAdminController extends Controller
 
         $provider = $this->get('media.provider')->getProvider($provider_name);
 
-        $media = new \Application\MediaBundle\Entity\Media;
+        $media = new \Application\Sonata\MediaBundle\Entity\Media;
         $media->setProviderName($provider_name);
 
         if($form instanceof Form) {

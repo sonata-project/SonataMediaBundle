@@ -16,11 +16,11 @@ use Bundle\Sonata\BaseApplicationBundle\Admin\Admin;
 class MediaAdmin extends Admin
 {
 
-    protected $class = 'Application\MediaBundle\Entity\Media';
+    protected $class = 'Application\Sonata\MediaBundle\Entity\Media';
 
     protected $list_fields = array(
-        'image'  => array('template' => 'MediaBundle:MediaAdmin:list_image.twig'),
-        'custom' => array('template' => 'MediaBundle:MediaAdmin:list_custom.twig'),
+        'image'  => array('template' => 'Sonata/MediaBundle:MediaAdmin:list_image.twig'),
+        'custom' => array('template' => 'Sonata/MediaBundle:MediaAdmin:list_custom.twig'),
         'enabled',
     );
 
