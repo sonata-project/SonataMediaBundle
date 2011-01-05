@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\MediaBundle\Admin;
+namespace Bundle\Sonata\MediaBundle\Admin;
 
-use Bundle\BaseApplicationBundle\Admin\Admin;
+use Bundle\Sonata\BaseApplicationBundle\Admin\Admin;
 
 class MediaAdmin extends Admin
 {
@@ -33,7 +33,13 @@ class MediaAdmin extends Admin
         'cdn_is_flushable'
     );
 
-    protected $base_route = 'media_admin';
+    protected $filter_fields = array(
+        'name',
+        'provider_reference',
+        'enabled',
+    );
+
+    protected $base_route = 'sonata_media_admin';
 
     // don't know yet how to get this value
     protected $base_controller_name = 'MediaBundle:MediaAdmin';

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\MediaBundle\Tests\Entity;
+namespace Bundle\Sonata\MediaBundle\Tests\Entity;
 
 class Media extends \Bundle\MediaBundle\Entity\BaseMedia {
 

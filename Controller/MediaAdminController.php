@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\MediaBundle\Controller;
+namespace Bundle\Sonata\MediaBundle\Controller;
 
-use Bundle\BaseApplicationBundle\Controller\CRUDController as Controller;
+use Bundle\Sonata\BaseApplicationBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Symfony\Component\Form\Form;
@@ -32,7 +32,7 @@ class MediaAdminController extends Controller
         );
         
         if(!$provider_name) {
-            return $this->render('MediaBundle:MediaAdmin:select_provider.twig', array(
+            return $this->render('Sonata/MediaBundle:MediaAdmin:select_provider.twig', array(
                 'providers'         => $this->get('media.provider')->getProviders(),
                 'configuration'     => $this->configuration,
                 'params'            => $params
@@ -68,7 +68,7 @@ class MediaAdminController extends Controller
             }
         }
 
-        $template = sprintf('MediaBundle:MediaAdmin:provider_create_%s.twig', $provider_name);
+        $template = sprintf('Sonata/MediaBundle:MediaAdmin:provider_create_%s.twig', $provider_name);
 
 
         
@@ -101,7 +101,7 @@ class MediaAdminController extends Controller
             $provider->buildEditForm($form);
         }
 
-        $template = sprintf('MediaBundle:MediaAdmin:provider_edit_%s.twig', $media->getProviderName());
+        $template = sprintf('Sonata/MediaBundle:MediaAdmin:provider_edit_%s.twig', $media->getProviderName());
 
         return $this->render($template, array(
             'form'   => $form,

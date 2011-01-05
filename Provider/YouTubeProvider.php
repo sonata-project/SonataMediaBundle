@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\MediaBundle\Provider;
+namespace Bundle\Sonata\MediaBundle\Provider;
 
-use Bundle\MediaBundle\Entity\BaseMedia as Media;
+use Bundle\Sonata\MediaBundle\Entity\BaseMedia as Media;
 
 class YoutubeProvider extends BaseProvider
 {

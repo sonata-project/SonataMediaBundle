@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\MediaBundle\Tests\Provider;
+namespace Bundle\Sonata\MediaBundle\Tests\Provider;
 
 use Bundle\MediaBundle\Tests\Entity\Media;
 

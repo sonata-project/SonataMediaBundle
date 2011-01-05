@@ -9,9 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\MediaBundle\Twig\Extension;
+namespace Bundle\Sonata\MediaBundle\Twig\Extension;
 
-use Symfony\Bundle\TwigBundle\TokenParser\HelperTokenParser;
+use Bundle\Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
+use Bundle\Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 
 class MediaExtension extends \Twig_Extension
 {
@@ -22,9 +23,12 @@ class MediaExtension extends \Twig_Extension
         return array(
 
             // {% render media_object with { 'width': 2 }%}
-            new HelperTokenParser('media', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'media'),
-            new HelperTokenParser('thumbnail', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'thumbnail'),
+//            new HelperTokenParser('media', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'media'),
+//            new HelperTokenParser('thumbnail', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'thumbnail'),
+            new MediaTokenParser,
+            new ThumbnailTokenParser,
         );
+
     }
 
     /**

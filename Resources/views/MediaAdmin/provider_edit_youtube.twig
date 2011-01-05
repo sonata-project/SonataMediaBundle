@@ -9,63 +9,60 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'MediaBundle:MediaAdmin:provider_edit.twig' %}
+{% extends 'Sonata/MediaBundle:MediaAdmin:provider_edit.twig' %}
 
 {% block title %}{% trans 'title_edit_youtube' from 'MediaBundle' %}{% endblock %}
 
-{% block content %}
+{% block preview %}{% media media, 'admin' %}{% endblock %}
 
-    {% block preview %}{% media media, 'admin' %}{% endblock %}
+{% block form %}
+    <form method="POST" action="{{ configuration.generateUrl('update', {'id' : media.id }) }}">
+        {{ form_hidden(form) }}
 
-    {% block form %}
-        <form method="POST" action="{{ configuration.generateUrl('update', {'id' : media.id }) }}">
-            {{ form|render_hidden }}
+        <p>
+            {{ form_label(form.binary_content) }}<br />
+            {{ form_field(form.binary_content, {'class' : 'title'}) }}
+            {{ form_errors(form.binary_content) }}
+        </p>
 
-            <p>
-                {{ form.binary_content|render_label }} <br />
-                {{ form.binary_content|render({'class' : 'title'}) }}
-                {{ form.binary_content|render_errors }}
-            </p>
+        <p>
+            {{ form_label(form.enabled) }} <br />
+            {{ form_field(form.enabled, {'class' : 'title'}) }}
+            {{ form_errors(form.enabled) }}
+        </p>
 
-            <p>
-                {{ form.enabled|render_label }} <br />
-                {{ form.enabled|render({'class' : 'title'}) }}
-                {{ form.enabled|render_errors }}
-            </p>
+        <p>
+            {{ form_label(form.name) }} <br />
+            {{ form_field(form.name, {'class' : 'title'}) }}
+            {{ form_errors(form.name) }}
+        </p>
 
-            <p>
-                {{ form.name|render_label }} <br />
-                {{ form.name|render({'class' : 'title'}) }}
-                {{ form.name|render_errors }}
-            </p>
+        <p>
+            {{ form_label(form.description) }} <br />
+            {{ form_field(form.description, {'class' : 'title'}) }}
+            {{ form_errors(form.description) }}
+        </p>
 
-            <p>
-                {{ form.description|render_label }} <br />
-                {{ form.description|render({'class' : 'title'}) }}
-                {{ form.description|render_errors }}
-            </p>
+        <p>
+            {{ form_label(form.author_name) }} <br />
+            {{ form_field(form.author_name, {'class' : 'title'}) }}
+            {{ form_errors(form.author_name) }}
+        </p>
 
-            <p>
-                {{ form.author_name|render_label }} <br />
-                {{ form.author_name|render({'class' : 'title'}) }}
-                {{ form.author_name|render_errors }}
-            </p>
+        <p>
+            {{ form_label(form.copyright) }} <br />
+            {{ form_field(form.copyright, {'class' : 'title'}) }}
+            {{ form_errors(form.copyright) }}
+        </p>
 
-            <p>
-                {{ form.copyright|render_label }} <br />
-                {{ form.copyright|render({'class' : 'title'}) }}
-                {{ form.copyright|render_errors }}
-            </p>
-
-            <p>
-                {{ form.cdn_is_flushable|render_label }} <br />
-                {{ form.cdn_is_flushable|render({'class' : 'title'}) }}
-                {{ form.cdn_is_flushable|render_errors }}
-            </p>
+        <p>
+            {{ form_label(form.cdn_is_flushable) }} <br />
+            {{ form_field(form.cdn_is_flushable, {'class' : 'title'}) }}
+            {{ form_errors(form.cdn_is_flushable) }}
+        </p>
 
 
-            <input type="submit" value="{% trans 'btn_update' from 'MediaBundle' %}" />
-        </form>
+        <input type="submit" value="{% trans 'btn_update' from 'MediaBundle' %}" />
+    </form>
 
-    {% endblock %}
 {% endblock %}

@@ -9,23 +9,21 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'MediaBundle:MediaAdmin:provider_create.twig' %}
+{% extends 'Sonata/MediaBundle:MediaAdmin:provider_create.twig' %}
 
 {% block title %}{% trans 'title_add_image' from 'MediaBundle' %}{% endblock %}
 
-{% block content %}
-    {% block form %}
-        <form method="POST" action="{{ configuration.generateUrl('create', params) }}" enctype="multipart/form-data">
-            {{ form|render_hidden }}
+{% block form %}
+    <form method="POST" action="{{ configuration.generateUrl('create', params) }}" enctype="multipart/form-data">
+        {{ form_hidden(form) }}
 
-            <p>
-                {{ form.binary_content|render_label }} <br />
-                {{ form.binary_content|render({'class' : 'title'}) }}
-                {{ form.binary_content|render_errors }}
-            </p>
+        <p>
+            {{ form_label(form.binary_content) }} <br />
+            {{ form_field(form.binary_content, {'class' : 'title'}) }}
+            {{ form_errors(form.binary_content) }}
+        </p>
 
-            <input type="submit" value="{% trans 'btn_create' from 'MediaBundle' %}" />
-        </form>
+        <input type="submit" value="{% trans 'btn_create' from 'MediaBundle' %}" />
+    </form>
 
-    {% endblock %}
 {% endblock %}

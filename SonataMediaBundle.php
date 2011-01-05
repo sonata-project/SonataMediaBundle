@@ -8,11 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\MediaBundle;
+namespace Bundle\Sonata\MediaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MediaBundle extends Bundle
+class SonataMediaBundle extends Bundle
 {
 
     public function boot()

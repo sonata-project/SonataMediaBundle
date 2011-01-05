@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Bundle\MediaBundle\Templating\Helper;
+namespace Bundle\Sonata\MediaBundle\Templating\Helper;
 
 use Symfony\Component\Templating\Helper\Helper;
 
@@ -68,7 +68,7 @@ class MediaHelper extends Helper
             ->getHelperProperties($media, $format, $options, $this->getMediaService()->getSettings());
 
         return $this->getTemplating()->render(
-            sprintf('MediaBundle:Provider:view_%s.twig', $media->getProviderName()),
+            sprintf('Sonata/MediaBundle:Provider:view_%s.twig', $media->getProviderName()),
             array(
                  'media'    => $media,
                  'format'   => $format,
@@ -117,7 +117,7 @@ class MediaHelper extends Helper
          $options['src'] = sprintf('%s%s', $base_media, $provider->generatePublicUrl($media, $format));
 
          return $this->getTemplating()->render(
-            sprintf('MediaBundle:Provider:thumbnail.twig', $media->getProviderName()),
+            sprintf('Sonata/MediaBundle:Provider:thumbnail.twig', $media->getProviderName()),
             array(
                  'media'    => $media,
                  'options'  => $options,
