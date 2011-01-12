@@ -13,7 +13,7 @@ namespace Bundle\Sonata\MediaBundle\Provider;
 
 use Bundle\Sonata\MediaBundle\Entity\BaseMedia as Media;
 
-class YoutubeProvider extends BaseProvider
+class YouTubeProvider extends BaseProvider
 {
 
     public function getReferenceImage(Media $media)

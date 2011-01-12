@@ -11,7 +11,7 @@
 
 namespace Bundle\Sonata\MediaBundle\Tests\Provider;
 
-use Bundle\MediaBundle\Tests\Entity\Media;
+use Bundle\Sonata\MediaBundle\Tests\Entity\Media;
 
 class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +28,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\Youtube('youtube', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\YouTubeProvider('youtube', $em, $settings);
 
 
         $media = new Media;
@@ -46,8 +46,8 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
 
         $this->assertEquals('/fake/path/0011/24', $provider->generatePrivatePath($media));
-        $this->assertEquals('http://here.com/updoads/media/0011/24', $provider->generatePublicPath($media));
-        $this->assertEquals('http://here.com/updoads/media/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
+        $this->assertEquals('/updoads/media/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
 
     }
 
@@ -64,7 +64,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\Youtube('youtube', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\YouTubeProvider('youtube', $em, $settings);
 
 
         $media = new Media;
@@ -108,7 +108,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\Youtube('youtube', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\YouTubeProvider('youtube', $em, $settings);
 
         $provider->addFormat('big', array('width' => 200, 'constraint' => true));
 
@@ -117,7 +117,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023456);
 
         stream_wrapper_unregister('http');
-        stream_wrapper_register('http', 'Bundle\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
+        stream_wrapper_register('http', 'Bundle\\Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
         
         // pre persist the media
         $provider->prePersist($media);

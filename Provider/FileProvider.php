@@ -150,17 +150,14 @@ class FileProvider extends BaseProvider
         $media->setUpdatedAt(new \Datetime());
     }
 
+
     public function generatePublicUrl(Media $media, $format)
     {
 
+        // return an icon
         $path = sprintf('/media_bundle/images/files/%s/file.png',
             $format
         );
-
-        if($this->settings['cdn_enabled']) {
-
-            $path = sprintf('%s%s', $this->settings['cdn_path'], $path);
-        }
 
         return $path;
     }

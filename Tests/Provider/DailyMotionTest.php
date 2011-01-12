@@ -11,7 +11,7 @@
 
 namespace Bundle\Sonata\MediaBundle\Tests\Provider;
 
-use Bundle\MediaBundle\Tests\Entity\Media;
+use Bundle\Sonata\MediaBundle\Tests\Entity\Media;
 
 class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +28,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\DailyMotion('dailymotion', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\DailyMotionProvider('dailymotion', $em, $settings);
 
 
         $media = new Media;
@@ -46,8 +46,8 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $provider->getReferenceImage($media));
 
         $this->assertEquals('/fake/path/0011/24', $provider->generatePrivatePath($media));
-        $this->assertEquals('http://here.com/updoads/media/0011/24', $provider->generatePublicPath($media));
-        $this->assertEquals('http://here.com/updoads/media/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
+        $this->assertEquals('/updoads/media/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
 
     }
 
@@ -64,7 +64,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\DailyMotion('dailymotion', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\DailyMotionProvider('dailymotion', $em, $settings);
 
 
         $media = new Media;
@@ -109,7 +109,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\DailyMotion('dailymotion', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\DailyMotionProvider('dailymotion', $em, $settings);
 
         $provider->addFormat('big', array('width' => 200, 'constraint' => true));
 
@@ -118,7 +118,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023456);
 
         stream_wrapper_unregister('http');
-        stream_wrapper_register('http', 'Bundle\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
+        stream_wrapper_register('http', 'Bundle\\Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
 
         // pre persist the media
         $provider->prePersist($media);

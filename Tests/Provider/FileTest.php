@@ -11,7 +11,7 @@
 
 namespace Bundle\Sonata\MediaBundle\Tests\Provider;
 
-use Bundle\MediaBundle\Tests\Entity\Media;
+use Bundle\Sonata\MediaBundle\Tests\Entity\Media;
 
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +28,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\File('file', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\FileProvider('file', $em, $settings);
 
 
         $media = new Media;
@@ -44,8 +44,10 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/fake/path/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
 
         $this->assertEquals('/fake/path/0011/24', $provider->generatePrivatePath($media));
-        $this->assertEquals('http://here.com/updoads/media/0011/24', $provider->generatePublicPath($media));
-        $this->assertEquals('http://here.com/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
+
+        // default icon image
+        $this->assertEquals('/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
 
     }
 
@@ -61,7 +63,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\File('file', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\FileProvider('file', $em, $settings);
 
         $media = new Media;
         $media->setName('test.png');
@@ -81,7 +83,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\MediaBundle\Provider\File('file', $em, $settings);
+        $provider = new \Bundle\Sonata\MediaBundle\Provider\FileProvider('file', $em, $settings);
 
         $provider->addFormat('big', array('width' => 200, 'constraint' => true));
 
