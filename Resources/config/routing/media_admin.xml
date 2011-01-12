@@ -20,11 +20,11 @@
         <default key="_controller">Sonata\MediaBundle:MediaAdmin:update</default>
     </route>
 
-    <route id="sonata_media_admin_edit" pattern="/:id/edit">
+    <route id="sonata_media_admin_edit" pattern="/{id}/edit">
         <default key="_controller">Sonata\MediaBundle:MediaAdmin:edit</default>
     </route>
 
-    <route id="sonata_media_admin_delete" pattern="/:id/delete">
+    <route id="sonata_media_admin_delete" pattern="/{id}/delete">
         <default key="_controller">Sonata\MediaBundle:MediaAdmin:delete</default>
     </route>
 </routes>
