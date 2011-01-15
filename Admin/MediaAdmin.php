@@ -11,20 +11,20 @@
 
 namespace Bundle\Sonata\MediaBundle\Admin;
 
-use Bundle\Sonata\BaseApplicationBundle\Admin\Admin;
+use Bundle\Sonata\BaseApplicationBundle\Admin\EntityAdmin as Admin;
 
 class MediaAdmin extends Admin
 {
 
     protected $class = 'Application\Sonata\MediaBundle\Entity\Media';
 
-    protected $list_fields = array(
+    protected $listFields = array(
         'image'  => array('template' => 'Sonata/MediaBundle:MediaAdmin:list_image.twig'),
         'custom' => array('template' => 'Sonata/MediaBundle:MediaAdmin:list_custom.twig'),
         'enabled',
     );
 
-    protected $form_fields = array(
+    protected $formFields = array(
         'enabled',
         'name',
         'description',
@@ -33,15 +33,13 @@ class MediaAdmin extends Admin
         'cdn_is_flushable'
     );
 
-    protected $filter_fields = array(
+    protected $filterFields = array(
         'name',
         'provider_reference',
         'enabled',
     );
 
-    protected $base_route = 'sonata_media_admin';
-
     // don't know yet how to get this value
-    protected $base_controller_name = 'MediaBundle:MediaAdmin';
+    protected $baseControllerName = 'Sonata\MediaBundle:MediaAdmin';
 
 }

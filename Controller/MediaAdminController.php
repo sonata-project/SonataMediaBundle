@@ -19,30 +19,35 @@ use Symfony\Component\Form\Form;
 class MediaAdminController extends Controller
 {
 
+    public function getParameters()
+    {
+        $provider_name = $this->get('request')->get('provider');
+        $context       = $this->get('request')->get('context');
+
+        return array(
+            'provider' => $provider_name,
+            'context'  => $context
+        );
+    }
+    
     public function createAction($form = null)
     {
         $this->get('session')->start();
 
-        $provider_name = $this->get('request')->get('provider');
-        $context       = $this->get('request')->get('context');
-
-        $params = array(
-            'provider' => $provider_name,
-            'context'  => $context
-        );
+        $params = $this->getParameters();
         
-        if(!$provider_name) {
+        if(!$params['provider']) {
             return $this->render('Sonata/MediaBundle:MediaAdmin:select_provider.twig', array(
                 'providers'         => $this->get('media.provider')->getProviders(),
-                'configuration'     => $this->configuration,
+                'configuration'     => $this->admin,
                 'params'            => $params
             ));
         }
 
-        $provider = $this->get('media.provider')->getProvider($provider_name);
+        $provider = $this->get('media.provider')->getProvider($params['provider']);
 
         $media = new \Application\Sonata\MediaBundle\Entity\Media;
-        $media->setProviderName($provider_name);
+        $media->setProviderName($params['provider']);
 
         if($form instanceof Form) {
             $media = $form->getData();
@@ -56,19 +61,19 @@ class MediaAdminController extends Controller
             
             if($form->isValid()) {
 
-                if($context) {
-                    $media->setContext($context);
+                if($params['context']) {
+                    $media->setContext($params['context']);
                 }
                 $this->get('media.provider')->prePersist($media);
-                $this->configuration->getEntityManager()->persist($media);
-                $this->configuration->getEntityManager()->flush();
+                $this->admin->getEntityManager()->persist($media);
+                $this->admin->getEntityManager()->flush();
                 $this->get('media.provider')->postPersist($media);
 
-                return $this->redirect($this->configuration->generateUrl('edit', array('id' => $media->getId())));
+                return $this->redirect($this->admin->generateUrl('edit', array('id' => $media->getId())));
             }
         }
 
-        $template = sprintf('Sonata/MediaBundle:MediaAdmin:provider_create_%s.twig', $provider_name);
+        $template = sprintf('Sonata/MediaBundle:MediaAdmin:provider_create_%s.twig', $params['provider']);
 
 
         
@@ -76,7 +81,7 @@ class MediaAdminController extends Controller
             'form'   => $form,
             'media'  => $media,
             'params' => $params,
-            'configuration'     => $this->configuration,
+            'admin'  => $this->admin,
         ));
     }
 
@@ -89,7 +94,7 @@ class MediaAdminController extends Controller
             $media = $id->getData();
             $form   = $id;
         } else {
-            $media = $this->configuration->getObject($this->get('request')->get('id'));
+            $media = $this->admin->getObject($this->get('request')->get('id'));
 
             if(!$media) {
                 throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
@@ -106,7 +111,8 @@ class MediaAdminController extends Controller
         return $this->render($template, array(
             'form'   => $form,
             'media'  => $media,
-            'configuration'     => $this->configuration,
+            'admin'  => $this->admin,
+            'params' => $this->getParameters()
         ));
     }
 
@@ -119,7 +125,7 @@ class MediaAdminController extends Controller
            throw new \RuntimeException('invalid request type, POST expected');
         }
 
-        $media = $this->configuration->getObject($this->get('request')->get('id'));
+        $media = $this->admin->getObject($this->get('request')->get('id'));
 
         if(!$media) {
             throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $this->get('request')->get('id')));
@@ -135,11 +141,14 @@ class MediaAdminController extends Controller
         if($form->isValid()) {
 
             $this->get('media.provider')->preUpdate($media);
-            $this->configuration->getEntityManager()->persist($form->getData());
-            $this->configuration->getEntityManager()->flush();
+            $this->admin->getEntityManager()->persist($form->getData());
+            $this->admin->getEntityManager()->flush();
             $this->get('media.provider')->postUpdate($media);
 
-            return $this->redirect($this->configuration->generateUrl('edit', array('id' => $media->getId())));
+            return $this->redirect($this->admin->generateUrl('edit', array(
+                'id' => $media->getId(),
+                'params' => $this->getParameters()
+            )));
         }
 
         return $this->forward(sprintf('%s:edit', $this->getBaseControllerName()), array(
