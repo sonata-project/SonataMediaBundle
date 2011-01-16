@@ -9,18 +9,18 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'Sonata/MediaBundle:MediaAdmin:provider_edit.twig' %}
+{% extends 'SonataMediaBundle:MediaAdmin:provider_edit.twig.html' %}
 
-{% block title %}{% trans 'title_edit_dailymotion' from 'MediaBundle' %}{% endblock %}
+{% block title %}{% trans 'title_edit_file' from 'MediaBundle' %}{% endblock %}
 
 {% block preview %}{% media media, 'admin' %}{% endblock %}
 
 {% block form %}
-    <form method="POST" action="{{ admin.generateUrl('update', {'id' : media.id }) }}">
+    <form method="POST" action="{{ admin.generateUrl('update', {'id' : media.id }) }}" enctype="multipart/form-data">
         {{ form_hidden(form) }}
 
         <p>
-            {{ form_label(form.binary_content) }} <br />
+            {{ form_label(form.binary_content) }}<br />
             {{ form_field(form.binary_content, {'class' : 'title'}) }}
             {{ form_errors(form.binary_content) }}
         </p>
@@ -60,6 +60,7 @@ file that was distributed with this source code.
             {{ form_field(form.cdn_is_flushable, {'class' : 'title'}) }}
             {{ form_errors(form.cdn_is_flushable) }}
         </p>
+
 
         <input type="submit" value="{% trans 'btn_update' from 'MediaBundle' %}" />
     </form>

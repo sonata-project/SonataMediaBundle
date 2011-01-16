@@ -26,7 +26,7 @@ class MediaController extends Controller
             throw new NotFoundHttpException('unable to find the media with the id');
         }
 
-        return $this->render('MediaBundle:Media:view.twig', array(
+        return $this->render('SonataMediaBundle:Media:view.twig.html', array(
             'media'     => $media,
             'formats'   => $this->get('media.provider')->getProvider($media->getProviderName())->getFormats(),
             'format'    => $format

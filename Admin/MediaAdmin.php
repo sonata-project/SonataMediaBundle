@@ -19,8 +19,8 @@ class MediaAdmin extends Admin
     protected $class = 'Application\Sonata\MediaBundle\Entity\Media';
 
     protected $listFields = array(
-        'image'  => array('template' => 'Sonata/MediaBundle:MediaAdmin:list_image.twig'),
-        'custom' => array('template' => 'Sonata/MediaBundle:MediaAdmin:list_custom.twig'),
+        'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.twig.html'),
+        'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.twig.html'),
         'enabled',
     );
 
@@ -40,6 +40,6 @@ class MediaAdmin extends Admin
     );
 
     // don't know yet how to get this value
-    protected $baseControllerName = 'Sonata\MediaBundle:MediaAdmin';
+    protected $baseControllerName = 'SonataMediaBundle:MediaAdmin';
 
 }

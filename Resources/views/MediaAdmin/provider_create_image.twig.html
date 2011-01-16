@@ -9,12 +9,12 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'Sonata/MediaBundle:MediaAdmin:provider_create.twig' %}
+{% extends 'SonataMediaBundle:MediaAdmin:provider_create.twig.html' %}
 
-{% block title %}{% trans 'title_add_youtube' from 'MediaBundle' %}{% endblock %}
+{% block title %}{% trans 'title_add_image' from 'MediaBundle' %}{% endblock %}
 
 {% block form %}
-    <form method="POST" action="{{ admin.generateUrl('create', params) }}">
+    <form method="POST" action="{{ admin.generateUrl('create', params) }}" enctype="multipart/form-data">
         {{ form_hidden(form) }}
 
         <p>

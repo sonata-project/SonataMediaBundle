@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
     <route id="sonata_media_view" pattern="/view/{id}/{format}">
-        <default key="_controller">Sonata\MediaBundle:Media:view</default>
+        <default key="_controller">SonataMediaBundle:Media:view</default>
         <default key="format">reference</default>
     </route>
 
