@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Tests\Provider;
+namespace Sonata\MediaBundle\Tests\Provider;
 
-use Bundle\Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Tests\Entity\Media;
 
 class ImageProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +28,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
 
         
         $media = new Media;
@@ -61,7 +61,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
 
         $media = new Media;
         $media->setName('test.png');
@@ -107,7 +107,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         );
 
 
-        $provider = new \Bundle\Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
 
         $provider->addFormat('big', array('width' => 200, 'constraint' => true));
         

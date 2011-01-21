@@ -1,8 +1,8 @@
 <?php
 
-namespace Bundle\Sonata\MediaBundle\Twig\TokenParser;
+namespace Sonata\MediaBundle\Twig\TokenParser;
 
-use Bundle\Sonata\MediaBundle\Twig\Node\MediaNode;
+use Sonata\MediaBundle\Twig\Node\MediaNode;
 
 class MediaTokenParser extends \Twig_TokenParser
 {

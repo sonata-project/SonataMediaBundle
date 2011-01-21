@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Provider;
+namespace Sonata\MediaBundle\Provider;
 
-use Bundle\Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Entity\BaseMedia as Media;
 
 abstract class BaseProvider
 {

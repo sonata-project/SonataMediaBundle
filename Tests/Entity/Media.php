@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Tests\Entity;
+namespace Sonata\MediaBundle\Tests\Entity;
 
-class Media extends \Bundle\Sonata\MediaBundle\Entity\BaseMedia {
+class Media extends \Sonata\MediaBundle\Entity\BaseMedia {
 
     protected $id;
 

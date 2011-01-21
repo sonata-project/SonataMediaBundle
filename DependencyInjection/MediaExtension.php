@@ -9,7 +9,7 @@
  */
 
 
-namespace Bundle\Sonata\MediaBundle\DependencyInjection;
+namespace Sonata\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Resource\FileResource;
@@ -71,7 +71,7 @@ class MediaExtension extends Extension
 
         // register template helper
         $definition = new Definition(
-            'Bundle\Sonata\MediaBundle\Templating\Helper\MediaHelper',
+            'Sonata\MediaBundle\Templating\Helper\MediaHelper',
             array(
                  new Reference('media.provider'),
                  new Reference('templating')
@@ -84,7 +84,7 @@ class MediaExtension extends Extension
 
         // register the twig extension
         $container
-            ->register('twig.extension.media', 'Bundle\Sonata\MediaBundle\Twig\Extension\MediaExtension')
+            ->register('twig.extension.media', 'Sonata\MediaBundle\Twig\Extension\MediaExtension')
             ->addTag('twig.extension');
 
     }

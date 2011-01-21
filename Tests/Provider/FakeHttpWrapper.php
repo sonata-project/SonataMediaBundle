@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Tests\Provider;
+namespace Sonata\MediaBundle\Tests\Provider;
 
 class FakeHttpWrapper  {
 

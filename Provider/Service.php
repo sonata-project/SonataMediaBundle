@@ -10,9 +10,9 @@
  */
 
 
-namespace Bundle\Sonata\MediaBundle\Provider;
+namespace Sonata\MediaBundle\Provider;
 
-use Bundle\Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Entity\BaseMedia as Media;
 
 /**
  *

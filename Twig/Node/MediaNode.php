@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\Sonata\MediaBundle\Twig\Node;
+namespace Sonata\MediaBundle\Twig\Node;
 
 class MediaNode extends \Twig_Node
 {

@@ -4,7 +4,7 @@
 
 * Add MediaBundle to your src/Bundle dir
 
-        git submodule add git@github.com:sonata-project/MediaBundle.git src/Bundle/Sonata/MediaBundle
+        git submodule add git@github.com:sonata-project/MediaBundle.git src/Sonata/MediaBundle
 
 * add the Imagine bundle (image management) and follow ImagineBundle README
 
@@ -17,7 +17,7 @@
         {
             return array(
                 // ...
-                new Bundle\Sonata\MediaBundle\MediaBundle(),
+                new Sonata\MediaBundle\MediaBundle(),
                 // ...
             );
         }
@@ -27,7 +27,7 @@
 
 
         media.config:
-            class: Bundle\Sonata\MediaBundle\Provider\Service
+            class: Sonata\MediaBundle\Provider\Service
 
             settings:
                 cdn_enabled: false
@@ -38,19 +38,19 @@
 
             providers:
                 image:
-                    class: Bundle\Sonata\MediaBundle\Provider\ImageProvider
+                    class: Sonata\MediaBundle\Provider\ImageProvider
                     formats:
                         small: { width: 100 }
                         big:   { width: 500 }
 
                 youtube:
-                    class: Bundle\Sonata\MediaBundle\Provider\YouTubeProvider
+                    class: Sonata\MediaBundle\Provider\YouTubeProvider
                     formats:
                         small: { width: 100 }
                         big:   { width: 500 }
 
                 dailymotion:
-                    class: Bundle\Sonata\MediaBundle\Provider\DailyMotionProvider
+                    class: Sonata\MediaBundle\Provider\DailyMotionProvider
                     formats:
                         small: { width: 100 }
                         big:   { width: 500 }

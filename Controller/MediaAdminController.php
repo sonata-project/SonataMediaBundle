@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Controller;
+namespace Sonata\MediaBundle\Controller;
 
-use Bundle\Sonata\BaseApplicationBundle\Controller\CRUDController as Controller;
+use Sonata\BaseApplicationBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Symfony\Component\Form\Form;
@@ -32,6 +32,7 @@ class MediaAdminController extends Controller
     
     public function createAction($form = null)
     {
+
         $this->get('session')->start();
 
         $params = $this->getParameters();

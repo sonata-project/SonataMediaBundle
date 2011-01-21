@@ -5,7 +5,7 @@
       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Bundle\Sonata\MediaBundle\Entity\BaseMedia" >
+    <mapped-superclass name="Sonata\MediaBundle\Entity\BaseMedia" >
 
         <field name="name"                column="name"           type="string"   nullable="false" length="255"/>
         <field name="description"         column="description"    type="text"     nullable="true" length="1024"/>

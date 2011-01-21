@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Entity;
+namespace Sonata\MediaBundle\Entity;
 
 /**
  * Bundle\MediaBundle\Entity\EntityMedia

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Admin;
+namespace Sonata\MediaBundle\Admin;
 
-use Bundle\Sonata\BaseApplicationBundle\Admin\EntityAdmin as Admin;
+use Sonata\BaseApplicationBundle\Admin\EntityAdmin as Admin;
 
 class MediaAdmin extends Admin
 {

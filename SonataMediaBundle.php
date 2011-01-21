@@ -8,13 +8,29 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle;
+namespace Sonata\MediaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SonataMediaBundle extends Bundle
 {
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getNamespace()
+    {
+        return __NAMESPACE__;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath()
+    {
+        return strtr(__DIR__, '\\', '/');
+    }
+    
     public function boot()
     {
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bundle\Sonata\MediaBundle\Twig\TokenParser;
+namespace Sonata\MediaBundle\Twig\TokenParser;
 
-use Bundle\Sonata\MediaBundle\Twig\Node\ThumbnailNode;
+use Sonata\MediaBundle\Twig\Node\ThumbnailNode;
 
 class ThumbnailTokenParser extends \Twig_TokenParser
 {

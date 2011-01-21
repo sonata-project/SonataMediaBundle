@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Bundle\Sonata\MediaBundle\Twig\Extension;
+namespace Sonata\MediaBundle\Twig\Extension;
 
-use Bundle\Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
-use Bundle\Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
+use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
+use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 
 class MediaExtension extends \Twig_Extension
 {
