@@ -35,39 +35,40 @@ class MediaExtension extends Extension
      * @param array            $config    An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function configLoad($config, ContainerBuilder $container)
+    public function configLoad($configs, ContainerBuilder $container)
     {
+        foreach($configs as $config) {
+            $definition = new Definition($config['class']);
+            $definition->addMethodCall('setSettings', array(isset($config['settings']) ? $config['settings'] : array()));
 
-        $definition = new Definition($config['class']);
-        $definition->addMethodCall('setSettings', array(isset($config['settings']) ? $config['settings'] : array()));
-        
-        foreach($config['providers'] as $name => $provider) {
+            foreach($config['providers'] as $name => $provider) {
 
-            $provider_name = sprintf('media.provider.%s', $name);
+                $provider_name = sprintf('media.provider.%s', $name);
 
-            $config['settings']['quality']      = isset($config['settings']['quality']) ? $config['settings']['quality'] : 80;
-            $config['settings']['format']       = isset($config['settings']['format'])  ? $config['settings']['format'] : 'jpg';
-            $config['settings']['height']       = isset($config['settings']['height'])  ? $config['settings']['height'] : 'false';
-            $config['settings']['constraint']   = isset($config['settings']['constraint'])  ? $config['settings']['constraint'] : true;
+                $config['settings']['quality']      = isset($config['settings']['quality']) ? $config['settings']['quality'] : 80;
+                $config['settings']['format']       = isset($config['settings']['format'])  ? $config['settings']['format'] : 'jpg';
+                $config['settings']['height']       = isset($config['settings']['height'])  ? $config['settings']['height'] : 'false';
+                $config['settings']['constraint']   = isset($config['settings']['constraint'])  ? $config['settings']['constraint'] : true;
 
-            $provider['formats']                = is_array($provider['formats']) ? $provider['formats']  : array();
-            
-            $provider_definition = new Definition($provider['class'], array(
-                $name,
-                new Reference($config['em']),
-                $config['settings'],
-            ));
+                $provider['formats']                = is_array($provider['formats']) ? $provider['formats']  : array();
 
-            foreach($provider['formats'] as $format_name => $format_definition) {
-                $provider_definition->addMethodCall('addFormat', array($format_name, $format_definition));
+                $provider_definition = new Definition($provider['class'], array(
+                    $name,
+                    new Reference($config['em']),
+                    $config['settings'],
+                ));
+
+                foreach($provider['formats'] as $format_name => $format_definition) {
+                    $provider_definition->addMethodCall('addFormat', array($format_name, $format_definition));
+                }
+
+                $container->setDefinition($provider_name, $provider_definition);
+
+                $definition->addMethodCall('addProvider', array($name, new Reference($provider_name)));
             }
 
-            $container->setDefinition($provider_name, $provider_definition);
-
-            $definition->addMethodCall('addProvider', array($name, new Reference($provider_name)));
+            $container->setDefinition('media.provider', $definition);
         }
-
-        $container->setDefinition('media.provider', $definition);
 
         // register template helper
         $definition = new Definition(
@@ -79,7 +80,7 @@ class MediaExtension extends Extension
         );
         $definition->addTag('templating.helper', array('alias' => 'media'));
         $definition->addTag('templating.helper', array('alias' => 'thumbnail'));
-        
+
         $container->setDefinition('templating.helper.media', $definition);
 
         // register the twig extension
