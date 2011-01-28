@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-class MediaBundle_AllTests
+class SonataMediaBundle_AllTests
 {
 
     public static function suite()

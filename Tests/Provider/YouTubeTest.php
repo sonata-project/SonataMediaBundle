@@ -117,7 +117,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023456);
 
         stream_wrapper_unregister('http');
-        stream_wrapper_register('http', 'Bundle\\Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
+        stream_wrapper_register('http', 'Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
         
         // pre persist the media
         $provider->prePersist($media);
