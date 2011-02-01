@@ -194,13 +194,13 @@ class DailyMotionProvider extends BaseProvider
             $this->getReferenceImage($media),
         );
 
-        foreach($this->formats as $format => $definition) {
+        foreach ($this->formats as $format => $definition) {
             $files[] = $this->generatePrivateUrl($media, $format);
         }
 
 
-        foreach($files as $file) {
-            if(file_exists($file)) {
+        foreach ($files as $file) {
+            if (file_exists($file)) {
                 unlink($file);
             }
         }

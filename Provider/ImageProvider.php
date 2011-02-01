@@ -28,7 +28,7 @@ class ImageProvider extends FileProvider
         $base_media = $settings['cdn_enabled'] ? $settings['cdn_path'] : '';
 
          // the media is flushable, so we are working with a recent version not yet handled by the cdn
-        if($media->getCdnIsFlushable()) {
+        if ($media->getCdnIsFlushable()) {
             $base_media = '';
         }
 
@@ -82,13 +82,13 @@ class ImageProvider extends FileProvider
             $this->getReferenceImage($media),
         );
 
-        foreach($this->formats as $format => $definition) {
+        foreach ($this->formats as $format => $definition) {
             $files[] = $this->generatePrivateUrl($media, $format);
         }
 
 
-        foreach($files as $file) {
-            if(file_exists($file)) {
+        foreach ($files as $file) {
+            if (file_exists($file)) {
                 unlink($file);
             }
         }

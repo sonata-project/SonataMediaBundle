@@ -32,7 +32,7 @@ class Service
     public function getProvider($name)
     {
 
-        if(!isset($this->providers[$name])) {
+        if (!isset($this->providers[$name])) {
             throw new \RuntimeException(sprintf('unable to retrieve the provider named : %s', $name));
         }
 
@@ -103,7 +103,7 @@ class Service
     public function getProviderList()
     {
         $choices = array();
-        foreach(array_keys($this->providers) as $name) {
+        foreach (array_keys($this->providers) as $name) {
             $choices[$name] = $name;
         }
 

@@ -52,7 +52,7 @@ abstract class BaseProvider
     public function generateThumbnails(Media $media)
     {
 
-        if(!$this->requireThumbnails()) {
+        if (!$this->requireThumbnails()) {
             return;
         }
 

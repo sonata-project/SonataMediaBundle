@@ -162,7 +162,7 @@ class BaseMedia
     {
         $metadata = $this->getProviderMetadata();
 
-        if(!is_array($metadata)) {
+        if (!is_array($metadata)) {
             $metadata = array();
         }
 

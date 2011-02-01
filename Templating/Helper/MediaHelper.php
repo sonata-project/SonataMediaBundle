@@ -58,7 +58,7 @@ class MediaHelper extends Helper
     public function media($media, $format, $options = array())
     {
 
-        if(!$media) {
+        if (!$media) {
             return '';
         }
         
@@ -88,7 +88,7 @@ class MediaHelper extends Helper
     public function thumbnail($media, $format, $options = array())
     {
 
-         if(!$media) {
+         if (!$media) {
              return '';
          }
 
@@ -97,7 +97,7 @@ class MediaHelper extends Helper
          $base_media = $settings['cdn_enabled'] ? $settings['cdn_path'] : '';
 
          // the media is flushable, so we are working with a recent version not yet handled by the cdn
-         if($media->getCdnIsFlushable()) {
+         if ($media->getCdnIsFlushable()) {
              $base_media = '';
          }
 

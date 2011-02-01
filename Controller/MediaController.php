@@ -22,7 +22,7 @@ class MediaController extends Controller
 
         $media = $this->get('doctrine.orm.default_entity_manager')->find('Application\Sonata\MediaBundle\Entity\Media', $id);
 
-        if(!$media) {
+        if (!$media) {
             throw new NotFoundHttpException('unable to find the media with the id');
         }
 

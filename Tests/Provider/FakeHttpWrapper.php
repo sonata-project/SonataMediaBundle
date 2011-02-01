@@ -87,7 +87,7 @@ class FakeHttpWrapper  {
 
         $file = __DIR__.'/../fixtures/'.self::$ref[$path];
 
-        if(!is_file($file)) {
+        if (!is_file($file)) {
             var_dump('unable to retrieve the file : '.$file);
         }
         

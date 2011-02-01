@@ -37,11 +37,11 @@ class MediaExtension extends Extension
      */
     public function configLoad($configs, ContainerBuilder $container)
     {
-        foreach($configs as $config) {
+        foreach ($configs as $config) {
             $definition = new Definition($config['class']);
             $definition->addMethodCall('setSettings', array(isset($config['settings']) ? $config['settings'] : array()));
 
-            foreach($config['providers'] as $name => $provider) {
+            foreach ($config['providers'] as $name => $provider) {
 
                 $provider_name = sprintf('media.provider.%s', $name);
 
@@ -58,7 +58,7 @@ class MediaExtension extends Extension
                     $config['settings'],
                 ));
 
-                foreach($provider['formats'] as $format_name => $format_definition) {
+                foreach ($provider['formats'] as $format_name => $format_definition) {
                     $provider_definition->addMethodCall('addFormat', array($format_name, $format_definition));
                 }
 

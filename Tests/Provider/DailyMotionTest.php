@@ -88,7 +88,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
         // clean previous test
-        if(is_file(sys_get_temp_dir().'/media_bundle_test/0011/24/thumb_1023458_big.jpg')) {
+        if (is_file(sys_get_temp_dir().'/media_bundle_test/0011/24/thumb_1023458_big.jpg')) {
 
             unlink(sys_get_temp_dir().'/media_bundle_test/0011/24/thumb_1023458_big.jpg');
         }

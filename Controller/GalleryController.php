@@ -36,7 +36,7 @@ class GalleryController extends Controller
 
         $gallery = $this->get('doctrine.orm.default_entity_manager')->find('Application\Sonata\MediaBundle\Entity\Gallery', $id);
 
-        if(!$gallery) {
+        if (!$gallery) {
             throw new NotFoundHttpException('unable to find the gallery with the id');
         }
 

@@ -68,7 +68,7 @@ class FileProvider extends BaseProvider
     public function postPersist(Media $media)
     {
 
-        if(!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent()) {
             return;
         }
 
@@ -84,7 +84,7 @@ class FileProvider extends BaseProvider
 
     public function postUpdate(Media $media)
     {
-        if(!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent()) {
             return;
         }
 
@@ -102,7 +102,7 @@ class FileProvider extends BaseProvider
 
     public function fixBinaryContent($media)
     {
-        if(!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent()) {
 
             return;
         }
@@ -128,18 +128,18 @@ class FileProvider extends BaseProvider
         $media->setProviderName($this->name);
         $media->setProviderStatus(Media::STATUS_OK);
 
-        if(!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent()) {
 
             return;
         }
 
         // this is the original name
-        if(!$media->getName()) {
+        if (!$media->getName()) {
             $media->setName($media->getBinaryContent()->getName());
         }
 
         // this is the name used to store the file
-        if(!$media->getProviderReference()) {
+        if (!$media->getProviderReference()) {
            $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
         }
 
@@ -183,8 +183,8 @@ class FileProvider extends BaseProvider
             $this->getReferenceImage($media),
         );
 
-        foreach($files as $file) {
-            if(file_exists($file)) {
+        foreach ($files as $file) {
+            if (file_exists($file)) {
                 unlink($file);
             }
         }
@@ -195,13 +195,13 @@ class FileProvider extends BaseProvider
 
         $this->fixBinaryContent($media);
         
-        if(!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent()) {
 
             return;
         }
                 
         // this is the name used to store the file
-        if(!$media->getProviderReference()) {
+        if (!$media->getProviderReference()) {
            $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
         }
 
