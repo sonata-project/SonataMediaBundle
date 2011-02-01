@@ -101,7 +101,6 @@ class MediaHelper extends Helper
              $base_media = '';
          }
 
-
          $provider = $this
             ->getMediaService()
             ->getProvider($media->getProviderName());

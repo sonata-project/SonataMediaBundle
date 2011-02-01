@@ -3,13 +3,14 @@
     <mapped-superclass name="Sonata\MediaBundle\Entity\BaseEntityMedia">
 
         <field name="classname" type="string"   column="classname"  length="255"/>
-        <field name="object_id" type="integer"  column="object_id"  />
+        <field name="objectId"
+               type="integer"  column="object_id"  />
         <field name="enabled"   type="boolean"  column="enabled"  default="false"  />
-        <field name="is_main"   type="boolean"  column="is_main"  default="false"  />
+        <field name="isMain"    type="boolean"  column="is_main"  default="false"  />
         <field name="position"  type="integer"  column="position" default="0" />
 
-        <field name="updated_at"          column="updated_at"     type="datetime" />
-        <field name="created_at"          column="created_at"     type="datetime" />
+        <field name="updatedAt"          column="updated_at"     type="datetime" />
+        <field name="createdAt"          column="created_at"     type="datetime" />
 
     </mapped-superclass>
 </doctrine-mapping>

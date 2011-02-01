@@ -31,27 +31,35 @@ class BaseGallery
     {
         return $this->id;
     }
-
     
     /**
      * @var string $name
      */
-    private $name;
+    protected $name;
 
     /**
      * @var boolean $enabled
      */
-    private $enabled;
+    protected $enabled;
+
+    /**
+     * @var boolean $enabled
+     */
+    protected $code;
 
     /**
      * @var datetime $updated_at
      */
-    private $updated_at;
+    protected $updatedAt;
 
     /**
      * @var datetime $created_at
      */
-    private $created_at;
+    protected $createdAt;
+
+    protected $medias;
+
+    protected $defaultFormat;
 
     /**
      * Set name
@@ -100,7 +108,7 @@ class BaseGallery
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -110,7 +118,7 @@ class BaseGallery
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
@@ -120,7 +128,7 @@ class BaseGallery
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -130,6 +138,26 @@ class BaseGallery
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
+    }
+
+    public function setMedias($medias)
+    {
+        $this->medias = $medias;
+    }
+
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
+    public function setDefaultFormat($defaultFormat)
+    {
+        $this->defaultFormat = $defaultFormat;
+    }
+
+    public function getDefaultFormat()
+    {
+        return $this->defaultFormat;
     }
 }

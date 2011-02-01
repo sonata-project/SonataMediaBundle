@@ -7,31 +7,31 @@
 
     <mapped-superclass name="Sonata\MediaBundle\Entity\BaseMedia" >
 
-        <field name="name"                column="name"           type="string"   nullable="false" length="255"/>
-        <field name="description"         column="description"    type="text"     nullable="true" length="1024"/>
-        <field name="enabled"             column="enabled"        type="boolean"  nullable="false" default="false" />
+        <field name="name"              column="name"           type="string"   nullable="false" length="255"/>
+        <field name="description"       column="description"    type="text"     nullable="true" length="1024"/>
+        <field name="enabled"           column="enabled"        type="boolean"  nullable="false" default="false" />
 
-        <field name="provider_name"       column="provider_name"            type="string"   nullable="false" length="255" default="image" />
-        <field name="provider_status"     column="provider_status"          type="integer"  nullable="false" />
-        <field name="provider_reference"  column="provider_reference"       type="string"   nullable="false" length="255"/>
-        <field name="provider_metadata"   column="provider_metadata"        type="array"    nullable="true" />
+        <field name="providerName"      column="provider_name"            type="string"   nullable="false" length="255" default="image" />
+        <field name="providerStatus"    column="provider_status"          type="integer"  nullable="false" />
+        <field name="providerReference" column="provider_reference"       type="string"   nullable="false" length="255"/>
+        <field name="providerMetadata"  column="provider_metadata"        type="array"    nullable="true" />
 
-        <field name="width"               column="width"             type="integer"  nullable="true" />
-        <field name="height"              column="height"            type="integer"  nullable="true" />
-        <field name="length"              column="length"            type="decimal"  nullable="true" />
-        <field name="content_type"        column="content_type"      type="string"   nullable="true" length="64" />
-        <field name="size"                column="size"              type="integer"  nullable="true" />
+        <field name="width"             column="width"             type="integer"  nullable="true" />
+        <field name="height"            column="height"            type="integer"  nullable="true" />
+        <field name="length"            column="length"            type="decimal"  nullable="true" />
+        <field name="contentType"       column="content_type"      type="string"   nullable="true" length="64" />
+        <field name="size"              column="size"              type="integer"  nullable="true" />
 
-        <field name="copyright"           column="copyright"         type="string"  nullable="true" length="255"/>
-        <field name="author_name"         column="author_name"       type="string"  nullable="true" length="255"/>
+        <field name="copyright"         column="copyright"         type="string"  nullable="true" length="255"/>
+        <field name="authorName"        column="author_name"       type="string"  nullable="true" length="255"/>
 
-        <field name="context"             column="context"           type="string"  nullable="true" length="16"/>
+        <field name="context"           column="context"           type="string"  nullable="true" length="16"/>
 
-        <field name="cdn_is_flushable"    column="cdn_is_flushable"  type="boolean"  nullable="true" default="false" />
-        <field name="cdn_flush_at"        column="cdn_flush_at"      type="datetime" />
+        <field name="cdnIsFlushable"    column="cdn_is_flushable"  type="boolean"  nullable="true" default="false" />
+        <field name="cdnFlushAt"        column="cdn_flush_at"      type="datetime" nullable="true"/>
 
-        <field name="updated_at"          column="updated_at"     type="datetime" />
-        <field name="created_at"          column="created_at"     type="datetime" />
+        <field name="updatedAt"         column="updated_at"     type="datetime" />
+        <field name="createdAt"         column="created_at"     type="datetime" />
         
     </mapped-superclass>
 </doctrine-mapping>

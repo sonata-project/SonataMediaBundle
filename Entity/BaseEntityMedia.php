@@ -39,9 +39,9 @@ class BaseEntityMedia
     private $classname;
 
     /**
-     * @var integer $object_id
+     * @var integer $objectId
      */
-    private $object_id;
+    private $objectId;
 
     /**
      * @var boolean $enabled
@@ -49,9 +49,9 @@ class BaseEntityMedia
     private $enabled;
 
     /**
-     * @var boolean $is_main
+     * @var boolean $isMain
      */
-    private $is_main;
+    private $isMain;
 
     /**
      * @var integer $position
@@ -59,14 +59,14 @@ class BaseEntityMedia
     private $position;
 
     /**
-     * @var datetime $updated_at
+     * @var datetime $updatedAt
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
-     * @var datetime $created_at
+     * @var datetime $createdAt
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * Set classname
@@ -95,7 +95,7 @@ class BaseEntityMedia
      */
     public function setObjectId($objectId)
     {
-        $this->object_id = $objectId;
+        $this->objectId = $objectId;
     }
 
     /**
@@ -105,7 +105,7 @@ class BaseEntityMedia
      */
     public function getObjectId()
     {
-        return $this->object_id;
+        return $this->objectId;
     }
 
     /**
@@ -135,7 +135,7 @@ class BaseEntityMedia
      */
     public function setIsMain($isMain)
     {
-        $this->is_main = $isMain;
+        $this->isMain = $isMain;
     }
 
     /**
@@ -145,7 +145,7 @@ class BaseEntityMedia
      */
     public function getIsMain()
     {
-        return $this->is_main;
+        return $this->isMain;
     }
 
     /**
@@ -175,7 +175,7 @@ class BaseEntityMedia
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -185,7 +185,7 @@ class BaseEntityMedia
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
@@ -195,7 +195,7 @@ class BaseEntityMedia
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -205,7 +205,7 @@ class BaseEntityMedia
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
 }

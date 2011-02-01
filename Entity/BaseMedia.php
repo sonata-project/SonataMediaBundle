@@ -11,13 +11,14 @@
 
 namespace Sonata\MediaBundle\Entity;
 
-class BaseMedia {
+class BaseMedia
+{
 
-    const  STATUS_OK          = 1;
-    const  STATUS_SENDING     = 2;
-    const  STATUS_PENDING     = 3;
-    const  STATUS_ERROR       = 4;
-    const  STATUS_ENCODING    = 4;
+    const STATUS_OK          = 1;
+    const STATUS_SENDING     = 2;
+    const STATUS_PENDING     = 3;
+    const STATUS_ERROR       = 4;
+    const STATUS_ENCODING    = 4;
 
     /**
      * @var integer $id
@@ -34,7 +35,6 @@ class BaseMedia {
         return $this->id;
     }
 
-    
     /**
      * @var string $name
      */
@@ -53,22 +53,22 @@ class BaseMedia {
     /**
      * @var string $provider_name
      */
-    protected $provider_name;
+    protected $providerName;
 
     /**
      * @var integer $provider_status
      */
-    protected $provider_status;
+    protected $providerStatus;
 
     /**
      * @var string $provider_reference
      */
-    protected $provider_reference;
+    protected $providerReference;
 
     /**
      * @var array $provider_metadata
      */
-    protected $provider_metadata = array();
+    protected $providerMetadata = array();
 
     /**
      * @var integer $width
@@ -93,7 +93,7 @@ class BaseMedia {
     /**
      * @var string $author_name
      */
-    protected $author_name;
+    protected $authorName;
 
     /**
      * @var string $context
@@ -103,25 +103,35 @@ class BaseMedia {
     /**
      * @var boolean $cdn_is_flushable
      */
-    protected $cdn_is_flushable;
+    protected $cdnIsFlushable;
 
     /**
      * @var datetime $cdn_flush_at
      */
-    protected $cdn_flush_at;
+    protected $cdnFlushAt;
 
     /**
      * @var datetime $updated_at
      */
-    protected $updated_at;
+    protected $updatedAt;
 
     /**
      * @var datetime $created_at
      */
-    protected $created_at;
+    protected $createdAt;
 
 
-    protected $binary_content;
+    protected $binaryContent;
+
+    /**
+     * @var varchar $content_type
+     */
+    protected $contentType;
+
+    /**
+     * @var integer $size
+     */
+    protected $size;
 
 
     public static function getStatusList()
@@ -135,17 +145,17 @@ class BaseMedia {
         );
     }
     
-    public function setBinaryContent($binary_content)
+    public function setBinaryContent($binaryContent)
     {
 
-        $this->provider_reference = null;
-        $this->binary_content = $binary_content;
+        $this->providerReference = null;
+        $this->binaryContent = $binaryContent;
     }
 
     public function getBinaryContent()
     {
 
-        return $this->binary_content;
+        return $this->binaryContent;
     }
 
     public function getMetadataValue($name, $default = null)
@@ -226,7 +236,7 @@ class BaseMedia {
      */
     public function setProviderName($providerName)
     {
-        $this->provider_name = $providerName;
+        $this->providerName = $providerName;
     }
 
     /**
@@ -236,7 +246,7 @@ class BaseMedia {
      */
     public function getProviderName()
     {
-        return $this->provider_name;
+        return $this->providerName;
     }
 
     /**
@@ -246,7 +256,7 @@ class BaseMedia {
      */
     public function setProviderStatus($providerStatus)
     {
-        $this->provider_status = $providerStatus;
+        $this->providerStatus = $providerStatus;
     }
 
     /**
@@ -256,7 +266,7 @@ class BaseMedia {
      */
     public function getProviderStatus()
     {
-        return $this->provider_status;
+        return $this->providerStatus;
     }
 
     /**
@@ -266,7 +276,7 @@ class BaseMedia {
      */
     public function setProviderReference($providerReference)
     {
-        $this->provider_reference = $providerReference;
+        $this->providerReference = $providerReference;
     }
 
     /**
@@ -276,7 +286,7 @@ class BaseMedia {
      */
     public function getProviderReference()
     {
-        return $this->provider_reference;
+        return $this->providerReference;
     }
 
     /**
@@ -286,7 +296,7 @@ class BaseMedia {
      */
     public function setProviderMetadata($providerMetadata)
     {
-        $this->provider_metadata = $providerMetadata;
+        $this->providerMetadata = $providerMetadata;
     }
 
     /**
@@ -296,7 +306,7 @@ class BaseMedia {
      */
     public function getProviderMetadata()
     {
-        return $this->provider_metadata;
+        return $this->providerMetadata;
     }
 
     /**
@@ -386,7 +396,7 @@ class BaseMedia {
      */
     public function setAuthorName($authorName)
     {
-        $this->author_name = $authorName;
+        $this->authorName = $authorName;
     }
 
     /**
@@ -396,7 +406,7 @@ class BaseMedia {
      */
     public function getAuthorName()
     {
-        return $this->author_name;
+        return $this->authorName;
     }
 
     /**
@@ -426,7 +436,7 @@ class BaseMedia {
      */
     public function setCdnIsFlushable($cdnIsFlushable)
     {
-        $this->cdn_is_flushable = $cdnIsFlushable;
+        $this->cdnIsFlushable = $cdnIsFlushable;
     }
 
     /**
@@ -436,7 +446,7 @@ class BaseMedia {
      */
     public function getCdnIsFlushable()
     {
-        return $this->cdn_is_flushable;
+        return $this->cdnIsFlushable;
     }
 
     /**
@@ -446,7 +456,7 @@ class BaseMedia {
      */
     public function setCdnFlushAt($cdnFlushAt)
     {
-        $this->cdn_flush_at = $cdnFlushAt;
+        $this->cdnFlushAt = $cdnFlushAt;
     }
 
     /**
@@ -456,7 +466,7 @@ class BaseMedia {
      */
     public function getCdnFlushAt()
     {
-        return $this->cdn_flush_at;
+        return $this->cdnFlushAt;
     }
 
     /**
@@ -466,7 +476,7 @@ class BaseMedia {
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -476,7 +486,7 @@ class BaseMedia {
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
@@ -486,7 +496,7 @@ class BaseMedia {
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -496,17 +506,8 @@ class BaseMedia {
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
-    /**
-     * @var varchar $content_type
-     */
-    protected $content_type;
-
-    /**
-     * @var integer $size
-     */
-    protected $size;
 
     /**
      * Set content_type
@@ -515,7 +516,7 @@ class BaseMedia {
      */
     public function setContentType($contentType)
     {
-        $this->content_type = $contentType;
+        $this->contentType = $contentType;
     }
 
     /**
@@ -525,7 +526,7 @@ class BaseMedia {
      */
     public function getContentType()
     {
-        return $this->content_type;
+        return $this->contentType;
     }
 
     /**

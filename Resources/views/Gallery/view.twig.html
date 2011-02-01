@@ -1,0 +1,20 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+<h1>{{ gallery.name }}</h1>
+
+<div class="sonata-media-gallery-media-list">
+    {% for media in gallery.medias %}
+        <div class="sonata-media-gallery-media-item">
+            <a href="{{ url('sonata_media_view', {'id': media.id }) }}">{% thumbnail media, gallery.defaultFormat %}</a>
+        </div>
+    {% endfor %}
+</div>
