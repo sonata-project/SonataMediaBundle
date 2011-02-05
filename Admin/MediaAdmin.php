@@ -12,34 +12,36 @@
 namespace Sonata\MediaBundle\Admin;
 
 use Sonata\BaseApplicationBundle\Admin\EntityAdmin as Admin;
+use Sonata\BaseApplicationBundle\Form\FormMapper;
+use Sonata\BaseApplicationBundle\Datagrid\DatagridMapper;
+use Sonata\BaseApplicationBundle\Datagrid\ListMapper;
 
 class MediaAdmin extends Admin
 {
 
     protected $class = 'Application\Sonata\MediaBundle\Entity\Media';
+    protected $baseControllerName = 'SonataMediaBundle:MediaAdmin';
 
-    protected $listFields = array(
-        'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.twig.html'),
-        'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.twig.html'),
+    protected $list = array(
+        'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.twig.html', 'type' => 'string'),
+        'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.twig.html', 'type' => 'string'),
         'enabled',
     );
 
-    protected $formFields = array(
+    protected $form = array(
         'enabled',
         'name',
         'description',
-        'author_name',
+        'authorName',
         'copyright',
-        'cdn_is_flushable'
+        'cdnIsFlushable'
     );
 
-    protected $filterFields = array(
+    protected $filter = array(
         'name',
-        'provider_reference',
+        'providerReference',
         'enabled',
     );
-
-    // don't know yet how to get this value
-    protected $baseControllerName = 'SonataMediaBundle:MediaAdmin';
+    
 
 }

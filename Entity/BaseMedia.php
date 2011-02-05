@@ -548,4 +548,9 @@ class BaseMedia
     {
         return $this->size;
     }
+
+    public function __toString()
+    {
+        $this->getName();
+    }
 }

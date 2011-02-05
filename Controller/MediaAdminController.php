@@ -53,12 +53,16 @@ class MediaAdminController extends Controller
         if ($form instanceof Form) {
             $media = $form->getData();
         } else {
-            $form = new Form('data', $media, $this->get('validator'));
+            $form = new Form('data', array(
+                'data'      => $media,
+                'validator' => $this->get('validator'),
+                'context'   => $this->get('form.context'),
+            ));
             $provider->buildCreateForm($form);
         }
 
         if ($this->get('request')->getMethod() == 'POST') {
-            $form->bind($this->get('request')->get('data'), $this->get('request')->files->get('data'));
+            $form->bind($this->get('request'));
             
             if ($form->isValid()) {
 
@@ -76,8 +80,6 @@ class MediaAdminController extends Controller
 
         $template = sprintf('SonataMediaBundle:MediaAdmin:provider_create_%s.twig.html', $params['provider']);
 
-
-        
         return $this->render($template, array(
             'form'   => $form,
             'media'  => $media,
@@ -103,7 +105,11 @@ class MediaAdminController extends Controller
 
             $provider = $this->get('media.provider')->getProvider($media->getProviderName());
 
-            $form = new Form('data', $media, $this->get('validator'));
+            $form = new Form('data', array(
+                'data'      => $media,
+                'validator' => $this->get('validator'),
+                'context'   => $this->get('form.context'),
+            ));
             $provider->buildEditForm($form);
         }
 
