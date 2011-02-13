@@ -9,6 +9,8 @@ file that was distributed with this source code.
 
 #}
 
-<td>
+{% extends 'SonataBaseApplicationBundle:CRUD:base_list_field.twig.html' %}
+
+{% block field%}
     <a href="{{ admin.generateUrl('edit', {'id' : object.id}) }}">{% thumbnail object, 'admin' with {'width': 75, 'height': 60} %}</a>
-</td>
+{% endblock %}

@@ -9,9 +9,11 @@ file that was distributed with this source code.
 
 #}
 
-<td>
+{% extends 'SonataBaseApplicationBundle:CRUD:base_list_field.twig.html' %}
+
+{% block field%}
     <div>
         <strong>{{ object.name }}</strong> <br />
         {{ object.providername}} : {{ object.width }}x{{ object.height }} <br />
     </div>
-</td>
+{% endblock %}

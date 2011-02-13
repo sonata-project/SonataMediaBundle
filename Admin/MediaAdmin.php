@@ -42,6 +42,19 @@ class MediaAdmin extends Admin
         'providerReference',
         'enabled',
     );
-    
 
+    public function configureFormFields(FormMapper $form)
+    {
+
+    }
+
+    public function configureDatagridFilters(DatagridMapper $datagrid)
+    {
+
+    }
+
+    public function configureListFields(ListMapper $list)
+    {
+
+    }
 }
