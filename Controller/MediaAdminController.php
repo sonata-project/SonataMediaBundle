@@ -38,7 +38,7 @@ class MediaAdminController extends Controller
         $params = $this->getParameters();
         
         if (!$params['provider']) {
-            return $this->render('SonataMediaBundle:MediaAdmin:select_provider.twig.html', array(
+            return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
                 'providers'         => $this->get('media.provider')->getProviders(),
                 'configuration'     => $this->admin,
                 'params'            => $params
@@ -78,7 +78,7 @@ class MediaAdminController extends Controller
             }
         }
 
-        $template = sprintf('SonataMediaBundle:MediaAdmin:provider_create_%s.twig.html', $params['provider']);
+        $template = sprintf('SonataMediaBundle:MediaAdmin:provider_create_%s.html.twig', $params['provider']);
 
         return $this->render($template, array(
             'form'   => $form,
@@ -113,7 +113,7 @@ class MediaAdminController extends Controller
             $provider->buildEditForm($form);
         }
 
-        $template = sprintf('SonataMediaBundle:MediaAdmin:provider_edit_%s.twig.html', $media->getProviderName());
+        $template = sprintf('SonataMediaBundle:MediaAdmin:provider_edit_%s.html.twig', $media->getProviderName());
 
         return $this->render($template, array(
             'form'   => $form,

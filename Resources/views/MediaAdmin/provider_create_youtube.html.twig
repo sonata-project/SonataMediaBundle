@@ -9,9 +9,9 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'SonataMediaBundle:MediaAdmin:provider_create.twig.html' %}
+{% extends 'SonataMediaBundle:MediaAdmin:provider_create.html.twig' %}
 
-{% block title %}{% trans 'title_add_dailymotion' from 'MediaBundle' %}{% endblock %}
+{% block title %}{% trans 'title_add_youtube' from 'MediaBundle' %}{% endblock %}
 
 {% block form %}
     <form method="POST" action="{{ admin.generateUrl('create', params) }}">
@@ -20,7 +20,7 @@ file that was distributed with this source code.
         <p>
             {{ form_label(form.binary_content) }} <br />
             {{ form_field(form.binary_content, {'class' : 'title'}) }}
-            {{ form_errors(form.binary_content)}}
+            {{ form_errors(form.binary_content) }}
         </p>
 
         <input type="submit" value="{% trans 'btn_create' from 'MediaBundle' %}" />

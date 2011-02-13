@@ -68,7 +68,7 @@ class MediaHelper extends Helper
             ->getHelperProperties($media, $format, $options, $this->getMediaService()->getSettings());
 
         return $this->getTemplating()->render(
-            sprintf('SonataMediaBundle:Provider:view_%s.twig.html', $media->getProviderName()),
+            sprintf('SonataMediaBundle:Provider:view_%s.html.twig', $media->getProviderName()),
             array(
                  'media'    => $media,
                  'format'   => $format,
@@ -116,7 +116,7 @@ class MediaHelper extends Helper
          $options['src'] = sprintf('%s%s', $base_media, $provider->generatePublicUrl($media, $format));
 
          return $this->getTemplating()->render(
-            sprintf('SonataMediaBundle:Provider:thumbnail.twig.html', $media->getProviderName()),
+            sprintf('SonataMediaBundle:Provider:thumbnail.html.twig', $media->getProviderName()),
             array(
                  'media'    => $media,
                  'options'  => $options,

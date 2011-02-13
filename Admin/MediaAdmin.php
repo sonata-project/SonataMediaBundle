@@ -23,8 +23,8 @@ class MediaAdmin extends Admin
     protected $baseControllerName = 'SonataMediaBundle:MediaAdmin';
 
     protected $list = array(
-        'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.twig.html', 'type' => 'string'),
-        'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.twig.html', 'type' => 'string'),
+        'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig', 'type' => 'string'),
+        'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig', 'type' => 'string'),
         'enabled',
     );
 

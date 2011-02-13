@@ -9,14 +9,14 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'SonataMediaBundle:MediaAdmin:provider_edit.twig.html' %}
+{% extends 'SonataMediaBundle:MediaAdmin:provider_edit.html.twig' %}
 
-{% block title %}{% trans 'title_edit_file' from 'MediaBundle' %}{% endblock %}
+{% block title %}{% trans 'title_edit_youtube' from 'MediaBundle' %}{% endblock %}
 
 {% block preview %}{% media media, 'admin' %}{% endblock %}
 
 {% block form %}
-    <form method="POST" action="{{ admin.generateUrl('update', {'id' : media.id }) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ admin.generateUrl('update', {'id' : media.id }) }}">
         {{ form_hidden(form) }}
 
         <p>
