@@ -41,7 +41,8 @@ class MediaAdminController extends Controller
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
                 'providers'         => $this->get('media.provider')->getProviders(),
                 'configuration'     => $this->admin,
-                'params'            => $params
+                'params'            => $params,
+                'base_template' => $this->getBaseTemplate()
             ));
         }
 
@@ -74,6 +75,10 @@ class MediaAdminController extends Controller
                 $this->admin->getEntityManager()->flush();
                 $this->get('media.provider')->postPersist($media);
 
+                if ($this->get('request')->isXmlHttpRequest()) {
+                    return $this->renderJson(array('result' => 'ok', 'objectId' => $media->getId()));
+                }
+                
                 return $this->redirect($this->admin->generateUrl('edit', array('id' => $media->getId())));
             }
         }
@@ -85,6 +90,7 @@ class MediaAdminController extends Controller
             'media'  => $media,
             'params' => $params,
             'admin'  => $this->admin,
+            'base_template' => $this->getBaseTemplate()
         ));
     }
 
@@ -119,7 +125,8 @@ class MediaAdminController extends Controller
             'form'   => $form,
             'media'  => $media,
             'admin'  => $this->admin,
-            'params' => $this->getParameters()
+            'params' => $this->getParameters(),
+            'base_template' => $this->getBaseTemplate()
         ));
     }
 

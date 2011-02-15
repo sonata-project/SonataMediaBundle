@@ -160,4 +160,25 @@ class BaseGallery
     {
         return $this->defaultFormat;
     }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 }

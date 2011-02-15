@@ -551,6 +551,6 @@ class BaseMedia
 
     public function __toString()
     {
-        $this->getName();
+        return $this->getName();
     }
 }
