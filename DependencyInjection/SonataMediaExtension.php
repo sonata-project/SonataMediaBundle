@@ -26,7 +26,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaExtension extends Extension
+class SonataMediaExtension extends Extension
 {
 
     /**
@@ -35,40 +35,40 @@ class MediaExtension extends Extension
      * @param array            $config    An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function configLoad($configs, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container)
     {
-        foreach ($configs as $config) {
-            $definition = new Definition($config['class']);
-            $definition->addMethodCall('setSettings', array(isset($config['settings']) ? $config['settings'] : array()));
+        $config = call_user_func_array('array_merge_recursive', $config);
 
-            foreach ($config['providers'] as $name => $provider) {
+        $definition = new Definition($config['class']);
+        $definition->addMethodCall('setSettings', array(isset($config['settings']) ? $config['settings'] : array()));
 
-                $provider_name = sprintf('media.provider.%s', $name);
+        foreach ($config['providers'] as $name => $provider) {
 
-                $config['settings']['quality']      = isset($config['settings']['quality']) ? $config['settings']['quality'] : 80;
-                $config['settings']['format']       = isset($config['settings']['format'])  ? $config['settings']['format'] : 'jpg';
-                $config['settings']['height']       = isset($config['settings']['height'])  ? $config['settings']['height'] : 'false';
-                $config['settings']['constraint']   = isset($config['settings']['constraint'])  ? $config['settings']['constraint'] : true;
+            $provider_name = sprintf('media.provider.%s', $name);
 
-                $provider['formats']                = is_array($provider['formats']) ? $provider['formats']  : array();
+            $config['settings']['quality']      = isset($config['settings']['quality']) ? $config['settings']['quality'] : 80;
+            $config['settings']['format']       = isset($config['settings']['format'])  ? $config['settings']['format'] : 'jpg';
+            $config['settings']['height']       = isset($config['settings']['height'])  ? $config['settings']['height'] : 'false';
+            $config['settings']['constraint']   = isset($config['settings']['constraint'])  ? $config['settings']['constraint'] : true;
 
-                $provider_definition = new Definition($provider['class'], array(
-                    $name,
-                    new Reference($config['em']),
-                    $config['settings'],
-                ));
+            $provider['formats']                = is_array($provider['formats']) ? $provider['formats']  : array();
 
-                foreach ($provider['formats'] as $format_name => $format_definition) {
-                    $provider_definition->addMethodCall('addFormat', array($format_name, $format_definition));
-                }
+            $provider_definition = new Definition($provider['class'], array(
+                $name,
+                new Reference($config['em']),
+                $config['settings'],
+            ));
 
-                $container->setDefinition($provider_name, $provider_definition);
-
-                $definition->addMethodCall('addProvider', array($name, new Reference($provider_name)));
+            foreach ($provider['formats'] as $format_name => $format_definition) {
+                $provider_definition->addMethodCall('addFormat', array($format_name, $format_definition));
             }
 
-            $container->setDefinition('media.provider', $definition);
+            $container->setDefinition($provider_name, $provider_definition);
+
+            $definition->addMethodCall('addProvider', array($name, new Reference($provider_name)));
         }
+
+        $container->setDefinition('media.provider', $definition);
 
         // register template helper
         $definition = new Definition(
@@ -110,6 +110,6 @@ class MediaExtension extends Extension
     public function getAlias()
     {
 
-        return "media";
+        return "sonata_media";
     }
 }
