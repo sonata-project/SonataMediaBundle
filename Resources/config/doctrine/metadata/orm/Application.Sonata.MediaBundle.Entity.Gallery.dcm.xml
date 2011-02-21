@@ -40,5 +40,21 @@
             </join-table>
 
         </many-to-many>
+
+        <one-to-many
+            field="galleryHasMedias"
+            target-entity="Application\Sonata\MediaBundle\Entity\GalleryHasMedia"
+            inversed-by="gallery"
+            >
+
+            <cascade>
+                <cascade-persist />
+                <!--<cascade-merge />-->
+                <!--<cascade-remove />-->
+                <!--<cascade-refresh />-->
+            </cascade>
+
+        </one-to-many>
+        
     </entity>
 </doctrine-mapping>

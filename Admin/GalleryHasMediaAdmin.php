@@ -16,28 +16,22 @@ use Sonata\BaseApplicationBundle\Form\FormMapper;
 use Sonata\BaseApplicationBundle\Datagrid\DatagridMapper;
 use Sonata\BaseApplicationBundle\Datagrid\ListMapper;
 
-class GalleryAdmin extends Admin
+class GalleryHasMediaAdmin extends Admin
 {
 
-    protected $class = 'Application\Sonata\MediaBundle\Entity\Gallery';
-    protected $baseControllerName = 'SonataMediaBundle:GalleryAdmin';
+    protected $class = 'Application\Sonata\MediaBundle\Entity\GalleryHasMedia';
+    protected $baseControllerName = 'SonataMediaBundle:GalleryHasMediaAdmin';
 
     protected $list = array(
+        'media',
+        'gallery',
+        'position',
         'enabled',
-        'name' => array('identifier' => true),
-        'defaultFormat',
     );
 
     protected $form = array(
-        'enabled',
-        'name',
-        'defaultFormat',
-        'galleryHasMedias' => array('edit' => 'inline', 'inline' => 'table'),
-        'code',
-    );
-
-    protected $filter = array(
-        'name',
+        'media' => array('edit' => 'list'),
+        'position',
         'enabled',
     );
 
@@ -54,17 +48,5 @@ class GalleryAdmin extends Admin
     public function configureListFields(ListMapper $list)
     {
 
-    }
-
-    public function preUpdate($object)
-    {
-        // fix weird bug with setter object not being call
-        $object->setGalleryHasMedias($object->getGalleryHasMedias());
-    }
-
-    public function preInsert($object)
-    {
-        // fix weird bug with setter object not being call
-        $object->setGalleryHasMedias($object->getGalleryHasMedias());
     }
 }

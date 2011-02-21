@@ -18,21 +18,6 @@ class BaseGallery
 {
 
     /**
-     * @var integer $id
-     */
-    private $id;
-
-    /**
-     * Get id
-     *
-     * @return integer $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    
-    /**
      * @var string $name
      */
     protected $name;
@@ -57,10 +42,14 @@ class BaseGallery
      */
     protected $createdAt;
 
-    protected $medias;
-
     protected $defaultFormat;
 
+    protected $galleryHasMedias;
+
+    public function __construct()
+    {
+        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection;
+    }
     /**
      * Set name
      *
@@ -141,16 +130,6 @@ class BaseGallery
         return $this->createdAt;
     }
 
-    public function setMedias($medias)
-    {
-        $this->medias = $medias;
-    }
-
-    public function getMedias()
-    {
-        return $this->medias;
-    }
-
     public function setDefaultFormat($defaultFormat)
     {
         $this->defaultFormat = $defaultFormat;
@@ -180,5 +159,32 @@ class BaseGallery
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function setGalleryHasMedias($galleryHasMedias)
+    {
+        $this->galleryHasMedias = $galleryHasMedias;
+
+        foreach($galleryHasMedias as $galleryHasMedia)
+        {
+            $galleryHasMedia->setGallery($this);
+        }
+    }
+
+    public function getGalleryHasMedias()
+    {
+        return $this->galleryHasMedias;
+    }
+
+    public function addGalleryHasMedias(BaseGalleryHasMedia $galleryHasMedia)
+    {
+        $this->galleryHasMedias[] = $galleryHasMedia;
+
+        $galleryHasMedia->setGallery($this);
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ?: '-';
     }
 }

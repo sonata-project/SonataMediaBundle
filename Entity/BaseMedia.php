@@ -133,6 +133,8 @@ class BaseMedia
      */
     protected $size;
 
+    protected $galleryHasMedias;
+
 
     public static function getStatusList()
     {
@@ -552,5 +554,15 @@ class BaseMedia
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function setGalleryHasMedias($galleryHasMedias)
+    {
+        $this->galleryHasMedias = $galleryHasMedias;
+    }
+
+    public function getGalleryHasMedias()
+    {
+        return $this->galleryHasMedias;
     }
 }

@@ -9,28 +9,46 @@
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
     <entity
-        name="Application\Sonata\MediaBundle\Entity\Media"
-        table="media__media"
-        repository-class="Application\Sonata\MediaBundle\Entity\MediaRepository">
+        name="Application\Sonata\MediaBundle\Entity\GalleryHasMedia"
+        table="media__gallery_media"
+        >
 
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
 
-        <one-to-many
-            field="galleryHasMedias"
-            target-entity="Application\Sonata\MediaBundle\Entity\GalleryHasMedia"
-            inversed-by="media"
+        <many-to-one
+            field="media"
+            target-entity="Application\Sonata\MediaBundle\Entity\Media"
+            inversed-by="galleryHasMedias"
+            >
+
+            <join-column name="media_id" referenced-column-name="id" />
+            
+            <cascade>
+                <cascade-persist />
+                <cascade-merge />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
+
+        </many-to-one>
+
+        <many-to-one
+            field="gallery"
+            target-entity="Application\Sonata\MediaBundle\Entity\Gallery"
+            inversed-by="galleryHasMedias"
             >
 
             <cascade>
                 <cascade-persist />
-                <!--<cascade-merge />-->
-                <!--<cascade-remove />-->
-                <!--<cascade-refresh />-->
+                <cascade-merge />
+                <cascade-remove />
+                <cascade-refresh />
             </cascade>
 
-        </one-to-many>
-
+            <join-column name="gallery_id" referenced-column-name="id" />
+            
+        </many-to-one>
     </entity>
 </doctrine-mapping>
