@@ -9,11 +9,11 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         bootstrap="tests/bootstrap.php"
+         bootstrap="../../autoload.php"
 >
     <testsuites>
         <testsuite name="MediaBundle Test Suite">
-            <directory>.</directory>
+            <directory>./Tests/</directory>
         </testsuite>
     </testsuites>
 
