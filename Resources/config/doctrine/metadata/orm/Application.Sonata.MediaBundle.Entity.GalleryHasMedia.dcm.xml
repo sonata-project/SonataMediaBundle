@@ -27,9 +27,6 @@
             
             <cascade>
                 <cascade-persist />
-                <cascade-merge />
-                <cascade-remove />
-                <cascade-refresh />
             </cascade>
 
         </many-to-one>
@@ -42,9 +39,6 @@
 
             <cascade>
                 <cascade-persist />
-                <cascade-merge />
-                <cascade-remove />
-                <cascade-refresh />
             </cascade>
 
             <join-column name="gallery_id" referenced-column-name="id" />

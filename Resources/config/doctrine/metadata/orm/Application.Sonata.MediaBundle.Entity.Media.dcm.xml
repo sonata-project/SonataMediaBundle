@@ -23,11 +23,10 @@
             inversed-by="media"
             >
 
+            <orphan-removal>true</orphan-removal>
+
             <cascade>
                 <cascade-persist />
-                <!--<cascade-merge />-->
-                <!--<cascade-remove />-->
-                <!--<cascade-refresh />-->
             </cascade>
 
         </one-to-many>

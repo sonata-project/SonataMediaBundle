@@ -23,6 +23,8 @@
             inversed-by="galleries"
             >
 
+            <orphan-removal>true</orphan-removal>
+
             <cascade>
                 <cascade-persist />
                 <!--<cascade-merge />-->
@@ -47,6 +49,8 @@
             inversed-by="gallery"
             >
 
+            <orphan-removal>true</orphan-removal>
+            
             <cascade>
                 <cascade-persist />
                 <!--<cascade-merge />-->
