@@ -18,10 +18,6 @@ use Sonata\BaseApplicationBundle\Datagrid\ListMapper;
 
 class MediaAdmin extends Admin
 {
-
-    protected $class = 'Application\Sonata\MediaBundle\Entity\Media';
-    protected $baseControllerName = 'SonataMediaBundle:MediaAdmin';
-
     protected $list = array(
         'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig', 'type' => 'string'),
         'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig', 'type' => 'string'),

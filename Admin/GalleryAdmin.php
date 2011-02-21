@@ -19,9 +19,6 @@ use Sonata\BaseApplicationBundle\Datagrid\ListMapper;
 class GalleryAdmin extends Admin
 {
 
-    protected $class = 'Application\Sonata\MediaBundle\Entity\Gallery';
-    protected $baseControllerName = 'SonataMediaBundle:GalleryAdmin';
-
     protected $list = array(
         'enabled',
         'name' => array('identifier' => true),
