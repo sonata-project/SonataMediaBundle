@@ -26,7 +26,7 @@
 * Add these lines into your config.yml file
 
 
-        media.config:
+        sonata_media:
             class: Sonata\MediaBundle\Provider\Service
 
             settings:

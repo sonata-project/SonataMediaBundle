@@ -43,15 +43,15 @@ class MediaHelper extends Helper
      */
     public function getName()
     {
-        return 'media';
+        return 'sonata_media';
     }
 
     /**
      *
      * return the provider view for the provided media
      *
-     * @param  $media
-     * @param  $format
+     * @param Media $media
+     * @param string $format
      * @param array $options
      * @return string
      */
@@ -80,8 +80,8 @@ class MediaHelper extends Helper
     /**
      * return the thumbnail for the provided media
      *
-     * @param  $media
-     * @param  $format
+     * @param Media $media
+     * @param string $format
      * @param array $options
      * @return string
      */

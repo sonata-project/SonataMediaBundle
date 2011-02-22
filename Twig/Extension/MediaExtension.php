@@ -38,7 +38,7 @@ class MediaExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'media';
+        return 'sonata_media';
     }
 }
 
