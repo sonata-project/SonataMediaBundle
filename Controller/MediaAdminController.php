@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Controller;
 
-use Sonata\BaseApplicationBundle\Controller\CRUDController as Controller;
+use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MediaAdminController extends Controller
 {
@@ -75,11 +75,11 @@ class MediaAdminController extends Controller
                 $this->admin->getEntityManager()->flush();
                 $this->get('media.provider')->postPersist($media);
 
-                if ($this->get('request')->isXmlHttpRequest()) {
+                if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array('result' => 'ok', 'objectId' => $media->getId()));
                 }
                 
-                return $this->redirect($this->admin->generateUrl('edit', array('id' => $media->getId())));
+                return new RedirectResponse($this->admin->generateUrl('edit', array('id' => $media->getId())));
             }
         }
 
@@ -159,7 +159,7 @@ class MediaAdminController extends Controller
             $this->admin->getEntityManager()->flush();
             $this->get('media.provider')->postUpdate($media);
 
-            return $this->redirect($this->admin->generateUrl('edit', array(
+            return new RedirectResponse($this->admin->generateUrl('edit', array(
                 'id' => $media->getId(),
                 'params' => $this->getParameters()
             )));

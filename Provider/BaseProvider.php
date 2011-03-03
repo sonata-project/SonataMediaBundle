@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Symfony\Component\Form\Form;
 
 abstract class BaseProvider
 {
@@ -140,13 +141,13 @@ abstract class BaseProvider
      * build the related create form
      *
      */
-    abstract function buildCreateForm($form);
+    abstract function buildCreateForm(Form $form);
 
     /**
      * build the related create form
      *
      */
-    abstract function buildEditForm($form);
+    abstract function buildEditForm(Form $form);
 
 
     /**

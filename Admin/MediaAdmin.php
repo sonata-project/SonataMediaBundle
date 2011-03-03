@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Admin;
 
-use Sonata\BaseApplicationBundle\Admin\EntityAdmin as Admin;
-use Sonata\BaseApplicationBundle\Form\FormMapper;
-use Sonata\BaseApplicationBundle\Datagrid\DatagridMapper;
-use Sonata\BaseApplicationBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Admin\EntityAdmin as Admin;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class MediaAdmin extends Admin
 {

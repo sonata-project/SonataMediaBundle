@@ -96,4 +96,9 @@ class BaseGalleryHasMedia
     {
         $this->updatedAt = new \DateTime();
     }
+
+    public function __toString()
+    {
+        return $this->getGallery().' | '.$this->getMedia();
+    }
 }

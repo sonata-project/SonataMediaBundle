@@ -32,7 +32,7 @@ Next, be sure to enable the bundles in your application kernel:
 Configuration
 -------------
 
-To use the ``BaseApplicationBundle``, add the following to your application
+To use the ``AdminBundle``, add the following to your application
 configuration file.
 
 .. code-block:: yaml
@@ -78,7 +78,7 @@ configuration file.
 
 The bundle contains admin class to manage the different entities :
 
-- Add the BaseApplicationBundle's admin definition
+- Add the AdminBundle's admin definition
 
 .. code-block:: yaml
 

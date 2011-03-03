@@ -12,23 +12,41 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Symfony\Component\Form\Form;
 
 class YouTubeProvider extends BaseProvider
 {
 
+    /**
+     * Return the reference image
+     *
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return null
+     */
     public function getReferenceImage(Media $media)
     {
 
         return $media->getMetadataValue('thumbnail_url');
     }
 
-
+    /**
+     * return the absolute path of source media
+     *
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return string
+     */
     public function getAbsolutePath(Media $media)
     {
 
         return sprintf('http://www.youtube.com/v/%s', $media->getProviderReference());
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param string $format
+     * @param array $options
+     * @return array
+     */
     public function getHelperProperties(Media $media, $format, $options = array())
     {
 
@@ -139,7 +157,7 @@ class YouTubeProvider extends BaseProvider
      * build the related create form
      *
      */
-    function buildEditForm($form)
+    function buildEditForm(Form $form)
     {
         $form->add(new \Symfony\Component\Form\TextField('name'));
         $form->add(new \Symfony\Component\Form\CheckboxField('enabled'));
@@ -156,7 +174,7 @@ class YouTubeProvider extends BaseProvider
      * build the related create form
      *
      */
-    function buildCreateForm($form)
+    function buildCreateForm(Form $form)
     {
         $form->add(new \Symfony\Component\Form\TextField('binary_content'));
     }
@@ -240,7 +258,6 @@ class YouTubeProvider extends BaseProvider
         foreach ($this->formats as $format => $definition) {
             $files[] = $this->generatePrivateUrl($media, $format);
         }
-
 
         foreach ($files as $file) {
             if (file_exists($file)) {

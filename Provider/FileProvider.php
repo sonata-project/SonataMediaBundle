@@ -11,7 +11,8 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
-
+use Symfony\Component\Form\Form;
+    
 class FileProvider extends BaseProvider
 {
 
@@ -39,7 +40,7 @@ class FileProvider extends BaseProvider
      * build the related create form
      *
      */
-    function buildEditForm($form)
+    function buildEditForm(Form $form)
     {
         $form->add(new \Symfony\Component\Form\TextField('name'));
         $form->add(new \Symfony\Component\Form\CheckboxField('enabled'));
@@ -58,7 +59,7 @@ class FileProvider extends BaseProvider
      * build the related create form
      *
      */
-    function buildCreateForm($form)
+    function buildCreateForm(Form $form)
     {
         $form->add(new \Symfony\Component\Form\FileField('binary_content', array(
             'secret' => 'file'

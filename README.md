@@ -55,7 +55,7 @@
                         small: { width: 100 }
                         big:   { width: 500 }
 
-* Add these lines into your admin.yml file (BaseApplicationBundle)
+* Add these lines into your admin.yml file (AdminBundle)
 
         media:
             label:      Media
