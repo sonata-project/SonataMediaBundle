@@ -22,6 +22,7 @@ class DailyMotionProvider extends BaseProvider
         return $media->getMetadataValue('thumbnail_url');
     }
 
+    
     public function getAbsolutePath(Media $media)
     {
 

@@ -10,6 +10,11 @@ git, you can add them as submodules::
 
   git submodule add git@github.com:sonata-project/MediaBundle.git src/Sonata/MediaBundle
 
+  // dependency bundles
+  git submodule add git@github.com:sonata-project/AdminBundle.git src/Sonata/AdminBundle
+  git submodule add git@github.com:sonata-project/EasyExtendsBundle.git src/Sonata/EasyExtendsBundle
+
+  
 Add the ``Imagine`` image processing library
 
   git submodule add git://github.com/avalanche123/Imagine.git src/vendor/imagine
@@ -24,7 +29,9 @@ Next, be sure to enable the bundles in your application kernel:
   {
       return array(
           // ...
-          new Sonata\MediaBundle\MediaBundle(),
+          new Sonata\MediaBundle\SonataMediaBundle(),
+          new Sonata\AdminBundle\SonataAdminBundle(),
+          new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
           // ...
       );
   }
@@ -102,5 +109,4 @@ The bundle contains admin class to manage the different entities :
             class:      Sonata\MediaBundle\Admin\GalleryHasMediaAdmin
             entity:     Application\Sonata\MediaBundle\Entity\GalleryHasMedia
             controller: SonataMediaBundle:GalleryHasMediaAdmin
-            options:
-                show_in_dashboard: false
+

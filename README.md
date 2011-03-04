@@ -6,22 +6,35 @@
 
         git submodule add git@github.com:sonata-project/MediaBundle.git src/Sonata/MediaBundle
 
-* add the Imagine bundle (image management) and follow ImagineBundle README
+
+* Add the AdminBundle if not yet installed
+
+        git submodule add git@github.com:sonata-project/AdminBundle.git src/Sonata/AdminBundle
+
+* Add the EasyExtendsBundle if not yet installed
+
+        git submodule add git@github.com:sonata-project/EasyExtendsBundle.git src/Sonata/EasyExtendsBundle
+
+* Add the Imagine bundle (image management) and follow ImagineBundle README
 
         git submodule add git://github.com/avalanche123/Imagine.git src/vendor/imagine
 
-* Add EasyExtendsBundle to your application kernel
+* Add MediaBundle to your application kernel
 
         // app/AppKernel.php
         public function registerBundles()
         {
             return array(
                 // ...
+                new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
                 new Sonata\MediaBundle\MediaBundle(),
                 // ...
             );
         }
 
+* Run the command easy-extends:generate to generate the main model files
+
+        php kooqit/console sonata:easy-extends:generate
 
 * Add these lines into your config.yml file
 
@@ -34,7 +47,6 @@
                 cdn_path:     http://media.sonata-project.org
                 public_path: /uploads/media
                 private_path: /web/uploads/media
-
 
             providers:
                 image:

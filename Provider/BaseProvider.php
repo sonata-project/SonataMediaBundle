@@ -16,30 +16,56 @@ use Symfony\Component\Form\Form;
 
 abstract class BaseProvider
 {
-
+    /**
+     * @var array
+     */
     protected $formats = array();
+
+    /**
+     * @var array
+     */
     protected $settings = array();
 
+    /**
+     * @param string $name
+     * @param \Doctrine\ORM\EntityManager $em
+     * @param array $settings
+     */
     public function __construct($name, $em, $settings = array())
     {
-
         $this->name     = $name;
         $this->em       = $em;
         $this->settings = $settings;
     }
 
+    /**
+     * @param string $name
+     * @param array $format
+     *
+     * @return void
+     */
     public function addFormat($name, $format)
     {
-
         $this->formats[$name] = $format;
     }
 
+    /**
+     * return the format settings
+     * 
+     * @param string $name
+     *
+     * @return array|false the format settings
+     */
     public function getFormat($name)
     {
-        
         return isset($this->formats[$name]) ? $this->formats[$name] : false;
     }
 
+    /**
+     * return true if the media related to the provider required thumbnails (generation)
+     *
+     * @return boolean
+     */
     public function requireThumbnails()
     {
         return true;
