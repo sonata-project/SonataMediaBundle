@@ -12,11 +12,13 @@
 namespace Sonata\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Resource\FileResource;
 
 use Symfony\Component\Finder\Finder;
 
@@ -37,6 +39,9 @@ class SonataMediaExtension extends Extension
      */
     public function load(array $config, ContainerBuilder $container)
     {
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('admin.xml');
+
         $config = call_user_func_array('array_merge_recursive', $config);
 
         $definition = new Definition($config['class']);

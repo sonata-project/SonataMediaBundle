@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Admin;
 
-use Sonata\AdminBundle\Admin\EntityAdmin as Admin;
+use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -39,7 +39,7 @@ class GalleryAdmin extends Admin
 
     protected $filter = array(
         'name',
-        'enabled',
+        'enabled'
     );
 
     public function configureFormFields(FormMapper $form)
@@ -49,7 +49,6 @@ class GalleryAdmin extends Admin
 
     public function configureDatagridFilters(DatagridMapper $datagrid)
     {
-
     }
 
     public function configureListFields(ListMapper $list)
