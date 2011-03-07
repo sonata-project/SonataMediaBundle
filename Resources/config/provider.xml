@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="sonata.media.provider.image.class">Sonata\MediaBundle\Provider\ImageProvider</parameter>
+        <parameter key="sonata.media.provider.file.class">Sonata\MediaBundle\Provider\FileProvider</parameter>
+        <parameter key="sonata.media.provider.youtube.class">Sonata\MediaBundle\Provider\YouTubeProvider</parameter>
+        <parameter key="sonata.media.provider.dailymotion.class">Sonata\MediaBundle\Provider\DailyMotionProvider</parameter>
+
+        <parameter key="sonata.media.pool.class">Sonata\MediaBundle\Provider\Pool</parameter>
+    </parameters>
+
+    <services>
+        <service id="sonata.media.entity_manager" alias="doctrine.orm.default_entity_manager" />
+
+        <service id="sonata.media.pool" class="%sonata.media.pool.class%"/>
+        
+        <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
+            <tag name="sonata.media.provider" />
+            <argument>sonata.media.provider.image</argument>
+            <argument type="service" id="sonata.media.entity_manager" />
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_image.html.twig</argument>
+                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_image.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMediaBundle:Provider:view_image.html.twig</argument>
+                </argument>
+            </call>
+        </service>
+
+        <service id="sonata.media.provider.file" class="%sonata.media.provider.file.class%">
+            <tag name="sonata.media.provider" />
+            <argument>sonata.media.provider.file</argument>
+            <argument type="service" id="sonata.media.entity_manager" />
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_file.html.twig</argument>
+                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_file.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMediaBundle:Provider:view_file.html.twig</argument>
+                </argument>
+            </call>
+        </service>
+
+        <service id="sonata.media.provider.youtube" class="%sonata.media.provider.youtube.class%">
+            <tag name="sonata.media.provider" />
+            <argument>sonata.media.provider.youtube</argument>
+            <argument type="service" id="sonata.media.entity_manager" />
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_youtube.html.twig</argument>
+                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_youtube.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMediaBundle:Provider:view_youtube.html.twig</argument>
+                </argument>
+            </call>
+        </service>
+
+        <service id="sonata.media.provider.dailymotion" class="%sonata.media.provider.dailymotion.class%">
+            <tag name="sonata.media.provider" />
+            <argument>sonata.media.provider.dailymotion</argument>
+            <argument type="service" id="sonata.media.entity_manager" />
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_dailymotion.html.twig</argument>
+                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_dailymotion.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMediaBundle:Provider:view_dailymotion.html.twig</argument>
+                </argument>
+            </call>
+        </service>
+    </services>
+</container>

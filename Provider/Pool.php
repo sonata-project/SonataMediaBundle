@@ -21,11 +21,17 @@ use Sonata\MediaBundle\Entity\BaseMedia as Media;
  * @throws RuntimeException
  *
  */
-class Service
+class Pool
 {
 
+    /**
+     * @var array
+     */
     protected $providers = array();
 
+    /**
+     * @var array
+     */
     protected $settings = array();
 
 

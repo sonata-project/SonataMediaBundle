@@ -165,7 +165,7 @@ class BaseGallery
     {
         $this->galleryHasMedias = $galleryHasMedias;
 
-        foreach($galleryHasMedias as $galleryHasMedia)
+        foreach ($galleryHasMedias as $galleryHasMedia)
         {
             $galleryHasMedia->setGallery($this);
         }

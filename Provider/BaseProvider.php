@@ -26,6 +26,10 @@ abstract class BaseProvider
      */
     protected $settings = array();
 
+    protected $em;
+
+    protected $templates = array();
+
     /**
      * @param string $name
      * @param \Doctrine\ORM\EntityManager $em
@@ -251,7 +255,6 @@ abstract class BaseProvider
             $format
         );
     }
-
     
     public function getFormats()
     {
@@ -267,5 +270,34 @@ abstract class BaseProvider
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+    }
+
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    public function setTemplates($templates)
+    {
+        $this->templates = $templates;
+    }
+
+    public function getTemplates()
+    {
+        return $this->templates;
+    }
+
+    /**
+     * @param string $name
+     * @return void
+     */
+    public function getTemplate($name)
+    {
+        return isset($this->templates[$name]) ? $this->templates[$name] : null; 
     }
 }

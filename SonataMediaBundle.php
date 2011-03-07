@@ -11,8 +11,16 @@
 namespace Sonata\MediaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Sonata\MediaBundle\DependencyInjection\AddProviderPass;
+    
 class SonataMediaBundle extends Bundle
 {
 
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new AddProviderPass());
+    }
 }

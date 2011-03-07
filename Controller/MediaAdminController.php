@@ -39,14 +39,14 @@ class MediaAdminController extends Controller
         
         if (!$params['provider']) {
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
-                'providers'         => $this->get('media.provider')->getProviders(),
+                'providers'         => $this->get('sonata.media.pool')->getProviders(),
                 'configuration'     => $this->admin,
                 'params'            => $params,
                 'base_template' => $this->getBaseTemplate()
             ));
         }
 
-        $provider = $this->get('media.provider')->getProvider($params['provider']);
+        $provider = $this->get('sonata.media.pool')->getProvider($params['provider']);
 
         $media = new \Application\Sonata\MediaBundle\Entity\Media;
         $media->setProviderName($params['provider']);
@@ -70,10 +70,10 @@ class MediaAdminController extends Controller
                 if ($params['context']) {
                     $media->setContext($params['context']);
                 }
-                $this->get('media.provider')->prePersist($media);
+                $this->get('sonata.media.pool')->prePersist($media);
                 $this->admin->getEntityManager()->persist($media);
                 $this->admin->getEntityManager()->flush();
-                $this->get('media.provider')->postPersist($media);
+                $this->get('sonata.media.pool')->postPersist($media);
 
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array('result' => 'ok', 'objectId' => $media->getId()));
@@ -83,9 +83,7 @@ class MediaAdminController extends Controller
             }
         }
 
-        $template = sprintf('SonataMediaBundle:MediaAdmin:provider_create_%s.html.twig', $params['provider']);
-
-        return $this->render($template, array(
+        return $this->render($provider->getTemplate('admin_create'), array(
             'form'   => $form,
             'media'  => $media,
             'params' => $params,
@@ -102,6 +100,9 @@ class MediaAdminController extends Controller
         if ($id instanceof Form) {
             $media = $id->getData();
             $form   = $id;
+
+            $this->get('sonata.media.pool')->getProvider($media->getProviderName());
+            
         } else {
             $media = $this->admin->getObject($this->get('request')->get('id'));
 
@@ -109,7 +110,7 @@ class MediaAdminController extends Controller
                 throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
             }
 
-            $provider = $this->get('media.provider')->getProvider($media->getProviderName());
+            $provider = $this->get('sonata.media.pool')->getProvider($media->getProviderName());
 
             $form = new Form('data', array(
                 'data'      => $media,
@@ -119,9 +120,7 @@ class MediaAdminController extends Controller
             $provider->buildEditForm($form);
         }
 
-        $template = sprintf('SonataMediaBundle:MediaAdmin:provider_edit_%s.html.twig', $media->getProviderName());
-
-        return $this->render($template, array(
+        return $this->render($provider->getTemplate('admin_edit'), array(
             'form'   => $form,
             'media'  => $media,
             'admin'  => $this->admin,
@@ -145,7 +144,7 @@ class MediaAdminController extends Controller
             throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $this->get('request')->get('id')));
         }
 
-        $provider = $this->get('media.provider')->getProvider($media->getProviderName());
+        $provider = $this->get('sonata.media.pool')->getProvider($media->getProviderName());
 
         $form = new Form('data', $media, $this->get('validator'));
         $provider->buildEditForm($form);
@@ -154,10 +153,10 @@ class MediaAdminController extends Controller
 
         if ($form->isValid()) {
 
-            $this->get('media.provider')->preUpdate($media);
+            $this->get('sonata.media.pool')->preUpdate($media);
             $this->admin->getEntityManager()->persist($form->getData());
             $this->admin->getEntityManager()->flush();
-            $this->get('media.provider')->postUpdate($media);
+            $this->get('sonata.media.pool')->postUpdate($media);
 
             return new RedirectResponse($this->admin->generateUrl('edit', array(
                 'id' => $media->getId(),

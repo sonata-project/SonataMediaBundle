@@ -20,7 +20,7 @@ class GalleryController extends Controller
     public function indexAction()
     {
 
-        $galleries = $this->get('doctrine.orm.default_entity_manager')
+        $galleries = $this->get('sonata.media.entity_manager')
             ->getRepository('Application\Sonata\MediaBundle\Entity\Gallery')
             ->findBy(array(
                 'enabled' => true
@@ -34,7 +34,7 @@ class GalleryController extends Controller
     public function viewAction($id)
     {
 
-        $gallery = $this->get('doctrine.orm.default_entity_manager')->find('Application\Sonata\MediaBundle\Entity\Gallery', $id);
+        $gallery = $this->get('sonata.media.entity_manager')->find('Application\Sonata\MediaBundle\Entity\Gallery', $id);
 
         if (!$gallery) {
             throw new NotFoundHttpException('unable to find the gallery with the id');

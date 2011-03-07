@@ -41,45 +41,18 @@ class SonataMediaExtension extends Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('admin.xml');
+        $loader->load('provider.xml');
 
         $config = call_user_func_array('array_merge_recursive', $config);
 
-        $definition = new Definition($config['class']);
-        $definition->addMethodCall('setSettings', array(isset($config['settings']) ? $config['settings'] : array()));
-
-        foreach ($config['providers'] as $name => $provider) {
-
-            $provider_name = sprintf('media.provider.%s', $name);
-
-            $config['settings']['quality']      = isset($config['settings']['quality']) ? $config['settings']['quality'] : 80;
-            $config['settings']['format']       = isset($config['settings']['format'])  ? $config['settings']['format'] : 'jpg';
-            $config['settings']['height']       = isset($config['settings']['height'])  ? $config['settings']['height'] : 'false';
-            $config['settings']['constraint']   = isset($config['settings']['constraint'])  ? $config['settings']['constraint'] : true;
-
-            $provider['formats']                = is_array($provider['formats']) ? $provider['formats']  : array();
-
-            $provider_definition = new Definition($provider['class'], array(
-                $name,
-                new Reference($config['em']),
-                $config['settings'],
-            ));
-
-            foreach ($provider['formats'] as $format_name => $format_definition) {
-                $provider_definition->addMethodCall('addFormat', array($format_name, $format_definition));
-            }
-
-            $container->setDefinition($provider_name, $provider_definition);
-
-            $definition->addMethodCall('addProvider', array($name, new Reference($provider_name)));
-        }
-
-        $container->setDefinition('media.provider', $definition);
+        $definition = $container->getDefinition('sonata.media.pool');
+        $definition->addMethodCall('setSettings', $config);
 
         // register template helper
         $definition = new Definition(
             'Sonata\MediaBundle\Templating\Helper\MediaHelper',
             array(
-                 new Reference('media.provider'),
+                 new Reference('sonata.media.pool'),
                  new Reference('templating')
             )
         );
