@@ -8,7 +8,7 @@ The ``MediaBundle`` is a media library based on dedicated provider which handle 
   - image
   - youtube
   - dailymotion
-  - more to come (vimeo
+  - more to come : vimeo, pdf ...
 
 Each ``type`` is managed by a service which is in charge of :
 

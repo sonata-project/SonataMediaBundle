@@ -81,32 +81,3 @@ configuration file.
 
     You can define formats per provider type. You might want to set
     an transversal ``admin`` format to be used by the ``MediaAdmin`` class.
-
-
-The bundle contains admin class to manage the different entities :
-
-- Add the AdminBundle's admin definition
-
-.. code-block:: yaml
-
-        media:
-            label:      Media
-            group:      Media
-            class:      Sonata\MediaBundle\Admin\MediaAdmin
-            entity:     Application\Sonata\MediaBundle\Entity\Media
-            controller: SonataMediaBundle:MediaAdmin
-
-        gallery:
-            label:      Gallery
-            group:      Media
-            class:      Sonata\MediaBundle\Admin\GalleryAdmin
-            entity:     Application\Sonata\MediaBundle\Entity\Gallery
-            controller: SonataMediaBundle:GalleryAdmin
-
-        gallery_has_media:
-            label:      GalleryHasMedia
-            group:      Media
-            class:      Sonata\MediaBundle\Admin\GalleryHasMediaAdmin
-            entity:     Application\Sonata\MediaBundle\Entity\GalleryHasMedia
-            controller: SonataMediaBundle:GalleryHasMediaAdmin
-
