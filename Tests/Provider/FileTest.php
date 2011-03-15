@@ -16,9 +16,8 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testProvider()
+    public function getProvider()
     {
-
         $em = 1;
         $settings = array (
             'cdn_enabled'   => true,
@@ -27,9 +26,21 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
             'public_path'   => '/updoads/media',
         );
 
+        $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
+        $resizer->expects($this->any())
+            ->method('resize')
+            ->will($this->returnValue(true));
 
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $settings);
+        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $resizer, $settings);
 
+        return $provider;
+    }
+
+    
+    public function testProvider()
+    {
+
+        $provider = $this->getProvider();
 
         $media = new Media;
         $media->setName('test.txt');
@@ -54,16 +65,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     public function testThumbnail()
     {
 
-        $em = 1;
-        $settings = array (
-            'cdn_enabled'   => true,
-            'cdn_path'      => 'http://here.com',
-            'private_path'  => sys_get_temp_dir().'/media_bundle_test',
-            'public_path'   => '/updoads/media',
-        );
-
-
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $settings);
+        $provider = $this->getProvider();
 
         $media = new Media;
         $media->setName('test.png');
@@ -73,19 +75,12 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testEvent() {
-        $em = 1;
-        $settings = array (
-            'cdn_enabled'   => true,
-            'cdn_path'      => 'http://here.com',
-            'private_path'  => sys_get_temp_dir().'/media_bundle_test',
-            'public_path'   => '/updoads/media',
-        );
+    public function testEvent()
+    {
 
+        $provider = $this->getProvider();
 
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $settings);
-
-        $provider->addFormat('big', array('width' => 200, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
 
@@ -103,11 +98,8 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $provider->postPersist($media);
 
         $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false');
-        $this->assertFileExists($provider->getReferenceImage($media), '::postRemove() remove the original file');
 
         $provider->postRemove($media);
-
-        $this->assertFileNotExists($provider->getReferenceImage($media), '::postRemove() remove the original file');
     }
 
 }

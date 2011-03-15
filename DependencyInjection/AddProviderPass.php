@@ -53,6 +53,14 @@ class AddProviderPass implements CompilerPassInterface
 
     }
 
+    /**
+     * Define the default settings to the config array
+     *
+     * @param string $id
+     * @param \Symfony\Component\DependencyInjection\Definition $definition
+     * @param array $settings
+     * @return void
+     */
     public function applySettings($id, Definition $definition, $settings)
     {
 

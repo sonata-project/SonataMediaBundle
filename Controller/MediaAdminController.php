@@ -71,8 +71,8 @@ class MediaAdminController extends Controller
                     $media->setContext($params['context']);
                 }
                 $this->get('sonata.media.pool')->prePersist($media);
-                $this->admin->getEntityManager()->persist($media);
-                $this->admin->getEntityManager()->flush();
+                $this->admin->getModelManager()->persist($media);
+                $this->admin->getModelManager()->flush();
                 $this->get('sonata.media.pool')->postPersist($media);
 
                 if ($this->isXmlHttpRequest()) {
@@ -154,8 +154,8 @@ class MediaAdminController extends Controller
         if ($form->isValid()) {
 
             $this->get('sonata.media.pool')->preUpdate($media);
-            $this->admin->getEntityManager()->persist($form->getData());
-            $this->admin->getEntityManager()->flush();
+            $this->admin->getModelManager()->persist($form->getData());
+            $this->admin->getModelManager()->flush();
             $this->get('sonata.media.pool')->postUpdate($media);
 
             return new RedirectResponse($this->admin->generateUrl('edit', array(

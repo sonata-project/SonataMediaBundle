@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
 use Symfony\Component\Form\Form;
+use Sonata\MediaBundle\Media\ResizerInterface;
 
 abstract class BaseProvider
 {
@@ -30,15 +31,18 @@ abstract class BaseProvider
 
     protected $templates = array();
 
+    protected $resizer;
+
     /**
      * @param string $name
      * @param \Doctrine\ORM\EntityManager $em
      * @param array $settings
      */
-    public function __construct($name, $em, $settings = array())
+    public function __construct($name, $em, ResizerInterface $resizer, $settings = array())
     {
         $this->name     = $name;
         $this->em       = $em;
+        $this->resizer  = $resizer;
         $this->settings = $settings;
     }
 
@@ -116,18 +120,7 @@ abstract class BaseProvider
                 }
             }
 
-            // TODO : this should be configured as a DI service
-            $image = new \Imagine\Image($image_reference);
-
-            $height = isset($settings['height']) ? $settings['height'] :  null;
-            
-            // resize the thumbnail
-            $processor = new \Imagine\Processor();
-            $processor
-                ->resize($settings['width'], $height, !$height ? \Imagine\GD\Command\Resize::INFER_HEIGHT : null)
-                ->save($filename)
-                ->process($image);
-            
+            $this->getResizer()->resize($image_reference, $filename, $settings['width'], $settings['height']);
         }
 
         if (isset($temp_file)) {
@@ -282,11 +275,19 @@ abstract class BaseProvider
         return $this->settings;
     }
 
-    public function setTemplates($templates)
+    /**
+     *
+     * @param array $templates
+     */
+    public function setTemplates(array $templates)
     {
         $this->templates = $templates;
     }
 
+    /**
+     *
+     * @return array
+     */
     public function getTemplates()
     {
         return $this->templates;
@@ -299,5 +300,13 @@ abstract class BaseProvider
     public function getTemplate($name)
     {
         return isset($this->templates[$name]) ? $this->templates[$name] : null; 
+    }
+
+    /**
+     * @return \Sonata\MediaBundle\Media\ResizerInterface
+     */
+    public function getResizer()
+    {
+        return $this->resizer;
     }
 }

@@ -16,9 +16,8 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 class ImageProviderTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testProvider()
+    public function getProvider()
     {
-
         $em = 1;
         $settings = array (
             'cdn_enabled'   => true,
@@ -27,9 +26,21 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
             'public_path'   => '/updoads/media',
         );
 
+        $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
+        $resizer->expects($this->any())
+            ->method('resize')
+            ->will($this->returnValue(true));
 
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $resizer, $settings);
 
+        return $provider;
+    }
+    
+
+    public function testProvider()
+    {
+
+        $provider = $this->getProvider();
         
         $media = new Media;
         $media->setName('test.png');
@@ -52,16 +63,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
     public function testThumbnail()
     {
 
-        $em = 1;
-        $settings = array (
-            'cdn_enabled'   => true,
-            'cdn_path'      => 'http://here.com',
-            'private_path'  => sys_get_temp_dir().'/media_bundle_test',
-            'public_path'   => '/updoads/media',
-        );
-
-
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
+        $provider = $this->getProvider();
 
         $media = new Media;
         $media->setName('test.png');
@@ -79,37 +81,21 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('\RuntimeException', $e);
         }
 
-        $provider->addFormat('big', array('width' => 200, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true));
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
-        // clean previous test
-        if (is_file(sys_get_temp_dir().'/media_bundle_test/0011/24/thumb_1023456_big.jpg')) {
-
-            unlink(sys_get_temp_dir().'/media_bundle_test/0011/24/thumb_1023456_big.jpg');
-        }
-
-        copy($file->getPath(), $provider->getReferenceImage($media));
-        
         $provider->generateThumbnails($media);
 
-        $this->assertEquals(sys_get_temp_dir().'/media_bundle_test/0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
-        $this->assertFileExists($provider->generatePrivateUrl($media, 'big'), '::generateThumbnails() created the big thumbnail');
+        $this->assertEquals('/fake/path/0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testEvent() {
-        $em = 1;
-        $settings = array (
-            'cdn_enabled'   => true,
-            'cdn_path'      => 'http://here.com',
-            'private_path'  => sys_get_temp_dir().'/media_bundle_test',
-            'public_path'   => '/updoads/media',
-        );
+    public function testEvent()
+    {
 
+        $provider = $this->getProvider();
 
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $settings);
-
-        $provider->addFormat('big', array('width' => 200, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
         
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
 
@@ -126,11 +112,6 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         // post persit the media
         $provider->postPersist($media);
 
-        $this->assertFileExists($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return a valid file');
-
         $provider->postRemove($media);
-
-        $this->assertFileNotExists($provider->generatePrivateUrl($media, 'big'), '::postRemove() remove the thumbnail');
-        $this->assertFileNotExists($provider->getReferenceImage($media), '::postRemove() remove the original file');
     }
 }
