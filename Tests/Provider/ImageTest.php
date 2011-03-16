@@ -23,7 +23,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
             'cdn_enabled'   => true,
             'cdn_path'      => 'http://here.com',
             'private_path'  => '/fake/path',
-            'public_path'   => '/updoads/media',
+            'public_path'   => '/uploads/media',
         );
 
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
@@ -31,8 +31,18 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
             ->method('resize')
             ->will($this->returnValue(true));
 
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('image', $em, $resizer, $settings);
+        $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
 
+        $file = $this->getMock('Gaufrette\Filesystem\File', array(), array($adapter));
+
+        $filesystem = $this->getMock('Gaufrette\Filesystem\Filesystem', array('get'), array($adapter));
+        $filesystem->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($file));
+
+
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $em, $filesystem, $settings);
+        $provider->setResizer($resizer);
         return $provider;
     }
     
@@ -47,16 +57,16 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
 
-        $this->assertEquals('/fake/path/0001/01/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
+        $this->assertEquals('0001/01/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
 
         $media->setId(1023456);
-        $this->assertEquals('/fake/path/0011/24/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
+        $this->assertEquals('0011/24/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
 
-        $this->assertEquals('/fake/path/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
+        $this->assertEquals('0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
-        $this->assertEquals('/fake/path/0011/24', $provider->generatePrivatePath($media));
-        $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
-        $this->assertEquals('/updoads/media/0011/24/thumb_1023456_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('0011/24', $provider->generatePrivatePath($media));
+        $this->assertEquals('/uploads/media/0011/24', $provider->generatePublicPath($media));
+        $this->assertEquals('/uploads/media/0011/24/thumb_1023456_big.jpg', $provider->generatePublicUrl($media, 'big'));
 
     }
 
@@ -70,15 +80,12 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
 
-
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
-
         try {
             $provider->generateThumbnails($media);
             $this->assertFalse(true, '::generateThumbnails() must generate a RuntimeException with no formats defined');
         } catch (\Exception $e) {
 
-            $this->assertInstanceOf('\RuntimeException', $e);
+            $this->assertInstanceOf('\Exception', $e);
         }
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true));
@@ -87,7 +94,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('/fake/path/0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent()

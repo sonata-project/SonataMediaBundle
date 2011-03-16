@@ -10,6 +10,8 @@
 
 namespace Sonata\MediaBundle\Media;
 
+use Gaufrette\Filesystem\File;
+
 interface ResizerInterface
 {
     /**
@@ -20,6 +22,6 @@ interface ResizerInterface
      * @param null|integer $height
      * @return void
      */
-    function resize($in, $out, $width, $height = null);
+    function resize(File $in, File $out, $format, $width, $height = null);
 
 }

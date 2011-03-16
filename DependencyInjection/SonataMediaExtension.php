@@ -48,6 +48,9 @@ class SonataMediaExtension extends Extension
         $definition = $container->getDefinition('sonata.media.pool');
         $definition->addMethodCall('setSettings', $config);
 
+        $this->configureResizerAdapter($container, $config);
+        $this->configureFilesystemAdapter($container, $config);
+      
         // register template helper
         $definition = new Definition(
             'Sonata\MediaBundle\Templating\Helper\MediaHelper',
@@ -66,6 +69,66 @@ class SonataMediaExtension extends Extension
             ->register('twig.extension.media', 'Sonata\MediaBundle\Twig\Extension\MediaExtension')
             ->addTag('twig.extension');
 
+    }
+
+    /**
+     * Inject filesystem dependency to default provider
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param  $config
+     * @return void
+     */
+    public function configureFilesystemAdapter(ContainerBuilder $container, $config)
+    {
+
+        // add the default configuration for the local filesystem
+        if($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['sonata.media.adapter.filesystem.local'])) {
+            $definition = $container->getDefinition('sonata.media.adapter.filesystem.local');
+            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.local'];
+            $definition->addArgument($configuration['directory']);
+            $definition->addArgument($configuration['create']);
+        }
+
+        // add the default configuration for the FTP filesystem
+        if($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['sonata.media.adapter.filesystem.ftp'])) {
+            $definition = $container->getDefinition('sonata.media.adapter.filesystem.ftp');
+            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.ftp'];
+            $definition->addArgument($configuration['directory']);
+            $definition->addArgument($configuration['username']);
+            $definition->addArgument($configuration['password']);
+            $definition->addArgument($configuration['port']);
+            $definition->addArgument($configuration['passive']);
+            $definition->addArgument($configuration['create']);
+        }
+
+        // attach filesystem service to provider
+        foreach($config['providers'] as $id => $provider) {
+            if(!$provider['filesystem']) {
+                continue;
+            }
+
+            $container->getDefinition($id)->setArgument(2, new Reference($provider['filesystem']));
+        }
+    }
+
+    /**
+     * Inject Image resizer dependency to default provider
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param  $config
+     * @return void
+     */
+    public function configureResizerAdapter(ContainerBuilder $container, $config)
+    {
+
+        // attach resizer service to provier
+        foreach($config['providers'] as $id => $provider) {
+            if(!$provider['resizer']) {
+                continue;
+            }
+
+            $container->getDefinition($id)->addMethodCall('setResizer', array(new Reference($provider['resizer'])));
+        }
     }
 
     /**

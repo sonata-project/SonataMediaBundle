@@ -15,9 +15,13 @@
 
         git submodule add git@github.com:sonata-project/EasyExtendsBundle.git src/Sonata/EasyExtendsBundle
 
-* Add the Imagine bundle (image management) and follow ImagineBundle README
+* Add the Imagine library (image manipulation)
 
         git submodule add git://github.com/avalanche123/Imagine.git src/vendor/imagine
+
+* Add the Gaufrette library (filesystem Abstraction)
+
+        git submodule add https://github.com/knplabs/Gaufrette.git src/vendor/gaufrette
 
 * Add MediaBundle to your application kernel
 
@@ -38,31 +42,72 @@
 
 * Add these lines into your config.yml file
 
+    sonata_media:
+        # define the global settings
+        settings:
+            cdn_enabled:  false
+            cdn_path:     http://media.sonata-project.org
+            public_path:  /uploads/media
 
-        sonata_media:
-            class: Sonata\MediaBundle\Provider\Service
+        contexts:
+            defaults:
+                providers:
+                    - sonata.media.provider.dailymotion
+                    - sonata.media.provider.youtube
+                    - sonata.media.provider.image
+                    - sonata.media.provider.file
 
-            settings:
-                cdn_enabled: false
-                cdn_path:     http://media.sonata-project.org
-                public_path: /uploads/media
-                private_path: /web/uploads/media
+            user:
+                providers:
+                    - sonata.media.provider.dailymotion
+                    - sonata.media.provider.youtube
+                    - sonata.media.provider.image
+                    - sonata.media.provider.file
 
-            providers:
-                image:
-                    class: Sonata\MediaBundle\Provider\ImageProvider
-                    formats:
-                        small: { width: 100 }
-                        big:   { width: 500 }
+        filesystem:
+            sonata.media.adapter.filesystem.local:
+                directory:  %kernel.root_dir%/../web/uploads/media
+                create:     false
 
-                youtube:
-                    class: Sonata\MediaBundle\Provider\YouTubeProvider
-                    formats:
-                        small: { width: 100 }
-                        big:   { width: 500 }
+            sonata.media.adapter.filesystem.ftp:
+                directory:
+                host:
+                username:
+                password:
+                port:     21
+                passive:  false
+                create:   false
 
-                dailymotion:
-                    class: Sonata\MediaBundle\Provider\DailyMotionProvider
-                    formats:
-                        small: { width: 100 }
-                        big:   { width: 500 }
+        providers:
+            sonata.media.provider.file:
+                formats:
+                resizer:    false
+                filesystem: sonata.media.filesystem.local
+
+            sonata.media.provider.image:
+                settings:
+                    cdn_enabled: true
+
+                resizer:    sonata.media.resizer.simple
+                filesystem: sonata.media.filesystem.local
+                formats:
+                    small: { width: 100 , quality: 70}
+                    big:   { width: 500 , quality: 70}
+                    admin: { width: 300}
+
+            sonata.media.provider.youtube:
+                resizer:    sonata.media.resizer.simple
+                filesystem: sonata.media.filesystem.local
+                formats:
+                    small: { width: 100 , quality: 70}
+                    big:   { width: 500 , quality: 70}
+                    admin: { width: 300}
+
+            sonata.media.provider.dailymotion:
+                resizer:    sonata.media.resizer.simple
+                filesystem: sonata.media.filesystem.local
+                formats:
+                    small: { width: 100 , quality: 70}
+                    big:   { width: 500 , quality: 70}
+                    admin: { width: 300}
+

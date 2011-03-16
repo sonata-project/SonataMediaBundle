@@ -31,7 +31,19 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
             ->method('resize')
             ->will($this->returnValue(true));
 
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $resizer, $settings);
+
+        $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
+
+        $file = $this->getMock('Gaufrette\Filesystem\File', array(), array($adapter));
+
+        $filesystem = $this->getMock('Gaufrette\Filesystem\Filesystem', array('get'), array($adapter));
+        $filesystem->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($file));
+
+
+        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $filesystem, $settings);
+        $provider->setResizer($resizer);
 
         return $provider;
     }
@@ -47,14 +59,14 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASD.txt');
         $media->setId(10);
 
-        $this->assertEquals('/fake/path/0001/01/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
+        $this->assertEquals('0001/01/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
 
         $media->setId(1023456);
-        $this->assertEquals('/fake/path/0011/24/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
+        $this->assertEquals('0011/24/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
 
-        $this->assertEquals('/fake/path/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
+        $this->assertEquals('0011/24/ASDASD.txt', $provider->getReferenceImage($media));
 
-        $this->assertEquals('/fake/path/0011/24', $provider->generatePrivatePath($media));
+        $this->assertEquals('0011/24', $provider->generatePrivatePath($media));
         $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
 
         // default icon image

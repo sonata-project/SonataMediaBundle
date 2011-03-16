@@ -68,17 +68,15 @@ class FileProvider extends BaseProvider
     
     public function postPersist(Media $media)
     {
-
         if (!$media->getBinaryContent()) {
             return;
         }
 
-        $filename = sprintf('%s/%s',
-            $this->buildDirectory($media),
-            $media->getProviderReference()
+        $file = $this->getFilesystem()->get(
+            sprintf('%s/%s', $this->generatePrivatePath($media), $media->getProviderReference()),
+            true
         );
-
-        copy($media->getBinaryContent()->getPath(), $filename);
+        $file->setContent(file_get_contents($media->getBinaryContent()->getPath()));
 
         $this->generateThumbnails($media);
     }
@@ -91,12 +89,11 @@ class FileProvider extends BaseProvider
 
         $this->fixBinaryContent($media);
 
-        $filename = sprintf('%s/%s',
-            $this->buildDirectory($media),
-            $media->getProviderReference()
+        $file = $this->getFilesystem()->get(
+            sprintf('%s/%s', $this->generatePrivatePath($media), $media->getProviderReference()),
+            true
         );
-
-        copy($media->getBinaryContent()->getPath(), $filename);
+        $file->setContent(file_get_contents($media->getBinaryContent()->getPath()));
 
         $this->generateThumbnails($media);
     }
@@ -178,19 +175,6 @@ class FileProvider extends BaseProvider
         return false;
     }
 
-    public function postRemove(Media $media)
-    {
-        $files = array(
-            $this->getReferenceImage($media),
-        );
-
-        foreach ($files as $file) {
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        }
-    }
-
     public function preUpdate(Media $media)
     {
 
@@ -205,7 +189,6 @@ class FileProvider extends BaseProvider
         if (!$media->getProviderReference()) {
            $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
         }
-
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
         $media->setSize($media->getBinaryContent()->size());

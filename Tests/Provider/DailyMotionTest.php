@@ -26,12 +26,24 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
             'public_path'   => '/updoads/media',
         );
 
+
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
             ->method('resize')
             ->will($this->returnValue(true));
 
-        $provider = new \Sonata\MediaBundle\Provider\DailyMotionProvider('dailymotion', $em, $resizer, $settings);
+        $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
+
+        $file = $this->getMock('Gaufrette\Filesystem\File', array(), array($adapter));
+
+        $filesystem = $this->getMock('Gaufrette\Filesystem\Filesystem', array('get'), array($adapter));
+        $filesystem->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($file));
+
+
+        $provider = new \Sonata\MediaBundle\Provider\DailyMotionProvider('file', $em, $filesystem, $settings);
+        $provider->setResizer($resizer);
 
         return $provider;
     }
@@ -55,7 +67,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $provider->getReferenceImage($media));
 
-        $this->assertEquals('/fake/path/0011/24', $provider->generatePrivatePath($media));
+        $this->assertEquals('0011/24', $provider->generatePrivatePath($media));
         $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
         $this->assertEquals('/updoads/media/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
 
@@ -88,7 +100,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('/fake/path/0011/24/thumb_1023458_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('0011/24/thumb_1023458_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent()

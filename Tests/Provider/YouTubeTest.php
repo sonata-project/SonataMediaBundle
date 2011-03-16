@@ -31,8 +31,18 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
             ->method('resize')
             ->will($this->returnValue(true));
 
-        $provider = new \Sonata\MediaBundle\Provider\YouTubeProvider('youtube', $em, $resizer, $settings);
+        $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
 
+        $file = $this->getMock('Gaufrette\Filesystem\File', array(), array($adapter));
+
+        $filesystem = $this->getMock('Gaufrette\Filesystem\Filesystem', array('get'), array($adapter));
+        $filesystem->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($file));
+
+
+        $provider = new \Sonata\MediaBundle\Provider\YouTubeProvider('file', $em, $filesystem, $settings);
+        $provider->setResizer($resizer);
         return $provider;
     }
 
@@ -55,7 +65,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
 
-        $this->assertEquals('/fake/path/0011/24', $provider->generatePrivatePath($media));
+        $this->assertEquals('0011/24', $provider->generatePrivatePath($media));
         $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
         $this->assertEquals('/updoads/media/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
 
@@ -87,7 +97,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('/fake/path/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent()

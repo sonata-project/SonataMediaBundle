@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
 use Symfony\Component\Form\Form;
 use Sonata\MediaBundle\Media\ResizerInterface;
+use Gaufrette\Filesystem\Filesystem;
 
 abstract class BaseProvider
 {
@@ -33,17 +34,19 @@ abstract class BaseProvider
 
     protected $resizer;
 
+    protected $filesystem;
+
     /**
      * @param string $name
      * @param \Doctrine\ORM\EntityManager $em
      * @param array $settings
      */
-    public function __construct($name, $em, ResizerInterface $resizer, $settings = array())
+    public function __construct($name, $em, Filesystem $filesystem, array $settings = array())
     {
-        $this->name     = $name;
-        $this->em       = $em;
-        $this->resizer  = $resizer;
-        $this->settings = $settings;
+        $this->name         = $name;
+        $this->em           = $em;
+        $this->settings     = $settings;
+        $this->filesystem   = $filesystem;
     }
 
     /**
@@ -76,7 +79,7 @@ abstract class BaseProvider
      */
     public function requireThumbnails()
     {
-        return true;
+        return $this->getResizer() !== null;
     }
 
     /**
@@ -86,45 +89,40 @@ abstract class BaseProvider
      */
     public function generateThumbnails(Media $media)
     {
-
         if (!$this->requireThumbnails()) {
             return;
         }
 
-        $base_path = $this->buildDirectory($media);
-        $image_reference = $this->getReferenceImage($media);
-
         if (!is_array($this->formats) || count($this->formats) == 0) {
-
             throw new \RuntimeException('You must define one format');
         }
 
-        if (substr($image_reference, 0, 7) == 'http://') {
-            $info = pathinfo($image_reference);
-            $temp_file = tempnam(sys_get_temp_dir(), 'image') . '.' . $info['extension'];
-            file_put_contents($temp_file, file_get_contents($image_reference));
-            $image_reference = $temp_file;
+        $key = $this->getReferenceImage($media);
+
+        if (substr($key, 0, 7) == 'http://') {
+            $key = $this->generatePrivateUrl($media, 'reference');
+
+            // the reference file is remote, get it and store it with the 'reference' format
+            if($this->getFilesystem()->has($key)) {
+                $referenceFile = $this->getFilesystem()->get($key);
+            } else {
+                $referenceFile = $this->getFilesystem()->get($key, true);
+                $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)));
+            }
+        } else {
+            $referenceFile = $this->getFilesystem()->get($this->getReferenceImage($media), true);
         }
 
         foreach ($this->formats as $format => $settings) {
 
-            $filename = sprintf('%s/thumb_%s_%s.jpg',
-                $base_path,
-                $media->getId(),
-                $format
+            // resize the thumbnail
+            $this->getResizer()->resize(
+                $referenceFile,
+                $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
+                'jpg' ,
+                $settings['width'],
+                $settings['height']
             );
-
-            if (is_file($filename)) {
-                if (!@unlink($filename)) {
-                    throw new \RuntimeException('Unable to unlink the file : ' . $filename . '. Please check permissions !');
-                }
-            }
-
-            $this->getResizer()->resize($image_reference, $filename, $settings['width'], $settings['height']);
-        }
-
-        if (isset($temp_file)) {
-            unlink($temp_file);
         }
     }
 
@@ -153,12 +151,25 @@ abstract class BaseProvider
     abstract function postUpdate(Media $media);
 
     /**
-     *
-     * @abstract
-     * @param  $media
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    abstract function postRemove(Media $media);
+    public function postRemove(Media $media)
+    {
+        $path = $this->getReferenceImage($media);
+
+        if($this->getFilesystem()->has($path)) {
+            $this->getFilesystem()->delete($path);
+        }
+
+        // delete the differents formats
+        foreach ($this->formats as $format => $definition) {
+            $path = $this->generatePrivateUrl($media, $format);
+            if($this->getFilesystem()->has($path)) {
+                $this->getFilesystem()->delete($path);
+            }
+        }
+    }
 
     /**
      * build the related create form
@@ -172,7 +183,6 @@ abstract class BaseProvider
      */
     abstract function buildEditForm(Form $form);
 
-
     /**
      *
      * @abstract
@@ -181,8 +191,18 @@ abstract class BaseProvider
      */
     abstract function postPersist(Media $media);
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param string $format
+     */
     abstract function getHelperProperties(Media $media, $format);
-    
+
+    /**
+     * Generate the private path (client side)
+     *
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return string
+     */
     public function generatePrivatePath(Media $media)
     {
         $limit_first_level = 100000;
@@ -190,8 +210,7 @@ abstract class BaseProvider
 
         $rep_first_level = (int) ($media->getId() / $limit_first_level);
         $rep_second_level = (int) (($media->getId() - ($rep_first_level * $limit_first_level)) / $limit_second_level);
-        $path = sprintf('%s/%04s/%02s',
-            $this->settings['private_path'],
+        $path = sprintf('%04s/%02s',
             $rep_first_level + 1,
             $rep_second_level + 1
         );
@@ -199,9 +218,14 @@ abstract class BaseProvider
         return $path;
     }
 
+    /**
+     * Generate the public path (client side)
+     *
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return string
+     */
     public function generatePublicPath(Media $media)
     {
-
         $limit_first_level = 100000;
         $limit_second_level = 1000;
 
@@ -216,19 +240,13 @@ abstract class BaseProvider
         return $path;
     }
 
-    public function buildDirectory(Media $media)
-    {
-        $path = $this->generatePrivatePath($media);
-
-        if (!is_dir($path)) {
-            if (!@mkdir($path, 0755, true)) {
-                throw new \RuntimeException('unable to create directory : ' . $path);
-            }
-        }
-
-        return $path;
-    }
-
+    /**
+     * Generate the public directory path (client side)
+     *
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param  $format
+     * @return string
+     */
     public function generatePublicUrl(Media $media, $format)
     {
 
@@ -239,6 +257,13 @@ abstract class BaseProvider
         );
     }
 
+    /**
+     * Generate the private directory path (server side)
+     *
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param  $format
+     * @return string
+     */
     public function generatePrivateUrl(Media $media, $format)
     {
 
@@ -265,7 +290,7 @@ abstract class BaseProvider
         return $this->name;
     }
 
-    public function setSettings($settings)
+    public function setSettings(array $settings)
     {
         $this->settings = $settings;
     }
@@ -308,5 +333,20 @@ abstract class BaseProvider
     public function getResizer()
     {
         return $this->resizer;
+    }
+
+    public function setResizer(ResizerInterface $resizer)
+    {
+        return $this->resizer = $resizer;
+    }
+
+    public function setFilesystem($filesystem)
+    {
+        $this->filesystem = $filesystem;
+    }
+
+    public function getFilesystem()
+    {
+        return $this->filesystem;
     }
 }

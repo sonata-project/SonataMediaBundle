@@ -21,7 +21,7 @@
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.image</argument>
             <argument type="service" id="sonata.media.entity_manager" />
-            <argument type="service" id="sonata.media.resizer.simple" />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_image.html.twig</argument>
@@ -36,7 +36,7 @@
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.file</argument>
             <argument type="service" id="sonata.media.entity_manager" />
-            <argument type="service" id="sonata.media.resizer.simple" />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_file.html.twig</argument>
@@ -51,7 +51,7 @@
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.youtube</argument>
             <argument type="service" id="sonata.media.entity_manager" />
-            <argument type="service" id="sonata.media.resizer.simple" />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_youtube.html.twig</argument>
@@ -66,7 +66,7 @@
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.dailymotion</argument>
             <argument type="service" id="sonata.media.entity_manager" />
-            <argument type="service" id="sonata.media.resizer.simple" />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_dailymotion.html.twig</argument>

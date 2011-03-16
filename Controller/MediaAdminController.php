@@ -146,10 +146,13 @@ class MediaAdminController extends Controller
 
         $provider = $this->get('sonata.media.pool')->getProvider($media->getProviderName());
 
-        $form = new Form('data', $media, $this->get('validator'));
+        $form = new Form('data', array(
+            'data'      => $media,
+            'validator' => $this->get('validator')
+        ));
         $provider->buildEditForm($form);
 
-        $form->bind($this->get('request')->get('data'), $this->get('request')->files->get('data'));
+        $form->bind($this->get('request'));
 
         if ($form->isValid()) {
 

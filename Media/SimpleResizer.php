@@ -10,39 +10,50 @@
 
 namespace Sonata\MediaBundle\Media;
 
-use Imagine\Image\BoxInterface;
+use Imagine\ImagineInterface;
 use Imagine\Image\Box;
-    
+use Gaufrette\Filesystem\File;
+
 class SimpleResizer implements ResizerInterface
 {
     protected $adapterClass;
 
     protected $mode;
-    
-    public function __construct($adapter, $mode)
+
+
+    public function __construct(ImagineInterface $adapter, $mode)
     {
         $this->adapter = $adapter;
         $this->mode    = $mode;
     }
 
-    public function resize($in, $out, $width, $height = null)
+    /**
+     * @param \Gaufrette\Filesystem\File $in
+     * @param \Gaufrette\Filesystem\File $out
+     * @param string $format
+     * @param integer $width
+     * @param null|integer $height
+     * @return void
+     */
+    public function resize(File $in, File $out, $format, $width, $height = null)
     {
-
-        $image = $this->getAdapter()->open($in);
+        $image = $this->getAdapter()->load($in->getContent());
 
         if($height == null) {
             $size = $image->getSize();
             $height = (int) ($width * $size->getHeight() / $size->getWidth());
         }
 
-        return $image
+        $content = $image
             ->thumbnail(new Box($width, $height), $this->getMode())
-            ->save($out);
+            ->get($format);
+
+        $out->setContent($content);
     }
 
     /**
      * 
-     * @return \Imagine\Image\BoxInterface
+     * @return \Imagine\ImagineInterface
      */
     public function getAdapter()
     {

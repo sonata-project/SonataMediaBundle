@@ -15,12 +15,6 @@ use Sonata\MediaBundle\Entity\BaseMedia as Media;
 class ImageProvider extends FileProvider
 {
 
-
-    public function requireThumbnails()
-    {
-        return true;
-    }
-
     public function getHelperProperties(Media $media, $format, $options = array(), $settings = array())
     {
         $format_configuration = $this->getFormat($format);
@@ -39,6 +33,10 @@ class ImageProvider extends FileProvider
         ), $options);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return string
+     */
     public function getReferenceImage(Media $media)
     {
 
@@ -48,13 +46,21 @@ class ImageProvider extends FileProvider
         );
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return string
+     */
     public function getAbsolutePath(Media $media)
     {
 
         return $this->getReferenceImage($media);
     }
 
-
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param  $format
+     * @return string
+     */
     public function generatePublicUrl(Media $media, $format)
     {
 
@@ -65,6 +71,11 @@ class ImageProvider extends FileProvider
         );
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param  $format
+     * @return string
+     */
     public function generatePrivateUrl(Media $media, $format)
     {
 
@@ -73,24 +84,5 @@ class ImageProvider extends FileProvider
             $media->getId(),
             $format
         );
-    }
-
-    public function postRemove(Media $media)
-    {
-
-        $files = array(
-            $this->getReferenceImage($media),
-        );
-
-        foreach ($this->formats as $format => $definition) {
-            $files[] = $this->generatePrivateUrl($media, $format);
-        }
-
-
-        foreach ($files as $file) {
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        }
     }
 }

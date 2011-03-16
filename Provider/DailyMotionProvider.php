@@ -22,13 +22,11 @@ class DailyMotionProvider extends BaseProvider
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    
     public function getAbsolutePath(Media $media)
     {
 
         return sprintf('http://www.dailymotion.com/swf/video/%s', $media->getProviderReference());
     }
-
 
     /**
      * build the related create form
@@ -44,7 +42,6 @@ class DailyMotionProvider extends BaseProvider
         $form->add(new \Symfony\Component\Form\TextField('copyright'));
 
         $form->add(new \Symfony\Component\Form\TextField('binary_content'));
-
     }
 
     /**
@@ -121,6 +118,10 @@ class DailyMotionProvider extends BaseProvider
         return $params;
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return
+     */
     public function prePersist(Media $media)
     {
 
@@ -146,6 +147,10 @@ class DailyMotionProvider extends BaseProvider
 
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return
+     */
     public function preUpdate(Media $media)
     {
         if (!$media->getBinaryContent()) {
@@ -164,7 +169,11 @@ class DailyMotionProvider extends BaseProvider
         $media->setUpdatedAt(new \Datetime());
     }
 
-
+    /**
+     * @throws \RuntimeException
+     * @param  $media
+     * @return mixed|string
+     */
     public function getMetadata($media)
     {
 
@@ -189,29 +198,19 @@ class DailyMotionProvider extends BaseProvider
         return $metadata;
     }
 
-    public function postRemove(Media $media)
-    {
-        $files = array(
-            $this->getReferenceImage($media),
-        );
-
-        foreach ($this->formats as $format => $definition) {
-            $files[] = $this->generatePrivateUrl($media, $format);
-        }
-
-
-        foreach ($files as $file) {
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        }
-    }
-
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function postUpdate(Media $media)
     {
         $this->postPersist($media);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return
+     */
     public function postPersist(Media $media)
     {
         if (!$media->getBinaryContent()) {
@@ -221,6 +220,10 @@ class DailyMotionProvider extends BaseProvider
         $this->generateThumbnails($media);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function preRemove(Media $media)
     {
 
