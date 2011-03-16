@@ -15,20 +15,13 @@ use Sonata\MediaBundle\Entity\BaseMedia as Media;
 class ImageProvider extends FileProvider
 {
 
-    public function getHelperProperties(Media $media, $format, $options = array(), $settings = array())
+    public function getHelperProperties(Media $media, $format, $options = array())
     {
         $format_configuration = $this->getFormat($format);
 
-        $base_media = $settings['cdn_enabled'] ? $settings['cdn_path'] : '';
-
-         // the media is flushable, so we are working with a recent version not yet handled by the cdn
-        if ($media->getCdnIsFlushable()) {
-            $base_media = '';
-        }
-
         return array_merge(array(
           'title'    => $media->getName(),
-          'src'      => sprintf('%s%s', $base_media, $this->generatePublicUrl($media, $format)),
+          'src'      => $this->generatePublicUrl($media, $format),
           'width'    => $format_configuration['width'],
         ), $options);
     }
