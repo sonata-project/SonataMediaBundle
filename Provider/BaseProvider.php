@@ -24,11 +24,6 @@ abstract class BaseProvider
      */
     protected $formats = array();
 
-    /**
-     * @var array
-     */
-    protected $settings = array();
-
     protected $em;
 
     protected $templates = array();
@@ -44,11 +39,10 @@ abstract class BaseProvider
      * @param \Doctrine\ORM\EntityManager $em
      * @param array $settings
      */
-    public function __construct($name, $em, Filesystem $filesystem, CDNInterface $cdn, array $settings = array())
+    public function __construct($name, $em, Filesystem $filesystem, CDNInterface $cdn)
     {
         $this->name         = $name;
         $this->em           = $em;
-        $this->settings     = $settings;
         $this->filesystem   = $filesystem;
         $this->cdn          = $cdn;
     }
@@ -269,16 +263,6 @@ abstract class BaseProvider
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setSettings(array $settings)
-    {
-        $this->settings = $settings;
-    }
-
-    public function getSettings()
-    {
-        return $this->settings;
     }
 
     /**

@@ -38,6 +38,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = new \Sonata\MediaBundle\Provider\YouTubeProvider('file', $em, $filesystem, $cdn);
         $provider->setResizer($resizer);
+        
         return $provider;
     }
 

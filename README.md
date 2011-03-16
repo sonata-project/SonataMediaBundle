@@ -82,10 +82,8 @@
                     resizer:    false
                     filesystem: sonata.media.filesystem.local
                     cdn:        sonata.media.cdn.server
-                sonata.media.provider.image:
-                    settings:
-                        cdn_enabled: true
 
+                sonata.media.provider.image:
                     resizer:    sonata.media.resizer.simple
                     filesystem: sonata.media.filesystem.local
                     cdn:        sonata.media.cdn.server

@@ -29,12 +29,6 @@ class Pool
      */
     protected $providers = array();
 
-    /**
-     * @var array
-     */
-    protected $settings = array();
-
-
     public function getProvider($name)
     {
 
@@ -49,7 +43,6 @@ class Pool
     {
         $this->providers[$name] = $instance;
     }
-
 
     public function postUpdate(Media $media)
     {
@@ -94,16 +87,6 @@ class Pool
     public function getProviders()
     {
         return $this->providers;
-    }
-
-    public function setSettings($settings)
-    {
-        $this->settings = $settings;
-    }
-
-    public function getSettings()
-    {
-        return $this->settings;
     }
 
     public function getProviderList()
