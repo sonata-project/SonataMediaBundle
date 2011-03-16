@@ -165,7 +165,6 @@ class YouTubeProvider extends BaseProvider
         $form->add(new \Symfony\Component\Form\CheckboxField('cdn_is_flushable'));
         $form->add(new \Symfony\Component\Form\TextareaField('description'));
         $form->add(new \Symfony\Component\Form\TextField('copyright'));
-
         $form->add(new \Symfony\Component\Form\TextField('binary_content'));
 
     }

@@ -19,14 +19,6 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
     public function getProvider()
     {
         $em = 1;
-        $settings = array (
-            'cdn_enabled'   => true,
-            'cdn_path'      => 'http://here.com',
-            'private_path'  => '/fake/path',
-            'public_path'   => '/updoads/media',
-        );
-
-
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
             ->method('resize')
@@ -42,7 +34,9 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($file));
 
 
-        $provider = new \Sonata\MediaBundle\Provider\DailyMotionProvider('file', $em, $filesystem, $settings);
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
+
+        $provider = new \Sonata\MediaBundle\Provider\DailyMotionProvider('file', $em, $filesystem, $cdn);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -67,8 +61,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $provider->getReferenceImage($media));
 
-        $this->assertEquals('0011/24', $provider->generatePrivatePath($media));
-        $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
+        $this->assertEquals('0011/24', $provider->generatePath($media));
         $this->assertEquals('/updoads/media/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
 
     }

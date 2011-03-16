@@ -19,12 +19,6 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
     public function getProvider()
     {
         $em = 1;
-        $settings = array (
-            'cdn_enabled'   => true,
-            'cdn_path'      => 'http://here.com',
-            'private_path'  => '/fake/path',
-            'public_path'   => '/uploads/media',
-        );
 
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
@@ -40,13 +34,14 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($file));
 
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $em, $filesystem, $settings);
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $em, $filesystem, $cdn);
         $provider->setResizer($resizer);
+        
         return $provider;
     }
     
-
     public function testProvider()
     {
 
@@ -64,8 +59,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
-        $this->assertEquals('0011/24', $provider->generatePrivatePath($media));
-        $this->assertEquals('/uploads/media/0011/24', $provider->generatePublicPath($media));
+        $this->assertEquals('0011/24', $provider->generatePath($media));
         $this->assertEquals('/uploads/media/0011/24/thumb_1023456_big.jpg', $provider->generatePublicUrl($media, 'big'));
 
     }

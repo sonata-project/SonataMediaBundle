@@ -11,10 +11,11 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Entity\BaseMedia as Media;
 use Symfony\Component\Form\Form;
-use Sonata\MediaBundle\Media\ResizerInterface;
 use Gaufrette\Filesystem\Filesystem;
+use Sonata\MediaBundle\Media\ResizerInterface;
+use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\CDN\CDNInterface;
 
 abstract class BaseProvider
 {
@@ -36,17 +37,20 @@ abstract class BaseProvider
 
     protected $filesystem;
 
+    protected $cdn;
+    
     /**
      * @param string $name
      * @param \Doctrine\ORM\EntityManager $em
      * @param array $settings
      */
-    public function __construct($name, $em, Filesystem $filesystem, array $settings = array())
+    public function __construct($name, $em, Filesystem $filesystem, CDNInterface $cdn, array $settings = array())
     {
         $this->name         = $name;
         $this->em           = $em;
         $this->settings     = $settings;
         $this->filesystem   = $filesystem;
+        $this->cdn          = $cdn;
     }
 
     /**
@@ -203,7 +207,7 @@ abstract class BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return string
      */
-    public function generatePrivatePath(Media $media)
+    public function generatePath(Media $media)
     {
         $limit_first_level = 100000;
         $limit_second_level = 1000;
@@ -211,28 +215,6 @@ abstract class BaseProvider
         $rep_first_level = (int) ($media->getId() / $limit_first_level);
         $rep_second_level = (int) (($media->getId() - ($rep_first_level * $limit_first_level)) / $limit_second_level);
         $path = sprintf('%04s/%02s',
-            $rep_first_level + 1,
-            $rep_second_level + 1
-        );
-
-        return $path;
-    }
-
-    /**
-     * Generate the public path (client side)
-     *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return string
-     */
-    public function generatePublicPath(Media $media)
-    {
-        $limit_first_level = 100000;
-        $limit_second_level = 1000;
-
-        $rep_first_level = (int) ($media->getId() / $limit_first_level);
-        $rep_second_level = (int) (($media->getId() - ($rep_first_level * $limit_first_level)) / $limit_second_level);
-        $path = sprintf('%s/%04s/%02s', // todo : allow this to be configured....
-            $this->settings['public_path'],
             $rep_first_level + 1,
             $rep_second_level + 1
         );
@@ -249,12 +231,11 @@ abstract class BaseProvider
      */
     public function generatePublicUrl(Media $media, $format)
     {
-
-        return sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePublicPath($media),
+        return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
+            $this->generatePath($media),
             $media->getId(),
             $format
-        );
+        ));
     }
 
     /**
@@ -268,7 +249,7 @@ abstract class BaseProvider
     {
 
         return sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePrivatePath($media),
+            $this->generatePath($media),
             $media->getId(),
             $format
         );
@@ -348,5 +329,19 @@ abstract class BaseProvider
     public function getFilesystem()
     {
         return $this->filesystem;
+    }
+
+    /**
+     * @param CDNInterface $cdn
+     * @return void
+     */
+    public function setCdn(CDNInterface $cdn)
+    {
+        $this->cdn = $cdn;
+    }
+
+    public function getCdn()
+    {
+        return $this->cdn;
     }
 }

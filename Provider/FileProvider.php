@@ -20,7 +20,7 @@ class FileProvider extends BaseProvider
     {
 
         return sprintf('%s/%s',
-            $this->generatePrivatePath($media),
+            $this->generatePath($media),
             $media->getProviderReference()
         );
     }
@@ -52,7 +52,6 @@ class FileProvider extends BaseProvider
         $form->add(new \Symfony\Component\Form\FileField('binary_content', array(
             'secret' => 'file'
         )));
-
     }
 
     /**
@@ -73,7 +72,7 @@ class FileProvider extends BaseProvider
         }
 
         $file = $this->getFilesystem()->get(
-            sprintf('%s/%s', $this->generatePrivatePath($media), $media->getProviderReference()),
+            sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
             true
         );
         $file->setContent(file_get_contents($media->getBinaryContent()->getPath()));
@@ -90,7 +89,7 @@ class FileProvider extends BaseProvider
         $this->fixBinaryContent($media);
 
         $file = $this->getFilesystem()->get(
-            sprintf('%s/%s', $this->generatePrivatePath($media), $media->getProviderReference()),
+            sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
             true
         );
         $file->setContent(file_get_contents($media->getBinaryContent()->getPath()));
@@ -98,7 +97,7 @@ class FileProvider extends BaseProvider
         $this->generateThumbnails($media);
     }
 
-    public function fixBinaryContent($media)
+    public function fixBinaryContent(Media $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -152,12 +151,8 @@ class FileProvider extends BaseProvider
     public function generatePublicUrl(Media $media, $format)
     {
 
-        // return an icon
-        $path = sprintf('/media_bundle/images/files/%s/file.png',
-            $format
-        );
-
-        return $path;
+        // todo: add a valid icon set
+        return $this->getCdn()->getPath(sprintf('media_bundle/images/files/%s/file.png',$format));
     }
 
     public function getHelperProperties(Media $media, $format, $options = array())

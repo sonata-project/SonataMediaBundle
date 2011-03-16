@@ -18,7 +18,6 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileResource;
-
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -45,11 +44,9 @@ class SonataMediaExtension extends Extension
 
         $config = call_user_func_array('array_merge_recursive', $config);
 
-        $definition = $container->getDefinition('sonata.media.pool');
-        $definition->addMethodCall('setSettings', $config);
-
         $this->configureResizerAdapter($container, $config);
         $this->configureFilesystemAdapter($container, $config);
+        $this->configureCdnAdapter($container, $config);
       
         // register template helper
         $definition = new Definition(
@@ -71,6 +68,31 @@ class SonataMediaExtension extends Extension
 
     }
 
+    /**
+     * Inject CDN dependency to default provider
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param  $config
+     * @return void
+     */
+    public function configureCdnAdapter(ContainerBuilder $container, $config)
+    {
+        // add the default configuration for the server cdn
+        if($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['sonata.media.cdn.server'])) {
+            $definition     = $container->getDefinition('sonata.media.cdn.server');
+            $configuration  = $config['cdn']['sonata.media.cdn.server'];
+            $definition->setArgument(0, $configuration['path']);
+        }
+
+        // attach cdn service to provider
+        foreach($config['providers'] as $id => $provider) {
+            if(!$provider['cdn']) {
+                continue;
+            }
+
+            $container->getDefinition($id)->setArgument(3, new Reference($provider['cdn']));
+        }
+    }
     /**
      * Inject filesystem dependency to default provider
      *

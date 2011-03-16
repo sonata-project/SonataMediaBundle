@@ -21,7 +21,7 @@ use Symfony\Component\Templating\Helper\Helper;
 class MediaHelper extends Helper
 {
 
-    protected $media_service = null;
+    protected $mediaService = null;
 
     protected $templating = null;
 
@@ -30,9 +30,9 @@ class MediaHelper extends Helper
      *
      * @param Constructor $media_provider A MediaProvider instance
      */
-    public function __construct($media_service, $templating)
+    public function __construct($mediaService, $templating)
     {
-        $this->media_service    = $media_service;
+        $this->mediaService    = $mediaService;
         $this->templating       = $templating;
     }
 
@@ -93,17 +93,7 @@ class MediaHelper extends Helper
              return '';
          }
 
-         // compute the cdn option
-         $settings = $this->getMediaService()->getSettings();
-         $base_media = $settings['cdn_enabled'] ? $settings['cdn_path'] : '';
-
-         // the media is flushable, so we are working with a recent version not yet handled by the cdn
-         if ($media->getCdnIsFlushable()) {
-             $base_media = '';
-         }
-
-         $provider = $this
-            ->getMediaService()
+         $provider = $this->getMediaService()
             ->getProvider($media->getProviderName());
 
          $format_definition = $provider->getFormat($format);
@@ -114,7 +104,7 @@ class MediaHelper extends Helper
              'width' => $format_definition['width'],
          ), $options);
 
-         $options['src'] = sprintf('%s%s', $base_media, $provider->generatePublicUrl($media, $format));
+         $options['src'] = $provider->generatePublicUrl($media, $format);
 
          return $this->getTemplating()->render(
             $provider->getTemplate('helper_thumbnail'),
@@ -126,14 +116,14 @@ class MediaHelper extends Helper
      }
 
 
-    public function setMediaService($media_service)
+    public function setMediaService($mediaService)
     {
-        $this->media_service = $media_service;
+        $this->mediaService = $mediaService;
     }
 
     public function getMediaService()
     {
-        return $this->media_service;
+        return $this->mediaService;
     }
 
     public function setTemplating($templating)

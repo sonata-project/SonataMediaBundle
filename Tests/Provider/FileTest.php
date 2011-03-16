@@ -19,12 +19,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     public function getProvider()
     {
         $em = 1;
-        $settings = array (
-            'cdn_enabled'   => true,
-            'cdn_path'      => 'http://here.com',
-            'private_path'  => '/fake/path',
-            'public_path'   => '/updoads/media',
-        );
 
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
@@ -41,8 +35,9 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($file));
 
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $filesystem, $settings);
+        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $filesystem, $cdn);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -66,11 +61,10 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('0011/24/ASDASD.txt', $provider->getReferenceImage($media));
 
-        $this->assertEquals('0011/24', $provider->generatePrivatePath($media));
-        $this->assertEquals('/updoads/media/0011/24', $provider->generatePublicPath($media));
-
+        $this->assertEquals('0011/24', $provider->generatePath($media));
+        
         // default icon image
-        $this->assertEquals('/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/updoads/media/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
 
     }
 
@@ -84,7 +78,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023456);
 
         $provider->generateThumbnails($media);
-
     }
 
     public function testEvent()

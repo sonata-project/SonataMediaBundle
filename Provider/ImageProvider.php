@@ -41,7 +41,7 @@ class ImageProvider extends FileProvider
     {
 
         return sprintf('%s/%s',
-            $this->generatePrivatePath($media),
+            $this->generatePath($media),
             $media->getProviderReference()
         );
     }
@@ -63,12 +63,11 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(Media $media, $format)
     {
-
-        return sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePublicPath($media),
+        return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
+            $this->generatePath($media),
             $media->getId(),
             $format
-        );
+        ));
     }
 
     /**
@@ -80,7 +79,7 @@ class ImageProvider extends FileProvider
     {
 
         return sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePrivatePath($media),
+            $this->generatePath($media),
             $media->getId(),
             $format
         );

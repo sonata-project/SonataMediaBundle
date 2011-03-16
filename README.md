@@ -42,72 +42,73 @@
 
 * Add these lines into your config.yml file
 
-    sonata_media:
-        # define the global settings
-        settings:
-            cdn_enabled:  false
-            cdn_path:     http://media.sonata-project.org
-            public_path:  /uploads/media
+        sonata_media:
+            contexts:
+                defaults:
+                    providers:
+                        - sonata.media.provider.dailymotion
+                        - sonata.media.provider.youtube
+                        - sonata.media.provider.image
+                        - sonata.media.provider.file
 
-        contexts:
-            defaults:
-                providers:
-                    - sonata.media.provider.dailymotion
-                    - sonata.media.provider.youtube
-                    - sonata.media.provider.image
-                    - sonata.media.provider.file
+                user:
+                    providers:
+                        - sonata.media.provider.dailymotion
+                        - sonata.media.provider.youtube
+                        - sonata.media.provider.image
+                        - sonata.media.provider.file
 
-            user:
-                providers:
-                    - sonata.media.provider.dailymotion
-                    - sonata.media.provider.youtube
-                    - sonata.media.provider.image
-                    - sonata.media.provider.file
+            cdn:
+                sonata.media.cdn.server:
+                    path: /uploads/media # http://media.sonata-project.org/
 
-        filesystem:
-            sonata.media.adapter.filesystem.local:
-                directory:  %kernel.root_dir%/../web/uploads/media
-                create:     false
+            filesystem:
+                sonata.media.adapter.filesystem.local:
+                    directory:  %kernel.root_dir%/../web/uploads/media
+                    create:     false
 
-            sonata.media.adapter.filesystem.ftp:
-                directory:
-                host:
-                username:
-                password:
-                port:     21
-                passive:  false
-                create:   false
+                sonata.media.adapter.filesystem.ftp:
+                    directory:
+                    host:
+                    username:
+                    password:
+                    port:     21
+                    passive:  false
+                    create:   false
 
-        providers:
-            sonata.media.provider.file:
-                formats:
-                resizer:    false
-                filesystem: sonata.media.filesystem.local
+            providers:
+                sonata.media.provider.file:
+                    formats:
+                    resizer:    false
+                    filesystem: sonata.media.filesystem.local
+                    cdn:        sonata.media.cdn.server
+                sonata.media.provider.image:
+                    settings:
+                        cdn_enabled: true
 
-            sonata.media.provider.image:
-                settings:
-                    cdn_enabled: true
+                    resizer:    sonata.media.resizer.simple
+                    filesystem: sonata.media.filesystem.local
+                    cdn:        sonata.media.cdn.server
+                    formats:
+                        small: { width: 100 , quality: 70}
+                        big:   { width: 500 , quality: 70}
+                        admin: { width: 300}
 
-                resizer:    sonata.media.resizer.simple
-                filesystem: sonata.media.filesystem.local
-                formats:
-                    small: { width: 100 , quality: 70}
-                    big:   { width: 500 , quality: 70}
-                    admin: { width: 300}
+                sonata.media.provider.youtube:
+                    resizer:    sonata.media.resizer.simple
+                    filesystem: sonata.media.filesystem.local
+                    cdn:        sonata.media.cdn.server
+                    formats:
+                        small: { width: 100 , quality: 70}
+                        big:   { width: 500 , quality: 70}
+                        admin: { width: 300}
 
-            sonata.media.provider.youtube:
-                resizer:    sonata.media.resizer.simple
-                filesystem: sonata.media.filesystem.local
-                formats:
-                    small: { width: 100 , quality: 70}
-                    big:   { width: 500 , quality: 70}
-                    admin: { width: 300}
-
-            sonata.media.provider.dailymotion:
-                resizer:    sonata.media.resizer.simple
-                filesystem: sonata.media.filesystem.local
-                formats:
-                    small: { width: 100 , quality: 70}
-                    big:   { width: 500 , quality: 70}
-                    admin: { width: 300}
+                sonata.media.provider.dailymotion:
+                    resizer:    sonata.media.resizer.simple
+                    filesystem: sonata.media.filesystem.local
+                    cdn:        sonata.media.cdn.server
+                    formats:
+                        small: { width: 100 , quality: 70}
+                        big:   { width: 500 , quality: 70}
+                        admin: { width: 300}
 

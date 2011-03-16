@@ -14,7 +14,12 @@
         <service id="sonata.media.adapter.image.imagick" class="Imagine\Gmagick\Imagine"></service>
         <service id="sonata.media.adapter.image.gmagick" class="Imagine\Imagick\Imagine"></service>
 
-        <!-- filesystem abastraction service -->
+        <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
+            <argument type="service" id="sonata.media.adapter.image.gd"></argument>
+            <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
+        </service>
+
+        <!-- filesystem abstraction service -->
         <service id="sonata.media.adapter.filesystem.local" class="Gaufrette\Filesystem\Adapter\Local" />
         <service id="sonata.media.adapter.filesystem.ftp" class="Gaufrette\Filesystem\Adapter\Ftp" />
 
@@ -26,12 +31,10 @@
             <argument type="service" id="sonata.media.adapter.filesystem.local" />
         </service>
 
-        <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
-            <argument type="service" id="sonata.media.adapter.image.gd"></argument>
-            <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
+        <!-- CDN abstraction service -->
+        <service id="sonata.media.cdn.server" class="Sonata\MediaBundle\CDN\Server">
+            <argument />
         </service>
-
-        <service id="sonata.media.resizer.none" class="Sonata\MediaBundle\Media\NoneResizer" />
 
     </services>
     
