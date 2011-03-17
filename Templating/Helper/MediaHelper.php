@@ -66,7 +66,7 @@ class MediaHelper extends Helper
             ->getMediaService()
             ->getProvider($media->getProviderName());
         
-        $options = $provider->getHelperProperties($media, $format, $options, $this->getMediaService()->getSettings());
+        $options = $provider->getHelperProperties($media, $format, $options);
 
         return $this->getTemplating()->render(
             $provider->getTemplate('helper_view'),

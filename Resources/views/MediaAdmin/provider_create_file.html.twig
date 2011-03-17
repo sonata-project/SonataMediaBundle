@@ -14,13 +14,13 @@ file that was distributed with this source code.
 {% block title %}{% trans 'title_add_file' from 'MediaBundle' %}{% endblock %}
 
 {% block form %}
-    <form method="POST" action="{{ admin.generateUrl('create', params) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ admin.generateUrl('create', parameters) }}" enctype="multipart/form-data">
         {{ form_hidden(form) }}
 
         <p>
-            {{ form_label(form.binary_content) }} <br />
-            {{ form_field(form.binary_content, {'class' : 'title'}) }}
-            {{ form_errors(form.binary_content) }}
+            {{ form_label(form.binaryContent) }} <br />
+            {{ form_field(form.binaryContent, {'class' : 'title'}) }}
+            {{ form_errors(form.binaryContent) }}
         </p>
 
         <input type="submit" value="{% trans 'btn_create' from 'MediaBundle' %}" />

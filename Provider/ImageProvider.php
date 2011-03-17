@@ -12,6 +12,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
 
+
 class ImageProvider extends FileProvider
 {
 

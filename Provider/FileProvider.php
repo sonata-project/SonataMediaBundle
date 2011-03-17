@@ -12,6 +12,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
 use Symfony\Component\Form\Form;
+use Sonata\AdminBundle\Form\FormMapper;
     
 class FileProvider extends BaseProvider
 {
@@ -31,38 +32,37 @@ class FileProvider extends BaseProvider
         return $this->getReferenceImage($media);
     }
 
-    public function requireThumbnails()
+    /**
+     * build the related create form
+     *
+     */
+    function buildEditForm(FormMapper $formMapper)
     {
-        return false;
+        $formMapper->add('name');
+        $formMapper->add('enabled');
+        $formMapper->add('authorName');
+        $formMapper->add('cdnIsFlushable');
+        $formMapper->add('description');
+        $formMapper->add('copyright');
+
+        $formMapper->add(new \Symfony\Component\Form\FileField('binaryContent', array(
+            'secret' => 'file'
+        )), array(), array(
+            'type' => 'file'
+        ));
     }
 
     /**
      * build the related create form
      *
      */
-    function buildEditForm(Form $form)
+    function buildCreateForm(FormMapper $formMapper)
     {
-        $form->add(new \Symfony\Component\Form\TextField('name'));
-        $form->add(new \Symfony\Component\Form\CheckboxField('enabled'));
-        $form->add(new \Symfony\Component\Form\TextField('author_name'));
-        $form->add(new \Symfony\Component\Form\CheckboxField('cdn_is_flushable'));
-        $form->add(new \Symfony\Component\Form\TextareaField('description'));
-        $form->add(new \Symfony\Component\Form\TextField('copyright'));
-
-        $form->add(new \Symfony\Component\Form\FileField('binary_content', array(
+        $formMapper->add(new \Symfony\Component\Form\FileField('binaryContent', array(
             'secret' => 'file'
-        )));
-    }
-
-    /**
-     * build the related create form
-     *
-     */
-    function buildCreateForm(Form $form)
-    {
-        $form->add(new \Symfony\Component\Form\FileField('binary_content', array(
-            'secret' => 'file'
-        )));
+        )), array(), array(
+            'type' => 'file'
+        ));
     }
     
     public function postPersist(Media $media)
@@ -75,6 +75,7 @@ class FileProvider extends BaseProvider
             sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
             true
         );
+        
         $file->setContent(file_get_contents($media->getBinaryContent()->getPath()));
 
         $this->generateThumbnails($media);

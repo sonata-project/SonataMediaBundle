@@ -74,13 +74,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
 
-        try {
-            $provider->generateThumbnails($media);
-            $this->assertFalse(true, '::generateThumbnails() must generate a RuntimeException with no formats defined');
-        } catch (\Exception $e) {
-
-            $this->assertInstanceOf('\Exception', $e);
-        }
+        $this->assertFalse($provider->requireThumbnails($media));
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true));
 

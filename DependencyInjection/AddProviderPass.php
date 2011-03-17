@@ -32,13 +32,22 @@ class AddProviderPass implements CompilerPassInterface
 
         $pool = $container->getDefinition('sonata.media.pool');
 
-        // TODO: no very clean but don't know how to do that for now
+        // not very clean but don't know how to do that for now
         $settings = false;
-        foreach ($pool->getMethodCalls() as $calls) {
-            if ($calls[0] == 'setSettings') {
+        $post = false;
+        $methods  = $pool->getMethodCalls();
+        foreach ($methods as $pos => $calls) {
+            if ($calls[0] == '__hack__') {
                 $settings = $calls[1];
+                break;
             }
         }
+
+        if ($settings) {
+            unset($methods[$pos]);
+        }
+
+        $pool->setMethodCalls($methods);
 
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
 
@@ -47,10 +56,9 @@ class AddProviderPass implements CompilerPassInterface
             if ($settings) {
                 $this->applySettings($id, $definition, $settings);
             }
-            
+
             $pool->addMethodCall('addProvider', array($id, new Reference($id)));
         }
-
     }
 
     /**
@@ -77,13 +85,5 @@ class AddProviderPass implements CompilerPassInterface
                 $definition->addMethodCall('addFormat', array($format, $config));
             }
         }
-
-        // compute the settings
-        $settings = isset($settings['settings']) ? $settings['settings'] : array();
-        if (isset($settings['providers'][$id]['settings'])) {
-            $settings = array_merge($settings, $settings['providers'][$id]['settings']);
-        }
-
-        $definition->addMethodCall('setSettings', array($settings));
     }
 }

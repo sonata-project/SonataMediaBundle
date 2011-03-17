@@ -11,8 +11,8 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Symfony\Component\Form\Form;
 use Gaufrette\Filesystem\Filesystem;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Media\ResizerInterface;
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -77,7 +77,7 @@ abstract class BaseProvider
      */
     public function requireThumbnails()
     {
-        return $this->getResizer() !== null;
+        return $this->getResizer() !== null && count($this->formats) > 0;
     }
 
     /**
@@ -89,10 +89,6 @@ abstract class BaseProvider
     {
         if (!$this->requireThumbnails()) {
             return;
-        }
-
-        if (!is_array($this->formats) || count($this->formats) == 0) {
-            throw new \RuntimeException('You must define one format');
         }
 
         $key = $this->getReferenceImage($media);
@@ -173,13 +169,13 @@ abstract class BaseProvider
      * build the related create form
      *
      */
-    abstract function buildCreateForm(Form $form);
+    abstract function buildCreateForm(FormMapper $form);
 
     /**
      * build the related create form
      *
      */
-    abstract function buildEditForm(Form $form);
+    abstract function buildEditForm(FormMapper $form);
 
     /**
      *

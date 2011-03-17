@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Entity\BaseMedia as Media;
 use Symfony\Component\Form\Form;
+use Sonata\AdminBundle\Form\FormMapper;
 
 class YouTubeProvider extends BaseProvider
 {
@@ -157,25 +158,24 @@ class YouTubeProvider extends BaseProvider
      * build the related create form
      *
      */
-    function buildEditForm(Form $form)
+    function buildEditForm(FormMapper $formMapper)
     {
-        $form->add(new \Symfony\Component\Form\TextField('name'));
-        $form->add(new \Symfony\Component\Form\CheckboxField('enabled'));
-        $form->add(new \Symfony\Component\Form\TextField('author_name'));
-        $form->add(new \Symfony\Component\Form\CheckboxField('cdn_is_flushable'));
-        $form->add(new \Symfony\Component\Form\TextareaField('description'));
-        $form->add(new \Symfony\Component\Form\TextField('copyright'));
-        $form->add(new \Symfony\Component\Form\TextField('binary_content'));
-
+        $formMapper->add('name');
+        $formMapper->add('enabled');
+        $formMapper->add('authorName');
+        $formMapper->add('cdnIsFlushable');
+        $formMapper->add('description');
+        $formMapper->add('copyright');
+        $formMapper->add('binaryContent', array(), array('type' => 'string'));
     }
 
     /**
      * build the related create form
      *
      */
-    function buildCreateForm(Form $form)
+    function buildCreateForm(FormMapper $formMapper)
     {
-        $form->add(new \Symfony\Component\Form\TextField('binary_content'));
+        $formMapper->add('binaryContent', array(), array('type' => 'string'));
     }
 
     /**

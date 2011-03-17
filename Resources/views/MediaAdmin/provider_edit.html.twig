@@ -14,8 +14,8 @@ file that was distributed with this source code.
 {% block actions %}
     <div class="sonata-actions">
         <ul>
-            <li class="sonata-action-element"><a href="{{ admin.generateUrl('create', params) }}">{% trans "link_action_create" from "AdminBundle" %}</a></li>
-            <li class="sonata-action-element"><a href="{{ admin.generateUrl('list', params) }}">{% trans "link_action_list" from "AdminBundle" %}</a></li>
+            <li class="sonata-action-element"><a href="{{ admin.generateUrl('create', parameters) }}">{% trans "link_action_create" from "AdminBundle" %}</a></li>
+            <li class="sonata-action-element"><a href="{{ admin.generateUrl('list', parameters) }}">{% trans "link_action_list" from "AdminBundle" %}</a></li>
         </ul>
     </div>
 {% endblock %}

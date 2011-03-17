@@ -47,7 +47,11 @@ class SonataMediaExtension extends Extension
         $this->configureResizerAdapter($container, $config);
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
-      
+
+        // this shameless hack is done in order to have one clean configuration
+        // for adding formats ....
+        $container->getDefinition('sonata.media.pool')->addMethodCall('__hack__', $config);
+        
         // register template helper
         $definition = new Definition(
             'Sonata\MediaBundle\Templating\Helper\MediaHelper',
