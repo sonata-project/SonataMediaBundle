@@ -44,51 +44,80 @@ class Pool
         $this->providers[$name] = $instance;
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function postUpdate(Media $media)
     {
-
         $this->getProvider($media->getProviderName())->postUpdate($media);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function postRemove(Media $media)
     {
-
         $this->getProvider($media->getProviderName())->postRemove($media);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function postPersist(Media $media)
     {
-
         $this->getProvider($media->getProviderName())->postPersist($media);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function preUpdate(Media $media)
     {
-
         $this->getProvider($media->getProviderName())->preUpdate($media);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function preRemove(Media $media)
     {
-
         $this->getProvider($media->getProviderName())->preRemove($media);
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @return void
+     */
     public function prePersist(Media $media)
     {
         $this->getProvider($media->getProviderName())->prePersist($media);
     }
 
+    /**
+     * @param  $providers
+     * @return void
+     */
     public function setProviders($providers)
     {
         $this->providers = $providers;
     }
 
+    /**
+     * @return array
+     */
     public function getProviders()
     {
         return $this->providers;
     }
 
+    /**
+     * @return array
+     */
     public function getProviderList()
     {
         $choices = array();

@@ -58,6 +58,7 @@ class FileProvider extends BaseProvider
      */
     function buildCreateForm(FormMapper $formMapper)
     {
+
         $formMapper->add(new \Symfony\Component\Form\FileField('binaryContent', array(
             'secret' => 'file'
         )), array(), array(
@@ -142,7 +143,7 @@ class FileProvider extends BaseProvider
         }
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
-        $media->setSize($media->getBinaryContent()->size());
+        $media->setSize($media->getBinaryContent()->getSize());
 
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());

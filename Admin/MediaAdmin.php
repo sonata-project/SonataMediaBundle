@@ -26,15 +26,6 @@ class MediaAdmin extends Admin
         'enabled',
     );
 
-    protected $form = array(
-        'enabled',
-        'name',
-        'description',
-        'authorName',
-        'copyright',
-        'cdnIsFlushable'
-    );
-
     protected $filter = array(
         'name',
         'providerReference',
@@ -70,4 +61,49 @@ class MediaAdmin extends Admin
     {
 
     }
+
+    public function prePersist($media)
+    {
+        $this->pool->prePersist($media);
+    }
+
+    public function postPersist($media)
+    {
+        $this->pool->postPersist($media);
+    }
+
+    public function preUpdate($media)
+    {
+      $this->pool->preUpdate($media);
+    }
+
+    public function postUpdate($media) 
+    {
+      $this->pool->preUpdate($media);
+    }
+
+    public function getPersitentParameters()
+    {
+        if(!$this->getRequest()) {
+            return array();
+        }
+
+        return array(
+            'provider' => $this->getRequest()->get('provider'),
+            'context'  => $this->getRequest()->get('context'),
+        );
+    }
+
+    public function getNewInstance()
+    {
+        $media = parent::getNewInstance();
+        
+        if($this->getRequest()) {
+            $media->setProviderName($this->getRequest()->get('provider'));
+            $media->setContext($this->getRequest()->get('context'));
+        }
+
+        return $media;
+    }
+
 }
