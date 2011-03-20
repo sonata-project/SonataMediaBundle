@@ -82,7 +82,7 @@ class MediaAdmin extends Admin
       $this->pool->preUpdate($media);
     }
 
-    public function getPersitentParameters()
+    public function getPersistentParameters()
     {
         if(!$this->getRequest()) {
             return array();

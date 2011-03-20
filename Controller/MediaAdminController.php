@@ -21,7 +21,7 @@ class MediaAdminController extends Controller
     public function createAction($form = null)
     {
 
-        $parameters = $this->admin->getPersitentParameters();
+        $parameters = $this->admin->getPersistentParameters();
         
         if (!$parameters['provider']) {
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
