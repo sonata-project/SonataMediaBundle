@@ -16,6 +16,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 
+use Knplabs\MenuBundle\Menu;
+use Knplabs\MenuBundle\MenuItem;
+
 class MediaAdmin extends Admin
 {
     protected $pool = null;
@@ -62,6 +65,15 @@ class MediaAdmin extends Admin
 
     }
 
+    public function configureUrls()
+    {
+        $this->urls[$this->baseCodeRoute . '.view'] = array(
+            'name'      => $this->getBaseRouteName().'_view',
+            'pattern'   => $this->getBaseRoutePattern().'/'.$this->getRouterIdParameter().'/view',
+        );
+
+    }
+
     public function prePersist($media)
     {
         $this->pool->prePersist($media);
@@ -104,6 +116,38 @@ class MediaAdmin extends Admin
         }
 
         return $media;
+    }
+
+    public function getSideMenu($action, $childAdmin = false)
+    {
+
+        if ($childAdmin || in_array($action, array('edit', 'view'))) {
+            return $this->getEditSideMenu();
+        }
+
+        return false;
+    }
+
+    public function getEditSideMenu()
+    {
+
+        $menu = new Menu;
+
+        $admin = $this->isChild() ? $this->getParent() : $this;
+
+        $id = $this->getRequest()->get('id');
+
+        $menu->addChild(
+            $this->trans('edit_media'),
+            $admin->generateUrl('edit', array('id' => $id))
+        );
+
+        $menu->addChild(
+            $this->trans('view_media'),
+            $admin->generateUrl('view', array('id' => $id))
+        );
+
+        return $menu;
     }
 
 }

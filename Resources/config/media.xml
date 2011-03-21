@@ -36,6 +36,13 @@
             <argument />
         </service>
 
+        <service id="sonata.media.cdn.panther" class="Sonata\MediaBundle\CDN\PantherPortal">
+            <argument />
+            <argument />
+            <argument />
+            <argument />
+        </service>
+        
     </services>
     
 </container>

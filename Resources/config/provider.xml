@@ -8,6 +8,7 @@
         <parameter key="sonata.media.provider.file.class">Sonata\MediaBundle\Provider\FileProvider</parameter>
         <parameter key="sonata.media.provider.youtube.class">Sonata\MediaBundle\Provider\YouTubeProvider</parameter>
         <parameter key="sonata.media.provider.dailymotion.class">Sonata\MediaBundle\Provider\DailyMotionProvider</parameter>
+        <parameter key="sonata.media.provider.vimeo.class">Sonata\MediaBundle\Provider\VimeoProvider</parameter>
 
         <parameter key="sonata.media.pool.class">Sonata\MediaBundle\Provider\Pool</parameter>
     </parameters>
@@ -25,8 +26,6 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_image.html.twig</argument>
-                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_image.html.twig</argument>
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
                     <argument key='helper_view'>SonataMediaBundle:Provider:view_image.html.twig</argument>
                 </argument>
@@ -41,8 +40,6 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_file.html.twig</argument>
-                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_file.html.twig</argument>
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
                     <argument key='helper_view'>SonataMediaBundle:Provider:view_file.html.twig</argument>
                 </argument>
@@ -57,8 +54,6 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_youtube.html.twig</argument>
-                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_youtube.html.twig</argument>
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
                     <argument key='helper_view'>SonataMediaBundle:Provider:view_youtube.html.twig</argument>
                 </argument>
@@ -73,10 +68,22 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='admin_edit'>SonataMediaBundle:MediaAdmin:provider_edit_dailymotion.html.twig</argument>
-                    <argument key='admin_create'>SonataMediaBundle:MediaAdmin:provider_create_dailymotion.html.twig</argument>
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
                     <argument key='helper_view'>SonataMediaBundle:Provider:view_dailymotion.html.twig</argument>
+                </argument>
+            </call>
+        </service>
+
+        <service id="sonata.media.provider.vimeo" class="%sonata.media.provider.vimeo.class%">
+            <tag name="sonata.media.provider" />
+            <argument>sonata.media.provider.vimeo</argument>
+            <argument type="service" id="sonata.media.entity_manager" />
+            <argument />
+            <argument />
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
                 </argument>
             </call>
         </service>

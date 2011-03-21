@@ -18,6 +18,24 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MediaAdminController extends Controller
 {
+
+    public function viewAction($id)
+    {
+        $media = $this->get('sonata.media.entity_manager')->find('Application\Sonata\MediaBundle\Entity\Media', $id);
+
+        if (!$media) {
+            throw new NotFoundHttpException('unable to find the media with the id');
+        }
+
+        return $this->render('SonataMediaBundle:MediaAdmin:view.html.twig', array(
+            'media'     => $media,
+            'formats'   => $this->get('sonata.media.pool')->getProvider($media->getProviderName())->getFormats(),
+            'format'    => 'reference',
+            'base_template' => $this->getBaseTemplate(),
+            'admin'     => $this->admin
+        ));
+    }
+  
     public function createAction($form = null)
     {
 

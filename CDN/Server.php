@@ -45,4 +45,16 @@ class Server implements CDNInterface
     {
         // nothing to do
     }
+
+    /**
+    * Flush a different set of ressource matching the provided string array
+    *
+    * @param string $string
+    * @return void
+    */
+    function flushPaths(array $paths)
+    {
+        // nothing to do
+    }
+
 }

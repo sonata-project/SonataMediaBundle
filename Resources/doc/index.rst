@@ -2,7 +2,7 @@ Welcome to MediaBundle documentation
 ===================================
 
 The ``MediaBundle`` is a media library based on dedicated provider which handle different
-``type`` of media :
+``type`` of media:
 
   - file
   - image
@@ -35,3 +35,4 @@ Reference Guide
 
    reference/installation
    reference/helpers
+   reference/creating_a_provider_class

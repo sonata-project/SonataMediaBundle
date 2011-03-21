@@ -60,7 +60,13 @@
 
             cdn:
                 sonata.media.cdn.server:
-                    path: /uploads/media # http://media.sonata-project.org/
+                    path: /uploads/media # http://media.sonata-project.org
+
+                sonata.media.cdn.panther:
+                    path:       http://domain.pantherportal.com/uploads/media
+                    site_id:
+                    password:
+                    username:   
 
             filesystem:
                 sonata.media.adapter.filesystem.local:

@@ -19,6 +19,9 @@ Add the ``Imagine`` image processing library
 
   git submodule add git://github.com/avalanche123/Imagine.git src/vendor/imagine
 
+Add the ``Gaufrette`` file abstraction library
+
+  git submodule add git://github.com/knplabs/Gaufrette.git src/vendor/gaufrette
 
 Next, be sure to enable the bundles in your application kernel:
 
@@ -46,13 +49,6 @@ configuration file.
 
     # app/config/config.yml
     sonata_media:
-        # define the global settings
-        settings:
-            cdn_enabled:  false
-            cdn_path:     http://media.sonata-project.org
-            private_path: %kernel.root_dir%/../web/uploads/media
-            public_path:  /uploads/media
-
         contexts:
             defaults:
                 providers:
@@ -61,21 +57,27 @@ configuration file.
                     - sonata.media.provider.image
                     - sonata.media.provider.file
 
-            user:
-                providers:
-                    - sonata.media.provider.dailymotion
-                    - sonata.media.provider.youtube
-                    - sonata.media.provider.image
-                    - sonata.media.provider.file
+        # the CDN defined how the media is accessible from the web
+        cdn:
+            sonata.media.cdn.server:
+                path: /uploads/media # http://media.sonata-project.org
 
+        # the filesystem defined how the media is accessible from the PHP
+        filesystem:
+            sonata.media.adapter.filesystem.local:
+                directory:  %kernel.root_dir%/../web/uploads/media
+                create:     false
+
+        # configure the different providers
         providers:
             sonata.media.provider.file:
                 formats:
+                resizer:    false
 
             sonata.media.provider.image:
-                settings:
-                    cdn_enabled: true
-
+                resizer:    sonata.media.resizer.simple             # optional key, default value : sonata.media.resizer.simple
+                cdn:        sonata.media.cdn.server                 # optional key, default value : sonata.media.cdn.server
+                filesystem: sonata.media.adapter.filesystem.local   # optional key, default value : sonata.media.adapter.filesystem.local
                 formats:
                     small: { width: 100 , quality: 70}
                     big:   { width: 500 , quality: 70}

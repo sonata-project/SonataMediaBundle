@@ -88,13 +88,20 @@ class SonataMediaExtension extends Extension
             $definition->setArgument(0, $configuration['path']);
         }
 
+        if($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['sonata.media.cdn.panther'])) {
+            $definition     = $container->getDefinition('sonata.media.cdn.panther');
+            $configuration  = $config['cdn']['sonata.media.cdn.panther'];
+            $definition->setArgument(0, $configuration['path']);
+            $definition->setArgument(1, $configuration['username']);
+            $definition->setArgument(2, $configuration['password']);
+            $definition->setArgument(3, $configuration['site_id']);
+        }
+
         // attach cdn service to provider
         foreach($config['providers'] as $id => $provider) {
-            if(!$provider['cdn']) {
-                continue;
-            }
+            $cdn = isset($provider['cdn']) ? $provider['cdn'] : 'sonata.media.cdn.server';
 
-            $container->getDefinition($id)->setArgument(3, new Reference($provider['cdn']));
+            $container->getDefinition($id)->setArgument(3, new Reference($cdn));
         }
     }
     /**
@@ -129,11 +136,9 @@ class SonataMediaExtension extends Extension
 
         // attach filesystem service to provider
         foreach($config['providers'] as $id => $provider) {
-            if(!$provider['filesystem']) {
-                continue;
-            }
+            $filesystem = isset($provider['filesystem']) ? $provider['filesystem'] : 'sonata.media.filesystem.local';
 
-            $container->getDefinition($id)->setArgument(2, new Reference($provider['filesystem']));
+            $container->getDefinition($id)->setArgument(2, new Reference($filesystem));
         }
     }
 
@@ -149,11 +154,11 @@ class SonataMediaExtension extends Extension
 
         // attach resizer service to provier
         foreach($config['providers'] as $id => $provider) {
-            if(!$provider['resizer']) {
-                continue;
-            }
+            $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
 
-            $container->getDefinition($id)->addMethodCall('setResizer', array(new Reference($provider['resizer'])));
+            if($resizer) {
+              $container->getDefinition($id)->addMethodCall('setResizer', array(new Reference($resizer)));
+            }
         }
     }
 

@@ -35,4 +35,12 @@ interface CDNInterface
      * @return void
      */
     function flushByString($string);
+
+    /**
+     * Flush a different set of ressource matching the provided string array
+     *
+     * @param string $string
+     * @return void
+     */
+    function flushPaths(array $paths);
 }
