@@ -353,6 +353,9 @@ passed to the ``view_vimeo.html.twig`` template file.
         return $params;
     }
 
+
+From the vimeo's documentation, a video can be included like this :
+
 .. code-block:: twig
 
     <iframe
@@ -362,3 +365,6 @@ passed to the ``view_vimeo.html.twig`` template file.
         height="{{ options.height }}"
         frameborder="{{ options.frameborder }}">
     </iframe>
+
+
+Et voila! Of course you should test the provider class. There are many examples in the Tests folder.
