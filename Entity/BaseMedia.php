@@ -98,7 +98,7 @@ class BaseMedia
     /**
      * @var string $context
      */
-    protected $context;
+    protected $context = 'default';
 
     /**
      * @var boolean $cdn_is_flushable

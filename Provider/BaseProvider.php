@@ -77,7 +77,7 @@ abstract class BaseProvider
      */
     public function requireThumbnails()
     {
-        return $this->getResizer() !== null && count($this->formats) > 0;
+        return $this->getResizer() !== null;
     }
 
     /**
@@ -118,6 +118,15 @@ abstract class BaseProvider
                 $settings['height']
             );
         }
+    }
+
+    public function getFormatName(Media $media, $format)
+    {
+        if ($format == 'admin') {
+            return 'admin';
+        }
+        
+        return sprintf('%s_%s', $media->getcontext(), $format);
     }
 
     /**

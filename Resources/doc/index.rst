@@ -36,3 +36,4 @@ Reference Guide
    reference/installation
    reference/helpers
    reference/creating_a_provider_class
+   reference/media_context

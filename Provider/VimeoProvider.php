@@ -192,13 +192,13 @@ class VimeoProvider extends BaseProvider
         $metadata = @file_get_contents($url);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to retrieve youtube video information for :' . $url);
+            throw new \RuntimeException('Unable to retrieve vimeo video information for :' . $url);
         }
 
         $metadata = json_decode($metadata, true);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to decode youtube video information for :' . $url);
+            throw new \RuntimeException('Unable to decode vimeo video information for :' . $url);
         }
 
         return $metadata;

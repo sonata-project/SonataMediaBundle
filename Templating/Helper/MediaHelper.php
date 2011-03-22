@@ -33,7 +33,7 @@ class MediaHelper extends Helper
     public function __construct($mediaService, $templating)
     {
         $this->mediaService    = $mediaService;
-        $this->templating       = $templating;
+        $this->templating      = $templating;
     }
 
     /**
@@ -65,7 +65,8 @@ class MediaHelper extends Helper
         $provider = $this
             ->getMediaService()
             ->getProvider($media->getProviderName());
-        
+
+        $format = $provider->getFormatName($media, $format);
         $options = $provider->getHelperProperties($media, $format, $options);
 
         return $this->getTemplating()->render(
@@ -96,6 +97,7 @@ class MediaHelper extends Helper
          $provider = $this->getMediaService()
             ->getProvider($media->getProviderName());
 
+         $format = $provider->getFormatName($media, $format);
          $format_definition = $provider->getFormat($format);
 
          // build option

@@ -7,7 +7,7 @@ Introduction
 A provider class try to resolve a simple use case : specific media management.
 
 A youtube video and an image file are two different kind of media which cannot
-be managed by only one class. So in the ``MediaBundle`` there are represented
+be managed by only one class. So in the ``MediaBundle`` they are represented
 by a provider class : ``YoutubeProvider`` and ``ImageProvider``.
 
 A provider class is responsable to build common elements linked to a media
@@ -25,7 +25,7 @@ By default the filesystem and the CDN uses the local filesystem and the current
 server for the CDN.
 
 So when you create a provider you don't need to worry about how media are going
-to be store.
+to be store into the filesystem.
 
 Media Entity
 ------------
@@ -93,7 +93,7 @@ Let's initialize the ``VimeoProvider`` class.
 
     }
 
-Now we need to create the create and edit form. There is 2 forms because the
+Now we need to define the create and edit form. There is 2 forms because the
 workflow is not the same :
 
  - create : display only one input text representing the video identifier
@@ -124,8 +124,8 @@ definition to the related provider.
         $formMapper->add('binaryContent', array(), array('type' => 'string'));
     }
 
-Once the form will be submitted we will need to retrieve the video metadata. The metadata
-are going to be used to store Media information :
+Once the form will be submitted, we retrieve the video metadata. The metadata is going to be used to
+store ``Media`` information :
 
 
 .. code-block:: php
@@ -154,12 +154,12 @@ are going to be used to store Media information :
     }
 
 
-Now, we need to code the logic for the create  mode, the ``$media`` contains data from the ``POST``.
-A bit of ``AdminBundle`` the always calls some method while saving an object :
- - prePersist / postPersist
- - preUpdate / postUpdate
+Now, we need to code the logic for the create mode, the ``$media`` contains data from the ``POST``.
+The ``AdminBundle`` always calls specific methods while saving an object :
+ - ``prePersist`` / ``postPersist``
+ - ``preUpdate`` / ``postUpdate``
 
-The ``MediaAdmin`` delegates this management to the provider.
+The ``MediaAdmin`` delegates this management to the media provider.
 
 .. code-block:: php
 
@@ -251,8 +251,8 @@ The ``generateThumbnails`` is defined in the ``BaseProvider`` class. This method
         return $media->getMetadataValue('thumbnail_url');
     }
 
-At this point, the provider class is almost finish, we can add and remove a vimeo video thanks to the ``AdminBundle``
-integration and to the ``VimeoProvider``.
+At this point, the provider class is almost finish, we can add and remove a vimeo video : thanks to the ``AdminBundle``
+integration and to the ``VimeoProvider`` service.
 
 
 Register the class to the DIC
@@ -262,11 +262,12 @@ If you use the tag ``sonata.media.provider``, the provider service will be added
 
 .. code-block:: xml
 
-        <service id="sonata.media.provider.dailymotion" class="MyClass">
+        <service id="sonata.media.provider.vimeo" class="Sonata\MediaBundle\Provider\VimeoProvider">
             <tag name="sonata.media.provider" />
-            <argument>mycode</argument>
-            <argument type="service" id="the_default_orm_service" />
-
+            <argument>sonata.media.provider.vimeo</argument>
+            <argument type="service" id="sonata.media.entity_manager" />
+            <argument />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -368,3 +369,4 @@ From the vimeo's documentation, a video can be included like this :
 
 
 Et voila! Of course you should test the provider class. There are many examples in the Tests folder.
+The source code is available in the class ``Sonata\MediaBundle\Provider\VimeoProvider``.

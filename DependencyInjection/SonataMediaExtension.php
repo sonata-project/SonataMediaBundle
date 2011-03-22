@@ -44,7 +44,6 @@ class SonataMediaExtension extends Extension
 
         $config = call_user_func_array('array_merge_recursive', $config);
 
-        $this->configureResizerAdapter($container, $config);
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
 
@@ -96,13 +95,6 @@ class SonataMediaExtension extends Extension
             $definition->setArgument(2, $configuration['password']);
             $definition->setArgument(3, $configuration['site_id']);
         }
-
-        // attach cdn service to provider
-        foreach($config['providers'] as $id => $provider) {
-            $cdn = isset($provider['cdn']) ? $provider['cdn'] : 'sonata.media.cdn.server';
-
-            $container->getDefinition($id)->setArgument(3, new Reference($cdn));
-        }
     }
     /**
      * Inject filesystem dependency to default provider
@@ -132,33 +124,6 @@ class SonataMediaExtension extends Extension
             $definition->addArgument($configuration['port']);
             $definition->addArgument($configuration['passive']);
             $definition->addArgument($configuration['create']);
-        }
-
-        // attach filesystem service to provider
-        foreach($config['providers'] as $id => $provider) {
-            $filesystem = isset($provider['filesystem']) ? $provider['filesystem'] : 'sonata.media.filesystem.local';
-
-            $container->getDefinition($id)->setArgument(2, new Reference($filesystem));
-        }
-    }
-
-    /**
-     * Inject Image resizer dependency to default provider
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param  $config
-     * @return void
-     */
-    public function configureResizerAdapter(ContainerBuilder $container, $config)
-    {
-
-        // attach resizer service to provier
-        foreach($config['providers'] as $id => $provider) {
-            $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
-
-            if($resizer) {
-              $container->getDefinition($id)->addMethodCall('setResizer', array(new Reference($resizer)));
-            }
         }
     }
 

@@ -50,50 +50,26 @@ configuration file.
     # app/config/config.yml
     sonata_media:
         contexts:
-            defaults:
+            default:  # the default context is mandatory
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
                     - sonata.media.provider.image
                     - sonata.media.provider.file
 
-        # the CDN defined how the media is accessible from the web
+                formats:
+                    small: { width: 100 , quality: 70}
+                    big:   { width: 500 , quality: 70}
+
         cdn:
             sonata.media.cdn.server:
-                path: /uploads/media # http://media.sonata-project.org
+                path: /uploads/media # http://media.sonata-project.org/
 
-        # the filesystem defined how the media is accessible from the PHP
         filesystem:
             sonata.media.adapter.filesystem.local:
                 directory:  %kernel.root_dir%/../web/uploads/media
                 create:     false
 
-        # configure the different providers
-        providers:
-            sonata.media.provider.file:
-                formats:
-                resizer:    false
-
-            sonata.media.provider.image:
-                resizer:    sonata.media.resizer.simple             # optional key, default value : sonata.media.resizer.simple
-                cdn:        sonata.media.cdn.server                 # optional key, default value : sonata.media.cdn.server
-                filesystem: sonata.media.adapter.filesystem.local   # optional key, default value : sonata.media.adapter.filesystem.local
-                formats:
-                    small: { width: 100 , quality: 70}
-                    big:   { width: 500 , quality: 70}
-                    admin: { width: 300}
-
-            sonata.media.provider.youtube:
-                formats:
-                    small: { width: 100 , quality: 70}
-                    big:   { width: 500 , quality: 70}
-                    admin: { width: 300}
-
-            sonata.media.provider.dailymotion:
-                formats:
-                    small: { width: 100 , quality: 70}
-                    big:   { width: 500 , quality: 70}
-                    admin: { width: 300}
 
 .. note::
 

@@ -11,7 +11,7 @@ PHP Usage
 
 Render the thumbnail :
 
-.. code-block:: twig
+.. code-block:: php
 
     <?php echo $view['sonata_media']->thumbnail($media, 'small_format') ?>
     
@@ -21,7 +21,7 @@ Render the thumbnail :
 
 Render the media :
 
-.. code-block:: twig
+.. code-block:: php
 
     <?php echo $view['sonata_media']->media($media, 'small_format') ?>
 
