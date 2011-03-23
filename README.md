@@ -19,6 +19,7 @@ can be different for each context, a context is defined by a set of ``formats`` 
 As the infrastructure is not standard, the ``MediaBundle`` abstracts the ``filesystem`` layer
 and the ``cdn`` layer.
 
+The backend is handled by the ``AdminBundle``.
 
 Available services
 ------------------
@@ -42,6 +43,8 @@ Available services
     - sonata.media.cdn.server             : The local http server (default)
     - sonata.media.cdn.panther            : Panther Portal
 
+
+More services will be available in the futur depend on your contributions :)
 
 More information
 ----------------
