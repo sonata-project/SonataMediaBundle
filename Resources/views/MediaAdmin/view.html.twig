@@ -9,24 +9,24 @@ file that was distributed with this source code.
 
 #}
 
-{% extends base_template %}
+{% extends 'SonataAdminBundle:CRUD:action.html.twig' %}
 
 {% block title %}{{ media.name }}{% endblock %}
 
 {% block content %}
-    <h1>{{ media.name }} ({{ format }})</h1>
+    <h2>{{ media.name }} ({{ format }})</h2>
 
-    <h2>{% trans "title.media_preview" from 'MediaBundle' %}</h2>
+    <h3>{% trans "title.media_preview" from 'MediaBundle' %}</h3>
     <div>
         {% media media, format %}
     </div>
 
-    <h2>{% trans "title.media_thumbnail" from 'MediaBundle' %}</h2>
+    <h3>{% trans "title.media_thumbnail" from 'MediaBundle' %}</h3>
     <div>
         {% thumbnail media, format %}
     </div>
 
-    <h2>{% trans "title.imformations" from 'MediaBundle' %}</h2>
+    <h3>{% trans "title.informations" from 'MediaBundle' %}</h3>
 
     <table>
         <tr>
@@ -74,7 +74,7 @@ file that was distributed with this source code.
         <tr>
     </table>
 
-    <h2>{% trans "title.formats" from 'MediaBundle' %}</h2>
+    <h3>{% trans "title.formats" from 'MediaBundle' %}</h3>
     <table>
         <tr>
             <td>

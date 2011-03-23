@@ -28,11 +28,13 @@ class MediaAdminController extends Controller
         }
         
         return $this->render('SonataMediaBundle:MediaAdmin:view.html.twig', array(
-            'media'     => $media,
-            'formats'   => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
-            'format'    => $this->get('request')->get('format', 'reference'),
+            'media'         => $media,
+            'formats'       => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
+            'format'        => $this->get('request')->get('format', 'reference'),
             'base_template' => $this->getBaseTemplate(),
-            'admin'     => $this->admin
+            'admin'         => $this->admin,
+            'side_menu'     => $this->getSideMenu('view'),
+            'breadcrumbs'   => $this->getBreadcrumbs('view'),
         ));
     }
   
@@ -45,7 +47,8 @@ class MediaAdminController extends Controller
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
                 'providers'     => $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', 'default')),
                 'configuration' => $this->admin,
-                'base_template' => $this->getBaseTemplate()
+                'base_template' => $this->getBaseTemplate(),
+                'side_menu'     => false,
             ));
         }
 
