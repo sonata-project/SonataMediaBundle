@@ -29,7 +29,6 @@ class AddProviderPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-
         $settings = $this->fixSettings($container);
 
         // define configuration per provider
@@ -54,7 +53,6 @@ class AddProviderPass implements CompilerPassInterface
 
         // not very clean but don't know how to do that for now
         $settings = false;
-        $post = false;
         $methods  = $pool->getMethodCalls();
         foreach ($methods as $pos => $calls) {
             if ($calls[0] == '__hack__') {
@@ -81,8 +79,6 @@ class AddProviderPass implements CompilerPassInterface
         $pool = $container->getDefinition('sonata.media.pool');
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
             $pool->addMethodCall('addProvider', array($id, new Reference($id)));
-
-
         }
     }
     

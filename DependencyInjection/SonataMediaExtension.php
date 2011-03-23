@@ -47,10 +47,22 @@ class SonataMediaExtension extends Extension
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
 
+        $pool = $container->getDefinition('sonata.media.pool');
+
         // this shameless hack is done in order to have one clean configuration
         // for adding formats ....
-        $container->getDefinition('sonata.media.pool')->addMethodCall('__hack__', $config);
-        
+        $pool->addMethodCall('__hack__', $config);
+
+        foreach ($config['contexts'] as $name => $settings) {
+            $formats = array();
+
+            foreach($settings['formats'] as $format => $value) {
+                $formats[$name.'_'.$format] = $value;
+            }
+
+            $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats));
+        }
+
         // register template helper
         $definition = new Definition(
             'Sonata\MediaBundle\Templating\Helper\MediaHelper',

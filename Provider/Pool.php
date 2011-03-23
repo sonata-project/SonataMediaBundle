@@ -29,6 +29,8 @@ class Pool
      */
     protected $providers = array();
 
+    protected $contexts = array();
+
     public function getProvider($name)
     {
 
@@ -113,6 +115,96 @@ class Pool
     public function getProviders()
     {
         return $this->providers;
+    }
+
+    /**
+     * @param string $name
+     * @param array $providers
+     * @param array $formats
+     * @return void
+     */
+    public function addContext($name, array $providers = array(), array $formats = array())
+    {
+        if (!$this->hasContext($name)) {
+            $this->contexts[$name] = array(
+                'providers' => array(),
+                'formats'   => array(),
+            );
+        }
+
+        $this->contexts[$name]['providers']    = $providers;
+        $this->contexts[$name]['formats']      = $formats;
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasContext($name)
+    {
+        return isset($this->contexts[$name]);
+    }
+
+    /**
+     * @param  $name
+     * @return array|null
+     */
+    public function getContext($name)
+    {
+        if (!$this->hasContext($name)) {
+            return null;
+        }
+
+        
+        return $this->contexts[$name];
+    }
+
+    /**
+     *
+     * @return array|null
+     */
+    public function getProviderNamesByContext($name)
+    {
+        $context = $this->getContext($name);
+
+        if(!$context) {
+            return null;
+        }
+
+        return $context['providers'];
+    }
+
+    /**
+     *
+     * @return array|null
+     */
+    public function getFormatNamesByContext($name)
+    {
+        $context = $this->getContext($name);
+
+        if(!$context) {
+            return null;
+        }
+
+        return $context['formats'];
+    }
+
+    /**
+     * @param string $name
+     * @return array
+     */
+    public function getProvidersByContext($name) {
+        $providers = array();
+
+        if (!$this->hasContext($name)) {
+            return $providers;
+        }
+
+        foreach($this->getProviderNamesByContext($name) as $name) {
+            $providers[] = $this->getProvider($name);
+        }
+
+        return $providers;
     }
 
     /**

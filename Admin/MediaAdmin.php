@@ -33,6 +33,7 @@ class MediaAdmin extends Admin
         'name',
         'providerReference',
         'enabled',
+        'context'
     );
 
     public function __construct($class, $baseControllerName, $pool)
