@@ -8,7 +8,7 @@ A provider class try to resolve a simple use case : specific media management.
 
 A youtube video and an image file are two different kind of media which cannot
 be managed by only one class. So in the ``MediaBundle`` they are represented
-by a provider class : ``YoutubeProvider`` and ``ImageProvider``.
+by two provider classes : ``YoutubeProvider`` and ``ImageProvider``.
 
 A provider class is responsable to build common elements linked to a media
  - thumbnails

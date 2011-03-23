@@ -1,114 +1,56 @@
-# Prototype to easily manage media
+MediaBundle - Media management on steroid
+=========================================
 
-## Installation
+The ``MediaBundle`` is a media library based on dedicated ``provider`` which handle different
+``type`` of media: file, video or image.
 
-* Add MediaBundle to your src/Bundle dir
+Each ``type`` is managed by a ``provider`` service which is in charge of :
 
-        git submodule add git@github.com:sonata-project/MediaBundle.git src/Sonata/MediaBundle
+  - retrieving media metadata
+  - generating media thumbnail
+  - tweaking the edit form
+  - rendering the media
 
+Each ``media`` can be linked to a ``context``. A context can be ``news``, ``user`` or any
+name you need. A context allows to regroup a set of picture into one group. As requirement
+can be different for each context, a context is defined by a set of ``formats`` and a set of
+``provider``.
 
-* Add the AdminBundle if not yet installed
-
-        git submodule add git@github.com:sonata-project/AdminBundle.git src/Sonata/AdminBundle
-
-* Add the EasyExtendsBundle if not yet installed
-
-        git submodule add git@github.com:sonata-project/EasyExtendsBundle.git src/Sonata/EasyExtendsBundle
-
-* Add the Imagine library (image manipulation)
-
-        git submodule add git://github.com/avalanche123/Imagine.git src/vendor/imagine
-
-* Add the Gaufrette library (filesystem Abstraction)
-
-        git submodule add https://github.com/knplabs/Gaufrette.git src/vendor/gaufrette
-
-* Add MediaBundle to your application kernel
-
-        // app/AppKernel.php
-        public function registerBundles()
-        {
-            return array(
-                // ...
-                new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-                new Sonata\MediaBundle\MediaBundle(),
-                // ...
-            );
-        }
-
-* Run the command easy-extends:generate to generate the main model files
-
-        php kooqit/console sonata:easy-extends:generate
-
-* Add these lines into your config.yml file
-
-        sonata_media:
-            contexts:
-                default:  # the default context is mandatory
-                    providers:
-                        - sonata.media.provider.dailymotion
-                        - sonata.media.provider.youtube
-                        - sonata.media.provider.image
-                        - sonata.media.provider.file
-
-                    formats:
-                        small: { width: 100 , quality: 70}
-                        big:   { width: 500 , quality: 70}
-
-                news:
-                    providers:
-                        - sonata.media.provider.dailymotion
-                        - sonata.media.provider.youtube
-                        - sonata.media.provider.image
-                        - sonata.media.provider.file
-
-                    formats:
-                        small: { width: 150 , quality: 95}
-                        big:   { width: 500 , quality: 90}
-
-            cdn:
-                sonata.media.cdn.server:
-                    path: /uploads/media # http://media.sonata-project.org
-
-                sonata.media.cdn.panther:
-                    path:       http://domain.pantherportal.com/uploads/media
-                    site_id:
-                    password:
-                    username:   
-
-            filesystem:
-                sonata.media.adapter.filesystem.local:
-                    directory:  %kernel.root_dir%/../web/uploads/media
-                    create:     false
-
-                sonata.media.adapter.filesystem.ftp:
-                    directory:
-                    host:
-                    username:
-                    password:
-                    port:     21
-                    passive:  false
-                    create:   false
-
-            providers:
-                sonata.media.provider.file:
-                    resizer:    false
-                    filesystem: sonata.media.filesystem.local
-                    cdn:        sonata.media.cdn.server
-
-                sonata.media.provider.image:
-                    resizer:    sonata.media.resizer.simple
-                    filesystem: sonata.media.filesystem.local
-                    cdn:        sonata.media.cdn.server
-
-                sonata.media.provider.youtube:
-                    resizer:    sonata.media.resizer.simple
-                    filesystem: sonata.media.filesystem.local
-                    cdn:        sonata.media.cdn.server
-
-                sonata.media.provider.dailymotion:
-                    resizer:    sonata.media.resizer.simple
-                    filesystem: sonata.media.filesystem.local
-                    cdn:        sonata.media.cdn.server
+As the infrastructure is not standard, the ``MediaBundle`` abstracts the ``filesystem`` layer
+and the ``cdn`` layer.
 
 
+Available services
+------------------
+
+ Providers
+
+    - sonata.media.provider.image         : Image
+    - sonata.media.provider.file          : File
+    - sonata.media.provider.dailymotion   : Dailymotion
+    - sonata.media.provider.vimeo         : Vimeo
+    - sonata.media.provider.youtube       : Youtube
+
+ Filesystem
+
+    - sonata.media.filesystem.local       : The local filesystem (default)
+    - sonata.media.filesystem.ftp         : FTP
+
+
+ CDN
+
+    - sonata.media.cdn.server             : The local http server (default)
+    - sonata.media.cdn.panther            : Panther Portal
+
+
+More information
+----------------
+
+You need to go to the Ressources/doc folder where the reStructuredText documentation is available.
+Please note the Github preview might break and hide some content.
+
+TODO
+----
+
+ - thumbnail synchronisation command line
+ - CDN Flush command line
