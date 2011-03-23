@@ -14,7 +14,7 @@ Each ``type`` is managed by a ``provider`` service which is in charge of :
 Each ``media`` can be linked to a ``context``. A context can be ``news``, ``user`` or any
 name you need. A context allows to regroup a set of picture into one group. As requirement
 can be different for each context, a context is defined by a set of ``formats`` and a set of
-``provider``.
+``providers``.
 
 As the infrastructure is not standard, the ``MediaBundle`` abstracts the ``filesystem`` layer
 and the ``cdn`` layer.

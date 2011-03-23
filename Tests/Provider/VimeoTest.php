@@ -77,7 +77,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $media->setId(1023457);
 
-        $this->assertFalse($provider->requireThumbnails($media));
+        $this->assertTrue($provider->requireThumbnails($media));
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 

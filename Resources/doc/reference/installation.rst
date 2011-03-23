@@ -43,11 +43,12 @@ At this point, the bundle is not yet ready. You need to generate the correct ent
 
     php kooqit/console Sonata:easy-extends:generate
 
+.. note::
 
-    > The command will generate domain objects in an ``Application`` namespace. So you can point entities'
-    > associations to a global and common namespace. This will make Entities sharing very easier has your
-    > models will allows point to a global namespace.
-    > For instance the media will be ``Application\Sonata\MediaBundle\Entity\Media``.
+    The command will generate domain objects in an ``Application`` namespace. So you can point entities'
+    associations to a global and common namespace. This will make Entities sharing very easier has your
+    models will allows point to a global namespace.
+    For instance the media will be ``Application\Sonata\MediaBundle\Entity\Media``.
 
 Now, add the new `Application` Bundle into the kernel
 

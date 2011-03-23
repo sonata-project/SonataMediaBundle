@@ -79,7 +79,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $media->setId(1023458);
 
-        $this->assertFalse($provider->requireThumbnails($media));
+        $this->assertTrue($provider->requireThumbnails($media));
 
         $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
 

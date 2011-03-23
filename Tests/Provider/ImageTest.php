@@ -52,12 +52,12 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
 
-        $this->assertEquals('0001/01/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
-
+        
+        $this->assertEquals('/uploads/media/0001/01/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
         $media->setId(1023456);
-        $this->assertEquals('0011/24/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
+        $this->assertEquals('/uploads/media/0011/24/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
 
-        $this->assertEquals('0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
+        $this->assertEquals('/uploads/media/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
         $this->assertEquals('0011/24', $provider->generatePath($media));
         $this->assertEquals('/uploads/media/0011/24/thumb_1023456_big.jpg', $provider->generatePublicUrl($media, 'big'));
@@ -74,7 +74,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
 
-        $this->assertFalse($provider->requireThumbnails($media));
+        $this->assertTrue($provider->requireThumbnails($media));
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true));
 
