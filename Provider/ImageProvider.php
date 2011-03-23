@@ -34,10 +34,10 @@ class ImageProvider extends FileProvider
     public function getReferenceImage(Media $media)
     {
 
-        return sprintf('%s/%s',
+        return $this->getCdn()->getPath(sprintf('%s/%s',
             $this->generatePath($media),
             $media->getProviderReference()
-        );
+        ));
     }
 
     /**
@@ -57,6 +57,10 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(Media $media, $format)
     {
+        if($format == 'reference') {
+            return $this->getReferenceImage($media);
+        }
+
         return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePath($media),
             $media->getId(),

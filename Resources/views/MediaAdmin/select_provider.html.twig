@@ -16,7 +16,7 @@ file that was distributed with this source code.
 {% block content %}
     <ul>
         {% for code, provider in providers %}
-            <li><a href="{{ configuration.generateUrl('create', {'provider': code}) }}">{{ provider.name }}</a></li>
+            <li><a href="{{ configuration.generateUrl('create', {'provider': provider.name}) }}">{{ provider.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

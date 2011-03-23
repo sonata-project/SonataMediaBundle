@@ -13,22 +13,18 @@ namespace Sonata\MediaBundle\Twig\Extension;
 
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
+use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 
 class MediaExtension extends \Twig_Extension
 {
 
     public function getTokenParsers()
     {
-
         return array(
-
-            // {% render media_object with { 'width': 2 }%}
-//            new HelperTokenParser('media', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'media'),
-//            new HelperTokenParser('thumbnail', '<media>, <format> [with <attributes:hash>]', 'templating.helper.media', 'thumbnail'),
             new MediaTokenParser,
             new ThumbnailTokenParser,
+            new PathTokenParser,
         );
-
     }
 
     /**

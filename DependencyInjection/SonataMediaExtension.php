@@ -73,12 +73,13 @@ class SonataMediaExtension extends Extension
         );
         $definition->addTag('templating.helper', array('alias' => 'media'));
         $definition->addTag('templating.helper', array('alias' => 'thumbnail'));
+        $definition->addTag('templating.helper', array('alias' => 'path'));
 
-        $container->setDefinition('templating.helper.media', $definition);
+        $container->setDefinition('sonata.media.templating.helper', $definition);
 
         // register the twig extension
         $container
-            ->register('twig.extension.media', 'Sonata\MediaBundle\Twig\Extension\MediaExtension')
+            ->register('sonata.media.twig.extension', 'Sonata\MediaBundle\Twig\Extension\MediaExtension')
             ->addTag('twig.extension');
 
     }

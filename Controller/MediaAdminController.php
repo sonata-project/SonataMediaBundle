@@ -26,11 +26,11 @@ class MediaAdminController extends Controller
         if (!$media) {
             throw new NotFoundHttpException('unable to find the media with the id');
         }
-
+        
         return $this->render('SonataMediaBundle:MediaAdmin:view.html.twig', array(
             'media'     => $media,
-            'formats'   => $this->get('sonata.media.pool')->getProvider($media->getProviderName())->getFormats(),
-            'format'    => 'reference',
+            'formats'   => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
+            'format'    => $this->get('request')->get('format', 'reference'),
             'base_template' => $this->getBaseTemplate(),
             'admin'     => $this->admin
         ));

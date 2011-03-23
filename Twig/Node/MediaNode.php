@@ -18,7 +18,7 @@ class MediaNode extends \Twig_Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write("echo \$this->env->getExtension('templating')->getContainer()->get('templating.helper.media')->media(")
+            ->write("echo \$this->env->getExtension('templating')->getContainer()->get('sonata.media.templating.helper')->media(")
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))

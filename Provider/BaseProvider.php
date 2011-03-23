@@ -120,13 +120,29 @@ abstract class BaseProvider
         }
     }
 
+    /**
+     * return the correct format name : providerName_format
+     *
+     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param string $format
+     * @return string
+     */
     public function getFormatName(Media $media, $format)
     {
         if ($format == 'admin') {
             return 'admin';
         }
-        
-        return sprintf('%s_%s', $media->getcontext(), $format);
+
+        if ($format == 'reference') {
+            return 'reference';
+        }
+
+        $baseName = $media->getContext().'_';
+        if (substr($format, 0, strlen($baseName)) == $baseName) {
+            return $format;
+        }
+
+        return $baseName.$format;
     }
 
     /**
@@ -230,6 +246,10 @@ abstract class BaseProvider
      */
     public function generatePublicUrl(Media $media, $format)
     {
+        if($format == 'reference') {
+            return $this->getReferenceImage($media);
+        }
+               
         return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePath($media),
             $media->getId(),

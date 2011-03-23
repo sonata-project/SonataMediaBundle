@@ -16,33 +16,84 @@ file that was distributed with this source code.
 {% block content %}
     <h1>{{ media.name }} ({{ format }})</h1>
 
+    <h2>{% trans "title.media_preview" from 'MediaBundle' %}</h2>
     <div>
         {% media media, format %}
     </div>
 
-    <h2>Information</h2>
-    <ul>
-        <li>Size : {{ media.size }}</li>
-        <li>Width : {{ media.width }}</li>
-        <li>Height : {{ media.height }}</li>
-        <li>Content Type : {{ media.contenttype }}</li>
-        <li>Copyright : {{ media.copyright }}</li>
-        <li>Author name : {{ media.authorname }}</li>
-        <li>CDN : {% if media.cdnisflushable %}to be flushed{% else %} last flush at {{ media.cdnflushat|date}} {% endif %}</li>
-    </ul>
+    <h2>{% trans "title.media_thumbnail" from 'MediaBundle' %}</h2>
+    <div>
+        {% thumbnail media, format %}
+    </div>
 
-    <h2>Formats</h2>
-    <ul>
-        <li><a href="{{ admin.generateUrl('view', { 'id' : media.id, 'format' : 'reference'}) }}">reference</li>
+    <h2>{% trans "title.imformations" from 'MediaBundle' %}</h2>
+
+    <table>
+        <tr>
+            <td>{% trans "label.size" from 'MediaBundle' %}</td>
+            <td>{{ media.size }}</td>
+        <tr>
+        <tr>
+            <td>{% trans "label.width" from 'MediaBundle' %}</td>
+            <td>{{ media.width }}</td>
+        <tr>
+        <tr>
+            <td>{% trans "label.height" from 'MediaBundle' %}</td>
+            <td>{{ media.height }}</td>
+        <tr>
+        <tr>
+            <td>{% trans "label.content_type" from 'MediaBundle' %}</td>
+            <td>{{ media.contenttype }}</td>
+        <tr>
+        <tr>
+            <td>{% trans "label.copyright" from 'MediaBundle' %}</td>
+            <td>{{ media.copyright }}</td>
+        <tr>
+        <tr>
+            <td>{% trans "label.author_name" from 'MediaBundle' %}</td>
+            <td>{{ media.authorname }}</td>
+        <tr>
+        <tr>
+            <td>{% trans "label.cdn" from 'MediaBundle' %}</td>
+            <td>
+                {% if media.cdnisflushable %}
+                    {% trans "label.to_be_flushed" from 'MediaBundle' %}
+                {% else %}
+                    {% trans "label.to_be_flushed" from 'MediaBundle' %}
+
+                    {% set date = media.cdnflushat|date %}
+                    {% trans from 'MediaBundle' %}
+                        label.flushed_at
+                    {% endtrans %}
+                 {% endif %}
+            </td>
+        <tr>
+        <tr>
+            <td>{% trans "label.public_url" from 'MediaBundle' %}</td>
+            <td><input type="text" value="{% path media, format %}" style="width:500px"/></td>
+        <tr>
+    </table>
+
+    <h2>{% trans "title.formats" from 'MediaBundle' %}</h2>
+    <table>
+        <tr>
+            <td>
+                <a href="{{ admin.generateUrl('view', { 'id' : media.id, 'format' : 'reference'}) }}">reference</a>
+            </td>
+            <td>
+                <input type="text" value="{% path media, 'reference' %}"  style="width:500px" />
+            </td>
+        </tr>
 
         {% for name, format in formats %}
-            <li>
-                <a href="{{ admin.generateUrl('view', { 'id' : media.id, 'format' : name}) }}">
-                    {% thumbnail media, name %}
-                    {{ name }}
-
-                </a>
-            </li>
+            <tr>
+                <td>
+                    <a href="{{ admin.generateUrl('view', { 'id' : media.id, 'format' : name}) }}">{{ name }}</a>
+                </td>
+                <td>
+                    <input type="text" value="{% path media, name %}"  style="width:500px"/>
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

@@ -67,6 +67,7 @@ class MediaHelper extends Helper
             ->getProvider($media->getProviderName());
 
         $format = $provider->getFormatName($media, $format);
+
         $options = $provider->getHelperProperties($media, $format, $options);
 
         return $this->getTemplating()->render(
@@ -115,9 +116,25 @@ class MediaHelper extends Helper
                  'options'  => $options,
             )
          );
-     }
+    }
 
+    /**
+     * @param Media $media
+     * @param string $format
+     * @return string
+     */
+    public function path($media, $format)
+    {
+        if (!$media) {
+             return '';
+        }
 
+        $provider = $this->getMediaService()
+           ->getProvider($media->getProviderName());
+
+        return $provider->generatePublicUrl($media, $format);
+    }
+    
     public function setMediaService($mediaService)
     {
         $this->mediaService = $mediaService;

@@ -72,11 +72,13 @@ class MediaAdmin extends Admin
             'name'      => $this->getBaseRouteName().'_view',
             'pattern'   => $this->getBaseRoutePattern().'/'.$this->getRouterIdParameter().'/view',
         );
-
     }
 
     public function prePersist($media)
     {
+        $parameters = $this->getPersistentParameters();
+        $media->setContext($parameters['context']);
+        
         $this->pool->prePersist($media);
     }
 
@@ -103,7 +105,7 @@ class MediaAdmin extends Admin
 
         return array(
             'provider' => $this->getRequest()->get('provider'),
-            'context'  => $this->getRequest()->get('context'),
+            'context'  => $this->getRequest()->get('context', 'default'),
         );
     }
 
