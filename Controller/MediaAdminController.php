@@ -49,6 +49,9 @@ class MediaAdminController extends Controller
                 'configuration' => $this->admin,
                 'base_template' => $this->getBaseTemplate(),
                 'side_menu'     => false,
+                'admin'         => $this->admin,
+                'side_menu'     => $this->getSideMenu('create'),
+                'breadcrumbs'   => $this->getBreadcrumbs('create'),
             ));
         }
 
