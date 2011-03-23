@@ -37,8 +37,8 @@ class MediaAdminController extends Controller
             'breadcrumbs'   => $this->getBreadcrumbs('view'),
         ));
     }
-  
-    public function createAction($form = null)
+
+    public function createAction()
     {
 
         $parameters = $this->admin->getPersistentParameters();
@@ -52,6 +52,6 @@ class MediaAdminController extends Controller
             ));
         }
 
-        return parent::createAction($form);
+        return parent::createAction();
     }
 }
