@@ -15,7 +15,8 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-
+use Sonata\AdminBundle\Route\RouteCollection;
+    
 use Knplabs\MenuBundle\Menu;
 use Knplabs\MenuBundle\MenuItem;
 
@@ -27,6 +28,11 @@ class MediaAdmin extends Admin
         'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig', 'type' => 'string'),
         'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig', 'type' => 'string'),
         'enabled',
+        '_action' => array(
+            'actions' => array(
+                'view' => array(),
+            )
+        )
     );
 
     protected $filter = array(
@@ -66,12 +72,9 @@ class MediaAdmin extends Admin
 
     }
 
-    public function configureUrls()
+    public function configureRoutes(RouteCollection $collection)
     {
-        $this->urls[$this->baseCodeRoute . '.view'] = array(
-            'name'      => $this->getBaseRouteName().'_view',
-            'pattern'   => $this->getBaseRoutePattern().'/'.$this->getRouterIdParameter().'/view',
-        );
+        $collection->add('view', $this->getRouterIdParameter().'/view');
     }
 
     public function prePersist($media)
