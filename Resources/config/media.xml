@@ -21,7 +21,18 @@
 
         <!-- filesystem abstraction service -->
         <service id="sonata.media.adapter.filesystem.local" class="Gaufrette\Filesystem\Adapter\Local" />
-        <service id="sonata.media.adapter.filesystem.ftp" class="Gaufrette\Filesystem\Adapter\Ftp" />
+        <service id="sonata.media.adapter.filesystem.ftp"   class="Gaufrette\Filesystem\Adapter\Ftp" />
+        <service id="sonata.media.adapter.service.s3"       class="Zend\Service\Amazon\S3\S3" >
+            <argument />
+            <argument />
+            <argument />
+        </service>
+        <service id="sonata.media.adapter.filesystem.s3"    class="Gaufrette\Filesystem\Adapter\AmazonS3" >
+            <argument />
+            <argument />
+            <argument />
+        </service>
+
 
         <service id="sonata.media.filesystem.ftp" class="Gaufrette\Filesystem\Filesystem" >
             <argument type="service" id="sonata.media.adapter.filesystem.ftp" />
@@ -29,6 +40,10 @@
 
         <service id="sonata.media.filesystem.local" class="Gaufrette\Filesystem\Filesystem">
             <argument type="service" id="sonata.media.adapter.filesystem.local" />
+        </service>
+
+        <service id="sonata.media.filesystem.s3" class="Gaufrette\Filesystem\Filesystem">
+            <argument type="service" id="sonata.media.adapter.filesystem.s3" />
         </service>
 
         <!-- CDN abstraction service -->

@@ -64,6 +64,13 @@ Full configuration option
                 passive:  false
                 create:   false
 
+            sonata.media.adapter.filesystem.s3:
+                bucket:     
+                accessKey:
+                secretKey:
+                create:     false
+                region:     # this settings does not seems to be implemented with Zend Framework
+                
         providers:
             sonata.media.provider.file:
                 resizer:    false

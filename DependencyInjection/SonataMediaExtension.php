@@ -138,6 +138,21 @@ class SonataMediaExtension extends Extension
             $definition->addArgument($configuration['passive']);
             $definition->addArgument($configuration['create']);
         }
+
+        // add the default configuration for the S3 filesystem
+        if($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['sonata.media.adapter.filesystem.s3'])) {
+            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.s3'];
+            
+            $definition = $container->getDefinition('sonata.media.adapter.filesystem.s3');
+            $definition->setArgument(0, new Reference('sonata.media.adapter.service.s3'));
+            $definition->setArgument(1, $configuration['bucket']);
+            $definition->setArgument(2, $configuration['create']);
+
+            $definition = $container->getDefinition('sonata.media.adapter.service.s3');
+            $definition->setArgument(0, $configuration['accessKey']);
+            $definition->setArgument(1, $configuration['secretKey']);
+            $definition->setArgument(2, $configuration['region']);
+        }
     }
 
     /**
