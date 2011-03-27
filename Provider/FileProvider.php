@@ -102,7 +102,6 @@ class FileProvider extends BaseProvider
     public function fixBinaryContent(Media $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -113,9 +112,9 @@ class FileProvider extends BaseProvider
                 throw new RuntimeException('The file does not exist : ' . $media->getBinaryContent());
             }
 
-            $binary_content = new \Symfony\Component\HttpFoundation\File\File($media->getBinaryContent());
+            $binaryContent = new \Symfony\Component\HttpFoundation\File\File($media->getBinaryContent());
 
-            $media->setBinaryContent($binary_content);
+            $media->setBinaryContent($binaryContent);
         }
     }
 

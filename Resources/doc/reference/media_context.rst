@@ -74,7 +74,7 @@ change the Admin behaviors :
 
     public function getPersistentParameters()
     {
-        if(!$this->getRequest()) {
+        if (!$this->getRequest()) {
             return array();
         }
 

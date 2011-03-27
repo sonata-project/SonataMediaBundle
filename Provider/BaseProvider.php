@@ -97,7 +97,7 @@ abstract class BaseProvider
             $key = $this->generatePrivateUrl($media, 'reference');
 
             // the reference file is remote, get it and store it with the 'reference' format
-            if($this->getFilesystem()->has($key)) {
+            if ($this->getFilesystem()->has($key)) {
                 $referenceFile = $this->getFilesystem()->get($key);
             } else {
                 $referenceFile = $this->getFilesystem()->get($key, true);
@@ -177,14 +177,14 @@ abstract class BaseProvider
     {
         $path = $this->getReferenceImage($media);
 
-        if($this->getFilesystem()->has($path)) {
+        if ($this->getFilesystem()->has($path)) {
             $this->getFilesystem()->delete($path);
         }
 
         // delete the differents formats
         foreach ($this->formats as $format => $definition) {
             $path = $this->generatePrivateUrl($media, $format);
-            if($this->getFilesystem()->has($path)) {
+            if ($this->getFilesystem()->has($path)) {
                 $this->getFilesystem()->delete($path);
             }
         }
@@ -246,7 +246,7 @@ abstract class BaseProvider
      */
     public function generatePublicUrl(Media $media, $format)
     {
-        if($format == 'reference') {
+        if ($format == 'reference') {
             return $this->getReferenceImage($media);
         }
                

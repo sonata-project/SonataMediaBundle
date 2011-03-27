@@ -39,7 +39,7 @@ class SimpleResizer implements ResizerInterface
     {
         $image = $this->getAdapter()->load($in->getContent());
 
-        if($height == null) {
+        if ($height == null) {
             $size = $image->getSize();
             $height = (int) ($width * $size->getHeight() / $size->getWidth());
         }

@@ -87,7 +87,7 @@ class PanterPortal implements CDNInterface
     {
         $result = $this->getClient()->flush($this->login, $this->pass, "paths", $this->siteId, implode("\n",  $paths), true, false);
 
-        if($result != "Flush successfully submitted.")
+        if ($result != "Flush successfully submitted.")
         {
             throw new \RuntimeException('Unable to flush : '. $result);
         }
@@ -100,7 +100,7 @@ class PanterPortal implements CDNInterface
      */
     public function getClient()
     {
-        if(!$this->cdnSoap) {
+        if (!$this->cdnSoap) {
             $this->cdnSoap = new \SoapClient(self::WSDL_URL);
         }
 

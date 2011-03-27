@@ -56,7 +56,7 @@ class SonataMediaExtension extends Extension
         foreach ($config['contexts'] as $name => $settings) {
             $formats = array();
 
-            foreach($settings['formats'] as $format => $value) {
+            foreach ($settings['formats'] as $format => $value) {
                 $formats[$name.'_'.$format] = $value;
             }
 
@@ -94,13 +94,13 @@ class SonataMediaExtension extends Extension
     public function configureCdnAdapter(ContainerBuilder $container, $config)
     {
         // add the default configuration for the server cdn
-        if($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['sonata.media.cdn.server'])) {
+        if ($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['sonata.media.cdn.server'])) {
             $definition     = $container->getDefinition('sonata.media.cdn.server');
             $configuration  = $config['cdn']['sonata.media.cdn.server'];
             $definition->setArgument(0, $configuration['path']);
         }
 
-        if($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['sonata.media.cdn.panther'])) {
+        if ($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['sonata.media.cdn.panther'])) {
             $definition     = $container->getDefinition('sonata.media.cdn.panther');
             $configuration  = $config['cdn']['sonata.media.cdn.panther'];
             $definition->setArgument(0, $configuration['path']);
@@ -120,7 +120,7 @@ class SonataMediaExtension extends Extension
     {
 
         // add the default configuration for the local filesystem
-        if($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['sonata.media.adapter.filesystem.local'])) {
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['sonata.media.adapter.filesystem.local'])) {
             $definition = $container->getDefinition('sonata.media.adapter.filesystem.local');
             $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.local'];
             $definition->addArgument($configuration['directory']);
@@ -128,7 +128,7 @@ class SonataMediaExtension extends Extension
         }
 
         // add the default configuration for the FTP filesystem
-        if($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['sonata.media.adapter.filesystem.ftp'])) {
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['sonata.media.adapter.filesystem.ftp'])) {
             $definition = $container->getDefinition('sonata.media.adapter.filesystem.ftp');
             $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.ftp'];
             $definition->addArgument($configuration['directory']);
@@ -140,7 +140,7 @@ class SonataMediaExtension extends Extension
         }
 
         // add the default configuration for the S3 filesystem
-        if($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['sonata.media.adapter.filesystem.s3'])) {
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['sonata.media.adapter.filesystem.s3'])) {
             $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.s3'];
             
             $definition = $container->getDefinition('sonata.media.adapter.filesystem.s3');

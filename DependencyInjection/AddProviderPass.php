@@ -108,7 +108,7 @@ class AddProviderPass implements CompilerPassInterface
 
             $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
 
-            if($resizer) {
+            if ($resizer) {
               $definition->addMethodCall('setResizer', array(new Reference($resizer)));
             }
         }

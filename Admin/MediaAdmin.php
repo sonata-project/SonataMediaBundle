@@ -55,7 +55,7 @@ class MediaAdmin extends Admin
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
-        if($media->getId() > 0) {
+        if ($media->getId() > 0) {
             $provider->buildEditForm($formMapper);
         } else {
             $provider->buildCreateForm($formMapper);
@@ -102,7 +102,7 @@ class MediaAdmin extends Admin
 
     public function getPersistentParameters()
     {
-        if(!$this->getRequest()) {
+        if (!$this->getRequest()) {
             return array();
         }
 
@@ -116,7 +116,7 @@ class MediaAdmin extends Admin
     {
         $media = parent::getNewInstance();
         
-        if($this->getRequest()) {
+        if ($this->getRequest()) {
             $media->setProviderName($this->getRequest()->get('provider'));
             $media->setContext($this->getRequest()->get('context'));
         }

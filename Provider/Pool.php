@@ -167,7 +167,7 @@ class Pool
     {
         $context = $this->getContext($name);
 
-        if(!$context) {
+        if (!$context) {
             return null;
         }
 
@@ -182,7 +182,7 @@ class Pool
     {
         $context = $this->getContext($name);
 
-        if(!$context) {
+        if (!$context) {
             return null;
         }
 
@@ -200,7 +200,7 @@ class Pool
             return $providers;
         }
 
-        foreach($this->getProviderNamesByContext($name) as $name) {
+        foreach ($this->getProviderNamesByContext($name) as $name) {
             $providers[] = $this->getProvider($name);
         }
 
