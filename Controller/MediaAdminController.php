@@ -27,7 +27,7 @@ class MediaAdminController extends Controller
             throw new NotFoundHttpException('unable to find the media with the id');
         }
         
-        return $this->render('SonataMediaBundle:MediaAdmin:view.html.twig', array(
+        return $this->render('SonataMedia:MediaAdmin:view.html.twig', array(
             'media'         => $media,
             'formats'       => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
             'format'        => $this->get('request')->get('format', 'reference'),
@@ -44,7 +44,7 @@ class MediaAdminController extends Controller
         $parameters = $this->admin->getPersistentParameters();
         
         if (!$parameters['provider']) {
-            return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
+            return $this->render('SonataMedia:MediaAdmin:select_provider.html.twig', array(
                 'providers'     => $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', 'default')),
                 'configuration' => $this->admin,
                 'base_template' => $this->getBaseTemplate(),

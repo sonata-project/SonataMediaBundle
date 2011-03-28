@@ -25,8 +25,8 @@ class MediaAdmin extends Admin
     protected $pool = null;
     
     protected $list = array(
-        'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig', 'type' => 'string'),
-        'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig', 'type' => 'string'),
+        'image'  => array('template' => 'SonataMedia:MediaAdmin:list_image.html.twig', 'type' => 'string'),
+        'custom' => array('template' => 'SonataMedia:MediaAdmin:list_custom.html.twig', 'type' => 'string'),
         'enabled',
         '_action' => array(
             'actions' => array(

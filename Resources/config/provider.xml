@@ -26,8 +26,8 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_image.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMedia:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMedia:Provider:view_image.html.twig</argument>
                 </argument>
             </call>
         </service>
@@ -40,8 +40,8 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_file.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMedia:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMedia:Provider:view_file.html.twig</argument>
                 </argument>
             </call>
         </service>
@@ -54,8 +54,8 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_youtube.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMedia:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMedia:Provider:view_youtube.html.twig</argument>
                 </argument>
             </call>
         </service>
@@ -68,8 +68,8 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_dailymotion.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMedia:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMedia:Provider:view_dailymotion.html.twig</argument>
                 </argument>
             </call>
         </service>
@@ -82,8 +82,8 @@
             <argument />
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
+                    <argument key='helper_thumbnail'>SonataMedia:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMedia:Provider:view_vimeo.html.twig</argument>
                 </argument>
             </call>
         </service>
