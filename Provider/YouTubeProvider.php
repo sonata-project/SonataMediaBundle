@@ -200,7 +200,7 @@ class YouTubeProvider extends BaseProvider
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
         $media->setContentType('video/x-flv');
-        $media->setProviderStatus(Media::STATUS_OK);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
 
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());

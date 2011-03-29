@@ -160,6 +160,13 @@ class SonataMediaExtension extends Extension
             $definition->setArgument(1, $configuration['secretKey']);
             $definition->setArgument(2, $configuration['region']);
         }
+
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['sonata.media.adapter.filesystem.replicate'])) {
+            $definition = $container->getDefinition('sonata.media.adapter.filesystem.replicate');
+            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.replicate'];
+            $definition->setArgument(0, new Reference($configuration['master']));
+            $definition->setArgument(1, new Reference($configuration['slave']));
+        }
     }
 
     /**

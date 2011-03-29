@@ -70,7 +70,11 @@ Full configuration option
                 secretKey:
                 create:     false
                 region:     # this settings does not seems to be implemented with Zend Framework
-                
+
+            sonata.media.adapter.filesystem.replicate:
+                master: sonata.media.adapter.filesystem.s3
+                slave: sonata.media.adapter.filesystem.local
+
         providers:
             sonata.media.provider.file:
                 resizer:    false
