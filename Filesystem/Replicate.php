@@ -33,7 +33,7 @@ class Replicate implements AdapterInterface
      *
      * @return boolean TRUE on success, or FALSE on failure
      */
-    function delete($key)
+    public function delete($key)
     {
         if($this->slave->delete($key)) {
             return $this->master->delete($key);
@@ -49,7 +49,7 @@ class Replicate implements AdapterInterface
      *
      * @return integer An UNIX like timestamp
      */
-    function mtime($key)
+    public function mtime($key)
     {
         return $this->master->mtime($key);
     }
@@ -61,7 +61,7 @@ class Replicate implements AdapterInterface
      *
      * @return array
      */
-    function keys($pattern)
+    public function keys($pattern)
     {
         return $this->master->keys($pattern);
     }
@@ -73,7 +73,7 @@ class Replicate implements AdapterInterface
      *
      * @return boolean
      */
-    function exists($key)
+    public function exists($key)
     {
         return $this->master->exists($key);
     }
@@ -87,7 +87,7 @@ class Replicate implements AdapterInterface
      * @return integer The number of bytes that were written into the file, or
      *                 FALSE on failure
      */
-    function write($key, $content)
+    public function write($key, $content)
     {
         if($this->master->write($key, $content)) {
             return $this->slave->write($key, $content);
@@ -103,8 +103,8 @@ class Replicate implements AdapterInterface
      *
      * @return string
      */
-    function read($key)
+    public function read($key)
     {
-        return $this->master->delete($key);
+        return $this->master->read($key);
     }
 }
