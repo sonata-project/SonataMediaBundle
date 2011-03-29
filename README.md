@@ -37,6 +37,7 @@ Available services
     - sonata.media.filesystem.local       : The local filesystem (default)
     - sonata.media.filesystem.ftp         : FTP
     - sonata.media.filesystem.s3          : Amazon S3
+    - sonata.media.filesystem.replicate   : Replicate file to a master and to a slave
 
  CDN
 
