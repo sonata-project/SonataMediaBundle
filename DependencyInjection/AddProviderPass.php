@@ -103,8 +103,8 @@ class AddProviderPass implements CompilerPassInterface
             $filesystem = isset($provider['filesystem']) ? $provider['filesystem']  : 'sonata.media.filesystem.local';
             $cdn        = isset($provider['cdn'])        ? $provider['cdn']         : 'sonata.media.cdn.server';
 
-            $definition->setArgument(2, new Reference($filesystem));
-            $definition->setArgument(3, new Reference($cdn));
+            $definition->setArgument(1, new Reference($filesystem));
+            $definition->setArgument(2, new Reference($cdn));
 
             $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
 

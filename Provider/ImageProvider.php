@@ -10,13 +10,13 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 
 class ImageProvider extends FileProvider
 {
 
-    public function getHelperProperties(Media $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
         $format_configuration = $this->getFormat($format);
 
@@ -31,7 +31,7 @@ class ImageProvider extends FileProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return string
      */
-    public function getReferenceImage(Media $media)
+    public function getReferenceImage(MediaInterface $media)
     {
 
         return $this->getCdn()->getPath(sprintf('%s/%s',
@@ -44,7 +44,7 @@ class ImageProvider extends FileProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return string
      */
-    public function getAbsolutePath(Media $media)
+    public function getAbsolutePath(MediaInterface $media)
     {
 
         return $this->getReferenceImage($media);
@@ -55,7 +55,7 @@ class ImageProvider extends FileProvider
      * @param  $format
      * @return string
      */
-    public function generatePublicUrl(Media $media, $format)
+    public function generatePublicUrl(MediaInterface $media, $format)
     {
         if ($format == 'reference') {
             return $this->getReferenceImage($media);
@@ -73,7 +73,7 @@ class ImageProvider extends FileProvider
      * @param  $format
      * @return string
      */
-    public function generatePrivateUrl(Media $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, $format)
     {
 
         return sprintf('%s/thumb_%d_%s.jpg',

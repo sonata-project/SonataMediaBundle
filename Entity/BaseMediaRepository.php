@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Entity;
 
-class BaseMediaRepository extends \Doctrine\ORM\EntityRepository
+abstract class BaseMediaRepository extends \Doctrine\ORM\EntityRepository
 {
 
 

@@ -18,8 +18,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function getProvider()
     {
-        $em = 1;
-
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
             ->method('resize')
@@ -37,13 +35,12 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $em, $filesystem, $cdn);
+        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $filesystem, $cdn);
         $provider->setResizer($resizer);
 
         return $provider;
     }
 
-    
     public function testProvider()
     {
 
@@ -106,5 +103,4 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->postRemove($media);
     }
-
 }

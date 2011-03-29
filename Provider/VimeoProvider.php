@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
 
@@ -24,7 +24,7 @@ class VimeoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return null
      */
-    public function getReferenceImage(Media $media)
+    public function getReferenceImage(MediaInterface $media)
     {
         return $media->getMetadataValue('thumbnail_url');
     }
@@ -35,7 +35,7 @@ class VimeoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return string
      */
-    public function getAbsolutePath(Media $media)
+    public function getAbsolutePath(MediaInterface $media)
     {
         return sprintf('http://www.vimeo.com/%s', $media->getProviderReference());
     }
@@ -46,7 +46,7 @@ class VimeoProvider extends BaseProvider
      * @param array $options
      * @return array
      */
-    public function getHelperProperties(Media $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
 
         // documentation : http://vimeo.com/api/docs/moogaloop
@@ -124,7 +124,7 @@ class VimeoProvider extends BaseProvider
      *
      * @see BaseProvider::preSave
      */
-    public function prePersist(Media $media)
+    public function prePersist(MediaInterface $media)
     {
 
         if (!$media->getBinaryContent()) {
@@ -158,7 +158,7 @@ class VimeoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return 
      */
-    public function preUpdate(Media $media)
+    public function preUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -171,7 +171,7 @@ class VimeoProvider extends BaseProvider
         $media->setProviderMetadata($metadata);
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
-        $media->setProviderStatus(Media::STATUS_OK);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
 
         $media->setUpdatedAt(new \Datetime());
     }
@@ -181,7 +181,7 @@ class VimeoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return mixed|string
      */
-    public function getMetadata(Media $media)
+    public function getMetadata(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -208,7 +208,7 @@ class VimeoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function postUpdate(Media $media)
+    public function postUpdate(MediaInterface $media)
     {
         $this->postPersist($media);
     }
@@ -217,7 +217,7 @@ class VimeoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return
      */
-    public function postPersist(Media $media)
+    public function postPersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -231,7 +231,7 @@ class VimeoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function preRemove(Media $media)
+    public function preRemove(MediaInterface $media)
     {
 
     }

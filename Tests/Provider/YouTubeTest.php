@@ -18,8 +18,6 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
     public function getProvider()
     {
-        $em = 1;
-
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
             ->method('resize')
@@ -36,7 +34,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
-        $provider = new \Sonata\MediaBundle\Provider\YouTubeProvider('file', $em, $filesystem, $cdn);
+        $provider = new \Sonata\MediaBundle\Provider\YouTubeProvider('file', $filesystem, $cdn);
         $provider->setResizer($resizer);
         
         return $provider;
@@ -63,7 +61,6 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('0011/24', $provider->generatePath($media));
         $this->assertEquals('/updoads/media/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
-
     }
 
     public function testThumbnail()
@@ -115,5 +112,4 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         stream_wrapper_restore('http');
     }
-
 }

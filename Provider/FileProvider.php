@@ -10,14 +10,14 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
     
 class FileProvider extends BaseProvider
 {
 
-    public function getReferenceImage(Media $media)
+    public function getReferenceImage(MediaInterface $media)
     {
 
         return sprintf('%s/%s',
@@ -26,7 +26,7 @@ class FileProvider extends BaseProvider
         );
     }
 
-    public function getAbsolutePath(Media $media)
+    public function getAbsolutePath(MediaInterface $media)
     {
 
         return $this->getReferenceImage($media);
@@ -66,7 +66,7 @@ class FileProvider extends BaseProvider
         ));
     }
     
-    public function postPersist(Media $media)
+    public function postPersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -82,7 +82,7 @@ class FileProvider extends BaseProvider
         $this->generateThumbnails($media);
     }
 
-    public function postUpdate(Media $media)
+    public function postUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -99,7 +99,7 @@ class FileProvider extends BaseProvider
         $this->generateThumbnails($media);
     }
 
-    public function fixBinaryContent(Media $media)
+    public function fixBinaryContent(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -109,7 +109,7 @@ class FileProvider extends BaseProvider
         if (!$media->getBinaryContent() instanceof \Symfony\Component\HttpFoundation\File\File) {
 
             if (!is_file($media->getBinaryContent())) {
-                throw new RuntimeException('The file does not exist : ' . $media->getBinaryContent());
+                throw new \RuntimeException('The file does not exist : ' . $media->getBinaryContent());
             }
 
             $binaryContent = new \Symfony\Component\HttpFoundation\File\File($media->getBinaryContent());
@@ -118,13 +118,13 @@ class FileProvider extends BaseProvider
         }
     }
 
-    public function prePersist(Media $media)
+    public function prePersist(MediaInterface $media)
     {
 
         $this->fixBinaryContent($media);
 
         $media->setProviderName($this->name);
-        $media->setProviderStatus(Media::STATUS_OK);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
 
         if (!$media->getBinaryContent()) {
 
@@ -149,14 +149,14 @@ class FileProvider extends BaseProvider
     }
 
 
-    public function generatePublicUrl(Media $media, $format)
+    public function generatePublicUrl(MediaInterface $media, $format)
     {
 
         // todo: add a valid icon set
         return $this->getCdn()->getPath(sprintf('media_bundle/images/files/%s/file.png',$format));
     }
 
-    public function getHelperProperties(Media $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
         return array_merge(array(
           'title'       => $media->getName(),
@@ -165,13 +165,13 @@ class FileProvider extends BaseProvider
         ), $options);
     }
 
-    public function generatePrivateUrl(Media $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, $format)
     {
 
         return false;
     }
 
-    public function preUpdate(Media $media)
+    public function preUpdate(MediaInterface $media)
     {
 
         $this->fixBinaryContent($media);
@@ -191,7 +191,7 @@ class FileProvider extends BaseProvider
         $media->setUpdatedAt(new \Datetime());
     }
 
-    public function preRemove(Media $media)
+    public function preRemove(MediaInterface $media)
     {
 
     }

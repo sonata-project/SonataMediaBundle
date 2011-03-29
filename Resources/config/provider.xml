@@ -14,14 +14,11 @@
     </parameters>
 
     <services>
-        <service id="sonata.media.entity_manager" alias="doctrine.orm.default_entity_manager" />
-
         <service id="sonata.media.pool" class="%sonata.media.pool.class%"/>
         
         <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.image</argument>
-            <argument type="service" id="sonata.media.entity_manager" />
             <argument />
             <argument />
             <call method="setTemplates">
@@ -35,7 +32,6 @@
         <service id="sonata.media.provider.file" class="%sonata.media.provider.file.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.file</argument>
-            <argument type="service" id="sonata.media.entity_manager" />
             <argument />
             <argument />
             <call method="setTemplates">
@@ -49,7 +45,6 @@
         <service id="sonata.media.provider.youtube" class="%sonata.media.provider.youtube.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.youtube</argument>
-            <argument type="service" id="sonata.media.entity_manager" />
             <argument />
             <argument />
             <call method="setTemplates">
@@ -63,7 +58,6 @@
         <service id="sonata.media.provider.dailymotion" class="%sonata.media.provider.dailymotion.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.dailymotion</argument>
-            <argument type="service" id="sonata.media.entity_manager" />
             <argument />
             <argument />
             <call method="setTemplates">
@@ -77,7 +71,6 @@
         <service id="sonata.media.provider.vimeo" class="%sonata.media.provider.vimeo.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.vimeo</argument>
-            <argument type="service" id="sonata.media.entity_manager" />
             <argument />
             <argument />
             <call method="setTemplates">

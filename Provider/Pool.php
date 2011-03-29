@@ -12,7 +12,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  *
@@ -23,7 +23,6 @@ use Sonata\MediaBundle\Entity\BaseMedia as Media;
  */
 class Pool
 {
-
     /**
      * @var array
      */
@@ -50,7 +49,7 @@ class Pool
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function postUpdate(Media $media)
+    public function postUpdate(MediaInterface $media)
     {
         $this->getProvider($media->getProviderName())->postUpdate($media);
     }
@@ -59,7 +58,7 @@ class Pool
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function postRemove(Media $media)
+    public function postRemove(MediaInterface $media)
     {
         $this->getProvider($media->getProviderName())->postRemove($media);
     }
@@ -68,7 +67,7 @@ class Pool
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function postPersist(Media $media)
+    public function postPersist(MediaInterface $media)
     {
         $this->getProvider($media->getProviderName())->postPersist($media);
     }
@@ -77,7 +76,7 @@ class Pool
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function preUpdate(Media $media)
+    public function preUpdate(MediaInterface $media)
     {
         $this->getProvider($media->getProviderName())->preUpdate($media);
     }
@@ -86,7 +85,7 @@ class Pool
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function preRemove(Media $media)
+    public function preRemove(MediaInterface $media)
     {
         $this->getProvider($media->getProviderName())->preRemove($media);
     }
@@ -95,7 +94,7 @@ class Pool
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function prePersist(Media $media)
+    public function prePersist(MediaInterface $media)
     {
         $this->getProvider($media->getProviderName())->prePersist($media);
     }

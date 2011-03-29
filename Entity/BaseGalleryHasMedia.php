@@ -10,7 +10,7 @@
 
 namespace Sonata\MediaBundle\Entity;
 
-class BaseGalleryHasMedia
+abstract class BaseGalleryHasMedia
 {
 
     protected $media;

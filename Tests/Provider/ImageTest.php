@@ -18,8 +18,6 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
     public function getProvider()
     {
-        $em = 1;
-
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
             ->method('resize')
@@ -36,7 +34,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $em, $filesystem, $cdn);
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $filesystem, $cdn);
         $provider->setResizer($resizer);
         
         return $provider;
@@ -61,7 +59,6 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('0011/24', $provider->generatePath($media));
         $this->assertEquals('/uploads/media/0011/24/thumb_1023456_big.jpg', $provider->generatePublicUrl($media, 'big'));
-
     }
 
     public function testThumbnail()

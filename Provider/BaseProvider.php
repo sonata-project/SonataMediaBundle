@@ -14,7 +14,7 @@ namespace Sonata\MediaBundle\Provider;
 use Gaufrette\Filesystem\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Media\ResizerInterface;
-use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 
 abstract class BaseProvider
@@ -23,8 +23,6 @@ abstract class BaseProvider
      * @var array
      */
     protected $formats = array();
-
-    protected $em;
 
     protected $templates = array();
 
@@ -36,13 +34,11 @@ abstract class BaseProvider
     
     /**
      * @param string $name
-     * @param \Doctrine\ORM\EntityManager $em
      * @param array $settings
      */
-    public function __construct($name, $em, Filesystem $filesystem, CDNInterface $cdn)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn)
     {
         $this->name         = $name;
-        $this->em           = $em;
         $this->filesystem   = $filesystem;
         $this->cdn          = $cdn;
     }
@@ -85,7 +81,7 @@ abstract class BaseProvider
      *
      * @return void
      */
-    public function generateThumbnails(Media $media)
+    public function generateThumbnails(MediaInterface $media)
     {
         if (!$this->requireThumbnails()) {
             return;
@@ -123,11 +119,11 @@ abstract class BaseProvider
     /**
      * return the correct format name : providerName_format
      *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
      * @return string
      */
-    public function getFormatName(Media $media, $format)
+    public function getFormatName(MediaInterface $media, $format)
     {
         if ($format == 'admin') {
             return 'admin';
@@ -151,7 +147,7 @@ abstract class BaseProvider
      * @abstract
      * @return string to the reference image
      */
-    abstract function getReferenceImage(Media $media);
+    abstract function getReferenceImage(MediaInterface $media);
 
     /**
      * return the absolute path of the reference image or the service provider reference
@@ -159,7 +155,7 @@ abstract class BaseProvider
      * @abstract
      * @return void
      */
-    abstract function getAbsolutePath(Media $media);
+    abstract function getAbsolutePath(MediaInterface $media);
 
     /**
      *
@@ -167,13 +163,13 @@ abstract class BaseProvider
      * @param  $media
      * @return void
      */
-    abstract function postUpdate(Media $media);
+    abstract function postUpdate(MediaInterface $media);
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function postRemove(Media $media)
+    public function postRemove(MediaInterface $media)
     {
         $path = $this->getReferenceImage($media);
 
@@ -208,21 +204,21 @@ abstract class BaseProvider
      * @param  $media
      * @return void
      */
-    abstract function postPersist(Media $media);
+    abstract function postPersist(MediaInterface $media);
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
      */
-    abstract function getHelperProperties(Media $media, $format);
+    abstract function getHelperProperties(MediaInterface $media, $format);
 
     /**
      * Generate the private path (client side)
      *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string
      */
-    public function generatePath(Media $media)
+    public function generatePath(MediaInterface $media)
     {
         $limit_first_level = 100000;
         $limit_second_level = 1000;
@@ -240,11 +236,11 @@ abstract class BaseProvider
     /**
      * Generate the public directory path (client side)
      *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param  $format
      * @return string
      */
-    public function generatePublicUrl(Media $media, $format)
+    public function generatePublicUrl(MediaInterface $media, $format)
     {
         if ($format == 'reference') {
             return $this->getReferenceImage($media);
@@ -260,13 +256,12 @@ abstract class BaseProvider
     /**
      * Generate the private directory path (server side)
      *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param  $format
      * @return string
      */
-    public function generatePrivateUrl(Media $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, $format)
     {
-
         return sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePath($media),
             $media->getId(),

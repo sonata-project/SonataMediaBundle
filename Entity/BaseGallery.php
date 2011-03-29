@@ -14,7 +14,7 @@ namespace Sonata\MediaBundle\Entity;
 /**
  * Bundle\MediaBundle\Entity\Gallery
  */
-class BaseGallery
+abstract class BaseGallery
 {
 
     /**

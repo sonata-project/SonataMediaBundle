@@ -10,20 +10,20 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Entity\BaseMedia as Media;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
 
 class DailyMotionProvider extends BaseProvider
 {
 
-    public function getReferenceImage(Media $media)
+    public function getReferenceImage(MediaInterface $media)
     {
 
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    public function getAbsolutePath(Media $media)
+    public function getAbsolutePath(MediaInterface $media)
     {
 
         return sprintf('http://www.dailymotion.com/swf/video/%s', $media->getProviderReference());
@@ -53,7 +53,7 @@ class DailyMotionProvider extends BaseProvider
         $formMapper->add('binaryContent', array(), array('type' => 'string'));
     }
 
-    public function getHelperProperties(Media $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
 
         // documentation : http://www.dailymotion.com/en/doc/api/player
@@ -122,7 +122,7 @@ class DailyMotionProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return
      */
-    public function prePersist(Media $media)
+    public function prePersist(MediaInterface $media)
     {
 
         if (!$media->getBinaryContent()) {
@@ -140,7 +140,7 @@ class DailyMotionProvider extends BaseProvider
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
         $media->setContentType('video/x-flv');
-        $media->setProviderStatus(Media::STATUS_OK);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
 
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());
@@ -150,7 +150,7 @@ class DailyMotionProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return
      */
-    public function preUpdate(Media $media)
+    public function preUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -163,7 +163,7 @@ class DailyMotionProvider extends BaseProvider
         $media->setProviderReference($media->getBinaryContent());
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
-        $media->setProviderStatus(Media::STATUS_OK);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
         
         $media->setUpdatedAt(new \Datetime());
     }
@@ -173,7 +173,7 @@ class DailyMotionProvider extends BaseProvider
      * @param  $media
      * @return mixed|string
      */
-    public function getMetadata($media)
+    public function getMetadata(MediaInterface $media)
     {
 
         if (!$media->getBinaryContent()) {
@@ -201,7 +201,7 @@ class DailyMotionProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function postUpdate(Media $media)
+    public function postUpdate(MediaInterface $media)
     {
         $this->postPersist($media);
     }
@@ -210,7 +210,7 @@ class DailyMotionProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return
      */
-    public function postPersist(Media $media)
+    public function postPersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -223,7 +223,7 @@ class DailyMotionProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
-    public function preRemove(Media $media)
+    public function preRemove(MediaInterface $media)
     {
 
     }

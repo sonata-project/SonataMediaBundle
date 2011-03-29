@@ -37,12 +37,19 @@ class SonataMediaExtension extends Extension
      */
     public function load(array $config, ContainerBuilder $container)
     {
+        // todo: update the code to use the Configuration class 
+        $config = call_user_func_array('array_merge_recursive', $config);
+        
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('admin.xml');
         $loader->load('provider.xml');
         $loader->load('media.xml');
 
-        $config = call_user_func_array('array_merge_recursive', $config);
+        if (!in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
+            throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
+        }
+        
+        $loader->load(sprintf('%s.xml', $config['db_driver']));
 
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
