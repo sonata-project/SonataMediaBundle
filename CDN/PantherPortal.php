@@ -50,7 +50,7 @@ class PanterPortal implements CDNInterface
         $this->siteId   = $siteId;
     }
 
-    public function getPath($relativePath)
+    public function getPath($relativePath, $isFlushable = false)
     {
         return sprintf('%s/%s', $this->path, $relativePath);
     }

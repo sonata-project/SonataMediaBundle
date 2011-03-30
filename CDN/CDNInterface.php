@@ -15,9 +15,11 @@ interface CDNInterface
     /**
      * return the base path 
      *
+     * @param string $relativePath
+     * @param boolean $isFlushable
      * @return string
      */
-    function getPath($relativePath);
+    function getPath($relativePath, $isFlushable);
 
     /**
      * Flush the ressource

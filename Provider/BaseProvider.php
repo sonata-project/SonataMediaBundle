@@ -250,7 +250,7 @@ abstract class BaseProvider
             $this->generatePath($media),
             $media->getId(),
             $format
-        ));
+        ), $media->getCdnIsFlushable());
     }
 
     /**

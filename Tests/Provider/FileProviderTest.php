@@ -65,9 +65,53 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testHelperProperies()
+    {
+        $provider = $this->getProvider();
+
+        $provider->addFormat('admin', array('width' => 100));
+        $media = new Media;
+        $media->setName('test.png');
+        $media->setProviderReference('ASDASDAS.png');
+        $media->setId(10);
+        $media->setHeight(100);
+
+        $properties = $provider->getHelperProperties($media, 'admin');
+
+        $this->assertInternalType('array', $properties);
+        $this->assertEquals('test.png', $properties['title']);
+    }
+
+    public function testFixBinaryContent()
+    {
+        $provider = $this->getProvider();
+
+        $file = __DIR__.'/../fixtures/file.txt';
+
+        $media = new Media;
+        $media->setBinaryContent($file);
+        $provider->fixBinaryContent($media);
+
+        $this->assertInstanceOf('\Symfony\Component\HttpFoundation\File\File', $media->getBinaryContent());
+    }
+
+    public function testForm()
+    {
+        $provider = $this->getProvider();
+
+        $formMapper = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add'), array(), '', false);
+        $formMapper->expects($this->exactly(8))
+            ->method('add')
+            ->will($this->returnValue(null));
+
+
+        $provider->buildCreateForm($formMapper);
+
+        $provider->buildEditForm($formMapper);
+    }
+
     public function testThumbnail()
     {
-
         $provider = $this->getProvider();
 
         $media = new Media;
@@ -83,6 +127,23 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+
+        $file = __DIR__.'/../fixtures/file.txt';
+
+        $media = new Media;
+        $provider->preUpdate($media);
+        $this->assertNull($media->getProviderReference());
+
+        $media->setBinaryContent($file);
+        $provider->fixBinaryContent($media);
+
+        $provider->preUpdate($media);
+
+        $this->assertInstanceOf('\DateTime', $media->getUpdatedAt());
+        $this->assertNotNull($media->getProviderReference());
+
+        $provider->postUpdate($media);
+
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
 

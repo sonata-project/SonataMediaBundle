@@ -25,7 +25,7 @@ interface MediaManagerInterface
     /**
      * Deletes a media
      *
-     * @param Media $user
+     * @param Media $media
      * @return void
      */
     function deleteMedia(MediaInterface $media);
@@ -39,7 +39,7 @@ interface MediaManagerInterface
     function findMediaBy(array $criteria);
 
     /**
-     * Returns the user's fully qualified class name
+     * Returns the media's fully qualified class name
      *
      * @return string
      */

@@ -115,6 +115,13 @@ class SonataMediaExtension extends Extension
             $definition->setArgument(2, $configuration['password']);
             $definition->setArgument(3, $configuration['site_id']);
         }
+
+        if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['sonata.media.cdn.fallback'])) {
+            $definition     = $container->getDefinition('sonata.media.cdn.fallback');
+            $configuration  = $config['cdn']['sonata.media.cdn.fallback'];
+            $definition->setArgument(0, new Reference($configuration['cdn']));
+            $definition->setArgument(1, new Reference($configuration['fallback']));
+        }
     }
     /**
      * Inject filesystem dependency to default provider

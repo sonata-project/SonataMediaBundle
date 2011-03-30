@@ -9,20 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Tests\Entity;
+namespace Sonata\MediaBundle\Tests\Media;
 
-class Media extends \Sonata\MediaBundle\Entity\BaseMedia
+
+class SimpleResizerTest extends \PHPUnit_Framework_TestCase
 {
 
-    protected $id;
 
-    public function setId($id)
+    public function testResize()
     {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
+        
     }
 }

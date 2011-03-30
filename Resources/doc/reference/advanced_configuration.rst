@@ -50,6 +50,10 @@ Full configuration option
                 password:
                 username:
 
+            sonata.media.cdn.fallback:
+                cdn:      sonata.media.cdn.panther
+                fallback: sonata.media.cdn.server
+                
         filesystem:
             sonata.media.adapter.filesystem.local:
                 directory:  %kernel.root_dir%/../web/uploads/media

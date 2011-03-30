@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -110,6 +111,65 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->postRemove($media);
 
+        $media->setProviderStatus('fake');
+        $provider->preUpdate($media);
+
+        $this->assertEquals(MediaInterface::STATUS_OK, $media->getProviderStatus());
+        $provider->postUpdate($media);
+
+        $media->setProviderStatus('fake');
+        $media->setBinaryContent(null);
+
+        $provider->prePersist($media);
+        $this->assertEquals('fake', $media->getProviderStatus());
+
+        $provider->preUpdate($media);
+        $this->assertEquals('fake', $media->getProviderStatus());
+
+        $provider->postPersist($media);
+        $this->assertEquals('fake', $media->getProviderStatus());
+
+        $provider->preRemove($media);
+
         stream_wrapper_restore('http');
     }
+
+    public function testForm()
+    {
+        $provider = $this->getProvider();
+
+        $formMapper = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add'), array(), '', false);
+        $formMapper->expects($this->exactly(8))
+            ->method('add')
+            ->will($this->returnValue(null));
+
+
+        $provider->buildCreateForm($formMapper);
+
+        $provider->buildEditForm($formMapper);
+    }
+
+    public function testHelperProperies()
+    {
+        $provider = $this->getProvider();
+
+        $provider->addFormat('admin', array('width' => 100));
+        $media = new Media;
+        $media->setName('Les tests');
+        $media->setProviderReference('ASDASDAS.png');
+        $media->setId(10);
+        $media->setHeight(100);
+        $media->setWidth(100);
+
+
+        $properties = $provider->getHelperProperties($media, 'admin');
+
+        $this->assertInternalType('array', $properties);
+        $this->assertEquals(100, $properties['height']);
+        $this->assertEquals(100, $properties['width']);
+
+        $properties = $provider->getHelperProperties($media, 'admin', array('width' => 150));
+        $this->assertEquals(150, $properties['width']);
+    }
+
 }

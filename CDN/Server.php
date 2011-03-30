@@ -19,7 +19,7 @@ class Server implements CDNInterface
         $this->path = $path;
     }
 
-    public function getPath($relativePath)
+    public function getPath($relativePath, $isFlushable = false)
     {
         return sprintf('%s/%s', $this->path, $relativePath);
     }

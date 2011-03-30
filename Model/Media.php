@@ -140,10 +140,6 @@ abstract class Media implements MediaInterface
     {
         $metadata = $this->getProviderMetadata();
 
-        if (!is_array($metadata)) {
-            $metadata = array();
-        }
-
         return isset($metadata[$name]) ? $metadata[$name] : $default;
     }
 
@@ -272,7 +268,7 @@ abstract class Media implements MediaInterface
      *
      * @param array $providerMetadata
      */
-    public function setProviderMetadata($providerMetadata)
+    public function setProviderMetadata(array $providerMetadata = array())
     {
         $this->providerMetadata = $providerMetadata;
     }

@@ -153,7 +153,7 @@ class FileProvider extends BaseProvider
     {
 
         // todo: add a valid icon set
-        return $this->getCdn()->getPath(sprintf('media_bundle/images/files/%s/file.png',$format));
+        return $this->getCdn()->getPath(sprintf('media_bundle/images/files/%s/file.png', $format), $media->getCdnIsFlushable());
     }
 
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
@@ -187,7 +187,7 @@ class FileProvider extends BaseProvider
         }
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
-        $media->setSize($media->getBinaryContent()->size());
+        $media->setSize($media->getBinaryContent()->getSize());
         $media->setUpdatedAt(new \Datetime());
     }
 

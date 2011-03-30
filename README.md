@@ -43,7 +43,7 @@ Available services
 
     - sonata.media.cdn.server             : The local http server (default)
     - sonata.media.cdn.panther            : Panther Portal
-
+    - sonata.media.cdn.fallback           : Fallback, use the fallback fallback (the http server) if the Media is not yet flushed on the CDN
 
 More services will be available in the futur depend on your contributions :)
 
