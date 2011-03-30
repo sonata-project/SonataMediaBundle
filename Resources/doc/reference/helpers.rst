@@ -1,15 +1,15 @@
 Helpers
 =======
 
-The bundle comes with different helpers to render the thumbnail or the media itself. The thumbnail always
-represents the media's image preview (ie the thumbnail of a flash video). And the media helper generates
-the media itself (ie the flash video).
-
+The bundle comes with different helpers to render the thumbnail or the media
+itself. The thumbnail always represents the media's image preview (i.e. the
+thumbnail of a flash video). And the media helper generates the media itself
+(i.e. the flash video).
 
 PHP Usage
 ---------
 
-Render the thumbnail :
+Render the thumbnail:
 
 .. code-block:: php
 
@@ -19,7 +19,7 @@ Render the thumbnail :
         'class' => 'myclass'
     ) ?>
 
-Render the media :
+Render the media:
 
 .. code-block:: php
 
@@ -29,21 +29,20 @@ Render the media :
         'class' => 'myclass'
     ) ?>
 
-
 Twig usage
 ----------
 
-Render the thumbnail :
+Render the thumbnail:
 
-.. code-block:: twig
+.. code-block:: jinja
 
     {% thumbnail media, 'small_format' %}
 
     {% thumbnail media, 'small_format', {'class': 'myclass'} %}
 
-Render the media :
+Render the media:
 
-.. code-block:: twig
+.. code-block:: jinja
 
     {% media media, 'small_format' %}
 

@@ -1,19 +1,18 @@
 Installation
 ============
 
-Make sure you have a ``Sonata`` directory, if not create it::
+Make sure you have a ``Sonata`` directory. If you don't, create it::
 
   mkdir src/Sonata
 
-to begin, add the dependent bundles to the ``src/`` directory. if using
-git, you can add them as submodules::
+To begin, add the dependent bundles to the ``src/`` directory. If you're
+using git, you can add them as submodules::
 
   git submodule add git@github.com:Sonata-project/MediaBundle.git src/Sonata/MediaBundle
 
   // dependency bundles
   git submodule add git@github.com:Sonata-project/AdminBundle.git src/Sonata/AdminBundle
   git submodule add git@github.com:Sonata-project/EasyExtendsBundle.git src/Sonata/EasyExtendsBundle
-
 
 Add the ``imagine`` image processing library
 
@@ -39,16 +38,18 @@ Next, be sure to enable the bundles in your application kernel:
       );
   }
 
-At this point, the bundle is not yet ready. You need to generate the correct entities for the media::
+At this point, the bundle is not yet ready. You need to generate the correct
+entities for the media::
 
-    php kooqit/console Sonata:easy-extends:generate
+    php app/console Sonata:easy-extends:generate
 
 .. note::
 
-    The command will generate domain objects in an ``Application`` namespace. So you can point entities'
-    associations to a global and common namespace. This will make Entities sharing very easier has your
-    models will allows point to a global namespace.
-    For instance the media will be ``Application\Sonata\MediaBundle\Entity\Media``.
+    The command will generate domain objects in an ``Application`` namespace.
+    So you can point entities' associations to a global and common namespace.
+    This will make Entities sharing very easier has your models will allows
+    point to a global namespace. For instance the media will be
+    ``Application\Sonata\MediaBundle\Entity\Media``.
 
 Now, add the new `Application` Bundle into the kernel
 
@@ -80,12 +81,11 @@ Update the ``autoload.php`` to add a new namespaces :
         // ... other declarations
     ));
 
-
 Configuration
 -------------
 
-to use the ``AdminBundle``, add the following to your application
-configuration file.
+To use the ``AdminBundle``, add the following to your application configuration
+file.
 
 .. code-block:: yaml
 
@@ -112,8 +112,7 @@ configuration file.
                 directory:  %kernel.root_dir%/../web/uploads/media
                 create:     false
 
-
 .. note::
 
-    you can define formats per provider type. you might want to set
-    an transversal ``admin`` format to be used by the ``mediaadmin`` class.
+    You can define formats per provider type. You might want to set
+    a transversal ``admin`` format to be used by the ``mediaadmin`` class.

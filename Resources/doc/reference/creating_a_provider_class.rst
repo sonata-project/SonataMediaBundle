@@ -1,53 +1,56 @@
-Creating a media provider : a vimeo provider
-============================================
+Creating a Media Provider: A Vimeo Provider
+===========================================
 
-Introduction
-------------
+A provider class solves a simple use case: the management of a very specific
+type of media.
 
-A provider class try to resolve a simple use case : specific media management.
+A youtube video and an image file are two very different types of media and
+each cannot be managed by a single class. In the ``MediaBundle``, each is
+represented by two provider classes: ``YoutubeProvider`` and ``ImageProvider``.
 
-A youtube video and an image file are two different kind of media which cannot
-be managed by only one class. So in the ``MediaBundle`` they are represented
-by two provider classes : ``YoutubeProvider`` and ``ImageProvider``.
+A provider class is responsible for handling common things related to a media
+asset:
 
-A provider class is responsable to build common elements linked to a media
- - thumbnails
- - path
- - editing the media with form
- - storing the media information (metadata)
+* thumbnails
+* path
+* editing the media with a form
+* storing the media information (metadata)
 
 A provider class is always linked to a ``Filesystem`` and a ``CDN``. The
-filesystem abstraction uses the ``Gaufrette`` library, for now there is
+filesystem abstraction uses the ``Gaufrette`` library. For now there is
 only 2 abstracted filesystem available : ``Local`` and ``FTP``. The ``CDN``
-is used to generated the public url of a media.
+is used to generated the public url of a media asset.
 
-By default the filesystem and the CDN uses the local filesystem and the current
+By default the filesystem and the CDN use the local filesystem and the current
 server for the CDN.
 
-So when you create a provider you don't need to worry about how media are going
-to be store into the filesystem.
+In other words, when you create a provider, you don't need to worry about
+how media assets are going to be store on the filesystem.
 
 Media Entity
 ------------
 
-The ``Media`` entity comes with common media fields : size, length, width and height.
-However the provider might required to add more information, as it not possible to
-store all information into columns, the provider class can use the ``provider_metadata``
+The ``Media`` entity comes with common media fields: ``size``, ``length``,
+``width`` and ``height``. However the provider might require you to add more
+information. As it not possible to store all of the possible information
+into database columns, the provider class can use the ``provider_metadata``
 field to store metadata as a serialize array.
 
 The ``Media`` entity has 3 other provider fields:
- - ``provider_name`` : the service name linked to the media
- - ``provider_status`` : the status of the media
- - ``provider_reference`` : the internal provider reference (the video sig for instance)
+
+* ``provider_name`` : the service name linked to the media
+* ``provider_status`` : the status of the media
+* ``provider_reference`` : the internal provider reference (the video sig for instance)
 
 Case Study
 ----------
 
-Before starting to code we need to collect information about vimeo
+Before starting, we need to collect information about some asset on vimeo.
+Take this video, for example:
 
- - video identifier format : 21216091
- - video player documentation : http://vimeo.com/api/docs/moogaloop
- - metadata : http://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
+* video identifier format : 21216091
+* video player documentation : http://vimeo.com/api/docs/moogaloop
+* metadata : http://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
  
    {
      "type":"video",
@@ -69,14 +72,12 @@ Before starting to code we need to collect information about vimeo
      "video_id":"21216091"
    }
 
- The metadata contains all information we want.
-
+The metadata contains all information we want.
 
 Initialize the class
 --------------------
 
 Let's initialize the ``VimeoProvider`` class.
-
 
 .. code-block:: php
 
@@ -89,22 +90,20 @@ Let's initialize the ``VimeoProvider`` class.
 
     class VimeoProvider extends BaseProvider
     {
-
-
     }
 
-Now we need to define the create and edit form. There is 2 forms because the
-workflow is not the same :
+Next, we need to define the create and edit forms. There are two forms because
+the workflow is not the same:
 
- - create : display only one input text representing the video identifier
- - edit : display all information about the media, the edit form should not be
-          used to edit metadata information as the metadata are only used
-          internally by the provider class
+* *create*: display only one input text representing the video identifier;
 
-The ``MediaAdmin`` class used by the ``AdminBundle`` does not know how to create
-the form as the form is unique per provider, so the ``MediaAdmin`` delegates this
-definition to the related provider.
+* *edit*: display all information about the media: the edit form should not
+  be used to edit the metadata information as the metadata is only used
+  internally by the provider class.
 
+The ``MediaAdmin`` class, used by the ``AdminBundle``, does not know how
+to create the form as the form is unique per provider. So the ``MediaAdmin``
+delegates this definition to the related provider.
 
 .. code-block:: php
 
@@ -124,9 +123,8 @@ definition to the related provider.
         $formMapper->add('binaryContent', array(), array('type' => 'string'));
     }
 
-Once the form will be submitted, we retrieve the video metadata. The metadata is going to be used to
-store ``Media`` information :
-
+Once the form is submitted, we retrieve the video metadata. The metadata
+is going to be used to store ``Media`` information :
 
 .. code-block:: php
 
@@ -153,11 +151,12 @@ store ``Media`` information :
         return $metadata;
     }
 
+Now, we need to code the logic for the create mode. The ``$media`` contains
+data from the ``POST``. The ``AdminBundle`` always calls specific methods
+while saving an object :
 
-Now, we need to code the logic for the create mode, the ``$media`` contains data from the ``POST``.
-The ``AdminBundle`` always calls specific methods while saving an object :
- - ``prePersist`` / ``postPersist``
- - ``preUpdate`` / ``postUpdate``
+* ``prePersist`` / ``postPersist``
+* ``preUpdate`` / ``postUpdate``
 
 The ``MediaAdmin`` delegates this management to the media provider.
 
@@ -165,7 +164,6 @@ The ``MediaAdmin`` delegates this management to the media provider.
 
     public function prePersist(Media $media)
     {
-
         if (!$media->getBinaryContent()) {
 
             return;
@@ -193,8 +191,7 @@ The ``MediaAdmin`` delegates this management to the media provider.
         $media->setUpdatedAt(new \Datetime());
     }
 
-
-The update method only update data that cannot be managed by the user.
+The update method should only update data that cannot be managed by the user.
 
 .. code-block:: php
 
@@ -216,12 +213,12 @@ The update method only update data that cannot be managed by the user.
         $media->setUpdatedAt(new \Datetime());
     }
 
+At this point, the ``Media`` object is populated with data from the vimeo's
+JSON definition and is ready to be saved. However once saved, the provider
+need to generate the correct thumbnails.
 
-At this point, the ``Media`` object is populated with data from the json vimeo's definition
-and ready to be saved. However once saved, the provider need to generated the correct thumbnails.
-
-The ``postPersist`` and ``postUpdate`` must be implemented to generate valid thumbnails.
-
+The ``postPersist`` and ``postUpdate`` must be implemented to generate valid
+thumbnails.
 
 .. code-block:: php
 
@@ -241,8 +238,9 @@ The ``postPersist`` and ``postUpdate`` must be implemented to generate valid thu
     }
 
 
-The ``generateThumbnails`` is defined in the ``BaseProvider`` class. This method required an
-``getReferenceImage`` that returns the reference image.
+The ``generateThumbnails`` method is defined in the ``BaseProvider`` class.
+This method required a ``getReferenceImage`` method that returns the reference
+image.
 
 .. code-block:: php
 
@@ -251,61 +249,63 @@ The ``generateThumbnails`` is defined in the ``BaseProvider`` class. This method
         return $media->getMetadataValue('thumbnail_url');
     }
 
-At this point, the provider class is almost finish, we can add and remove a vimeo video : thanks to the ``AdminBundle``
-integration and to the ``VimeoProvider`` service.
+At this point, the provider class is almost finish: we can add and remove
+a vimeo video : thanks to the ``AdminBundle`` integration and the ``VimeoProvider``
+service.
 
+Register the Class with the Service Container
+---------------------------------------------
 
-Register the class to the DIC
------------------------------
-
-If you use the tag ``sonata.media.provider``, the provider service will be added to the provider pool.
+If you use the tag ``sonata.media.provider``, the provider service will be
+added to the provider pool.
 
 .. code-block:: xml
 
-        <service id="sonata.media.provider.vimeo" class="Sonata\MediaBundle\Provider\VimeoProvider">
-            <tag name="sonata.media.provider" />
-            <argument>sonata.media.provider.vimeo</argument>
-            <argument type="service" id="sonata.media.entity_manager" />
-            <argument />
-            <argument />
-            <call method="setTemplates">
-                <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
-                </argument>
-            </call>
-        </service>
-
+    <service id="sonata.media.provider.vimeo" class="Sonata\MediaBundle\Provider\VimeoProvider">
+        <tag name="sonata.media.provider" />
+        <argument>sonata.media.provider.vimeo</argument>
+        <argument type="service" id="sonata.media.entity_manager" />
+        <argument />
+        <argument />
+        <call method="setTemplates">
+            <argument type="collection">
+                <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
+            </argument>
+        </call>
+    </service>
 
 The last important part is how the vimeo media should be displayed.
 
 View Helper
 -----------
 
-The ``MediaBundle`` comes with 2 helpers method :
-  - thumbnails : this method displays the thumbnail depends on the requested format. The thumbnail path generation
-                 uses the CDN service injected into the provider. By default, the ``sonata.media.cdn.server``
-                 service is used. The server is just the local http server.
-  - media : this methods displays the media, in the current case the media is the vimeo player. Depends on the
-            provider the method ``getHelperProperties`` is called to normalize the available options.
+The ``MediaBundle`` comes with 2 helpers methods:
 
+* *thumbnails*: This method displays the thumbnail depending on the requested
+  format. The thumbnail path generation uses the CDN service injected into
+  the provider. By default, the ``sonata.media.cdn.server`` service is used.
+  The server is just the local http server.
 
-The thumbnail template is common to all media and it is quite simple :
+* *media*: This methods displays the media. In the current case, the media
+  is the vimeo player. Depending on the provider, the method ``getHelperProperties``
+  is called to normalize the available options.
 
-.. code-block:: twig
+The thumbnail template is common to all media and it is quite simple:
+
+.. code-block:: html+jinja
 
     <img {% for name, value in options %}{{name}}="{{value}}" {% endfor %} />
 
-The media template and media helper is a bit more tricky, each provider might provide a rich set of options to
-embeded the media. The ``VideoProvider::getHelperProperties()`` generates a correct set of options to be
-passed to the ``view_vimeo.html.twig`` template file.
-
+The media template and media helper is a bit more tricky. Each provider might
+provide a rich set of options to embed the media. The
+``VideoProvider::getHelperProperties()`` method generates the correct set
+of options that need to be passed to the ``view_vimeo.html.twig`` template file.
 
 .. code-block:: php
 
     public function getHelperProperties(Media $media, $format, $options = array())
     {
-
         // documentation : http://vimeo.com/api/docs/moogaloop
         $defaults = array(
             // (optional) Flash Player version of app. Defaults to 9 .NEW!
@@ -340,7 +340,6 @@ passed to the ``view_vimeo.html.twig`` template file.
             'js_swf_id' => uniqid('vimeo_player_'),
         );
 
-
         $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
         $params = array(
@@ -354,10 +353,9 @@ passed to the ``view_vimeo.html.twig`` template file.
         return $params;
     }
 
+From the vimeo's documentation, a video can be included like this:
 
-From the vimeo's documentation, a video can be included like this :
-
-.. code-block:: twig
+.. code-block:: html+jinja
 
     <iframe
         id="{{ options.id }}"
@@ -367,6 +365,6 @@ From the vimeo's documentation, a video can be included like this :
         frameborder="{{ options.frameborder }}">
     </iframe>
 
-
-Et voila! Of course you should test the provider class. There are many examples in the Tests folder.
-The source code is available in the class ``Sonata\MediaBundle\Provider\VimeoProvider``.
+Et voila! Of course you should test the provider class. There are many examples
+in the ``Tests`` folder. The source code is available in the class
+``Sonata\MediaBundle\Provider\VimeoProvider``.

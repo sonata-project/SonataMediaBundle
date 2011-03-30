@@ -1,10 +1,9 @@
 Advanced Configuration
 ======================
 
-Full configuration option
+Full configuration options:
 
-
-.. code-block:: php
+.. code-block:: yaml
 
     sonata_media:
         contexts:
