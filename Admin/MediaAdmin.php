@@ -102,7 +102,7 @@ class MediaAdmin extends Admin
 
     public function getPersistentParameters()
     {
-        if (!$this->getRequest()) {
+        if (!$this->hasRequest()) {
             return array();
         }
 
@@ -116,7 +116,7 @@ class MediaAdmin extends Admin
     {
         $media = parent::getNewInstance();
         
-        if ($this->getRequest()) {
+        if ($this->hasRequest()) {
             $media->setProviderName($this->getRequest()->get('provider'));
             $media->setContext($this->getRequest()->get('context'));
         }

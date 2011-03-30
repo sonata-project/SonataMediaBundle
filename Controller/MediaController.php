@@ -28,7 +28,7 @@ class MediaController extends Controller
 
         return $this->render('SonataMedia:Media:view.html.twig', array(
             'media'     => $media,
-            'formats'   => $this->get('media.provider')->getProvider($media->getProviderName())->getFormats(),
+            'formats'   => $this->get('sonata.media.pool')->getProvider($media->getProviderName())->getFormats(),
             'format'    => $format
         ));
     }

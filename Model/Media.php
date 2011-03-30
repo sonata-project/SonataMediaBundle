@@ -428,7 +428,7 @@ abstract class Media implements MediaInterface
      *
      * @param datetime $cdnFlushAt
      */
-    public function setCdnFlushAt($cdnFlushAt)
+    public function setCdnFlushAt(\DateTime $cdnFlushAt = null)
     {
         $this->cdnFlushAt = $cdnFlushAt;
     }
@@ -448,7 +448,7 @@ abstract class Media implements MediaInterface
      *
      * @param datetime $updatedAt
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
     }
@@ -468,7 +468,7 @@ abstract class Media implements MediaInterface
      *
      * @param datetime $createdAt
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
     }

@@ -20,12 +20,10 @@ class GalleryController extends Controller
     public function indexAction()
     {
 
-        $galleries = $this->get('sonata.media.entity_manager')
-            ->getRepository('Application\Sonata\MediaBundle\Entity\Gallery')
-            ->findBy(array(
-                'enabled' => true
-            ));
-
+        $galleries = $this->get('sonata.media.manager.gallery')->findGalleriesBy(array(
+            'enabled' => true
+        ));
+        
         return $this->render('SonataMedia:Gallery:index.html.twig', array(
             'galleries'   => $galleries,
         ));
@@ -34,7 +32,7 @@ class GalleryController extends Controller
     public function viewAction($id)
     {
 
-        $gallery = $this->get('sonata.media.entity_manager')->find('Application\Sonata\MediaBundle\Entity\Gallery', $id);
+        $gallery = $this->get('sonata.media.manager.gallery')->findGalleryBy(array( 'id' =>  $id));
 
         if (!$gallery) {
             throw new NotFoundHttpException('unable to find the gallery with the id');

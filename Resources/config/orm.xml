@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="sonata.media.manager.media.class">Sonata\MediaBundle\Entity\MediaManager</parameter>
+        <parameter key="sonata.media.manager.gallery.class">Sonata\MediaBundle\Entity\GalleryManager</parameter>
     </parameters>
 
     <services>
@@ -15,6 +16,11 @@
             <argument type="service" id="sonata.media.pool" />
             <argument type="service" id="sonata.media.entity_manager" />
             <argument>Application\Sonata\MediaBundle\Entity\Media</argument>
+        </service>
+
+        <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
+            <argument type="service" id="sonata.media.entity_manager" />
+            <argument>Application\Sonata\MediaBundle\Entity\Gallery</argument>
         </service>
     </services>
 

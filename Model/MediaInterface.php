@@ -229,7 +229,7 @@ interface MediaInterface
      *
      * @param datetime $cdnFlushAt
      */
-    function setCdnFlushAt($cdnFlushAt);
+    function setCdnFlushAt(\Datetime $cdnFlushAt = null);
 
     /**
      * Get cdn_flush_at
@@ -243,7 +243,7 @@ interface MediaInterface
      *
      * @param datetime $updatedAt
      */
-    function setUpdatedAt($updatedAt);
+    function setUpdatedAt(\Datetime $updatedAt = null);
 
     /**
      * Get updated_at
@@ -257,7 +257,7 @@ interface MediaInterface
      *
      * @param datetime $createdAt
      */
-    function setCreatedAt($createdAt);
+    function setCreatedAt(\Datetime $createdAt = null);
 
     /**
      * Get created_at

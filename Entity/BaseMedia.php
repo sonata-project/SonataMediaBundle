@@ -11,9 +11,19 @@
 
 namespace Sonata\MediaBundle\Entity;
 
-use Sonata\MediaBundle\Model\Media as AbstractMedia;
+use Sonata\MediaBundle\Model\Media;
 
-abstract class BaseMedia extends AbstractMedia
+abstract class BaseMedia extends Media
 {
 
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 }
