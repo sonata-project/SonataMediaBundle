@@ -33,8 +33,8 @@ class MediaAdminController extends Controller
             'format'        => $this->get('request')->get('format', 'reference'),
             'base_template' => $this->getBaseTemplate(),
             'admin'         => $this->admin,
-            'side_menu'     => $this->getSideMenu('view'),
-            'breadcrumbs'   => $this->getBreadcrumbs('view'),
+            'side_menu'     => $this->admin->getSideMenu('view'),
+            'breadcrumbs'   => $this->admin->getBreadcrumbs('view'),
         ));
     }
 
@@ -50,8 +50,8 @@ class MediaAdminController extends Controller
                 'base_template' => $this->getBaseTemplate(),
                 'side_menu'     => false,
                 'admin'         => $this->admin,
-                'side_menu'     => $this->getSideMenu('create'),
-                'breadcrumbs'   => $this->getBreadcrumbs('create'),
+                'side_menu'     => $this->admin->getSideMenu('create'),
+                'breadcrumbs'   => $this->admin->getBreadcrumbs('create'),
             ));
         }
 
