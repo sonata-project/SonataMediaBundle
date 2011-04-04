@@ -24,7 +24,7 @@ class GalleryController extends Controller
             'enabled' => true
         ));
         
-        return $this->render('SonataMedia:Gallery:index.html.twig', array(
+        return $this->render('SonataMediaBundle:Gallery:index.html.twig', array(
             'galleries'   => $galleries,
         ));
     }
@@ -38,7 +38,7 @@ class GalleryController extends Controller
             throw new NotFoundHttpException('unable to find the gallery with the id');
         }
 
-        return $this->render('SonataMedia:Gallery:view.html.twig', array(
+        return $this->render('SonataMediaBundle:Gallery:view.html.twig', array(
             'gallery'   => $gallery,
         ));
     }
