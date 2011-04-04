@@ -38,7 +38,7 @@ class GalleryManager extends AbstractGalleryManager
      * @param Gallery $gallery
      * @return void
      */
-    function updateGallery(GalleryInterface $gallery)
+    public function updateGallery(GalleryInterface $gallery)
     {
         $this->em->persist($gallery);
         $this->em->flush();
@@ -49,7 +49,7 @@ class GalleryManager extends AbstractGalleryManager
      *
      * @return string
      */
-    function getClass()
+    public function getClass()
     {
         return $this->class;
     }
@@ -60,7 +60,7 @@ class GalleryManager extends AbstractGalleryManager
      * @param array $criteria
      * @return Gallery
      */
-    function findGalleryBy(array $criteria)
+    public function findGalleryBy(array $criteria)
     {
         return $this->repository->findOneBy($criteria);
     }
@@ -71,7 +71,7 @@ class GalleryManager extends AbstractGalleryManager
      * @param array $criteria
      * @return array
      */
-    function findGalleriesBy(array $criteria)
+    public function findGalleriesBy(array $criteria)
     {
         return $this->repository->findBy($criteria);
     }
@@ -82,7 +82,7 @@ class GalleryManager extends AbstractGalleryManager
      * @param Gallery $gallery
      * @return void
      */
-    function deleteGallery(GalleryInterface $gallery)
+    public function deleteGallery(GalleryInterface $gallery)
     {
         $this->em->remove($gallery);
         $this->em->flush();

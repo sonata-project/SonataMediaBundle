@@ -17,8 +17,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
     
-use Knplabs\MenuBundle\Menu;
-use Knplabs\MenuBundle\MenuItem;
+use Knplabs\Bundle\MenuBundle\Menu;
 
 class MediaAdmin extends Admin
 {

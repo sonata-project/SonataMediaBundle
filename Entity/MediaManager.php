@@ -40,7 +40,7 @@ class MediaManager extends AbstractMediaManager
      * @param Media $media
      * @return void
      */
-    function updateUser(MediaInterface $media)
+    public function updateMedia(MediaInterface $media)
     {
         $this->em->persist($media);
         $this->em->flush();
@@ -51,7 +51,7 @@ class MediaManager extends AbstractMediaManager
      *
      * @return string
      */
-    function getClass()
+    public function getClass()
     {
         return $this->class;
     }
@@ -62,7 +62,7 @@ class MediaManager extends AbstractMediaManager
      * @param array $criteria
      * @return Media
      */
-    function findMediaBy(array $criteria)
+    public function findMediaBy(array $criteria)
     {
         return $this->repository->findOneBy($criteria);
     }
@@ -73,7 +73,7 @@ class MediaManager extends AbstractMediaManager
      * @param Media $media
      * @return void
      */
-    function deleteMedia(MediaInterface $media)
+    public function deleteMedia(MediaInterface $media)
     {
         $this->em->remove($media);
         $this->em->flush();

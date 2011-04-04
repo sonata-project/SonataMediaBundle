@@ -16,7 +16,7 @@ interface MediaManagerInterface
 {
 
     /**
-     * Creates an empty medie instance
+     * Creates an empty media instance
      *
      * @return Media
      */
@@ -51,5 +51,5 @@ interface MediaManagerInterface
      * @param Media $media
      * @return void
      */
-    function updateUser(MediaInterface $media);
+    function updateMedia(MediaInterface $media);
 }
