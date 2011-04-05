@@ -16,6 +16,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Media\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\Generator\GeneratorInterface;
+
 
 abstract class BaseProvider
 {
@@ -30,17 +32,20 @@ abstract class BaseProvider
 
     protected $filesystem;
 
+    protected $pathGenerator;
+
     protected $cdn;
     
     /**
      * @param string $name
      * @param array $settings
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator)
     {
-        $this->name         = $name;
-        $this->filesystem   = $filesystem;
-        $this->cdn          = $cdn;
+        $this->name          = $name;
+        $this->filesystem    = $filesystem;
+        $this->cdn           = $cdn;
+        $this->pathGenerator = $pathGenerator;
     }
 
     /**
@@ -220,17 +225,7 @@ abstract class BaseProvider
      */
     public function generatePath(MediaInterface $media)
     {
-        $limit_first_level = 100000;
-        $limit_second_level = 1000;
-
-        $rep_first_level = (int) ($media->getId() / $limit_first_level);
-        $rep_second_level = (int) (($media->getId() - ($rep_first_level * $limit_first_level)) / $limit_second_level);
-        $path = sprintf('%04s/%02s',
-            $rep_first_level + 1,
-            $rep_second_level + 1
-        );
-
-        return $path;
+        return $this->pathGenerator->generatePath($media);
     }
 
     /**
@@ -271,7 +266,6 @@ abstract class BaseProvider
     
     public function getFormats()
     {
-
         return $this->formats;
     }
 

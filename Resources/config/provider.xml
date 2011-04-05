@@ -21,6 +21,7 @@
             <argument>sonata.media.provider.image</argument>
             <argument />
             <argument />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -32,6 +33,7 @@
         <service id="sonata.media.provider.file" class="%sonata.media.provider.file.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.file</argument>
+            <argument />
             <argument />
             <argument />
             <call method="setTemplates">
@@ -47,6 +49,7 @@
             <argument>sonata.media.provider.youtube</argument>
             <argument />
             <argument />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -60,6 +63,7 @@
             <argument>sonata.media.provider.dailymotion</argument>
             <argument />
             <argument />
+            <argument />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -71,6 +75,7 @@
         <service id="sonata.media.provider.vimeo" class="%sonata.media.provider.vimeo.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.vimeo</argument>
+            <argument />
             <argument />
             <argument />
             <call method="setTemplates">

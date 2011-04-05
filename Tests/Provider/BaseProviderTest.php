@@ -33,8 +33,9 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
-        $provider = new TestProvider('test', $filesystem, $cdn);
-
+        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        
+        $provider = new TestProvider('test', $filesystem, $cdn, $generator);
 
         return $provider;
     }

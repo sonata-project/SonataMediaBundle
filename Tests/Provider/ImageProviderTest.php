@@ -34,7 +34,9 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $filesystem, $cdn);
+        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+
+        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $filesystem, $cdn, $generator);
         $provider->setResizer($resizer);
         
         return $provider;

@@ -36,7 +36,9 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
-        $provider = new \Sonata\MediaBundle\Provider\DailyMotionProvider('file', $filesystem, $cdn);
+        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+
+        $provider = new \Sonata\MediaBundle\Provider\DailyMotionProvider('file', $filesystem, $cdn, $generator);
         $provider->setResizer($resizer);
 
         return $provider;
