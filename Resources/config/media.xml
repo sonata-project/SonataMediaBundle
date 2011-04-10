@@ -10,12 +10,12 @@
 
     <services>
         <!-- image manipulation service -->
-        <service id="sonata.media.adapter.image.gd" class="Imagine\Gd\Imagine"></service>
-        <service id="sonata.media.adapter.image.imagick" class="Imagine\Gmagick\Imagine"></service>
-        <service id="sonata.media.adapter.image.gmagick" class="Imagine\Imagick\Imagine"></service>
+        <service id="sonata.media.adapter.image.gd" class="Imagine\Gd\Imagine" />
+        <service id="sonata.media.adapter.image.imagick" class="Imagine\Gmagick\Imagine" />
+        <service id="sonata.media.adapter.image.gmagick" class="Imagine\Imagick\Imagine" />
 
         <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
-            <argument type="service" id="sonata.media.adapter.image.gd"></argument>
+            <argument type="service" id="sonata.media.adapter.image.gd" />
             <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
         </service>
 
@@ -57,7 +57,7 @@
 
         <!-- Path generator servive -->
         <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\DefaultGenerator">
-            
+
         </service>
 
         <!-- CDN abstraction service -->
@@ -77,5 +77,5 @@
             <argument />
         </service>
     </services>
-    
+
 </container>

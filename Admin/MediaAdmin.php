@@ -16,13 +16,13 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-    
+
 use Knplabs\Bundle\MenuBundle\Menu;
 
 class MediaAdmin extends Admin
 {
     protected $pool = null;
-    
+
     protected $list = array(
         'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig', 'type' => 'string'),
         'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig', 'type' => 'string'),
@@ -41,9 +41,9 @@ class MediaAdmin extends Admin
         'context'
     );
 
-    public function __construct($class, $baseControllerName, $pool)
+    public function __construct($code, $class, $baseControllerName, $pool)
     {
-        parent::__construct($class, $baseControllerName);
+        parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
     }
@@ -80,7 +80,7 @@ class MediaAdmin extends Admin
     {
         $parameters = $this->getPersistentParameters();
         $media->setContext($parameters['context']);
-        
+
         $this->pool->prePersist($media);
     }
 
@@ -94,7 +94,7 @@ class MediaAdmin extends Admin
       $this->pool->preUpdate($media);
     }
 
-    public function postUpdate($media) 
+    public function postUpdate($media)
     {
       $this->pool->preUpdate($media);
     }
@@ -114,7 +114,7 @@ class MediaAdmin extends Admin
     public function getNewInstance()
     {
         $media = parent::getNewInstance();
-        
+
         if ($this->hasRequest()) {
             $media->setProviderName($this->getRequest()->get('provider'));
             $media->setContext($this->getRequest()->get('context'));
@@ -123,20 +123,11 @@ class MediaAdmin extends Admin
         return $media;
     }
 
-    public function getSideMenu($action, $childAdmin = false)
+    public function configureSideMenu(Menu $menu, $action, Admin $childAdmin = null)
     {
-
-        if ($childAdmin || in_array($action, array('edit', 'view'))) {
-            return $this->getEditSideMenu();
+        if (!$childAdmin && !in_array($action, array('edit', 'view'))) {
+            return;
         }
-
-        return false;
-    }
-
-    public function getEditSideMenu()
-    {
-
-        $menu = new Menu;
 
         $admin = $this->isChild() ? $this->getParent() : $this;
 
@@ -151,8 +142,6 @@ class MediaAdmin extends Admin
             $this->trans('view_media'),
             $admin->generateUrl('view', array('id' => $id))
         );
-
-        return $menu;
     }
 
 }

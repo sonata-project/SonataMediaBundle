@@ -8,7 +8,7 @@
         <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.controller">SonataMediaBundle:MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.entity">Application\Sonata\MediaBundle\Entity\Media</parameter>
-        
+
         <!-- GALLERY -->
         <parameter key="sonata.media.admin.gallery.class">Sonata\MediaBundle\Admin\GalleryAdmin</parameter>
         <parameter key="sonata.media.admin.gallery.controller">SonataMediaBundle:GalleryAdmin</parameter>
@@ -23,6 +23,7 @@
     <services>
         <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%">
             <tag name="sonata.admin" manager_type="orm" group="sonata_media" label="media"/>
+            <argument />
             <argument>%sonata.media.admin.media.entity%</argument>
             <argument>%sonata.media.admin.media.controller%</argument>
             <argument type="service" id="sonata.media.pool" />
@@ -30,15 +31,17 @@
 
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">
             <tag name="sonata.admin" manager_type="orm" group="sonata_media" label="gallery"/>
+            <argument />
             <argument>%sonata.media.admin.gallery.entity%</argument>
             <argument>%sonata.media.admin.gallery.controller%</argument>
         </service>
-        
+
         <service id="sonata.media.admin.gallery_has_media" class="%sonata.media.admin.gallery_has_media.class%">
             <tag name="sonata.admin" manager_type="orm" group="sonata_media" label="gallery_has_media" show_in_dashboard="false"/>
+            <argument />
             <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
             <argument>%sonata.media.admin.gallery_has_media.controller%</argument>
         </service>
     </services>
-    
+
 </container>
