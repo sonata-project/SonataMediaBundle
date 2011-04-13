@@ -34,7 +34,7 @@ class Pool
     {
 
         if (!isset($this->providers[$name])) {
-            throw new \RuntimeException(sprintf('unable to retrieve the provider named : %s', $name));
+            throw new \RuntimeException(sprintf('unable to retrieve the provider named : `%s`', $name));
         }
 
         return $this->providers[$name];
@@ -154,7 +154,7 @@ class Pool
             return null;
         }
 
-        
+
         return $this->contexts[$name];
     }
 

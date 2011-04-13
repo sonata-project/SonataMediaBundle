@@ -17,7 +17,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-use Knplabs\Bundle\MenuBundle\Menu;
+use Knplabs\Bundle\MenuBundle\MenuItem;
 
 class MediaAdmin extends Admin
 {
@@ -51,6 +51,10 @@ class MediaAdmin extends Admin
     public function configureFormFields(FormMapper $formMapper)
     {
         $media = $formMapper->getForm()->getData();
+
+        if(!$media->getProviderName()) {
+            return;
+        }
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
@@ -123,9 +127,10 @@ class MediaAdmin extends Admin
         return $media;
     }
 
-    public function configureSideMenu(Menu $menu, $action, Admin $childAdmin = null)
+    public function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
     {
-        if (!$childAdmin && !in_array($action, array('edit', 'view'))) {
+
+        if (!in_array($action, array('edit', 'view'))) {
             return;
         }
 
