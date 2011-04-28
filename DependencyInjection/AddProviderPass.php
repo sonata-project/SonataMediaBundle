@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * 
+ *
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
@@ -81,7 +81,7 @@ class AddProviderPass implements CompilerPassInterface
             $pool->addMethodCall('addProvider', array($id, new Reference($id)));
         }
     }
-    
+
     /**
      * @param ContainerBuilder $container
      * @param array $settings
@@ -104,9 +104,9 @@ class AddProviderPass implements CompilerPassInterface
             $cdn        = isset($provider['cdn'])        ? $provider['cdn']         : 'sonata.media.cdn.server';
             $generator  = isset($provider['generator'])  ? $provider['generator']   : 'sonata.media.generator.default';
 
-            $definition->setArgument(1, new Reference($filesystem));
-            $definition->setArgument(2, new Reference($cdn));
-            $definition->setArgument(3, new Reference($generator));
+            $definition->replaceArgument(1, new Reference($filesystem));
+            $definition->replaceArgument(2, new Reference($cdn));
+            $definition->replaceArgument(3, new Reference($generator));
 
             $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
 
@@ -129,7 +129,7 @@ class AddProviderPass implements CompilerPassInterface
             // add the differents related formats
             foreach ($context['providers'] as $id) {
                 $definition = $container->getDefinition($id);
-                
+
                 foreach ($context['formats'] as $format => $config) {
                     $config['quality']      = isset($config['quality']) ? $config['quality'] : 80;
                     $config['format']       = isset($config['format'])  ? $config['format'] : 'jpg';

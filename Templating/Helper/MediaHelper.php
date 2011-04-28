@@ -47,8 +47,7 @@ class MediaHelper extends Helper
     }
 
     /**
-     *
-     * return the provider view for the provided media
+     * Returns the provider view for the provided media
      *
      * @param Media $media
      * @param string $format
@@ -57,7 +56,6 @@ class MediaHelper extends Helper
      */
     public function media($media, $format, $options = array())
     {
-
         if (!$media) {
             return '';
         }
@@ -81,7 +79,7 @@ class MediaHelper extends Helper
     }
 
     /**
-     * return the thumbnail for the provided media
+     * Returns the thumbnail for the provided media
      *
      * @param Media $media
      * @param string $format
@@ -90,7 +88,6 @@ class MediaHelper extends Helper
      */
     public function thumbnail($media, $format, $options = array())
     {
-
          if (!$media) {
              return '';
          }
@@ -134,20 +131,10 @@ class MediaHelper extends Helper
 
         return $provider->generatePublicUrl($media, $format);
     }
-    
-    public function setMediaService($mediaService)
-    {
-        $this->mediaService = $mediaService;
-    }
 
     public function getMediaService()
     {
         return $this->mediaService;
-    }
-
-    public function setTemplating($templating)
-    {
-        $this->templating = $templating;
     }
 
     public function getTemplating()

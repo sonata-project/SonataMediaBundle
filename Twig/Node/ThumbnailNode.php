@@ -18,7 +18,7 @@ class ThumbnailNode extends \Twig_Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write("echo \$this->env->getExtension('templating')->getContainer()->get('sonata.media.templating.helper')->thumbnail(")
+            ->write("echo \$this->env->getExtension('sonata_media')->thumbnail(")
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))

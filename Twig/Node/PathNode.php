@@ -18,7 +18,7 @@ class PathNode extends \Twig_Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write("echo \$this->env->getExtension('templating')->getContainer()->get('sonata.media.templating.helper')->path(")
+            ->write("echo \$this->env->getExtension('sonata_media')->path(")
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))

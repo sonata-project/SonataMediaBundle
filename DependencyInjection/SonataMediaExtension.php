@@ -37,18 +37,20 @@ class SonataMediaExtension extends Extension
      */
     public function load(array $config, ContainerBuilder $container)
     {
-        // todo: update the code to use the Configuration class 
+        // todo: update the code to use the Configuration class
         $config = call_user_func_array('array_merge_recursive', $config);
-        
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('admin.xml');
         $loader->load('provider.xml');
         $loader->load('media.xml');
+//        $loader->load('template.xml');
+        $loader->load('twig.xml');
 
         if (!in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
-        
+
         $loader->load(sprintf('%s.xml', $config['db_driver']));
 
         $this->configureFilesystemAdapter($container, $config);
@@ -69,26 +71,6 @@ class SonataMediaExtension extends Extension
 
             $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats));
         }
-
-        // register template helper
-        $definition = new Definition(
-            'Sonata\MediaBundle\Templating\Helper\MediaHelper',
-            array(
-                 new Reference('sonata.media.pool'),
-                 new Reference('templating')
-            )
-        );
-        $definition->addTag('templating.helper', array('alias' => 'media'));
-        $definition->addTag('templating.helper', array('alias' => 'thumbnail'));
-        $definition->addTag('templating.helper', array('alias' => 'path'));
-
-        $container->setDefinition('sonata.media.templating.helper', $definition);
-
-        // register the twig extension
-        $container
-            ->register('sonata.media.twig.extension', 'Sonata\MediaBundle\Twig\Extension\MediaExtension')
-            ->addTag('twig.extension');
-
     }
 
     /**
@@ -104,23 +86,23 @@ class SonataMediaExtension extends Extension
         if ($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['sonata.media.cdn.server'])) {
             $definition     = $container->getDefinition('sonata.media.cdn.server');
             $configuration  = $config['cdn']['sonata.media.cdn.server'];
-            $definition->setArgument(0, $configuration['path']);
+            $definition->replaceArgument(0, $configuration['path']);
         }
 
         if ($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['sonata.media.cdn.panther'])) {
             $definition     = $container->getDefinition('sonata.media.cdn.panther');
             $configuration  = $config['cdn']['sonata.media.cdn.panther'];
-            $definition->setArgument(0, $configuration['path']);
-            $definition->setArgument(1, $configuration['username']);
-            $definition->setArgument(2, $configuration['password']);
-            $definition->setArgument(3, $configuration['site_id']);
+            $definition->replaceArgument(0, $configuration['path']);
+            $definition->replaceArgument(1, $configuration['username']);
+            $definition->replaceArgument(2, $configuration['password']);
+            $definition->replaceArgument(3, $configuration['site_id']);
         }
 
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['sonata.media.cdn.fallback'])) {
             $definition     = $container->getDefinition('sonata.media.cdn.fallback');
             $configuration  = $config['cdn']['sonata.media.cdn.fallback'];
-            $definition->setArgument(0, new Reference($configuration['cdn']));
-            $definition->setArgument(1, new Reference($configuration['fallback']));
+            $definition->replaceArgument(0, new Reference($configuration['cdn']));
+            $definition->replaceArgument(1, new Reference($configuration['fallback']));
         }
     }
     /**
@@ -156,23 +138,23 @@ class SonataMediaExtension extends Extension
         // add the default configuration for the S3 filesystem
         if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['sonata.media.adapter.filesystem.s3'])) {
             $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.s3'];
-            
+
             $definition = $container->getDefinition('sonata.media.adapter.filesystem.s3');
-            $definition->setArgument(0, new Reference('sonata.media.adapter.service.s3'));
-            $definition->setArgument(1, $configuration['bucket']);
-            $definition->setArgument(2, $configuration['create']);
+            $definition->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'));
+            $definition->replaceArgument(1, $configuration['bucket']);
+            $definition->replaceArgument(2, $configuration['create']);
 
             $definition = $container->getDefinition('sonata.media.adapter.service.s3');
-            $definition->setArgument(0, $configuration['accessKey']);
-            $definition->setArgument(1, $configuration['secretKey']);
-            $definition->setArgument(2, $configuration['region']);
+            $definition->replaceArgument(0, $configuration['accessKey']);
+            $definition->replaceArgument(1, $configuration['secretKey']);
+            $definition->replaceArgument(2, $configuration['region']);
         }
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['sonata.media.adapter.filesystem.replicate'])) {
             $definition = $container->getDefinition('sonata.media.adapter.filesystem.replicate');
             $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.replicate'];
-            $definition->setArgument(0, new Reference($configuration['master']));
-            $definition->setArgument(1, new Reference($configuration['slave']));
+            $definition->replaceArgument(0, new Reference($configuration['master']));
+            $definition->replaceArgument(1, new Reference($configuration['slave']));
         }
     }
 

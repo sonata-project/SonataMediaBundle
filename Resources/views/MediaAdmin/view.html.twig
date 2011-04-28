@@ -16,65 +16,63 @@ file that was distributed with this source code.
 {% block content %}
     <h2>{{ media.name }} ({{ format }})</h2>
 
-    <h3>{% trans "title.media_preview" from 'MediaBundle' %}</h3>
+    <h3>{% trans from 'MediaBundle' %}title.media_preview{% endtrans %}</h3>
     <div>
         {% media media, format %}
     </div>
 
-    <h3>{% trans "title.media_thumbnail" from 'MediaBundle' %}</h3>
+    <h3>{% trans from 'MediaBundle' %}title.media_thumbnail{% endtrans %}</h3>
     <div>
         {% thumbnail media, format %}
     </div>
 
-    <h3>{% trans "title.informations" from 'MediaBundle' %}</h3>
+    <h3>{% trans from 'MediaBundle' %}title.informations{% endtrans %}</h3>
 
     <table>
         <tr>
-            <td>{% trans "label.size" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.size{% endtrans %}</td>
             <td>{{ media.size }}</td>
         <tr>
         <tr>
-            <td>{% trans "label.width" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.width{% endtrans %}</td>
             <td>{{ media.width }}</td>
         <tr>
         <tr>
-            <td>{% trans "label.height" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.height{% endtrans %}</td>
             <td>{{ media.height }}</td>
         <tr>
         <tr>
-            <td>{% trans "label.content_type" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.content_type{% endtrans %}</td>
             <td>{{ media.contenttype }}</td>
         <tr>
         <tr>
-            <td>{% trans "label.copyright" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.copyright{% endtrans %}</td>
             <td>{{ media.copyright }}</td>
         <tr>
         <tr>
-            <td>{% trans "label.author_name" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.author_name{% endtrans %}</td>
             <td>{{ media.authorname }}</td>
         <tr>
         <tr>
-            <td>{% trans "label.cdn" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.cdn{% endtrans %}</td>
             <td>
                 {% if media.cdnisflushable %}
-                    {% trans "label.to_be_flushed" from 'MediaBundle' %}
+                    {% trans from 'MediaBundle' %}label.to_be_flushed{% endtrans %}
                 {% else %}
-                    {% trans "label.to_be_flushed" from 'MediaBundle' %}
+                    {% trans from 'MediaBundle' %}label.to_be_flushed{% endtrans %}
 
                     {% set date = media.cdnflushat|date %}
-                    {% trans from 'MediaBundle' %}
-                        label.flushed_at
-                    {% endtrans %}
+                    {% trans from 'MediaBundle' %}label.flushed_at{% endtrans %}
                  {% endif %}
             </td>
         <tr>
         <tr>
-            <td>{% trans "label.public_url" from 'MediaBundle' %}</td>
+            <td>{% trans from 'MediaBundle' %}label.public_url{% endtrans %}</td>
             <td><input type="text" value="{% path media, format %}" style="width:500px"/></td>
         <tr>
     </table>
 
-    <h3>{% trans "title.formats" from 'MediaBundle' %}</h3>
+    <h3>{% trans from 'MediaBundle' %}title.formats{% endtrans %}</h3>
     <table>
         <tr>
             <td>

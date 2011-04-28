@@ -30,9 +30,13 @@ class Pool
 
     protected $contexts = array();
 
+    /**
+     * @throws \RuntimeException
+     * @param  $name
+     * @return \Sonata\MediaBundle\Provider\ProviderInterface
+     */
     public function getProvider($name)
     {
-
         if (!isset($this->providers[$name])) {
             throw new \RuntimeException(sprintf('unable to retrieve the provider named : `%s`', $name));
         }
@@ -46,7 +50,7 @@ class Pool
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function postUpdate(MediaInterface $media)
@@ -55,7 +59,7 @@ class Pool
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function postRemove(MediaInterface $media)
@@ -73,7 +77,7 @@ class Pool
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function preUpdate(MediaInterface $media)
@@ -82,7 +86,7 @@ class Pool
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function preRemove(MediaInterface $media)
@@ -91,7 +95,7 @@ class Pool
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function prePersist(MediaInterface $media)
