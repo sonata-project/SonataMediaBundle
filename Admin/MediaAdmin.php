@@ -30,6 +30,7 @@ class MediaAdmin extends Admin
         '_action' => array(
             'actions' => array(
                 'view' => array(),
+                'edit' => array()
             )
         )
     );
@@ -50,7 +51,7 @@ class MediaAdmin extends Admin
 
     public function configureFormFields(FormMapper $formMapper)
     {
-        $media = $formMapper->getForm()->getData();
+        $media = $formMapper->getFormBuilder()->getData();
 
         if(!$media->getProviderName()) {
             return;
@@ -129,7 +130,6 @@ class MediaAdmin extends Admin
 
     public function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
     {
-
         if (!in_array($action, array('edit', 'view'))) {
             return;
         }
@@ -148,5 +148,4 @@ class MediaAdmin extends Admin
             $admin->generateUrl('view', array('id' => $id))
         );
     }
-
 }

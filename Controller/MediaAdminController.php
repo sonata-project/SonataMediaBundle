@@ -46,7 +46,6 @@ class MediaAdminController extends Controller
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
                 'providers'     => $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', 'default')),
                 'base_template' => $this->getBaseTemplate(),
-                'side_menu'     => false,
                 'admin'         => $this->admin,
                 'action'        => 'create'
             ));
