@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Media;
 use Imagine\ImagineInterface;
 use Imagine\Image\Box;
 use Gaufrette\Filesystem\File;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class SimpleResizer implements ResizerInterface
 {
@@ -35,7 +36,7 @@ class SimpleResizer implements ResizerInterface
      * @param null|integer $height
      * @return void
      */
-    public function resize(File $in, File $out, $format, $width, $height = null)
+    public function resize(MediaInterface $media, File $in, File $out, $format, $width, $height = null)
     {
         $image = $this->getAdapter()->load($in->getContent());
 
