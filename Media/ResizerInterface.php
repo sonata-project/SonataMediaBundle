@@ -17,12 +17,13 @@ interface ResizerInterface
 {
     /**
      * @abstract
-     * @param string $in
-     * @param string $out
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Gaufrette\Filesystem\File $in
+     * @param \Gaufrette\Filesystem\File $out
+     * @param string $format
      * @param integer $width
      * @param null|integer $height
      * @return void
      */
     function resize(MediaInterface $media, File $in, File $out, $format, $width, $height = null);
-
 }

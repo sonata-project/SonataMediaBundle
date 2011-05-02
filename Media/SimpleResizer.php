@@ -21,7 +21,10 @@ class SimpleResizer implements ResizerInterface
 
     protected $mode;
 
-
+    /**
+     * @param \Imagine\ImagineInterface $adapter
+     * @param string $mode
+     */
     public function __construct(ImagineInterface $adapter, $mode)
     {
         $this->adapter = $adapter;
@@ -29,6 +32,7 @@ class SimpleResizer implements ResizerInterface
     }
 
     /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param \Gaufrette\Filesystem\File $in
      * @param \Gaufrette\Filesystem\File $out
      * @param string $format
@@ -53,7 +57,7 @@ class SimpleResizer implements ResizerInterface
     }
 
     /**
-     * 
+     *
      * @return \Imagine\ImagineInterface
      */
     public function getAdapter()
@@ -61,6 +65,9 @@ class SimpleResizer implements ResizerInterface
         return $this->adapter;
     }
 
+    /**
+     * @return string
+     */
     public function getMode()
     {
         return $this->mode;
