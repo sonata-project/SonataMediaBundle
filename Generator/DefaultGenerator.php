@@ -35,6 +35,6 @@ class DefaultGenerator implements GeneratorInterface
         $rep_first_level = (int) ($media->getId() / $this->firstLevel);
         $rep_second_level = (int) (($media->getId() - ($rep_first_level * $this->firstLevel)) / $this->secondLevel);
 
-        return sprintf('%04s/%02s', $rep_first_level + 1, $rep_second_level + 1);
+        return sprintf('%s/%04s/%02s', $media->getContext(), $rep_first_level + 1, $rep_second_level + 1);
     }
 }
