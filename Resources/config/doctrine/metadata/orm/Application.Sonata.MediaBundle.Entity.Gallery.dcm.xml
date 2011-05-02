@@ -17,52 +17,23 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <many-to-many
-            field="medias"
-            target-entity="Application\Sonata\MediaBundle\Entity\Media"
-            inversed-by="galleries"
+        <one-to-many
+            field="galleryHasMedias"
+            target-entity="Application\Sonata\MediaBundle\Entity\GalleryHasMedia"
+            mapped-by="gallery"
             >
 
             <orphan-removal>true</orphan-removal>
 
             <cascade>
                 <cascade-persist />
-                <!--<cascade-merge />-->
-                <!--<cascade-remove />-->
-                <!--<cascade-refresh />-->
             </cascade>
-
-            <join-table name="media__gallery_media">
-                <join-columns>
-                    <join-column name="gallery_id" referenced-column-name="id"/>
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="media_id" referenced-column-name="id"/>
-                </inverse-join-columns>
-            </join-table>
 
             <order-by>
                 <order-by-field name="position" direction="ASC" />
             </order-by>
 
-        </many-to-many>
-
-        <one-to-many
-            field="galleryHasMedias"
-            target-entity="Application\Sonata\MediaBundle\Entity\GalleryHasMedia"
-            inversed-by="gallery"
-            >
-
-            <orphan-removal>true</orphan-removal>
-            
-            <cascade>
-                <cascade-persist />
-                <!--<cascade-merge />-->
-                <!--<cascade-remove />-->
-                <!--<cascade-refresh />-->
-            </cascade>
-
         </one-to-many>
-        
+
     </entity>
 </doctrine-mapping>
