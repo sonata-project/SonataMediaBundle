@@ -112,6 +112,7 @@ abstract class BaseProvider
 
             // resize the thumbnail
             $this->getResizer()->resize(
+                $media,
                 $referenceFile,
                 $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
                 'jpg' ,
