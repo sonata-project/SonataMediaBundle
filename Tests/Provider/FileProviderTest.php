@@ -12,6 +12,9 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\AdminBundle\Admin\ORM\FieldDescription;
+use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +25,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $resizer->expects($this->any())
             ->method('resize')
             ->will($this->returnValue(true));
-
 
         $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
 
@@ -45,7 +47,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testProvider()
     {
-
         $provider = $this->getProvider();
 
         $media = new Media;
@@ -53,18 +54,17 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASD.txt');
         $media->setId(10);
 
-        $this->assertEquals('0001/01/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
+        $this->assertEquals('default/0001/01/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
 
         $media->setId(1023456);
-        $this->assertEquals('0011/24/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
+        $this->assertEquals('default/0011/24/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
 
-        $this->assertEquals('0011/24/ASDASD.txt', $provider->getReferenceImage($media));
+        $this->assertEquals('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
 
-        $this->assertEquals('0011/24', $provider->generatePath($media));
-        
+        $this->assertEquals('default/0011/24', $provider->generatePath($media));
+
         // default icon image
         $this->assertEquals('/updoads/media/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
-
     }
 
     public function testHelperProperies()
@@ -101,14 +101,16 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $formMapper = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add'), array(), '', false);
-        $formMapper->expects($this->exactly(8))
+        $formMapper     = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add', 'addType'), array(), '', false);
+        $formMapper->expects($this->exactly(6))
             ->method('add')
             ->will($this->returnValue(null));
 
+        $formMapper->expects($this->exactly(2))
+            ->method('addType')
+            ->will($this->returnValue(null));
 
         $provider->buildCreateForm($formMapper);
-
         $provider->buildEditForm($formMapper);
     }
 
@@ -125,7 +127,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testEvent()
     {
-
         $provider = $this->getProvider();
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
@@ -145,7 +146,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($media->getProviderReference());
 
         $provider->postUpdate($media);
-
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
 

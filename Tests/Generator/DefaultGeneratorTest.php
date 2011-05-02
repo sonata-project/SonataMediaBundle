@@ -23,18 +23,19 @@ class DefaultGeneratorTest extends \PHPUnit_Framework_TestCase
         $generator = new DefaultGenerator;
 
         $media = new Media;
-        
+        $media->setContext('user');
+
         $media->setId(10);
-        $this->assertEquals('0001/01', $generator->generatePath($media));
+        $this->assertEquals('user/0001/01', $generator->generatePath($media));
 
         $media->setId(10000);
-        $this->assertEquals('0001/11', $generator->generatePath($media));
+        $this->assertEquals('user/0001/11', $generator->generatePath($media));
 
         $media->setId(12341230);
-        $this->assertEquals('0124/42', $generator->generatePath($media));
+        $this->assertEquals('user/0124/42', $generator->generatePath($media));
 
         $media->setId(999999999);
-        $this->assertEquals('10000/100', $generator->generatePath($media));
+        $this->assertEquals('user/10000/100', $generator->generatePath($media));
 
     }
 }

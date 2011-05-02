@@ -21,7 +21,6 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
     public function getProvider()
     {
-
         $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
 
         $file = $this->getMock('Gaufrette\Filesystem\File', array(), array($adapter));
@@ -34,7 +33,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
-        
+
         $provider = new TestProvider('test', $filesystem, $cdn, $generator);
 
         return $provider;
@@ -59,7 +58,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $media = new \Sonata\MediaBundle\Tests\Entity\Media;
         $media->setContext('test');
-        
+
         $this->assertEquals('admin', $provider->getFormatName($media, 'admin'));
         $this->assertEquals('reference', $provider->getFormatName($media, 'reference'));
         $this->assertEquals('test_small', $provider->getFormatName($media, 'small'));

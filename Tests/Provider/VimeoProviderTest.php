@@ -39,13 +39,12 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = new \Sonata\MediaBundle\Provider\VimeoProvider('file', $filesystem, $cdn, $generator);
         $provider->setResizer($resizer);
-        
+
         return $provider;
     }
 
     public function testProvider()
     {
-
         $provider = $this->getProvider();
 
         $media = new Media;
@@ -60,14 +59,12 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023457);
         $this->assertEquals('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $provider->getReferenceImage($media));
 
-        $this->assertEquals('0011/24', $provider->generatePath($media));
-        $this->assertEquals('/updoads/media/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
-
+        $this->assertEquals('default/0011/24', $provider->generatePath($media));
+        $this->assertEquals('/updoads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail()
     {
-
         $provider = $this->getProvider();
 
         $media = new Media;
@@ -86,7 +83,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent()
@@ -101,7 +98,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         stream_wrapper_unregister('http');
         stream_wrapper_register('http', 'Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
-        
+
         // pre persist the media
         $provider->prePersist($media);
 
@@ -145,7 +142,6 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
             ->method('add')
             ->will($this->returnValue(null));
 
-
         $provider->buildCreateForm($formMapper);
 
         $provider->buildEditForm($formMapper);
@@ -173,5 +169,4 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $properties = $provider->getHelperProperties($media, 'admin', array('width' => 150));
         $this->assertEquals(150, $properties['width']);
     }
-
 }

@@ -13,11 +13,15 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileProvider extends BaseProvider
 {
 
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return string
+     */
     public function getReferenceImage(MediaInterface $media)
     {
         return sprintf('%s/%s',
@@ -26,14 +30,19 @@ class FileProvider extends BaseProvider
         );
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return string
+     */
     public function getAbsolutePath(MediaInterface $media)
     {
         return $this->getReferenceImage($media);
     }
 
     /**
-     * build the related create form
+     * Build the related create form
      *
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
     function buildEditForm(FormMapper $formMapper)
     {
@@ -49,6 +58,7 @@ class FileProvider extends BaseProvider
     /**
      * build the related create form
      *
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
     function buildCreateForm(FormMapper $formMapper)
     {
@@ -109,7 +119,6 @@ class FileProvider extends BaseProvider
 
         // if the binary content is a filename => convert to a valid File
         if (!$media->getBinaryContent() instanceof File) {
-
             if (!is_file($media->getBinaryContent())) {
                 throw new \RuntimeException('The file does not exist : ' . $media->getBinaryContent());
             }
@@ -117,6 +126,29 @@ class FileProvider extends BaseProvider
             $binaryContent = new File($media->getBinaryContent());
 
             $media->setBinaryContent($binaryContent);
+        }
+    }
+
+    /**
+     * @throws \RuntimeException
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    private function fixFilename(MediaInterface $media)
+    {
+        if ($media->getBinaryContent() instanceof File) {
+            $media->setName($media->getBinaryContent()->getName());
+        } else if ($media->getBinaryContent() instanceof UploadedFile) {
+            $media->setName($media->getBinaryContent()->getOriginalName());
+        } else {
+            $mediaName = false;
+        }
+
+        // this is the original name
+        if (!$media->getName() && !$mediaName) {
+            throw new \RuntimeException('Please define a valid media\'s name');
+        } else if (!$media->getName()) {
+            $media->setName($mediaName);
         }
     }
 
@@ -132,23 +164,18 @@ class FileProvider extends BaseProvider
         $media->setProviderStatus(MediaInterface::STATUS_OK);
 
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
-        // this is the original name
-        if (!$media->getName()) {
-            $media->setName($media->getBinaryContent()->getOriginalName());
-        }
+        $this->fixFilename($media);
 
         // this is the name used to store the file
         if (!$media->getProviderReference()) {
-           $media->setProviderReference(sha1($media->getBinaryContent()->getOriginalName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
+           $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
         }
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
         $media->setSize($media->getBinaryContent()->getSize());
-
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());
     }
@@ -198,13 +225,14 @@ class FileProvider extends BaseProvider
         $this->fixBinaryContent($media);
 
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
+        $this->fixFilename($media);
+
         // this is the name used to store the file
         if (!$media->getProviderReference()) {
-           $media->setProviderReference(sha1($media->getBinaryContent()->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
+           $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
         }
 
         $media->setContentType($media->getBinaryContent()->getMimeType());

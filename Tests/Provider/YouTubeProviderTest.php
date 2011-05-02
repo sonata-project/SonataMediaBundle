@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
-    
+
 class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -39,13 +39,12 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = new \Sonata\MediaBundle\Provider\YouTubeProvider('file', $filesystem, $cdn, $generator);
         $provider->setResizer($resizer);
-        
+
         return $provider;
     }
 
     public function testProvider()
     {
-
         $provider = $this->getProvider();
 
         $media = new Media;
@@ -62,13 +61,12 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
 
-        $this->assertEquals('0011/24', $provider->generatePath($media));
-        $this->assertEquals('/updoads/media/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('default/0011/24', $provider->generatePath($media));
+        $this->assertEquals('/updoads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail()
     {
-
         $provider = $this->getProvider();
 
         $media = new Media;
@@ -86,7 +84,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent()
@@ -101,7 +99,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         stream_wrapper_unregister('http');
         stream_wrapper_register('http', 'Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
-        
+
         // pre persist the media
         $provider->prePersist($media);
 
@@ -145,7 +143,6 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
             ->method('add')
             ->will($this->returnValue(null));
 
-
         $provider->buildCreateForm($formMapper);
 
         $provider->buildEditForm($formMapper);
@@ -162,7 +159,6 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(10);
         $media->setHeight(100);
         $media->setWidth(100);
-
 
         $properties = $provider->getHelperProperties($media, 'admin');
 
