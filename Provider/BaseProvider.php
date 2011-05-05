@@ -116,8 +116,7 @@ abstract class BaseProvider
                 $referenceFile,
                 $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
                 'jpg' ,
-                $settings['width'],
-                $settings['height']
+                $settings
             );
         }
     }
