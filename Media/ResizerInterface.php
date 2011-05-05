@@ -21,9 +21,8 @@ interface ResizerInterface
      * @param \Gaufrette\Filesystem\File $in
      * @param \Gaufrette\Filesystem\File $out
      * @param string $format
-     * @param integer $width
-     * @param null|integer $height
+     * @param array $settings
      * @return void
      */
-    function resize(MediaInterface $media, File $in, File $out, $format, $width, $height = null);
+    function resize(MediaInterface $media, File $in, File $out, $format, $settings);
 }

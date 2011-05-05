@@ -36,21 +36,24 @@ class SimpleResizer implements ResizerInterface
      * @param \Gaufrette\Filesystem\File $in
      * @param \Gaufrette\Filesystem\File $out
      * @param string $format
-     * @param integer $width
-     * @param null|integer $height
+     * @param array $settings
      * @return void
      */
-    public function resize(MediaInterface $media, File $in, File $out, $format, $width, $height = null)
+    public function resize(MediaInterface $media, File $in, File $out, $format, $settings)
     {
+        if (!isset($settings['width'])) {
+            throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderClass()));
+        }
+        
         $image = $this->getAdapter()->load($in->getContent());
 
-        if ($height == null) {
+        if ($settings['height'] == null) {
             $size = $image->getSize();
-            $height = (int) ($width * $size->getHeight() / $size->getWidth());
+            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
         }
 
         $content = $image
-            ->thumbnail(new Box($width, $height), $this->getMode())
+            ->thumbnail(new Box($settings['width'], $settings['height']), $this->getMode())
             ->get($format);
 
         $out->setContent($content);
