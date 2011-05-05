@@ -41,7 +41,10 @@ class SimpleResizer implements ResizerInterface
      */
     public function resize(MediaInterface $media, File $in, File $out, $format, $settings)
     {
-        if (!isset($settings['width'])) throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderClass()));
+        if (!isset($settings['width'])) {
+            throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderClass()));
+        }
+        
         $image = $this->getAdapter()->load($in->getContent());
 
         if ($settings['height'] == null) {
