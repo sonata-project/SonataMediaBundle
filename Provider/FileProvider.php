@@ -44,7 +44,7 @@ class FileProvider extends BaseProvider
      *
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
-    function buildEditForm(FormMapper $formMapper)
+    public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name', array('required' => false));
         $formMapper->add('enabled', array('required' => false));
@@ -60,7 +60,7 @@ class FileProvider extends BaseProvider
      *
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
-    function buildCreateForm(FormMapper $formMapper)
+    public function buildCreateForm(FormMapper $formMapper)
     {
         $formMapper->addType('binaryContent', 'file', array('type' => false));
     }
@@ -134,12 +134,12 @@ class FileProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    private function fixFilename(MediaInterface $media)
+    protected function fixFilename(MediaInterface $media)
     {
-        if ($media->getBinaryContent() instanceof File) {
-            $media->setName($media->getBinaryContent()->getName());
-        } else if ($media->getBinaryContent() instanceof UploadedFile) {
+        if ($media->getBinaryContent() instanceof UploadedFile) {
             $media->setName($media->getBinaryContent()->getOriginalName());
+        } else if ($media->getBinaryContent() instanceof File) {
+            $media->setName($media->getBinaryContent()->getName());
         } else {
             $mediaName = false;
         }

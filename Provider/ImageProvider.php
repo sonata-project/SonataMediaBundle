@@ -28,31 +28,29 @@ class ImageProvider extends FileProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string
      */
     public function getReferenceImage(MediaInterface $media)
     {
-
         return $this->getCdn()->getPath(sprintf('%s/%s',
             $this->generatePath($media),
             $media->getProviderReference()
-        ));
+        ), $media->getCdnIsFlushable());
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string
      */
     public function getAbsolutePath(MediaInterface $media)
     {
-
         return $this->getReferenceImage($media);
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @param  $format
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string $format
      * @return string
      */
     public function generatePublicUrl(MediaInterface $media, $format)
@@ -65,17 +63,16 @@ class ImageProvider extends FileProvider
             $this->generatePath($media),
             $media->getId(),
             $format
-        ));
+        ), $media->getCdnIsFlushable());
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @param  $format
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string $format
      * @return string
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-
         return sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePath($media),
             $media->getId(),

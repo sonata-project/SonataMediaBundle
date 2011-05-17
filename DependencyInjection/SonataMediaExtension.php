@@ -41,17 +41,16 @@ class SonataMediaExtension extends Extension
         $config = call_user_func_array('array_merge_recursive', $config);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('admin.xml');
         $loader->load('provider.xml');
         $loader->load('media.xml');
-//        $loader->load('template.xml');
         $loader->load('twig.xml');
 
-        if (!in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
+        if (!in_array(strtolower($config['db_driver']), array('orm', 'odm'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
 
         $loader->load(sprintf('%s.xml', $config['db_driver']));
+        $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
 
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
@@ -114,7 +113,6 @@ class SonataMediaExtension extends Extension
      */
     public function configureFilesystemAdapter(ContainerBuilder $container, $config)
     {
-
         // add the default configuration for the local filesystem
         if ($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['sonata.media.adapter.filesystem.local'])) {
             $definition = $container->getDefinition('sonata.media.adapter.filesystem.local');
