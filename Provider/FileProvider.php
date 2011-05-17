@@ -52,7 +52,7 @@ class FileProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable', array('required' => false));
         $formMapper->add('description', array('required' => false));
         $formMapper->add('copyright', array('required' => false));
-        $formMapper->addType('binaryContent', 'file', array('type' => false, 'required' => false));
+        $formMapper->addType('binaryContent', 'file', array('type' => 'file', 'required' => false));
     }
 
     /**
@@ -62,7 +62,7 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->addType('binaryContent', 'file', array('type' => false));
+        $formMapper->addType('binaryContent', 'file', array('type' => 'file'));
     }
 
     /**
@@ -171,7 +171,7 @@ class FileProvider extends BaseProvider
 
         // this is the name used to store the file
         if (!$media->getProviderReference()) {
-           $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
+            $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
         }
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
