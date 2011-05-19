@@ -41,7 +41,7 @@ Next, be sure to enable the bundles in your application kernel:
 At this point, the bundle is not yet ready. You need to generate the correct
 entities for the media::
 
-    php app/console Sonata:easy-extends:generate
+    php app/console sonata:easy-extends:generate SonataMediaBundle
 
 .. note::
 
@@ -80,6 +80,14 @@ Update the ``autoload.php`` to add a new namespaces :
 
         // ... other declarations
     ));
+
+Then add these bundles in the config mapping definition :
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    ApplicationSonataMediaBundle: ~
+    SonataMediaBundle: ~
 
 Configuration
 -------------
