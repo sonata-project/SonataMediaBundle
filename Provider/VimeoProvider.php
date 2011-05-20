@@ -29,15 +29,19 @@ class VimeoProvider extends BaseProvider
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    /**
-     * return the absolute path of source media
-     *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return string
-     */
-    public function getAbsolutePath(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media)
     {
-        return sprintf('http://www.vimeo.com/%s', $media->getProviderReference());
+        $key = $this->generatePrivateUrl($media, 'reference');
+
+        // the reference file is remote, get it and store it with the 'reference' format
+        if ($this->getFilesystem()->has($key)) {
+            $referenceFile = $this->getFilesystem()->get($key);
+        } else {
+            $referenceFile = $this->getFilesystem()->get($key, true);
+            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)));
+        }
+
+        return $referenceFile;
     }
 
     /**
@@ -48,7 +52,6 @@ class VimeoProvider extends BaseProvider
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-
         // documentation : http://vimeo.com/api/docs/moogaloop
         $defaults = array(
             // (optional) Flash Player version of app. Defaults to 9 .NEW!
@@ -126,9 +129,7 @@ class VimeoProvider extends BaseProvider
      */
     public function prePersist(MediaInterface $media)
     {
-
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -156,12 +157,11 @@ class VimeoProvider extends BaseProvider
 
     /**
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return 
+     * @return
      */
     public function preUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -184,8 +184,7 @@ class VimeoProvider extends BaseProvider
     public function getMetadata(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
-            return;
+            return null;
         }
 
         $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getBinaryContent());
@@ -220,7 +219,6 @@ class VimeoProvider extends BaseProvider
     public function postPersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -235,5 +233,4 @@ class VimeoProvider extends BaseProvider
     {
 
     }
-
 }

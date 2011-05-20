@@ -19,7 +19,7 @@ use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 
 
-abstract class BaseProvider
+abstract class BaseProvider implements MediaProviderInterface
 {
     /**
      * @var array
@@ -35,7 +35,7 @@ abstract class BaseProvider
     protected $pathGenerator;
 
     protected $cdn;
-    
+
     /**
      * @param string $name
      * @param array $settings
@@ -61,7 +61,7 @@ abstract class BaseProvider
 
     /**
      * return the format settings
-     * 
+     *
      * @param string $name
      *
      * @return array|false the format settings
@@ -92,25 +92,9 @@ abstract class BaseProvider
             return;
         }
 
-        $key = $this->getReferenceImage($media);
-
-        if (substr($key, 0, 7) == 'http://') {
-            $key = $this->generatePrivateUrl($media, 'reference');
-
-            // the reference file is remote, get it and store it with the 'reference' format
-            if ($this->getFilesystem()->has($key)) {
-                $referenceFile = $this->getFilesystem()->get($key);
-            } else {
-                $referenceFile = $this->getFilesystem()->get($key, true);
-                $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)));
-            }
-        } else {
-            $referenceFile = $this->getFilesystem()->get($this->getReferenceImage($media), true);
-        }
+        $referenceFile = $this->getReferenceFile($media);
 
         foreach ($this->formats as $format => $settings) {
-
-            // resize the thumbnail
             $this->getResizer()->resize(
                 $media,
                 $referenceFile,
@@ -147,30 +131,6 @@ abstract class BaseProvider
     }
 
     /**
-     * return the reference image of the media, can be the videa thumbnail or the original uploaded picture
-     *
-     * @abstract
-     * @return string to the reference image
-     */
-    abstract function getReferenceImage(MediaInterface $media);
-
-    /**
-     * return the absolute path of the reference image or the service provider reference
-     *
-     * @abstract
-     * @return void
-     */
-    abstract function getAbsolutePath(MediaInterface $media);
-
-    /**
-     *
-     * @abstract
-     * @param  $media
-     * @return void
-     */
-    abstract function postUpdate(MediaInterface $media);
-
-    /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
@@ -190,32 +150,6 @@ abstract class BaseProvider
             }
         }
     }
-
-    /**
-     * build the related create form
-     *
-     */
-    abstract function buildCreateForm(FormMapper $form);
-
-    /**
-     * build the related create form
-     *
-     */
-    abstract function buildEditForm(FormMapper $form);
-
-    /**
-     *
-     * @abstract
-     * @param  $media
-     * @return void
-     */
-    abstract function postPersist(MediaInterface $media);
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     */
-    abstract function getHelperProperties(MediaInterface $media, $format);
 
     /**
      * Generate the private path (client side)
@@ -240,7 +174,7 @@ abstract class BaseProvider
         if ($format == 'reference') {
             return $this->getReferenceImage($media);
         }
-               
+
         return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePath($media),
             $media->getId(),
@@ -257,13 +191,17 @@ abstract class BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
+        if ($format == 'reference') {
+            return $this->getReferenceImage($media);
+        }
+
         return sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePath($media),
             $media->getId(),
             $format
         );
     }
-    
+
     public function getFormats()
     {
         return $this->formats;
@@ -299,11 +237,11 @@ abstract class BaseProvider
 
     /**
      * @param string $name
-     * @return void
+     * @return string
      */
     public function getTemplate($name)
     {
-        return isset($this->templates[$name]) ? $this->templates[$name] : null; 
+        return isset($this->templates[$name]) ? $this->templates[$name] : null;
     }
 
     /**
@@ -314,32 +252,18 @@ abstract class BaseProvider
         return $this->resizer;
     }
 
-    public function setResizer(ResizerInterface $resizer)
-    {
-        return $this->resizer = $resizer;
-    }
-
-    public function setFilesystem($filesystem)
-    {
-        $this->filesystem = $filesystem;
-    }
-
     public function getFilesystem()
     {
         return $this->filesystem;
     }
 
-    /**
-     * @param CDNInterface $cdn
-     * @return void
-     */
-    public function setCdn(CDNInterface $cdn)
-    {
-        $this->cdn = $cdn;
-    }
-
     public function getCdn()
     {
         return $this->cdn;
+    }
+
+    public function setResizer(ResizerInterface $resizer)
+    {
+        $this->resizer = $resizer;
     }
 }

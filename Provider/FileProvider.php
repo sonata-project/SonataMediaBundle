@@ -30,13 +30,9 @@ class FileProvider extends BaseProvider
         );
     }
 
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
-     */
-    public function getAbsolutePath(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media)
     {
-        return $this->getReferenceImage($media);
+        return $this->getFilesystem()->get($this->getReferenceImage($media), true);
     }
 
     /**

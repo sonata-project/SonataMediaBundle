@@ -22,35 +22,40 @@ class YouTubeProvider extends BaseProvider
      * Return the reference image
      *
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return null
+     * @return string
      */
     public function getReferenceImage(MediaInterface $media)
     {
-
         return $media->getMetadataValue('thumbnail_url');
     }
 
     /**
-     * return the absolute path of source media
-     *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return string
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return \Gaufrette\Filesystem\File
      */
-    public function getAbsolutePath(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media)
     {
+        $key = $this->generatePrivateUrl($media, 'reference');
 
-        return sprintf('http://www.youtube.com/v/%s', $media->getProviderReference());
+        // the reference file is remote, get it and store it with the 'reference' format
+        if ($this->getFilesystem()->has($key)) {
+            $referenceFile = $this->getFilesystem()->get($key);
+        } else {
+            $referenceFile = $this->getFilesystem()->get($key, true);
+            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)));
+        }
+
+        return $referenceFile;
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
      * @param array $options
      * @return array
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-
         // documentation : http://code.google.com/apis/youtube/player_parameters.html
 
         $defaults = array(
@@ -184,14 +189,13 @@ class YouTubeProvider extends BaseProvider
      */
     public function prePersist(MediaInterface $media)
     {
-
         if (!$media->getBinaryContent()) {
 
             return;
         }
 
         $metadata = $this->getMetadata($media);
-        
+
         $media->setProviderName($this->name);
         $media->setProviderReference($media->getBinaryContent());
         $media->setProviderMetadata($metadata);
@@ -204,12 +208,12 @@ class YouTubeProvider extends BaseProvider
 
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());
-        
+
     }
 
     /**
      * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return 
+     * @return
      */
     public function preUpdate(MediaInterface $media)
     {
@@ -237,8 +241,7 @@ class YouTubeProvider extends BaseProvider
     public function getMetadata(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
-            return;
+            return null;
         }
 
         $url = sprintf('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%s&format=json', $media->getBinaryContent());

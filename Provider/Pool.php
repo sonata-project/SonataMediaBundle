@@ -49,6 +49,17 @@ class Pool
         $this->providers[$name] = $instance;
     }
 
+    public function getProviderByProduct(ProductInterface $product)
+    {
+        foreach($this->providers as $provider) {
+            if (get_class($product) == $provider->getClass()) {
+                return $provider;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void

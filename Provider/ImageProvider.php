@@ -33,19 +33,10 @@ class ImageProvider extends FileProvider
      */
     public function getReferenceImage(MediaInterface $media)
     {
-        return $this->getCdn()->getPath(sprintf('%s/%s',
+        return sprintf('%s/%s',
             $this->generatePath($media),
             $media->getProviderReference()
-        ), $media->getCdnIsFlushable());
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
-     */
-    public function getAbsolutePath(MediaInterface $media)
-    {
-        return $this->getReferenceImage($media);
+        );
     }
 
     /**
@@ -55,15 +46,9 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
-            return $this->getReferenceImage($media);
-        }
+        $path = $format == 'reference' ? $this->getReferenceImage($media) : sprintf('%s/thumb_%d_%s.jpg',  $this->generatePath($media), $media->getId(), $format);
 
-        return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        ), $media->getCdnIsFlushable());
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
     /**

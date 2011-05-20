@@ -26,6 +26,7 @@ class GalleryAdmin extends Admin
     );
 
     protected $form = array(
+        'code',
         'enabled',
         'name',
         'defaultFormat',
@@ -34,27 +35,12 @@ class GalleryAdmin extends Admin
             'inline' => 'table',
             'sortable' => 'position'
         ),
-        'code',
     );
 
     protected $filter = array(
         'name',
         'enabled'
     );
-
-    public function configureFormFields(FormMapper $form)
-    {
-
-    }
-
-    public function configureDatagridFilters(DatagridMapper $datagrid)
-    {
-    }
-
-    public function configureListFields(ListMapper $list)
-    {
-
-    }
 
     public function preUpdate($object)
     {

@@ -89,7 +89,6 @@ class AddProviderPass implements CompilerPassInterface
      */
     public function attachArguments(ContainerBuilder $container, array $settings)
     {
-
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
 
             if (!isset($settings['providers'][$id])) {
@@ -111,7 +110,7 @@ class AddProviderPass implements CompilerPassInterface
             $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
 
             if ($resizer) {
-              $definition->addMethodCall('setResizer', array(new Reference($resizer)));
+                $definition->addMethodCall('setResizer', array(new Reference($resizer)));
             }
         }
     }

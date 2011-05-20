@@ -19,14 +19,22 @@ class DailyMotionProvider extends BaseProvider
 
     public function getReferenceImage(MediaInterface $media)
     {
-
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    public function getAbsolutePath(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media)
     {
+        $key = $this->generatePrivateUrl($media, 'reference');
 
-        return sprintf('http://www.dailymotion.com/swf/video/%s', $media->getProviderReference());
+        // the reference file is remote, get it and store it with the 'reference' format
+        if ($this->getFilesystem()->has($key)) {
+            $referenceFile = $this->getFilesystem()->get($key);
+        } else {
+            $referenceFile = $this->getFilesystem()->get($key, true);
+            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)));
+        }
+
+        return $referenceFile;
     }
 
     /**
@@ -53,9 +61,14 @@ class DailyMotionProvider extends BaseProvider
         $formMapper->add('binaryContent', array(), array('type' => 'string'));
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string $format
+     * @param array $options
+     * @return array
+     */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-
         // documentation : http://www.dailymotion.com/en/doc/api/player
 
         $defaults = array(
@@ -124,14 +137,13 @@ class DailyMotionProvider extends BaseProvider
      */
     public function prePersist(MediaInterface $media)
     {
-
         if (!$media->getBinaryContent()) {
 
             return;
         }
 
         $metadata = $this->getMetadata($media);
-        
+
         $media->setProviderName($this->name);
         $media->setProviderMetadata($metadata);
         $media->setProviderReference($media->getBinaryContent());
@@ -164,7 +176,7 @@ class DailyMotionProvider extends BaseProvider
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-        
+
         $media->setUpdatedAt(new \Datetime());
     }
 
@@ -175,10 +187,8 @@ class DailyMotionProvider extends BaseProvider
      */
     public function getMetadata(MediaInterface $media)
     {
-
         if (!$media->getBinaryContent()) {
-
-            return;
+            return null;
         }
 
         $url = sprintf('http://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/%s&format=json', $media->getBinaryContent());
