@@ -135,4 +135,38 @@ class TestProvider extends BaseProvider
     {
         // TODO: Implement getReferenceImage() method.
     }
+
+    /**
+     * Generate the private path
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string $format
+     * @return string
+     */
+    function generatePrivateUrl(MediaInterface $media, $format)
+    {
+      // TODO: Implement generatePrivateUrl() method.
+    }
+
+    /**
+     * Generate the public path
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string $format
+     * @return string
+     */
+    function generatePublicUrl(MediaInterface $media, $format)
+    {
+      // TODO: Implement generatePublicUrl() method.
+    }
+
+    /**
+     *
+     * @return \Gaufrette\Filesystem\File
+     */
+    function getReferenceFile(MediaInterface $media)
+    {
+      // TODO: Implement getReferenceFile() method.
+    }
+
 }

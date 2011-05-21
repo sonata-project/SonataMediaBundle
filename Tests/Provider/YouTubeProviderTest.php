@@ -52,12 +52,8 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderName('youtube');
         $media->setProviderReference('BDYAbAtaDzA');
         $media->setProviderMetadata(json_decode('{"provider_url": "http:\/\/www.youtube.com\/", "title": "Nono le petit robot", "html": "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\"><\/param><param name=\"allowFullScreen\" value=\"true\"><\/param><param name=\"allowscriptaccess\" value=\"always\"><\/param><embed src=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\" type=\"application\/x-shockwave-flash\" width=\"425\" height=\"344\" allowscriptaccess=\"always\" allowfullscreen=\"true\"><\/embed><\/object>", "author_name": "timan38", "height": 344, "thumbnail_width": 480, "width": 425, "version": "1.0", "author_url": "http:\/\/www.youtube.com\/user\/timan38", "provider_name": "YouTube", "thumbnail_url": "http:\/\/i3.ytimg.com\/vi\/BDYAbAtaDzA\/hqdefault.jpg", "type": "video", "thumbnail_height": 360}', true));
-        $media->setId(10);
-
-        $this->assertEquals('http://www.youtube.com/v/BDYAbAtaDzA', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
 
         $media->setId(1023457);
-        $this->assertEquals('http://www.youtube.com/v/BDYAbAtaDzA', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
 
         $this->assertEquals('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
 

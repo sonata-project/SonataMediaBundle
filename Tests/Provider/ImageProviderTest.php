@@ -49,14 +49,9 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media = new Media;
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
-        $media->setId(10);
-
-
-        $this->assertEquals('/uploads/media/default/0001/01/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
         $media->setId(1023456);
-        $this->assertEquals('/uploads/media/default/0011/24/ASDASDAS.png', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
 
-        $this->assertEquals('/uploads/media/default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
+        $this->assertEquals('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
         $this->assertEquals('/uploads/media/default/0011/24/thumb_1023456_big.jpg', $provider->generatePublicUrl($media, 'big'));

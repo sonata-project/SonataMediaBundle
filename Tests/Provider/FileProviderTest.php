@@ -52,13 +52,8 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $media = new Media;
         $media->setName('test.txt');
         $media->setProviderReference('ASDASD.txt');
-        $media->setId(10);
-
-        $this->assertEquals('default/0001/01/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
 
         $media->setId(1023456);
-        $this->assertEquals('default/0011/24/ASDASD.txt', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
-
         $this->assertEquals('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
 
         $this->assertEquals('default/0011/24', $provider->generatePath($media));

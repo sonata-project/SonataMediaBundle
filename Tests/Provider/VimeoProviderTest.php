@@ -52,9 +52,6 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderName('vimeo');
         $media->setProviderReference('21216091');
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Vimeo","provider_url":"http:\/\/vimeo.com\/","title":"Blinky\u2122","author_name":"Ruairi Robinson","author_url":"http:\/\/vimeo.com\/ruairirobinson","is_plus":"1","html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>","width":"1920","height":"1080","duration":"771","description":"","thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg","thumbnail_width":1280,"thumbnail_height":720,"video_id":"21216091"}', true));
-        $media->setId(10);
-
-        $this->assertEquals('http://www.vimeo.com/21216091', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
 
         $media->setId(1023457);
         $this->assertEquals('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $provider->getReferenceImage($media));

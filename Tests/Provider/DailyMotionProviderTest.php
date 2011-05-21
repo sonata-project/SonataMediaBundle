@@ -52,14 +52,10 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderName('dailymotion');
         $media->setProviderReference('x9wjql');
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Dailymotion","provider_url":"http:\/\/www.dailymotion.com","title":"Thomas Rabaix - les tests fonctionnels - Symfony Live 2009","author_name":"Guillaume Pon\u00e7on","author_url":"http:\/\/www.dailymotion.com\/phptv","width":480,"height":270,"html":"<iframe src=\"http:\/\/www.dailymotion.com\/embed\/video\/x9wjql\" width=\"480\" height=\"270\" frameborder=\"0\"><\/iframe>","thumbnail_url":"http:\/\/ak2.static.dailymotion.com\/static\/video\/711\/536\/16635117:jpeg_preview_large.jpg?20100801072241","thumbnail_width":426.666666667,"thumbnail_height":240}', true));
-        $media->setId(10);
-
-        $this->assertEquals('http://www.dailymotion.com/swf/video/x9wjql', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1');
-
-        $media->setId(1023458);
-        $this->assertEquals('http://www.dailymotion.com/swf/video/x9wjql', $provider->getAbsolutePath($media), '::getAbsolutePath() return the correct path - id = 1023456');
 
         $this->assertEquals('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $provider->getReferenceImage($media));
+
+        $media->setId(1023458);
 
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
         $this->assertEquals('/updoads/media/default/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
