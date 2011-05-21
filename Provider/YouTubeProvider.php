@@ -15,38 +15,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class YouTubeProvider extends BaseProvider
+class YouTubeProvider extends BaseVideoProvider
 {
-
-    /**
-     * Return the reference image
-     *
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return string
-     */
-    public function getReferenceImage(MediaInterface $media)
-    {
-        return $media->getMetadataValue('thumbnail_url');
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return \Gaufrette\Filesystem\File
-     */
-    public function getReferenceFile(MediaInterface $media)
-    {
-        $key = $this->generatePrivateUrl($media, 'reference');
-
-        // the reference file is remote, get it and store it with the 'reference' format
-        if ($this->getFilesystem()->has($key)) {
-            $referenceFile = $this->getFilesystem()->get($key);
-        } else {
-            $referenceFile = $this->getFilesystem()->get($key, true);
-            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)));
-        }
-
-        return $referenceFile;
-    }
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
@@ -160,30 +130,6 @@ class YouTubeProvider extends BaseProvider
     }
 
     /**
-     * build the related create form
-     *
-     */
-    function buildEditForm(FormMapper $formMapper)
-    {
-        $formMapper->add('name');
-        $formMapper->add('enabled');
-        $formMapper->add('authorName');
-        $formMapper->add('cdnIsFlushable');
-        $formMapper->add('description');
-        $formMapper->add('copyright');
-        $formMapper->add('binaryContent', array(), array('type' => 'string'));
-    }
-
-    /**
-     * build the related create form
-     *
-     */
-    function buildCreateForm(FormMapper $formMapper)
-    {
-        $formMapper->add('binaryContent', array(), array('type' => 'string'));
-    }
-
-    /**
      *
      * @see BaseProvider::preSave
      */
@@ -207,29 +153,6 @@ class YouTubeProvider extends BaseProvider
         $media->setProviderStatus(MediaInterface::STATUS_OK);
 
         $media->setCreatedAt(new \Datetime());
-        $media->setUpdatedAt(new \Datetime());
-
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return
-     */
-    public function preUpdate(MediaInterface $media)
-    {
-        if (!$media->getBinaryContent()) {
-
-            return;
-        }
-
-        $metadata = $this->getMetadata($media);
-
-        $media->setProviderReference($media->getBinaryContent());
-        $media->setProviderMetadata($metadata);
-        $media->setHeight($metadata['height']);
-        $media->setWidth($metadata['width']);
-        $media->setProviderStatus(MediaInterface::STATUS_OK);
-
         $media->setUpdatedAt(new \Datetime());
     }
 
@@ -259,37 +182,4 @@ class YouTubeProvider extends BaseProvider
 
         return $metadata;
     }
-
-    /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return void
-     */
-    public function postUpdate(MediaInterface $media)
-    {
-        $this->postPersist($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return
-     */
-    public function postPersist(MediaInterface $media)
-    {
-        if (!$media->getBinaryContent()) {
-
-            return;
-        }
-
-        $this->generateThumbnails($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return void
-     */
-    public function preRemove(MediaInterface $media)
-    {
-
-    }
-
 }

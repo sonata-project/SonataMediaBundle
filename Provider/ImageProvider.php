@@ -46,7 +46,11 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        $path = $format == 'reference' ? $this->getReferenceImage($media) : sprintf('%s/thumb_%d_%s.jpg',  $this->generatePath($media), $media->getId(), $format);
+        if ($format == 'reference') {
+            $path = $this->getReferenceImage($media);
+        } else {
+            $path = sprintf('%s/thumb_%d_%s.jpg',  $this->generatePath($media), $media->getId(), $format);
+        }
 
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }

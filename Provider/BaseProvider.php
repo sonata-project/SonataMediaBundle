@@ -162,46 +162,6 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->pathGenerator->generatePath($media);
     }
 
-    /**
-     * Generate the public directory path (client side)
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  $format
-     * @return string
-     */
-    public function generatePublicUrl(MediaInterface $media, $format)
-    {
-        if ($format == 'reference') {
-            return $this->getReferenceImage($media);
-        }
-
-        return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        ), $media->getCdnIsFlushable());
-    }
-
-    /**
-     * Generate the private directory path (server side)
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  $format
-     * @return string
-     */
-    public function generatePrivateUrl(MediaInterface $media, $format)
-    {
-        if ($format == 'reference') {
-            return $this->getReferenceImage($media);
-        }
-
-        return sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        );
-    }
-
     public function getFormats()
     {
         return $this->formats;
