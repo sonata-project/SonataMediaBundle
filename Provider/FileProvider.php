@@ -48,7 +48,7 @@ class FileProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable', array('required' => false));
         $formMapper->add('description', array('required' => false));
         $formMapper->add('copyright', array('required' => false));
-        $formMapper->addType('binaryContent', 'file', array('type' => 'file', 'required' => false));
+        $formMapper->addType('binaryContent', 'file', array('required' => false));
     }
 
     /**
@@ -58,7 +58,7 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->addType('binaryContent', 'file', array('type' => 'file'));
+        $formMapper->addType('binaryContent', 'file');
     }
 
     /**
