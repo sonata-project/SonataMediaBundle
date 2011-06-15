@@ -48,7 +48,7 @@ class GalleryAdmin extends Admin
         $object->setGalleryHasMedias($object->getGalleryHasMedias());
     }
 
-    public function preInsert($object)
+    public function prePersist($object)
     {
         // fix weird bug with setter object not being call
         $object->setGalleryHasMedias($object->getGalleryHasMedias());

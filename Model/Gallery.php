@@ -144,12 +144,12 @@ abstract class Gallery implements GalleryInterface
 
     public function setGalleryHasMedias($galleryHasMedias)
     {
-        $this->galleryHasMedias = $galleryHasMedias;
-
         foreach ($galleryHasMedias as $galleryHasMedia)
         {
             $galleryHasMedia->setGallery($this);
         }
+
+        $this->galleryHasMedias = $galleryHasMedias;
     }
 
     public function getGalleryHasMedias()
@@ -159,9 +159,9 @@ abstract class Gallery implements GalleryInterface
 
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
     {
-        $this->galleryHasMedias[] = $galleryHasMedia;
-
         $galleryHasMedia->setGallery($this);
+
+        $this->galleryHasMedias[] = $galleryHasMedia;
     }
 
     public function __toString()
