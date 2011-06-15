@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\Filesystem\Filesystem;
+use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Media\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;

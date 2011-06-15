@@ -12,7 +12,7 @@ namespace Sonata\MediaBundle\Media;
 
 use Imagine\ImagineInterface;
 use Imagine\Image\Box;
-use Gaufrette\Filesystem\File;
+use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class SimpleResizer implements ResizerInterface
@@ -33,8 +33,8 @@ class SimpleResizer implements ResizerInterface
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param \Gaufrette\Filesystem\File $in
-     * @param \Gaufrette\Filesystem\File $out
+     * @param \Gaufrette\File $in
+     * @param \Gaufrette\File $out
      * @param string $format
      * @param array $settings
      * @return void
@@ -44,7 +44,7 @@ class SimpleResizer implements ResizerInterface
         if (!isset($settings['width'])) {
             throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderClass()));
         }
-        
+
         $image = $this->getAdapter()->load($in->getContent());
 
         if ($settings['height'] == null) {

@@ -10,7 +10,7 @@
 
 namespace Sonata\MediaBundle\Filesystem;
 
-use Gaufrette\Filesystem\Adapter as AdapterInterface;
+use Gaufrette\Adapter as AdapterInterface;
 
 class Replicate implements AdapterInterface
 {

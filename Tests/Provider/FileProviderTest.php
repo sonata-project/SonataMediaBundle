@@ -26,11 +26,11 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
             ->method('resize')
             ->will($this->returnValue(true));
 
-        $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
+        $adapter = $this->getMock('Gaufrette\Adapter');
 
-        $file = $this->getMock('Gaufrette\Filesystem\File', array(), array($adapter));
+        $file = $this->getMock('Gaufrette\File', array(), array($adapter));
 
-        $filesystem = $this->getMock('Gaufrette\Filesystem\Filesystem', array('get'), array($adapter));
+        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
         $filesystem->expects($this->any())
             ->method('get')
             ->will($this->returnValue($file));

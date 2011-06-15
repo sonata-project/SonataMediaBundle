@@ -49,7 +49,7 @@ interface MediaProviderInterface
 
     /**
      *
-     * @return \Gaufrette\Filesystem\File
+     * @return \Gaufrette\File
      */
     function getReferenceFile(MediaInterface $media);
 

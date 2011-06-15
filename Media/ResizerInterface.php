@@ -10,7 +10,7 @@
 
 namespace Sonata\MediaBundle\Media;
 
-use Gaufrette\Filesystem\File;
+use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 interface ResizerInterface
@@ -18,8 +18,8 @@ interface ResizerInterface
     /**
      * @abstract
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param \Gaufrette\Filesystem\File $in
-     * @param \Gaufrette\Filesystem\File $out
+     * @param \Gaufrette\File $in
+     * @param \Gaufrette\File $out
      * @param string $format
      * @param array $settings
      * @return void

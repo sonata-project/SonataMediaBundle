@@ -21,11 +21,11 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
     public function getProvider()
     {
-        $adapter = $this->getMock('Gaufrette\Filesystem\Adapter');
+        $adapter = $this->getMock('Gaufrette\Adapter');
 
-        $file = $this->getMock('Gaufrette\Filesystem\File', array(), array($adapter));
+        $file = $this->getMock('Gaufrette\File', array(), array($adapter));
 
-        $filesystem = $this->getMock('Gaufrette\Filesystem\Filesystem', array('get'), array($adapter));
+        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
         $filesystem->expects($this->any())
             ->method('get')
             ->will($this->returnValue($file));
@@ -41,7 +41,6 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testBaseProvider()
     {
-
         $provider = $this->getProvider();
         $provider->setTemplates(array(
             'edit' => 'edit.twig'
@@ -162,7 +161,7 @@ class TestProvider extends BaseProvider
 
     /**
      *
-     * @return \Gaufrette\Filesystem\File
+     * @return \Gaufrette\File
      */
     function getReferenceFile(MediaInterface $media)
     {
