@@ -67,7 +67,7 @@ class FileProvider extends BaseProvider
      */
     public function postPersist(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        if ($media->getBinaryContent() === null) {
             return;
         }
 
@@ -76,7 +76,7 @@ class FileProvider extends BaseProvider
             true
         );
 
-        $file->setContent(file_get_contents($media->getBinaryContent()->getPath()));
+        $file->setContent(file_get_contents($media->getBinaryContent()->getRealPath()));
 
         $this->generateThumbnails($media);
     }
@@ -97,7 +97,7 @@ class FileProvider extends BaseProvider
             sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
             true
         );
-        $file->setContent(file_get_contents($media->getBinaryContent()->getPath()));
+        $file->setContent(file_get_contents($media->getBinaryContent()->getRealPath()));
 
         $this->generateThumbnails($media);
     }
@@ -109,7 +109,7 @@ class FileProvider extends BaseProvider
      */
     public function fixBinaryContent(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        if ($media->getBinaryContent() === null) {
             return;
         }
 
@@ -133,9 +133,9 @@ class FileProvider extends BaseProvider
     protected function fixFilename(MediaInterface $media)
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
-            $media->setName($media->getBinaryContent()->getOriginalName());
+            $media->setName($media->getBinaryContent()->getClientOriginalName());
         } else if ($media->getBinaryContent() instanceof File) {
-            $media->setName($media->getBinaryContent()->getName());
+            $media->setName($media->getBinaryContent()->getBasename());
         } else {
             $mediaName = false;
         }
