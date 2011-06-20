@@ -39,7 +39,7 @@ class MediaAdmin extends Admin
         'name',
         'providerReference',
         'enabled',
-        'context'
+        'context',
     );
 
     public function __construct($code, $class, $baseControllerName, $pool)
@@ -68,7 +68,17 @@ class MediaAdmin extends Admin
 
     public function configureDatagridFilters(DatagridMapper $datagrid)
     {
+        $providers = array();
+        foreach($this->pool->getProviderNamesByContext('default') as $name) {
+            $providers[$name] = $name;
+        }
 
+        $datagrid->add('providerName', array(
+            'type' => 'choice',
+            'filter_field_options'=> array(
+                'choices' => $providers
+            )
+        ));
     }
 
     public function configureListFields(ListMapper $list)
