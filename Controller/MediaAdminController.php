@@ -15,12 +15,16 @@ use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaAdminController extends Controller
 {
-
     public function viewAction($id)
     {
+        if (false === $this->admin->isGranted('VIEW')) {
+            throw new AccessDeniedException();
+        }
+
         $media = $this->get('sonata.media.manager.media')->findMediaBy(array('id' => $id));
 
         if (!$media) {
@@ -39,6 +43,9 @@ class MediaAdminController extends Controller
 
     public function createAction()
     {
+        if (false === $this->admin->isGranted('CREATE')) {
+            throw new AccessDeniedException();
+        }
 
         $parameters = $this->admin->getPersistentParameters();
 
