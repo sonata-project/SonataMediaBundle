@@ -159,7 +159,7 @@ class FileProvider extends BaseProvider
         $media->setProviderName($this->name);
         $media->setProviderStatus(MediaInterface::STATUS_OK);
 
-        if (!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             return;
         }
 
