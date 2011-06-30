@@ -8,11 +8,11 @@ Make sure you have a ``Sonata`` directory. If you don't, create it::
 To begin, add the dependent bundles to the ``src/`` directory. If you're
 using git, you can add them as submodules::
 
-  git submodule add git@github.com:Sonata-project/MediaBundle.git src/Sonata/MediaBundle
+  git submodule add git://github.com/sonata-project/MediaBundle.git src/Sonata/MediaBundle
 
   // dependency bundles
-  git submodule add git@github.com:Sonata-project/AdminBundle.git src/Sonata/AdminBundle
-  git submodule add git@github.com:Sonata-project/EasyExtendsBundle.git src/Sonata/EasyExtendsBundle
+  git submodule add git://github.com/sonata-project/AdminBundle.git src/Sonata/AdminBundle
+  git submodule add git://github.com/sonata-project/EasyExtendsBundle.git src/Sonata/EasyExtendsBundle
 
 Add the ``imagine`` image processing library
 
