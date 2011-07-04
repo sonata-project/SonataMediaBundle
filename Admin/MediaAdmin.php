@@ -17,7 +17,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-use Knplabs\Bundle\MenuBundle\MenuItem;
+use Knp\Bundle\MenuBundle\MenuItem;
 
 class MediaAdmin extends Admin
 {
@@ -76,7 +76,9 @@ class MediaAdmin extends Admin
         $datagrid->add('providerName', array(
             'type' => 'choice',
             'filter_field_options'=> array(
-                'choices' => $providers
+                'choices' => $providers,
+                'required' => false,
+                'multiple' => true
             )
         ));
     }
