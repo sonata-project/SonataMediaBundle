@@ -4,19 +4,19 @@ Installation
 To begin, add the dependent bundles to the ``src/`` directory. If you're
 using git, you can add them as submodules::
 
-  git submodule add git://github.com/sonata-project/SonataMediaBundle.git  src/Sonata/MediaBundle
+  git submodule add git://github.com/sonata-project/SonataMediaBundle.git  vendor/bundles/Sonata/MediaBundle
 
   // dependency bundles
-  git submodule add git://github.com/sonata-project/SonataAdminBundle.git src/Sonata/AdminBundle
-  git submodule add git://github.com/sonata-project/SonataEasyExtendsBundle.git src/Sonata/EasyExtendsBundle
+  git submodule add git://github.com/sonata-project/SonataAdminBundle.git vendor/bundles/Sonata/AdminBundle
+  git submodule add git://github.com/sonata-project/SonataEasyExtendsBundle.git vendor/bundles/Sonata/EasyExtendsBundle
 
 Add the ``imagine`` image processing library
 
-  git submodule add git://github.com/avalanche123/Imagine.git src/vendor/imagine
+  git submodule add git://github.com/avalanche123/Imagine.git vendor/imagine
 
 Add the ``gaufrette`` file abstraction library
 
-  git submodule add git://github.com/knplabs/Gaufrette.git src/vendor/gaufrette
+  git submodule add git://github.com/knplabs/Gaufrette.git vendor/gaufrette
 
 Next, be sure to enable the bundles in your application kernel:
 
@@ -94,25 +94,25 @@ file.
 .. code-block:: yaml
 
     # app/config/config.yml
-    Sonata_media:
+    sonata_media:
         contexts:
             default:  # the default context is mandatory
                 providers:
-                    - Sonata.media.provider.dailymotion
-                    - Sonata.media.provider.youtube
-                    - Sonata.media.provider.image
-                    - Sonata.media.provider.file
+                    - sonata.media.provider.dailymotion
+                    - sonata.media.provider.youtube
+                    - sonata.media.provider.image
+                    - sonata.media.provider.file
 
                 formats:
                     small: { width: 100 , quality: 70}
                     big:   { width: 500 , quality: 70}
 
         cdn:
-            Sonata.media.cdn.server:
-                path: /uploads/media # http://media.Sonata-project.org/
+            sonata.media.cdn.server:
+                path: /uploads/media # http://media.sonata-project.org/
 
         filesystem:
-            Sonata.media.adapter.filesystem.local:
+            sonata.media.adapter.filesystem.local:
                 directory:  %kernel.root_dir%/../web/uploads/media
                 create:     false
 
