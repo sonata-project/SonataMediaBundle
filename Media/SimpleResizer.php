@@ -10,7 +10,7 @@
 
 namespace Sonata\MediaBundle\Media;
 
-use Imagine\ImagineInterface;
+use Imagine\Image\ImagineInterface;
 use Imagine\Image\Box;
 use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -22,7 +22,7 @@ class SimpleResizer implements ResizerInterface
     protected $mode;
 
     /**
-     * @param \Imagine\ImagineInterface $adapter
+     * @param \Imagine\Image\ImagineInterface $adapter
      * @param string $mode
      */
     public function __construct(ImagineInterface $adapter, $mode)
@@ -61,7 +61,7 @@ class SimpleResizer implements ResizerInterface
 
     /**
      *
-     * @return \Imagine\ImagineInterface
+     * @return \Imagine\Image\ImagineInterface
      */
     public function getAdapter()
     {
