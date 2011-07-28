@@ -2,7 +2,7 @@ Media Context
 =============
 
 When a site has to handle pictures, you can have different type of pictures:
-news pictures, users pictures etc. But in the end,pictures require the same
+news pictures, users pictures etc. But in the end pictures require the same
 features: resize, cdn and database relationship with entities.
 
 The ``MediaBundle`` tries to solve this situation by introducing ``context``:

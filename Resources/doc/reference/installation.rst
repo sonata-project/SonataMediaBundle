@@ -43,7 +43,7 @@ entities for the media::
 
     The command will generate domain objects in an ``Application`` namespace.
     So you can point entities' associations to a global and common namespace.
-    This will make Entities sharing very easier has your models will allows
+    This will make Entities sharing very easier as your models will allow to
     point to a global namespace. For instance the media will be
     ``Application\Sonata\MediaBundle\Entity\Media``.
 
@@ -64,7 +64,7 @@ Now, add the new `Application` Bundle into the kernel
       );
   }
 
-Update the ``autoload.php`` to add a new namespaces :
+Update the ``autoload.php`` to add a new namespace:
 
 .. code-block:: php
 
@@ -77,7 +77,7 @@ Update the ``autoload.php`` to add a new namespaces :
         // ... other declarations
     ));
 
-Then add these bundles in the config mapping definition :
+Then add these bundles in the config mapping definition:
 
 .. code-block:: yaml
 

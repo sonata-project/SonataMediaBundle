@@ -19,7 +19,7 @@ asset:
 A provider class is always linked to a ``Filesystem`` and a ``CDN``. The
 filesystem abstraction uses the ``Gaufrette`` library. For now there is
 only 2 abstracted filesystem available : ``Local`` and ``FTP``. The ``CDN``
-is used to generated the public url of a media asset.
+is used to generated the media asset public url.
 
 By default the filesystem and the CDN use the local filesystem and the current
 server for the CDN.
@@ -38,9 +38,9 @@ field to store metadata as a serialize array.
 
 The ``Media`` entity has 3 other provider fields:
 
-* ``provider_name`` : the service name linked to the media
-* ``provider_status`` : the status of the media
-* ``provider_reference`` : the internal provider reference (the video sig for instance)
+* ``provider_name``: the service name linked to the media
+* ``provider_status``: the media status
+* ``provider_reference``: the internal provider reference (the video sig for instance)
 
 Case Study
 ----------
@@ -95,9 +95,9 @@ Let's initialize the ``VimeoProvider`` class.
 Next, we need to define the create and edit forms. There are two forms because
 the workflow is not the same:
 
-* *create*: display only one input text representing the video identifier;
+* *create*: displays only one input text representing the video identifier;
 
-* *edit*: display all information about the media: the edit form should not
+* *edit*: displays all information about the media: the edit form should not
   be used to edit the metadata information as the metadata is only used
   internally by the provider class.
 
@@ -215,7 +215,7 @@ The update method should only update data that cannot be managed by the user.
 
 At this point, the ``Media`` object is populated with data from the vimeo's
 JSON definition and is ready to be saved. However once saved, the provider
-need to generate the correct thumbnails.
+needs to generate the correct thumbnails.
 
 The ``postPersist`` and ``postUpdate`` must be implemented to generate valid
 thumbnails.
@@ -280,7 +280,7 @@ The last important part is how the vimeo media should be displayed.
 View Helper
 -----------
 
-The ``MediaBundle`` comes with 2 helpers methods:
+The ``MediaBundle`` comes with 2 helper methods:
 
 * *thumbnails*: This method displays the thumbnail depending on the requested
   format. The thumbnail path generation uses the CDN service injected into
@@ -297,7 +297,7 @@ The thumbnail template is common to all media and it is quite simple:
 
     <img {% for name, value in options %}{{name}}="{{value}}" {% endfor %} />
 
-The media template and media helper is a bit more tricky. Each provider might
+The media template and media helper are a bit more tricky. Each provider might
 provide a rich set of options to embed the media. The
 ``VideoProvider::getHelperProperties()`` method generates the correct set
 of options that need to be passed to the ``view_vimeo.html.twig`` template file.
@@ -365,6 +365,6 @@ From the vimeo's documentation, a video can be included like this:
         frameborder="{{ options.frameborder }}">
     </iframe>
 
-Et voila! Of course you should test the provider class. There are many examples
+Et voilà! Of course you should test the provider class. There are many examples
 in the ``Tests`` folder. The source code is available in the class
 ``Sonata\MediaBundle\Provider\VimeoProvider``.
