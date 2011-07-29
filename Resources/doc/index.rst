@@ -1,8 +1,8 @@
-Welcome to MediaBundle Documentation
-====================================
+Welcome to SonataMediaBundle Documentation
+==========================================
 
-The ``MediaBundle`` is a media library based on a dedicated ``provider`` which
-handles different ``type`` of media: files, videos or images.
+The ``SonataMediaBundle`` is a media library based on a dedicated ``provider``
+which handles different ``type`` of media: files, videos or images.
 
 Each ``type`` is managed by a ``provider`` service which is in charge of:
 

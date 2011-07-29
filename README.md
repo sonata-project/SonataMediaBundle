@@ -1,8 +1,8 @@
-MediaBundle - Media management on steroids
-==========================================
+SonataMediaBundle - Media management on steroids
+================================================
 
-The ``MediaBundle`` is a media library based on a dedicated ``provider`` which
-handles different ``type`` of media: files, videos or images.
+The ``SonataMediaBundle`` is a media library based on a dedicated ``provider``
+which handles different ``type`` of media: files, videos or images.
 
 The full documentation can be found in the ``Resources/doc/`` directory and
 is best read offline after cloning this repository.
