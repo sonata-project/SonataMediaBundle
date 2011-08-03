@@ -18,29 +18,37 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class GalleryAdmin extends Admin
 {
+    public function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            ->add('code')
+            ->add('enabled')
+            ->add('name')
+            ->add('defaultFormat')
+            ->add('galleryHasMedias', 'sonata_type_collection', array(), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable'  => 'position'
+            ))
+        ;
+    }
 
-    protected $list = array(
-        'enabled',
-        'name' => array('identifier' => true),
-        'defaultFormat',
-    );
+    public function configureListFields(ListMapper $listMapper)
+    {
+        $listMapper
+            ->add('enabled')
+            ->addIdentifier('name')
+            ->add('defaultFormat')
+        ;
+    }
 
-    protected $form = array(
-        'code',
-        'enabled',
-        'name',
-        'defaultFormat',
-        'galleryHasMedias' => array(
-            'edit' => 'inline',
-            'inline' => 'table',
-            'sortable' => 'position'
-        ),
-    );
-
-    protected $filter = array(
-        'name',
-        'enabled'
-    );
+    public function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper
+            ->add('name')
+            ->add('enabled')
+        ;
+    }
 
     public function preUpdate($object)
     {

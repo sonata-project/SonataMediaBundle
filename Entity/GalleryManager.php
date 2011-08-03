@@ -21,24 +21,28 @@ class GalleryManager extends AbstractGalleryManager
     protected $em;
     protected $repository;
     protected $class;
-    
+
     public function __construct(EntityManager $em, $class)
     {
         $this->em    = $em;
         $this->class = $class;
-
-        if(class_exists($class)) {
-            $this->repository = $this->em->getRepository($class);
-        }
     }
-    
+
+    protected function getRepository()
+    {
+        if (!$this->repository) {
+            $this->repository = $this->em->getRepository($this->class);
+        }
+
+        return $this->repository;
+    }
     /**
      * Updates a gallery
      *
      * @param Gallery $gallery
      * @return void
      */
-    public function updateGallery(GalleryInterface $gallery)
+    public function update(GalleryInterface $gallery)
     {
         $this->em->persist($gallery);
         $this->em->flush();
@@ -60,9 +64,9 @@ class GalleryManager extends AbstractGalleryManager
      * @param array $criteria
      * @return Gallery
      */
-    public function findGalleryBy(array $criteria)
+    public function findOneBy(array $criteria)
     {
-        return $this->repository->findOneBy($criteria);
+        return $this->getRepository()->findOneBy($criteria);
     }
 
     /**
@@ -71,9 +75,9 @@ class GalleryManager extends AbstractGalleryManager
      * @param array $criteria
      * @return array
      */
-    public function findGalleriesBy(array $criteria)
+    public function findBy(array $criteria)
     {
-        return $this->repository->findBy($criteria);
+        return $this->getRepository()->findBy($criteria);
     }
 
     /**
@@ -82,10 +86,9 @@ class GalleryManager extends AbstractGalleryManager
      * @param Gallery $gallery
      * @return void
      */
-    public function deleteGallery(GalleryInterface $gallery)
+    public function delete(GalleryInterface $gallery)
     {
         $this->em->remove($gallery);
         $this->em->flush();
     }
-
 }

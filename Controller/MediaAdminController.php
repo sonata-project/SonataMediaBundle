@@ -25,7 +25,7 @@ class MediaAdminController extends Controller
             throw new AccessDeniedException();
         }
 
-        $media = $this->get('sonata.media.manager.media')->findMediaBy(array('id' => $id));
+        $media = $this->get('sonata.media.manager.media')->findOneBy(array('id' => $id));
 
         if (!$media) {
             throw new NotFoundHttpException('unable to find the media with the id');

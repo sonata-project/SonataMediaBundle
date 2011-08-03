@@ -21,26 +21,31 @@ class MediaManager extends AbstractMediaManager
     protected $em;
     protected $repository;
     protected $class;
-    
+
     public function __construct(Pool $pool, EntityManager $em, $class)
     {
-        $this->em           = $em;
+        $this->em    = $em;
         $this->class = $class;
-
-        if(class_exists($class)) {
-            $this->repository = $this->em->getRepository($class);
-        }
 
         parent::__construct($pool);
     }
-    
+
+    protected function getRepository()
+    {
+        if (!$this->repository) {
+            $this->repository = $this->em->getRepository($this->class);
+        }
+
+        return $this->repository;
+    }
+
     /**
      * Updates a media
      *
      * @param Media $media
      * @return void
      */
-    public function updateMedia(MediaInterface $media)
+    public function update(MediaInterface $media)
     {
         $this->em->persist($media);
         $this->em->flush();
@@ -62,9 +67,20 @@ class MediaManager extends AbstractMediaManager
      * @param array $criteria
      * @return Media
      */
-    public function findMediaBy(array $criteria)
+    public function findOneBy(array $criteria)
     {
-        return $this->repository->findOneBy($criteria);
+        return $this->getRepository()->findOneBy($criteria);
+    }
+
+    /**
+     * Finds one media by the given criteria
+     *
+     * @param array $criteria
+     * @return Media
+     */
+    public function findBy(array $criteria)
+    {
+        return $this->getRepository()->findBy($criteria);
     }
 
     /**
@@ -73,7 +89,7 @@ class MediaManager extends AbstractMediaManager
      * @param Media $media
      * @return void
      */
-    public function deleteMedia(MediaInterface $media)
+    public function delete(MediaInterface $media)
     {
         $this->em->remove($media);
         $this->em->flush();

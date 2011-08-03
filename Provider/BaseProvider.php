@@ -84,6 +84,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * generated thumbnails linked to the media, a thumbnail is a format used on the website
      *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function generateThumbnails(MediaInterface $media)

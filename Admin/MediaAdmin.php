@@ -23,25 +23,6 @@ class MediaAdmin extends Admin
 {
     protected $pool = null;
 
-    protected $list = array(
-        'image'  => array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig', 'type' => 'string'),
-        'custom' => array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig', 'type' => 'string'),
-        'enabled',
-        '_action' => array(
-            'actions' => array(
-                'view' => array(),
-                'edit' => array()
-            )
-        )
-    );
-
-    protected $filter = array(
-        'name',
-        'providerReference',
-        'enabled',
-        'context',
-    );
-
     public function __construct($code, $class, $baseControllerName, $pool)
     {
         parent::__construct($code, $class, $baseControllerName);
@@ -49,11 +30,56 @@ class MediaAdmin extends Admin
         $this->pool = $pool;
     }
 
+    public function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper
+            ->add('name')
+            ->add('providerReference')
+            ->add('enabled')
+            ->add('context')
+        ;
+
+       $providers = array();
+
+        foreach($this->pool->getProviderNamesByContext('default') as $name) {
+            $providers[$name] = $name;
+        }
+
+        $datagridMapper->add('providerName', 'choice', array(
+            'filter_field_options'=> array(
+                'choices' => $providers,
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true
+            )
+        ));
+    }
+
+    public function configureListFields(ListMapper $listMapper)
+    {
+        $listMapper
+            ->addIdentifier('id')
+            ->add('image', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig'))
+            ->add('custom', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig'))
+            ->add('enabled')
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'view' => array(),
+                    'edit' => array(),
+                )
+            ))
+        ;
+    }
+
     public function configureFormFields(FormMapper $formMapper)
     {
-        $media = $formMapper->getFormBuilder()->getData();
+        $media = $this->getSubject();
 
-        if(!$media->getProviderName()) {
+        if (!$media) {
+            $media = $this->getNewInstance();
+        }
+
+        if(!$media || !$media->getProviderName()) {
             return;
         }
 
@@ -64,28 +90,6 @@ class MediaAdmin extends Admin
         } else {
             $provider->buildCreateForm($formMapper);
         }
-    }
-
-    public function configureDatagridFilters(DatagridMapper $datagrid)
-    {
-        $providers = array();
-        foreach($this->pool->getProviderNamesByContext('default') as $name) {
-            $providers[$name] = $name;
-        }
-
-        $datagrid->add('providerName', array(
-            'type' => 'choice',
-            'filter_field_options'=> array(
-                'choices' => $providers,
-                'required' => false,
-                'multiple' => true
-            )
-        ));
-    }
-
-    public function configureListFields(ListMapper $list)
-    {
-
     }
 
     public function configureRoutes(RouteCollection $collection)
@@ -108,12 +112,12 @@ class MediaAdmin extends Admin
 
     public function preUpdate($media)
     {
-      $this->pool->preUpdate($media);
+        $this->pool->preUpdate($media);
     }
 
     public function postUpdate($media)
     {
-      $this->pool->preUpdate($media);
+        $this->pool->postUpdate($media);
     }
 
     public function getPersistentParameters()
@@ -159,5 +163,10 @@ class MediaAdmin extends Admin
             $this->trans('view_media'),
             $admin->generateUrl('view', array('id' => $id))
         );
+    }
+
+    public function getPool()
+    {
+        return $this->pool;
     }
 }

@@ -15,18 +15,15 @@ use Sonata\MediaBundle\Provider\Pool;
 
 abstract class GalleryManager implements GalleryManagerInterface
 {
-
     /**
      * Creates an empty gallery instance
      *
      * @return Gallery
      */
-    function createGallery()
+    function create()
     {
         $class = $this->getClass();
 
         return new $class;
     }
-
-
 }

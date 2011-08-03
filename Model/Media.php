@@ -12,7 +12,6 @@ namespace Sonata\MediaBundle\Model;
 
 abstract class Media implements MediaInterface
 {
-
     /**
      * @var string $name
      */
@@ -525,7 +524,7 @@ abstract class Media implements MediaInterface
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() ?: 'n/a';
     }
 
     public function setGalleryHasMedias($galleryHasMedias)

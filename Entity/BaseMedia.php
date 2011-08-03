@@ -15,7 +15,6 @@ use Sonata\MediaBundle\Model\Media;
 
 abstract class BaseMedia extends Media
 {
-
     public function prePersist()
     {
         $this->createdAt = new \DateTime();

@@ -49,17 +49,6 @@ class Pool
         $this->providers[$name] = $instance;
     }
 
-    public function getProviderByProduct(ProductInterface $product)
-    {
-        foreach($this->providers as $provider) {
-            if (get_class($product) == $provider->getClass()) {
-                return $provider;
-            }
-        }
-
-        return null;
-    }
-
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
@@ -171,6 +160,16 @@ class Pool
 
 
         return $this->contexts[$name];
+    }
+
+    /**
+     * Returns the context list
+     *
+     * @return array
+     */
+    public function getContexts()
+    {
+        return $this->contexts;
     }
 
     /**

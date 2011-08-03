@@ -1,0 +1,25 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% extends 'SonataPageBundle:Block:block_base.html.twig' %}
+
+{% block block %}
+    {% if settings.title %}
+        <h3 class="sonata-media-title">{{ settings.title }}</h3>
+    {% endif %}
+
+    <div class="sonata-feeds-container">
+        {% if media %}
+            {% media media, settings.format %}
+        {% else %}
+            {# no media selected ... #}
+        {% endif %}
+    </div>
+{% endblock %}

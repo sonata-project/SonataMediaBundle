@@ -42,13 +42,13 @@ class FileProvider extends BaseProvider
      */
     public function buildEditForm(FormMapper $formMapper)
     {
-        $formMapper->add('name', array('required' => false));
-        $formMapper->add('enabled', array('required' => false));
-        $formMapper->add('authorName', array('required' => false));
-        $formMapper->add('cdnIsFlushable', array('required' => false));
-        $formMapper->add('description', array('required' => false));
-        $formMapper->add('copyright', array('required' => false));
-        $formMapper->addType('binaryContent', 'file', array('required' => false));
+        $formMapper->add('name', null, array('required' => false));
+        $formMapper->add('enabled', null, array('required' => false));
+        $formMapper->add('authorName', null, array('required' => false));
+        $formMapper->add('cdnIsFlushable', null, array('required' => false));
+        $formMapper->add('description', null, array('required' => false));
+        $formMapper->add('copyright', null, array('required' => false));
+        $formMapper->add('binaryContent', 'file', array('required' => false));
     }
 
     /**
@@ -58,7 +58,7 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->addType('binaryContent', 'file');
+        $formMapper->add('binaryContent', 'file');
     }
 
     /**

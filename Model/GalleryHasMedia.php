@@ -25,6 +25,12 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
 
     protected $enabled;
 
+    public function __construct()
+    {
+        $this->position = 0;
+        $this->enabled  = false;
+    }
+
     public function setCreatedAt(\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;

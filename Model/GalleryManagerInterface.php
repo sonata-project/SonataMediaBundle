@@ -11,16 +11,14 @@
 
 namespace Sonata\MediaBundle\Model;
 
-
 interface GalleryManagerInterface
 {
-
     /**
      * Creates an empty medie instance
      *
      * @return Gallery
      */
-    function createGallery();
+    function create();
 
     /**
      * Deletes a gallery
@@ -28,7 +26,7 @@ interface GalleryManagerInterface
      * @param Gallery $gallery
      * @return void
      */
-    function deleteGallery(GalleryInterface $gallery);
+    function delete(GalleryInterface $gallery);
 
     /**
      * Finds one gallery by the given criteria
@@ -36,7 +34,7 @@ interface GalleryManagerInterface
      * @param array $criteria
      * @return GalleryInterface
      */
-    function findGalleryBy(array $criteria);
+    function findOneBy(array $criteria);
 
     /**
      * Finds galleries by the given criteria
@@ -44,7 +42,7 @@ interface GalleryManagerInterface
      * @param array $criteria
      * @return array
      */
-    function findGalleriesBy(array $criteria);
+    function findBy(array $criteria);
 
     /**
      * Returns the gallery's fully qualified class name
@@ -59,7 +57,5 @@ interface GalleryManagerInterface
      * @param Gallery $gallery
      * @return void
      */
-    function updateGallery(GalleryInterface $gallery);
-
-
+    function update(GalleryInterface $gallery);
 }

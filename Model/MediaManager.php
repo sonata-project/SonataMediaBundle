@@ -27,7 +27,7 @@ abstract class MediaManager implements MediaManagerInterface
      *
      * @return Media
      */
-    function createMedia()
+    function create()
     {
         $class = $this->getClass();
 

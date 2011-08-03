@@ -20,7 +20,7 @@ interface MediaManagerInterface
      *
      * @return Media
      */
-    function createMedia();
+    function create();
 
     /**
      * Deletes a media
@@ -28,7 +28,15 @@ interface MediaManagerInterface
      * @param Media $media
      * @return void
      */
-    function deleteMedia(MediaInterface $media);
+    function delete(MediaInterface $media);
+
+    /**
+     * Finds many media by the given criteria
+     *
+     * @param array $criteria
+     * @return MediaInterface
+     */
+    function findBy(array $criteria);
 
     /**
      * Finds one media by the given criteria
@@ -36,7 +44,7 @@ interface MediaManagerInterface
      * @param array $criteria
      * @return MediaInterface
      */
-    function findMediaBy(array $criteria);
+    function findOneBy(array $criteria);
 
     /**
      * Returns the media's fully qualified class name
@@ -51,5 +59,5 @@ interface MediaManagerInterface
      * @param Media $media
      * @return void
      */
-    function updateMedia(MediaInterface $media);
+    function update(MediaInterface $media);
 }

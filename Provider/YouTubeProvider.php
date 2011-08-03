@@ -136,7 +136,6 @@ class YouTubeProvider extends BaseVideoProvider
     public function prePersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 

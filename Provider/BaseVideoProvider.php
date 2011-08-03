@@ -18,15 +18,21 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 
-
 abstract class BaseVideoProvider extends BaseProvider
 {
-
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
     public function getReferenceImage(MediaInterface $media)
     {
         return $media->getMetadataValue('thumbnail_url');
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return \Gaufrette\File
+     */
     public function getReferenceFile(MediaInterface $media)
     {
         $key = $this->generatePrivateUrl($media, 'reference');
@@ -46,7 +52,7 @@ abstract class BaseVideoProvider extends BaseProvider
      * Generate the public directory path (client side)
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  $format
+     * @param string $format
      * @return string
      */
     public function generatePublicUrl(MediaInterface $media, $format)
@@ -62,7 +68,7 @@ abstract class BaseVideoProvider extends BaseProvider
      * Generate the private directory path (server side)
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  $format
+     * @param string $format
      * @return string
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
@@ -75,7 +81,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
     public function preUpdate(MediaInterface $media)
@@ -96,6 +102,12 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return
+     */
+    abstract function prePersist(MediaInterface $media);
+
+    /**
      * build the related create form
      *
      */
@@ -107,7 +119,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add('binaryContent', array(), array('type' => 'string'));
+        $formMapper->add('binaryContent', 'text');
     }
 
     /**
@@ -116,11 +128,11 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', array(), array('type' => 'string'));
+        $formMapper->add('binaryContent', 'text');
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function postUpdate(MediaInterface $media)
@@ -129,7 +141,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
     public function postPersist(MediaInterface $media)
@@ -142,7 +154,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function preRemove(MediaInterface $media)
