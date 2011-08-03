@@ -18,7 +18,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class GalleryAdmin extends Admin
 {
-    public function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->add('code')
@@ -33,7 +33,7 @@ class GalleryAdmin extends Admin
         ;
     }
 
-    public function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->add('enabled')
@@ -42,7 +42,7 @@ class GalleryAdmin extends Admin
         ;
     }
 
-    public function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('name')

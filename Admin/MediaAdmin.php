@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 use Knp\Bundle\MenuBundle\MenuItem;
@@ -30,7 +31,7 @@ class MediaAdmin extends Admin
         $this->pool = $pool;
     }
 
-    public function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('name')
@@ -55,7 +56,7 @@ class MediaAdmin extends Admin
         ));
     }
 
-    public function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('id')
@@ -71,7 +72,7 @@ class MediaAdmin extends Admin
         ;
     }
 
-    public function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
         $media = $this->getSubject();
 
@@ -92,7 +93,16 @@ class MediaAdmin extends Admin
         }
     }
 
-    public function configureRoutes(RouteCollection $collection)
+    /**
+     *
+     * @param DatagridMapper
+     */
+    protected function configureShowField(ShowMapper $filter)
+    {
+        // TODO: Implement configureShowField() method.
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('view', $this->getRouterIdParameter().'/view');
     }
@@ -144,7 +154,7 @@ class MediaAdmin extends Admin
         return $media;
     }
 
-    public function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
+    protected function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
     {
         if (!in_array($action, array('edit', 'view'))) {
             return;

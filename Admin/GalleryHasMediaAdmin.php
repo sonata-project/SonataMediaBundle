@@ -18,7 +18,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class GalleryHasMediaAdmin extends Admin
 {
-    public function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->add('media', 'sonata_type_model', array(), array('edit' => 'list'))
@@ -27,12 +27,12 @@ class GalleryHasMediaAdmin extends Admin
         ;
     }
 
-    public function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
 
     }
 
-    public function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->add('media')
