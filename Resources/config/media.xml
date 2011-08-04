@@ -11,8 +11,8 @@
     <services>
         <!-- image manipulation service -->
         <service id="sonata.media.adapter.image.gd" class="Imagine\Gd\Imagine" />
-        <service id="sonata.media.adapter.image.imagick" class="Imagine\Gmagick\Imagine" />
-        <service id="sonata.media.adapter.image.gmagick" class="Imagine\Imagick\Imagine" />
+        <service id="sonata.media.adapter.image.imagick" class="Imagine\Imagick\Imagine" />
+        <service id="sonata.media.adapter.image.gmagick" class="Imagine\Gmagick\Imagine" />
 
         <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
             <argument type="service" id="sonata.media.adapter.image.gd" />
