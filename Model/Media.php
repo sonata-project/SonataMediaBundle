@@ -113,6 +113,17 @@ abstract class Media implements MediaInterface
     protected $galleryHasMedias;
 
 
+    public function prePersist()
+    {
+        $this->setCreatedAt(new \DateTime);
+        $this->setUpdatedAt(new \DateTime);
+    }
+
+    public function preUpdate()
+    {
+        $this->setUpdatedAt(new \DateTime);
+    }
+
     public static function getStatusList()
     {
         return array(
