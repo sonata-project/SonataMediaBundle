@@ -84,22 +84,22 @@ Full configuration options:
                 resizer:    false
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
-                generator:  soanta.media.generator.default
+                generator:  sonata.media.generator.default
 
             sonata.media.provider.image:
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
-                generator:  soanta.media.generator.default
+                generator:  sonata.media.generator.default
 
             sonata.media.provider.youtube:
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
-                generator:  soanta.media.generator.default
+                generator:  sonata.media.generator.default
 
             sonata.media.provider.dailymotion:
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
-                generator:  soanta.media.generator.default
+                generator:  sonata.media.generator.default
