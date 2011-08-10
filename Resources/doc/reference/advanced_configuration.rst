@@ -6,6 +6,7 @@ Full configuration options:
 .. code-block:: yaml
 
     sonata_media:
+        db_driver: orm
         contexts:
             default:  # the default context is mandatory
                 providers:
