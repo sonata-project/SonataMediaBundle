@@ -102,7 +102,7 @@ class MediaAdmin extends Admin
         // TODO: Implement configureShowField() method.
     }
 
-    protected function configureRoutes(RouteCollection $collection)
+    public function configureRoutes(RouteCollection $collection)
     {
         $collection->add('view', $this->getRouterIdParameter().'/view');
     }
@@ -154,7 +154,7 @@ class MediaAdmin extends Admin
         return $media;
     }
 
-    protected function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
+    public function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
     {
         if (!in_array($action, array('edit', 'view'))) {
             return;
