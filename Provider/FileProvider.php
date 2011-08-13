@@ -87,7 +87,7 @@ class FileProvider extends BaseProvider
      */
     public function postUpdate(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             return;
         }
 
@@ -220,7 +220,7 @@ class FileProvider extends BaseProvider
     {
         $this->fixBinaryContent($media);
 
-        if (!$media->getBinaryContent()) {
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             return;
         }
 

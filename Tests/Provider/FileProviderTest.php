@@ -96,13 +96,9 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $formMapper     = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add', 'addType'), array(), '', false);
-        $formMapper->expects($this->exactly(6))
+        $formMapper     = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add'), array(), '', false);
+        $formMapper->expects($this->exactly(8))
             ->method('add')
-            ->will($this->returnValue(null));
-
-        $formMapper->expects($this->exactly(2))
-            ->method('addType')
             ->will($this->returnValue(null));
 
         $provider->buildCreateForm($formMapper);
