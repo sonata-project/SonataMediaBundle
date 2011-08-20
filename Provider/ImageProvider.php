@@ -49,7 +49,7 @@ class ImageProvider extends FileProvider
         if ($format == 'reference') {
             $path = $this->getReferenceImage($media);
         } else {
-            $path = sprintf('%s/thumb_%d_%s.jpg',  $this->generatePath($media), $media->getId(), $format);
+            $path = sprintf('%s/thumb_%s_%s.jpg',  $this->generatePath($media), $media->getId(), $format);
         }
 
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
@@ -62,7 +62,7 @@ class ImageProvider extends FileProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%d_%s.jpg',
+        return sprintf('%s/thumb_%s_%s.jpg',
             $this->generatePath($media),
             $media->getId(),
             $format
