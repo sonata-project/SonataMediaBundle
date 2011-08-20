@@ -46,7 +46,7 @@ class SonataMediaExtension extends Extension
         $loader->load('twig.xml');
         $loader->load('block.xml');
 
-        if (!in_array(strtolower($config['db_driver']), array('orm'))) {
+        if (!in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
 

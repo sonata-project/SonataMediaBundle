@@ -22,6 +22,11 @@
             <argument type="service" id="sonata.media.entity_manager" />
             <argument>Application\Sonata\MediaBundle\Entity\Gallery</argument>
         </service>
+
+        <!-- Path generator servive -->
+        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\DefaultGenerator">
+
+        </service>
     </services>
 
 </container>
