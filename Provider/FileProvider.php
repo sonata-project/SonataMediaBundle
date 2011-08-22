@@ -71,12 +71,7 @@ class FileProvider extends BaseProvider
             return;
         }
 
-        $file = $this->getFilesystem()->get(
-            sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
-            true
-        );
-
-        $file->setContent(file_get_contents($media->getBinaryContent()->getRealPath()));
+        $this->setFileContents($media);
 
         $this->generateThumbnails($media);
     }
@@ -93,11 +88,7 @@ class FileProvider extends BaseProvider
 
         $this->fixBinaryContent($media);
 
-        $file = $this->getFilesystem()->get(
-            sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
-            true
-        );
-        $file->setContent(file_get_contents($media->getBinaryContent()->getRealPath()));
+        $this->setFileContents($media);
 
         $this->generateThumbnails($media);
     }
@@ -243,5 +234,24 @@ class FileProvider extends BaseProvider
     public function preRemove(MediaInterface $media)
     {
 
+    }
+
+    /**
+     * Set the file contents for an image
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $contents path to contents, defaults to MediaInterface BinaryContent
+     * @return void
+     */
+    public function setFileContents(MediaInterface $media, $contents=null)
+    {
+        $file = $this->getFilesystem()->get(
+            sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
+            true
+        );
+        if (!$contents) {
+            $contents = $media->getBinaryContent()->getRealPath();
+        }
+        $file->setContent(file_get_contents($contents));
     }
 }
