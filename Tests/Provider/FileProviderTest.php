@@ -35,7 +35,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
@@ -59,7 +59,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
 
         // default icon image
-        $this->assertEquals('/updoads/media/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/uploads/media/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testHelperProperies()
@@ -94,6 +94,9 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testForm()
     {
+        if (!class_exists('\Sonata\AdminBundle\Form\FormMapper')) {
+            $this->markTestSkipped("AdminBundle doesn't seem to be installed");
+        }
         $provider = $this->getProvider();
 
         $formMapper     = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add'), array(), '', false);
@@ -156,5 +159,23 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false');
 
         $provider->postRemove($media);
+    }
+
+    public function testSetFileContents()
+    {
+        $adapter = new \Gaufrette\Adapter\InMemory(array('testDir'));
+        $filesystem = new \Gaufrette\Filesystem($adapter);
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
+        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $filesystem, $cdn, $generator);
+
+        $media = new Media;
+        $media->setId(853);
+        $media->setProviderReference(853);
+
+        $provider->setFileContents($media, realpath(__DIR__.'/../fixtures/file.txt'));
+        $this->assertEquals('Hello file text!', $provider->getReferenceFile($media)->getContent());
+
+
     }
 }
