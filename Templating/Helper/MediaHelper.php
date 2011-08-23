@@ -129,6 +129,8 @@ class MediaHelper extends Helper
         $provider = $this->getMediaService()
            ->getProvider($media->getProviderName());
 
+        $format = $provider->getFormatName($media, $format);
+
         return $provider->generatePublicUrl($media, $format);
     }
 
