@@ -37,7 +37,7 @@
         </service>
 
         <service id="sonata.media.admin.gallery_has_media" class="%sonata.media.admin.gallery_has_media.class%">
-            <tag name="sonata.admin" manager_type="orm" group="sonata_media" label="gallery_has_media" show_in_dashboard="false"/>
+            <tag name="sonata.admin" manager_type="orm" label="gallery_has_media"/>
             <argument />
             <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
             <argument>%sonata.media.admin.gallery_has_media.controller%</argument>
