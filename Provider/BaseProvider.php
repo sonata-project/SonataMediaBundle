@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\MediaBundle\Media\CropperInterface;
 use Sonata\MediaBundle\Media\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -28,8 +27,6 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $formats = array();
 
     protected $templates = array();
-
-    protected $cropper;
 
     protected $resizer;
 
@@ -229,18 +226,5 @@ abstract class BaseProvider implements MediaProviderInterface
     public function setResizer(ResizerInterface $resizer)
     {
         $this->resizer = $resizer;
-    }
-
-    public function setCropper(CropperInterface $cropper)
-    {
-        $this->cropper = $cropper;
-    }
-
-    /**
-     * @return \Sonata\MediaBundle\Media\CropperInterface
-     */
-    public function getCropper()
-    {
-        return $this->cropper;
     }
 }

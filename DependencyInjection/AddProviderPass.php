@@ -112,12 +112,6 @@ class AddProviderPass implements CompilerPassInterface
             if ($resizer) {
                 $definition->addMethodCall('setResizer', array(new Reference($resizer)));
             }
-
-            $cropper = isset($provider['cropper']) ? $provider['cropper'] : 'sonata.media.cropper.simple';
-
-            if ($cropper) {
-                $definition->addMethodCall('setCropper', array(new Reference($cropper)));
-            }
         }
     }
 
