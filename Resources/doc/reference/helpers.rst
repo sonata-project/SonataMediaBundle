@@ -14,7 +14,7 @@ Render the thumbnail:
 .. code-block:: php
 
     <?php echo $view['sonata_media']->thumbnail($media, 'small_format') ?>
-    
+
     <?php echo $view['sonata_media']->thumbnail($media, 'small_format', array(
         'class' => 'myclass'
     ) ?>
@@ -38,7 +38,7 @@ Render the thumbnail:
 
     {% thumbnail media, 'small_format' %}
 
-    {% thumbnail media, 'small_format', {'class': 'myclass'} %}
+    {% thumbnail media, 'small_format' with {'class': 'myclass'} %}
 
 Render the media:
 
