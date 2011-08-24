@@ -34,11 +34,30 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('crop', $metadata, 'crop should be stored in the existing array');
         $this->assertArrayHasKey('name', $metadata, 'name metadata should still be in the array');
         $this->assertSame($cropData, $metadata['crop'], 'the crop data array should be returned');
+
+        return $media;
     }
 
-    public function testUnsetMetadataValue()
+    /**
+     * @depends testSetMetadataValue
+     */
+    public function testUnsetMetadataValue($media)
     {
-        
+        $metadataProperty = $this->getMediaPropertyReflection('providerMetadata');
+
+        $media->unsetMetadataValue('crop');
+        $metadata = $metadataProperty->getValue($media);
+        $this->assertArrayNotHasKey('crop', $metadata, 'crop should not be in the metadata');
+
+        $media->unsetMetadataValue('name');
+        $metadata = $metadataProperty->getValue($media);
+        $this->assertEmpty($metadata, 'crop should not be in the metadata');
+
+        try {
+            $media->unsetMetadataValue('bullshit');
+        } catch (InvalidArgumentException $expected) {
+            $this->fail('an invalid key should be ignored');
+        }
     }
 
     protected function getMediaPropertyReflection($propertyName)
