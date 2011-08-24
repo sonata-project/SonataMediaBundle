@@ -154,6 +154,31 @@ abstract class Media implements MediaInterface
     }
 
     /**
+     * Add a named data value to the metadata
+     *
+     * @param string $name
+     * @param string$value
+     */
+    public function setMetadataValue($name, $value)
+    {
+        $metadata = $this->getProviderMetadata();
+        $metadata[$name] = $value;
+        $this->setProviderMetadata($metadata);
+    }
+
+    /**
+     * Remove a named data from the metadata
+     * 
+     * @param string $name
+     */
+    public function unsetMetadataValue($name)
+    {
+        $metadata = $this->getProviderMetadata();
+        unset($metadata[$name]);
+        $this->setProviderMetadata($metadata);
+    }
+
+    /**
      * Set name
      *
      * @param string $name
