@@ -35,6 +35,8 @@ abstract class BaseProvider implements MediaProviderInterface
 
     protected $cdn;
 
+    protected $prefix = 'thumb';
+
     /**
      * @param $name
      * @param \Gaufrette\Filesystem $filesystem
@@ -168,6 +170,9 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function generateFileName(MediaInterface $media, $format, $prefix=null, $ext=null)
     {
+        if (!$prefix) {
+            $prefix = $this->prefix;
+        }
         if ($prefix) {
             $prefix .= '_';
         }
@@ -271,5 +276,15 @@ abstract class BaseProvider implements MediaProviderInterface
     public function setResizer(ResizerInterface $resizer)
     {
         $this->resizer = $resizer;
+    }
+
+    public function setFilenamePrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    public function getFilenamePrefix()
+    {
+        return $this->prefix;
     }
 }

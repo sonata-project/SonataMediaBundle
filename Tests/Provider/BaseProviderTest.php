@@ -82,9 +82,16 @@ class BaseProviderTest extends ProviderTestCommon
             "no extension should get the extension from the media"
         );
 
+        $provider->setFilenamePrefix('new_prefix');
+        $this->assertSame('new_prefix_853_test_format.png',
+            $provider->generateFileName($media, 'test_format'),
+            "no prefix should use the prefix set in the provider the file name start with the id"
+        );
+
+        $provider->setFilenamePrefix(null);
         $this->assertSame('853_test_format.png',
             $provider->generateFileName($media, 'test_format'),
-            "no prefix should have the file name start with the id"
+            "no prefix in param and provider the file name should start with the id"
         );
     }
 
