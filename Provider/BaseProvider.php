@@ -90,22 +90,20 @@ abstract class BaseProvider implements MediaProviderInterface
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function generateThumbnails(MediaInterface $media, $referenceFormat = 'reference')
+    public function generateThumbnails(MediaInterface $media)
     {
         if (!$this->requireThumbnails()) {
             return;
         }
 
-        if (!$referenceFile = $this->getFile($media, $referenceFormat, false)) {
-            throw new Exception(sprintf('The requested format %s has not been created', $referenceFormat));
-        }
+        $referenceFile = $this->getReferenceFile($media);
 
         foreach ($this->formats as $format => $settings) {
             $this->getResizer()->resize(
                 $media,
                 $referenceFile,
                 $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
-                'jpg' ,
+                'jpg',
                 $settings
             );
         }
