@@ -153,6 +153,13 @@ abstract class Media implements MediaInterface
         return isset($metadata[$name]) ? $metadata[$name] : $default;
     }
 
+    public function setMetadataValue($name, $value)
+    {
+        $metadata = $this->getProviderMetadata();
+        $metadata[$name] = $value;
+        $this->setProviderMetadata($metadata);
+    }
+    
     /**
      * Set name
      *
