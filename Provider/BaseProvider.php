@@ -171,7 +171,10 @@ abstract class BaseProvider implements MediaProviderInterface
         if ($prefix) {
             $prefix .= '_';
         }
-
+        if (!$ext) {
+            $ext = $media->getExtension();
+        }
+        
         return sprintf('%s%s_%s.%s',
             $prefix,
             $media->getId(),
