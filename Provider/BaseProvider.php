@@ -164,9 +164,27 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->pathGenerator->generatePath($media);
     }
 
-    /**
-     * @return array
-     */
+    public function generateFileName(MediaInterface $media, $format, $ext='jpg', $prefix=null)
+    {
+        if ($prefix) {
+            $prefix .= '_';
+        }
+        return sprintf('%s%s_%s.%s',
+            $prefix,
+            $media->getId(),
+            $format,
+            $ext
+        );
+    }
+
+    public function generateFullPath(MediaInterface $media, $format, $ext='jpg', $prefix=null)
+    {
+        return sprintf('%s/%s',
+            $this->generatePath($media),
+            $this->generateFileName($media, $format, $ext, $prefix)
+        );
+    }
+    
     public function getFormats()
     {
         return $this->formats;
