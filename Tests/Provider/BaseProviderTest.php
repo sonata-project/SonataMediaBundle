@@ -68,13 +68,24 @@ class BaseProviderTest extends ProviderTestCommon
 
     public function testGenerateFileName()
     {
-        $media = $this->getMedia(853);
         $provider = $this->getProvider();
-        
+        $media = $this->getMedia(853);
+        $media->setExtension('png');
+
         $this->assertSame('prefix_853_test_format.jpg',
-            $provider->generateFileName($media, 'test_format', 'jpg', 'prefix')
+            $provider->generateFileName($media, 'test_format', 'prefix', 'jpg'),
+            'provide all parameters, overrides extension set in media'
         );
 
+        $this->assertSame('prefix_853_test_format.png',
+            $provider->generateFileName($media, 'test_format', 'prefix'),
+            "no extension should get the extension from the media"
+        );
+
+        $this->assertSame('853_test_format.png',
+            $provider->generateFileName($media, 'test_format'),
+            "no prefix should have the file name start with the id"
+        );
     }
 
 
