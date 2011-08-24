@@ -7,12 +7,12 @@
                 <target>Media</target>
             </trans-unit>
 
-            <trans-unit id="slidemenu.link_edit_media">
-                <source>slidemenu.link_edit_media</source>
+            <trans-unit id="sidemenu.link_edit_media">
+                <source>sidemenu.link_edit_media</source>
                 <target>Edit</target>
             </trans-unit>
-            <trans-unit id="slidemenu.link_media_view">
-                <source>slidemenu.link_media_view</source>
+            <trans-unit id="sidemenu.link_media_view">
+                <source>sidemenu.link_media_view</source>
                 <target>View</target>
             </trans-unit>
 
