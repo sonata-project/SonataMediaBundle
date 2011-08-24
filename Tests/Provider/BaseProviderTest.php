@@ -88,16 +88,14 @@ class BaseProviderTest extends ProviderTestCommon
         );
     }
 
-
     public function testGenerateFullPath()
     {
         $media = $this->getMedia(853);
         $provider = $this->getProvider();
 
         $this->assertSame('default/0001/01/prefix_853_test_format.jpg',
-            $provider->generateFullPath($media, 'test_format', 'jpg', 'prefix')
+            $provider->generateFullPath($media, 'test_format', 'prefix', 'jpg')
         );
-
     }
 }
 
