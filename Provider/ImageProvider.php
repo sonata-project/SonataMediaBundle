@@ -12,10 +12,14 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 
-
 class ImageProvider extends FileProvider
 {
-
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $format
+     * @param array $options
+     * @return array
+     */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
         $format_configuration = $this->getFormat($format);

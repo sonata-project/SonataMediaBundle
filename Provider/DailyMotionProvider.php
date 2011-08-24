@@ -16,7 +16,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class DailyMotionProvider extends BaseVideoProvider
 {
-
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
@@ -88,7 +87,7 @@ class DailyMotionProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
     public function prePersist(MediaInterface $media)
@@ -116,8 +115,8 @@ class DailyMotionProvider extends BaseVideoProvider
 
     /**
      * @throws \RuntimeException
-     * @param  $media
-     * @return mixed|string
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return mixed|null|string
      */
     public function getMetadata(MediaInterface $media)
     {

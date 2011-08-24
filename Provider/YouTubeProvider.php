@@ -17,7 +17,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class YouTubeProvider extends BaseVideoProvider
 {
-
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
@@ -130,8 +129,8 @@ class YouTubeProvider extends BaseVideoProvider
     }
 
     /**
-     *
-     * @see BaseProvider::preSave
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return
      */
     public function prePersist(MediaInterface $media)
     {
@@ -157,8 +156,8 @@ class YouTubeProvider extends BaseVideoProvider
 
     /**
      * @throws \RuntimeException
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
-     * @return mixed|string
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return mixed|null|string
      */
     public function getMetadata(MediaInterface $media)
     {

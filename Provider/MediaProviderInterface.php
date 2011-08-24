@@ -15,7 +15,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 interface MediaProviderInterface
 {
-
     /**
      * @param string $name
      * @param array $format
@@ -43,13 +42,16 @@ interface MediaProviderInterface
     /**
      * generated thumbnails linked to the media, a thumbnail is a format used on the website
      *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     function generateThumbnails(MediaInterface $media);
 
+
     /**
-     *
-     * @return \Gaufrette\File
+     * @abstract
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
      */
     function getReferenceFile(MediaInterface $media);
 
@@ -65,18 +67,30 @@ interface MediaProviderInterface
     /**
      * return the reference image of the media, can be the video thumbnail or the original uploaded picture
      *
-     * @abstract
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string to the reference image
      */
     function getReferenceImage(MediaInterface $media);
 
     /**
      *
-     * @abstract
-     * @param  $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function preUpdate(MediaInterface $media);
+
+    /**
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     function postUpdate(MediaInterface $media);
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function preRemove(MediaInterface $media);
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
@@ -99,9 +113,14 @@ interface MediaProviderInterface
     function buildEditForm(FormMapper $formMapper);
 
     /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function prePersist(MediaInterface $media);
+
+    /**
      *
-     * @abstract
-     * @param  $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     function postPersist(MediaInterface $media);

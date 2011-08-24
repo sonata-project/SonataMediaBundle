@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -33,7 +32,7 @@ class Pool
     /**
      * @throws \RuntimeException
      * @param  $name
-     * @return \Sonata\MediaBundle\Provider\ProviderInterface
+     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
      */
     public function getProvider($name)
     {
@@ -53,22 +52,13 @@ class Pool
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function postUpdate(MediaInterface $media)
+    public function prePersist(MediaInterface $media)
     {
-        $this->getProvider($media->getProviderName())->postUpdate($media);
+        $this->getProvider($media->getProviderName())->prePersist($media);
     }
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function postRemove(MediaInterface $media)
-    {
-        $this->getProvider($media->getProviderName())->postRemove($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Entity\BaseMedia $media
      * @return void
      */
     public function postPersist(MediaInterface $media)
@@ -98,13 +88,22 @@ class Pool
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function prePersist(MediaInterface $media)
+    public function postUpdate(MediaInterface $media)
     {
-        $this->getProvider($media->getProviderName())->prePersist($media);
+        $this->getProvider($media->getProviderName())->postUpdate($media);
     }
 
     /**
-     * @param  $providers
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function postRemove(MediaInterface $media)
+    {
+        $this->getProvider($media->getProviderName())->postRemove($media);
+    }
+
+    /**
+     * @param array $providers
      * @return void
      */
     public function setProviders($providers)
@@ -149,7 +148,7 @@ class Pool
     }
 
     /**
-     * @param  $name
+     * @param string $name
      * @return array|null
      */
     public function getContext($name)
@@ -157,7 +156,6 @@ class Pool
         if (!$this->hasContext($name)) {
             return null;
         }
-
 
         return $this->contexts[$name];
     }
@@ -172,9 +170,10 @@ class Pool
         return $this->contexts;
     }
 
+
     /**
-     *
-     * @return array|null
+     * @param $name
+     * @return array
      */
     public function getProviderNamesByContext($name)
     {
@@ -188,8 +187,8 @@ class Pool
     }
 
     /**
-     *
-     * @return array|null
+     * @param $name
+     * @return array
      */
     public function getFormatNamesByContext($name)
     {

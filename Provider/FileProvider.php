@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileProvider extends BaseProvider
 {
-
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string
@@ -30,6 +29,10 @@ class FileProvider extends BaseProvider
         );
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return \Gaufrette\File
+     */
     public function getReferenceFile(MediaInterface $media)
     {
         return $this->getFilesystem()->get($this->getReferenceImage($media), true);

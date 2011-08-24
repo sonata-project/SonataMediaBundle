@@ -19,6 +19,11 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaAdminController extends Controller
 {
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException|\Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @param $id
+     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     */
     public function viewAction($id)
     {
         if (false === $this->admin->isGranted('VIEW')) {
@@ -41,6 +46,10 @@ class MediaAdminController extends Controller
         ));
     }
 
+    /**
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
+     */
     public function createAction()
     {
         if (false === $this->admin->isGranted('CREATE')) {

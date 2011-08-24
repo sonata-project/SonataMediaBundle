@@ -101,15 +101,10 @@ abstract class BaseVideoProvider extends BaseProvider
         $media->setUpdatedAt(new \Datetime());
     }
 
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
-     */
-    abstract function prePersist(MediaInterface $media);
 
     /**
-     * build the related create form
-     *
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return void
      */
     function buildEditForm(FormMapper $formMapper)
     {
@@ -123,8 +118,8 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * build the related create form
-     *
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return void
      */
     function buildCreateForm(FormMapper $formMapper)
     {

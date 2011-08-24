@@ -37,8 +37,10 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $cdn;
 
     /**
-     * @param string $name
-     * @param array $settings
+     * @param $name
+     * @param \Gaufrette\Filesystem $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
+     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator)
     {
@@ -163,16 +165,26 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->pathGenerator->generatePath($media);
     }
 
+    /**
+     * @return array
+     */
     public function getFormats()
     {
         return $this->formats;
     }
 
+    /**
+     * @param $name
+     * @return void
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
@@ -213,16 +225,26 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->resizer;
     }
 
+    /**
+     * @return \Gaufrette\Filesystem
+     */
     public function getFilesystem()
     {
         return $this->filesystem;
     }
 
+    /**
+     * @return \Sonata\MediaBundle\CDN\CDNInterface
+     */
     public function getCdn()
     {
         return $this->cdn;
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Media\ResizerInterface $resizer
+     * @return void
+     */
     public function setResizer(ResizerInterface $resizer)
     {
         $this->resizer = $resizer;
