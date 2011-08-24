@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\CDN;
 /**
  *
  *  From https://pantherportal.cdnetworks.com/wsdl/flush.wsdl
- * 
+ *
  *  flushRequest:
  *     username, password: credentials of a user that has web service access.
  *     siteId: the numeric id of the site to flush from.
@@ -41,7 +41,7 @@ class PanterPortal implements CDNInterface
     protected $siteId;
 
     protected $cdnSoap;
-  
+
     public function __construct($path, $username, $password, $siteId)
     {
         $this->path     = $path;
@@ -69,7 +69,7 @@ class PanterPortal implements CDNInterface
     /**
      * Flush the ressource
      *
-     * @param string $media
+     * @param string $string
      * @return void
      */
     function flush($string)
@@ -80,7 +80,7 @@ class PanterPortal implements CDNInterface
     /**
      * Flush different set of ressource matching the provided string array
      *
-     * @param string $string
+     * @param array $paths
      * @return void
      */
     function flushPaths(array $paths)

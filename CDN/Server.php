@@ -14,11 +14,19 @@ class Server implements CDNInterface
 {
     protected $path;
 
+    /**
+     * @param $path
+     */
     public function __construct($path)
     {
         $this->path = $path;
     }
 
+    /**
+     * @param $relativePath
+     * @param bool $isFlushable
+     * @return string
+     */
     public function getPath($relativePath, $isFlushable = false)
     {
         return sprintf('%s/%s', $this->path, $relativePath);
@@ -38,7 +46,7 @@ class Server implements CDNInterface
     /**
      * Flush the ressource
      *
-     * @param string $media
+     * @param string $string
      * @return void
      */
     function flush($string)
@@ -49,12 +57,11 @@ class Server implements CDNInterface
     /**
     * Flush a different set of ressource matching the provided string array
     *
-    * @param string $string
+    * @param array $paths
     * @return void
     */
     function flushPaths(array $paths)
     {
         // nothing to do
     }
-
 }

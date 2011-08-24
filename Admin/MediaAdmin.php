@@ -17,20 +17,31 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\MediaBundle\Provider\Pool;
 
 use Knp\Bundle\MenuBundle\MenuItem;
 
 class MediaAdmin extends Admin
 {
-    protected $pool = null;
+    protected $pool;
 
-    public function __construct($code, $class, $baseControllerName, $pool)
+    /**
+     * @param $code
+     * @param $class
+     * @param $baseControllerName
+     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     */
+    public function __construct($code, $class, $baseControllerName, Pool $pool)
     {
         parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
     }
 
+    /**
+     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
+     * @return void
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -40,22 +51,27 @@ class MediaAdmin extends Admin
             ->add('context')
         ;
 
-       $providers = array();
+        $providers = array();
 
         foreach($this->pool->getProviderNamesByContext('default') as $name) {
             $providers[$name] = $name;
         }
 
-        $datagridMapper->add('providerName', 'choice', array(
-            'filter_field_options'=> array(
+        $datagridMapper->add('providerName', 'doctrine_orm_choice', array(
+            'field_options'=> array(
                 'choices' => $providers,
                 'required' => false,
                 'multiple' => true,
-                'expanded' => true
-            )
+                'expanded' => true,
+            ),
+            'field_type'=> 'choice',
         ));
     }
 
+    /**
+     * @param \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
+     * @return void
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -72,6 +88,10 @@ class MediaAdmin extends Admin
         ;
     }
 
+    /**
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $media = $this->getSubject();
@@ -94,19 +114,27 @@ class MediaAdmin extends Admin
     }
 
     /**
-     *
-     * @param DatagridMapper
+     * @param \Sonata\AdminBundle\Show\ShowMapper $filter
+     * @return void
      */
     protected function configureShowField(ShowMapper $filter)
     {
         // TODO: Implement configureShowField() method.
     }
 
+    /**
+     * @param \Sonata\AdminBundle\Route\RouteCollection $collection
+     * @return void
+     */
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('view', $this->getRouterIdParameter().'/view');
     }
 
+    /**
+     * @param $media
+     * @return void
+     */
     public function prePersist($media)
     {
         $parameters = $this->getPersistentParameters();
@@ -154,6 +182,12 @@ class MediaAdmin extends Admin
         return $media;
     }
 
+    /**
+     * @param \Knp\Bundle\MenuBundle\MenuItem $menu
+     * @param $action
+     * @param null|\Sonata\AdminBundle\Admin\Admin $childAdmin
+     * @return
+     */
     protected function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
     {
         if (!in_array($action, array('edit', 'view'))) {
@@ -175,6 +209,9 @@ class MediaAdmin extends Admin
         );
     }
 
+    /**
+     * @return null|\Sonata\MediaBundle\Provider\Pool
+     */
     public function getPool()
     {
         return $this->pool;

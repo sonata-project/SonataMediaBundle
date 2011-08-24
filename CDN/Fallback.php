@@ -28,7 +28,8 @@ class Fallback implements CDNInterface
 
     /**
      * @param string $relativePath
-     * @param boolean $isFlushable
+     * @param bool $isFlushable
+     * @return string
      */
     public function getPath($relativePath, $isFlushable = false)
     {
@@ -53,7 +54,7 @@ class Fallback implements CDNInterface
     /**
      * Flush the ressource
      *
-     * @param string $media
+     * @param string $string
      * @return void
      */
     public function flush($string)
@@ -64,7 +65,7 @@ class Fallback implements CDNInterface
     /**
     * Flush a different set of ressource matching the provided string array
     *
-    * @param string $string
+    * @param array $paths
     * @return void
     */
     public function flushPaths(array $paths)
