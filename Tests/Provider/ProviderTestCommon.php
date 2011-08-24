@@ -11,16 +11,17 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-class Common extends \PHPUnit_Framework_TestCase
+abstract class ProviderTestCommon extends \PHPUnit_Framework_TestCase
 {
-    protected function getProvider()
-    {
-        $filesystem = $this->getFilesystem();
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
-        $provider = $this->getMockForAbstractClass('Sonata\MediaBundle\Provider\BaseProvider', array('test', $filesystem, $cdn, $generator));
+    protected $filesystem;
 
-        return $provider;
+    protected function getFilesystem($dirs = array())
+    {
+        if (!$this->filesystem) {
+            $adapter = new \Gaufrette\Adapter\InMemory($dirs);
+            $this->filesystem = new \Gaufrette\Filesystem($adapter);
+        }
+        return $this->filesystem;
     }
 
     protected function getMedia($id)
@@ -32,9 +33,13 @@ class Common extends \PHPUnit_Framework_TestCase
         return $media;
     }
 
-    protected function getFilesystem($dirs = array('testing'))
+    protected function getProvider()
     {
-        $adapter = new \Gaufrette\Adapter\InMemory($dirs);
-        return new \Gaufrette\Filesystem($adapter);
+        $filesystem = $this->getFilesystem();
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
+        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        $provider = $this->getMockForAbstractClass($this->provider, array('test', $filesystem, $cdn, $generator));
+
+        return $provider;
     }
 }
