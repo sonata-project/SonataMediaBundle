@@ -88,13 +88,15 @@ abstract class BaseProvider implements MediaProviderInterface
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function generateThumbnails(MediaInterface $media)
+    public function generateThumbnails(MediaInterface $media, $referenceFormat = 'reference')
     {
         if (!$this->requireThumbnails()) {
             return;
         }
 
-        $referenceFile = $this->getReferenceFile($media);
+        if (!$referenceFile = $this->getFile($media, $referenceFormat, false)) {
+            throw new Exception(sprintf('The requested format %s has not been created', $referenceFormat));
+        }
 
         foreach ($this->formats as $format => $settings) {
             $this->getResizer()->resize(
@@ -164,11 +166,12 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->pathGenerator->generatePath($media);
     }
 
-    public function generateFileName(MediaInterface $media, $format, $ext='jpg', $prefix=null)
+    public function generateFileName(MediaInterface $media, $format, $prefix=null, $ext=null)
     {
         if ($prefix) {
             $prefix .= '_';
         }
+
         return sprintf('%s%s_%s.%s',
             $prefix,
             $media->getId(),
@@ -177,11 +180,11 @@ abstract class BaseProvider implements MediaProviderInterface
         );
     }
 
-    public function generateFullPath(MediaInterface $media, $format, $ext='jpg', $prefix=null)
+    public function generateFullPath(MediaInterface $media, $format, $prefix=null, $ext=null)
     {
         return sprintf('%s/%s',
             $this->generatePath($media),
-            $this->generateFileName($media, $format, $ext, $prefix)
+            $this->generateFileName($media, $format, $prefix, $ext)
         );
     }
     
