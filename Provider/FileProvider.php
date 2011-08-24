@@ -74,7 +74,7 @@ class FileProvider extends BaseProvider
             return;
         }
 
-        $this->setFileContents($media);
+        $this->setReferenceContent($media);
 
         $this->generateThumbnails($media);
     }
@@ -91,7 +91,7 @@ class FileProvider extends BaseProvider
 
         $this->fixBinaryContent($media);
 
-        $this->setFileContents($media);
+        $this->setReferenceContent($media);
 
         $this->generateThumbnails($media);
     }
@@ -242,7 +242,7 @@ class FileProvider extends BaseProvider
      * @param $contents path to contents, defaults to MediaInterface BinaryContent
      * @return void
      */
-    public function setFileContents(MediaInterface $media, $contents=null)
+    public function setReferenceContent(MediaInterface $media, $contents=null)
     {
         $file = $this->getFilesystem()->get(
             sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),

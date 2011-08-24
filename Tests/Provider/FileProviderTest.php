@@ -160,14 +160,14 @@ class FileProviderTest extends ProviderTestCommon
         $provider->postRemove($media);
     }
 
-    public function testSetFileContents()
+    public function testSetReferenceContent()
     {
         $provider = $this->getProvider();
 
         $media = $this->getMedia(853);
         $media->setProviderReference(853);
 
-        $provider->setFileContents($media, realpath(__DIR__.'/../fixtures/file.txt'));
+        $provider->setReferenceContent($media, realpath(__DIR__.'/../fixtures/file.txt'));
         $this->assertEquals('Hello file text!', $provider->getReferenceFile($media)->getContent());
     }
 }
