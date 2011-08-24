@@ -11,12 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Sonata\MediaBundle\Tests\Provider\ProviderTestCommon;
 use Sonata\MediaBundle\Tests\Entity\Media;
 
-class FileProviderTest extends \PHPUnit_Framework_TestCase
+class FileProviderTest extends ProviderTestCommon
 {
+    protected $provider = 'Sonata\MediaBundle\Provider\FileProvider';
 
-    public function getProvider()
+    public function getMockProvider()
     {
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
         $resizer->expects($this->any())
@@ -44,7 +46,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testProvider()
     {
-        $provider = $this->getProvider();
+        $provider = $this->getMockProvider();
 
         $media = new Media;
         $media->setName('test.txt');
@@ -59,9 +61,9 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/uploads/media/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
     }
 
-    public function testHelperProperies()
+    public function testHelperProperties()
     {
-        $provider = $this->getProvider();
+        $provider = $this->getMockProvider();
 
         $provider->addFormat('admin', array('width' => 100));
         $media = new Media;
@@ -78,7 +80,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testFixBinaryContent()
     {
-        $provider = $this->getProvider();
+        $provider = $this->getMockProvider();
 
         $file = __DIR__.'/../fixtures/file.txt';
 
@@ -94,7 +96,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('\Sonata\AdminBundle\Form\FormMapper')) {
             $this->markTestSkipped("AdminBundle doesn't seem to be installed");
         }
-        $provider = $this->getProvider();
+        $provider = $this->getMockProvider();
 
         $formMapper     = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add'), array(), '', false);
         $formMapper->expects($this->exactly(8))
@@ -107,7 +109,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnail()
     {
-        $provider = $this->getProvider();
+        $provider = $this->getMockProvider();
 
         $media = new Media;
         $media->setName('test.png');
@@ -118,7 +120,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testEvent()
     {
-        $provider = $this->getProvider();
+        $provider = $this->getMockProvider();
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
@@ -160,19 +162,12 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testSetFileContents()
     {
-        $adapter = new \Gaufrette\Adapter\InMemory(array('testDir'));
-        $filesystem = new \Gaufrette\Filesystem($adapter);
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $filesystem, $cdn, $generator);
+        $provider = $this->getProvider();
 
-        $media = new Media;
-        $media->setId(853);
+        $media = $this->getMedia(853);
         $media->setProviderReference(853);
 
         $provider->setFileContents($media, realpath(__DIR__.'/../fixtures/file.txt'));
         $this->assertEquals('Hello file text!', $provider->getReferenceFile($media)->getContent());
-
-
     }
 }
