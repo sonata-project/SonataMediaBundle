@@ -199,12 +199,12 @@ class MediaAdmin extends Admin
         $id = $this->getRequest()->get('id');
 
         $menu->addChild(
-            $this->trans('sidemenu.link_edit_media', array(), 'SonataAdminBundle'),
+            $this->trans('sidemenu.link_edit_media'),
             $admin->generateUrl('edit', array('id' => $id))
         );
 
         $menu->addChild(
-            $this->trans('sidemenu.link_media_view', array(), 'SonataAdminBundle'),
+            $this->trans('sidemenu.link_media_view'),
             $admin->generateUrl('view', array('id' => $id))
         );
     }
