@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Média</target>
+            </trans-unit>
+
+            <trans-unit id="sidemenu.link_edit_media">
+                <source>sidemenu.link_edit_media</source>
+                <target>Edition</target>
+            </trans-unit>
+            <trans-unit id="sidemenu.link_media_view">
+                <source>sidemenu.link_media_view</source>
+                <target>Visualisé</target>
+            </trans-unit>
+
+            <trans-unit id="breadcrumb.link_media_list">
+                <source>breadcrumb.link_media_list</source>
+                <target>Médias</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_edit">
+                <source>breadcrumb.link_media_edit</source>
+                <target>Edition</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_view">
+                <source>breadcrumb.link_media_view</source>
+                <target>Visualisé</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_list">
+                <source>breadcrumb.link_gallery_list</source>
+                <target>Galeries</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_edit">
+                <source>breadcrumb.link_gallery_edit</source>
+                <target>Edition</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
