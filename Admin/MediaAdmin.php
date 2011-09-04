@@ -19,7 +19,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Provider\Pool;
 
-use Knp\Menu\MenuItem;
+use knp\Menu\ItemInterface as MenuItemInterface;
 
 class MediaAdmin extends Admin
 {
@@ -183,12 +183,12 @@ class MediaAdmin extends Admin
     }
 
     /**
-     * @param \Knp\Menu\MenuItem $menu
+     * @param \Knp\Menu\ItemInterface $menu
      * @param $action
      * @param null|\Sonata\AdminBundle\Admin\Admin $childAdmin
      * @return
      */
-    protected function configureSideMenu(MenuItem $menu, $action, Admin $childAdmin = null)
+    protected function configureSideMenu(MenuItemInterface $menu, $action, Admin $childAdmin = null)
     {
         if (!in_array($action, array('edit', 'view'))) {
             return;
