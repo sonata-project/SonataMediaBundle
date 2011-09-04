@@ -19,7 +19,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Provider\Pool;
 
-use knp\Menu\ItemInterface as MenuItemInterface;
+use Knp\Menu\ItemInterface as MenuItemInterface;
 
 class MediaAdmin extends Admin
 {
