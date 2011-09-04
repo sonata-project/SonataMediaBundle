@@ -19,7 +19,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Provider\Pool;
 
-use Knp\Bundle\MenuBundle\MenuItem;
+use Knp\Menu\MenuItem;
 
 class MediaAdmin extends Admin
 {
@@ -183,7 +183,7 @@ class MediaAdmin extends Admin
     }
 
     /**
-     * @param \Knp\Bundle\MenuBundle\MenuItem $menu
+     * @param \Knp\Menu\MenuItem $menu
      * @param $action
      * @param null|\Sonata\AdminBundle\Admin\Admin $childAdmin
      * @return
@@ -200,12 +200,12 @@ class MediaAdmin extends Admin
 
         $menu->addChild(
             $this->trans('sidemenu.link_edit_media'),
-            $admin->generateUrl('edit', array('id' => $id))
+            array('uri' => $admin->generateUrl('edit', array('id' => $id)))
         );
 
         $menu->addChild(
             $this->trans('sidemenu.link_media_view'),
-            $admin->generateUrl('view', array('id' => $id))
+            array('uri' => $admin->generateUrl('view', array('id' => $id)))
         );
     }
 
