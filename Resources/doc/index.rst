@@ -22,7 +22,8 @@ As the infrastructure is not standard, the ``MediaBundle`` abstracts the
 Available services
 ------------------
 
-### Providers
+
+ - Providers
 
     - sonata.media.provider.image         : Image
     - sonata.media.provider.file          : File
@@ -30,14 +31,14 @@ Available services
     - sonata.media.provider.vimeo         : Vimeo
     - sonata.media.provider.youtube       : Youtube
 
-### Filesystem
+ -  Filesystem
 
     - sonata.media.filesystem.local       : The local filesystem (default)
     - sonata.media.filesystem.ftp         : FTP
     - sonata.media.filesystem.s3          : Amazon S3
     - sonata.media.filesystem.replicate   : Replicate file to a master and to a slave
 
-### CDN
+ - CDN
 
     - sonata.media.cdn.server             : The local http server (default)
     - sonata.media.cdn.panther            : Panther Portal

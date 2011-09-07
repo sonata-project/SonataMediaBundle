@@ -10,11 +10,11 @@ using git, you can add them as submodules::
   git submodule add git://github.com/sonata-project/SonataAdminBundle.git vendor/bundles/Sonata/AdminBundle
   git submodule add git://github.com/sonata-project/SonataEasyExtendsBundle.git vendor/bundles/Sonata/EasyExtendsBundle
 
-Add the ``imagine`` image processing library
+Add the ``imagine`` image processing library::
 
   git submodule add git://github.com/avalanche123/Imagine.git vendor/imagine
 
-Add the ``gaufrette`` file abstraction library
+Add the ``gaufrette`` file abstraction library::
 
   git submodule add git://github.com/knplabs/Gaufrette.git vendor/gaufrette
 
@@ -22,6 +22,7 @@ Next, be sure to enable the bundles in your application kernel:
 
 .. code-block:: php
 
+  <?php
   // app/appkernel.php
   public function registerbundles()
   {
@@ -51,6 +52,7 @@ Now, add the new `Application` Bundle into the kernel
 
 .. code-block:: php
 
+  <?php
   public function registerbundles()
   {
       return array(
@@ -68,14 +70,15 @@ Update the ``autoload.php`` to add a new namespace:
 
 .. code-block:: php
 
-    $loader->registerNamespaces(array(
-        'Sonata'                             => __DIR__,
-        'Application'                        => __DIR__,
-        'Imagine'                            => __DIR__.'/vendor/imagine/lib',
-        'Gaufrette'                          => __DIR__.'/vendor/gaufrette/src',
+  <?php
+  $loader->registerNamespaces(array(
+    'Sonata'        => __DIR__,
+    'Application'   => __DIR__,
+    'Imagine'       => __DIR__.'/vendor/imagine/lib',
+    'Gaufrette'     => __DIR__.'/vendor/gaufrette/src',
 
-        // ... other declarations
-    ));
+    // ... other declarations
+  ));
 
 Then add these bundles in the config mapping definition:
 

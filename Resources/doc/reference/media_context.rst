@@ -55,9 +55,10 @@ parameter will be used by the related controller.
 
 .. code-block:: php
 
+    <?php
     public function configureFormFields(FormMapper $form)
     {
-        // ... 
+        // ...
         $form->add('image', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'news')));
         // ...
     }
@@ -73,6 +74,7 @@ the Admin behaviors:
 
 .. code-block:: php
 
+    <?php
     public function getPersistentParameters()
     {
         if (!$this->getRequest()) {

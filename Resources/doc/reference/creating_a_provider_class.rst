@@ -51,7 +51,7 @@ Take this video, for example:
 * video identifier format : 21216091
 * video player documentation : http://vimeo.com/api/docs/moogaloop
 * metadata : http://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
- 
+
    {
      "type":"video",
      "version":"1.0",
@@ -81,6 +81,7 @@ Let's initialize the ``VimeoProvider`` class.
 
 .. code-block:: php
 
+    <?php
     namespace Sonata\MediaBundle\Provider;
 
     use Sonata\MediaBundle\Provider\BaseProvider;
@@ -107,12 +108,13 @@ delegates this definition to the related provider.
 
 .. code-block:: php
 
-    function buildCreateForm(FormMapper $formMapper)
+    <?php
+    public function buildCreateForm(FormMapper $formMapper)
     {
         $formMapper->add('binaryContent', array(), array('type' => 'string'));
     }
 
-    function buildEditForm(FormMapper $formMapper)
+    public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name');
         $formMapper->add('enabled');
@@ -128,6 +130,7 @@ is going to be used to store ``Media`` information :
 
 .. code-block:: php
 
+    <?php
     public function getMetadata(Media $media)
     {
         if (!$media->getBinaryContent()) {
@@ -162,6 +165,7 @@ The ``MediaAdmin`` delegates this management to the media provider.
 
 .. code-block:: php
 
+    <?php
     public function prePersist(Media $media)
     {
         if (!$media->getBinaryContent()) {
@@ -195,6 +199,7 @@ The update method should only update data that cannot be managed by the user.
 
 .. code-block:: php
 
+    <?php
     public function preUpdate(Media $media)
     {
         if (!$media->getBinaryContent()) {
@@ -222,6 +227,7 @@ thumbnails.
 
 .. code-block:: php
 
+    <?php
     public function postUpdate(Media $media)
     {
         $this->postPersist($media);
@@ -244,6 +250,7 @@ image.
 
 .. code-block:: php
 
+    <?php
     public function getReferenceImage(Media $media)
     {
         return $media->getMetadataValue('thumbnail_url');
@@ -304,6 +311,7 @@ of options that need to be passed to the ``view_vimeo.html.twig`` template file.
 
 .. code-block:: php
 
+    <?php
     public function getHelperProperties(Media $media, $format, $options = array())
     {
         // documentation : http://vimeo.com/api/docs/moogaloop
