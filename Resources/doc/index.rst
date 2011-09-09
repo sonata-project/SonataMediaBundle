@@ -22,7 +22,6 @@ As the infrastructure is not standard, the ``MediaBundle`` abstracts the
 Available services
 ------------------
 
-
  - Providers
 
     - sonata.media.provider.image         : Image

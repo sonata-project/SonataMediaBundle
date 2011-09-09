@@ -72,4 +72,25 @@ class ImageProvider extends FileProvider
             $format
         );
     }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function preRemove(MediaInterface $media)
+    {
+        $path = $this->getReferenceImage($media);
+
+        if ($this->getFilesystem()->has($path)) {
+            $this->getFilesystem()->delete($path);
+        }
+
+        // delete the differents formats
+        foreach ($this->formats as $format => $definition) {
+            $path = $this->generatePrivateUrl($media, $format);
+            if ($this->getFilesystem()->has($path)) {
+                $this->getFilesystem()->delete($path);
+            }
+        }
+    }
 }

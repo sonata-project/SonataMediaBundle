@@ -27,6 +27,15 @@
             <argument>%sonata.media.admin.media.entity%</argument>
             <argument>%sonata.media.admin.media.controller%</argument>
             <argument type="service" id="sonata.media.pool" />
+
+            <call method="setModelManager">
+                <argument type="service" id="sonata.media.admin.media.manager" />
+            </call>
+        </service>
+
+        <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineModelManager">
+            <argument type="service" id="doctrine.odm.default_entity_manager" />
+            <argument type="service" id="sonata.media.manager.media" />
         </service>
 
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">

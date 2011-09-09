@@ -17,11 +17,17 @@ abstract class MediaManager implements MediaManagerInterface
 {
     protected $pool;
 
-    public function __construct(Pool $pool)
-    {
-        $this->pool = $pool;
-    }
+    protected $class;
 
+    /**
+     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param $class
+     */
+    public function __construct(Pool $pool, $class)
+    {
+        $this->pool  = $pool;
+        $this->class = $class;
+    }
     /**
      * Creates an empty media instance
      *
@@ -42,5 +48,35 @@ abstract class MediaManager implements MediaManagerInterface
     public function getPool()
     {
         return $this->pool;
+    }
+
+    /**
+     * Finds one media by the given criteria
+     *
+     * @param array $criteria
+     * @return Media
+     */
+    public function findOneBy(array $criteria)
+    {
+        return $this->getRepository()->findOneBy($criteria);
+    }
+
+    /**
+     * Finds one media by the given criteria
+     *
+     * @param array $criteria
+     * @return Media
+     */
+    public function findBy(array $criteria)
+    {
+        return $this->getRepository()->findBy($criteria);
+    }
+
+    /**
+     * @return void
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 }

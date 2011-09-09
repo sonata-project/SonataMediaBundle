@@ -18,7 +18,6 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 
-
 abstract class BaseProvider implements MediaProviderInterface
 {
     /**
@@ -137,7 +136,7 @@ abstract class BaseProvider implements MediaProviderInterface
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function postRemove(MediaInterface $media)
+    public function preRemove(MediaInterface $media)
     {
         $path = $this->getReferenceImage($media);
 

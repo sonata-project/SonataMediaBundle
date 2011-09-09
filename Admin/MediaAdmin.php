@@ -139,23 +139,6 @@ class MediaAdmin extends Admin
     {
         $parameters = $this->getPersistentParameters();
         $media->setContext($parameters['context']);
-
-        $this->pool->prePersist($media);
-    }
-
-    public function postPersist($media)
-    {
-        $this->pool->postPersist($media);
-    }
-
-    public function preUpdate($media)
-    {
-        $this->pool->preUpdate($media);
-    }
-
-    public function postUpdate($media)
-    {
-        $this->pool->postUpdate($media);
     }
 
     public function getPersistentParameters()

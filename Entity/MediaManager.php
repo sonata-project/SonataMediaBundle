@@ -22,12 +22,16 @@ class MediaManager extends AbstractMediaManager
     protected $repository;
     protected $class;
 
+    /**
+     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param \Doctrine\ORM\EntityManager $em
+     * @param $class
+     */
     public function __construct(Pool $pool, EntityManager $em, $class)
     {
         $this->em    = $em;
-        $this->class = $class;
 
-        parent::__construct($pool);
+        parent::__construct($pool, $class);
     }
 
     protected function getRepository()
@@ -42,56 +46,56 @@ class MediaManager extends AbstractMediaManager
     /**
      * Updates a media
      *
-     * @param Media $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string $context
+     * @param string $providerName
      * @return void
      */
-    public function update(MediaInterface $media)
+    public function save(MediaInterface $media, $context = null, $providerName = null)
     {
+        if ($context) {
+            $media->setContext($context);
+        }
+
+        if ($providerName) {
+            $media->setProviderName($providerName);
+        }
+
+        $isNew = $media->getId() === null;
+
+        if ($isNew) {
+            $this->pool->getProvider($media->getProviderName())->prePersist($media);
+        } else {
+            $this->pool->getProvider($media->getProviderName())->preUpdate($media);
+        }
+
+        $this->em->persist($media);
+        $this->em->flush();
+
+        if ($isNew) {
+            $this->pool->getProvider($media->getProviderName())->postPersist($media);
+        } else {
+            $this->pool->getProvider($media->getProviderName())->postUpdate($media);
+        }
+
+        // just in case the pool alter the media
         $this->em->persist($media);
         $this->em->flush();
     }
 
     /**
-     * Returns the media's fully qualified class name
-     *
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Finds one media by the given criteria
-     *
-     * @param array $criteria
-     * @return Media
-     */
-    public function findOneBy(array $criteria)
-    {
-        return $this->getRepository()->findOneBy($criteria);
-    }
-
-    /**
-     * Finds one media by the given criteria
-     *
-     * @param array $criteria
-     * @return Media
-     */
-    public function findBy(array $criteria)
-    {
-        return $this->getRepository()->findBy($criteria);
-    }
-
-    /**
      * Deletes a media
      *
-     * @param Media $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     public function delete(MediaInterface $media)
     {
+        $this->pool->getProvider($media->getProviderName())->preRemove($media);
         $this->em->remove($media);
+        $this->em->flush();
+
+        $this->pool->getProvider($media->getProviderName())->postRemove($media);
         $this->em->flush();
     }
 }

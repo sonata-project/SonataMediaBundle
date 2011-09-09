@@ -130,15 +130,11 @@ class FileProvider extends BaseProvider
             $media->setName($media->getBinaryContent()->getClientOriginalName());
         } else if ($media->getBinaryContent() instanceof File) {
             $media->setName($media->getBinaryContent()->getBasename());
-        } else {
-            $mediaName = false;
         }
 
         // this is the original name
-        if (!$media->getName() && !$mediaName) {
+        if (!$media->getName()) {
             throw new \RuntimeException('Please define a valid media\'s name');
-        } else if (!$media->getName()) {
-            $media->setName($mediaName);
         }
     }
 
@@ -236,7 +232,7 @@ class FileProvider extends BaseProvider
      */
     public function preRemove(MediaInterface $media)
     {
-
+        // never delete icon image
     }
 
     /**
@@ -256,5 +252,10 @@ class FileProvider extends BaseProvider
             $contents = $media->getBinaryContent()->getRealPath();
         }
         $file->setContent(file_get_contents($contents));
+    }
+
+    public function postRemove(MediaInterface $media)
+    {
+       // never delete icon image
     }
 }

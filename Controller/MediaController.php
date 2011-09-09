@@ -16,10 +16,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MediaController extends Controller
 {
-
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @param $id
+     * @param string $format
+     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     */
     public function viewAction($id, $format = 'reference')
     {
-
         $media = $this->get('sonata.media.manager.media')->findMediaBy(array('id' => $id));
 
         if (!$media) {

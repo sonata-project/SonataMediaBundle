@@ -54,10 +54,10 @@ interface MediaManagerInterface
     function getClass();
 
     /**
-     * Updates a media
+     * Save a media
      *
      * @param Media $media
      * @return void
      */
-    function update(MediaInterface $media);
+    function save(MediaInterface $media);
 }

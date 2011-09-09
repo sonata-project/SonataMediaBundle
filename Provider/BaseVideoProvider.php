@@ -22,7 +22,7 @@ abstract class BaseVideoProvider extends BaseProvider
 {
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * @return string
      */
     public function getReferenceImage(MediaInterface $media)
     {
@@ -152,8 +152,7 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function preRemove(MediaInterface $media)
+    public function postRemove(MediaInterface $media)
     {
-
     }
 }

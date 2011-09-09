@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 /**
  *
@@ -43,63 +44,14 @@ class Pool
         return $this->providers[$name];
     }
 
-    public function addProvider($name, $instance)
+    /**
+     * @param $name
+     * @param MediaProviderInterface $instance
+     * @return void
+     */
+    public function addProvider($name, MediaProviderInterface $instance)
     {
         $this->providers[$name] = $instance;
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function prePersist(MediaInterface $media)
-    {
-        $this->getProvider($media->getProviderName())->prePersist($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function postPersist(MediaInterface $media)
-    {
-        $this->getProvider($media->getProviderName())->postPersist($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function preUpdate(MediaInterface $media)
-    {
-        $this->getProvider($media->getProviderName())->preUpdate($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function preRemove(MediaInterface $media)
-    {
-        $this->getProvider($media->getProviderName())->preRemove($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function postUpdate(MediaInterface $media)
-    {
-        $this->getProvider($media->getProviderName())->postUpdate($media);
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function postRemove(MediaInterface $media)
-    {
-        $this->getProvider($media->getProviderName())->postRemove($media);
     }
 
     /**
@@ -112,7 +64,7 @@ class Pool
     }
 
     /**
-     * @return array
+     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface[]
      */
     public function getProviders()
     {

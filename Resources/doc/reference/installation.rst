@@ -10,11 +10,11 @@ using git, you can add them as submodules::
   git submodule add git://github.com/sonata-project/SonataAdminBundle.git vendor/bundles/Sonata/AdminBundle
   git submodule add git://github.com/sonata-project/SonataEasyExtendsBundle.git vendor/bundles/Sonata/EasyExtendsBundle
 
-Add the ``imagine`` image processing library::
+Add the ``Imagine`` image processing library::
 
   git submodule add git://github.com/avalanche123/Imagine.git vendor/imagine
 
-Add the ``gaufrette`` file abstraction library::
+Add the ``Gaufrette`` file abstraction library::
 
   git submodule add git://github.com/knplabs/Gaufrette.git vendor/gaufrette
 
