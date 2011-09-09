@@ -168,4 +168,33 @@ class TestProvider extends BaseProvider
       // TODO: Implement getReferenceFile() method.
     }
 
+    /**
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function preUpdate(MediaInterface $media)
+    {
+        // TODO: Implement preUpdate() method.
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function postRemove(MediaInterface $media)
+    {
+        // TODO: Implement postRemove() method.
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function prePersist(MediaInterface $media)
+    {
+        // TODO: Implement prePersist() method.
+    }
+
+
 }
