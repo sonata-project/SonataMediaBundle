@@ -16,6 +16,11 @@ abstract class Gallery implements GalleryInterface
     /**
      * @var string $name
      */
+    protected $context;
+
+    /**
+     * @var string $name
+     */
     protected $name;
 
     /**
@@ -167,5 +172,21 @@ abstract class Gallery implements GalleryInterface
     public function __toString()
     {
         return $this->getName() ?: '-';
+    }
+
+    /**
+     * @param string $context
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 }

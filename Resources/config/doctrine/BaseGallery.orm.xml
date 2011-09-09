@@ -3,6 +3,7 @@
     <mapped-superclass name="Sonata\MediaBundle\Entity\BaseGallery">
 
         <field name="name"       type="string"   column="name"  length="255"/>
+        <field name="context"    type="string"   column="context"  length="255"/>
         <field name="defaultFormat"       type="string"   column="default_format"  length="255"/>
         <field name="code"       type="string"   column="code"  length="255"/>
         <field name="enabled"    type="boolean"  column="enabled"    />
@@ -14,6 +15,6 @@
             <lifecycle-callback type="prePersist" method="prePersist"/>
             <lifecycle-callback type="preUpdate" method="preUpdate"/>
         </lifecycle-callbacks>
-        
+
     </mapped-superclass>
 </doctrine-mapping>

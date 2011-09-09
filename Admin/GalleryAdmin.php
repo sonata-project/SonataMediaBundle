@@ -18,14 +18,21 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class GalleryAdmin extends Admin
 {
+    /**
+     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @return void
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->add('code')
-            ->add('enabled')
+            ->add('context')
+            ->add('enabled', null, array('required' => false))
             ->add('name')
             ->add('defaultFormat')
-            ->add('galleryHasMedias', 'sonata_type_collection', array(), array(
+            ->add('galleryHasMedias', 'sonata_type_collection', array(
+                'by_reference' => false
+            ), array(
                 'edit' => 'inline',
                 'inline' => 'table',
                 'sortable'  => 'position'
@@ -33,32 +40,70 @@ class GalleryAdmin extends Admin
         ;
     }
 
+    /**
+     * @param \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
+     * @return void
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->add('enabled')
             ->addIdentifier('name')
+            ->add('context')
             ->add('defaultFormat')
         ;
     }
 
+    /**
+     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
+     * @return void
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
             ->add('name')
             ->add('enabled')
+            ->add('context')
         ;
     }
 
-    public function preUpdate($object)
+    /**
+     * @param $media
+     * @return void
+     */
+    public function prePersist($gallery)
     {
-        // fix weird bug with setter object not being call
-        $object->setGalleryHasMedias($object->getGalleryHasMedias());
+        $parameters = $this->getPersistentParameters();
+
+        $gallery->setContext($parameters['context']);
     }
 
-    public function prePersist($object)
+    /**
+     * @return array
+     */
+    public function getPersistentParameters()
     {
-        // fix weird bug with setter object not being call
-        $object->setGalleryHasMedias($object->getGalleryHasMedias());
+        if (!$this->hasRequest()) {
+            return array();
+        }
+
+        return array(
+            'context'  => $this->getRequest()->get('context', 'default'),
+        );
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNewInstance()
+    {
+        $gallery = parent::getNewInstance();
+
+        if ($this->hasRequest()) {
+            $gallery->setContext($this->getRequest()->get('context'));
+        }
+
+        return $gallery;
+    }
+
 }

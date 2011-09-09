@@ -7,6 +7,7 @@
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseGallery">
 
         <field name="name"          fieldName="name"            type="string"/>
+        <field name="context"       fieldName="context"         type="string"/>
         <field name="defaultFormat" fieldName="defaultFormat"   type="string" />
         <field name="code"          fieldName="code"            type="string" />
         <field name="enabled"       fieldName="enabled"         type="boolean" />
@@ -18,6 +19,6 @@
             <lifecycle-callback type="prePersist" method="prePersist"/>
             <lifecycle-callback type="preUpdate" method="preUpdate"/>
         </lifecycle-callbacks>
-        
+
     </mapped-superclass>
 </doctrine-mongo-mapping>
