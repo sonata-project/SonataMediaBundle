@@ -74,8 +74,8 @@ Update the ``autoload.php`` to add a new namespace:
   $loader->registerNamespaces(array(
     'Sonata'        => __DIR__,
     'Application'   => __DIR__,
-    'Imagine'       => __DIR__.'/vendor/imagine/lib',
-    'Gaufrette'     => __DIR__.'/vendor/gaufrette/src',
+    'Imagine'       => __DIR__.'/../vendor/imagine/lib',
+    'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
 
     // ... other declarations
   ));
