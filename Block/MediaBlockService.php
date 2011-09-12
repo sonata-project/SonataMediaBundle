@@ -10,7 +10,6 @@
 
 namespace Sonata\MediaBundle\Block;
 
-
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
@@ -26,6 +25,7 @@ use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Form;
 use \Symfony\Component\DependencyInjection\ContainerInterface;
+use Sonata\PageBundle\CmsManager\CmsManagerInterface;
 
 /**
  * PageExtension
@@ -75,7 +75,7 @@ class MediaBlockService extends BaseBlockService
         );
     }
 
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(CmsManagerInterface $manager, FormMapper $formMapper, BlockInterface $block)
     {
         $contextChoices = array();
 
@@ -86,6 +86,7 @@ class MediaBlockService extends BaseBlockService
         $media = $block->getSetting('mediaId');
 
         $formatChoices = array();
+
         if ($media instanceof MediaInterface) {
 
             $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
@@ -118,12 +119,12 @@ class MediaBlockService extends BaseBlockService
         ));
     }
 
-    function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    public function validateBlock(CmsManagerInterface $manager, ErrorElement $errorElement, BlockInterface $block)
     {
 
     }
 
-    public function execute(BlockInterface $block, PageInterface $page, Response $response = null)
+    public function execute(CmsManagerInterface $manager, BlockInterface $block, PageInterface $page, Response $response = null)
     {
         // merge settings
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
@@ -137,7 +138,7 @@ class MediaBlockService extends BaseBlockService
         ), $response);
     }
 
-    public function load(BlockInterface $block)
+    public function load(CmsManagerInterface $manager, BlockInterface $block)
     {
         $media = $block->getSetting('mediaId', null);
 
@@ -157,6 +158,4 @@ class MediaBlockService extends BaseBlockService
     {
         $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
-
-
 }
