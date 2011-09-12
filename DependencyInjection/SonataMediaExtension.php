@@ -28,7 +28,6 @@ use Symfony\Component\Finder\Finder;
  */
 class SonataMediaExtension extends Extension
 {
-
     /**
      * Loads the url shortener configuration.
      *
@@ -105,6 +104,7 @@ class SonataMediaExtension extends Extension
             $definition->replaceArgument(1, new Reference($configuration['fallback']));
         }
     }
+
     /**
      * Inject filesystem dependency to default provider
      *
@@ -164,19 +164,16 @@ class SonataMediaExtension extends Extension
      */
     public function getXsdValidationBasePath()
     {
-
         return __DIR__.'/../Resources/config/schema';
     }
 
     public function getNamespace()
     {
-
         return 'http://www.sonata-project.org/schema/dic/media';
     }
 
     public function getAlias()
     {
-
         return "sonata_media";
     }
 }

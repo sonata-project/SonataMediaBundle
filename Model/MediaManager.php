@@ -28,6 +28,7 @@ abstract class MediaManager implements MediaManagerInterface
         $this->pool  = $pool;
         $this->class = $class;
     }
+
     /**
      * Creates an empty media instance
      *
@@ -73,7 +74,7 @@ abstract class MediaManager implements MediaManagerInterface
     }
 
     /**
-     * @return void
+     * @return string
      */
     public function getClass()
     {
