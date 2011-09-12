@@ -59,7 +59,7 @@ parameter will be used by the related controller.
     public function configureFormFields(FormMapper $form)
     {
         // ...
-        $form->add('image', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'news')));
+        $form->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'news')));
         // ...
     }
 
