@@ -14,12 +14,14 @@ use Gaufrette\Adapter as AdapterInterface;
 
 class Replicate implements AdapterInterface
 {
-
     protected $master;
 
     protected $slave;
 
-
+    /**
+     * @param \Gaufrette\Adapter $master
+     * @param \Gaufrette\Adapter $slave
+     */
     public function __construct(AdapterInterface $master, AdapterInterface $slave)
     {
         $this->master = $master;
@@ -38,7 +40,7 @@ class Replicate implements AdapterInterface
         return $this->master->checksum($key);
     }
 
-  /**
+    /**
      * Deletes the file
      *
      * @param  string $key
@@ -47,11 +49,8 @@ class Replicate implements AdapterInterface
      */
     public function delete($key)
     {
-        if($this->slave->delete($key)) {
-            return $this->master->delete($key);
-        }
-
-        return false;
+        $this->slave->delete($key);
+        $this->master->delete($key);
     }
 
     /**
@@ -69,13 +68,11 @@ class Replicate implements AdapterInterface
     /**
      * Returns an array of all keys matching the specified pattern
      *
-     * @param  string $pattern
-     *
      * @return array
      */
-    public function keys($pattern)
+    public function keys()
     {
-        return $this->master->keys($pattern);
+        return $this->master->keys();
     }
 
     /**
@@ -101,11 +98,10 @@ class Replicate implements AdapterInterface
      */
     public function write($key, $content)
     {
-        if($this->master->write($key, $content)) {
-            return $this->slave->write($key, $content);
-        }
+        $return = $this->master->write($key, $content);
+        $this->slave->write($key, $content);
 
-        return false;
+        return $return;
     }
 
     /**
@@ -118,5 +114,19 @@ class Replicate implements AdapterInterface
     public function read($key)
     {
         return $this->master->read($key);
+    }
+
+    /**
+     * Renames a file
+     *
+     * @param string $key
+     * @param string $new
+     *
+     * @throws RuntimeException on failure
+     */
+    function rename($key, $new)
+    {
+        $this->master->rename($key, $new);
+        $this->slave->rename($key, $new);
     }
 }
