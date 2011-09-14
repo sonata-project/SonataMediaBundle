@@ -28,10 +28,8 @@ namespace Sonata\MediaBundle\CDN;
  *    Please note that an error with response "Over the limit of flush requests per hour" means that the flush is rate limited.
  *    Any requests until the rate limit is no longer exceeded will receive this response.
  */
-class PanterPortal implements CDNInterface
+class PantherPortal implements CDNInterface
 {
-    const WSDL_URL = "https://pantherportal.cdnetworks.com/wsdl/flush.wsdl";
-
     protected $path;
 
     protected $username;
@@ -40,16 +38,31 @@ class PanterPortal implements CDNInterface
 
     protected $siteId;
 
-    protected $cdnSoap;
+    protected $client;
 
-    public function __construct($path, $username, $password, $siteId)
+    protected $wsdl;
+
+    /**
+     * @param $path
+     * @param $username
+     * @param $password
+     * @param $siteId
+     * @param string $wsdl
+     */
+    public function __construct($path, $username, $password, $siteId, $wsdl = "https://pantherportal.cdnetworks.com/wsdl/flush.wsdl")
     {
         $this->path     = $path;
         $this->username = $username;
         $this->password = $password;
         $this->siteId   = $siteId;
+        $this->wsdl     = $wsdl;
     }
 
+    /**
+     * @param $relativePath
+     * @param bool $isFlushable
+     * @return string
+     */
     public function getPath($relativePath, $isFlushable = false)
     {
         return sprintf('%s/%s', $this->path, $relativePath);
@@ -61,7 +74,7 @@ class PanterPortal implements CDNInterface
      * @param string $string
      * @return void
      */
-    function flushByString($string)
+    public function flushByString($string)
     {
         $this->flushPaths(array($string));
     }
@@ -72,7 +85,7 @@ class PanterPortal implements CDNInterface
      * @param string $string
      * @return void
      */
-    function flush($string)
+    public function flush($string)
     {
         $this->flushPaths(array($string));
     }
@@ -83,12 +96,11 @@ class PanterPortal implements CDNInterface
      * @param array $paths
      * @return void
      */
-    function flushPaths(array $paths)
+    public function flushPaths(array $paths)
     {
-        $result = $this->getClient()->flush($this->login, $this->pass, "paths", $this->siteId, implode("\n",  $paths), true, false);
+        $result = $this->getClient()->flush($this->username, $this->password, "paths", $this->siteId, implode("\n",  $paths), true, false);
 
-        if ($result != "Flush successfully submitted.")
-        {
+        if ($result != "Flush successfully submitted.") {
             throw new \RuntimeException('Unable to flush : '. $result);
         }
     }
@@ -100,10 +112,19 @@ class PanterPortal implements CDNInterface
      */
     public function getClient()
     {
-        if (!$this->cdnSoap) {
-            $this->cdnSoap = new \SoapClient(self::WSDL_URL);
+        if (!$this->client) {
+            $this->client = new \SoapClient($this->wsdl);
         }
 
-        return $this->cdnSoap;
+        return $this->client;
+    }
+
+    /**
+     * @param \SoapClient $client
+     * @return void
+     */
+    public function setClient(\SoapClient $client)
+    {
+        $this->client = $client;
     }
 }
