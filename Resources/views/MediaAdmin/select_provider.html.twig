@@ -17,6 +17,8 @@ file that was distributed with this source code.
     <ul>
         {% for code, provider in providers %}
             <li><a href="{{ admin.generateUrl('create', {'provider': provider.name}) }}">{{ provider.name }}</a></li>
+        {% else %}
+            <li>{% trans from 'MediaBundle' %}no_provider_available{% endtrans %}</li>
         {% endfor %}
     </ul>
 {% endblock %}
