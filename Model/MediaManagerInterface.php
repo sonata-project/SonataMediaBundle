@@ -11,10 +11,8 @@
 
 namespace Sonata\MediaBundle\Model;
 
-
 interface MediaManagerInterface
 {
-
     /**
      * Creates an empty media instance
      *
@@ -54,10 +52,11 @@ interface MediaManagerInterface
     function getClass();
 
     /**
-     * Save a media
-     *
-     * @param Media $media
+     * @abstract
+     * @param MediaInterface $media
+     * @param null $context
+     * @param null $providerName
      * @return void
      */
-    function save(MediaInterface $media);
+    function save(MediaInterface $media, $context = null, $providerName = null);
 }
