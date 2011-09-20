@@ -1,11 +1,27 @@
 <?php
 
+/*
+ * This file is part of sonata-project.
+ *
+ * (c) 2010 Thomas Rabaix
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sonata\MediaBundle\Twig\TokenParser;
 
 use Sonata\MediaBundle\Twig\Node\MediaNode;
 
 class MediaTokenParser extends \Twig_TokenParser
 {
+    protected $extensionName;
+
+    public function __construct($extensionName)
+    {
+        $this->extensionName = $extensionName;
+    }
+
     /**
      * Parses a token and returns a node.
      *
@@ -18,9 +34,9 @@ class MediaTokenParser extends \Twig_TokenParser
         $media = $this->parser->getExpressionParser()->parseExpression();
 
         $this->parser->getStream()->next();
-        
+
         $format = $this->parser->getExpressionParser()->parseExpression();
-        
+
         // attributes
         if ($this->parser->getStream()->test(\Twig_Token::NAME_TYPE, 'with')) {
             $this->parser->getStream()->next();
@@ -32,7 +48,7 @@ class MediaTokenParser extends \Twig_TokenParser
 
         $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        return new MediaNode($media, $format, $attributes, $token->getLine(), $this->getTag());
+        return new MediaNode($this->extensionName, $media, $format, $attributes, $token->getLine(), $this->getTag());
     }
 
     /**

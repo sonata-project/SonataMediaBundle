@@ -1,11 +1,24 @@
 <?php
 
+/*
+ * This file is part of sonata-project.
+ *
+ * (c) 2010 Thomas Rabaix
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sonata\MediaBundle\Twig\Node;
 
 class PathNode extends \Twig_Node
 {
-    public function __construct(\Twig_Node_Expression $media, \Twig_Node_Expression $format, $lineno, $tag = null)
+    protected $extensionName;
+
+    public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $format, $lineno, $tag = null)
     {
+        $this->extensionName = $extensionName;
+
         parent::__construct(array('media' => $media, 'format' => $format), array(), $lineno, $tag);
     }
 
@@ -18,7 +31,7 @@ class PathNode extends \Twig_Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write("echo \$this->env->getExtension('sonata_media')->path(")
+            ->write(sprintf("echo \$this->env->getExtension('%s')->path(", $this->extensionName))
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))
