@@ -5,8 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="sonata.media.generator.default.class">Sonata\MediaBundle\Generator\ODMGenerator</parameter>
         <parameter key="sonata.media.manager.media.class">Sonata\MediaBundle\Document\MediaManager</parameter>
+        <parameter key="sonata.media.manager.media.entity">Application\Sonata\MediaBundle\Document\Media</parameter>
         <parameter key="sonata.media.manager.gallery.class">Sonata\MediaBundle\Document\GalleryManager</parameter>
+        <parameter key="sonata.media.manager.gallery.entity">Application\Sonata\MediaBundle\Document\Gallery</parameter>
     </parameters>
 
     <services>
@@ -15,17 +18,16 @@
         <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
             <argument type="service" id="sonata.media.pool" />
             <argument type="service" id="sonata.media.document_manager" />
-            <argument>Application\Sonata\MediaBundle\Document\Media</argument>
+            <argument>%sonata.media.manager.media.entity%</argument>
         </service>
 
         <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
             <argument type="service" id="sonata.media.document_manager" />
-            <argument>Application\Sonata\MediaBundle\Document\Gallery</argument>
+            <argument>%sonata.media.manager.gallery.entity%</argument>
         </service>
 
         <!-- Path generator servive -->
-        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\ODMGenerator">
-
+        <service id="sonata.media.generator.default" class="%sonata.media.generator.default.class%">
         </service>
     </services>
 
