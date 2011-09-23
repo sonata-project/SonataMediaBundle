@@ -8,7 +8,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Sonata\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -44,6 +43,10 @@ class SonataMediaExtension extends Extension
         $loader->load('media.xml');
         $loader->load('twig.xml');
         $loader->load('block.xml');
+
+        if (interface_exists('Sonata\FormatterBundle\Extension\ExtensionInterface', true)) {
+            $loader->load('formatter.xml');
+        }
 
         if (!in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
