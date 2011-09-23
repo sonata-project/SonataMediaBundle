@@ -114,7 +114,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add('binaryContent', 'text');
+        $formMapper->add('binaryContent', 'text', array('required' => false));
     }
 
     /**

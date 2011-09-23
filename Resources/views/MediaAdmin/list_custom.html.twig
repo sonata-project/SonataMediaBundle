@@ -11,9 +11,9 @@ file that was distributed with this source code.
 
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
-{% block field%}
+{% block field %}
     <div>
         <strong>{{ object.name }}</strong> <br />
-        {{ object.providername}} : {{ object.width }}x{{ object.height }} <br />
+        {{ object.providerName|trans({}, 'SonataMediaBundle') }}: {{ object.width }}x{{ object.height }} <br />
     </div>
 {% endblock %}
