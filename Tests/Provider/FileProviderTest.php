@@ -12,9 +12,6 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\AdminBundle\Admin\ORM\FieldDescription;
-use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
-use Sonata\AdminBundle\Datagrid\DatagridInterface;
 
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
