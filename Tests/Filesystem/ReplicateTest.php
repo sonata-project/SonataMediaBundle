@@ -15,10 +15,8 @@ use Sonata\MediaBundle\Filesystem\Replicate;
 
 class MediaTest extends \PHPUnit_Framework_TestCase
 {
-
-    function testReplicate() {
-
-
+    public function testReplicate()
+    {
         $master = $this->getMock('Gaufrette\Adapter');
         $slave = $this->getMock('Gaufrette\Adapter');
         $replicate = new Replicate($master, $slave);

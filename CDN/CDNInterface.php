@@ -13,35 +13,38 @@ namespace Sonata\MediaBundle\CDN;
 interface CDNInterface
 {
     /**
-     * return the base path
+     * Return the base path
      *
      * @param string $relativePath
      * @param boolean $isFlushable
+     *
      * @return string
      */
     function getPath($relativePath, $isFlushable);
 
     /**
-     * Flush the ressource
+     * Flush the resource
      *
-     * @abstract
      * @param string $string
+     *
      * @return void
      */
     function flush($string);
 
     /**
-     * Flush a set of ressource matching the provided string
+     * Flush a set of resources matching the provided string
      *
      * @param string $string
+     *
      * @return void
      */
     function flushByString($string);
 
     /**
-     * Flush a different set of ressource matching the provided string array
+     * Flush a set of resources matching the paths in provided array
      *
      * @param array $paths
+     *
      * @return void
      */
     function flushPaths(array $paths);

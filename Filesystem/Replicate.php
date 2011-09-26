@@ -35,7 +35,7 @@ class Replicate implements AdapterInterface
      *
      * @return string
      */
-    function checksum($key)
+    public function checksum($key)
     {
         return $this->master->checksum($key);
     }
@@ -124,7 +124,7 @@ class Replicate implements AdapterInterface
      *
      * @throws RuntimeException on failure
      */
-    function rename($key, $new)
+    public function rename($key, $new)
     {
         $this->master->rename($key, $new);
         $this->slave->rename($key, $new);
