@@ -23,9 +23,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * @param $relativePath
-     * @param bool $isFlushable
-     * @return string
+     * {@inheritDoc}
      */
     public function getPath($relativePath, $isFlushable = false)
     {
@@ -33,34 +31,25 @@ class Server implements CDNInterface
     }
 
     /**
-     * Flush a set of ressource matching the provided string
-     *
-     * @param string $string
-     * @return void
+     * {@inheritDoc}
      */
-    function flushByString($string)
+    public function flushByString($string)
     {
         // nothing to do
     }
 
     /**
-     * Flush the ressource
-     *
-     * @param string $string
-     * @return void
+     * {@inheritDoc}
      */
-    function flush($string)
+    public function flush($string)
     {
         // nothing to do
     }
 
     /**
-    * Flush a different set of ressource matching the provided string array
-    *
-    * @param array $paths
-    * @return void
-    */
-    function flushPaths(array $paths)
+     * {@inheritDoc}
+     */
+    public function flushPaths(array $paths)
     {
         // nothing to do
     }

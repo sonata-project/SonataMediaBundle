@@ -106,7 +106,7 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      * @return void
      */
-    function buildEditForm(FormMapper $formMapper)
+    public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name');
         $formMapper->add('enabled');
@@ -121,7 +121,7 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      * @return void
      */
-    function buildCreateForm(FormMapper $formMapper)
+    public function buildCreateForm(FormMapper $formMapper)
     {
         $formMapper->add('binaryContent', 'text');
     }

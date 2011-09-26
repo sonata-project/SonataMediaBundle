@@ -14,7 +14,7 @@ namespace Sonata\MediaBundle\Model;
 interface GalleryManagerInterface
 {
     /**
-     * Creates an empty medie instance
+     * Creates an empty gallery instance
      *
      * @return Gallery
      */
