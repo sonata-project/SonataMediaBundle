@@ -18,7 +18,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class BaseProviderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function getProvider()
     {
         $adapter = $this->getMock('Gaufrette\Adapter');
@@ -65,14 +64,13 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-
 class TestProvider extends BaseProvider
 {
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
      */
-    function getHelperProperties(MediaInterface $media, $format)
+    public function getHelperProperties(MediaInterface $media, $format)
     {
         // TODO: Implement getHelperProperties() method.
     }
@@ -82,7 +80,7 @@ class TestProvider extends BaseProvider
      * @param  $media
      * @return void
      */
-    function postPersist(MediaInterface $media)
+    public function postPersist(MediaInterface $media)
     {
         // TODO: Implement postPersist() method.
     }
@@ -91,7 +89,7 @@ class TestProvider extends BaseProvider
      * build the related create form
      *
      */
-    function buildEditForm(FormMapper $form)
+    public function buildEditForm(FormMapper $form)
     {
         // TODO: Implement buildEditForm() method.
     }
@@ -100,7 +98,7 @@ class TestProvider extends BaseProvider
      * build the related create form
      *
      */
-    function buildCreateForm(FormMapper $form)
+    public function buildCreateForm(FormMapper $form)
     {
         // TODO: Implement buildCreateForm() method.
     }
@@ -110,7 +108,7 @@ class TestProvider extends BaseProvider
      * @param  $media
      * @return void
      */
-    function postUpdate(MediaInterface $media)
+    public function postUpdate(MediaInterface $media)
     {
         // TODO: Implement postUpdate() method.
     }
@@ -120,7 +118,7 @@ class TestProvider extends BaseProvider
      *
      * @return void
      */
-    function getAbsolutePath(MediaInterface $media)
+    public function getAbsolutePath(MediaInterface $media)
     {
         // TODO: Implement getAbsolutePath() method.
     }
@@ -130,7 +128,7 @@ class TestProvider extends BaseProvider
      *
      * @return string to the reference image
      */
-    function getReferenceImage(MediaInterface $media)
+    public function getReferenceImage(MediaInterface $media)
     {
         // TODO: Implement getReferenceImage() method.
     }
@@ -142,7 +140,7 @@ class TestProvider extends BaseProvider
      * @param string $format
      * @return string
      */
-    function generatePrivateUrl(MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, $format)
     {
       // TODO: Implement generatePrivateUrl() method.
     }
@@ -154,7 +152,7 @@ class TestProvider extends BaseProvider
      * @param string $format
      * @return string
      */
-    function generatePublicUrl(MediaInterface $media, $format)
+    public function generatePublicUrl(MediaInterface $media, $format)
     {
       // TODO: Implement generatePublicUrl() method.
     }
@@ -163,7 +161,7 @@ class TestProvider extends BaseProvider
      *
      * @return \Gaufrette\File
      */
-    function getReferenceFile(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media)
     {
       // TODO: Implement getReferenceFile() method.
     }
@@ -173,7 +171,7 @@ class TestProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    function preUpdate(MediaInterface $media)
+    public function preUpdate(MediaInterface $media)
     {
         // TODO: Implement preUpdate() method.
     }
@@ -182,7 +180,7 @@ class TestProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    function postRemove(MediaInterface $media)
+    public function postRemove(MediaInterface $media)
     {
         // TODO: Implement postRemove() method.
     }
@@ -191,10 +189,8 @@ class TestProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    function prePersist(MediaInterface $media)
+    public function prePersist(MediaInterface $media)
     {
         // TODO: Implement prePersist() method.
     }
-
-
 }

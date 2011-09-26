@@ -11,8 +11,6 @@
 
 namespace Sonata\MediaBundle\Model;
 
-use Sonata\MediaBundle\Provider\Pool;
-
 abstract class GalleryManager implements GalleryManagerInterface
 {
     /**
@@ -20,7 +18,7 @@ abstract class GalleryManager implements GalleryManagerInterface
      *
      * @return Gallery
      */
-    function create()
+    public function create()
     {
         $class = $this->getClass();
 
