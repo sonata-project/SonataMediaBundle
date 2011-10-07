@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 class YouTubeProvider extends BaseVideoProvider
 {
@@ -138,15 +139,12 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        $metadata = $this->getMetadata($media);
-
         $media->setProviderName($this->name);
         $media->setProviderReference($media->getBinaryContent());
-        $media->setProviderMetadata($metadata);
-        $media->setName($metadata['title']);
-        $media->setAuthorName($metadata['author_name']);
-        $media->setHeight($metadata['height']);
-        $media->setWidth($metadata['width']);
+        $media->setName($media->getMetadataValue('title'));
+        $media->setAuthorName($media->getMetadataValue('author_name'));
+        $media->setHeight($media->getMetadataValue('height'));
+        $media->setWidth($media->getMetadataValue('width'));
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(MediaInterface::STATUS_OK);
 
@@ -179,5 +177,32 @@ class YouTubeProvider extends BaseVideoProvider
         }
 
         return $metadata;
+    }
+    
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
+        $pattern = '/http:\/\/(?:www\.)?youtube.*watch\?v=([a-zA-Z0-9\-_]+)|http:\/\/?youtu\.be\/(\w{11}+)/';
+        $matches = array();
+        
+        //if url doesn't match youtube's, fail validation
+        if (!preg_match($pattern, $media->getBinaryContent(), $matches)) {
+            $errorElement->with('binaryContent')->addViolation($this->translator->trans('youtube_regex_validation_error', array(), 'MediaBundle'))->end();
+        } else {
+            //remove index 0 (full url)
+            unset($matches[0]);
+            try {
+                //implode is needed as $matches now has 2 elements, one of which is always empty
+                //this is due to the regex used. Feel free to improve it
+                $media->setBinaryContent(implode('',$matches));
+                $media->setProviderMetadata($this->getMetadata($media));
+            } catch (RuntimeException $re) {
+                $errorElement->with('binaryContent')->addViolation($re->getMessage())->end();
+            }
+        }
     }
 }

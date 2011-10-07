@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
@@ -190,6 +191,18 @@ class MediaAdmin extends Admin
             $this->trans('sidemenu.link_media_view'),
             array('uri' => $admin->generateUrl('view', array('id' => $id)))
         );
+    }
+    
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param mixed $object
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        $provider = $this->pool->getProvider($object->getProviderName());
+		
+        $provider->validate($errorElement, $object);
     }
 
     /**

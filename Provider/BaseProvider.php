@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Media\ResizerInterface;
@@ -34,6 +35,8 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $pathGenerator;
 
     protected $cdn;
+    
+    protected $translator;
 
     /**
      * @param $name
@@ -41,12 +44,13 @@ abstract class BaseProvider implements MediaProviderInterface
      * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, Translator $translator)
     {
         $this->name          = $name;
         $this->filesystem    = $filesystem;
         $this->cdn           = $cdn;
         $this->pathGenerator = $pathGenerator;
+        $this->translator    = $translator;
     }
 
     /**
