@@ -157,7 +157,6 @@ abstract class BaseVideoProvider extends BaseProvider
     {
     }
     
-    
     /**
      * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
