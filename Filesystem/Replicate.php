@@ -96,10 +96,10 @@ class Replicate implements AdapterInterface
      * @return integer The number of bytes that were written into the file, or
      *                 FALSE on failure
      */
-    public function write($key, $content)
+    public function write($key, $content, array $metadata = null)
     {
-        $return = $this->master->write($key, $content);
-        $this->slave->write($key, $content);
+        $return = $this->master->write($key, $content, $metadata);
+        $this->slave->write($key, $content, $metadata);
 
         return $return;
     }
@@ -128,5 +128,15 @@ class Replicate implements AdapterInterface
     {
         $this->master->rename($key, $new);
         $this->slave->rename($key, $new);
+    }
+    
+    /**
+     * If the adapter can allow inserting metadata
+     *
+     * @return bool true if supports metadata, false if not
+     */
+    function supportsMetadata()
+    {
+        return $this->master->supportsMetadata() && $this->slave->supportsMetadata();
     }
 }
