@@ -129,7 +129,7 @@ class MediaBlockService extends BaseBlockService
         // merge settings
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
 
-        $media = false;
+        $media = $settings['mediaId'];
 
         return $this->renderResponse('SonataMediaBundle:Block:block_media.html.twig', array(
             'media'     => $media,
