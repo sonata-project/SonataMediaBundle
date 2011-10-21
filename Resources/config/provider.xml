@@ -22,6 +22,7 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="translator" />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -36,6 +37,7 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="translator" />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -50,6 +52,7 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="translator" />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -64,6 +67,7 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="translator" />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -78,6 +82,7 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="translator" />
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>

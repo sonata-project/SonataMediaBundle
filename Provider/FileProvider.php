@@ -14,6 +14,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 class FileProvider extends BaseProvider
 {
@@ -257,5 +258,14 @@ class FileProvider extends BaseProvider
     public function postRemove(MediaInterface $media)
     {
        // never delete icon image
+    }
+    
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
     }
 }

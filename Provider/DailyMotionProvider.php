@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 class DailyMotionProvider extends BaseVideoProvider
 {
@@ -138,5 +139,14 @@ class DailyMotionProvider extends BaseVideoProvider
         }
 
         return $metadata;
+    }
+    
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
     }
 }

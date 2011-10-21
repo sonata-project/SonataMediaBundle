@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Media\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
@@ -153,6 +154,15 @@ abstract class BaseVideoProvider extends BaseProvider
      * @return void
      */
     public function postRemove(MediaInterface $media)
+    {
+    }
+    
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
     }
 }
