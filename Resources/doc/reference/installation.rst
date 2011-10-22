@@ -80,13 +80,20 @@ Update the ``autoload.php`` to add a new namespace:
     // ... other declarations
   ));
 
-Then add these bundles in the config mapping definition:
+Then add these bundles in the doctrine mapping definition:
 
 .. code-block:: yaml
 
     # app/config/config.yml
-    ApplicationSonataMediaBundle: ~
-    SonataMediaBundle: ~
+
+    doctrine:
+        orm:
+            entity_managers:
+                default:
+                    mappings:
+                        ApplicationSonataMediaBundle: ~
+                        SonataMediaBundle: ~
+
 
 Configuration
 -------------
