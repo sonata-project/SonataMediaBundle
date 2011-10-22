@@ -25,7 +25,7 @@
 
     <services>
         <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%">
-            <tag name="sonata.admin" manager_type="mongodb" group="sonata_media" label="media"/>
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media" label="media"/>
             <argument />
             <argument>%sonata.media.admin.media.entity%</argument>
             <argument>%sonata.media.admin.media.controller%</argument>
@@ -40,12 +40,12 @@
         </service>
 
         <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineModelManager">
-            <argument type="service" id="doctrine.odm.default_entity_manager" />
+            <argument type="service" id="doctrine.odm.mongodb.default_connection" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>
 
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">
-            <tag name="sonata.admin" manager_type="mongodb" group="sonata_media" label="gallery"/>
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media" label="gallery"/>
             <argument />
             <argument>%sonata.media.admin.gallery.entity%</argument>
             <argument>%sonata.media.admin.gallery.controller%</argument>
@@ -56,7 +56,7 @@
         </service>
 
         <service id="sonata.media.admin.gallery_has_media" class="%sonata.media.admin.gallery_has_media.class%">
-            <tag name="sonata.admin" manager_type="mongodb" group="sonata_media" label="gallery_has_media" show_in_dashboard="false"/>
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media" label="gallery_has_media" show_in_dashboard="false"/>
             <argument />
             <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
             <argument>%sonata.media.admin.gallery_has_media.controller%</argument>

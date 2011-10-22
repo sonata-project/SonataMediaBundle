@@ -48,7 +48,7 @@ class SonataMediaExtension extends Extension
             $loader->load('formatter.xml');
         }
 
-        if (!in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
+        if (!in_array(strtolower($config['db_driver']), array('orm', 'doctrine_mongodb'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
 
