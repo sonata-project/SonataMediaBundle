@@ -15,8 +15,14 @@ use Sonata\MediaBundle\Provider\Pool;
 
 abstract class MediaManager implements MediaManagerInterface
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var string
+     */
     protected $class;
 
     /**
@@ -34,7 +40,7 @@ abstract class MediaManager implements MediaManagerInterface
      *
      * @return Media
      */
-    function create()
+    public function create()
     {
         $class = $this->getClass();
 
