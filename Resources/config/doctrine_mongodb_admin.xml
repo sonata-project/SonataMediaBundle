@@ -5,7 +5,7 @@
 
     <parameters>
         <!-- MEDIA -->
-        <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\MediaAdmin</parameter>
+        <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\ODM\MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.controller">SonataMediaBundle:MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.entity">Application\Sonata\MediaBundle\Document\Media</parameter>
         <parameter key="sonata.media.admin.media.translation_domain">SonataMediaBundle</parameter>
@@ -39,8 +39,8 @@
             </call>
         </service>
 
-        <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineModelManager">
-            <argument type="service" id="doctrine.odm.mongodb.default_connection" />
+        <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineMongoDBManager">
+            <argument type="service" id="doctrine.odm.mongodb.default_document_manager" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>
 

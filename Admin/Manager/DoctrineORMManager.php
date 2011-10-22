@@ -9,7 +9,7 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
  * this method overwrite the default AdminModelManager to call
  * the custom methods from the dedicated media manager
  */
-class DoctrineModelManager extends ModelManager
+class DoctrineORMManager extends ModelManager
 {
     protected $manager;
 

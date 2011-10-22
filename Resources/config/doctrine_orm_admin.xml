@@ -5,7 +5,7 @@
 
     <parameters>
         <!-- MEDIA -->
-        <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\MediaAdmin</parameter>
+        <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\ORM\MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.controller">SonataMediaBundle:MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.entity">Application\Sonata\MediaBundle\Entity\Media</parameter>
         <parameter key="sonata.media.admin.media.translation_domain">SonataMediaBundle</parameter>
@@ -39,7 +39,7 @@
             </call>
         </service>
 
-        <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineModelManager">
+        <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineORMManager">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>

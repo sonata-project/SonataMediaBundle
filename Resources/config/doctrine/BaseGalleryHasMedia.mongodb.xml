@@ -6,16 +6,16 @@
 
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseGalleryHasMedia">
 
-        <field name="position"   fieldName="position" type="integer" />
+        <field name="position"   fieldName="position" type="int" />
         <field name="enabled"    fieldName="enabled"  type="boolean" />
 
-        <field name="updatedAt"          fieldName="updatedAt"     type="timestamp" />
-        <field name="createdAt"          fieldName="createdAt"     type="timestamp" />
+        <field name="updatedAt"          fieldName="updatedAt"     type="date" />
+        <field name="createdAt"          fieldName="createdAt"     type="date" />
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist"/>
             <lifecycle-callback type="preUpdate" method="preUpdate"/>
         </lifecycle-callbacks>
-        
+
     </mapped-superclass>
 </doctrine-mongo-mapping>

@@ -168,7 +168,7 @@ abstract class Media implements MediaInterface
 
     /**
      * Remove a named data from the metadata
-     * 
+     *
      * @param string $name
      */
     public function unsetMetadataValue($name)

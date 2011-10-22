@@ -98,6 +98,7 @@ file.
 
     # app/config/config.yml
     sonata_media:
+        db_driver: doctrine_orm # or doctrine_mongodb
         contexts:
             default:  # the default context is mandatory
                 providers:

@@ -21,7 +21,7 @@ use Sonata\MediaBundle\Provider\Pool;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
-class MediaAdmin extends Admin
+abstract class BaseMediaAdmin extends Admin
 {
     protected $pool;
 
@@ -36,36 +36,6 @@ class MediaAdmin extends Admin
         parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
-    }
-
-    /**
-     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('name')
-            ->add('providerReference')
-            ->add('enabled')
-            ->add('context')
-        ;
-
-        $providers = array();
-
-        foreach($this->pool->getProviderNamesByContext('default') as $name) {
-            $providers[$name] = $name;
-        }
-
-        $datagridMapper->add('providerName', 'doctrine_orm_choice', array(
-            'field_options'=> array(
-                'choices' => $providers,
-                'required' => false,
-                'multiple' => false,
-                'expanded' => false,
-            ),
-            'field_type'=> 'choice',
-        ));
     }
 
     /**
