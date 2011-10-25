@@ -73,7 +73,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        $this->generateFullPath($media, $format, 'thumb', 'jpg');
+        return $this->generateFullPath($media, $format, 'thumb', 'jpg');
     }
 
     /**
