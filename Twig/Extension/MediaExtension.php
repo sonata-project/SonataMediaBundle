@@ -134,10 +134,15 @@ class MediaExtension extends \Twig_Extension
         $format_definition = $provider->getFormat($format);
 
         // build option
-        $options = array_merge(array(
+        $defaultOptions = array(
             'title' => $media->getName(),
-            'width' => $format_definition['width'],
-        ), $options);
+        );
+
+        if ($format_definition['width']) {
+            $defaultOptions['width'] = $format_definition['width'];
+        }
+
+        $options = array_merge($defaultOptions, $options);
 
         $options['src'] = $provider->generatePublicUrl($media, $format);
 
