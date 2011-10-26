@@ -172,7 +172,5 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->setFileContents($media, realpath(__DIR__.'/../fixtures/file.txt'));
         $this->assertEquals('Hello file text!', $provider->getReferenceFile($media)->getContent());
-
-
     }
 }
