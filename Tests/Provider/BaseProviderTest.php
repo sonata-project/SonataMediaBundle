@@ -12,13 +12,16 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Tests\Provider\ProviderTestCommon;
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class BaseProviderTest extends \PHPUnit_Framework_TestCase
+class BaseProviderTest extends ProviderTestCommon
 {
-    public function getProvider()
+    protected $provider = 'Sonata\MediaBundle\Provider\BaseProvider';
+
+    public function getMockProvider()
     {
         $adapter = $this->getMock('Gaufrette\Adapter');
 
@@ -40,7 +43,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testBaseProvider()
     {
-        $provider = $this->getProvider();
+        $provider = $this->getMockProvider();
         $provider->setTemplates(array(
             'edit' => 'edit.twig'
         ));
@@ -61,6 +64,45 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('reference', $provider->getFormatName($media, 'reference'));
         $this->assertEquals('test_small', $provider->getFormatName($media, 'small'));
         $this->assertEquals('test_small', $provider->getFormatName($media, 'test_small'));
+    }
+
+    public function testGenerateFileName()
+    {
+        $provider = $this->getProvider();
+        $media = $this->getMedia(853);
+        $media->setExtension('png');
+
+        $this->assertSame('prefix_853_test_format.jpg',
+            $provider->generateFileName($media, 'test_format', 'prefix', 'jpg'),
+            'provide all parameters, overrides extension set in media'
+        );
+
+        $this->assertSame('prefix_853_test_format.png',
+            $provider->generateFileName($media, 'test_format', 'prefix'),
+            "no extension should get the extension from the media"
+        );
+
+        $provider->setFilenamePrefix('new_prefix');
+        $this->assertSame('new_prefix_853_test_format.png',
+            $provider->generateFileName($media, 'test_format'),
+            "no prefix should use the prefix set in the provider the file name start with the id"
+        );
+
+        $provider->setFilenamePrefix(null);
+        $this->assertSame('853_test_format.png',
+            $provider->generateFileName($media, 'test_format'),
+            "no prefix in param and provider the file name should start with the id"
+        );
+    }
+
+    public function testGenerateFullPath()
+    {
+        $media = $this->getMedia(853);
+        $provider = $this->getProvider();
+
+        $this->assertSame('default/0001/01/prefix_853_test_format.jpg',
+            $provider->generateFullPath($media, 'test_format', 'prefix', 'jpg')
+        );
     }
 }
 

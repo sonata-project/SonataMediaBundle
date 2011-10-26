@@ -112,6 +112,10 @@ abstract class Media implements MediaInterface
 
     protected $galleryHasMedias;
 
+    /**
+     * @var string $extension
+     */
+    protected $extension;
 
     public function prePersist()
     {
@@ -558,11 +562,6 @@ abstract class Media implements MediaInterface
         return $this->size;
     }
 
-    public function __toString()
-    {
-        return $this->getName() ?: 'n/a';
-    }
-
     public function setGalleryHasMedias($galleryHasMedias)
     {
         $this->galleryHasMedias = $galleryHasMedias;
@@ -571,5 +570,30 @@ abstract class Media implements MediaInterface
     public function getGalleryHasMedias()
     {
         return $this->galleryHasMedias;
+    }
+
+    /**
+     * Set the file extension for this medium
+     *
+     * @param string $extension
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = $extension;
+    }
+
+    /**
+     * Return the file extension for this medium
+     *
+     * @return string
+     */
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ?: 'n/a';
     }
 }

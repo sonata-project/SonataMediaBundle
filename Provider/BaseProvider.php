@@ -35,6 +35,8 @@ abstract class BaseProvider implements MediaProviderInterface
 
     protected $cdn;
 
+    protected $prefix = 'thumb';
+
     /**
      * @param $name
      * @param \Gaufrette\Filesystem $filesystem
@@ -101,7 +103,7 @@ abstract class BaseProvider implements MediaProviderInterface
                 $media,
                 $referenceFile,
                 $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
-                'jpg' ,
+                'jpg',
                 $settings
             );
         }
@@ -164,9 +166,34 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->pathGenerator->generatePath($media);
     }
 
-    /**
-     * @return array
-     */
+    public function generateFileName(MediaInterface $media, $format, $prefix=null, $ext=null)
+    {
+        if (!$prefix) {
+            $prefix = $this->prefix;
+        }
+        if ($prefix) {
+            $prefix .= '_';
+        }
+        if (!$ext) {
+            $ext = $media->getExtension();
+        }
+        
+        return sprintf('%s%s_%s.%s',
+            $prefix,
+            $media->getId(),
+            $format,
+            $ext
+        );
+    }
+
+    public function generateFullPath(MediaInterface $media, $format, $prefix=null, $ext=null)
+    {
+        return sprintf('%s/%s',
+            $this->generatePath($media),
+            $this->generateFileName($media, $format, $prefix, $ext)
+        );
+    }
+    
     public function getFormats()
     {
         return $this->formats;
@@ -247,5 +274,15 @@ abstract class BaseProvider implements MediaProviderInterface
     public function setResizer(ResizerInterface $resizer)
     {
         $this->resizer = $resizer;
+    }
+
+    public function setFilenamePrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    public function getFilenamePrefix()
+    {
+        return $this->prefix;
     }
 }
