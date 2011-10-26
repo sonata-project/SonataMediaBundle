@@ -157,13 +157,22 @@ class FileProvider extends BaseProvider
 
         // this is the name used to store the file
         if (!$media->getProviderReference()) {
-            $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
+            $media->setProviderReference($this->generateReferenceName($media));
         }
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
         $media->setSize($media->getBinaryContent()->getSize());
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return string
+     */
+    protected function generateReferenceName(MediaInterface $media)
+    {
+        return sha1($media->getName() . rand(11111, 99999)) . '.' . $media->getBinaryContent()->guessExtension();
     }
 
     /**
@@ -218,7 +227,7 @@ class FileProvider extends BaseProvider
 
         // this is the name used to store the file
         if (!$media->getProviderReference()) {
-           $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)) . $media->getBinaryContent()->getExtension());
+            $media->setProviderReference($this->generateReferenceName($media));
         }
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
