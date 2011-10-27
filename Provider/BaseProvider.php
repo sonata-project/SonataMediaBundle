@@ -248,7 +248,7 @@ abstract class BaseProvider implements MediaProviderInterface
      *
      * @return string
      */
-    function getCdnPath($relativePath, $isFlushable)
+    public function getCdnPath($relativePath, $isFlushable)
     {
         return $this->getCdn()->getPath($relativePath, $isFlushable);
     }
