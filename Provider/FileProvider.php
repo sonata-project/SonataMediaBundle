@@ -168,15 +168,6 @@ class FileProvider extends BaseProvider
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
-     */
-    protected function generateReferenceName(MediaInterface $media)
-    {
-        return sha1($media->getName() . rand(11111, 99999)) . '.' . $media->getBinaryContent()->guessExtension();
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
      * @return string
      */
@@ -266,5 +257,14 @@ class FileProvider extends BaseProvider
     public function postRemove(MediaInterface $media)
     {
        // never delete icon image
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return string
+     */
+    protected function generateReferenceName(MediaInterface $media)
+    {
+        return sha1($media->getName() . rand(11111, 99999)) . '.' . $media->getBinaryContent()->guessExtension();
     }
 }

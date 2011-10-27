@@ -241,6 +241,19 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
+     * Return the Cdn base path
+     *
+     * @param string $relativePath
+     * @param boolean $isFlushable
+     *
+     * @return string
+     */
+    public function getCdnPath($relativePath, $isFlushable)
+    {
+        return $this->getCdn()->getPath($relativePath, $isFlushable);
+    }
+
+    /**
      * @param \Sonata\MediaBundle\Media\ResizerInterface $resizer
      * @return void
      */

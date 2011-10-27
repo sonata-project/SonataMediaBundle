@@ -56,7 +56,7 @@ class ImageProvider extends FileProvider
             $path = sprintf('%s/thumb_%s_%s.jpg',  $this->generatePath($media), $media->getId(), $format);
         }
 
-        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
+        return $this->getCdnPath($path, $media->getCdnIsFlushable());
     }
 
     /**
