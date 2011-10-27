@@ -62,6 +62,12 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test_small', $provider->getFormatName($media, 'small'));
         $this->assertEquals('test_small', $provider->getFormatName($media, 'test_small'));
     }
+
+    public function testGetCdnPath()
+    {
+        $provider = $this->getProvider();
+        $this->assertEquals('/updoads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
+    }
 }
 
 class TestProvider extends BaseProvider
