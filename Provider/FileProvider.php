@@ -173,8 +173,13 @@ class FileProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        // todo: add a valid icon set
-        return $this->getCdn()->getPath(sprintf('media_bundle/images/files/%s/file.png', $format), $media->getCdnIsFlushable());
+        if ($format == 'reference') {
+            $path = $this->getReferenceImage($media);
+        } else {
+            $path = sprintf('media_bundle/images/files/%s/file.png', $format);
+        }
+
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
     /**
