@@ -113,9 +113,53 @@
                 <source>label.public_url</source>
                 <target>Public URL</target>
             </trans-unit>
+
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="label.file">
+                <source>label.file</source>
+                <target>File</target>
+            </trans-unit>
+            <trans-unit id="label.author">
+                <source>label.author</source>
+                <target>Author</target>
+            </trans-unit>
+
+            <trans-unit id="label.enabled">
+                <source>label.enabled</source>
+                <target>Enabled</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_is_flushable">
+                <source>label.cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="label.video_reference">
+                <source>label.video_reference</source>
+                <target>Change video</target>
+            </trans-unit>
+
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Description</target>
+            </trans-unit>
+
             <trans-unit id="title.formats">
                 <source>title.formats</source>
                 <target>Formats</target>
+            </trans-unit>
+            <trans-unit id="label.select_context">
+                <source>label.select_context</source>
+                <target>Context : </target>
+            </trans-unit>
+            <trans-unit id="label.select_provider">
+                <source>label.select_provider</source>
+                <target>Type : </target>
+            </trans-unit>
+            <trans-unit id="link.all_providers">
+                <source>link.all_providers</source>
+                <target>All</target>
             </trans-unit>
 
             <trans-unit id="sonata.media.provider.dailymotion">

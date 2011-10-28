@@ -13,7 +13,7 @@
             </trans-unit>
             <trans-unit id="sidemenu.link_media_view">
                 <source>sidemenu.link_media_view</source>
-                <target>Visualisé</target>
+                <target>Visualiser</target>
             </trans-unit>
 
             <trans-unit id="breadcrumb.link_media_list">
@@ -26,7 +26,7 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_view">
                 <source>breadcrumb.link_media_view</source>
-                <target>Visualisé</target>
+                <target>Visualiser</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
@@ -35,6 +35,114 @@
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Edition</target>
+            </trans-unit>
+
+            <trans-unit id="breadcrumb.link_media_create">
+                <source>breadcrumb.link_media_create</source>
+                <target>Ajouter</target>
+            </trans-unit>
+
+            <trans-unit id="media">
+                <source>media</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="gallery">
+                <source>gallery</source>
+                <target>Gallery</target>
+            </trans-unit>
+            <trans-unit id="title_select_provider">
+                <source>title_select_provider</source>
+                <target>Sélectionner un type</target>
+            </trans-unit>
+            <trans-unit id="no_provider_available">
+                <source>no_provider_available</source>
+                <target>Pas de type disponible</target>
+            </trans-unit>
+            <trans-unit id="title.media_preview">
+                <source>title.media_preview</source>
+                <target>Visualiser</target>
+            </trans-unit>
+            <trans-unit id="title.media_thumbnail">
+                <source>title.media_thumbnail</source>
+                <target>Vignette</target>
+            </trans-unit>
+            <trans-unit id="title.informations">
+                <source>title.informations</source>
+                <target>Information</target>
+            </trans-unit>
+            <trans-unit id="label.size">
+                <source>label.size</source>
+                <target>Taille</target>
+            </trans-unit>
+            <trans-unit id="label.width">
+                <source>label.width</source>
+                <target>Largeur</target>
+            </trans-unit>
+            <trans-unit id="label.height">
+                <source>label.height</source>
+                <target>Hauteur</target>
+            </trans-unit>
+            <trans-unit id="label.content_type">
+                <source>label.content_type</source>
+                <target>Type de contenu</target>
+            </trans-unit>
+            <trans-unit id="label.copyright">
+                <source>label.copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
+            <trans-unit id="label.author_name">
+                <source>label.author_name</source>
+                <target>Auteur</target>
+            </trans-unit>
+            <trans-unit id="label.cdn">
+                <source>label.cdn</source>
+                <target>CDN</target>
+            </trans-unit>
+            <trans-unit id="label.to_be_flushed">
+                <source>label.to_be_flushed</source>
+                <target>Flushable</target>
+            </trans-unit>
+            <trans-unit id="label.flushed_at">
+                <source>label.flushed_at</source>
+                <target>Flushed at</target>
+            </trans-unit>
+            <trans-unit id="label.public_url">
+                <source>label.public_url</source>
+                <target>URL Publique</target>
+            </trans-unit>
+
+            <trans-unit id="label.select_context">
+                <source>label.select_context</source>
+                <target>Contexte : </target>
+            </trans-unit>
+            <trans-unit id="label.select_provider">
+                <source>label.select_provider</source>
+                <target>Type : </target>
+            </trans-unit>
+            <trans-unit id="link.all_providers">
+                <source>link.all_providers</source>
+                <target>Tous</target>
+            </trans-unit>
+
+            <trans-unit id="sonata.media.provider.dailymotion">
+                <source>sonata.media.provider.dailymotion</source>
+                <target>DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube">
+                <source>sonata.media.provider.youtube</source>
+                <target>YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo">
+                <source>sonata.media.provider.vimeo</source>
+                <target>Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image">
+                <source>sonata.media.provider.image</source>
+                <target>Image</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file">
+                <source>sonata.media.provider.file</source>
+                <target>Fichier</target>
             </trans-unit>
         </body>
     </file>

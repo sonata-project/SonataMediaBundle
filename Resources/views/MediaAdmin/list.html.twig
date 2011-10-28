@@ -1,0 +1,68 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
+
+{% block preview %}
+    {{ "label.select_context"|trans({}, 'SonataMediaBundle') }}
+    {% for name, context in media_pool.contexts %}
+        <a href="{{ admin.generateUrl('list', {'context' : name }) }}">
+            {% if name == persistent_parameters.context %}
+                <b>{{ name }}</b>
+            {% else %}
+                {{ name }}
+            {% endif %}
+            </a> {% if not loop.last %}, {%endif%}
+    {% endfor %}
+
+    -
+    {{ "label.select_provider"|trans({}, 'SonataMediaBundle') }}
+
+    <a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': null}) }}">
+        {% if not persistent_parameters.provider %}
+            <b>{{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}</b>
+        {% else %}
+            {{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}
+        {% endif %}
+    </a>
+
+    {% for provider_name in media_pool.getProviderNamesByContext(persistent_parameters.context) %}
+        ,
+        <a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': provider_name}) }}">
+            {% if persistent_parameters.provider == provider_name%}
+                <b>{{ provider_name|trans({}, 'SonataMediaBundle') }}</b>
+            {% else %}
+                {{ provider_name|trans({}, 'SonataMediaBundle') }}
+            {% endif %}
+        </a>
+    {% endfor %}
+
+{% endblock %}
+
+
+{% block list_filters %}
+    {% if admin.datagrid.filters %}
+        <form class="sonata-filter-form" action="{{ admin.generateUrl('list') }}" method="GET">
+            <input type="hidden" name="context" value="{{ persistent_parameters.context }}" />
+            <input type="hidden" name="provider" value="{{ persistent_parameters.provider }}" />
+
+            {% for filter in admin.datagrid.filters %}
+                {{ form_row(form.getChild(filter.name)) }}
+            {% endfor %}
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="{% trans from 'SonataAdminBundle' %}btn_filter{% endtrans %}" />
+
+            <a href="{{ admin.generateUrl('list') }}">{% trans from 'SonataAdminBundle' %}link_reset_filter{% endtrans %}</a>
+        </form>
+    {% endif %}
+{% endblock %}

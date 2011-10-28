@@ -108,13 +108,13 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildEditForm(FormMapper $formMapper)
     {
-        $formMapper->add('name');
-        $formMapper->add('enabled');
-        $formMapper->add('authorName');
-        $formMapper->add('cdnIsFlushable');
-        $formMapper->add('description');
-        $formMapper->add('copyright');
-        $formMapper->add('binaryContent', 'text', array('required' => false));
+        $formMapper->add('name', null, array('label' => $formMapper->getAdmin()->trans('label.name')));
+        $formMapper->add('enabled', null, array('label' => $formMapper->getAdmin()->trans('label.enabled')));
+        $formMapper->add('authorName', null, array('label' => $formMapper->getAdmin()->trans('label.author_name')));
+        $formMapper->add('cdnIsFlushable', null, array('label' => $formMapper->getAdmin()->trans('label.cdn_is_flushable')));
+        $formMapper->add('description', null, array('label' => $formMapper->getAdmin()->trans('label.description')));
+        $formMapper->add('copyright', null, array('label' => $formMapper->getAdmin()->trans('label.copyright')));
+        $formMapper->add('binaryContent', 'text', array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.video_reference')));
     }
 
     /**
@@ -123,7 +123,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'text');
+        $formMapper->add('binaryContent', 'text', array('label' => $formMapper->getAdmin()->trans('label.video_reference')));
     }
 
     /**
