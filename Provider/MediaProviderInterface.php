@@ -51,7 +51,7 @@ interface MediaProviderInterface
     /**
      * @abstract
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * @return \Gaufrette\File
      */
     function getReferenceFile(MediaInterface $media);
 
@@ -190,4 +190,15 @@ interface MediaProviderInterface
      * @return void
      */
     function getTemplate($name);
+
+    /**
+     * Mode can be x-file
+     *
+     * @abstract
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $format
+     * @param $mode
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    function getDownloadResponse(MediaInterface $media, $format, $mode);
 }

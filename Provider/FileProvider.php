@@ -14,6 +14,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 class FileProvider extends BaseProvider
 {
@@ -128,8 +129,10 @@ class FileProvider extends BaseProvider
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
             $media->setName($media->getBinaryContent()->getClientOriginalName());
+            $media->setMetadataValue('filename', $media->getBinaryContent()->getClientOriginalName());
         } else if ($media->getBinaryContent() instanceof File) {
             $media->setName($media->getBinaryContent()->getBasename());
+            $media->setMetadataValue('filename', $media->getBinaryContent()->getBasename());
         }
 
         // this is the original name
@@ -271,5 +274,37 @@ class FileProvider extends BaseProvider
     protected function generateReferenceName(MediaInterface $media)
     {
         return sha1($media->getName() . rand(11111, 99999)) . '.' . $media->getBinaryContent()->guessExtension();
+    }
+
+    /**
+     * Mode can be x-file
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $format
+     * @param $mode
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    {
+        // build the default headers
+        $headers = array(
+            'Content-Type'          => $media->getContentType(),
+            'Content-Disposition'   => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
+        );
+
+        // create default variables
+        if ($mode == 'X-Sendfile') {
+            $headers['X-Sendfile'] = $this->generatePrivateUrl($media, $format);
+            $content = '';
+        } else if ($mode == 'X-Accel-Redirect') {
+            $headers['X-Accel-Redirect'] = $this->generatePrivateUrl($media, $format);
+            $content = '';
+        } else if ($mode == 'http') {
+            $content = $this->getReferenceFile($media)->getContent();
+        } else {
+            $content = '';
+        }
+
+        return new Response($content, 200, $headers);
     }
 }

@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DailyMotionProvider extends BaseVideoProvider
 {
@@ -138,5 +139,16 @@ class DailyMotionProvider extends BaseVideoProvider
         }
 
         return $metadata;
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $format
+     * @param $mode
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    {
+        return new RedirectResponse(sprintf('http://www.dailymotion.com/video/%s', $media->getProviderReference()));
     }
 }

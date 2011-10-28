@@ -20,14 +20,47 @@ interface MediaInterface
     const STATUS_ERROR       = 4;
     const STATUS_ENCODING    = 5;
 
+    /**
+     * @abstract
+     * @param mixed $binaryContent
+     */
     function setBinaryContent($binaryContent);
 
+    /**
+     * @abstract
+     *
+     * @return mixed
+     */
     function getBinaryContent();
 
+    /**
+     * @abstract
+     * @param $name
+     * @param null $default
+     */
     function getMetadataValue($name, $default = null);
 
+    /**
+     * @abstract
+     * @param $name
+     * @param $value
+     */
+    function setMetadataValue($name, $value);
+
+    /**
+     * Remove a named data from the metadata
+     *
+     * @param string $name
+     */
+    function unsetMetadataValue($name);
+
+    /**
+     * @abstract
+     *
+     * @return mixed
+     */
     function getId();
-    
+
     /**
      * Set name
      *

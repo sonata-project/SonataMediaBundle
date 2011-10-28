@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\Form;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class YouTubeProvider extends BaseVideoProvider
 {
@@ -179,5 +180,16 @@ class YouTubeProvider extends BaseVideoProvider
         }
 
         return $metadata;
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $format
+     * @param $mode
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    {
+        return new RedirectResponse(sprintf('http://www.youtube.com/watch?v=%s', $media->getProviderReference()));
     }
 }
