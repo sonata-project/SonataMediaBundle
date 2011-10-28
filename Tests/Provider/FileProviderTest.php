@@ -94,12 +94,22 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('\Sonata\AdminBundle\Form\FormMapper')) {
             $this->markTestSkipped("AdminBundle doesn't seem to be installed");
         }
+
         $provider = $this->getProvider();
 
-        $formMapper     = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add'), array(), '', false);
+        $admin = $this->getMock('Sonata\AdminBundle\Admin\AdminInterface');
+        $admin->expects($this->any())
+            ->method('trans')
+            ->will($this->returnValue('message'));
+
+        $formMapper = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add', 'getAdmin'), array(), '', false);
         $formMapper->expects($this->exactly(8))
             ->method('add')
             ->will($this->returnValue(null));
+
+        $formMapper->expects($this->exactly(8))
+            ->method('getAdmin')
+            ->will($this->returnValue($admin));
 
         $provider->buildCreateForm($formMapper);
         $provider->buildEditForm($formMapper);
