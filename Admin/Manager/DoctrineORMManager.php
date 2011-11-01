@@ -2,7 +2,7 @@
 
 namespace Sonata\MediaBundle\Admin\Manager;
 
-use Sonata\AdminBundle\Model\ORM\ModelManager;
+use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 
 /**
