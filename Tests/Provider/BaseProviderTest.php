@@ -11,33 +11,12 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 
 class BaseProviderTest extends \PHPUnit_Framework_TestCase
 {
-    public function getProvider()
-    {
-        $adapter = $this->getMock('Gaufrette\Adapter');
-
-        $file = $this->getMock('Gaufrette\File', array(), array($adapter));
-
-        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $filesystem->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($file));
-
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
-
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
-
-        $provider = new TestProvider('test', $filesystem, $cdn, $generator);
-
-        return $provider;
-    }
-
     public function testBaseProvider()
     {
         $provider = $this->getProvider();
@@ -54,7 +33,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('array', $provider->getFormat('small'));
 
-        $media = new \Sonata\MediaBundle\Tests\Entity\Media;
+        $media = $this->getMedia();
         $media->setContext('test');
 
         $this->assertEquals('admin', $provider->getFormatName($media, 'admin'));
@@ -66,137 +45,47 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetCdnPath()
     {
         $provider = $this->getProvider();
-        $this->assertEquals('/updoads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
-    }
-}
-
-class TestProvider extends BaseProvider
-{
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     */
-    public function getHelperProperties(MediaInterface $media, $format)
-    {
-        // TODO: Implement getHelperProperties() method.
+        $this->assertEquals('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
     }
 
-    /**
-     *
-     * @param  $media
-     * @return void
-     */
-    public function postPersist(MediaInterface $media)
+    public function testGenerateThumbnail()
     {
-        // TODO: Implement postPersist() method.
+        $this->markTestIncomplete('need to test reference file passed in and using default reference file');
+    }
+    
+    protected function getProvider()
+    {
+        $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
+        $resizer->expects($this->any())
+            ->method('resize')
+            ->will($this->returnValue(true));
+
+        $adapter = $this->getMock('Gaufrette\Adapter');
+
+        $file = $this->getMock('Gaufrette\File', array(), array($adapter));
+
+        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
+        $filesystem->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($file));
+
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
+
+        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+
+        $provider = $this->getMockForAbstractClass('Sonata\MediaBundle\Provider\BaseProvider', array('file', $filesystem, $cdn, $generator));
+        $provider->setResizer($resizer);
+
+        return $provider;
     }
 
-    /**
-     * build the related create form
-     *
-     */
-    public function buildEditForm(FormMapper $form)
+    protected function getMedia($id = null)
     {
-        // TODO: Implement buildEditForm() method.
-    }
+        $media = $this->getMockForAbstractClass('Sonata\MediaBundle\Model\Media');
+        $media->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue($id));
 
-    /**
-     * build the related create form
-     *
-     */
-    public function buildCreateForm(FormMapper $form)
-    {
-        // TODO: Implement buildCreateForm() method.
-    }
-
-    /**
-     *
-     * @param  $media
-     * @return void
-     */
-    public function postUpdate(MediaInterface $media)
-    {
-        // TODO: Implement postUpdate() method.
-    }
-
-    /**
-     * return the absolute path of the reference image or the service provider reference
-     *
-     * @return void
-     */
-    public function getAbsolutePath(MediaInterface $media)
-    {
-        // TODO: Implement getAbsolutePath() method.
-    }
-
-    /**
-     * return the reference image of the media, can be the videa thumbnail or the original uploaded picture
-     *
-     * @return string to the reference image
-     */
-    public function getReferenceImage(MediaInterface $media)
-    {
-        // TODO: Implement getReferenceImage() method.
-    }
-
-    /**
-     * Generate the private path
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
-     */
-    public function generatePrivateUrl(MediaInterface $media, $format)
-    {
-      // TODO: Implement generatePrivateUrl() method.
-    }
-
-    /**
-     * Generate the public path
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
-     */
-    public function generatePublicUrl(MediaInterface $media, $format)
-    {
-      // TODO: Implement generatePublicUrl() method.
-    }
-
-    /**
-     *
-     * @return \Gaufrette\File
-     */
-    public function getReferenceFile(MediaInterface $media)
-    {
-      // TODO: Implement getReferenceFile() method.
-    }
-
-    /**
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function preUpdate(MediaInterface $media)
-    {
-        // TODO: Implement preUpdate() method.
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function postRemove(MediaInterface $media)
-    {
-        // TODO: Implement postRemove() method.
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
-     */
-    public function prePersist(MediaInterface $media)
-    {
-        // TODO: Implement prePersist() method.
+        return $media;
     }
 }

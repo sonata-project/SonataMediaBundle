@@ -86,15 +86,17 @@ abstract class BaseProvider implements MediaProviderInterface
      * generated thumbnails linked to the media, a thumbnail is a format used on the website
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Gaufrette\File $referenceFile
+     * @param \Gaufrette\File $referenceFile
      * @return void
      */
-    public function generateThumbnails(MediaInterface $media)
+    public function generateThumbnails(MediaInterface $media, File $referenceFile = null)
     {
         if (!$this->requireThumbnails()) {
             return;
         }
 
-        $referenceFile = $this->getReferenceFile($media);
+        $referenceFile = $referenceFile ? $referenceFile : $this->getReferenceFile($media);
 
         foreach ($this->formats as $format => $settings) {
             $this->getResizer()->resize(
