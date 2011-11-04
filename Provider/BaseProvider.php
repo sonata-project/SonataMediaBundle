@@ -98,9 +98,15 @@ abstract class BaseProvider implements MediaProviderInterface
 
         $referenceFile = $referenceFile ? $referenceFile : $this->getReferenceFile($media);
 
-        $formats = $formats ? $formats : $this->getFormats();
+        if ($formats) {
+            foreach ($formats as $format) {
+                $formatSettings[$format] = $this->formats[$format];
+            }
+        } else {
+            $formatSettings = $this->getFormats();
+        }
 
-        foreach ($formats as $format => $settings) {
+        foreach ($formatSettings as $format => $settings) {
             $this->getResizer()->resize(
                 $media,
                 $referenceFile,
