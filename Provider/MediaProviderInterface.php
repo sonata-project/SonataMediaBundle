@@ -43,11 +43,11 @@ interface MediaProviderInterface
      * generated thumbnails linked to the media, a thumbnail is a format used on the website
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param \Gaufrette\File $referenceFile
      * @param array of strings $formats
+     * @param \Gaufrette\File $referenceFile
      * @return void
      */
-    function generateThumbnails(MediaInterface $media, File $referenceFile = null, array $formats = null);
+    function generateThumbnails(MediaInterface $media, array $formats = null, File $referenceFile = null);
 
     /**
      * @abstract
