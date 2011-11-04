@@ -94,7 +94,7 @@ class AddProviderPass implements CompilerPassInterface
             if (!isset($settings['providers'][$id])) {
                 $provider = array();
             } else {
-                $provider   = $settings['providers'][$id];
+                $provider = $settings['providers'][$id];
             }
 
             $definition = $container->getDefinition($id);
@@ -107,10 +107,14 @@ class AddProviderPass implements CompilerPassInterface
             $definition->replaceArgument(2, new Reference($cdn));
             $definition->replaceArgument(3, new Reference($generator));
 
-            $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
-
-            if ($resizer) {
-                $definition->addMethodCall('setResizer', array(new Reference($resizer)));
+            if (isset($provider['resizers'])) {
+                foreach ($provider['resizers'] as $resizer) {
+                    if ($resizer) {
+                        $definition->addMethodCall('addResizer', array($resizer, new Reference($resizer)));
+                    }
+                }
+            } else {
+                $definition->addMethodCall('setResizer', array(new Reference('sonata.media.resizer.simple')));
             }
         }
     }
