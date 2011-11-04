@@ -87,10 +87,10 @@ abstract class BaseProvider implements MediaProviderInterface
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param \Gaufrette\File $referenceFile
-     * @param \Gaufrette\File $referenceFile
+     * @param array of strings $formats
      * @return void
      */
-    public function generateThumbnails(MediaInterface $media, File $referenceFile = null)
+    public function generateThumbnails(MediaInterface $media, File $referenceFile = null, array $formats = null)
     {
         if (!$this->requireThumbnails()) {
             return;
@@ -98,7 +98,9 @@ abstract class BaseProvider implements MediaProviderInterface
 
         $referenceFile = $referenceFile ? $referenceFile : $this->getReferenceFile($media);
 
-        foreach ($this->formats as $format => $settings) {
+        $formats = $formats ? $formats : $this->getFormats();
+
+        foreach ($formats as $format => $settings) {
             $this->getResizer()->resize(
                 $media,
                 $referenceFile,

@@ -44,9 +44,10 @@ interface MediaProviderInterface
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param \Gaufrette\File $referenceFile
+     * @param array of strings $formats
      * @return void
      */
-    function generateThumbnails(MediaInterface $media, File $referenceFile = null);
+    function generateThumbnails(MediaInterface $media, File $referenceFile = null, array $formats = null);
 
     /**
      * @abstract
