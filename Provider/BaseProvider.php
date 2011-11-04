@@ -99,11 +99,15 @@ abstract class BaseProvider implements MediaProviderInterface
         $referenceFile = $referenceFile ? $referenceFile : $this->getReferenceFile($media);
 
         if ($formats) {
-            foreach ($formats as $format) {
-                $formatSettings[$format] = $this->formats[$format];
+            $formatKeys = array_keys($this->formats);
+            foreach ($formatKeys as $key) {
+                $format = substr($key, 0, strstr($key, '_'));
+                if (in_array($format, $formats)) {
+                    $formatSettings[$key] = $this->formats[$key];
+                }
             }
         } else {
-            $formatSettings = $this->getFormats();
+            $formatSettings = $this->formats;
         }
 
         foreach ($formatSettings as $format => $settings) {
