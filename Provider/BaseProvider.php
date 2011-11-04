@@ -101,7 +101,7 @@ abstract class BaseProvider implements MediaProviderInterface
         if ($formats) {
             $formatKeys = array_keys($this->formats);
             foreach ($formatKeys as $key) {
-                $format = substr($key, 0, strstr($key, '_'));
+                $format = substr($key, 0, strpos($key, '_'));
                 if (in_array($format, $formats)) {
                     $formatSettings[$key] = $this->formats[$key];
                 }
