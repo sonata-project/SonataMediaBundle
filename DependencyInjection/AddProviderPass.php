@@ -114,7 +114,7 @@ class AddProviderPass implements CompilerPassInterface
                     }
                 }
             } else {
-                $definition->addMethodCall('setResizer', array(new Reference('sonata.media.resizer.simple')));
+                $definition->addMethodCall('addResizer', array('sonata.media.resizer.simple', new Reference('sonata.media.resizer.simple')));
             }
         }
     }
