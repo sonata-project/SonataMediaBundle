@@ -199,4 +199,19 @@ class TestProvider extends BaseProvider
     {
         // TODO: Implement prePersist() method.
     }
+
+    /**
+     * Mode can be x-file
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $format
+     * @param $mode
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    function getDownloadResponse(MediaInterface $media, $format, $mode)
+    {
+        // TODO: Implement getDownloadResponse() method.
+    }
+
+
 }
