@@ -60,11 +60,6 @@ class MediaController extends Controller
     }
 
     /**
-     * This method is a proof of concept of how to download a media with
-     * the current bundle.
-     *
-     * The use must have a specific role to access to this file
-     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @param $id
      * @param string $format
@@ -72,17 +67,19 @@ class MediaController extends Controller
      */
     public function downloadAction($id, $format = 'reference')
     {
-        if (!$this->get('security.context')->isGranted(array('ROLE_SUPER_ADMIN', 'ROLE_ADMIN'))) {
-            throw new AccessDeniedException();
-        }
-
         $media = $this->getMedia($id);
 
         if (!$media) {
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
-        return $this->getProvider($media)
-            ->getDownloadResponse($media, $format, $this->getRequest()->get('mode', 'http'));
+        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())){
+            throw new AccessDeniedException();
+        }
+
+        $response = $this->getProvider($media)
+            ->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
+
+        return $response;
     }
 }

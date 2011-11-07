@@ -6,7 +6,6 @@
                 <source>sonata_media</source>
                 <target>Media</target>
             </trans-unit>
-
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
                 <target>Edit</target>
@@ -15,7 +14,6 @@
                 <source>sidemenu.link_media_view</source>
                 <target>View</target>
             </trans-unit>
-
             <trans-unit id="breadcrumb.link_media_create">
                 <source>breadcrumb.link_media_create</source>
                 <target>Create</target>
@@ -44,7 +42,6 @@
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Edit</target>
             </trans-unit>
-
             <trans-unit id="media">
                 <source>media</source>
                 <target>Media</target>
@@ -113,7 +110,6 @@
                 <source>label.public_url</source>
                 <target>Public URL</target>
             </trans-unit>
-
             <trans-unit id="label.name">
                 <source>label.name</source>
                 <target>Name</target>
@@ -126,7 +122,6 @@
                 <source>label.author</source>
                 <target>Author</target>
             </trans-unit>
-
             <trans-unit id="label.enabled">
                 <source>label.enabled</source>
                 <target>Enabled</target>
@@ -139,12 +134,10 @@
                 <source>label.video_reference</source>
                 <target>Change video</target>
             </trans-unit>
-
             <trans-unit id="label.description">
                 <source>label.description</source>
                 <target>Description</target>
             </trans-unit>
-
             <trans-unit id="title.formats">
                 <source>title.formats</source>
                 <target>Formats</target>
@@ -161,7 +154,6 @@
                 <source>link.all_providers</source>
                 <target>All</target>
             </trans-unit>
-
             <trans-unit id="sonata.media.provider.dailymotion">
                 <source>sonata.media.provider.dailymotion</source>
                 <target>DailyMotion</target>
@@ -181,6 +173,30 @@
             <trans-unit id="sonata.media.provider.file">
                 <source>sonata.media.provider.file</source>
                 <target>File</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url">
+                <source>label.protected_download_url</source>
+                <target>Protected URL</target>
+            </trans-unit>
+            <trans-unit id="description.roles_download_strategy">
+                <source>description.roles_download_strategy</source>
+                <target>The media can be retrieved by users with the following roles : %roles%.</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url_notice">
+                <source>label.protected_download_url_notice</source>
+                <target>Warning</target>
+            </trans-unit>
+            <trans-unit id="description.public_download_strategy">
+                <source>description.public_download_strategy</source>
+                <target>The media can be retrieved by anyone.</target>
+            </trans-unit>
+            <trans-unit id="description.forbidden_download_strategy">
+                <source>description.forbidden_download_strategy</source>
+                <target>The media can be retrieved by nobody.</target>
+            </trans-unit>
+            <trans-unit id="link.test_protected_url">
+                <source>link.test_protected_url</source>
+                <target>Link Preview</target>
             </trans-unit>
         </body>
     </file>

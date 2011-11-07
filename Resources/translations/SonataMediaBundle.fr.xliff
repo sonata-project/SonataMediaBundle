@@ -6,7 +6,6 @@
                 <source>sonata_media</source>
                 <target>Média</target>
             </trans-unit>
-
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
                 <target>Edition</target>
@@ -15,7 +14,6 @@
                 <source>sidemenu.link_media_view</source>
                 <target>Visualiser</target>
             </trans-unit>
-
             <trans-unit id="breadcrumb.link_media_list">
                 <source>breadcrumb.link_media_list</source>
                 <target>Médias</target>
@@ -36,12 +34,10 @@
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Edition</target>
             </trans-unit>
-
             <trans-unit id="breadcrumb.link_media_create">
                 <source>breadcrumb.link_media_create</source>
                 <target>Ajouter</target>
             </trans-unit>
-
             <trans-unit id="media">
                 <source>media</source>
                 <target>Media</target>
@@ -110,7 +106,6 @@
                 <source>label.public_url</source>
                 <target>URL Publique</target>
             </trans-unit>
-
             <trans-unit id="label.select_context">
                 <source>label.select_context</source>
                 <target>Contexte : </target>
@@ -123,7 +118,6 @@
                 <source>link.all_providers</source>
                 <target>Tous</target>
             </trans-unit>
-
             <trans-unit id="sonata.media.provider.dailymotion">
                 <source>sonata.media.provider.dailymotion</source>
                 <target>DailyMotion</target>
@@ -143,6 +137,30 @@
             <trans-unit id="sonata.media.provider.file">
                 <source>sonata.media.provider.file</source>
                 <target>Fichier</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url">
+                <source>label.protected_download_url</source>
+                <target>URL Protégée</target>
+            </trans-unit>
+            <trans-unit id="description.roles_download_strategy">
+                <source>description.roles_download_strategy</source>
+                <target>Le média peut être récupéré par les utilisateurs avec une des permissions suivantes : %roles%.</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url_notice">
+                <source>label.protected_download_url_notice</source>
+                <target>Attention</target>
+            </trans-unit>
+            <trans-unit id="description.public_download_strategy">
+                <source>description.public_download_strategy</source>
+                <target>Le média peut être récupéré par tout le monde.</target>
+            </trans-unit>
+            <trans-unit id="description.forbidden_download_strategy">
+                <source>description.forbidden_download_strategy</source>
+                <target>Le média peut être récupéré par personne.</target>
+            </trans-unit>
+            <trans-unit id="link.test_protected_url">
+                <source>link.test_protected_url</source>
+                <target>Lien d'exemple</target>
             </trans-unit>
         </body>
     </file>

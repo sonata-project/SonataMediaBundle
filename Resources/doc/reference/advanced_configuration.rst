@@ -6,9 +6,12 @@ Full configuration options:
 .. code-block:: yaml
 
     sonata_media:
-        db_driver: orm
+        db_driver: doctrine_orm
         contexts:
             default:  # the default context is mandatory
+                download:
+                    strategy: sonata.media.security.superadmin_strategy
+                    mode: http
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -20,6 +23,9 @@ Full configuration options:
                     big:   { width: 500 , quality: 70}
 
             tv:
+                download:
+                    strategy: sonata.media.security.superadmin_strategy
+                    mode: http
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -30,6 +36,9 @@ Full configuration options:
                     grandmatv:  { width: 640 , quality: 480}
 
             news:
+                download:
+                    strategy: sonata.media.security.superadmin_strategy
+                    mode: http
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -53,7 +62,7 @@ Full configuration options:
             sonata.media.cdn.fallback:
                 cdn:      sonata.media.cdn.panther
                 fallback: sonata.media.cdn.server
-                
+
         filesystem:
             sonata.media.adapter.filesystem.local:
                 directory:  %kernel.root_dir%/../web/uploads/media
@@ -69,7 +78,7 @@ Full configuration options:
                 create:   false
 
             sonata.media.adapter.filesystem.s3:
-                bucket:     
+                bucket:
                 accessKey:
                 secretKey:
                 create:     false

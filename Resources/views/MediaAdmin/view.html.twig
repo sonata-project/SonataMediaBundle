@@ -65,6 +65,16 @@ file that was distributed with this source code.
             </td>
         <tr>
         <tr>
+            <td>{% trans from 'SonataMediaBundle' %}label.protected_download_url{% endtrans %}</td>
+            <td>
+                <input type="text" value="{{ path('sonata_media_download', {'id': media.id}) }}" style="width:500px"/>
+                <a href="{{ path('sonata_media_download', {'id': media.id}) }}">{% trans from 'SonataMediaBundle' %}link.test_protected_url{% endtrans %}</a>
+                <br />
+                <span class="label warning">{% trans from 'SonataMediaBundle' %}label.protected_download_url_notice{% endtrans %}</span> {{ security.description }}
+            </td>
+        <tr>
+
+        <tr>
             <td>{% trans from 'SonataMediaBundle' %}label.public_url{% endtrans %}</td>
             <td><input type="text" value="{% path media, format %}" style="width:500px"/></td>
         <tr>

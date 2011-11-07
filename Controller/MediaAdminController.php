@@ -42,6 +42,7 @@ class MediaAdminController extends Controller
             'format'        => $this->get('request')->get('format', 'reference'),
             'base_template' => $this->getBaseTemplate(),
             'admin'         => $this->admin,
+            'security'      => $this->get('sonata.media.pool')->getDownloadSecurity($media),
             'action'        => 'view'
         ));
     }

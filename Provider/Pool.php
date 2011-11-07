@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 
 /**
  *
@@ -29,6 +30,8 @@ class Pool
     protected $providers = array();
 
     protected $contexts = array();
+
+    protected $downloadSecurities = array();
 
     /**
      * @throws \RuntimeException
@@ -55,6 +58,15 @@ class Pool
     }
 
     /**
+     * @param $name
+     * @param \Sonata\MediaBundle\Security\DownloadStrategyInterface $security
+     */
+    public function addDownloadSecurity($name, DownloadStrategyInterface $security)
+    {
+        $this->downloadSecurities[$name] = $security;
+    }
+
+    /**
      * @param array $providers
      * @return void
      */
@@ -75,19 +87,22 @@ class Pool
      * @param string $name
      * @param array $providers
      * @param array $formats
+     * @param array $download
      * @return void
      */
-    public function addContext($name, array $providers = array(), array $formats = array())
+    public function addContext($name, array $providers = array(), array $formats = array(), array $download = array())
     {
         if (!$this->hasContext($name)) {
             $this->contexts[$name] = array(
                 'providers' => array(),
                 'formats'   => array(),
+                'download'  => array(),
             );
         }
 
-        $this->contexts[$name]['providers']    = $providers;
-        $this->contexts[$name]['formats']      = $formats;
+        $this->contexts[$name]['providers'] = $providers;
+        $this->contexts[$name]['formats']   = $formats;
+        $this->contexts[$name]['download']  = $download;
     }
 
     /**
@@ -182,6 +197,34 @@ class Pool
         }
 
         return $choices;
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return \Sonata\MediaBundle\Security\DownloadStrategyInterface
+     */
+    public function getDownloadSecurity(MediaInterface $media)
+    {
+        $context = $this->getContext($media->getContext());
+
+        $id = $context['download']['strategy'];
+
+        if (!isset($this->downloadSecurities[$id])) {
+            throw new \RuntimeException('Unable to retrieve the download security : '.$id);
+        }
+
+        return $this->downloadSecurities[$id];
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return string
+     */
+    public function getDownloadMode(MediaInterface $media)
+    {
+        $context = $this->getContext($media->getContext());
+
+        return $context['download']['mode'];
     }
 }
 

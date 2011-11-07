@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="sonata.media.security.public_strategy" class="Sonata\MediaBundle\Security\PublicDownloadStrategy" >
+            <argument type="service" id="translator" />
+        </service>
+
+        <service id="sonata.media.security.forbidden_strategy" class="Sonata\MediaBundle\Security\ForbiddenDownloadStrategy">
+            <argument type="service" id="translator" />
+        </service>
+
+        <service id="sonata.media.security.superadmin_strategy" class="Sonata\MediaBundle\Security\RolesDownloadStrategy" >
+            <argument type="service" id="translator" />
+            <argument type="service" id="security.context" />
+            <argument type="collection">
+                <argument>ROLE_SUPER_ADMIN</argument>
+                <argument>ROLE_ADMIN</argument>
+            </argument>
+        </service>
+
+        <service id="sonata.media.security.connected_strategy" class="Sonata\MediaBundle\Security\RolesDownloadStrategy" >
+            <argument type="service" id="translator" />
+            <argument type="service" id="security.context" />
+            <argument type="collection">
+                <argument>IS_AUTHENTICATED_FULLY</argument>
+                <argument>IS_AUTHENTICATED_REMEMBERED</argument>
+            </argument>
+        </service>
+    </services>
+</container>

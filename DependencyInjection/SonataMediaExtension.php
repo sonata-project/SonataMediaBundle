@@ -43,6 +43,7 @@ class SonataMediaExtension extends Extension
         $loader->load('media.xml');
         $loader->load('twig.xml');
         $loader->load('block.xml');
+        $loader->load('security.xml');
 
         if (interface_exists('Sonata\FormatterBundle\Extension\ExtensionInterface', true)) {
             $loader->load('formatter.xml');
@@ -64,6 +65,8 @@ class SonataMediaExtension extends Extension
         // for adding formats ....
         $pool->addMethodCall('__hack__', $config);
 
+        $strategies = array();
+
         foreach ($config['contexts'] as $name => $settings) {
             $formats = array();
 
@@ -71,7 +74,26 @@ class SonataMediaExtension extends Extension
                 $formats[$name.'_'.$format] = $value;
             }
 
-            $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats));
+            if (!isset($settings['download'])) {
+                $settings['download'] = array();
+            }
+
+            if (!isset($settings['download']['mode'])) {
+                $settings['download']['mode'] = 'http';
+            }
+
+            if (!isset($settings['download']['strategy'])) {
+                $settings['download']['strategy'] = 'sonata.media.security.superadmin_strategy';
+            }
+
+            $strategies[] = $settings['download']['strategy'];
+            $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats, $settings['download']));
+        }
+
+        $strategies = array_unique($strategies);
+
+        foreach ($strategies as $strategyId) {
+            $pool->addMethodCall('addDownloadSecurity', array($strategyId, new Reference($strategyId)));
         }
     }
 
