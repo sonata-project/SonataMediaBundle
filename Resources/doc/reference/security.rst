@@ -7,17 +7,17 @@ a download strategy interface, which can be set per context and authorize the me
 
 Built-in security strategy:
 
-* sonata.media.security.superadmin_strategy : DEFAULT - the user need to have one of the following roles : ROLE_SUPER_ADMIN or ROLE_ADMIN
-* sonata.media.security.public_strategy : no restriction, files are public
-* sonata.media.security.forbidden_strategy : not possible to retrieve the original file
-* sonata.media.security.connected_strategy : the need to have one of the following roles : IS_AUTHENTICATED_FULLY or IS_AUTHENTICATED_REMEMBERED
+* ``sonata.media.security.superadmin_strategy`` : DEFAULT - the user need to have one of the following roles : ``ROLE_SUPER_ADMIN`` or ``ROLE_ADMIN``
+* ``sonata.media.security.public_strategy`` : no restriction, files are public
+* ``sonata.media.security.forbidden_strategy`` : not possible to retrieve the original file
+* ``sonata.media.security.connected_strategy`` : the need to have one of the following roles : ``IS_AUTHENTICATED_FULLY`` or ``IS_AUTHENTICATED_REMEMBERED``
 
 On top of that, there is 3 download modes which can be configured to download the media. The download mode depends on
 the HTTP server you used:
 
 * http : DEFAULT - use php to send the file
-* X-Sendfile : use the X-Sendfile flag (Apache + mod_xsendfile : https://tn123.org/mod_xsendfile/)
-* X-Accel-Redirect : use the X-Accel-Redirect flag (Nginx : http://wiki.nginx.org/X-accel)
+* X-Sendfile : use the ``X-Sendfile`` flag (Apache + mod_xsendfile : https://tn123.org/mod_xsendfile/)
+* X-Accel-Redirect : use the ``X-Accel-Redirect`` flag (Nginx : http://wiki.nginx.org/X-accel)
 
 .. note::
 
@@ -136,14 +136,13 @@ Let's create the following strategy : a media can be downloaded only once per se
 
 Let's explain a bit :
 
-* ``__construct`` : the constructor get the different dependency. As the session belongs to the request scope, it is
-not possible to inject the service session, so the Container is injected.
+* ``__construct`` : the constructor get the different dependency. As the session belongs to the request scope, it is not possible to inject the service session, so the Container is injected.
 * ``isGranted`` : the method test the number of time the file has been downloaded
 * ``getDescription`` : return a translated message to explain what the current strategy does
 * ``getSession`` : return the session from the container.
 
 
-The last important part is declaring the service. Open the service.xml file and add the following lines.
+The last important part is declaring the service. Open the ``service.xml`` file and add the following lines.
 
 .. code-block:: xml
 
