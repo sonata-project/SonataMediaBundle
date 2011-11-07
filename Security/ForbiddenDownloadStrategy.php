@@ -41,7 +41,7 @@ class ForbiddenDownloadStrategy implements DownloadStrategyInterface
      *
      * @return string
      */
-    function getDescription()
+    public function getDescription()
     {
         return $this->translator->trans('description.forbidden_download_strategy', array(), 'SonataMediaBundle');
     }

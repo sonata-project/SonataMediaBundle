@@ -50,7 +50,7 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
      *
      * @return string
      */
-    function getDescription()
+    public function getDescription()
     {
         return $this->translator->trans('description.roles_download_strategy', array('%roles%' => implode(', ', $this->roles)), 'SonataMediaBundle');
     }
