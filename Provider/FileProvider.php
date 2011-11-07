@@ -46,13 +46,13 @@ class FileProvider extends BaseProvider
      */
     public function buildEditForm(FormMapper $formMapper)
     {
-        $formMapper->add('name', null, array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.name')));
-        $formMapper->add('enabled', null, array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.enabled')));
-        $formMapper->add('authorName', null, array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.author')));
-        $formMapper->add('cdnIsFlushable', null, array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.cdn_is_flushable')));
-        $formMapper->add('description', null, array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.description')));
-        $formMapper->add('copyright', null, array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.copyright')));
-        $formMapper->add('binaryContent', 'file', array('required' => false, 'label' => $formMapper->getAdmin()->trans('label.file')));
+        $formMapper->add('name', null, array('required' => false, 'label' => 'label.name'));
+        $formMapper->add('enabled', null, array('required' => false, 'label' => 'label.enabled'));
+        $formMapper->add('authorName', null, array('required' => false, 'label' => 'label.author'));
+        $formMapper->add('cdnIsFlushable', null, array('required' => false, 'label' => 'label.cdn_is_flushable'));
+        $formMapper->add('description', null, array('required' => false, 'label' => 'label.description'));
+        $formMapper->add('copyright', null, array('required' => false, 'label' => 'label.copyright'));
+        $formMapper->add('binaryContent', 'file', array('required' => false, 'label' => 'label.file'));
     }
 
     /**
@@ -62,7 +62,7 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'file', array('label' => $formMapper->getAdmin()->trans('label.file')));
+        $formMapper->add('binaryContent', 'file', array('label' => 'label.file'));
     }
 
     /**
