@@ -4,8 +4,9 @@ SonataMediaBundle - Media management on steroids
 The ``SonataMediaBundle`` is a media library based on a dedicated ``provider``
 which handles different ``type`` of media: files, videos or images.
 
-The full documentation can be found in the ``Resources/doc/`` directory and
-is best read offline after cloning this repository.
+The online documentation of the bundle is in http://sonata-project.org/bundles/media
+
+For contribution to the documentation you cand find it on [Resources/doc/](https://github.com/sonata-project/SonataMediaBundle/tree/master/Resources/doc)
 
 Each ``type`` is managed by a ``provider`` service which is in charge of:
 
@@ -23,6 +24,12 @@ As the infrastructure is not standard, the ``MediaBundle`` abstracts the
 ``filesystem`` layer and the ``cdn`` layer.
 
 The backend is handled by the ``AdminBundle``.
+
+
+**Google Groups**: For questions and proposals you can post on this google groups
+
+* [Sonata Users](https://groups.google.com/group/sonata-users): Only for user questions
+* [Sonata Devs](https://groups.google.com/group/sonata-devs): Only for devs
 
 Available services
 ------------------
