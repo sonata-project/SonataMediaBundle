@@ -56,5 +56,6 @@ Reference Guide
    reference/helpers
    reference/creating_a_provider_class
    reference/media_context
+   reference/usage
    reference/security
    reference/advanced_configuration
