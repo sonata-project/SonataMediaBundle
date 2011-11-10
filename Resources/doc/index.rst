@@ -19,6 +19,12 @@ is defined by a set of ``formats`` and a set of ``providers``.
 As the infrastructure is not standard, the ``MediaBundle`` abstracts the
 ``filesystem`` layer and the ``cdn`` layer.
 
+**Google Groups**: For questions and proposals you can post on this google groups
+
+* [Sonata Users](https://groups.google.com/group/sonata-users): Only for user questions
+* [Sonata Devs](https://groups.google.com/group/sonata-devs): Only for devs
+
+
 Available services
 ------------------
 
