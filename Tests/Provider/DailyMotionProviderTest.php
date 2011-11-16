@@ -149,10 +149,6 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
             ->method('add')
             ->will($this->returnValue(null));
 
-        $formMapper->expects($this->exactly(8))
-            ->method('getAdmin')
-            ->will($this->returnValue($admin));
-
         $provider->buildCreateForm($formMapper);
 
         $provider->buildEditForm($formMapper);
