@@ -11,6 +11,7 @@
 namespace Sonata\MediaBundle\Filesystem;
 
 use Gaufrette\Adapter as AdapterInterface;
+use Gaufrette\Filesystem;
 
 class Replicate implements AdapterInterface
 {
@@ -129,14 +130,30 @@ class Replicate implements AdapterInterface
         $this->master->rename($key, $new);
         $this->slave->rename($key, $new);
     }
-    
+
     /**
      * If the adapter can allow inserting metadata
      *
      * @return bool true if supports metadata, false if not
      */
-    function supportsMetadata()
+    public function supportsMetadata()
     {
         return $this->master->supportsMetadata() && $this->slave->supportsMetadata();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createFile($key, Filesystem $filesystem)
+    {
+        return $this->master->createFile($key, $filesystem);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createFileStream($key, Filesystem $filesystem)
+    {
+        return $this->master->createFileStream($key, $filesystem);
     }
 }
