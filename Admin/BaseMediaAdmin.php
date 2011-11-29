@@ -47,7 +47,7 @@ abstract class BaseMediaAdmin extends Admin
         $listMapper
 //            ->add('image', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig'))
             ->add('custom', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig'))
-            ->add('enabled')
+            ->add('enabled', 'boolean')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'view' => array(),
@@ -118,7 +118,7 @@ abstract class BaseMediaAdmin extends Admin
 
         return array(
             'provider' => $this->getRequest()->get('provider'),
-            'context'  => $this->getRequest()->get('context', 'default'),
+            'context'  => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
         );
     }
 

@@ -33,6 +33,13 @@ class Pool
 
     protected $downloadSecurities = array();
 
+    protected $defaultContext;
+
+    public function __construct($context)
+    {
+        $this->defaultContext = $context;
+    }
+
     /**
      * @throws \RuntimeException
      * @param  $name
@@ -225,6 +232,11 @@ class Pool
         $context = $this->getContext($media->getContext());
 
         return $context['download']['mode'];
+    }
+
+    public function getDefaultContext()
+    {
+        return $this->defaultContext;
     }
 }
 

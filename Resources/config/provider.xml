@@ -14,8 +14,10 @@
     </parameters>
 
     <services>
-        <service id="sonata.media.pool" class="%sonata.media.pool.class%"/>
-        
+        <service id="sonata.media.pool" class="%sonata.media.pool.class%">
+            <argument />
+        </service>
+
         <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.image</argument>

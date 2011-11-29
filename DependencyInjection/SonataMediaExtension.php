@@ -53,6 +53,8 @@ class SonataMediaExtension extends Extension
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
 
+        $config['default_context'] = !isset($config['default_context']) ? $config['default_context'] : 'default';
+
         $loader->load(sprintf('%s.xml', $config['db_driver']));
         $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
 
@@ -60,6 +62,7 @@ class SonataMediaExtension extends Extension
         $this->configureCdnAdapter($container, $config);
 
         $pool = $container->getDefinition('sonata.media.pool');
+        $pool->replaceArgument(0, $config['default_context']);
 
         // this shameless hack is done in order to have one clean configuration
         // for adding formats ....

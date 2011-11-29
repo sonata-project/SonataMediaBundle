@@ -7,6 +7,7 @@ Full configuration options:
 
     sonata_media:
         db_driver: doctrine_orm
+        default_context: default
         contexts:
             default:  # the default context is mandatory
                 download:

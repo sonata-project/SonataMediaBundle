@@ -31,7 +31,7 @@ class MediaAdmin extends Admin
 
         $providers = array();
 
-        foreach($this->pool->getProviderNamesByContext('default') as $name) {
+        foreach($this->pool->getProviderNamesByContext($this->getPersistentParameter('context', $this->pool->getDefaultContext())) as $name) {
             $providers[$name] = $name;
         }
 
