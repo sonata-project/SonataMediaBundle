@@ -53,7 +53,7 @@ class SonataMediaExtension extends Extension
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
 
-        $config['default_context'] = !isset($config['default_context']) ? $config['default_context'] : 'default';
+        $config['default_context'] = isset($config['default_context']) ? $config['default_context'] : 'default';
 
         $loader->load(sprintf('%s.xml', $config['db_driver']));
         $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
