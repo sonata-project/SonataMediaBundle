@@ -10,7 +10,7 @@ if (!is_dir($vendorDir)) {
 
 $deps = array(
     array('symfony', 'git://github.com/symfony/symfony.git', isset($_SERVER['SYMFONY_VERSION']) ? $_SERVER['SYMFONY_VERSION'] : 'origin/master'),
-    array('knpmenu', 'git://github.com/knplabs/KnpMenu.git', 'origin/master'),
+    array('knpmenu', 'git://github.com/KnpLabs/KnpMenu.git', 'origin/master'),
     array('Sonata/AdminBundle', 'git://github.com/sonata-project/SonataAdminBundle.git', 'origin/master'),
     array('gaufrette', 'git://github.com/KnpLabs/Gaufrette.git', 'origin/master')
 );
