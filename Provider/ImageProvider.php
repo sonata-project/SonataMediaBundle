@@ -50,13 +50,7 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
-            $path = $this->getReferenceImage($media);
-        } else {
-            $path = sprintf('%s/thumb_%s_%s.jpg',  $this->generatePath($media), $media->getId(), $format);
-        }
-
-        return $this->getCdnPath($path, $media->getCdnIsFlushable());
+        return $this->thumbnail->generatePublicUrl($this, $media, $format);
     }
 
     /**
@@ -66,11 +60,7 @@ class ImageProvider extends FileProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        );
+        return $this->thumbnail->generatePrivateUrl($this, $media, $format);
     }
 
     /**
@@ -85,12 +75,6 @@ class ImageProvider extends FileProvider
             $this->getFilesystem()->delete($path);
         }
 
-        // delete the differents formats
-        foreach ($this->formats as $format => $definition) {
-            $path = $this->generatePrivateUrl($media, $format);
-            if ($this->getFilesystem()->has($path)) {
-                $this->getFilesystem()->delete($path);
-            }
-        }
+        $this->thumbnail->delete($this, $media);
     }
 }

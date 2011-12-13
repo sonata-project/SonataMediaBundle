@@ -12,6 +12,8 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\Media\ResizerInterface;
+use Gaufrette\Filesystem;
 
 interface MediaProviderInterface
 {
@@ -194,11 +196,26 @@ interface MediaProviderInterface
     /**
      * Mode can be x-file
      *
-     * @abstract
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param $format
      * @param $mode
      * @return \Symfony\Component\HttpFoundation\Response
      */
     function getDownloadResponse(MediaInterface $media, $format, $mode);
+
+    /**
+     * @return \Sonata\MediaBundle\Media\ResizerInterface
+     */
+    function getResizer();
+
+    /**
+     * @return \Gaufrette\Filesystem
+     */
+    function getFilesystem();
+
+    /**
+     * @param string $relativePath
+     * @param bool $isFlushable
+     */
+    function getCdnPath($relativePath, $isFlushable);
 }

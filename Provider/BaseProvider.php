@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Media\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 
 abstract class BaseProvider implements MediaProviderInterface
 {
@@ -35,18 +36,22 @@ abstract class BaseProvider implements MediaProviderInterface
 
     protected $cdn;
 
+    protected $thumbnail;
+
     /**
      * @param $name
      * @param \Gaufrette\Filesystem $filesystem
      * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
+     * @param \Sonata\MediaBundle\Templating\Helper\ThumbnailInterface $thumbnail
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
     {
         $this->name          = $name;
         $this->filesystem    = $filesystem;
         $this->cdn           = $cdn;
         $this->pathGenerator = $pathGenerator;
+        $this->thumbnail     = $thumbnail;
     }
 
     /**
@@ -90,21 +95,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function generateThumbnails(MediaInterface $media)
     {
-        if (!$this->requireThumbnails()) {
-            return;
-        }
-
-        $referenceFile = $this->getReferenceFile($media);
-
-        foreach ($this->formats as $format => $settings) {
-            $this->getResizer()->resize(
-                $media,
-                $referenceFile,
-                $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
-                'jpg' ,
-                $settings
-            );
-        }
+        $this->thumbnail->generate($this, $media);
     }
 
     /**
@@ -144,13 +135,7 @@ abstract class BaseProvider implements MediaProviderInterface
             $this->getFilesystem()->delete($path);
         }
 
-        // delete the differents formats
-        foreach ($this->formats as $format => $definition) {
-            $path = $this->generatePrivateUrl($media, $format);
-            if ($this->getFilesystem()->has($path)) {
-                $this->getFilesystem()->delete($path);
-            }
-        }
+        $this->thumbnail->delete($this, $media);
     }
 
     /**

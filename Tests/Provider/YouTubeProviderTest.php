@@ -13,6 +13,8 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\YouTubeProvider;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +39,9 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $provider = new \Sonata\MediaBundle\Provider\YouTubeProvider('file', $filesystem, $cdn, $generator);
+        $thumbnail = new FormatThumbnail;
+
+        $provider = new YouTubeProvider('file', $filesystem, $cdn, $generator, $thumbnail);
         $provider->setResizer($resizer);
 
         return $provider;

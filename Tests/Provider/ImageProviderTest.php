@@ -12,6 +12,8 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Provider\ImageProvider;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +38,9 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $provider = new \Sonata\MediaBundle\Provider\ImageProvider('file', $filesystem, $cdn, $generator);
+        $thumbnail = new FormatThumbnail;
+
+        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail);
         $provider->setResizer($resizer);
 
         return $provider;

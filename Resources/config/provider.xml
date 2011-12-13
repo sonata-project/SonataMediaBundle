@@ -10,6 +10,8 @@
         <parameter key="sonata.media.provider.dailymotion.class">Sonata\MediaBundle\Provider\DailyMotionProvider</parameter>
         <parameter key="sonata.media.provider.vimeo.class">Sonata\MediaBundle\Provider\VimeoProvider</parameter>
 
+        <parameter key="sonata.media.thumbnail.format">Sonata\MediaBundle\Thumbnail\FormatThumbnail</parameter>
+
         <parameter key="sonata.media.pool.class">Sonata\MediaBundle\Provider\Pool</parameter>
     </parameters>
 
@@ -18,12 +20,16 @@
             <argument />
         </service>
 
+        <service id="sonata.media.thumbnail.format" class="%sonata.media.thumbnail.format%" />
+
         <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
             <tag name="sonata.media.provider" />
             <argument>sonata.media.provider.image</argument>
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="sonata.media.thumbnail.format" />
+
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -38,6 +44,8 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="sonata.media.thumbnail.format" />
+
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -52,6 +60,8 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="sonata.media.thumbnail.format" />
+
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -66,6 +76,8 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="sonata.media.thumbnail.format" />
+
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
@@ -80,6 +92,8 @@
             <argument />
             <argument />
             <argument />
+            <argument type="service" id="sonata.media.thumbnail.format" />
+
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>

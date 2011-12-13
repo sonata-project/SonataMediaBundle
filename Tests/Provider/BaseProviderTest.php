@@ -33,7 +33,9 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $provider = new TestProvider('test', $filesystem, $cdn, $generator);
+        $thumbnail = $this->getMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
+
+        $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail);
 
         return $provider;
     }

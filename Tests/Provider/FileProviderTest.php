@@ -12,6 +12,8 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +38,9 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $filesystem, $cdn, $generator);
+        $thumbnail = new FormatThumbnail();
+
+        $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -91,7 +95,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testForm()
     {
-        if (!class_exists('\Sonata\AdminBundle\Form\FormMapper')) {
+        if (!class_exists('Sonata\AdminBundle\Form\FormMapper')) {
             $this->markTestSkipped("AdminBundle doesn't seem to be installed");
         }
 
@@ -170,7 +174,9 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $filesystem = new \Gaufrette\Filesystem($adapter);
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
-        $provider = new \Sonata\MediaBundle\Provider\FileProvider('file', $filesystem, $cdn, $generator);
+        $thumbnail = new FormatThumbnail();
+
+        $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail);
 
         $media = new Media;
         $media->setId(853);

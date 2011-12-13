@@ -8,32 +8,34 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Sonata\MediaBundle\Templating\Helper;
 
 use Symfony\Component\Templating\Helper\Helper;
-
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * MediaHelper manages action inclusions.
  *
- * @author Thomas Rabaix <thomas.rabaix@sonata-project.com>
+ * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class MediaHelper extends Helper
 {
-
-    protected $mediaService = null;
+    protected $pool = null;
 
     protected $templating = null;
 
     /**
-     * Constructor.
-     *
-     * @param Constructor $media_provider A MediaProvider instance
+     * @param \Sonata\MediaBundle\Provider\Pool $mediaService
+     * @param \Symfony\Component\Templating\EngineInterface $templating
      */
-    public function __construct($mediaService, $templating)
+    public function __construct(Pool $pool, EngineInterface $templating)
     {
-        $this->mediaService    = $mediaService;
-        $this->templating      = $templating;
+        $this->pool       = $pool;
+        $this->templating = $templating;
     }
 
     /**
@@ -60,15 +62,13 @@ class MediaHelper extends Helper
             return '';
         }
 
-        $provider = $this
-            ->getMediaService()
-            ->getProvider($media->getProviderName());
+        $provider = $this->getProvider($media);
 
         $format = $provider->getFormatName($media, $format);
 
         $options = $provider->getHelperProperties($media, $format, $options);
 
-        return $this->getTemplating()->render(
+        return $this->templating->render(
             $provider->getTemplate('helper_view'),
             array(
                  'media'    => $media,
@@ -76,6 +76,15 @@ class MediaHelper extends Helper
                  'options'  => $options,
             )
         );
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
+     */
+    private function getProvider(MediaInterface $media)
+    {
+        return $this->pool->getProvider($media->getProviderName());
     }
 
     /**
@@ -92,16 +101,15 @@ class MediaHelper extends Helper
              return '';
          }
 
-         $provider = $this->getMediaService()
-            ->getProvider($media->getProviderName());
+         $provider = $this->getProvider($media);
 
          $format = $provider->getFormatName($media, $format);
-         $format_definition = $provider->getFormat($format);
+         $formatDefinition = $provider->getFormat($format);
 
          // build option
          $options = array_merge(array(
              'title' => $media->getName(),
-             'width' => $format_definition['width'],
+             'width' => $formatDefinition['width'],
          ), $options);
 
          $options['src'] = $provider->generatePublicUrl($media, $format);
@@ -126,21 +134,10 @@ class MediaHelper extends Helper
              return '';
         }
 
-        $provider = $this->getMediaService()
-           ->getProvider($media->getProviderName());
+        $provider = $this->getProvider($media);
 
         $format = $provider->getFormatName($media, $format);
 
         return $provider->generatePublicUrl($media, $format);
-    }
-
-    public function getMediaService()
-    {
-        return $this->mediaService;
-    }
-
-    public function getTemplating()
-    {
-        return $this->templating;
     }
 }

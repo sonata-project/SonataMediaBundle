@@ -13,6 +13,8 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\VimeoProvider;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +39,9 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $provider = new \Sonata\MediaBundle\Provider\VimeoProvider('file', $filesystem, $cdn, $generator);
+        $thumbnail = new FormatThumbnail;
+
+        $provider = new VimeoProvider('file', $filesystem, $cdn, $generator, $thumbnail);
         $provider->setResizer($resizer);
 
         return $provider;
