@@ -18,6 +18,19 @@ Add the ``Gaufrette`` file abstraction library::
 
   git submodule add git://github.com/knplabs/Gaufrette.git vendor/gaufrette
 
+Next, you must register the new namespaces in the ``autoload.php`` config:
+
+.. code-block:: php
+
+  <?php
+  $loader->registerNamespaces(array(
+    'Application'   => __DIR__,
+    'Sonata'        => __DIR__.'/../vendor/bundles',
+    'Imagine'       => __DIR__.'/../vendor/imagine/lib',
+    'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
+    // ... other declarations
+  ));
+
 Next, be sure to enable the bundles in your application kernel:
 
 .. code-block:: php
@@ -65,20 +78,6 @@ Now, add the new `Application` Bundle into the kernel
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
       );
   }
-
-Update the ``autoload.php`` to add a new namespace:
-
-.. code-block:: php
-
-  <?php
-  $loader->registerNamespaces(array(
-    'Sonata'        => __DIR__,
-    'Application'   => __DIR__,
-    'Imagine'       => __DIR__.'/../vendor/imagine/lib',
-    'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
-
-    // ... other declarations
-  ));
 
 Then add these bundles in the doctrine mapping definition:
 
