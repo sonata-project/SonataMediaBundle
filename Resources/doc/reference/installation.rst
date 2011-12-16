@@ -55,6 +55,12 @@ entities for the media::
 
 .. note::
 
+    To be able to generate domain objects, you need to have a database driver configure in your project.
+    If it's not the case, just follow this:
+    http://symfony.com/doc/current/book/doctrine.html#configuring-the-database
+
+.. note::
+
     The command will generate domain objects in an ``Application`` namespace.
     So you can point entities' associations to a global and common namespace.
     This will make Entities sharing very easier as your models will allow to
