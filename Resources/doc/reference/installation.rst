@@ -1,14 +1,13 @@
 Installation
 ============
 
-To begin, add the dependent bundles to the ``src/`` directory. If you're
-using git, you can add them as submodules::
+Base bundles
+------------
 
-  git submodule add git://github.com/sonata-project/SonataMediaBundle.git  vendor/bundles/Sonata/MediaBundle
+This bundle is mainely dependant of the SonataAdminBundle and the SonataDoctrineORMAdminBundle. So be sure you have install those two bundles before start:
 
-  // dependency bundles
-  git submodule add git://github.com/sonata-project/SonataAdminBundle.git vendor/bundles/Sonata/AdminBundle
-  git submodule add git://github.com/sonata-project/SonataEasyExtendsBundle.git vendor/bundles/Sonata/EasyExtendsBundle
+ * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
+ * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
 
 Add the ``Imagine`` image processing library::
 
