@@ -9,15 +9,36 @@ This bundle is mainely dependant of the SonataAdminBundle and the SonataDoctrine
  * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
 
-Add the ``Imagine`` image processing library::
+Installation
+------------
 
-  git submodule add git://github.com/avalanche123/Imagine.git vendor/imagine
+To begin, add the dependent bundles to the ``vendor/bundles`` directory. Add
+the following lines to the file ``deps``::
 
-Add the ``Gaufrette`` file abstraction library::
+  [SonataMediaBundle]
+      git=http://github.com/sonata-project/SonataMediaBundle.git
+      target=/bundles/Sonata/MediaBundle
 
-  git submodule add git://github.com/KnpLabs/Gaufrette.git vendor/gaufrette
+  [EasyExtendsBundle]
+      git=http://github.com/sonata-project/SonataEasyExtendsBundle.git
+      target=/bundles/Sonata/EasyExtendsBundle
 
-Next, you must register the new namespaces in the ``autoload.php`` config:
+  [Imagine]:
+      git=http://github.com/avalanche123/Imagine.git
+      target=/imagine
+
+  [Gaufrette]
+      git=http://github.com/KnpLabs/Gaufrette.git
+      target=/gaufrette
+
+and run::
+
+  bin/vendors install
+
+Configuration
+-------------
+
+Next, you must complete the new namespaces registration in the ``autoload.php`` config (adding Imagine and Gaufrette), at the end the register function should look like this:
 
 .. code-block:: php
 
@@ -25,12 +46,14 @@ Next, you must register the new namespaces in the ``autoload.php`` config:
   $loader->registerNamespaces(array(
     'Application'   => __DIR__,
     'Sonata'        => __DIR__.'/../vendor/bundles',
+    'Knp\Bundle'    => __DIR__.'/../vendor/bundles',
+    'Knp\Menu'      => __DIR__.'/../vendor/knp/menu/src',
     'Imagine'       => __DIR__.'/../vendor/imagine/lib',
     'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
     // ... other declarations
   ));
 
-Next, be sure to enable the bundles in your application kernel:
+Next, be sure to enable the new bundles in your application kernel:
 
 .. code-block:: php
 
@@ -41,7 +64,6 @@ Next, be sure to enable the bundles in your application kernel:
       return array(
           // ...
           new Sonata\MediaBundle\SonataMediaBundle(),
-          new Sonata\AdminBundle\SonataAdminBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
           // ...
       );
@@ -74,13 +96,9 @@ Now, add the new `Application` Bundle into the kernel
   public function registerbundles()
   {
       return array(
-          // Application Bundles
+          ...
           new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
-
-          // Vendor specifics bundles
-          new Sonata\MediaBundle\SonataMediaBundle(),
-          new Sonata\AdminBundle\SonataAdminBundle(),
-          new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+          ...
       );
   }
 
@@ -98,9 +116,6 @@ Then add these bundles in the doctrine mapping definition:
                         ApplicationSonataMediaBundle: ~
                         SonataMediaBundle: ~
 
-
-Configuration
--------------
 
 To use the ``AdminBundle``, add the following to your application configuration
 file.
