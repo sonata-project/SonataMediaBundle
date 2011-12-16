@@ -13,9 +13,9 @@ Render the thumbnail:
 
 .. code-block:: php
 
-    <?php echo $view['sonata_media']->thumbnail($media, 'small_format') ?>
+    <?php echo $view['sonata_media']->thumbnail($media, 'small') ?>
 
-    <?php echo $view['sonata_media']->thumbnail($media, 'small_format', array(
+    <?php echo $view['sonata_media']->thumbnail($media, 'small', array(
         'class' => 'myclass'
     ) ?>
 
@@ -23,9 +23,9 @@ Render the media:
 
 .. code-block:: php
 
-    <?php echo $view['sonata_media']->media($media, 'small_format') ?>
+    <?php echo $view['sonata_media']->media($media, 'small') ?>
 
-    <?php echo $view['sonata_media']->media($media, 'small_format', array(
+    <?php echo $view['sonata_media']->media($media, 'small', array(
         'class' => 'myclass'
     ) ?>
 
@@ -36,14 +36,14 @@ Render the thumbnail:
 
 .. code-block:: jinja
 
-    {% thumbnail media, 'small_format' %}
+    {% thumbnail media, 'small' %}
 
-    {% thumbnail media, 'small_format' with {'class': 'myclass'} %}
+    {% thumbnail media, 'small' with {'class': 'myclass'} %}
 
 Render the media:
 
 .. code-block:: jinja
 
-    {% media media, 'small_format' %}
+    {% media media, 'small' %}
 
-    {% media media, 'small_format' %}
+    {% media media, 'small' %}
