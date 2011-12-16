@@ -305,12 +305,19 @@ interface MediaInterface
      * @param varchar $contentType
      */
     function setContentType($contentType);
+
+    /**
+     * @return string
+     */
+    function getExtension();
+
     /**
      * Get content_type
      *
      * @return varchar $contentType
      */
     function getContentType();
+
     /**
      * Set size
      *

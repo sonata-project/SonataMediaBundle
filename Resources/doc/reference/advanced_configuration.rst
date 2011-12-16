@@ -95,21 +95,25 @@ Full configuration options:
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
+                thumbnail:  sonata.media.thumbnail.format
 
             sonata.media.provider.image:
                 resizer:    sonata.media.resizer.simple # sonata.media.resizer.square
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
+                thumbnail:  sonata.media.thumbnail.format
 
             sonata.media.provider.youtube:
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
+                thumbnail:  sonata.media.thumbnail.format
 
             sonata.media.provider.dailymotion:
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
+                thumbnail:  sonata.media.thumbnail.format

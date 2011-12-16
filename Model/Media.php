@@ -539,6 +539,14 @@ abstract class Media implements MediaInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getExtension()
+    {
+        return pathinfo($this->getProviderReference(), PATHINFO_EXTENSION);
+    }
+
+    /**
      * Set size
      *
      * @param integer $size

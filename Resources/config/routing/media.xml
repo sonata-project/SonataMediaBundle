@@ -13,5 +13,4 @@
         <default key="_controller">SonataMediaBundle:Media:download</default>
         <default key="format">reference</default>
     </route>
-
 </routes>
