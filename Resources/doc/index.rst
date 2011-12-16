@@ -1,5 +1,5 @@
-Welcome to SonataMediaBundle Documentation
-==========================================
+Media Bundle Documentation
+==========================
 
 The ``SonataMediaBundle`` is a media library based on a dedicated ``provider``
 which handles different ``type`` of media: files, videos or images.
