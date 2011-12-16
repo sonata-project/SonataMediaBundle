@@ -58,7 +58,7 @@ Next, be sure to enable the new bundles in your application kernel:
 
   <?php
   // app/appkernel.php
-  public function registerbundles()
+  public function registerBundles()
   {
       return array(
           // ...
