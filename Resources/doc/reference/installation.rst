@@ -16,7 +16,7 @@ Add the ``Imagine`` image processing library::
 
 Add the ``Gaufrette`` file abstraction library::
 
-  git submodule add git://github.com/knplabs/Gaufrette.git vendor/gaufrette
+  git submodule add git://github.com/KnpLabs/Gaufrette.git vendor/gaufrette
 
 Next, you must register the new namespaces in the ``autoload.php`` config:
 
