@@ -1,3 +1,5 @@
+*WARNING* If you read that documentation from Github, use the raw mode as this markup is not interpreded well....
+
 Installation
 ============
 
@@ -38,19 +40,16 @@ and run::
 Configuration
 -------------
 
-Next, you must complete the new namespaces registration in the ``autoload.php`` config (adding Imagine and Gaufrette), at the end the register function should look like this:
-
+Next, you must complete the new namespaces registration in the ``autoload.php`` config (adding Imagine and Gaufrette)
 .. code-block:: php
 
   <?php
   $loader->registerNamespaces(array(
+    ...
     'Application'   => __DIR__,
-    'Sonata'        => __DIR__.'/../vendor/bundles',
-    'Knp\Bundle'    => __DIR__.'/../vendor/bundles',
-    'Knp\Menu'      => __DIR__.'/../vendor/knp/menu/src',
     'Imagine'       => __DIR__.'/../vendor/imagine/lib',
     'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
-    // ... other declarations
+    ...
   ));
 
 Next, be sure to enable the new bundles in your application kernel:
@@ -69,40 +68,7 @@ Next, be sure to enable the new bundles in your application kernel:
       );
   }
 
-At this point, the bundle is not yet ready. You need to generate the correct
-entities for the media::
-
-    php app/console sonata:easy-extends:generate SonataMediaBundle
-
-.. note::
-
-    To be able to generate domain objects, you need to have a database driver configure in your project.
-    If it's not the case, just follow this:
-    http://symfony.com/doc/current/book/doctrine.html#configuring-the-database
-
-.. note::
-
-    The command will generate domain objects in an ``Application`` namespace.
-    So you can point entities' associations to a global and common namespace.
-    This will make Entities sharing very easier as your models will allow to
-    point to a global namespace. For instance the media will be
-    ``Application\Sonata\MediaBundle\Entity\Media``.
-
-Now, add the new `Application` Bundle into the kernel
-
-.. code-block:: php
-
-  <?php
-  public function registerbundles()
-  {
-      return array(
-          ...
-          new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
-          ...
-      );
-  }
-
-Then add these bundles in the doctrine mapping definition:
+Then you must configure the interaction with the orm and add the mediaBundles settings:
 
 .. code-block:: yaml
 
@@ -113,16 +79,7 @@ Then add these bundles in the doctrine mapping definition:
             entity_managers:
                 default:
                     mappings:
-                        ApplicationSonataMediaBundle: ~
                         SonataMediaBundle: ~
-
-
-To use the ``AdminBundle``, add the following to your application configuration
-file.
-
-.. code-block:: yaml
-
-    # app/config/config.yml
     sonata_media:
         db_driver: doctrine_orm # or doctrine_mongodb
         contexts:
@@ -150,6 +107,58 @@ file.
 
     You can define formats per provider type. You might want to set
     a transversal ``admin`` format to be used by the ``mediaadmin`` class.
+
+
+At this point, the bundle is not yet ready. You need to generate the correct
+entities for the media::
+
+    php app/console sonata:easy-extends:generate SonataMediaBundle
+
+.. note::
+
+    To be able to generate domain objects, you need to have a database driver configure in your project.
+    If it's not the case, just follow this:
+    http://symfony.com/doc/current/book/doctrine.html#configuring-the-database
+
+.. note::
+
+    The command will generate domain objects in an ``Application`` namespace.
+    So you can point entities' associations to a global and common namespace.
+    This will make Entities sharing very easier as your models will allow to
+    point to a global namespace. For instance the media will be
+    ``Application\Sonata\MediaBundle\Entity\Media``.
+
+
+Now that your module is generated, you can register it
+
+.. code-block:: php
+
+    <?php
+    // app/appkernel.php
+    public function registerbundles()
+    {
+        return array(
+            ...
+            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            ...
+        );
+    }
+
+    # app/config/config.yml
+      doctrine:
+          orm:
+              entity_managers:
+                  default:
+                      mappings:
+                          ApplicationSonataMediaBundle: ~
+
+
+Now, you can build up your database:
+
+.. code-block:: sh
+
+    app/console doctrine:schema:[create|update]
+
 
 If they are not already created, you need to add specific folder to allow uploads from users:
 
