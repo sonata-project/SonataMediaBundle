@@ -150,3 +150,13 @@ file.
 
     You can define formats per provider type. You might want to set
     a transversal ``admin`` format to be used by the ``mediaadmin`` class.
+
+If they are not already created, you need to add specific folder to allow uploads from users:
+
+.. code-block:: sh
+
+    mkdir web/uploads
+    mkdir web/uploads/media
+    chmod -R 0777 web/uploads
+
+Then you can visit your admin dashboard on http://my-server/admin/dashboard
