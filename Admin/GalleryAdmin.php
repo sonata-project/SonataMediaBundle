@@ -15,21 +15,52 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\MediaBundle\Provider\Pool;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 class GalleryAdmin extends Admin
 {
+    protected $pool;
+
+    /**
+     * @param $code
+     * @param $class
+     * @param $baseControllerName
+     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     */
+    public function __construct($code, $class, $baseControllerName, Pool $pool)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+
+        $this->pool = $pool;
+    }
+
     /**
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      * @return void
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $context = $this->getPersistentParameter('context');
+        if ($context) {
+            $context = $this->pool->getDefaultContext();
+        }
+
+        $formats = array();
+        foreach($this->pool->getFormatNamesByContext($context) as $name => $options) {
+            $formats[$name] = $name;
+        }
+
+        $contexts = array();
+        foreach($this->pool->getContexts() as $context => $format) {
+            $contexts[$context] = $context;
+        }
+
         $formMapper
-            ->add('code')
-            ->add('context')
+            ->add('context', 'choice', array('choices' => $contexts))
             ->add('enabled', null, array('required' => false))
             ->add('name')
-            ->add('defaultFormat')
+            ->add('defaultFormat', 'choice', array('choices' => $formats))
             ->add('galleryHasMedias', 'sonata_type_collection', array(
                 'by_reference' => false
             ), array(
@@ -52,6 +83,21 @@ class GalleryAdmin extends Admin
             ->add('context')
             ->add('defaultFormat')
         ;
+    }
+
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\GalleryInterface $gallery
+     */
+    public function validate(ErrorElement $errorElement, $gallery)
+    {
+        $formats = $this->pool->getFormatNamesByContext($gallery->getContext());
+
+        if (!array_key_exists($gallery->getDefaultFormat(), $formats)) {
+            $errorElement->with('defaultFormat')
+                ->addViolation('invalid format')
+            ->end();
+        }
     }
 
     /**

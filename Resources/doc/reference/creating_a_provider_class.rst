@@ -289,7 +289,7 @@ View Helper
 
 The ``MediaBundle`` comes with 2 helper methods:
 
-* *thumbnails*: This method displays the thumbnail depending on the requested
+* *thumbnail*: This method displays the thumbnail depending on the requested
   format. The thumbnail path generation uses the CDN service injected into
   the provider. By default, the ``sonata.media.cdn.server`` service is used.
   The server is just the local http server.

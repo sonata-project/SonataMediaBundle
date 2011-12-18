@@ -12,7 +12,6 @@ namespace Sonata\MediaBundle\Model;
 
 abstract class Gallery implements GalleryInterface
 {
-
     /**
      * @var string $name
      */
@@ -27,11 +26,6 @@ abstract class Gallery implements GalleryInterface
      * @var boolean $enabled
      */
     protected $enabled;
-
-    /**
-     * @var boolean $enabled
-     */
-    protected $code;
 
     /**
      * @var datetime $updatedAt
@@ -137,20 +131,9 @@ abstract class Gallery implements GalleryInterface
         return $this->defaultFormat;
     }
 
-    public function setCode($code)
-    {
-        $this->code = $code;
-    }
-
-    public function getCode()
-    {
-        return $this->code;
-    }
-
     public function setGalleryHasMedias($galleryHasMedias)
     {
-        foreach ($galleryHasMedias as $galleryHasMedia)
-        {
+        foreach ($galleryHasMedias as $galleryHasMedia) {
             $galleryHasMedia->setGallery($this);
         }
 

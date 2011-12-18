@@ -12,11 +12,9 @@ namespace Sonata\MediaBundle\Model;
 
 interface GalleryInterface
 {
-
     /**
      * Set name
      *
-     * @abstract
      * @param string $name
      */
     function setName($name);
@@ -24,7 +22,6 @@ interface GalleryInterface
     /**
      * Get name
      *
-     * @abstract
      * @return string $name
      */
     function getName();
@@ -32,7 +29,6 @@ interface GalleryInterface
     /**
      * Set enabled
      *
-     * @abstract
      * @param boolean $enabled
      */
     function setEnabled($enabled);
@@ -40,7 +36,6 @@ interface GalleryInterface
     /**
      * Get enabled
      *
-     * @abstract
      * @return boolean $enabled
      */
     function getEnabled();
@@ -48,82 +43,60 @@ interface GalleryInterface
     /**
      * Set updated_at
      *
-     * @param datetime $updatedAt
+     * @param \Datetime $updatedAt
      */
     function setUpdatedAt(\DateTime $updatedAt = null);
 
     /**
      * Get updated_at
      *
-     * @abstract
-     * @return datetime $updatedAt
+     * @return \Datetime $updatedAt
      */
     function getUpdatedAt();
 
     /**
      * Set created_at
      *
-     * @abstract
-     * @param datetime $createdAt
+     * @param \Datetime $createdAt
      */
     function setCreatedAt(\DateTime $createdAt = null);
 
     /**
      * Get created_at
      *
-     * @abstract
-     * @return datetime $createdAt
+     * @return \Datetime $createdAt
      */
     function getCreatedAt();
 
     /**
-     * @abstract
      * @param string $defaultFormat
      * @return void
      */
     function setDefaultFormat($defaultFormat);
 
     /**
-     * @abstract
      * @return void
      */
     function getDefaultFormat();
 
     /**
-     * @abstract
-     * @param string $code
-     * @return void
-     */
-    function setCode($code);
-
-    /**
-     * @abstract
-     * @return void
-     */
-    function getCode();
-
-    /**
-     * @abstract
-     * @param  $galleryHasMedias
+     * @param array $galleryHasMedias
      * @return void
      */
     function setGalleryHasMedias($galleryHasMedias);
 
     /**
-     * @abstract
      * @return void
      */
     function getGalleryHasMedias();
 
     /**
-     * @abstract
-     * @param BaseGalleryHasMedia $galleryHasMedia
+     * @param GalleryHasMediaInterface $galleryHasMedia
      * @return void
      */
     function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
 
     /**
-     * @abstract
      * @return string
      */
     function __toString();

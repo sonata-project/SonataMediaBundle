@@ -9,7 +9,6 @@
         <field name="name"          fieldName="name"            type="string"/>
         <field name="context"       fieldName="context"         type="string"/>
         <field name="defaultFormat" fieldName="defaultFormat"   type="string" />
-        <field name="code"          fieldName="code"            type="string" />
         <field name="enabled"       fieldName="enabled"         type="boolean" />
 
         <field name="updatedAt"     fieldName="updatedAt"       type="date" />
