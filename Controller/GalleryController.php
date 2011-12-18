@@ -16,23 +16,31 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GalleryController extends Controller
 {
-
+    /**
+     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     */
     public function indexAction()
     {
-
-        $galleries = $this->get('sonata.media.manager.gallery')->findGalleriesBy(array(
+        $galleries = $this->get('sonata.media.manager.gallery')->findBy(array(
             'enabled' => true
         ));
-        
+
         return $this->render('SonataMediaBundle:Gallery:index.html.twig', array(
             'galleries'   => $galleries,
         ));
     }
-    
+
+    /**
+     * @param $id
+     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function viewAction($id)
     {
-
-        $gallery = $this->get('sonata.media.manager.gallery')->findGalleryBy(array( 'id' =>  $id));
+        $gallery = $this->get('sonata.media.manager.gallery')->findOneBy(array(
+            'id'      =>  $id,
+            'enabled' => true
+        ));
 
         if (!$gallery) {
             throw new NotFoundHttpException('unable to find the gallery with the id');

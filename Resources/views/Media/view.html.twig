@@ -1,0 +1,36 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+<h1>{{ media.name }}</h1>
+
+<div>
+    {% media media, format %}
+</div>
+
+<h2>Information</h2>
+<ul>
+    <li>Size : {{ media.size }}</li>
+    <li>Width : {{ media.width }}</li>
+    <li>Height : {{ media.height }}</li>
+    <li>Content Type : {{ media.contenttype }}</li>
+    <li>Copyright : {{ media.copyright }}</li>
+    <li>Author name : {{ media.authorname }}</li>
+    <li>CDN : {% if media.cdnisflushable %}to be flushed{% else %} last flush at {{ media.cdnflushat|date}} {% endif %}</li>
+</ul>
+
+<h2>Formats</h2>
+<ul>
+    <li><a href="{{ url('sonata_media_view', { 'id' : media.id, 'format' : 'reference'}) }}">reference</a></li>
+
+    {% for name, format in formats %}
+        <li><a href="{{ url('sonata_media_view', { 'id' : media.id, 'format' : name}) }}">{{ name }}</a></li>
+    {% endfor %}
+</ul>

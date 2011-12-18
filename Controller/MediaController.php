@@ -52,9 +52,13 @@ class MediaController extends Controller
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
+        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())){
+            throw new AccessDeniedException();
+        }
+
         return $this->render('SonataMediaBundle:Media:view.html.twig', array(
             'media'     => $media,
-            'formats'   => $this->getProvider($media)->getFormats(),
+            'formats'   => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
             'format'    => $format
         ));
     }
