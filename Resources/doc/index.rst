@@ -19,11 +19,20 @@ is defined by a set of ``formats`` and a set of ``providers``.
 As the infrastructure is not standard, the ``MediaBundle`` abstracts the
 ``filesystem`` layer and the ``cdn`` layer.
 
-**Google Groups**: For questions and proposals you can post on this google groups
+Reference Guide
+---------------
 
-* [Sonata Users](https://groups.google.com/group/sonata-users): Only for user questions
-* [Sonata Devs](https://groups.google.com/group/sonata-devs): Only for devs
+.. toctree::
+   :maxdepth: 1
+   :numbered:
 
+   reference/installation
+   reference/helpers
+   reference/creating_a_provider_class
+   reference/media_context
+   reference/usage
+   reference/security
+   reference/advanced_configuration
 
 Available services
 ------------------
@@ -51,17 +60,3 @@ Available services
 
 More services will be available in the future depending on your contributions! :)
 
-Reference Guide
----------------
-
-.. toctree::
-   :maxdepth: 1
-   :numbered:
-
-   reference/installation
-   reference/helpers
-   reference/creating_a_provider_class
-   reference/media_context
-   reference/usage
-   reference/security
-   reference/advanced_configuration
