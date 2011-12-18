@@ -1,86 +1,74 @@
+*WARNING* If you read that documentation from Github, use the raw mode as this markup is not interpreded well....
+
 Installation
 ============
 
-To begin, add the dependent bundles to the ``src/`` directory. If you're
-using git, you can add them as submodules::
+Base bundles
+------------
 
-  git submodule add git://github.com/sonata-project/SonataMediaBundle.git  vendor/bundles/Sonata/MediaBundle
+This bundle is mainely dependant of the SonataAdminBundle and the SonataDoctrineORMAdminBundle. So be sure you have install those two bundles before start:
 
-  // dependency bundles
-  git submodule add git://github.com/sonata-project/SonataAdminBundle.git vendor/bundles/Sonata/AdminBundle
-  git submodule add git://github.com/sonata-project/SonataEasyExtendsBundle.git vendor/bundles/Sonata/EasyExtendsBundle
+ * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
+ * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
 
-Add the ``Imagine`` image processing library::
+Installation
+------------
 
-  git submodule add git://github.com/avalanche123/Imagine.git vendor/imagine
+To begin, add the dependent bundles to the ``vendor/bundles`` directory. Add
+the following lines to the file ``deps``::
 
-Add the ``Gaufrette`` file abstraction library::
+  [SonataMediaBundle]
+      git=http://github.com/sonata-project/SonataMediaBundle.git
+      target=/bundles/Sonata/MediaBundle
 
-  git submodule add git://github.com/knplabs/Gaufrette.git vendor/gaufrette
+  [EasyExtendsBundle]
+      git=http://github.com/sonata-project/SonataEasyExtendsBundle.git
+      target=/bundles/Sonata/EasyExtendsBundle
 
-Next, be sure to enable the bundles in your application kernel:
+  [Imagine]:
+      git=http://github.com/avalanche123/Imagine.git
+      target=/imagine
+
+  [Gaufrette]
+      git=http://github.com/KnpLabs/Gaufrette.git
+      target=/gaufrette
+
+and run::
+
+  bin/vendors install
+
+Configuration
+-------------
+
+Next, you must complete the new namespaces registration in the ``autoload.php`` config (adding Imagine and Gaufrette)
+.. code-block:: php
+
+  <?php
+  $loader->registerNamespaces(array(
+    ...
+    'Application'   => __DIR__,
+    'Imagine'       => __DIR__.'/../vendor/imagine/lib',
+    'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
+    ...
+  ));
+
+Next, be sure to enable the new bundles in your application kernel:
 
 .. code-block:: php
 
   <?php
   // app/appkernel.php
-  public function registerbundles()
+  public function registerBundles()
   {
       return array(
           // ...
           new Sonata\MediaBundle\SonataMediaBundle(),
-          new Sonata\AdminBundle\SonataAdminBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
           // ...
       );
   }
 
-At this point, the bundle is not yet ready. You need to generate the correct
-entities for the media::
-
-    php app/console sonata:easy-extends:generate SonataMediaBundle
-
-.. note::
-
-    The command will generate domain objects in an ``Application`` namespace.
-    So you can point entities' associations to a global and common namespace.
-    This will make Entities sharing very easier as your models will allow to
-    point to a global namespace. For instance the media will be
-    ``Application\Sonata\MediaBundle\Entity\Media``.
-
-Now, add the new `Application` Bundle into the kernel
-
-.. code-block:: php
-
-  <?php
-  public function registerbundles()
-  {
-      return array(
-          // Application Bundles
-          new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
-
-          // Vendor specifics bundles
-          new Sonata\MediaBundle\SonataMediaBundle(),
-          new Sonata\AdminBundle\SonataAdminBundle(),
-          new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-      );
-  }
-
-Update the ``autoload.php`` to add a new namespace:
-
-.. code-block:: php
-
-  <?php
-  $loader->registerNamespaces(array(
-    'Sonata'        => __DIR__,
-    'Application'   => __DIR__,
-    'Imagine'       => __DIR__.'/../vendor/imagine/lib',
-    'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
-
-    // ... other declarations
-  ));
-
-Then add these bundles in the doctrine mapping definition:
+Then you must configure the interaction with the orm and add the mediaBundles settings:
 
 .. code-block:: yaml
 
@@ -91,19 +79,7 @@ Then add these bundles in the doctrine mapping definition:
             entity_managers:
                 default:
                     mappings:
-                        ApplicationSonataMediaBundle: ~
                         SonataMediaBundle: ~
-
-
-Configuration
--------------
-
-To use the ``AdminBundle``, add the following to your application configuration
-file.
-
-.. code-block:: yaml
-
-    # app/config/config.yml
     sonata_media:
         db_driver: doctrine_orm # or doctrine_mongodb
         contexts:
@@ -131,3 +107,65 @@ file.
 
     You can define formats per provider type. You might want to set
     a transversal ``admin`` format to be used by the ``mediaadmin`` class.
+
+
+At this point, the bundle is not yet ready. You need to generate the correct
+entities for the media::
+
+    php app/console sonata:easy-extends:generate SonataMediaBundle
+
+.. note::
+
+    To be able to generate domain objects, you need to have a database driver configure in your project.
+    If it's not the case, just follow this:
+    http://symfony.com/doc/current/book/doctrine.html#configuring-the-database
+
+.. note::
+
+    The command will generate domain objects in an ``Application`` namespace.
+    So you can point entities' associations to a global and common namespace.
+    This will make Entities sharing very easier as your models will allow to
+    point to a global namespace. For instance the media will be
+    ``Application\Sonata\MediaBundle\Entity\Media``.
+
+
+Now that your module is generated, you can register it
+
+.. code-block:: php
+
+    <?php
+    // app/appkernel.php
+    public function registerbundles()
+    {
+        return array(
+            ...
+            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            ...
+        );
+    }
+
+    # app/config/config.yml
+      doctrine:
+          orm:
+              entity_managers:
+                  default:
+                      mappings:
+                          ApplicationSonataMediaBundle: ~
+
+
+Now, you can build up your database:
+
+.. code-block:: sh
+
+    app/console doctrine:schema:[create|update]
+
+
+If they are not already created, you need to add specific folder to allow uploads from users:
+
+.. code-block:: sh
+
+    mkdir web/uploads
+    mkdir web/uploads/media
+    chmod -R 0777 web/uploads
+
+Then you can visit your admin dashboard on http://my-server/admin/dashboard
