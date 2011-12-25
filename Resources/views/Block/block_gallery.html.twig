@@ -1,0 +1,48 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% extends 'SonataPageBundle:Block:block_base.html.twig' %}
+
+{% block block %}
+    {% if settings.title %}
+        <h3 class="sonata-media-block-media-title">{{ settings.title }}</h3>
+    {% endif %}
+
+    <div class="sonata-media-block-gallery-container">
+        <div id="sonata-media-block-gallery-{{ block.id }}" class="nivoGallery">
+            <ul>
+                {% for element in elements %}
+                    <li data-type="{{ element.type }}" data-title="{{ element.title }}" data-caption="{{ element.caption }}">
+                        {% if element.type == 'image' %}
+                            {% media element.media, settings.format %}
+                        {% elseif element.type == 'video' %}
+                            {% media element.media, settings.format %}
+                        {% endif %}
+                    </li>
+                {% else %}
+                    {# no elements #}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery('#sonata-media-block-gallery-{{ block.id }}').nivoGallery({
+                 pauseTime:     3000,
+                 animSpeed:     300,
+                 effect:        'fade',
+                 startPaused:   false,
+                 directionNav:  true,
+                 progressBar:   true
+            });
+        });
+    </script>
+{% endblock %}
