@@ -77,18 +77,42 @@ class MediaBlockService extends BaseBlockService
 
     public function buildEditForm(CmsManagerInterface $manager, FormMapper $formMapper, BlockInterface $block)
     {
+        $contextChoices = $this->getContextChoices();
+        $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
+
+        $formMapper->add('settings', 'sonata_type_immutable_array', array(
+            'keys' => array(
+                array('title', 'text', array('required' => false)),
+                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
+                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array($this->getMediaBuilder($formMapper), null, array()),
+            )
+        ));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getContextChoices()
+    {
         $contextChoices = array();
 
         foreach ($this->getMediaPool()->getContexts() as $name => $context) {
             $contextChoices[$name] = $name;
         }
 
-        $media = $block->getSetting('mediaId');
+        return $contextChoices;
+    }
 
+    /**
+     * @param null|\Sonata\MediaBundle\Model\MediaInterface $media
+     * @return array
+     */
+    protected function getFormatChoices(MediaInterface $media = null)
+    {
         $formatChoices = array();
 
         if ($media instanceof MediaInterface) {
-
             $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
 
             foreach ($formats as $code => $format) {
@@ -96,6 +120,11 @@ class MediaBlockService extends BaseBlockService
             }
         }
 
+        return $formatChoices;
+    }
+
+    protected function getMediaBuilder(FormMapper $formMapper)
+    {
         // simulate an association ...
         $fieldDescription = $formMapper->getAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media' );
         $fieldDescription->setAssociationAdmin($this->getMediaAdmin());
@@ -103,19 +132,10 @@ class MediaBlockService extends BaseBlockService
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(array('fieldName' => 'media', 'type' => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE));
 
-        $builder = $formMapper->create('mediaId', 'sonata_type_model', array(
+        return $formMapper->create('mediaId', 'sonata_type_model', array(
             'sonata_field_description' => $fieldDescription,
             'class'             => $this->getMediaAdmin()->getClass(),
             'model_manager'     => $this->getMediaAdmin()->getModelManager()
-        ));
-
-        $formMapper->add('settings', 'sonata_type_immutable_array', array(
-            'keys' => array(
-                array('title', 'text', array('required' => false)),
-                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
-                array($builder, null, array()),
-            )
         ));
     }
 

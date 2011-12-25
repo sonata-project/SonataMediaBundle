@@ -1,0 +1,35 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% extends 'SonataPageBundle:Block:block_base.html.twig' %}
+
+{% block block %}
+
+    <div class="sonata-media-block-feature-media-container">
+
+        <div class="sonata-media-block-feature-media-container-{{ settings.orientation }}">
+            {% if media %}
+                {% media media, settings.format %}
+            {% else %}
+                {# no media selected ... #}
+            {% endif %}
+        </div>
+
+        {% if settings.title %}
+            <h3 class="sonata-media-block-feature-media-title">{{ settings.title }}</h3>
+        {% endif %}
+
+        <div class="sonata-media-block-feature-media-content">
+            {{ settings.content }}
+        </div>
+
+        <div style="clear: both"></div>
+    </div>
+{% endblock %}
