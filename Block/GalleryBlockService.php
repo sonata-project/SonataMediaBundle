@@ -91,6 +91,11 @@ class GalleryBlockService extends BaseBlockService
             'title'    => false,
             'context'  => false,
             'format'   => false,
+            'pauseTime' => 3000,
+            'animSpeed' => 300,
+            'startPaused' => false,
+            'directionNav' => true,
+            'progressBar' => true,
         );
     }
 
@@ -139,6 +144,11 @@ class GalleryBlockService extends BaseBlockService
                 array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
                 array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
                 array($builder, null, array()),
+                array('pauseTime', 'number', array()),
+                array('animSpeed', 'number', array()),
+                array('startPaused', 'sonata_type_boolean', array()),
+                array('directionNav', 'sonata_type_boolean', array()),
+                array('progressBar', 'sonata_type_boolean', array()),
             )
         ));
     }

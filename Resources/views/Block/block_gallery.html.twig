@@ -36,12 +36,12 @@ file that was distributed with this source code.
     <script type="text/javascript">
         jQuery(document).ready(function() {
             jQuery('#sonata-media-block-gallery-{{ block.id }}').nivoGallery({
-                 pauseTime:     3000,
-                 animSpeed:     300,
+                 pauseTime:     {{ settings.pauseTime }},
+                 animSpeed:     {{ settings.animSpeed }},
                  effect:        'fade',
-                 startPaused:   false,
-                 directionNav:  true,
-                 progressBar:   true
+                 startPaused:   {% if settings.startPaused == 1 %}true{% else %}false{% endif %},
+                 directionNav:  {% if settings.directionNav == 1 %}true{% else %}false{% endif %},
+                 progressBar:   {% if settings.progressBar == 1 %}true{% else %}false{% endif %},
             });
         });
     </script>
