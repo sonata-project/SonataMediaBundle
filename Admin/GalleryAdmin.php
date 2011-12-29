@@ -47,12 +47,12 @@ class GalleryAdmin extends Admin
         }
 
         $formats = array();
-        foreach($this->pool->getFormatNamesByContext($context) as $name => $options) {
+        foreach((array)$this->pool->getFormatNamesByContext($context) as $name => $options) {
             $formats[$name] = $name;
         }
 
         $contexts = array();
-        foreach($this->pool->getContexts() as $context => $format) {
+        foreach((array)$this->pool->getContexts() as $context => $format) {
             $contexts[$context] = $context;
         }
 
