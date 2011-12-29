@@ -14,7 +14,10 @@
                 <source>sidemenu.link_media_view</source>
                 <target>Anzeigen</target>
             </trans-unit>
-
+            <trans-unit id="breadcrumb.link_media_create">
+                <source>breadcrumb.link_media_create</source>
+                <target>Hinzufügen</target>
+            </trans-unit>
             <trans-unit id="breadcrumb.link_media_list">
                 <source>breadcrumb.link_media_list</source>
                 <target>Medien</target>
