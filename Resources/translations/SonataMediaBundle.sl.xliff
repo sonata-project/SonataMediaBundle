@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Medijske vsebine</target>
+            </trans-unit>
+            <trans-unit id="sidemenu.link_edit_media">
+                <source>sidemenu.link_edit_media</source>
+                <target>Uredi</target>
+            </trans-unit>
+            <trans-unit id="sidemenu.link_media_view">
+                <source>sidemenu.link_media_view</source>
+                <target>Poglej</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_create">
+                <source>breadcrumb.link_media_create</source>
+                <target>Ustvari</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_list">
+                <source>breadcrumb.link_media_list</source>
+                <target>Medijske vsebine</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_edit">
+                <source>breadcrumb.link_media_edit</source>
+                <target>Uredi</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_view">
+                <source>breadcrumb.link_media_view</source>
+                <target>Poglej</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_create">
+                <source>breadcrumb.link_gallery_create</source>
+                <target>Ustvari</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_list">
+                <source>breadcrumb.link_gallery_list</source>
+                <target>Galerije</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_edit">
+                <source>breadcrumb.link_gallery_edit</source>
+                <target>Uredi</target>
+            </trans-unit>
+            <trans-unit id="media">
+                <source>media</source>
+                <target>Medijske vsebine</target>
+            </trans-unit>
+            <trans-unit id="gallery">
+                <source>gallery</source>
+                <target>Galerija</target>
+            </trans-unit>
+            <trans-unit id="title_select_provider">
+                <source>title_select_provider</source>
+                <target>Izberi ponudnika medijskih vsebin</target>
+            </trans-unit>
+            <trans-unit id="no_provider_available">
+                <source>no_provider_available</source>
+                <target>Ponudniki niso na voljo</target>
+            </trans-unit>
+            <trans-unit id="title.media_preview">
+                <source>title.media_preview</source>
+                <target>Predogled</target>
+            </trans-unit>
+            <trans-unit id="title.media_thumbnail">
+                <source>title.media_thumbnail</source>
+                <target>Sličica</target>
+            </trans-unit>
+            <trans-unit id="title.informations">
+                <source>title.informations</source>
+                <target>Informacije</target>
+            </trans-unit>
+            <trans-unit id="label.size">
+                <source>label.size</source>
+                <target>Velikost</target>
+            </trans-unit>
+            <trans-unit id="label.width">
+                <source>label.width</source>
+                <target>Širina</target>
+            </trans-unit>
+            <trans-unit id="label.height">
+                <source>label.height</source>
+                <target>Višina</target>
+            </trans-unit>
+            <trans-unit id="label.content_type">
+                <source>label.content_type</source>
+                <target>Vrsta vsebine</target>
+            </trans-unit>
+            <trans-unit id="label.copyright">
+                <source>label.copyright</source>
+                <target>Avtorske pravice</target>
+            </trans-unit>
+            <trans-unit id="label.author_name">
+                <source>label.author_name</source>
+                <target>Avtor</target>
+            </trans-unit>
+            <trans-unit id="label.cdn">
+                <source>label.cdn</source>
+                <target>CDN</target>
+            </trans-unit>
+            <trans-unit id="label.to_be_flushed">
+                <source>label.to_be_flushed</source>
+                <target>Za izprazniti</target>
+            </trans-unit>
+            <trans-unit id="label.flushed_at">
+                <source>label.flushed_at</source>
+                <target>Izpraznjeno ob</target>
+            </trans-unit>
+            <trans-unit id="label.public_url">
+                <source>label.public_url</source>
+                <target>Javni URL</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Ime</target>
+            </trans-unit>
+            <trans-unit id="label.file">
+                <source>label.file</source>
+                <target>Datoteka</target>
+            </trans-unit>
+            <trans-unit id="label.author">
+                <source>label.author</source>
+                <target>Avtor</target>
+            </trans-unit>
+            <trans-unit id="label.enabled">
+                <source>label.enabled</source>
+                <target>Omogočeno</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_is_flushable">
+                <source>label.cdn_is_flushable</source>
+                <target>Izprazni CDN</target>
+            </trans-unit>
+            <trans-unit id="label.video_reference">
+                <source>label.video_reference</source>
+                <target>Spremeni video</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Opis</target>
+            </trans-unit>
+            <trans-unit id="title.formats">
+                <source>title.formats</source>
+                <target>Vrste</target>
+            </trans-unit>
+            <trans-unit id="label.select_context">
+                <source>label.select_context</source>
+                <target>Kontekst: </target>
+            </trans-unit>
+            <trans-unit id="label.select_provider">
+                <source>label.select_provider</source>
+                <target>Vrsta: </target>
+            </trans-unit>
+            <trans-unit id="link.all_providers">
+                <source>link.all_providers</source>
+                <target>Vsi</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion">
+                <source>sonata.media.provider.dailymotion</source>
+                <target>DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube">
+                <source>sonata.media.provider.youtube</source>
+                <target>YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo">
+                <source>sonata.media.provider.vimeo</source>
+                <target>Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image">
+                <source>sonata.media.provider.image</source>
+                <target>Slika</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file">
+                <source>sonata.media.provider.file</source>
+                <target>Datoteka</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url">
+                <source>label.protected_download_url</source>
+                <target>Zaščiten URL</target>
+            </trans-unit>
+            <trans-unit id="description.roles_download_strategy">
+                <source>description.roles_download_strategy</source>
+                <target>Medijske vsebine lahko vnesejo uporabniki z naslednjimi pravicami: %roles%.</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url_notice">
+                <source>label.protected_download_url_notice</source>
+                <target>Opozorilo</target>
+            </trans-unit>
+            <trans-unit id="description.public_download_strategy">
+                <source>description.public_download_strategy</source>
+                <target>Medijske vsebine lahko vnesejo vsi uporabniki.</target>
+            </trans-unit>
+            <trans-unit id="description.forbidden_download_strategy">
+                <source>description.forbidden_download_strategy</source>
+                <target>Medijskih vsebin ne more vnesti noben uporabnik.</target>
+            </trans-unit>
+            <trans-unit id="link.test_protected_url">
+                <source>link.test_protected_url</source>
+                <target>Predogled povezave</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
