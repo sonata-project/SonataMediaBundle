@@ -33,6 +33,10 @@ the following lines to the file ``deps``::
       git=http://github.com/KnpLabs/Gaufrette.git
       target=/gaufrette
 
+  # if you want to use Amazon S3
+  [aws-sdk]
+      git=https://github.com/amazonwebservices/aws-sdk-for-php
+
 and run::
 
   bin/vendors install
@@ -51,6 +55,9 @@ Next, you must complete the new namespaces registration in the ``autoload.php`` 
     'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
     ...
   ));
+
+  // AWS SDK needs a special autoloader
+  require_once __DIR__.'/../vendor/aws-sdk/sdk.class.php';
 
 Next, be sure to enable the new bundles in your application kernel:
 

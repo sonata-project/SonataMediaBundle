@@ -174,7 +174,6 @@ class SonataMediaExtension extends Extension
             $definition = $container->getDefinition('sonata.media.adapter.service.s3');
             $definition->replaceArgument(0, $configuration['accessKey']);
             $definition->replaceArgument(1, $configuration['secretKey']);
-            $definition->replaceArgument(2, $configuration['region']);
         }
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['sonata.media.adapter.filesystem.replicate'])) {
