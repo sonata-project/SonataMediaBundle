@@ -14,9 +14,8 @@ file that was distributed with this source code.
 <div class="sonata-media-gallery-media-list">
     {% for galleryHasMedia in gallery.GalleryHasMedias %}
         <div class="sonata-media-gallery-media-item">
-            <a href="{{ url('sonata_media_view', {'id': galleryHasMedia.media.id }) }}">
+            <a class="sonata-media-gallery-media-item-link" href="{{ url('sonata_media_view', {'id': galleryHasMedia.media.id }) }}">
                 {% thumbnail galleryHasMedia.media, gallery.defaultFormat %}
-                {{ galleryHasMedia.media.name }}
             </a>
         </div>
     {% endfor %}
