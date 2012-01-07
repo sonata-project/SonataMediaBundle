@@ -115,6 +115,23 @@ Then you must configure the interaction with the orm and add the mediaBundles se
     You can define formats per provider type. You might want to set
     a transversal ``admin`` format to be used by the ``mediaadmin`` class.
 
+Also, you can determine the resizer to use; the default value is 
+``sonata.media.resizer.simple`` but you can change it to ``sonata.media.resizer.square``
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    
+    sonata_media:
+        providers:
+            sonata.media.provider.image:
+                resizer: sonata.media.resizer.square
+
+.. note::
+
+    The square resizer works like the simple resizer when the image format has
+    only the width. But if you specify the height the resizer crop the image in
+    the lower size.
 
 At this point, the bundle is not yet ready. You need to generate the correct
 entities for the media::
