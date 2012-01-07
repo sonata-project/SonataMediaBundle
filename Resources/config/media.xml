@@ -6,6 +6,8 @@
     <parameters>
         <parameter key="sonata.media.resizer.simple.class">Sonata\MediaBundle\Media\SimpleResizer</parameter>
         <parameter key="sonata.media.resizer.simple.adapter.mode">inset</parameter>
+        <parameter key="sonata.media.resizer.square.class">Sonata\MediaBundle\Media\SquareResizer</parameter>
+        <parameter key="sonata.media.resizer.square.adapter.mode">inset</parameter>
     </parameters>
 
     <services>
@@ -17,6 +19,11 @@
         <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
             <argument type="service" id="sonata.media.adapter.image.gd" />
             <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
+        </service>
+        
+        <service id="sonata.media.resizer.square" class="%sonata.media.resizer.square.class%">
+            <argument type="service" id="sonata.media.adapter.image.gd" />
+            <argument>%sonata.media.resizer.square.adapter.mode%</argument>
         </service>
 
         <!-- filesystem abstraction service -->

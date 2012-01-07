@@ -97,7 +97,7 @@ Full configuration options:
                 generator:  sonata.media.generator.default
 
             sonata.media.provider.image:
-                resizer:    sonata.media.resizer.simple
+                resizer:    sonata.media.resizer.simple # sonata.media.resizer.square
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
