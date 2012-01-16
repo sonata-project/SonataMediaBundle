@@ -4,6 +4,7 @@ namespace Sonata\MediaBundle\Admin\Manager;
 
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\AdminBundle\Exception\ModelManagerException;
 
 /**
  * this method overwrite the default AdminModelManager to call
@@ -44,8 +45,14 @@ class DoctrineORMManager extends ModelManager
      */
     public function batchDelete($class, ProxyQueryInterface $queryProxy)
     {
-        foreach ($queryProxy->getQuery()->iterate() as $pos => $object) {
-            $this->delete($object[0]);
+        try {
+            foreach ($queryProxy->getQuery()->iterate() as $pos => $object) {
+                $this->delete($object[0]);
+            }
+        } catch ( \PDOException $e ) {
+            throw new ModelManagerException('', 0, $e);
         }
+
+
     }
 }
