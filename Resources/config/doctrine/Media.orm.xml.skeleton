@@ -17,22 +17,5 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <one-to-many
-            field="galleryHasMedias"
-            target-entity="Application\Sonata\MediaBundle\Entity\GalleryHasMedia"
-            mapped-by="media"
-            >
-
-            <!--<orphan-removal>true</orphan-removal>-->
-
-            <cascade>
-                <cascade-persist />
-                <!--<cascade-merge />-->
-                <!--<cascade-remove />-->
-                <!--<cascade-refresh />-->
-            </cascade>
-
-        </one-to-many>
-
     </entity>
 </doctrine-mapping>

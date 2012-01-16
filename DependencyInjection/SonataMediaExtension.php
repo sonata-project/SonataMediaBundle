@@ -19,6 +19,8 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Finder\Finder;
 
+use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
+
 /**
  * MediaExtension
  *
@@ -98,6 +100,77 @@ class SonataMediaExtension extends Extension
         foreach ($strategies as $strategyId) {
             $pool->addMethodCall('addDownloadSecurity', array($strategyId, new Reference($strategyId)));
         }
+
+        if ('doctrine_orm' == $config['db_driver']) {
+            $this->registerDoctrineMapping($config);
+        }
+    }
+
+    /**
+     * @param array $config
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @return void
+     */
+    public function registerDoctrineMapping(array $config)
+    {
+        $collector = DoctrineCollector::getInstance();
+
+        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\Media', 'mapOneToMany', array(
+            'fieldName'     => 'galleryHasMedias',
+            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia',
+            'cascade'       => array(
+                'persist',
+            ),
+            'mappedBy'      => 'media',
+            'orphanRemoval' => false,
+        ));
+
+        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapOneToOne', array(
+            'fieldName'     => 'gallery',
+            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\Gallery',
+            'cascade'       => array(
+                'persist',
+            ),
+            'mappedBy'      => NULL,
+            'inversedBy'    => 'galleryHasMedias',
+            'joinColumns'   =>  array(
+                array(
+                    'name'  => 'gallery_id',
+                    'referencedColumnName' => 'id',
+                ),
+            ),
+            'orphanRemoval' => false,
+        ));
+
+        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapOneToOne', array(
+            'fieldName'     => 'media',
+            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\Media',
+            'cascade'       => array(
+                 'persist',
+            ),
+            'mappedBy'      => NULL,
+            'inversedBy'    => 'galleryHasMedias',
+            'joinColumns'   => array(
+                array(
+                    'name'  => 'media_id',
+                    'referencedColumnName' => 'id',
+                ),
+            ),
+            'orphanRemoval' => false,
+        ));
+
+        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\Gallery', 'mapOneToMany', array(
+            'fieldName'     => 'galleryHasMedias',
+            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia',
+            'cascade'       => array(
+                'persist',
+            ),
+            'mappedBy'      => 'gallery',
+            'orphanRemoval' => false,
+            'orderBy'       => array(
+                'position'  => 'ASC',
+            ),
+        ));
     }
 
     /**
