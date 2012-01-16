@@ -144,6 +144,11 @@ class MediaBlockService extends BaseBlockService
 
     }
 
+    protected function getTemplate()
+    {
+        return 'SonataMediaBundle:Block:block_media.html.twig';
+    }
+
     public function execute(CmsManagerInterface $manager, BlockInterface $block, PageInterface $page, Response $response = null)
     {
         // merge settings
@@ -151,7 +156,7 @@ class MediaBlockService extends BaseBlockService
 
         $media = $settings['mediaId'];
 
-        return $this->renderResponse('SonataMediaBundle:Block:block_media.html.twig', array(
+        return $this->renderResponse($this->getTemplate(), array(
             'media'     => $media,
             'block'     => $block,
             'settings'  => $settings
