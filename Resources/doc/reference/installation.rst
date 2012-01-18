@@ -76,6 +76,18 @@ Next, be sure to enable the new bundles in your application kernel:
       );
   }
 
+Next, add the correct routing files:
+
+.. code-block:: yaml
+    gallery:
+        resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+        prefix: /media/gallery
+
+    media:
+        resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+        prefix: /media
+
+
 Then you must configure the interaction with the orm and add the mediaBundles settings:
 
 .. code-block:: yaml
