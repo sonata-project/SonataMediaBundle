@@ -48,7 +48,14 @@ interface MediaProviderInterface
      * @return void
      */
     function generateThumbnails(MediaInterface $media);
-
+    
+    /**
+     * remove all linked thumbnails
+     *
+     * @param MediaInterface $media
+     * @return void
+     */
+    function removeThumbnails(MediaInterface $media);
 
     /**
      * @abstract

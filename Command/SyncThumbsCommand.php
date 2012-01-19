@@ -10,6 +10,8 @@
 */
 
 namespace Sonata\MediaBundle\Command;
+use Symfony\Component\Console\Input\InputOption;
+
 use Symfony\Component\Console\Input\InputArgument;
 
 use Sonata\MediaBundle\Provider\ImageProvider;
@@ -26,32 +28,51 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
  */
 class SyncThumbsCommand extends ContainerAwareCommand
 {
+    protected $quiet = false;
+    protected $output;
+    
     public function configure()
     {
         $this->setName('sonata:media:sync-thumbnails')
             ->setDescription('Sync uploaded image thumbs with new media formats')
             ->setDefinition(array(
-                new InputArgument('context', InputArgument::REQUIRED, 'The context'),
                 new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
+                new InputOption('context', '', InputOption::VALUE_OPTIONAL, 'The context', 'default'),
         ));
     }
     
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $context = $input->getArgument('context');
         $provider = $input->getArgument('providerName');
+        $context = $input->getOption('context');
+        $this->quiet = $input->getOption('quiet');
+        $this->output = $output;
         
         $container = $this->getContainer();
         $manager = $container->get('sonata.media.manager.media');
-        $medias = $manager->findBy(array('providerName' => $provider));
-        
-        $output->writeln(sprintf("Loaded %s images for generating thumbs (provider: %s)", count($medias), $provider));
+        $medias = $manager->findBy(array('providerName' => $provider, 'context' => $context));
+        $this->log(sprintf("Loaded %s images for generating thumbs (provider: %s, context: %s)", count($medias), $provider, $context));
         
         foreach ($medias as $media) {
             $provider = $manager->getPool()->getProvider($media->getProviderName());
-            $output->writeln("Generating thumbs for " . $media->getName());
+            $this->log("Generating thumbs for " . $media->getName());
             $provider->removeThumbnails($media);
             $provider->generateThumbnails($media);
+        }
+        
+        $this->log('Done.');
+    }
+
+    /**
+     * Write a message to the output
+     * 
+     * @param string $message
+     * @return void
+     */
+    protected function log($message)
+    {
+        if ($this->quiet === false) {
+            $this->output->writeln($message);
         }
     }
 }
