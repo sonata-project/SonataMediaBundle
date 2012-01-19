@@ -47,8 +47,14 @@ class SonataMediaExtension extends Extension
         $loader->load('block.xml');
         $loader->load('security.xml');
 
-        if (interface_exists('Sonata\FormatterBundle\Extension\ExtensionInterface', true)) {
+        $bundles = $container->getParameter('kernel.bundles');
+
+        if (isset($bundles['SonataFormatterBundle'])) {
             $loader->load('formatter.xml');
+        }
+
+        if (!isset($bundles['LiipImagineBundle'])) {
+            $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
         }
 
         if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb'))) {
