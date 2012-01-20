@@ -55,7 +55,7 @@ class SyncThumbsCommand extends ContainerAwareCommand
         
         foreach ($medias as $media) {
             $provider = $manager->getPool()->getProvider($media->getProviderName());
-            $this->log("Generating thumbs for " . $media->getName());
+            $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
             $provider->removeThumbnails($media);
             $provider->generateThumbnails($media);
         }
