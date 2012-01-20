@@ -57,6 +57,15 @@ Available services
 
 More services will be available in the future depending on your contributions! :)
 
+Available commands
+------------------
+
+### sonata:media:sync-thumbs
+
+This command will re-generate the thumbnails for all medias based on the passed in context/provider. For example,
+when adding new media formats for already existing media this can be used to generate the new thumbs. 
+
+
 More information
 ----------------
 
@@ -67,5 +76,4 @@ is available. Please note the Github preview might break and hide some content
 TODO
 ----
 
- - thumbnail synchronisation command line
  - CDN Flush command line
