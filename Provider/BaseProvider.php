@@ -99,6 +99,17 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
+     * remove all linked thumbnails
+     * 
+     * @param MediaInterface $media
+     * @return void
+     */
+    public function removeThumbnails(MediaInterface $media)
+    {
+        $this->thumbnail->delete($this, $media);
+    }
+
+    /**
      * return the correct format name : providerName_format
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
