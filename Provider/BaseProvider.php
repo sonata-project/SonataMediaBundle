@@ -28,7 +28,9 @@ abstract class BaseProvider implements MediaProviderInterface
 
     protected $templates = array();
 
-    protected $resizer;
+    protected $currentResizer = 'sonata.media.resizer.simple';
+
+    protected $resizers;
 
     protected $filesystem;
 
@@ -213,11 +215,21 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
+     * @return string
+     */
+    public function getCurrentResizer()
+    {
+        return $this->currentResizer;
+    }
+
+    /**
+     * @param string $key or null selects currentResizer
      * @return \Sonata\MediaBundle\Media\ResizerInterface
      */
-    public function getResizer()
+    public function getResizer($key = null)
     {
-        return $this->resizer;
+        $key = $key ? $key : $this->currentResizer;
+        return isset($this->resizers[$key]) ? $this->resizers[$key] : null;
     }
 
     /**
@@ -255,6 +267,33 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function setResizer(ResizerInterface $resizer)
     {
-        $this->resizer = $resizer;
+        $this->resizers = array('default' => $resizer);
+    }
+
+    /**
+     * @param string $currentResizer
+     * @return void
+     */
+    public function setCurrentResizer($currentResizer)
+    {
+        $this->currentResizer = $currentResizer;
+    }
+
+    /**
+     * @param array of \Sonata\MediaBundle\Media\ResizerInterface $resizers
+     * @return void
+     */
+    public function setResizers(array $resizers)
+    {
+        $this->resizers = $resizers;
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Media\ResizerInterface $resizer
+     * @return void
+     */
+    public function addResizer($key, ResizerInterface $resizer)
+    {
+        $this->resizers[$key] = $resizer;
     }
 }
