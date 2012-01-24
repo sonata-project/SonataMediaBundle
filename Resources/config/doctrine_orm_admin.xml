@@ -49,7 +49,7 @@
         </service>
 
         <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineORMManager">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="doctrine" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>
 

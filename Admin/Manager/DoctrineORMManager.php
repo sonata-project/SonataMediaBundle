@@ -6,6 +6,8 @@ use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Exception\ModelManagerException;
 
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
 /**
  * this method overwrite the default AdminModelManager to call
  * the custom methods from the dedicated media manager
@@ -14,9 +16,9 @@ class DoctrineORMManager extends ModelManager
 {
     protected $manager;
 
-    public function __construct($entityManager, $manager)
+    public function __construct(RegistryInterface $doctrine, $manager)
     {
-        parent::__construct($entityManager);
+        parent::__construct($doctrine);
 
         $this->manager = $manager;
     }
