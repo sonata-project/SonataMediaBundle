@@ -1,5 +1,3 @@
-*WARNING* If you read that documentation from Github, use the raw mode as this markup is not interpreded well....
-
 Installation
 ============
 
@@ -79,6 +77,7 @@ Next, be sure to enable the new bundles in your application kernel:
 Next, add the correct routing files:
 
 .. code-block:: yaml
+
     gallery:
         resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
         prefix: /media/gallery
