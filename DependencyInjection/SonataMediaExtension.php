@@ -164,7 +164,7 @@ class SonataMediaExtension extends Extension
                 'persist',
             ),
             'mappedBy'      => 'gallery',
-            'orphanRemoval' => false,
+            'orphanRemoval' => true,
             'orderBy'       => array(
                 'position'  => 'ASC',
             ),
