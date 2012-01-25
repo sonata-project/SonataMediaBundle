@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Config\Definition\Processor;
 
 use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
 
@@ -32,13 +33,14 @@ class SonataMediaExtension extends Extension
     /**
      * Loads the url shortener configuration.
      *
-     * @param array            $config    An array of configuration settings
+     * @param array            $configs    An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function load(array $config, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container)
     {
-        // todo: update the code to use the Configuration class
-        $config = call_user_func_array('array_merge_recursive', $config);
+        $processor = new Processor();
+        $configuration = new Configuration();
+        $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('provider.xml');
@@ -58,10 +60,12 @@ class SonataMediaExtension extends Extension
         }
 
         if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb'))) {
-            throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
+            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
 
-        $config['default_context'] = isset($config['default_context']) ? $config['default_context'] : 'default';
+        if (!array_key_exists($config['default_context'], $config['contexts'])) {
+            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid default context : %s, available : %s', $config['default_context'], json_encode(array_keys($config['contexts']))));
+        }
 
         $loader->load(sprintf('%s.xml', $config['db_driver']));
         $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
@@ -83,18 +87,6 @@ class SonataMediaExtension extends Extension
 
             foreach ($settings['formats'] as $format => $value) {
                 $formats[$name.'_'.$format] = $value;
-            }
-
-            if (!isset($settings['download'])) {
-                $settings['download'] = array();
-            }
-
-            if (!isset($settings['download']['mode'])) {
-                $settings['download']['mode'] = 'http';
-            }
-
-            if (!isset($settings['download']['strategy'])) {
-                $settings['download']['strategy'] = 'sonata.media.security.superadmin_strategy';
             }
 
             $strategies[] = $settings['download']['strategy'];
@@ -121,9 +113,9 @@ class SonataMediaExtension extends Extension
     {
         $collector = DoctrineCollector::getInstance();
 
-        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\Media', 'mapOneToMany', array(
+        $collector->addAssociation($config['class']['media'], 'mapOneToMany', array(
             'fieldName'     => 'galleryHasMedias',
-            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia',
+            'targetEntity'  => $config['class']['gallery_has_media'],
             'cascade'       => array(
                 'persist',
             ),
@@ -131,9 +123,9 @@ class SonataMediaExtension extends Extension
             'orphanRemoval' => false,
         ));
 
-        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapManyToOne', array(
+        $collector->addAssociation($config['class']['gallery_has_media'], 'mapManyToOne', array(
             'fieldName'     => 'gallery',
-            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\Gallery',
+            'targetEntity'  => $config['class']['gallery'],
             'cascade'       => array(
                 'persist',
             ),
@@ -148,9 +140,9 @@ class SonataMediaExtension extends Extension
             'orphanRemoval' => false,
         ));
 
-        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapManyToOne', array(
+        $collector->addAssociation($config['class']['gallery_has_media'], 'mapManyToOne', array(
             'fieldName'     => 'media',
-            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\Media',
+            'targetEntity'  => $config['class']['media'],
             'cascade'       => array(
                  'persist',
             ),
@@ -165,9 +157,9 @@ class SonataMediaExtension extends Extension
             'orphanRemoval' => false,
         ));
 
-        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\Gallery', 'mapOneToMany', array(
+        $collector->addAssociation($config['class']['gallery'], 'mapOneToMany', array(
             'fieldName'     => 'galleryHasMedias',
-            'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia',
+            'targetEntity'  => $config['class']['gallery_has_media'],
             'cascade'       => array(
                 'persist',
             ),
@@ -189,26 +181,32 @@ class SonataMediaExtension extends Extension
     public function configureCdnAdapter(ContainerBuilder $container, $config)
     {
         // add the default configuration for the server cdn
-        if ($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['sonata.media.cdn.server'])) {
-            $definition     = $container->getDefinition('sonata.media.cdn.server');
-            $configuration  = $config['cdn']['sonata.media.cdn.server'];
-            $definition->replaceArgument(0, $configuration['path']);
+        if ($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['server'])) {
+            $container->getDefinition('sonata.media.cdn.server')
+                ->replaceArgument(0, $config['cdn']['server']['path'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.cdn.server');
         }
 
-        if ($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['sonata.media.cdn.panther'])) {
-            $definition     = $container->getDefinition('sonata.media.cdn.panther');
-            $configuration  = $config['cdn']['sonata.media.cdn.panther'];
-            $definition->replaceArgument(0, $configuration['path']);
-            $definition->replaceArgument(1, $configuration['username']);
-            $definition->replaceArgument(2, $configuration['password']);
-            $definition->replaceArgument(3, $configuration['site_id']);
+        if ($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['panther'])) {
+            $container->getDefinition('sonata.media.cdn.panther')
+                ->replaceArgument(0, $config['cdn']['panther']['path'])
+                ->replaceArgument(1, $config['cdn']['panther']['username'])
+                ->replaceArgument(2, $config['cdn']['panther']['password'])
+                ->replaceArgument(3, $config['cdn']['panther']['site_id'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.cdn.panther');
         }
 
-        if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['sonata.media.cdn.fallback'])) {
-            $definition     = $container->getDefinition('sonata.media.cdn.fallback');
-            $configuration  = $config['cdn']['sonata.media.cdn.fallback'];
-            $definition->replaceArgument(0, new Reference($configuration['cdn']));
-            $definition->replaceArgument(1, new Reference($configuration['fallback']));
+        if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
+            $container->getDefinition('sonata.media.cdn.fallback')
+                ->replaceArgument(0, new Reference($config['cdn']['fallback']['cdn']))
+                ->replaceArgument(1, new Reference($config['cdn']['fallback']['fallback']))
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.cdn.fallback');
         }
     }
 
@@ -222,66 +220,57 @@ class SonataMediaExtension extends Extension
     public function configureFilesystemAdapter(ContainerBuilder $container, $config)
     {
         // add the default configuration for the local filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['sonata.media.adapter.filesystem.local'])) {
-            $definition = $container->getDefinition('sonata.media.adapter.filesystem.local');
-            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.local'];
-            $definition->addArgument($configuration['directory']);
-            $definition->addArgument($configuration['create']);
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['local'])) {
+            $container->getDefinition('sonata.media.adapter.filesystem.local')
+                ->addArgument($config['filesystem']['local']['directory'])
+                ->addArgument($config['filesystem']['local']['create'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.local');
         }
 
         // add the default configuration for the FTP filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['sonata.media.adapter.filesystem.ftp'])) {
-            $definition = $container->getDefinition('sonata.media.adapter.filesystem.ftp');
-            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.ftp'];
-            $definition->addArgument($configuration['directory']);
-            $definition->addArgument($configuration['username']);
-            $definition->addArgument($configuration['password']);
-            $definition->addArgument($configuration['port']);
-            $definition->addArgument($configuration['passive']);
-            $definition->addArgument($configuration['create']);
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['ftp'])) {
+            $container->getDefinition('sonata.media.adapter.filesystem.ftp')
+                ->addArgument($config['filesystem']['ftp']['directory'])
+                ->addArgument($config['filesystem']['ftp']['username'])
+                ->addArgument($config['filesystem']['ftp']['password'])
+                ->addArgument($config['filesystem']['ftp']['port'])
+                ->addArgument($config['filesystem']['ftp']['passive'])
+                ->addArgument($config['filesystem']['ftp']['create'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.ftp');
+            $container->removeDefinition('sonata.media.filesystem.ftp');
         }
 
         // add the default configuration for the S3 filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['sonata.media.adapter.filesystem.s3'])) {
-            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.s3'];
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['s3'])) {
+            $container->getDefinition('sonata.media.adapter.filesystem.s3')
+                ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
+                ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
+                ->replaceArgument(2, $config['filesystem']['s3']['create'])
+            ;
 
-            $definition = $container->getDefinition('sonata.media.adapter.filesystem.s3');
-            $definition->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'));
-            $definition->replaceArgument(1, $configuration['bucket']);
-            $definition->replaceArgument(2, $configuration['create']);
-
-            $definition = $container->getDefinition('sonata.media.adapter.service.s3');
-            $definition->replaceArgument(0, array(
-                'secret' => $configuration['secretKey'],
-                'key'    => $configuration['accessKey'],
-            ));
+            $container->getDefinition('sonata.media.adapter.service.s3')
+                ->replaceArgument(0, array(
+                    'secret' => $config['filesystem']['s3']['secretKey'],
+                    'key'    => $config['filesystem']['s3']['accessKey'],
+                ))
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.s3');
+            $container->removeDefinition('sonata.media.filesystem.s3');
         }
 
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['sonata.media.adapter.filesystem.replicate'])) {
-            $definition = $container->getDefinition('sonata.media.adapter.filesystem.replicate');
-            $configuration =  $config['filesystem']['sonata.media.adapter.filesystem.replicate'];
-            $definition->replaceArgument(0, new Reference($configuration['master']));
-            $definition->replaceArgument(1, new Reference($configuration['slave']));
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
+            $container->getDefinition('sonata.media.adapter.filesystem.replicate')
+                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['master']))
+                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['slave']))
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
+            $container->removeDefinition('sonata.media.filesystem.replicate');
         }
-    }
-
-    /**
-     * Returns the base path for the XSD files.
-     *
-     * @return string The XSD base path
-     */
-    public function getXsdValidationBasePath()
-    {
-        return __DIR__.'/../Resources/config/schema';
-    }
-
-    public function getNamespace()
-    {
-        return 'http://www.sonata-project.org/schema/dic/media';
-    }
-
-    public function getAlias()
-    {
-        return "sonata_media";
     }
 }

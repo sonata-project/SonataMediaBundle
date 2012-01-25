@@ -90,29 +90,21 @@ class AddProviderCompilerPass implements CompilerPassInterface
     public function attachArguments(ContainerBuilder $container, array $settings)
     {
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
+            foreach($settings['providers'] as $name => $config) {
+                if ($config['service'] == $id) {
+                    $definition = $container->getDefinition($id);
 
-            if (!isset($settings['providers'][$id])) {
-                $provider = array();
-            } else {
-                $provider   = $settings['providers'][$id];
-            }
+                    $definition
+                        ->replaceArgument(1, new Reference($config['filesystem']))
+                        ->replaceArgument(2, new Reference($config['cdn']))
+                        ->replaceArgument(3, new Reference($config['generator']))
+                        ->replaceArgument(4, new Reference($config['thumbnail']))
+                    ;
 
-            $definition = $container->getDefinition($id);
-
-            $filesystem = isset($provider['filesystem']) ? $provider['filesystem']  : 'sonata.media.filesystem.local';
-            $cdn        = isset($provider['cdn'])        ? $provider['cdn']         : 'sonata.media.cdn.server';
-            $generator  = isset($provider['generator'])  ? $provider['generator']   : 'sonata.media.generator.default';
-            $thumbnail  = isset($provider['thumbnail'])  ? $provider['thumbnail']   : 'sonata.media.thumbnail.format';
-
-            $definition->replaceArgument(1, new Reference($filesystem));
-            $definition->replaceArgument(2, new Reference($cdn));
-            $definition->replaceArgument(3, new Reference($generator));
-            $definition->replaceArgument(4, new Reference($thumbnail));
-
-            $resizer = isset($provider['resizer']) ? $provider['resizer'] : 'sonata.media.resizer.simple';
-
-            if ($resizer) {
-                $definition->addMethodCall('setResizer', array(new Reference($resizer)));
+                    if ($config['resizer']) {
+                        $definition->addMethodCall('setResizer', array(new Reference($config['resizer'])));
+                    }
+                }
             }
         }
     }

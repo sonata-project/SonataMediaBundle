@@ -51,25 +51,25 @@ Full configuration options:
                     big:   { width: 500 , quality: 90}
 
         cdn:
-            sonata.media.cdn.server:
-                path: /uploads/media # http://media.sonata-project.org
+            server:
+                path:      /uploads/media # http://media.sonata-project.org
 
-            sonata.media.cdn.panther:
+            panther:
                 path:       http://domain.pantherportal.com/uploads/media
                 site_id:
                 password:
                 username:
 
-            sonata.media.cdn.fallback:
-                cdn:      sonata.media.cdn.panther
-                fallback: sonata.media.cdn.server
+            fallback:
+                master:     sonata.media.cdn.panther
+                fallback:   sonata.media.cdn.server
 
         filesystem:
-            sonata.media.adapter.filesystem.local:
+            local:
                 directory:  %kernel.root_dir%/../web/uploads/media
                 create:     false
 
-            sonata.media.adapter.filesystem.ftp:
+            ftp:
                 directory:
                 host:
                 username:
@@ -78,40 +78,40 @@ Full configuration options:
                 passive:  false
                 create:   false
 
-            sonata.media.adapter.filesystem.s3:
+            s3:
                 bucket:
                 accessKey:
                 secretKey:
                 create:     false
                 region:     # this settings does not seems to be implemented with Zend Framework
 
-            sonata.media.adapter.filesystem.replicate:
+            replicate:
                 master: sonata.media.adapter.filesystem.s3
                 slave: sonata.media.adapter.filesystem.local
 
         providers:
-            sonata.media.provider.file:
+            file:
                 resizer:    false
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
 
-            sonata.media.provider.image:
+            image:
                 resizer:    sonata.media.resizer.simple # sonata.media.resizer.square
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
 
-            sonata.media.provider.youtube:
+            youtube:
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
 
-            sonata.media.provider.dailymotion:
+            dailymotion:
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server

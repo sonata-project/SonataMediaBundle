@@ -48,11 +48,11 @@ Next, you must complete the new namespaces registration in the ``autoload.php`` 
 
   <?php
   $loader->registerNamespaces(array(
-    ...
-    'Application'   => __DIR__,
-    'Imagine'       => __DIR__.'/../vendor/imagine/lib',
-    'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
-    ...
+      ...
+      'Application'   => __DIR__,
+      'Imagine'       => __DIR__.'/../vendor/imagine/lib',
+      'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
+      ...
   ));
 
   // AWS SDK needs a special autoloader
@@ -114,11 +114,11 @@ Then you must configure the interaction with the orm and add the mediaBundles se
                     big:   { width: 500 , quality: 70}
 
         cdn:
-            sonata.media.cdn.server:
+            server:
                 path: /uploads/media # http://media.sonata-project.org/
 
         filesystem:
-            sonata.media.adapter.filesystem.local:
+            local:
                 directory:  %kernel.root_dir%/../web/uploads/media
                 create:     false
 
@@ -136,7 +136,7 @@ Also, you can determine the resizer to use; the default value is
 
     sonata_media:
         providers:
-            sonata.media.provider.image:
+            image:
                 resizer: sonata.media.resizer.square
 
 .. note::
