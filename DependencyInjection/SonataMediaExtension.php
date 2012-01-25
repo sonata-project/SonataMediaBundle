@@ -112,8 +112,8 @@ class SonataMediaExtension extends Extension
         $container->setParameter('sonata.media.admin.gallery.entity', $config['class']['gallery']);
         $container->setParameter('sonata.media.admin.gallery_has_media.entity', $config['class']['gallery_has_media']);
 
-        $container->setParameter('sonata.media.manager.media.class', $config['class']['media']);
-        $container->setParameter('sonata.media.manager.gallery.class', $config['class']['gallery']);
+        $container->setParameter('sonata.media.media.class', $config['class']['media']);
+        $container->setParameter('sonata.media.gallery.class', $config['class']['gallery']);
     }
 
     /**
