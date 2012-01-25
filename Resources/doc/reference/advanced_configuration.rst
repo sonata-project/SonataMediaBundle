@@ -7,6 +7,11 @@ Full configuration options:
 
     sonata_media:
         db_driver: doctrine_orm
+        class:
+            media:              Application\Sonata\MediaBundle\Entity\Media
+            gallery:            Application\Sonata\MediaBundle\Entity\Gallery
+            gallery_has_media:  Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+
         default_context: default
         contexts:
             default:  # the default context is mandatory
