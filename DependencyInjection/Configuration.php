@@ -28,37 +28,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $node = $treeBuilder->root('sonata_media')->children();
 
-
-//        providers:
-//            sonata.media.provider.file:
-//                resizer:    false
-//                filesystem: sonata.media.filesystem.local
-//                cdn:        sonata.media.cdn.server
-//                generator:  sonata.media.generator.default
-//                thumbnail:  sonata.media.thumbnail.format
-//
-//            sonata.media.provider.image:
-//                resizer:    sonata.media.resizer.simple # sonata.media.resizer.square
-//                filesystem: sonata.media.filesystem.local
-//                cdn:        sonata.media.cdn.server
-//                generator:  sonata.media.generator.default
-//                thumbnail:  sonata.media.thumbnail.format
-//
-//            sonata.media.provider.youtube:
-//                resizer:    sonata.media.resizer.simple
-//                filesystem: sonata.media.filesystem.local
-//                cdn:        sonata.media.cdn.server
-//                generator:  sonata.media.generator.default
-//                thumbnail:  sonata.media.thumbnail.format
-//
-//            sonata.media.provider.dailymotion:
-//                resizer:    sonata.media.resizer.simple
-//                filesystem: sonata.media.filesystem.local
-//                cdn:        sonata.media.cdn.server
-//                generator:  sonata.media.generator.default
-//                thumbnail:  sonata.media.thumbnail.format
-
-
         $node
             ->scalarNode('db_driver')->isRequired()->end()
             ->scalarNode('default_context')->isRequired()->end()
