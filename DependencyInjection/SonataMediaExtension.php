@@ -131,7 +131,7 @@ class SonataMediaExtension extends Extension
             'orphanRemoval' => false,
         ));
 
-        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapOneToOne', array(
+        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapManyToOne', array(
             'fieldName'     => 'gallery',
             'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\Gallery',
             'cascade'       => array(
@@ -148,7 +148,7 @@ class SonataMediaExtension extends Extension
             'orphanRemoval' => false,
         ));
 
-        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapOneToOne', array(
+        $collector->addAssociation('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia', 'mapManyToOne', array(
             'fieldName'     => 'media',
             'targetEntity'  => 'Application\\Sonata\\MediaBundle\\Entity\\Media',
             'cascade'       => array(
