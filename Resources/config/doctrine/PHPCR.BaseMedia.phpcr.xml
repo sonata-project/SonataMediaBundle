@@ -12,15 +12,15 @@
         <field name="enabled"           fieldName="enabled"             type="boolean" />
 
         <field name="providerName"      fieldName="providerName"        type="string" />
-        <field name="providerStatus"    fieldName="providerStatus"      type="int" />
+        <field name="providerStatus"    fieldName="providerStatus"      type="long" />
         <field name="providerReference" fieldName="providerReference"   type="string" />
-        <field name="providerMetadata"  fieldName="providerMetadata"    type="hash" />
+        <field name="providerMetadata"  fieldName="providerMetadata"    type="string" multivalue="true" />
 
-        <field name="width"             fieldName="width"               type="int" />
-        <field name="height"            fieldName="height"              type="int" />
-        <field name="length"            fieldName="length"              type="float" />
+        <field name="width"             fieldName="width"               type="long" />
+        <field name="height"            fieldName="height"              type="long" />
+        <field name="length"            fieldName="length"              type="double" />
         <field name="contentType"       fieldName="contentType"         type="string" />
-        <field name="size"              fieldName="size"                type="int" />
+        <field name="size"              fieldName="size"                type="long" />
 
         <field name="copyright"         fieldName="copyright"           type="string" />
         <field name="authorName"        fieldName="authorName"          type="string" />
@@ -29,8 +29,8 @@
         <field name="cdnIsFlushable"    fieldName="cdnIsFlushable"      type="boolean" />
         <field name="cdnFlushAt"        fieldName="cdnFlushAt"          type="date" />
 
-        <field name="updatedAt"         fieldName="updatedAt"     type="date" />
-        <field name="createdAt"         fieldName="createdAt"     type="date" />
+        <field name="updatedAt"         fieldName="updatedAt"           type="date" />
+        <field name="createdAt"         fieldName="createdAt"           type="date" />
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist" />

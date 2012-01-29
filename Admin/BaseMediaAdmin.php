@@ -78,7 +78,7 @@ abstract class BaseMediaAdmin extends Admin
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
-        if ($media->getId() > 0) {
+        if ($media->getId()) {
             $provider->buildEditForm($formMapper);
         } else {
             $provider->buildCreateForm($formMapper);
