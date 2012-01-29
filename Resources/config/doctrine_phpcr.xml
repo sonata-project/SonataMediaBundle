@@ -5,12 +5,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="sonata.media.manager.media.class">Sonata\MediaBundle\Document\MediaManager</parameter>
-        <parameter key="sonata.media.manager.gallery.class">Sonata\MediaBundle\Document\GalleryManager</parameter>
+        <parameter key="sonata.media.manager.media.class">Sonata\MediaBundle\Document\PHPCR\MediaManager</parameter>
+        <parameter key="sonata.media.manager.gallery.class">Sonata\MediaBundle\Document\PHPCR\GalleryManager</parameter>
     </parameters>
 
     <services>
-        <service id="sonata.media.document_manager" alias="doctrine.odm.mongodb.default_document_manager" />
+        <service id="sonata.media.document_manager" alias="doctrine_phpcr.odm.default_document_manager" />
 
         <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
             <argument type="service" id="sonata.media.pool" />
@@ -18,10 +18,10 @@
             <argument>%sonata.media.media.class%</argument>
         </service>
 
-        <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
-            <argument type="service" id="sonata.media.document_manager" />
-            <argument>%sonata.media.gallery.class%</argument>
-        </service>
+        <!--<service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">-->
+            <!--<argument type="service" id="sonata.media.document_manager" />-->
+            <!--<argument>Application\Sonata\MediaBundle\Document\PHPCR\Gallery</argument>-->
+        <!--</service>-->
 
         <!-- Path generator servive -->
         <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\ODMGenerator">

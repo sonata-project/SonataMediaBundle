@@ -4,7 +4,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Sonata\MediaBundle\Document\BaseGalleryHasMedia">
+    <mapped-superclass name="Sonata\MediaBundle\Document\ODM\BaseGalleryHasMedia">
 
         <field name="position"   fieldName="position" type="int" />
         <field name="enabled"    fieldName="enabled"  type="boolean" />

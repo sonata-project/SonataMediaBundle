@@ -59,7 +59,7 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
         }
 
-        if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb'))) {
+        if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'))) {
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
 
