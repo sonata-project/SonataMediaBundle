@@ -73,7 +73,6 @@ class DailyMotionProvider extends BaseVideoProvider
             'highlight' => null,
         );
 
-
         $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
         $params = array(
@@ -91,10 +90,9 @@ class DailyMotionProvider extends BaseVideoProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
-    public function prePersist(MediaInterface $media)
+    public function transform(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -109,9 +107,6 @@ class DailyMotionProvider extends BaseVideoProvider
         $media->setWidth($metadata['width']);
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-
-        $media->setCreatedAt(new \Datetime());
-        $media->setUpdatedAt(new \Datetime());
     }
 
     /**

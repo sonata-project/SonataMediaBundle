@@ -61,21 +61,27 @@ class MediaManager extends AbstractMediaManager
             $media->setProviderName($providerName);
         }
 
+        $provider = $this->pool->getProvider($media->getProviderName());
+
         $isNew = $media->getId() === null;
 
+        if ($media->getBinaryContent()) {
+            $provider->transform($media);
+        }
+
         if ($isNew) {
-            $this->pool->getProvider($media->getProviderName())->prePersist($media);
+            $provider->prePersist($media);
         } else {
-            $this->pool->getProvider($media->getProviderName())->preUpdate($media);
+            $provider->preUpdate($media);
         }
 
         $this->em->persist($media);
         $this->em->flush();
 
         if ($isNew) {
-            $this->pool->getProvider($media->getProviderName())->postPersist($media);
+            $provider->postPersist($media);
         } else {
-            $this->pool->getProvider($media->getProviderName())->postUpdate($media);
+            $provider->postUpdate($media);
         }
 
         // just in case the pool alter the media

@@ -121,6 +121,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023456);
 
         // pre persist the media
+        $provider->transform($media);
         $provider->prePersist($media);
 
         $this->assertEquals('logo.png', $media->getName(), '::getName() return the file name');

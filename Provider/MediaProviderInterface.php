@@ -48,7 +48,7 @@ interface MediaProviderInterface
      * @return void
      */
     function generateThumbnails(MediaInterface $media);
-    
+
     /**
      * remove all linked thumbnails
      *
@@ -225,4 +225,10 @@ interface MediaProviderInterface
      * @param bool $isFlushable
      */
     function getCdnPath($relativePath, $isFlushable);
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function transform(MediaInterface $media);
 }

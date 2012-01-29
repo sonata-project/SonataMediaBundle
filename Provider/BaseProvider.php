@@ -100,7 +100,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     /**
      * remove all linked thumbnails
-     * 
+     *
      * @param MediaInterface $media
      * @return void
      */
@@ -256,5 +256,24 @@ abstract class BaseProvider implements MediaProviderInterface
     public function setResizer(ResizerInterface $resizer)
     {
         $this->resizer = $resizer;
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function prePersist(MediaInterface $media)
+    {
+        $media->setCreatedAt(new \Datetime());
+        $media->setUpdatedAt(new \Datetime());
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function preUpdate(MediaInterface $media)
+    {
+        $media->setUpdatedAt(new \Datetime());
     }
 }

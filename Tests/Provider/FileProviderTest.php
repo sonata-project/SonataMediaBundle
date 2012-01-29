@@ -142,6 +142,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $provider->fixBinaryContent($media);
 
         $provider->preUpdate($media);
+        $provider->transform($media);
 
         $this->assertInstanceOf('\DateTime', $media->getUpdatedAt());
         $this->assertNotNull($media->getProviderReference());
@@ -155,6 +156,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023456);
 
         // pre persist the media
+        $provider->transform($media);
         $provider->prePersist($media);
 
         $this->assertEquals('file.txt', $media->getName(), '::getName() return the file name');

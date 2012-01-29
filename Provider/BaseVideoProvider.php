@@ -84,7 +84,7 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
-    public function preUpdate(MediaInterface $media)
+    public function transform(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -97,10 +97,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-
-        $media->setUpdatedAt(new \Datetime());
     }
-
 
     /**
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper

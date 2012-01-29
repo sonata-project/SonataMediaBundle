@@ -102,6 +102,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         stream_wrapper_register('http', 'Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
 
         // pre persist the media
+        $provider->transform($media);
         $provider->prePersist($media);
 
         $this->assertEquals('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
@@ -113,6 +114,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->postRemove($media);
 
         $media->setProviderStatus('fake');
+        $provider->transform($media);
         $provider->preUpdate($media);
 
         $this->assertEquals(MediaInterface::STATUS_OK, $media->getProviderStatus());

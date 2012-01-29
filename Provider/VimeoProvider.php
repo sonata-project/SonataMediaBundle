@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class VimeoProvider extends BaseVideoProvider
 {
-
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string $format
@@ -78,7 +77,7 @@ class VimeoProvider extends BaseVideoProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
-    public function prePersist(MediaInterface $media)
+    public function transform(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -101,9 +100,6 @@ class VimeoProvider extends BaseVideoProvider
         $media->setLength($metadata['duration']);
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-
-        $media->setCreatedAt(new \Datetime());
-        $media->setUpdatedAt(new \Datetime());
     }
 
     /**
@@ -132,7 +128,6 @@ class VimeoProvider extends BaseVideoProvider
 
         return $metadata;
     }
-
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media

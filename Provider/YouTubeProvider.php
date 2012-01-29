@@ -115,7 +115,6 @@ class YouTubeProvider extends BaseVideoProvider
             'cc_load_policy' => 1
         );
 
-
         $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
         $params = array(
@@ -131,9 +130,9 @@ class YouTubeProvider extends BaseVideoProvider
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * @return void
      */
-    public function prePersist(MediaInterface $media)
+    public function transform(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -150,9 +149,6 @@ class YouTubeProvider extends BaseVideoProvider
         $media->setWidth($metadata['width']);
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-
-        $media->setCreatedAt(new \Datetime());
-        $media->setUpdatedAt(new \Datetime());
     }
 
     /**

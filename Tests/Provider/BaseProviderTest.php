@@ -215,5 +215,14 @@ class TestProvider extends BaseProvider
         // TODO: Implement getDownloadResponse() method.
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function transform(MediaInterface $media)
+    {
+        // TODO: Implement transform() method.
+    }
+
 
 }

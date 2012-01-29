@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
@@ -72,6 +73,8 @@ abstract class BaseMediaAdmin extends Admin
         if(!$media || !$media->getProviderName()) {
             return;
         }
+
+        $formMapper->getFormBuilder()->appendNormTransformer(new ProviderDataTransformer($this->pool));
 
         $provider = $this->pool->getProvider($media->getProviderName());
 

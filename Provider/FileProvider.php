@@ -143,19 +143,11 @@ class FileProvider extends BaseProvider
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * @return void
      */
-    public function prePersist(MediaInterface $media)
+    public function transform(MediaInterface $media)
     {
         $this->fixBinaryContent($media);
-
-        $media->setProviderName($this->name);
-        $media->setProviderStatus(MediaInterface::STATUS_OK);
-
-        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
-            return;
-        }
-
         $this->fixFilename($media);
 
         // this is the name used to store the file
@@ -165,7 +157,6 @@ class FileProvider extends BaseProvider
 
         $media->setContentType($media->getBinaryContent()->getMimeType());
         $media->setSize($media->getBinaryContent()->getSize());
-        $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());
     }
 
@@ -194,9 +185,9 @@ class FileProvider extends BaseProvider
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
         return array_merge(array(
-          'title'       => $media->getName(),
-          'thumbnail'   => $this->getReferenceImage($media),
-          'file'        => $this->getReferenceImage($media),
+            'title'       => $media->getName(),
+            'thumbnail'   => $this->getReferenceImage($media),
+            'file'        => $this->getReferenceImage($media),
         ), $options);
     }
 
@@ -208,30 +199,6 @@ class FileProvider extends BaseProvider
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
         return false;
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
-     */
-    public function preUpdate(MediaInterface $media)
-    {
-        $this->fixBinaryContent($media);
-
-        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
-            return;
-        }
-
-        $this->fixFilename($media);
-
-        // this is the name used to store the file
-        if (!$media->getProviderReference()) {
-            $media->setProviderReference($this->generateReferenceName($media));
-        }
-
-        $media->setContentType($media->getBinaryContent()->getMimeType());
-        $media->setSize($media->getBinaryContent()->getSize());
-        $media->setUpdatedAt(new \Datetime());
     }
 
     /**
