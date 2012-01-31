@@ -155,9 +155,10 @@ class FileProvider extends BaseProvider
             $media->setProviderReference($this->generateReferenceName($media));
         }
 
-        $media->setContentType($media->getBinaryContent()->getMimeType());
-        $media->setSize($media->getBinaryContent()->getSize());
-        $media->setUpdatedAt(new \Datetime());
+        if ($media->getBinaryContent()) {
+            $media->setContentType($media->getBinaryContent()->getMimeType());
+            $media->setSize($media->getBinaryContent()->getSize());
+        }
     }
 
     /**

@@ -43,7 +43,8 @@ class MediaAdminController extends Controller
             'base_template' => $this->getBaseTemplate(),
             'admin'         => $this->admin,
             'security'      => $this->get('sonata.media.pool')->getDownloadSecurity($media),
-            'action'        => 'view'
+            'action'        => 'view',
+            'pixlr'         => $this->container->has('sonata.media.extra.pixlr') ? $this->container->get('sonata.media.extra.pixlr') : false,
         ));
     }
 

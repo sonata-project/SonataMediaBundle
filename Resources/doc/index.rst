@@ -33,6 +33,7 @@ Reference Guide
    reference/usage
    reference/security
    reference/advanced_configuration
+   reference/extra
 
 Available services
 ------------------

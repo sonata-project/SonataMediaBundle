@@ -202,6 +202,15 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
 
+            ->arrayNode('pixlr')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('enabled')->defaultValue(false)->end()
+                    ->scalarNode('secret')->defaultValue(sha1(uniqid(rand(1, 9999), true)))->end()
+                    ->scalarNode('referrer')->defaultValue('Sonata Media')->end()
+                ->end()
+            ->end()
+
             ->arrayNode('class')
                 ->addDefaultsIfNotSet()
                 ->children()

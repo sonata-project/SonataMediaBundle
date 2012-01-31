@@ -198,6 +198,37 @@
                 <source>link.test_protected_url</source>
                 <target>Link Preview</target>
             </trans-unit>
+            <trans-unit id="label.edit_with_pixlr">
+                <source>label.edit_with_pixlr</source>
+                <target>Edit this media with Pixlr</target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_warning">
+                <source>label.pixlr_warning</source>
+                <target>
+                    <![CDATA[
+                        <span class="label important">Important</span> you are going to expose the media to an <strong>external service</strong>. <br />
+                        If you are working on confidentiel materials, please do not use this service.
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_express_editor">
+                <source>label.pixlr_express_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong style="color: white">Express Editor</strong> <br />
+                        Simple interface for quick editing
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_advanced_editor">
+                <source>label.pixlr_advanced_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong style="color: white">Advanced Editor</strong> <br />
+                        Experimented users only
+                    ]]>
+                </target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

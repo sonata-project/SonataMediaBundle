@@ -21,14 +21,15 @@ file that was distributed with this source code.
         {% media media, format %}
     </div>
 
-    <h3>{% trans from 'SonataMediaBundle' %}title.media_thumbnail{% endtrans %}</h3>
-    <div>
-        {% thumbnail media, format %}
-    </div>
-
     <h3>{% trans from 'SonataMediaBundle' %}title.informations{% endtrans %}</h3>
 
     <table>
+        {% if pixlr and pixlr.isEditable(media) %}
+            <tr>
+                <td></td>
+                <td><a class="btn" href="{{ path('sonata_media_pixlr_open_editor', {'id': media.id }) }}">{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}</a></td>
+            </tr>
+        {% endif %}
         <tr>
             <td>{% trans from 'SonataMediaBundle' %}label.size{% endtrans %}</td>
             <td>{{ media.size }}</td>

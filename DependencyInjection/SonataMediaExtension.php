@@ -48,6 +48,7 @@ class SonataMediaExtension extends Extension
         $loader->load('twig.xml');
         $loader->load('block.xml');
         $loader->load('security.xml');
+        $loader->load('extra.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -104,6 +105,7 @@ class SonataMediaExtension extends Extension
         }
 
         $this->configureParameterClass($container, $config);
+        $this->configureExtra($container, $config);
     }
 
     public function configureParameterClass(ContainerBuilder $container, array $config)
@@ -283,6 +285,18 @@ class SonataMediaExtension extends Extension
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');
+        }
+    }
+
+    public function configureExtra(ContainerBuilder $container, array $config)
+    {
+        if ($config['pixlr']['enabled']) {
+            $container->getDefinition('sonata.media.extra.pixlr')
+                ->replaceArgument(0, $config['pixlr']['referrer'])
+                ->replaceArgument(1, $config['pixlr']['secret'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.extra.pixlr');
         }
     }
 }

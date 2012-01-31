@@ -1,0 +1,121 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        {% block stylesheets %}
+            <!-- jQuery code -->
+            <link rel="stylesheet" href="{{ asset('bundles/sonatajquery/themes/flick/jquery-ui-1.8.16.custom.css') }}" type="text/css" media="all" />
+            <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/bootstrap.min.css') }}" type="text/css" media="all" >
+
+            <!-- base application asset -->
+            <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/layout.css') }}" type="text/css" media="all">
+            <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/colors.css') }}" type="text/css" media="all">
+        {% endblock %}
+
+        <title>Pixlr Editor</title>
+
+        <style>
+            .header {
+                text-align: center;
+                background: none repeat scroll 0 0 #222222;
+                border-bottom: 5px solid #B6B6B6;
+                padding: 15px 0;
+            }
+
+            body.sonata-bc {
+               padding-top: 0;
+               margin: 0px;
+               padding: 0px;
+            }
+
+            a.box {
+                text-align: center;
+                width: 120px;
+                float: left;
+                margin: 30px;
+                margin-left: 35px;
+                margin-right: 35px;
+
+                padding: 30px;
+                text-decoration: none;
+
+                color: #B6B6B6;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+                border:9px solid #B6B6B6;
+                background-color:#222222;
+                /*-webkit-box-shadow: #B3B3B3 3px 3px 3px;*/
+                /*-moz-box-shadow: #B3B3B3 3px 3px 3px;*/
+                /*box-shadow: #B3B3B3 3px 3px 3px*/
+            }
+
+            a.box:hover {
+                color: #222222;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+                border:9px solid #222222;
+                background-color:#B6B6B6;
+                text-decoration: none;
+                /*-webkit-box-shadow: #B3B3B3 3px 3px 3px;*/
+                /*-moz-box-shadow: #B3B3B3 3px 3px 3px;*/
+                /*box-shadow: #B3B3B3 3px 3px 3px*/
+            }
+
+            div.content {
+                text-align: center;
+                width: 550px;
+                padding: 30px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .footer {
+                clear: both;
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body class="sonata-bc">
+        <div class="header">
+            <img src="{{ asset('bundles/sonatamedia/extra/pixlr/pixlr.png')}}" alt="Pixlr"/>
+        </div>
+
+        <div class="content">
+            <div class="alert-message block-message warning">
+                {{ "label.pixlr_warning"|trans({}, "SonataMediaBundle")|raw }}
+            </div>
+
+            <a href="{{ url('sonata_media_pixlr_edit', {'id': media.id, 'mode': 'express'}) }}" class="box">
+                <img src="{{ asset('bundles/sonatamedia/extra/pixlr/express_128.png')}}" alt="Pixlr Express" style="margin-left: -5px;"/>
+                {{ "label.pixlr_express_editor"|trans({}, "SonataMediaBundle")|raw }}
+            </a>
+
+            <a href="{{ url('sonata_media_pixlr_edit', {'id': media.id, 'mode': 'editor'}) }}" class="box">
+                <img src="{{ asset('bundles/sonatamedia/extra/pixlr/editor_128.png')}}" alt="Pixlr Editor" style="margin-left: -5px;"/>
+                {{ "label.pixlr_advanced_editor"|trans({}, "SonataMediaBundle")|raw }}
+            </a>
+
+            <div style="clear: both"></div>
+        </div>
+
+        <div class="footer">
+            The Sonata Project is not linked to Pixlr and does not provide supports on the Pixlr service. <br />
+            <a href="http://pixlr.com" target="_blank">Pixlr</a> is an external web service provided by <a href="http://usa.autodesk.com/adsk/servlet/pc/index?id=17483004&siteID=123112" target="_blank">Autodesk</a><br>
+            <a href="http://pixlr.com/terms_of_service/" target="_blank">Pixlr's Terms of Service</a> and <a href="http://pixlr.com/privacy_policy/" target="_blank">Pixlr's Privacy Policy</a> <br />
+        </div>
+    </body>
+</html>

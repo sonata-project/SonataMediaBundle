@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="sonata_media_pixlr_edit" pattern="/pixlr/edit/{id}/{mode}">
+        <default key="_controller">sonata.media.extra.pixlr:editAction</default>
+    </route>
+
+    <route id="sonata_media_pixlr_target" pattern="/pixlr/target/{hash}/{id}">
+        <default key="_controller">sonata.media.extra.pixlr:targetAction</default>
+    </route>
+
+    <route id="sonata_media_pixlr_exit" pattern="/pixlr/exit/{hash}/{id}">
+        <default key="_controller">sonata.media.extra.pixlr:exitAction</default>
+    </route>
+
+    <route id="sonata_media_pixlr_open_editor" pattern="/pixlr/open/{id}">
+        <default key="_controller">sonata.media.extra.pixlr:openEditorAction</default>
+    </route>
+</routes>
