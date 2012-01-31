@@ -159,6 +159,8 @@ class FileProvider extends BaseProvider
             $media->setContentType($media->getBinaryContent()->getMimeType());
             $media->setSize($media->getBinaryContent()->getSize());
         }
+
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
 
     /**
