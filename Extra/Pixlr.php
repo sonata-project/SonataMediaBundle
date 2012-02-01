@@ -191,10 +191,10 @@ class Pixlr
          */
         if (preg_match('@http://([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/_temp/[0-9a-z]{24}\.[a-z]*@', $request->get('image'), $matches)) {
             if (!in_array($matches[1], $this->allowHosts)) {
-                throw new NotFoundHttpException('Invalid image host');
+                throw new NotFoundHttpException(sprintf('Invalid image host : %s', $request->get('image')));
             }
         } else {
-            throw new NotFoundHttpException('Invalid image format');
+            throw new NotFoundHttpException(sprintf('Invalid image format : %s', $request->get('image')));
         }
 
         $file = $provider->getReferenceFile($media);
