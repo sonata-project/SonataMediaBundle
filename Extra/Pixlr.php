@@ -64,7 +64,8 @@ class Pixlr
 
         $this->validFormats = array('jpg', 'png');
         $this->allowHosts   = array(
-            '173.255.196.130'   // pilxr host
+            '173.255.196.130',   // pilxr hosts
+            '173.255.196.177',
         );
     }
 
