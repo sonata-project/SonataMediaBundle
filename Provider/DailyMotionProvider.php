@@ -88,15 +88,34 @@ class DailyMotionProvider extends BaseVideoProvider
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * @return void
      */
-    public function transform(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
         }
 
-        $metadata = $this->getMetadata($media);
+        if (preg_match("/www.dailymotion.com\/video\/([0-9a-zA-Z]*)_/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[1]);
+        }
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return
+     */
+    public function transform(MediaInterface $media)
+    {
+        $this->fixBinaryContent($media);
+
+        if (!$media->getBinaryContent()) {
+            return;
+        }
+
+        $url = sprintf('http://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/%s&format=json', $media->getBinaryContent());
+
+        $metadata = $this->getMetadata($media, $url);
 
         $media->setProviderName($this->name);
         $media->setProviderMetadata($metadata);
@@ -107,33 +126,6 @@ class DailyMotionProvider extends BaseVideoProvider
         $media->setWidth($metadata['width']);
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-    }
-
-    /**
-     * @throws \RuntimeException
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return mixed|null|string
-     */
-    public function getMetadata(MediaInterface $media)
-    {
-        if (!$media->getBinaryContent()) {
-            return null;
-        }
-
-        $url = sprintf('http://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/%s&format=json', $media->getBinaryContent());
-        $metadata = @file_get_contents($url);
-
-        if (!$metadata) {
-            throw new \RuntimeException('Unable to retrieve dailymotion video information for :' . $url);
-        }
-
-        $metadata = json_decode($metadata, true);
-
-        if (!$metadata) {
-            throw new \RuntimeException('Unable to decode dailymotion video information for :' . $url);
-        }
-
-        return $metadata;
     }
 
     /**

@@ -15,25 +15,26 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\DailyMotionProvider;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Buzz\Browser;
+use Buzz\Message\Response;
 
 class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 {
-
-    public function getProvider()
+    public function getProvider(Browser $browser = null)
     {
+        if (!$browser) {
+            $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        }
+
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
-        $resizer->expects($this->any())
-            ->method('resize')
-            ->will($this->returnValue(true));
+        $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
         $adapter = $this->getMock('Gaufrette\Adapter');
 
         $file = $this->getMock('Gaufrette\File', array(), array($adapter));
 
         $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $filesystem->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($file));
+        $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
@@ -41,7 +42,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $thumbnail = new FormatThumbnail;
 
-        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail);
+        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -63,7 +64,6 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
         $this->assertEquals('/updoads/media/default/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
-
     }
 
     public function testThumbnail()
@@ -89,52 +89,50 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default/0011/24/thumb_1023458_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testEvent()
+    public function testTransformWithSig()
     {
-        $provider = $this->getProvider();
+        $response = new Response();
+        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
+
+        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+
+        $provider = $this->getProvider($browser);
+
         $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
 
         $media = new Media;
         $media->setBinaryContent('x9wjql');
         $media->setId(1023456);
 
-        stream_wrapper_unregister('http');
-        stream_wrapper_register('http', 'Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
-
         // pre persist the media
         $provider->transform($media);
-        $provider->prePersist($media);
 
         $this->assertEquals('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
         $this->assertEquals('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
+    }
 
-        // post persit the media
-        $provider->postPersist($media);
+    public function testTransformWithUrl()
+    {
+        $response = new Response();
+        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
 
-        $provider->postRemove($media);
+        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
-        $media->setProviderStatus('fake');
+        $provider = $this->getProvider($browser);
+
+        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
+
+        $media = new Media;
+        $media->setBinaryContent('http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds');
+        $media->setId(1023456);
+
+        // pre persist the media
         $provider->transform($media);
-        $provider->preUpdate($media);
 
-        $this->assertEquals(MediaInterface::STATUS_OK, $media->getProviderStatus());
-        $provider->postUpdate($media);
-
-        $media->setProviderStatus('fake');
-        $media->setBinaryContent(null);
-
-        $provider->prePersist($media);
-        $this->assertEquals('fake', $media->getProviderStatus());
-
-        $provider->preUpdate($media);
-        $this->assertEquals('fake', $media->getProviderStatus());
-
-        $provider->postPersist($media);
-        $this->assertEquals('fake', $media->getProviderStatus());
-
-        $provider->preRemove($media);
-
-        stream_wrapper_restore('http');
+        $this->assertEquals('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
+        $this->assertEquals('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     public function testForm()

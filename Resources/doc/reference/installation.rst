@@ -31,6 +31,11 @@ the following lines to the file ``deps``::
       git=http://github.com/KnpLabs/Gaufrette.git
       target=/gaufrette
 
+  [buzz]
+      git=git://github.com/kriswallsmith/Buzz.git
+      target=/buzz
+
+
   # if you want to use Amazon S3
   [aws-sdk]
       git=https://github.com/amazonwebservices/aws-sdk-for-php

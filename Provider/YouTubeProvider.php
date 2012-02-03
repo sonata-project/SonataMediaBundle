@@ -132,13 +132,32 @@ class YouTubeProvider extends BaseVideoProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function transform(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
         }
 
-        $metadata = $this->getMetadata($media);
+        if (preg_match("/(?<=v(\=|\/))([-a-zA-Z0-9_]+)|(?<=youtu\.be\/)([-a-zA-Z0-9_]+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[2]);
+        }
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function transform(MediaInterface $media)
+    {
+        $this->fixBinaryContent($media);
+
+        if (!$media->getBinaryContent()) {
+            return;
+        }
+
+        $url = sprintf('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%s&format=json', $media->getBinaryContent());
+
+        $metadata = $this->getMetadata($media, $url);
 
         $media->setProviderName($this->name);
         $media->setProviderReference($media->getBinaryContent());
@@ -149,33 +168,6 @@ class YouTubeProvider extends BaseVideoProvider
         $media->setWidth($metadata['width']);
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-    }
-
-    /**
-     * @throws \RuntimeException
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return mixed|null|string
-     */
-    public function getMetadata(MediaInterface $media)
-    {
-        if (!$media->getBinaryContent()) {
-            return null;
-        }
-
-        $url = sprintf('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%s&format=json', $media->getBinaryContent());
-        $metadata = @file_get_contents($url);
-
-        if (!$metadata) {
-            throw new \RuntimeException('Unable to retrieve youtube video information for :' . $url);
-        }
-
-        $metadata = json_decode($metadata, true);
-
-        if (!$metadata) {
-            throw new \RuntimeException('Unable to decode youtube video information for :' . $url);
-        }
-
-        return $metadata;
     }
 
     /**

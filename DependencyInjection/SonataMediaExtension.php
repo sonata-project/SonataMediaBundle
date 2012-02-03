@@ -106,6 +106,13 @@ class SonataMediaExtension extends Extension
 
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
+        $this->configureBuzz($container, $config);
+    }
+
+    public function configureBuzz(ContainerBuilder $container, array $config)
+    {
+        $container->getDefinition('sonata.media.buzz.browser')
+            ->replaceArgument(0, new Reference($config['buzz']['connector']));
     }
 
     public function configureParameterClass(ContainerBuilder $container, array $config)

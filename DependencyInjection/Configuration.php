@@ -219,6 +219,13 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('gallery_has_media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia')->end()
                 ->end()
             ->end()
+
+            ->arrayNode('buzz')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.file_get_contents')->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

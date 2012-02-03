@@ -15,25 +15,26 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Buzz\Browser;
+use Buzz\Message\Response;
 
 class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 {
-
-    public function getProvider()
+    public function getProvider(Browser $browser = null)
     {
+        if (!$browser) {
+            $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        }
+
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
-        $resizer->expects($this->any())
-            ->method('resize')
-            ->will($this->returnValue(true));
+        $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
         $adapter = $this->getMock('Gaufrette\Adapter');
 
         $file = $this->getMock('Gaufrette\File', array(), array($adapter));
 
         $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $filesystem->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($file));
+        $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
 
@@ -41,7 +42,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $thumbnail = new FormatThumbnail;
 
-        $provider = new VimeoProvider('file', $filesystem, $cdn, $generator, $thumbnail);
+        $provider = new VimeoProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -87,9 +88,15 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testEvent()
+    public function testTransformWithSig()
     {
-        $provider = $this->getProvider();
+        $response = new Response();
+        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
+
+        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+
+        $provider = $this->getProvider($browser);
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
@@ -97,43 +104,36 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1023456);
 
-        stream_wrapper_unregister('http');
-        stream_wrapper_register('http', 'Sonata\\MediaBundle\\Tests\\Provider\\FakeHttpWrapper');
-
         // pre persist the media
         $provider->transform($media);
         $provider->prePersist($media);
 
         $this->assertEquals('Blinky™', $media->getName(), '::getName() return the file name');
         $this->assertEquals('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+    }
 
-        // post persit the media
-        $provider->postPersist($media);
+    public function testTransformWithUrl()
+    {
+        $response = new Response();
+        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
 
-        $provider->postRemove($media);
+        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
-        $media->setProviderStatus('fake');
+        $provider = $this->getProvider($browser);
+
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+
+        $media = new Media;
+        $media->setBinaryContent('http://vimeo.com/012341231');
+        $media->setId(1023456);
+
+        // pre persist the media
         $provider->transform($media);
-        $provider->preUpdate($media);
-
-        $this->assertEquals(MediaInterface::STATUS_OK, $media->getProviderStatus());
-        $provider->postUpdate($media);
-
-        $media->setProviderStatus('fake');
-        $media->setBinaryContent(null);
-
         $provider->prePersist($media);
-        $this->assertEquals('fake', $media->getProviderStatus());
 
-        $provider->preUpdate($media);
-        $this->assertEquals('fake', $media->getProviderStatus());
-
-        $provider->postPersist($media);
-        $this->assertEquals('fake', $media->getProviderStatus());
-
-        $provider->preRemove($media);
-
-        stream_wrapper_restore('http');
+        $this->assertEquals('Blinky™', $media->getName(), '::getName() return the file name');
+        $this->assertEquals('012341231', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     public function testForm()

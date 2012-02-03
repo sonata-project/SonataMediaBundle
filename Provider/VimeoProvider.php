@@ -75,16 +75,35 @@ class VimeoProvider extends BaseVideoProvider
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * @return void
      */
-    public function transform(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
         }
 
+        if (preg_match("/vimeo\.com\/(\d+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[1]);
+        }
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function transform(MediaInterface $media)
+    {
+        $this->fixBinaryContent($media);
+
+        if (!$media->getBinaryContent()) {
+            return;
+        }
+
+        $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getBinaryContent());
+
         // retrieve metadata
-        $metadata = $this->getMetadata($media);
+        $metadata = $this->getMetadata($media, $url);
 
         // store provider information
         $media->setProviderName($this->name);
@@ -100,33 +119,6 @@ class VimeoProvider extends BaseVideoProvider
         $media->setLength($metadata['duration']);
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-    }
-
-    /**
-     * @throws \RuntimeException
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return mixed|null|string
-     */
-    public function getMetadata(MediaInterface $media)
-    {
-        if (!$media->getBinaryContent()) {
-            return null;
-        }
-
-        $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getBinaryContent());
-        $metadata = @file_get_contents($url);
-
-        if (!$metadata) {
-            throw new \RuntimeException('Unable to retrieve vimeo video information for :' . $url);
-        }
-
-        $metadata = json_decode($metadata, true);
-
-        if (!$metadata) {
-            throw new \RuntimeException('Unable to decode vimeo video information for :' . $url);
-        }
-
-        return $metadata;
     }
 
     /**

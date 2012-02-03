@@ -17,9 +17,28 @@ use Sonata\MediaBundle\Media\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Buzz\Browser;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
+    protected $browser;
+
+    /**
+     * @param $name
+     * @param \Gaufrette\Filesystem $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
+     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
+     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
+     * @param \Buzz\Browser $browser
+     */
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser)
+    {
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
+
+        $this->browser = $browser;
+    }
+
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string
@@ -81,25 +100,6 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
-     */
-    public function transform(MediaInterface $media)
-    {
-        if (!$media->getBinaryContent()) {
-            return;
-        }
-
-        $metadata = $this->getMetadata($media);
-
-        $media->setProviderReference($media->getBinaryContent());
-        $media->setProviderMetadata($metadata);
-        $media->setHeight($metadata['height']);
-        $media->setWidth($metadata['width']);
-        $media->setProviderStatus(MediaInterface::STATUS_OK);
-    }
-
-    /**
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      * @return void
      */
@@ -151,5 +151,27 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function postRemove(MediaInterface $media)
     {
+    }
+
+    /**
+     * @throws \RuntimeException
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return mixed|null|string
+     */
+    public function getMetadata(MediaInterface $media, $url)
+    {
+        try {
+            $response = $this->browser->get($url);
+        } catch(\RuntimeException $e) {
+            throw new \RuntimeException('Unable to retrieve youtube video information for :' . $url, null, $e);
+        }
+
+        $metadata = json_decode($response->getContent(), true);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to decode dailymotion video information for :' . $url);
+        }
+
+        return $metadata;
     }
 }
