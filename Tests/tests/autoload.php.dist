@@ -13,7 +13,8 @@ if (is_file($autoload)) {
         'Symfony'   => array($vendorDir.'/symfony/src'),
         'Sonata\AdminBundle'   => array($vendorDir),
         'Knp'       => array($vendorDir.'/knpmenu/src'),
-        'Gaufrette' => array($vendorDir.'/gaufrette/src')
+        'Gaufrette' => array($vendorDir.'/gaufrette/src'),
+        'Buzz'      => array($vendorDir.'/buzz/lib'),
     ));
     $loader->register();
 
