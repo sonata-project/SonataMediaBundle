@@ -198,6 +198,37 @@
                 <source>link.test_protected_url</source>
                 <target>Predogled povezave</target>
             </trans-unit>
+            <trans-unit id="label.edit_with_pixlr">
+                <source>label.edit_with_pixlr</source>
+                <target>Urejanje s pomočjo strani Pixlr</target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_warning">
+                <source>label.pixlr_warning</source>
+                <target>
+                    <![CDATA[
+                        <span class="label important">Pomembno</span> medijske vsebine boste izpostavili <strong>zunanjim storitvam</strong>.<br />
+                        Če so vsebine zasebne narave, prosimo ne uporabljajte te storitve.
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_express_editor">
+                <source>label.pixlr_express_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong style="color: white">Express Editor</strong> <br />
+                        Enostaven vmesnik za hitro urejanje
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_advanced_editor">
+                <source>label.pixlr_advanced_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong style="color: white">Advanced Editor</strong> <br />
+                        Napredni urejevalnik
+                    ]]>
+                </target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
