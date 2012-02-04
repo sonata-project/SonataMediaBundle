@@ -80,19 +80,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test.png', $properties['title']);
     }
 
-    public function testFixBinaryContent()
-    {
-        $provider = $this->getProvider();
-
-        $file = __DIR__.'/../fixtures/file.txt';
-
-        $media = new Media;
-        $media->setBinaryContent($file);
-        $provider->fixBinaryContent($media);
-
-        $this->assertInstanceOf('\Symfony\Component\HttpFoundation\File\File', $media->getBinaryContent());
-    }
-
     public function testForm()
     {
         if (!class_exists('Sonata\AdminBundle\Form\FormMapper')) {
@@ -139,9 +126,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($media->getProviderReference());
 
         $media->setBinaryContent($file);
-        $provider->fixBinaryContent($media);
-
-        $provider->preUpdate($media);
         $provider->transform($media);
 
         $this->assertInstanceOf('\DateTime', $media->getUpdatedAt());
@@ -157,34 +141,10 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         // pre persist the media
         $provider->transform($media);
-        $provider->prePersist($media);
 
         $this->assertEquals('file.txt', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        // post persit the media
-        $provider->postPersist($media);
-
         $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false');
-
-        $provider->postRemove($media);
-    }
-
-    public function testSetFileContents()
-    {
-        $adapter = new \Gaufrette\Adapter\InMemory(array('testDir'));
-        $filesystem = new \Gaufrette\Filesystem($adapter);
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
-        $thumbnail = new FormatThumbnail();
-
-        $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail);
-
-        $media = new Media;
-        $media->setId(853);
-        $media->setProviderReference(853);
-
-        $provider->setFileContents($media, realpath(__DIR__.'/../fixtures/file.txt'));
-        $this->assertEquals('Hello file text!', $provider->getReferenceFile($media)->getContent());
     }
 }

@@ -131,7 +131,7 @@ class FileProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
-    public function fixBinaryContent(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media)
     {
         if ($media->getBinaryContent() === null) {
             return;
