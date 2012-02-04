@@ -149,6 +149,21 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                             ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
                             ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                            ->scalarNode('allowed_extensions')->defaultValue(array(
+                                'pdf', 'txt', 'rtf',
+                                'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pttx',
+                                'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb',
+                                'csv',
+                                'xml',
+                            ))->end()
+                            ->scalarNode('allowed_mime_types')->defaultValue(array(
+                                'application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain',
+                                'application/excel', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint',
+                                'application/vnd.ms-powerpoint', 'application/vnd.oasis.opendocument.text', 'application/vnd.oasis.opendocument.graphics', 'application/vnd.oasis.opendocument.presentation', 'application/vnd.oasis.opendocument.spreadsheet', 'application/vnd.oasis.opendocument.chart', 'application/vnd.oasis.opendocument.formula', 'application/vnd.oasis.opendocument.database', 'application/vnd.oasis.opendocument.image',
+                                'text/comma-separated-values',
+                                'text/xml',
+                                'application/zip', // seems to be used for xlsx document ...
+                            ))->end()
                         ->end()
                     ->end()
 
@@ -161,6 +176,15 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                             ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
                             ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                            ->scalarNode('allowed_extensions')->defaultValue(array(
+                                'jpg', 'png'
+                            ))->end()
+                            ->scalarNode('allowed_mime_types')->defaultValue(array(
+                                'image/pjpeg',
+                                'image/jpeg',
+                                'image/png',
+                                'image/x-png',
+                            ))->end()
                         ->end()
                     ->end()
 

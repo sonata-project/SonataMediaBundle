@@ -14,6 +14,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Media\ResizerInterface;
 use Gaufrette\Filesystem;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 interface MediaProviderInterface
 {
@@ -231,4 +232,11 @@ interface MediaProviderInterface
      * @return void
      */
     function transform(MediaInterface $media);
+
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    function validate(ErrorElement $errorElement, MediaInterface $media);
 }

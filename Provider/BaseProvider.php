@@ -18,6 +18,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 abstract class BaseProvider implements MediaProviderInterface
 {
@@ -43,7 +44,7 @@ abstract class BaseProvider implements MediaProviderInterface
      * @param \Gaufrette\Filesystem $filesystem
      * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
-     * @param \Sonata\MediaBundle\Templating\Helper\ThumbnailInterface $thumbnail
+     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
     {
@@ -275,5 +276,15 @@ abstract class BaseProvider implements MediaProviderInterface
     public function preUpdate(MediaInterface $media)
     {
         $media->setUpdatedAt(new \Datetime());
+    }
+
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
+
     }
 }

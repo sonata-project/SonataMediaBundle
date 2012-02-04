@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 /**
  *
@@ -35,6 +36,9 @@ class Pool
 
     protected $defaultContext;
 
+    /**
+     * @param $context
+     */
     public function __construct($context)
     {
         $this->defaultContext = $context;
@@ -234,9 +238,24 @@ class Pool
         return $context['download']['mode'];
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultContext()
     {
         return $this->defaultContext;
+    }
+
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
+        $provider = $this->getProvider($media->getProviderName());
+
+        $provider->validate($errorElement, $media);
     }
 }
 

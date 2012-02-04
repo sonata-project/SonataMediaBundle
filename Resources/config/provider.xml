@@ -34,6 +34,8 @@
             <argument />
             <argument />
             <argument type="service" id="sonata.media.thumbnail.format" />
+            <argument />
+            <argument />
 
             <call method="setTemplates">
                 <argument type="collection">
@@ -50,6 +52,8 @@
             <argument />
             <argument />
             <argument type="service" id="sonata.media.thumbnail.format" />
+            <argument />
+            <argument />
 
             <call method="setTemplates">
                 <argument type="collection">

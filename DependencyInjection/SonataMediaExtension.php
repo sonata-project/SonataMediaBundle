@@ -107,6 +107,20 @@ class SonataMediaExtension extends Extension
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
         $this->configureBuzz($container, $config);
+        $this->configureProviders($container, $config);
+    }
+
+    public function configureProviders(ContainerBuilder $container, $config)
+    {
+        $container->getDefinition('sonata.media.provider.image')
+            ->replaceArgument(5, $config['providers']['image']['allowed_extensions'])
+            ->replaceArgument(6, $config['providers']['image']['allowed_mime_types'])
+        ;
+
+        $container->getDefinition('sonata.media.provider.file')
+            ->replaceArgument(5, $config['providers']['file']['allowed_extensions'])
+            ->replaceArgument(6, $config['providers']['file']['allowed_mime_types'])
+        ;
     }
 
     public function configureBuzz(ContainerBuilder $container, array $config)

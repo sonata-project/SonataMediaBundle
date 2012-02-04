@@ -11,13 +11,42 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
+
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
+use Gaufrette\Filesystem;
+
 class FileProvider extends BaseProvider
 {
+    protected $allowedExtensions;
+
+    protected $allowedMimeTypes;
+
+    /**
+     * @param $name
+     * @param \Gaufrette\Filesystem $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
+     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
+     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
+     * @param array $allowExtensions
+     * @param array $allowMimeTypes
+     */
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array())
+    {
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
+
+        $this->allowedExtensions = $allowedExtensions;
+        $this->allowedMimeTypes  = $allowedMimeTypes;
+    }
+
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string
@@ -220,15 +249,17 @@ class FileProvider extends BaseProvider
      * @param $contents path to contents, defaults to MediaInterface BinaryContent
      * @return void
      */
-    public function setFileContents(MediaInterface $media, $contents=null)
+    protected function setFileContents(MediaInterface $media, $contents = null)
     {
         $file = $this->getFilesystem()->get(
             sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
             true
         );
+
         if (!$contents) {
             $contents = $media->getBinaryContent()->getRealPath();
         }
+
         $file->setContent(file_get_contents($contents));
     }
 
@@ -276,5 +307,37 @@ class FileProvider extends BaseProvider
         }
 
         return new Response($content, 200, $headers);
+    }
+
+    /**
+     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+            return;
+        }
+
+        if ($media->getBinaryContent() instanceof UploadedFile) {
+            $fileName = $media->getBinaryContent()->getClientOriginalName();
+        } else if ($media->getBinaryContent() instanceof File) {
+            $fileName = $media->getBinaryContent()->getFilename();
+        }
+
+        if (!in_array(pathinfo($fileName, PATHINFO_EXTENSION), $this->allowedExtensions)) {
+            $errorElement
+                ->with('binaryContent')
+                    ->addViolation('Invalid extensions')
+                ->end();
+        }
+
+        if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+            $errorElement
+                ->with('binaryContent')
+                    ->addViolation('Invalid mime type : ' . $media->getBinaryContent()->getMimeType())
+                ->end();
+        }
     }
 }
