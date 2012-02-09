@@ -32,6 +32,7 @@ Reference Guide
    reference/media_context
    reference/usage
    reference/security
+   reference/command_line
    reference/advanced_configuration
    reference/extra
 
