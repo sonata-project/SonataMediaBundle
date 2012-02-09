@@ -115,6 +115,7 @@ class SonataMediaExtension extends Extension
         $container->getDefinition('sonata.media.provider.image')
             ->replaceArgument(5, $config['providers']['image']['allowed_extensions'])
             ->replaceArgument(6, $config['providers']['image']['allowed_mime_types'])
+            ->replaceArgument(7, new Reference($config['providers']['image']['adapter']))
         ;
 
         $container->getDefinition('sonata.media.provider.file')

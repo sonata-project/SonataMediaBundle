@@ -87,7 +87,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
-    
+
     private function addCdnSection(ArrayNodeDefinition $node)
     {
         $node
@@ -101,7 +101,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('path')->defaultValue('/uploads/media')->end()
                             ->end()
                         ->end()
-    
+
                         ->arrayNode('panther')
                             ->children()
                                 ->scalarNode('path')->isRequired()->end() // http://domain.pantherportal.com/uploads/media
@@ -110,7 +110,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('username')->isRequired()->end()
                             ->end()
                         ->end()
-    
+
                         ->arrayNode('fallback')
                             ->children()
                                 ->scalarNode('master')->isRequired()->end()
@@ -122,7 +122,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
-    
+
     private function addFilesystemSection(ArrayNodeDefinition $node)
     {
         $node
@@ -173,7 +173,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
-    
+
     private function addProvidersSection(ArrayNodeDefinition $node)
     {
         $node
@@ -208,7 +208,7 @@ class Configuration implements ConfigurationInterface
                                 ))->end()
                             ->end()
                         ->end()
-    
+
                         ->arrayNode('image')
                             ->addDefaultsIfNotSet()
                             ->children()
@@ -218,6 +218,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                                ->scalarNode('adapter')->defaultValue('sonata.media.adapter.image.gd')->end()
                                 ->scalarNode('allowed_extensions')->defaultValue(array(
                                     'jpg', 'png'
                                 ))->end()
@@ -229,7 +230,7 @@ class Configuration implements ConfigurationInterface
                                 ))->end()
                             ->end()
                         ->end()
-    
+
                         ->arrayNode('youtube')
                             ->addDefaultsIfNotSet()
                             ->children()
@@ -241,7 +242,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
                             ->end()
                         ->end()
-    
+
                         ->arrayNode('dailymotion')
                             ->addDefaultsIfNotSet()
                             ->children()
@@ -253,7 +254,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
                             ->end()
                         ->end()
-    
+
                         ->arrayNode('vimeo')
                             ->addDefaultsIfNotSet()
                             ->children()
@@ -270,7 +271,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
-    
+
     private function addExtraSection(ArrayNodeDefinition $node)
     {
         $node
@@ -286,7 +287,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
-    
+
     private function addModelSection(ArrayNodeDefinition $node)
     {
         $node
@@ -302,7 +303,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
-    
+
     private function addBuzzSection(ArrayNodeDefinition $node)
     {
         $node

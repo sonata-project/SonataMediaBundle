@@ -11,9 +11,34 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+
+use Imagine\Image\ImagineInterface;
+use Gaufrette\Filesystem;
 
 class ImageProvider extends FileProvider
 {
+    protected $imagineAdapter;
+
+    /**
+     * @param $name
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
+     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
+     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
+     * @param array $allowedExtensions
+     * @param array $allowedMimeTypes
+     * @param \Imagine\Image\ImagineInterface $adapter
+     */
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ImagineInterface $adapter)
+    {
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes);
+
+        $this->imagineAdapter = $adapter;
+    }
+
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param $format
@@ -41,6 +66,23 @@ class ImageProvider extends FileProvider
             $this->generatePath($media),
             $media->getProviderReference()
         );
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    public function transform(MediaInterface $media)
+    {
+        parent::transform($media);
+
+        if ($media->getBinaryContent()) {
+            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
+            $size = $image->getSize();
+
+            $media->setWidth($size->getWidth());
+            $media->setHeight($size->getHeight());
+        }
     }
 
     /**

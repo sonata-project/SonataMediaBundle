@@ -21,18 +21,14 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
     public function getProvider()
     {
         $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
-        $resizer->expects($this->any())
-            ->method('resize')
-            ->will($this->returnValue(true));
+        $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
         $adapter = $this->getMock('Gaufrette\Adapter');
 
         $file = $this->getMock('Gaufrette\File', array(), array($adapter));
 
         $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $filesystem->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($file));
+        $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
@@ -40,7 +36,17 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $thumbnail = new FormatThumbnail;
 
-        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail);
+        $size = $this->getMock('Imagine\Image\BoxInterface');
+        $size->expects($this->any())->method('getWidth')->will($this->returnValue(100));
+        $size->expects($this->any())->method('getHeight')->will($this->returnValue(100));
+
+        $image = $this->getMock('Imagine\Image\ImageInterface');
+        $image->expects($this->any())->method('getSize')->will($this->returnValue($size));
+
+        $adapter = $this->getMock('Imagine\Image\ImagineInterface');
+        $adapter->expects($this->any())->method('open')->will($this->returnValue($image));
+
+        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, array(), array(), $adapter);
         $provider->setResizer($resizer);
 
         return $provider;
