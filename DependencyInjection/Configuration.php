@@ -43,6 +43,7 @@ class Configuration implements ConfigurationInterface
         $this->addExtraSection($node);
         $this->addModelSection($node);
         $this->addBuzzSection($node);
+        $this->addResizerSection($node);
 
         return $treeBuilder;
     }
@@ -312,6 +313,32 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.file_get_contents')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addResizerSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('resizer')
+                    ->addDefaultsIfNotSet()
+                    ->useAttributeAsKey('id')
+                    ->children()
+                        ->arrayNode('simple')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('mode')->defaultValue('inset')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('square')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('mode')->defaultValue('inset')->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
