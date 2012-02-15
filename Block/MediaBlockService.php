@@ -14,7 +14,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
-use Sonata\PageBundle\Model\BlockInterface;
+use Sonata\BlockBundle\Model\BlockInterface;
+
 use Sonata\PageBundle\Model\PageInterface;
 use Sonata\PageBundle\Block\BaseBlockService;
 
@@ -24,7 +25,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Form;
-use \Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Sonata\PageBundle\CmsManager\CmsManagerInterface;
 
 /**
@@ -46,6 +48,9 @@ class MediaBlockService extends BaseBlockService
         $this->container    = $container;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'Media';
@@ -65,6 +70,9 @@ class MediaBlockService extends BaseBlockService
         return $this->mediaAdmin;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultSettings()
     {
         return array(
@@ -75,7 +83,10 @@ class MediaBlockService extends BaseBlockService
         );
     }
 
-    public function buildEditForm(CmsManagerInterface $manager, FormMapper $formMapper, BlockInterface $block)
+    /**
+     * {@inheritdoc}
+     */
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $contextChoices = $this->getContextChoices();
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
@@ -139,7 +150,10 @@ class MediaBlockService extends BaseBlockService
         ));
     }
 
-    public function validateBlock(CmsManagerInterface $manager, ErrorElement $errorElement, BlockInterface $block)
+    /**
+     * {@inheritdoc}
+     */
+    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
 
     }
@@ -149,7 +163,10 @@ class MediaBlockService extends BaseBlockService
         return 'SonataMediaBundle:Block:block_media.html.twig';
     }
 
-    public function execute(CmsManagerInterface $manager, BlockInterface $block, PageInterface $page, Response $response = null)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(BlockInterface $block, Response $response = null)
     {
         // merge settings
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
@@ -163,7 +180,10 @@ class MediaBlockService extends BaseBlockService
         ), $response);
     }
 
-    public function load(CmsManagerInterface $manager, BlockInterface $block)
+    /**
+     * {@inheritdoc}
+     */
+    public function load(BlockInterface $block)
     {
         $media = $block->getSetting('mediaId', null);
 
@@ -174,11 +194,17 @@ class MediaBlockService extends BaseBlockService
         $block->setSetting('mediaId', $media);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function prePersist(BlockInterface $block)
     {
         $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function preUpdate(BlockInterface $block)
     {
         $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);

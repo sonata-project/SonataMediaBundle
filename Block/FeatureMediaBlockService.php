@@ -14,7 +14,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
-use Sonata\PageBundle\Model\BlockInterface;
+use Sonata\BlockBundle\Model\BlockInterface;
+
 use Sonata\PageBundle\Model\PageInterface;
 use Sonata\PageBundle\Block\BaseBlockService;
 
@@ -34,11 +35,17 @@ use Sonata\PageBundle\CmsManager\CmsManagerInterface;
  */
 class FeatureMediaBlockService extends MediaBlockService
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'Feature Media';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultSettings()
     {
         return array(
@@ -51,7 +58,10 @@ class FeatureMediaBlockService extends MediaBlockService
         );
     }
 
-    public function buildEditForm(CmsManagerInterface $manager, FormMapper $formMapper, BlockInterface $block)
+    /**
+     * {@inheritdoc}
+     */
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $contextChoices = $this->getContextChoices();
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
@@ -73,7 +83,10 @@ class FeatureMediaBlockService extends MediaBlockService
         ));
     }
 
-    public function execute(CmsManagerInterface $manager, BlockInterface $block, PageInterface $page, Response $response = null)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(BlockInterface $block, Response $response = null)
     {
         // merge settings
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
@@ -87,6 +100,9 @@ class FeatureMediaBlockService extends MediaBlockService
         ), $response);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getStylesheets($media)
     {
         return array(

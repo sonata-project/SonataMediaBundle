@@ -10,24 +10,24 @@
     </parameters>
 
     <services>
-        <service id="sonata.media.block.media" class="%sonata.media.block.media.class%" public="false">
-            <tag name="sonata.page.block" />
+        <service id="sonata.media.block.media" class="%sonata.media.block.media.class%">
+            <tag name="sonata.block" />
             <argument>sonata.media.block.media</argument>
             <argument type="service" id="templating" />
             <argument type="service" id="service_container" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>
 
-        <service id="sonata.media.block.feature_media" class="%sonata.media.block.feature_media.class%" public="false">
-            <tag name="sonata.page.block" />
+        <service id="sonata.media.block.feature_media" class="%sonata.media.block.feature_media.class%">
+            <tag name="sonata.block" />
             <argument>sonata.media.block.feature_media</argument>
             <argument type="service" id="templating" />
             <argument type="service" id="service_container" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>
 
-        <service id="sonata.media.block.gallery" class="%sonata.media.block.gallery.class%" public="false">
-            <tag name="sonata.page.block" />
+        <service id="sonata.media.block.gallery" class="%sonata.media.block.gallery.class%">
+            <tag name="sonata.block" />
             <argument>sonata.media.block.gallery</argument>
             <argument type="service" id="templating" />
             <argument type="service" id="service_container" />

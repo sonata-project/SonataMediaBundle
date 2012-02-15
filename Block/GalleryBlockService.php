@@ -14,7 +14,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
-use Sonata\PageBundle\Model\BlockInterface;
+use Sonata\BlockBundle\Model\BlockInterface;
+
 use Sonata\PageBundle\Model\PageInterface;
 use Sonata\PageBundle\Block\BaseBlockService;
 
@@ -54,7 +55,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -82,7 +83,15 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
+     */
+    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    {
+
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getDefaultSettings()
     {
@@ -100,11 +109,9 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\PageBundle\CmsManager\CmsManagerInterface $manager
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
-     * @param \Sonata\PageBundle\Model\BlockInterface $block
+     * {@inheritdoc}
      */
-    public function buildEditForm(CmsManagerInterface $manager, FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $contextChoices = array();
 
@@ -154,23 +161,9 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\PageBundle\CmsManager\CmsManagerInterface $manager
-     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\PageBundle\Model\BlockInterface $block
+     * {@inheritdoc}
      */
-    public function validateBlock(CmsManagerInterface $manager, ErrorElement $errorElement, BlockInterface $block)
-    {
-
-    }
-
-    /**
-     * @param \Sonata\PageBundle\CmsManager\CmsManagerInterface $manager
-     * @param \Sonata\PageBundle\Model\BlockInterface $block
-     * @param \Sonata\PageBundle\Model\PageInterface $page
-     * @param null|\Symfony\Component\HttpFoundation\Response $response
-     * @return string
-     */
-    public function execute(CmsManagerInterface $manager, BlockInterface $block, PageInterface $page, Response $response = null)
+    public function execute(BlockInterface $block, Response $response = null)
     {
         // merge settings
         $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
@@ -186,10 +179,9 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\PageBundle\CmsManager\CmsManagerInterface $manager
-     * @param \Sonata\PageBundle\Model\BlockInterface $block
+     * {@inheritdoc}
      */
-    public function load(CmsManagerInterface $manager, BlockInterface $block)
+    public function load(BlockInterface $block)
     {
         $media = $block->getSetting('galleryId', null);
 
@@ -201,7 +193,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\PageBundle\Model\BlockInterface $block
+     * {@inheritdoc}
      */
     public function prePersist(BlockInterface $block)
     {
@@ -209,13 +201,16 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\PageBundle\Model\BlockInterface $block
+     * {@inheritdoc}
      */
     public function preUpdate(BlockInterface $block)
     {
         $block->setSetting('galleryId', is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getStylesheets($media)
     {
         return array(
@@ -223,6 +218,9 @@ class GalleryBlockService extends BaseBlockService
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getJavacripts($media)
     {
         return array(
@@ -260,7 +258,8 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Sonata\BlockBundle\Model\MediaInterface $media
+     * @return false|string
      */
     private function getMediaType(MediaInterface $media)
     {
