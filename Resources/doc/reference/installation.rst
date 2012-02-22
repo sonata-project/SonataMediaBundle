@@ -57,6 +57,7 @@ Next, you must complete the new namespaces registration in the ``autoload.php`` 
       'Application'   => __DIR__,
       'Imagine'       => __DIR__.'/../vendor/imagine/lib',
       'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
+      'Buzz'          => __DIR__.'/../vendor/buzz/lib',
       ...
   ));
 
