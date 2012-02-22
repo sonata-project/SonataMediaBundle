@@ -5,9 +5,7 @@
 
     <parameters>
         <parameter key="sonata.media.resizer.simple.class">Sonata\MediaBundle\Media\SimpleResizer</parameter>
-        <parameter key="sonata.media.resizer.simple.adapter.mode">inset</parameter>
         <parameter key="sonata.media.resizer.square.class">Sonata\MediaBundle\Media\SquareResizer</parameter>
-        <parameter key="sonata.media.resizer.square.adapter.mode">inset</parameter>
     </parameters>
 
     <services>

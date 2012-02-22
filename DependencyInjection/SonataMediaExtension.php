@@ -104,6 +104,9 @@ class SonataMediaExtension extends Extension
             $this->registerDoctrineMapping($config);
         }
 
+        $container->setParameter('sonata.media.resizer.simple.adapter.mode', $config['resizer']['simple']['mode']);
+        $container->setParameter('sonata.media.resizer.square.adapter.mode', $config['resizer']['square']['mode']);
+
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
         $this->configureBuzz($container, $config);
