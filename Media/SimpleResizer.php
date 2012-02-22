@@ -54,7 +54,7 @@ class SimpleResizer implements ResizerInterface
 
         $content = $image
             ->thumbnail(new Box($settings['width'], $settings['height']), $this->getMode())
-            ->get($format);
+            ->get($format, array('quality' => $settings['quality']));
 
         $out->setContent($content);
     }

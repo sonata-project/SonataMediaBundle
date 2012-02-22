@@ -91,9 +91,9 @@ class SquareResizer implements ResizerInterface
         if ($settings['height'] < $size->getHeight() && $settings['width'] < $size->getWidth()) {
             $content = $image
                 ->thumbnail(new Box($settings['width'], $settings['height']), $this->getMode())
-                ->get($format);
+                ->get($format, array('quality' => $settings['quality']));
         } else {
-            $content = $image->get($format);
+            $content = $image->get($format, array('quality' => $settings['quality']));
         }
 
         $out->setContent($content);
