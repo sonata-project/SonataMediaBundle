@@ -147,7 +147,7 @@ class YouTubeProvider extends BaseVideoProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    public function transform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media)
     {
         $this->fixBinaryContent($media);
 

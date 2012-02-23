@@ -105,7 +105,7 @@ class DailyMotionProvider extends BaseVideoProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return
      */
-    public function transform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media)
     {
         $this->fixBinaryContent($media);
 

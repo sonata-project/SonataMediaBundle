@@ -16,13 +16,6 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
-/**
- *
- * It is not possible to use doctrine as the update event cannot update non updated fields ...
- *
- * @throws RuntimeException
- *
- */
 class Pool
 {
     /**

@@ -219,10 +219,8 @@ class TestProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
-    function transform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media)
     {
-        // TODO: Implement transform() method.
+        // TODO: Implement doTransform() method.
     }
-
-
 }

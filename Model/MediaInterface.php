@@ -21,27 +21,22 @@ interface MediaInterface
     const STATUS_ENCODING    = 5;
 
     /**
-     * @abstract
      * @param mixed $binaryContent
      */
     function setBinaryContent($binaryContent);
 
     /**
-     * @abstract
-     *
      * @return mixed
      */
     function getBinaryContent();
 
     /**
-     * @abstract
      * @param $name
      * @param null $default
      */
     function getMetadataValue($name, $default = null);
 
     /**
-     * @abstract
      * @param $name
      * @param $value
      */
@@ -55,8 +50,6 @@ interface MediaInterface
     function unsetMetadataValue($name);
 
     /**
-     * @abstract
-     *
      * @return mixed
      */
     function getId();

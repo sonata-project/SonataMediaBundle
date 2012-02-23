@@ -56,6 +56,26 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
+     * @abstract
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    abstract protected function doTransform(MediaInterface $media);
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @return void
+     */
+    final public function transform(MediaInterface $media)
+    {
+        if (null === $media->getBinaryContent()) {
+            return;
+        }
+
+        $this->doTransform($media);
+    }
+
+    /**
      * @param string $name
      * @param array $format
      *
