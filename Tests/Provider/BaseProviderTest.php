@@ -15,6 +15,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\FormBuilder;
 
 class BaseProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -223,4 +224,14 @@ class TestProvider extends BaseProvider
     {
         // TODO: Implement doTransform() method.
     }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilder $formBuilder
+     * @return void
+     */
+    function buildMediaType(FormBuilder $formBuilder)
+    {
+        // TODO: Implement buildMediaType() method.
+    }
+
 }

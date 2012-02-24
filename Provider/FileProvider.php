@@ -21,6 +21,7 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\FormBuilder;
 
 use Gaufrette\Filesystem;
 
@@ -48,8 +49,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
+     * {@inheritdoc}
      */
     public function getReferenceImage(MediaInterface $media)
     {
@@ -60,8 +60,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return \Gaufrette\File
+     * {@inheritdoc}
      */
     public function getReferenceFile(MediaInterface $media)
     {
@@ -69,9 +68,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * Build the related create form
-     *
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * {@inheritdoc}
      */
     public function buildEditForm(FormMapper $formMapper)
     {
@@ -85,9 +82,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * build the related create form
-     *
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * {@inheritdoc}
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
@@ -95,8 +90,15 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * {@inheritdoc}
+     */
+    public function buildMediaType(FormBuilder $formBuilder)
+    {
+        $formBuilder->add('binaryContent', 'file');
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function postPersist(MediaInterface $media)
     {
@@ -110,8 +112,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * {@inheritdoc}
      */
     public function postUpdate(MediaInterface $media)
     {
@@ -171,8 +172,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function doTransform(MediaInterface $media)
     {
@@ -193,9 +193,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
@@ -209,10 +207,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @param array $options
-     * @return array
+     * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
@@ -224,9 +219,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return bool
+     * {@inheritdoc}
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
@@ -234,8 +227,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function preRemove(MediaInterface $media)
     {
@@ -263,6 +255,9 @@ class FileProvider extends BaseProvider
         $file->setContent(file_get_contents($contents));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function postRemove(MediaInterface $media)
     {
        // never delete icon image
@@ -278,12 +273,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * Mode can be x-file
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @param $mode
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
     {
@@ -310,9 +300,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {

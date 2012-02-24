@@ -49,6 +49,7 @@ class SonataMediaExtension extends Extension
         $loader->load('block.xml');
         $loader->load('security.xml');
         $loader->load('extra.xml');
+        $loader->load('form.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -141,6 +142,8 @@ class SonataMediaExtension extends Extension
 
         $container->setParameter('sonata.media.media.class', $config['class']['media']);
         $container->setParameter('sonata.media.gallery.class', $config['class']['gallery']);
+
+        $container->getDefinition('sonata.media.form.type.media')->replaceArgument(1, $config['class']['media']);
     }
 
     /**

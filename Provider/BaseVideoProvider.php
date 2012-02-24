@@ -19,6 +19,7 @@ use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Buzz\Browser;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Form\FormBuilder;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
@@ -40,8 +41,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
+     * {@inheritdoc}
      */
     public function getReferenceImage(MediaInterface $media)
     {
@@ -49,8 +49,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return \Gaufrette\File
+     * {@inheritdoc}
      */
     public function getReferenceFile(MediaInterface $media)
     {
@@ -67,12 +66,8 @@ abstract class BaseVideoProvider extends BaseProvider
         return $referenceFile;
     }
 
-      /**
-     * Generate the public directory path (client side)
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
+    /**
+     * {@inheritdoc}
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
@@ -84,11 +79,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * Generate the private directory path (server side)
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
@@ -100,8 +91,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
-     * @return void
+     * {@inheritdoc}
      */
     public function buildEditForm(FormMapper $formMapper)
     {
@@ -115,8 +105,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
-     * @return void
+     * {@inheritdoc}
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
@@ -124,8 +113,15 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
+     */
+    public function buildMediaType(FormBuilder $formBuilder)
+    {
+        $formBuilder->add('binaryContent', 'text');
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function postUpdate(MediaInterface $media)
     {
@@ -133,8 +129,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * {@inheritdoc}
      */
     public function postPersist(MediaInterface $media)
     {
@@ -146,8 +141,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function postRemove(MediaInterface $media)
     {
@@ -156,20 +150,21 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * @throws \RuntimeException
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return mixed|null|string
+     * @param $url
+     * @return mixed
      */
-    public function getMetadata(MediaInterface $media, $url)
+    protected function getMetadata(MediaInterface $media, $url)
     {
         try {
             $response = $this->browser->get($url);
         } catch(\RuntimeException $e) {
-            throw new \RuntimeException('Unable to retrieve youtube video information for :' . $url, null, $e);
+            throw new \RuntimeException('Unable to retrieve the video information for :' . $url, null, $e);
         }
 
         $metadata = json_decode($response->getContent(), true);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to decode dailymotion video information for :' . $url);
+            throw new \RuntimeException('Unable to decode the video information for :' . $url);
         }
 
         return $metadata;

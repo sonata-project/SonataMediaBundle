@@ -14,20 +14,18 @@ namespace Sonata\MediaBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
-class ProviderDataTransformer implements DataTransformerInterface
+class ServiceProviderDataTransformer implements DataTransformerInterface
 {
-    protected $pool;
-
-    protected $array;
+    protected $provider;
 
     /**
      * @param \Sonata\MediaBundle\Provider\Pool $pool
      */
-    public function __construct(Pool $pool, array $options = array())
+    public function __construct(MediaProviderInterface $provider)
     {
-        $this->pool    = $pool;
-        $this->options = $options;
+        $this->provider = $provider;
     }
 
     /**
@@ -47,17 +45,7 @@ class ProviderDataTransformer implements DataTransformerInterface
             return $media;
         }
 
-        if (!$media->getProviderName() && isset($this->options['provider'])) {
-            $media->setProviderName($this->options['provider']);
-        }
-
-        if (!$media->getContext() && isset($this->options['context'])) {
-            $media->setProviderName($this->options['context']);
-        }
-
-        $provider = $this->pool->getProvider($media->getProviderName());
-
-        $provider->transform($media);
+        $this->provider->transform($media);
 
         return $media;
     }

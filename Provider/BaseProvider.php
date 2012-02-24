@@ -56,15 +56,13 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @abstract
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     abstract protected function doTransform(MediaInterface $media);
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     final public function transform(MediaInterface $media)
     {
@@ -76,10 +74,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param string $name
-     * @param array $format
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function addFormat($name, $format)
     {
@@ -87,11 +82,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * return the format settings
-     *
-     * @param string $name
-     *
-     * @return array|false the format settings
+     * {@inheritdoc}
      */
     public function getFormat($name)
     {
@@ -99,9 +90,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * return true if the media related to the provider required thumbnails (generation)
-     *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function requireThumbnails()
     {
@@ -109,10 +98,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * generated thumbnails linked to the media, a thumbnail is a format used on the website
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function generateThumbnails(MediaInterface $media)
     {
@@ -120,10 +106,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * remove all linked thumbnails
-     *
-     * @param MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function removeThumbnails(MediaInterface $media)
     {
@@ -131,11 +114,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * return the correct format name : providerName_format
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
+     * {@inheritdoc}
      */
     public function getFormatName(MediaInterface $media, $format)
     {
@@ -156,8 +135,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function preRemove(MediaInterface $media)
     {
@@ -171,10 +149,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * Generate the private path (client side)
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePath(MediaInterface $media)
     {
@@ -182,7 +157,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getFormats()
     {
@@ -190,8 +165,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param $name
-     * @return void
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -199,7 +173,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -207,8 +181,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     *
-     * @param array $templates
+     * {@inheritdoc}
      */
     public function setTemplates(array $templates)
     {
@@ -225,8 +198,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param string $name
-     * @return string
+     * {@inheritdoc}
      */
     public function getTemplate($name)
     {
@@ -234,7 +206,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @return \Sonata\MediaBundle\Media\ResizerInterface
+     * {@inheritdoc}
      */
     public function getResizer()
     {
@@ -242,7 +214,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @return \Gaufrette\Filesystem
+     * {@inheritdoc}
      */
     public function getFilesystem()
     {
@@ -250,7 +222,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @return \Sonata\MediaBundle\CDN\CDNInterface
+     * {@inheritdoc}
      */
     public function getCdn()
     {
@@ -258,12 +230,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * Return the Cdn base path
-     *
-     * @param string $relativePath
-     * @param boolean $isFlushable
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getCdnPath($relativePath, $isFlushable)
     {
@@ -271,8 +238,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Media\ResizerInterface $resizer
-     * @return void
+     * {@inheritdoc}
      */
     public function setResizer(ResizerInterface $resizer)
     {
@@ -280,8 +246,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function prePersist(MediaInterface $media)
     {
@@ -290,8 +255,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function preUpdate(MediaInterface $media)
     {
@@ -299,9 +263,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {

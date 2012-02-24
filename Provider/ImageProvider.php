@@ -24,7 +24,7 @@ class ImageProvider extends FileProvider
 
     /**
      * @param $name
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \Gaufrette\Filesystem $filesystem
      * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail

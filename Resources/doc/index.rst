@@ -31,6 +31,7 @@ Reference Guide
    reference/creating_a_provider_class
    reference/media_context
    reference/usage
+   reference/form
    reference/security
    reference/command_line
    reference/advanced_configuration

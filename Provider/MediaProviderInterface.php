@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Media\ResizerInterface;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Validator\ErrorElement;
+use Symfony\Component\Form\FormBuilder;
 
 interface MediaProviderInterface
 {
@@ -59,7 +60,6 @@ interface MediaProviderInterface
     function removeThumbnails(MediaInterface $media);
 
     /**
-     * @abstract
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return \Gaufrette\File
      */
@@ -239,4 +239,10 @@ interface MediaProviderInterface
      * @return void
      */
     function validate(ErrorElement $errorElement, MediaInterface $media);
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilder $formBuilder
+     * @return void
+     */
+    function buildMediaType(FormBuilder $formBuilder);
 }

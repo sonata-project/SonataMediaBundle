@@ -18,11 +18,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class YouTubeProvider extends BaseVideoProvider
 {
+
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @param array $options
-     * @return array
+     * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
@@ -129,8 +127,7 @@ class YouTubeProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -144,8 +141,7 @@ class YouTubeProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function doTransform(MediaInterface $media)
     {
@@ -157,7 +153,12 @@ class YouTubeProvider extends BaseVideoProvider
 
         $url = sprintf('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%s&format=json', $media->getBinaryContent());
 
-        $metadata = $this->getMetadata($media, $url);
+        try {
+            $metadata = $this->getMetadata($media, $url);
+        } catch(\RuntimeException $e) {
+            throw $e;
+            return;
+        }
 
         $media->setProviderName($this->name);
         $media->setProviderReference($media->getBinaryContent());
@@ -171,10 +172,7 @@ class YouTubeProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @param $mode
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
     {

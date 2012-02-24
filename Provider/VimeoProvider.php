@@ -19,10 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class VimeoProvider extends BaseVideoProvider
 {
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @param array $options
-     * @return array
+     * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
@@ -74,8 +71,7 @@ class VimeoProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -89,8 +85,7 @@ class VimeoProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function doTransform(MediaInterface $media)
     {
@@ -102,8 +97,11 @@ class VimeoProvider extends BaseVideoProvider
 
         $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getBinaryContent());
 
-        // retrieve metadata
-        $metadata = $this->getMetadata($media, $url);
+        try {
+            $metadata = $this->getMetadata($media, $url);
+        } catch(\RuntimeException $e) {
+            return;
+        }
 
         // store provider information
         $media->setProviderName($this->name);
@@ -122,10 +120,7 @@ class VimeoProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @param $mode
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
     {

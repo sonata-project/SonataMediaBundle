@@ -17,11 +17,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DailyMotionProvider extends BaseVideoProvider
 {
+
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @param array $options
-     * @return array
+     * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
@@ -87,8 +85,7 @@ class DailyMotionProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -102,8 +99,7 @@ class DailyMotionProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return
+     * {@inheritdoc}
      */
     protected function doTransform(MediaInterface $media)
     {
@@ -115,7 +111,11 @@ class DailyMotionProvider extends BaseVideoProvider
 
         $url = sprintf('http://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/%s&format=json', $media->getBinaryContent());
 
-        $metadata = $this->getMetadata($media, $url);
+        try {
+            $metadata = $this->getMetadata($media, $url);
+        } catch(\RuntimeException $e) {
+            return;
+        }
 
         $media->setProviderName($this->name);
         $media->setProviderMetadata($metadata);
@@ -129,10 +129,7 @@ class DailyMotionProvider extends BaseVideoProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @param $mode
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
     {
