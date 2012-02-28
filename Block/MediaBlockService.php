@@ -15,9 +15,9 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\BlockBundle\Block\BaseBlockService;
 
 use Sonata\PageBundle\Model\PageInterface;
-use Sonata\PageBundle\Block\BaseBlockService;
 
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -40,6 +40,12 @@ class MediaBlockService extends BaseBlockService
 
     protected $mediaManager;
 
+    /**
+     * @param $name
+     * @param \Symfony\Component\Templating\EngineInterface $templating
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \Sonata\MediaBundle\Model\MediaManagerInterface $mediaManager
+     */
     public function __construct($name, EngineInterface $templating, ContainerInterface $container, MediaManagerInterface $mediaManager)
     {
         parent::__construct($name, $templating);

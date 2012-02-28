@@ -16,17 +16,11 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Sonata\BlockBundle\Model\BlockInterface;
 
-use Sonata\PageBundle\Model\PageInterface;
-use Sonata\PageBundle\Block\BaseBlockService;
-
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Form;
-use \Symfony\Component\DependencyInjection\ContainerInterface;
-use Sonata\PageBundle\CmsManager\CmsManagerInterface;
+
 
 /**
  * PageExtension
