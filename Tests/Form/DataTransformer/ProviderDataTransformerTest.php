@@ -32,7 +32,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $pool = new Pool('default');
 
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $media->expects($this->once())->method('getProviderName')->will($this->returnValue('unknow'));
+        $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('unknow'));
 
         $transformer = new ProviderDataTransformer($pool);
         $transformer->reverseTransform($media);
@@ -47,7 +47,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $media->expects($this->once())->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('default'));
 
         $transformer = new ProviderDataTransformer($pool);
         $transformer->reverseTransform($media);
