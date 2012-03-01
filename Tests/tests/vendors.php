@@ -13,7 +13,8 @@ $deps = array(
     array('knpmenu', 'git://github.com/KnpLabs/KnpMenu.git', 'origin/master'),
     array('Sonata/AdminBundle', 'git://github.com/sonata-project/SonataAdminBundle.git', 'origin/master'),
     array('gaufrette', 'git://github.com/KnpLabs/Gaufrette.git', 'origin/master'),
-    array('buzz', 'git://github.com/kriswallsmith/Buzz.git', 'origin/master')
+    array('buzz', 'git://github.com/kriswallsmith/Buzz.git', 'origin/master'),
+    array('imagine', 'git://github.com/avalanche123/Imagine.git', 'origin/master')
 );
 
 foreach ($deps as $dep) {

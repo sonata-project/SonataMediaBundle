@@ -15,6 +15,7 @@ if (is_file($autoload)) {
         'Knp'       => array($vendorDir.'/knpmenu/src'),
         'Gaufrette' => array($vendorDir.'/gaufrette/src'),
         'Buzz'      => array($vendorDir.'/buzz/lib'),
+        'Imagine'   => array($vendorDir.'/Imagine/lib'),
     ));
     $loader->register();
 
