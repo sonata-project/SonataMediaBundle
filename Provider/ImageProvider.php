@@ -49,11 +49,27 @@ class ImageProvider extends FileProvider
     {
         $format_configuration = $this->getFormat($format);
 
+        $width = $media->getWidth();
+        $height = $media->getHeight();
+
+        // Honor the ratio, don't distort the image
+        if (isset($format_configuration['height']) && (!isset($format_configuration['width']) || $height > $width)) {
+            $width *= $format_configuration['height'];
+            $width /= $height;
+            $height = $format_configuration['height'];
+        }
+        else if (isset($format_configuration['width'])) {
+            $height *= $format_configuration['width'];
+            $height /= $width;
+            $width = $format_configuration['width'];
+        }
+
         return array_merge(array(
-          'title'    => $media->getName(),
-          'src'      => $this->generatePublicUrl($media, $format),
-          'width'    => $format_configuration['width'],
-        ), $options);
+                    'title'    => $media->getName(),
+                    'src'      => $this->generatePublicUrl($media, $format),
+                    'width'    => $width,
+                    'height'   => $height
+            ), $options);
     }
 
     /**
