@@ -141,6 +141,9 @@ class MediaExtension extends \Twig_Extension
         if ($format_definition['width']) {
             $defaultOptions['width'] = $format_definition['width'];
         }
+        if ($format_definition['height']) {
+            $defaultOptions['height'] = $format_definition['height'];
+        }
 
         $options = array_merge($defaultOptions, $options);
 
