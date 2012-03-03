@@ -73,35 +73,13 @@ class DailyMotionProvider extends BaseVideoProvider
 
         $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
-        $format_configuration = $this->getFormat($format);
-
-        $width = $media->getWidth();
-        $height = $media->getHeight();
-
-        if (isset($format_configuration['width']) && isset($format_configuration['height'])) {
-            $width = $format_configuration['width'];
-            $height = $format_configuration['height'];
-        }
-        else if (isset($format_configuration['height'])) {
-            $width *= $format_configuration['height'];
-            $width /= $height;
-            $height = $format_configuration['height'];
-        }
-        else if (isset($format_configuration['width'])) {
-            $height *= $format_configuration['width'];
-            $height /= $width;
-            $width = $format_configuration['width'];
-        }
-
         $params = array(
             'player_parameters' => http_build_query($player_parameters),
             'allowFullScreen'   => isset($options['allowFullScreen'])   ? $options['allowFullScreen']     : 'true',
             'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
-            'width'             => isset($options['width'])             ? $options['width']  : $width,
-            'height'            => isset($options['height'])            ? $options['height'] : $height,
         );
 
-        return $params;
+        return array_merge(parent::getHelperProperties($media,$format,$options),$params);
     }
 
     /**
