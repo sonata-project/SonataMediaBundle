@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -8,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Media;
+namespace Sonata\MediaBundle\Resizer;
 
 use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -16,7 +17,6 @@ use Sonata\MediaBundle\Model\MediaInterface;
 interface ResizerInterface
 {
     /**
-     * @abstract
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param \Gaufrette\File $in
      * @param \Gaufrette\File $out

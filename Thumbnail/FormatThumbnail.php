@@ -17,10 +17,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 class FormatThumbnail implements ThumbnailInterface
 {
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @return mixed
+     * {@inheritdoc}
      */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
@@ -34,10 +31,7 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
@@ -49,9 +43,7 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return mixed
+     * {@inheritdoc}
      */
     public function generate(MediaProviderInterface $provider, MediaInterface $media)
     {
@@ -73,8 +65,7 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * {@inheritdoc}
      */
     public function delete(MediaProviderInterface $provider, MediaInterface $media)
     {

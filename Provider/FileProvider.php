@@ -37,8 +37,8 @@ class FileProvider extends BaseProvider
      * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
-     * @param array $allowExtensions
-     * @param array $allowMimeTypes
+     * @param array $allowedExtensions
+     * @param array $allowedMimeTypes
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array())
     {

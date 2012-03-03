@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Media;
+namespace Sonata\MediaBundle\Resizer;
 
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Box;
@@ -31,7 +31,7 @@ class SquareResizer implements ResizerInterface
      * ImagineInterface
      */
     protected $adapter;
-    
+
     /**
      * string
      */
@@ -46,16 +46,9 @@ class SquareResizer implements ResizerInterface
         $this->adapter = $adapter;
         $this->mode    = $mode;
     }
-    
+
     /**
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param \Gaufrette\File $in
-     * @param \Gaufrette\File $out
-     * @param string $format
-     * @param array $settings
-     * 
-     * @return void
+     * {@inheritdoc}
      */
     public function resize(MediaInterface $media, File $in, File $out, $format, $settings)
     {
@@ -74,14 +67,14 @@ class SquareResizer implements ResizerInterface
                 $higher = $size->getWidth();
                 $lower = $size->getHeight();
             }
-            
+
             $crop = $higher - $lower;
-            
+
             if ($crop > 0) {
-                $point = $higher == $size->getHeight() 
+                $point = $higher == $size->getHeight()
                     ? new Point(0, 0)
                     : new Point($crop/2, 0);
-                
+
                 $image->crop($point, new Box($lower, $lower));
             }
         } else {
@@ -98,11 +91,11 @@ class SquareResizer implements ResizerInterface
 
         $out->setContent($content);
     }
-    
+
     /**
      * @return \Imagine\Image\ImagineInterface
      */
-    public function getAdapter()
+    private function getAdapter()
     {
         return $this->adapter;
     }
@@ -110,7 +103,7 @@ class SquareResizer implements ResizerInterface
     /**
      * @return string
      */
-    public function getMode()
+    private function getMode()
     {
         return $this->mode;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -8,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Media;
+namespace Sonata\MediaBundle\Resizer;
 
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Box;
@@ -32,12 +33,7 @@ class SimpleResizer implements ResizerInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param \Gaufrette\File $in
-     * @param \Gaufrette\File $out
-     * @param string $format
-     * @param array $settings
-     * @return void
+     * {@inheritdoc}
      */
     public function resize(MediaInterface $media, File $in, File $out, $format, $settings)
     {
@@ -63,7 +59,7 @@ class SimpleResizer implements ResizerInterface
      *
      * @return \Imagine\Image\ImagineInterface
      */
-    public function getAdapter()
+    private function getAdapter()
     {
         return $this->adapter;
     }
@@ -71,7 +67,7 @@ class SimpleResizer implements ResizerInterface
     /**
      * @return string
      */
-    public function getMode()
+    private function getMode()
     {
         return $this->mode;
     }

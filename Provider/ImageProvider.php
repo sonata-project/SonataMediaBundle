@@ -40,10 +40,7 @@ class ImageProvider extends FileProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @param array $options
-     * @return array
+     * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
@@ -57,8 +54,7 @@ class ImageProvider extends FileProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
+     * {@inheritdoc}
      */
     public function getReferenceImage(MediaInterface $media)
     {
@@ -69,8 +65,7 @@ class ImageProvider extends FileProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function doTransform(MediaInterface $media)
     {
@@ -86,9 +81,7 @@ class ImageProvider extends FileProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
@@ -96,9 +89,7 @@ class ImageProvider extends FileProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $format
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
@@ -106,8 +97,7 @@ class ImageProvider extends FileProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function preRemove(MediaInterface $media)
     {

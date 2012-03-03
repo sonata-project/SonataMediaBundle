@@ -17,7 +17,6 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 interface ThumbnailInterface
 {
     /**
-     * @abstract
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param $format
@@ -25,7 +24,6 @@ interface ThumbnailInterface
     function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
     /**
-     * @abstract
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param $format
@@ -33,14 +31,12 @@ interface ThumbnailInterface
     function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
     /**
-     * @abstract
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      */
     function generate(MediaProviderInterface $provider, MediaInterface $media);
 
     /**
-     * @abstract
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      */

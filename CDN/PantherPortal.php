@@ -59,9 +59,7 @@ class PantherPortal implements CDNInterface
     }
 
     /**
-     * @param $relativePath
-     * @param bool $isFlushable
-     * @return string
+     * {@inheritdoc}
      */
     public function getPath($relativePath, $isFlushable = false)
     {
@@ -69,10 +67,7 @@ class PantherPortal implements CDNInterface
     }
 
     /**
-     * Flush a set of ressource matching the provided string
-     *
-     * @param string $string
-     * @return void
+     * {@inheritdoc}
      */
     public function flushByString($string)
     {
@@ -80,10 +75,7 @@ class PantherPortal implements CDNInterface
     }
 
     /**
-     * Flush the ressource
-     *
-     * @param string $string
-     * @return void
+     * {@inheritdoc}
      */
     public function flush($string)
     {
@@ -91,10 +83,7 @@ class PantherPortal implements CDNInterface
     }
 
     /**
-     * Flush different set of ressource matching the provided string array
-     *
-     * @param array $paths
-     * @return void
+     * {@inheritdoc}
      */
     public function flushPaths(array $paths)
     {
@@ -110,7 +99,7 @@ class PantherPortal implements CDNInterface
      *
      * @return \SoapClient
      */
-    public function getClient()
+    private function getClient()
     {
         if (!$this->client) {
             $this->client = new \SoapClient($this->wsdl);
@@ -120,10 +109,12 @@ class PantherPortal implements CDNInterface
     }
 
     /**
-     * @param \SoapClient $client
+     * For testing only
+     *
+     * @param $client
      * @return void
      */
-    public function setClient(\SoapClient $client)
+    public function setClient($client)
     {
         $this->client = $client;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -27,13 +28,11 @@ class Fallback implements CDNInterface
     }
 
     /**
-     * @param string $relativePath
-     * @param bool $isFlushable
-     * @return string
+     * {@inheritdoc}
      */
     public function getPath($relativePath, $isFlushable = false)
     {
-        if($isFlushable) {
+        if ($isFlushable) {
             return $this->fallback->getPath($relativePath, $isFlushable);
         }
 
@@ -41,10 +40,7 @@ class Fallback implements CDNInterface
     }
 
     /**
-     * Flush a set of ressource matching the provided string
-     *
-     * @param string $string
-     * @return void
+     * {@inheritdoc}
      */
     public function flushByString($string)
     {
@@ -52,10 +48,7 @@ class Fallback implements CDNInterface
     }
 
     /**
-     * Flush the ressource
-     *
-     * @param string $string
-     * @return void
+     * {@inheritdoc}
      */
     public function flush($string)
     {
@@ -63,11 +56,8 @@ class Fallback implements CDNInterface
     }
 
     /**
-    * Flush a different set of ressource matching the provided string array
-    *
-    * @param array $paths
-    * @return void
-    */
+     * {@inheritdoc}
+     */
     public function flushPaths(array $paths)
     {
         $this->cdn->flushPaths($paths);
