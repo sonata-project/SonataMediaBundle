@@ -114,4 +114,40 @@ class SquareResizer implements ResizerInterface
     {
         return $this->mode;
     }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param array $settings
+     * @return Box
+     */
+    function getBox(MediaInterface $media, $settings)
+    {
+        $box = $size = new Box($media->getWidth(), $media->getHeight());
+
+        if (null != $settings['height']) {
+            if ($size->getHeight() > $size->getWidth()) {
+                $higher = $size->getHeight();
+                $lower = $size->getWidth();
+            } else {
+                $higher = $size->getWidth();
+                $lower = $size->getHeight();
+            }
+
+            $crop = $higher - $lower;
+
+            if ($crop > 0) {
+                $box = new Box($lower, $lower);
+            }
+        }
+        else {
+            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
+        }
+
+        if ($settings['height'] < $size->getHeight() && $settings['width'] < $size->getWidth()) {
+            return new Box($settings['width'],$settings['height']);
+        }
+        else {
+            return $box;
+        }
+    }
 }
