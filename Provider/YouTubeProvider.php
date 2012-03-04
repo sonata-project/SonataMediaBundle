@@ -12,13 +12,10 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\Form\Form;
-use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class YouTubeProvider extends BaseVideoProvider
 {
-
     /**
      * {@inheritdoc}
      */
@@ -115,12 +112,14 @@ class YouTubeProvider extends BaseVideoProvider
 
         $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
+        $box = $this->getBoxHelperProperties($media, $format, $options);
+
         $params = array(
             'player_parameters' => http_build_query($player_parameters),
             'allowFullScreen'   => $player_parameters['fs'] == '1'      ? 'true' : 'false',
             'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
-            'width'             => isset($options['width'])             ? $options['width']  : $media->getWidth(),
-            'height'            => isset($options['height'])            ? $options['height'] : $media->getHeight(),
+            'width'             => $box->getWidth(),
+            'height'            => $box->getHeight(),
         );
 
         return $params;
@@ -156,7 +155,6 @@ class YouTubeProvider extends BaseVideoProvider
         try {
             $metadata = $this->getMetadata($media, $url);
         } catch(\RuntimeException $e) {
-            throw $e;
             return;
         }
 

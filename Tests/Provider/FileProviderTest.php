@@ -20,10 +20,8 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     public function getProvider()
     {
-        $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
-        $resizer->expects($this->any())
-            ->method('resize')
-            ->will($this->returnValue(true));
+        $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
         $adapter = $this->getMock('Gaufrette\Adapter');
 

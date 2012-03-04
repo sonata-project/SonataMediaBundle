@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Provider\YouTubeProvider;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Buzz\Browser;
 use Buzz\Message\Response;
+use Imagine\Image\Box;
 
 class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,8 +27,9 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
             $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
         }
 
-        $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
+        $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
+        $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
 
         $adapter = $this->getMock('Gaufrette\Adapter');
 
@@ -174,8 +176,5 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $properties);
         $this->assertEquals(100, $properties['height']);
         $this->assertEquals(100, $properties['width']);
-
-        $properties = $provider->getHelperProperties($media, 'admin', array('width' => 150));
-        $this->assertEquals(150, $properties['width']);
     }
 }

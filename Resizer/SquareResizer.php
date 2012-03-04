@@ -50,14 +50,14 @@ class SquareResizer implements ResizerInterface
     /**
      * {@inheritdoc}
      */
-    public function resize(MediaInterface $media, File $in, File $out, $format, $settings)
+    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings)
     {
         if (!isset($settings['width'])) {
             throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderName()));
         }
 
-        $image = $this->getAdapter()->load($in->getContent());
-        $size = $image->getSize();
+        $image = $this->adapter->load($in->getContent());
+        $size = $media->getBox();
 
         if (null != $settings['height']) {
             if ($size->getHeight() > $size->getWidth()) {
@@ -71,19 +71,16 @@ class SquareResizer implements ResizerInterface
             $crop = $higher - $lower;
 
             if ($crop > 0) {
-                $point = $higher == $size->getHeight()
-                    ? new Point(0, 0)
-                    : new Point($crop/2, 0);
-
+                $point = $higher == $size->getHeight() ? new Point(0, 0) : new Point($crop / 2, 0);
                 $image->crop($point, new Box($lower, $lower));
             }
-        } else {
-            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
         }
+
+        $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
 
         if ($settings['height'] < $size->getHeight() && $settings['width'] < $size->getWidth()) {
             $content = $image
-                ->thumbnail(new Box($settings['width'], $settings['height']), $this->getMode())
+                ->thumbnail(new Box($settings['width'], $settings['height']), $this->mode)
                 ->get($format, array('quality' => $settings['quality']));
         } else {
             $content = $image->get($format, array('quality' => $settings['quality']));
@@ -93,18 +90,33 @@ class SquareResizer implements ResizerInterface
     }
 
     /**
-     * @return \Imagine\Image\ImagineInterface
+     * {@inheritdoc}
      */
-    private function getAdapter()
+    public function getBox(MediaInterface $media, array $settings)
     {
-        return $this->adapter;
-    }
+        $size = $media->getBox();
 
-    /**
-     * @return string
-     */
-    private function getMode()
-    {
-        return $this->mode;
+        if (null != $settings['height']) {
+
+            if ($size->getHeight() > $size->getWidth()) {
+                $higher = $size->getHeight();
+                $lower = $size->getWidth();
+            } else {
+                $higher = $size->getWidth();
+                $lower = $size->getHeight();
+            }
+
+            if ($higher - $lower > 0) {
+                return new Box($lower, $lower);
+            }
+        }
+
+        $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
+
+        if ($settings['height'] < $size->getHeight() && $settings['width'] < $size->getWidth()) {
+            return new Box($settings['width'], $settings['height']);
+        }
+
+        return $size;
     }
 }

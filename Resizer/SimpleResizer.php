@@ -15,10 +15,12 @@ use Imagine\Image\ImagineInterface;
 use Imagine\Image\Box;
 use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Exception\InvalidArgumentException;
 
 class SimpleResizer implements ResizerInterface
 {
-    protected $adapterClass;
+    protected $adapter;
 
     protected $mode;
 
@@ -35,40 +37,60 @@ class SimpleResizer implements ResizerInterface
     /**
      * {@inheritdoc}
      */
-    public function resize(MediaInterface $media, File $in, File $out, $format, $settings)
+    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings)
     {
         if (!isset($settings['width'])) {
             throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderName()));
         }
 
-        $image = $this->getAdapter()->load($in->getContent());
-
-        if ($settings['height'] == null) {
-            $size = $image->getSize();
-            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
-        }
+        $image = $this->adapter->load($in->getContent());
 
         $content = $image
-            ->thumbnail(new Box($settings['width'], $settings['height']), $this->getMode())
+            ->thumbnail($this->getBox($media, $settings), $this->mode)
             ->get($format, array('quality' => $settings['quality']));
 
         $out->setContent($content);
     }
 
     /**
-     *
-     * @return \Imagine\Image\ImagineInterface
+     * {@inheritdoc}
      */
-    private function getAdapter()
+    public function getBox(MediaInterface $media, array $settings)
     {
-        return $this->adapter;
+        $size = $media->getBox();
+
+        if ($settings['height'] == null) {
+            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
+        }
+
+        return $this->computeBox($media, $settings);
     }
 
     /**
-     * @return string
+     * @throws \Imagine\Exception\InvalidArgumentException
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param array $settings
+     * @return \Imagine\Image\Box
      */
-    private function getMode()
+    private function computeBox(MediaInterface $media, array $settings)
     {
-        return $this->mode;
+        if ($this->mode !== ImageInterface::THUMBNAIL_INSET && $this->mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
+            throw new InvalidArgumentException('Invalid mode specified');
+        }
+
+        $size = $media->getBox();
+
+        $ratios = array(
+            $settings['width'] / $size->getWidth(),
+            $settings['height'] / $size->getHeight()
+        );
+
+        if ($this->mode === ImageInterface::THUMBNAIL_INSET) {
+            $ratio = min($ratios);
+        } else {
+            $ratio = max($ratios);
+        }
+
+        return $size->scale($ratio);
     }
 }

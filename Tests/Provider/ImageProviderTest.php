@@ -14,14 +14,16 @@ namespace Sonata\MediaBundle\Tests\Provider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Provider\ImageProvider;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Imagine\Image\Box;
 
 class ImageProviderTest extends \PHPUnit_Framework_TestCase
 {
 
     public function getProvider()
     {
-        $resizer = $this->getMock('Sonata\MediaBundle\Media\ResizerInterface', array('resize'));
+        $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
+        $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
 
         $adapter = $this->getMock('Gaufrette\Adapter');
 

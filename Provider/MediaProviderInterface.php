@@ -12,7 +12,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\MediaBundle\Media\ResizerInterface;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Symfony\Component\Form\FormBuilder;

@@ -12,8 +12,6 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\Form\Form;
-use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class VimeoProvider extends BaseVideoProvider
@@ -59,12 +57,14 @@ class VimeoProvider extends BaseVideoProvider
 
         $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
+        $box = $this->getBoxHelperProperties($media, $format, $options);
+
         $params = array(
             'src'         => http_build_query($player_parameters),
             'id'          => $player_parameters['js_swf_id'],
             'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
-            'width'       => isset($options['width'])             ? $options['width']  : $media->getWidth(),
-            'height'      => isset($options['height'])            ? $options['height'] : $media->getHeight(),
+            'width'       => $box->getWidth(),
+            'height'      => $box->getHeight(),
         );
 
         return $params;

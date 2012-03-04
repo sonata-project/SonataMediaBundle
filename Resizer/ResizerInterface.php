@@ -24,5 +24,12 @@ interface ResizerInterface
      * @param array $settings
      * @return void
      */
-    function resize(MediaInterface $media, File $in, File $out, $format, $settings);
+    function resize(MediaInterface $media, File $in, File $out, $format, array $settings);
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param array $settings
+     * @return \Imagine\Image\Box
+     */
+    function getBox(MediaInterface $media, array $settings);
 }

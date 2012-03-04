@@ -325,6 +325,11 @@ interface MediaInterface
      */
     function getSize();
 
+    /**
+     * @return \Imagine\Image\Box
+     */
+    function getBox();
+
     function __toString();
 
     function setGalleryHasMedias($galleryHasMedias);

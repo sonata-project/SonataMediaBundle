@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\MediaBundle\Media\ResizerInterface;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -168,5 +168,30 @@ abstract class BaseVideoProvider extends BaseProvider
         }
 
         return $metadata;
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param $format
+     * @param array $options
+     * @return \Imagine\Image\Box
+     */
+    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
+    {
+        if ($format == 'reference') {
+            return $media->getBox();
+        }
+
+        if (isset($options['width']) || isset($options['height'])) {
+            $settings = array(
+                'width' => isset($options['width']) ? $options['width'] : null,
+                'height' => isset($options['height']) ? $options['height'] : null,
+            );
+
+        } else {
+            $settings = $this->getFormat($format);
+        }
+
+        return $this->resizer->getBox($media, $settings);
     }
 }

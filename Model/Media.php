@@ -10,6 +10,8 @@
 
 namespace Sonata\MediaBundle\Model;
 
+use Imagine\Image\Box;
+
 abstract class Media implements MediaInterface
 {
     /**
@@ -124,6 +126,10 @@ abstract class Media implements MediaInterface
         $this->setUpdatedAt(new \DateTime);
     }
 
+    /**
+     * @static
+     * @return array
+     */
     public static function getStatusList()
     {
         return array(
@@ -135,17 +141,26 @@ abstract class Media implements MediaInterface
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setBinaryContent($binaryContent)
     {
         $this->providerReference = null;
         $this->binaryContent = $binaryContent;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getBinaryContent()
     {
         return $this->binaryContent;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getMetadataValue($name, $default = null)
     {
         $metadata = $this->getProviderMetadata();
@@ -154,10 +169,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Add a named data value to the metadata
-     *
-     * @param string $name
-     * @param string$value
+     * {@inheritdoc}
      */
     public function setMetadataValue($name, $value)
     {
@@ -167,9 +179,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Remove a named data from the metadata
-     *
-     * @param string $name
+     * {@inheritdoc}
      */
     public function unsetMetadataValue($name)
     {
@@ -179,9 +189,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -189,9 +197,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get name
-     *
-     * @return string $name
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -199,9 +205,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set description
-     *
-     * @param text $description
+     * {@inheritdoc}
      */
     public function setDescription($description)
     {
@@ -209,9 +213,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get description
-     *
-     * @return text $description
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -219,9 +221,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set enabled
-     *
-     * @param boolean $enabled
+     * {@inheritdoc}
      */
     public function setEnabled($enabled)
     {
@@ -229,9 +229,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get enabled
-     *
-     * @return boolean $enabled
+     * {@inheritdoc}
      */
     public function getEnabled()
     {
@@ -239,9 +237,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set provider_name
-     *
-     * @param string $providerName
+     * {@inheritdoc}
      */
     public function setProviderName($providerName)
     {
@@ -249,9 +245,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get provider_name
-     *
-     * @return string $providerName
+     * {@inheritdoc}
      */
     public function getProviderName()
     {
@@ -259,9 +253,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set provider_status
-     *
-     * @param integer $providerStatus
+     * {@inheritdoc}
      */
     public function setProviderStatus($providerStatus)
     {
@@ -269,9 +261,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get provider_status
-     *
-     * @return integer $providerStatus
+     * {@inheritdoc}
      */
     public function getProviderStatus()
     {
@@ -279,9 +269,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set provider_reference
-     *
-     * @param string $providerReference
+     * {@inheritdoc}
      */
     public function setProviderReference($providerReference)
     {
@@ -289,9 +277,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get provider_reference
-     *
-     * @return string $providerReference
+     * {@inheritdoc}
      */
     public function getProviderReference()
     {
@@ -299,9 +285,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set provider_metadata
-     *
-     * @param array $providerMetadata
+     * {@inheritdoc}
      */
     public function setProviderMetadata(array $providerMetadata = array())
     {
@@ -309,9 +293,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get provider_metadata
-     *
-     * @return array $providerMetadata
+     * {@inheritdoc}
      */
     public function getProviderMetadata()
     {
@@ -319,9 +301,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set width
-     *
-     * @param integer $width
+     * {@inheritdoc}
      */
     public function setWidth($width)
     {
@@ -329,9 +309,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get width
-     *
-     * @return integer $width
+     * {@inheritdoc}
      */
     public function getWidth()
     {
@@ -339,9 +317,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set height
-     *
-     * @param integer $height
+     * {@inheritdoc}
      */
     public function setHeight($height)
     {
@@ -349,9 +325,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get height
-     *
-     * @return integer $height
+     * {@inheritdoc}
      */
     public function getHeight()
     {
@@ -359,9 +333,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set length
-     *
-     * @param decimal $length
+     * {@inheritdoc}
      */
     public function setLength($length)
     {
@@ -369,9 +341,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get length
-     *
-     * @return decimal $length
+     * {@inheritdoc}
      */
     public function getLength()
     {
@@ -379,9 +349,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set copyright
-     *
-     * @param string $copyright
+     * {@inheritdoc}
      */
     public function setCopyright($copyright)
     {
@@ -389,9 +357,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get copyright
-     *
-     * @return string $copyright
+     * {@inheritdoc}
      */
     public function getCopyright()
     {
@@ -399,9 +365,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set author_name
-     *
-     * @param string $authorName
+     * {@inheritdoc}
      */
     public function setAuthorName($authorName)
     {
@@ -409,9 +373,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get author_name
-     *
-     * @return string $authorName
+     * {@inheritdoc}
      */
     public function getAuthorName()
     {
@@ -419,9 +381,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set context
-     *
-     * @param string $context
+     * {@inheritdoc}
      */
     public function setContext($context)
     {
@@ -429,9 +389,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get context
-     *
-     * @return string $context
+     * {@inheritdoc}
      */
     public function getContext()
     {
@@ -439,9 +397,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set cdn_is_flushable
-     *
-     * @param boolean $cdnIsFlushable
+     * {@inheritdoc}
      */
     public function setCdnIsFlushable($cdnIsFlushable)
     {
@@ -449,9 +405,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get cdn_is_flushable
-     *
-     * @return boolean $cdnIsFlushable
+     * {@inheritdoc}
      */
     public function getCdnIsFlushable()
     {
@@ -459,9 +413,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set cdn_flush_at
-     *
-     * @param datetime $cdnFlushAt
+     * {@inheritdoc}
      */
     public function setCdnFlushAt(\DateTime $cdnFlushAt = null)
     {
@@ -469,9 +421,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get cdn_flush_at
-     *
-     * @return datetime $cdnFlushAt
+     * {@inheritdoc}
      */
     public function getCdnFlushAt()
     {
@@ -479,9 +429,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set updated_at
-     *
-     * @param datetime $updatedAt
+     * {@inheritdoc}
      */
     public function setUpdatedAt(\DateTime $updatedAt = null)
     {
@@ -489,9 +437,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get updated_at
-     *
-     * @return datetime $updatedAt
+     * {@inheritdoc}
      */
     public function getUpdatedAt()
     {
@@ -499,9 +445,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set created_at
-     *
-     * @param datetime $createdAt
+     * {@inheritdoc}
      */
     public function setCreatedAt(\DateTime $createdAt = null)
     {
@@ -509,9 +453,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get created_at
-     *
-     * @return datetime $createdAt
+     * {@inheritdoc}
      */
     public function getCreatedAt()
     {
@@ -519,9 +461,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set content_type
-     *
-     * @param varchar $contentType
+     * {@inheritdoc}
      */
     public function setContentType($contentType)
     {
@@ -529,9 +469,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get content_type
-     *
-     * @return varchar $contentType
+     * {@inheritdoc}
      */
     public function getContentType()
     {
@@ -539,7 +477,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getExtension()
     {
@@ -547,9 +485,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Set size
-     *
-     * @param integer $size
+     * {@inheritdoc}
      */
     public function setSize($size)
     {
@@ -557,25 +493,40 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * Get size
-     *
-     * @return integer $size
+     * {@inheritdoc}
      */
     public function getSize()
     {
         return $this->size;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getBox()
+    {
+        return new Box($this->width, $this->height);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function __toString()
     {
         return $this->getName() ?: 'n/a';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setGalleryHasMedias($galleryHasMedias)
     {
         $this->galleryHasMedias = $galleryHasMedias;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getGalleryHasMedias()
     {
         return $this->galleryHasMedias;

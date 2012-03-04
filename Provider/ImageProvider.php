@@ -44,12 +44,17 @@ class ImageProvider extends FileProvider
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-        $format_configuration = $this->getFormat($format);
+        if ($format == 'reference') {
+            $box = $media->getBox();
+        } else {
+            $box = $this->resizer->getBox($media, $this->getFormat($format));
+        }
 
         return array_merge(array(
-          'title'    => $media->getName(),
-          'src'      => $this->generatePublicUrl($media, $format),
-          'width'    => $format_configuration['width'],
+            'title'    => $media->getName(),
+            'src'      => $this->generatePublicUrl($media, $format),
+            'width'    => $box->getWidth(),
+            'height'   => $box->getHeight()
         ), $options);
     }
 
