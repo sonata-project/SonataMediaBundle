@@ -77,11 +77,9 @@ class DailyMotionProvider extends BaseVideoProvider
             'player_parameters' => http_build_query($player_parameters),
             'allowFullScreen'   => isset($options['allowFullScreen'])   ? $options['allowFullScreen']     : 'true',
             'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
-            'width'             => isset($options['width'])             ? $options['width']  : $media->getWidth(),
-            'height'            => isset($options['height'])            ? $options['height'] : $media->getHeight(),
         );
 
-        return $params;
+        return array_merge(parent::getHelperProperties($media,$format,$options),$params);
     }
 
     /**

@@ -119,11 +119,9 @@ class YouTubeProvider extends BaseVideoProvider
             'player_parameters' => http_build_query($player_parameters),
             'allowFullScreen'   => $player_parameters['fs'] == '1'      ? 'true' : 'false',
             'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
-            'width'             => isset($options['width'])             ? $options['width']  : $media->getWidth(),
-            'height'            => isset($options['height'])            ? $options['height'] : $media->getHeight(),
         );
 
-        return $params;
+        return array_merge(parent::getHelperProperties($media,$format,$options),$params);
     }
 
     /**

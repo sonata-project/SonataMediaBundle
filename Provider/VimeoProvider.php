@@ -63,11 +63,9 @@ class VimeoProvider extends BaseVideoProvider
             'src'         => http_build_query($player_parameters),
             'id'          => $player_parameters['js_swf_id'],
             'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
-            'width'       => isset($options['width'])             ? $options['width']  : $media->getWidth(),
-            'height'      => isset($options['height'])            ? $options['height'] : $media->getHeight(),
         );
 
-        return $params;
+        return array_merge(parent::getHelperProperties($media,$format,$options),$params);
     }
 
     /**
