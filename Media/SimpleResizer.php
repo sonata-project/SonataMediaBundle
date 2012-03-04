@@ -75,4 +75,24 @@ class SimpleResizer implements ResizerInterface
     {
         return $this->mode;
     }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param array $settings
+     * @return Box
+     */
+    function getBox(MediaInterface $media, $settings)
+    {
+        $box = new Box($media->getWidth(), $media->getHeight());
+
+        // Honor the ratio, don't distort the image
+        if (null != $settings['height'] && (null == $settings['width'] || $box->getHeight() > $box->getWidth())) {
+            $box->heighten($settings['height']);
+        }
+        else if (null != $settings['width']) {
+            $box->widen($settings['width']);
+        }
+
+        return $box;
+    }
 }

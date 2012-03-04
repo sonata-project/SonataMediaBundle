@@ -12,6 +12,7 @@ namespace Sonata\MediaBundle\Media;
 
 use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Imagine\Image\Box;
 
 interface ResizerInterface
 {
@@ -25,4 +26,12 @@ interface ResizerInterface
      * @return void
      */
     function resize(MediaInterface $media, File $in, File $out, $format, $settings);
+
+    /**
+     * @abstract
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param array $settings
+     * @return Box
+     */
+    function getBox(MediaInterface $media, $settings);
 }

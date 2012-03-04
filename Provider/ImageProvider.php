@@ -49,11 +49,14 @@ class ImageProvider extends FileProvider
     {
         $format_configuration = $this->getFormat($format);
 
+        $box = $this->getResizer()->getBox($media,$format_configuration);
+
         return array_merge(array(
-          'title'    => $media->getName(),
-          'src'      => $this->generatePublicUrl($media, $format),
-          'width'    => $format_configuration['width'],
-        ), $options);
+                    'title'    => $media->getName(),
+                    'src'      => $this->generatePublicUrl($media, $format),
+                    'width'    => $box->getWidth(),
+                    'height'   => $box->getHeight()
+            ), $options);
     }
 
     /**
