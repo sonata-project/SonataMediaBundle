@@ -42,7 +42,8 @@ class GalleryAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $context = $this->getPersistentParameter('context');
-        if ($context) {
+
+        if (!$context) {
             $context = $this->pool->getDefaultContext();
         }
 
@@ -66,7 +67,8 @@ class GalleryAdmin extends Admin
             ), array(
                 'edit' => 'inline',
                 'inline' => 'table',
-                'sortable'  => 'position'
+                'sortable'  => 'position',
+                'link_parameters' => array('context' => $context)
             ))
         ;
     }

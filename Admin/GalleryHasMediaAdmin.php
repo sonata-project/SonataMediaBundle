@@ -24,8 +24,17 @@ class GalleryHasMediaAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        if ($this->hasRequest()) {
+            $link_parameters = array('context' => $this->getRequest()->get('context'));
+        } else {
+            $link_parameters = array();
+        }
+
         $formMapper
-            ->add('media', 'sonata_type_model', array(), array('edit' => 'list'))
+            ->add('media', 'sonata_type_model', array(), array(
+                'edit' => 'list',
+                'link_parameters' => $link_parameters
+            ))
             ->add('enabled', null, array('required' => false))
             ->add('position')
         ;
