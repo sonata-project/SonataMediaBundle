@@ -19,12 +19,27 @@ class FormatThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
+    protected function generatePath(MediaProviderInterface $provider, MediaInterface $media, $format)
+    {
+        $settings = $provider->getFormat($format);
+
+        return sprintf('%s/thumb_%s_%s.%s',
+            $provider->generatePath($media),
+            $media->getId(),
+            $format,
+            isset($settings['format']) ? $settings['format'] : 'jpg'
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
         } else {
-            $path = sprintf('%s/thumb_%s_%s.jpg',  $provider->generatePath($media), $media->getId(), $format);
+            $path = $this->generatePath($provider, $media, $format);
         }
 
         return $provider->getCdnPath($path, $media->getCdnIsFlushable());
@@ -35,11 +50,7 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s.jpg',
-            $provider->generatePath($media),
-            $media->getId(),
-            $format
-        );
+        return $this->generatePath($provider, $media, $format);
     }
 
     /**
@@ -58,7 +69,7 @@ class FormatThumbnail implements ThumbnailInterface
                 $media,
                 $referenceFile,
                 $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
-                'jpg' ,
+                isset($settings['format']) ? $settings['format'] : 'jpg',
                 $settings
             );
         }

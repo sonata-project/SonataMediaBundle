@@ -107,12 +107,14 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($provider->requireThumbnails($media));
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true));
+        $provider->addFormat('small', array('width' => 200, 'height' => 100,'constraint' => true, 'format' => 'png'));
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
         $provider->generateThumbnails($media);
 
         $this->assertEquals('default/0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('default/0011/24/thumb_1023456_small.jpg', $provider->generatePrivateUrl($media, 'small'));
     }
 
     public function testEvent()
