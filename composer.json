@@ -1,0 +1,27 @@
+{
+    "name": "sonata-project/media-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony SonataMediaBundle",
+    "keywords": ["media", "sonata", "youtube", "dailymotion", "vimeo", "pdf", "file", "upload"],
+    "homepage": "http://sonata-project.org/bundles/media",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Rabaix",
+            "email": "thomas.rabaix@sonata-project.org"
+        },
+        {
+            "name": "Sonata Community",
+            "homepage": "https://github.com/sonata-project/SonataMediaBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "2.*",
+        "sonata/admin-bundle": "master-dev"
+    },
+    "autoload": {
+        "psr-0": { "Sonata\\MediaBundle": "" }
+    },
+    "target-dir": "Sonata/MediaBundle"
+}
