@@ -114,7 +114,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $provider->generateThumbnails($media);
 
         $this->assertEquals('default/0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
-        $this->assertEquals('default/0011/24/thumb_1023456_small.jpg', $provider->generatePrivateUrl($media, 'small'));
+        $this->assertEquals('default/0011/24/thumb_1023456_small.png', $provider->generatePrivateUrl($media, 'small'));
     }
 
     public function testEvent()
