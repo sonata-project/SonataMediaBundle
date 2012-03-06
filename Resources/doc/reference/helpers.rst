@@ -29,6 +29,12 @@ Render the media:
         'class' => 'myclass'
     ) ?>
 
+Render the path:
+
+.. code-block:: php
+
+    <?php echo $view['sonata_media']->path($media, 'small') ?>
+
 Twig usage
 ----------
 
@@ -47,3 +53,9 @@ Render the media:
     {% media media, 'small' %}
 
     {% media media, 'small' %}
+
+Render the path:
+
+.. code-block:: jinja
+
+    {% path media, 'small' %}
