@@ -20,6 +20,9 @@
         "symfony/framework-bundle": "2.*",
         "sonata/admin-bundle": "master-dev"
     },
+    "suggest": {
+        "sonata-project/doctrine-orm-admin-bundle": "*"
+    },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }
     },
