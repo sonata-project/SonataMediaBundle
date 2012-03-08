@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
-                <target>Gallerien</target>
+                <target>Galerien</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
@@ -44,7 +44,7 @@
             </trans-unit>
             <trans-unit id="gallery">
                 <source>gallery</source>
-                <target>Gallerie</target>
+                <target>Galerie</target>
             </trans-unit>
             <trans-unit id="title_select_provider">
                 <source>title_select_provider</source>
