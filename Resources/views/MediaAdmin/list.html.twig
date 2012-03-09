@@ -53,7 +53,7 @@ file that was distributed with this source code.
                 {% endif %}
             {% endfor %}
         {% endif %}
-        <form class="sonata-filter-form form-stacked {{ admin.isChild and 1 == admin.datagrid.filters|length  ? 'hide' : '' }}" action="{{ admin.generateUrl('list') }}" method="GET">
+        <form class="sonata-filter-form form-stacked {{ admin.isChild and 1 == admin.datagrid.filters|length ? 'hide' : '' }}" action="{{ admin.generateUrl('list') }}" method="GET">
 
             <input type="hidden" name="context" value="{{ persistent_parameters.context }}" />
             <input type="hidden" name="provider" value="{{ persistent_parameters.provider }}" />
