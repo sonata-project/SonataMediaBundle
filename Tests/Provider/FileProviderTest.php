@@ -65,7 +65,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', array('width' => 100, 'format' => 'jpg'));
         $media = new Media;
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
@@ -115,7 +115,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $file = __DIR__.'/../fixtures/file.txt';
 

@@ -43,7 +43,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
                     $provider->generatePath($media),
                     $media->getId(),
                     $format,
-                    isset($settings['format']) ? $settings['format'] : 'jpg'
+                    $settings['format']
                 ))
             );
         }

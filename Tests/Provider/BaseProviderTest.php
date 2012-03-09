@@ -53,7 +53,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Sonata\MediaBundle\CDN\CDNInterface', $provider->getCdn());
 
-        $provider->addFormat('small', array());
+        $provider->addFormat('small', array('format' => 'jpg'));
 
         $this->assertInternalType('array', $provider->getFormat('small'));
 

@@ -81,7 +81,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -100,7 +100,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $media = new Media;
         $media->setBinaryContent('BDYAbAtaDzA');
@@ -124,7 +124,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $media = new Media;
         $media->setBinaryContent('http://vimeo.com/012341231');
@@ -165,7 +165,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', array('width' => 100, 'format' => 'jpg'));
         $media = new Media;
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

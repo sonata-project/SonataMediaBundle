@@ -27,7 +27,7 @@ class FormatThumbnail implements ThumbnailInterface
             $provider->generatePath($media),
             $media->getId(),
             $format,
-            isset($settings['format']) ? $settings['format'] : 'jpg'
+            $settings['format']
         );
     }
 
@@ -69,7 +69,7 @@ class FormatThumbnail implements ThumbnailInterface
                 $media,
                 $referenceFile,
                 $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
-                isset($settings['format']) ? $settings['format'] : 'jpg',
+                $settings['format'],
                 $settings
             );
         }
