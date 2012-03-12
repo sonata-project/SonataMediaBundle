@@ -64,7 +64,6 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                             ->arrayNode('providers')
-                                ->addDefaultsIfNotSet()
                                 ->prototype('scalar')
                                     ->defaultValue(array())
                                 ->end()
@@ -94,7 +93,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('cdn')
-                    ->useAttributeAsKey('id')
                     ->children()
                         ->arrayNode('server')
                             ->addDefaultsIfNotSet()
@@ -129,9 +127,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('filesystem')
-                    ->useAttributeAsKey('id')
                     ->children()
-
                         ->arrayNode('local')
                             ->addDefaultsIfNotSet()
                             ->children()
@@ -181,7 +177,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('providers')
                     ->addDefaultsIfNotSet()
-                    ->useAttributeAsKey('id')
                     ->children()
                         ->arrayNode('file')
                             ->addDefaultsIfNotSet()
@@ -325,7 +320,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('resizer')
                     ->addDefaultsIfNotSet()
-                    ->useAttributeAsKey('id')
                     ->children()
                         ->arrayNode('simple')
                             ->addDefaultsIfNotSet()
