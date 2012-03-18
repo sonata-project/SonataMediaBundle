@@ -22,7 +22,8 @@
         "sonata-project/admin-bundle": "master-dev"
     },
     "suggest": {
-        "sonata-project/doctrine-orm-admin-bundle": "*"
+        "sonata-project/doctrine-orm-admin-bundle": "*",
+        "knplabs/gaufrette" : "*"
     },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }
