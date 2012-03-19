@@ -34,22 +34,17 @@ file that was distributed with this source code.
             <input type="hidden" name="context" value="{{ persistent_parameters.context }}" />
 
             <fieldset class="filter_legend">
-                <legend class="filter_legend">{% trans from 'SonataAdminBundle' %}label_filters{% endtrans %}</legend>
+                <legend class="filter_legend {{ admin.datagrid.hasActiveFilters(true) ? 'active' : 'inactive' }}">{% trans from 'SonataAdminBundle' %}label_filters{% endtrans %}</legend>
 
-                <div class="filter_container">
-                    <table>
-                        <tr>
-                            <td>
-                                <table>
-                                    {% for filter in admin.datagrid.filters %}
-                                        <tr id="filter_{{ filter.name }}_row">
-                                            <td class="filter-title">{{ admin.trans(filter.label) }}</td>
-                                            <td class="filter-type">{{ form_widget(form.getChild(filter.name).getChild('type')) }}</td>
-                                            <td class="filter-value">{{ form_widget(form.getChild(filter.name).getChild('value')) }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </td>
+                <div class="filter_container {{ admin.datagrid.hasActiveFilters(true) ? 'active' : 'inactive' }}">
+                    <table class="bordered-table">
+                        {% for filter in admin.datagrid.filters %}
+                            <tr id="filter_{{ filter.name }}_row" class="filter {{ filter.isActive ? 'active' : 'inactive' }}{{ filter.hidden ? ' hide' : '' }}">
+                                <td class="filter-title">{{ admin.trans(filter.label) }}</td>
+                                <td class="filter-type">{{ form_widget(form.getChild(filter.name).getChild('type')) }}</td>
+                                <td class="filter-value">{{ form_widget(form.getChild(filter.name).getChild('value')) }}</td>
+                            </tr>
+                        {% endfor %}
                             {#<td>#}
                                 {#<label for="add_filter_select">{% trans from 'SonataAdminBundle' %}add_filter{% endtrans %}</label>#}
                                 {#<select id="add_filter_select">#}
@@ -58,7 +53,6 @@ file that was distributed with this source code.
                                     {#{% endfor %}#}
                                 {#</select>#}
                             {#</td>#}
-                        </tr>
                     </table>
                     {{ form_rest(form) }}
 

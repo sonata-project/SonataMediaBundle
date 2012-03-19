@@ -111,7 +111,9 @@ class GalleryAdmin extends Admin
         $datagridMapper
             ->add('name')
             ->add('enabled')
-            ->add('context')
+            ->add('context', null, array(
+                'hidden' => true
+            ))
         ;
     }
 
