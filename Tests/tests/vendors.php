@@ -11,7 +11,7 @@ if (!is_dir($vendorDir)) {
 $deps = array(
     array('symfony', 'git://github.com/symfony/symfony.git', isset($_SERVER['SYMFONY_VERSION']) ? $_SERVER['SYMFONY_VERSION'] : 'origin/master'),
     array('knpmenu', 'git://github.com/KnpLabs/KnpMenu.git', 'origin/master'),
-    array('Sonata/AdminBundle', 'git://github.com/sonata-project/SonataAdminBundle.git', 'origin/master'),
+    array('Sonata/AdminBundle', 'git://github.com/sonata-project/SonataAdminBundle.git', 'origin/2.0'),
     array('gaufrette', 'git://github.com/KnpLabs/Gaufrette.git', 'origin/master'),
     array('buzz', 'git://github.com/kriswallsmith/Buzz.git', 'origin/master'),
     array('imagine', 'git://github.com/avalanche123/Imagine.git', 'origin/master')
