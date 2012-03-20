@@ -106,6 +106,7 @@ Then you must configure the interaction with the orm and add the mediaBundles se
                     mappings:
                         SonataMediaBundle: ~
     sonata_media:
+        default_context: default
         db_driver: doctrine_orm # or doctrine_mongodb
         contexts:
             default:  # the default context is mandatory
