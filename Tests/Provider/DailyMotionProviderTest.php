@@ -82,7 +82,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true, 'format' => 'jpg'));
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -101,7 +101,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true, 'format' => 'jpg'));
 
         $media = new Media;
         $media->setBinaryContent('x9wjql');
@@ -124,7 +124,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true, 'format' => 'jpg'));
 
         $media = new Media;
         $media->setBinaryContent('http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds');
@@ -164,7 +164,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', array('width' => 100, 'format' => 'jpg'));
         $media = new Media;
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

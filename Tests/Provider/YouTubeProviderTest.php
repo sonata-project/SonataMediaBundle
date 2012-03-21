@@ -81,7 +81,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -100,7 +100,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $media = new Media;
         $media->setBinaryContent('BDYAbAtaDzA');
@@ -123,7 +123,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $media = new Media;
         $media->setBinaryContent('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=g-all-esi&context=asdasdas');
@@ -163,7 +163,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', array('width' => 100, 'format' => 'jpg'));
         $media = new Media;
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

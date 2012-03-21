@@ -63,6 +63,8 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
 
+        $provider->addFormat('big', array('format' => 'jpg'));
+
         $this->assertEquals('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
@@ -74,7 +76,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', array('width' => 100, 'format' => 'jpg'));
         $media = new Media;
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
@@ -106,13 +108,15 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true, 'format' => 'jpg'));
+        $provider->addFormat('small', array('width' => 200, 'height' => 100,'constraint' => true, 'format' => 'png'));
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
         $provider->generateThumbnails($media);
 
         $this->assertEquals('default/0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('default/0011/24/thumb_1023456_small.png', $provider->generatePrivateUrl($media, 'small'));
     }
 
     public function testEvent()
@@ -120,7 +124,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider();
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true, 'format' => 'jpg'));
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
 
