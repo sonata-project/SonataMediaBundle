@@ -16,6 +16,14 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 class FormatThumbnail implements ThumbnailInterface
 {
+    
+    private  $defaultFormat;
+    
+    public function __construct($defaultFormat)
+    {
+        $this->defaultFormat = $defaultFormat;
+    }
+    
     /**
      * {@inheritdoc}
      */
@@ -24,7 +32,7 @@ class FormatThumbnail implements ThumbnailInterface
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
         } else {
-            $path = sprintf('%s/thumb_%s_%s.jpg',  $provider->generatePath($media), $media->getId(), $format);
+            $path = sprintf('%s/thumb_%s_%s.%s',  $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
         }
 
         return $provider->getCdnPath($path, $media->getCdnIsFlushable());
@@ -35,10 +43,11 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s.jpg',
+        return sprintf('%s/thumb_%s_%s.%s',
             $provider->generatePath($media),
             $media->getId(),
-            $format
+            $format,
+            $this->getExtension($media)
         );
     }
 
@@ -52,13 +61,13 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         $referenceFile = $provider->getReferenceFile($media);
-
+        
         foreach ($provider->getFormats() as $format => $settings) {
             $provider->getResizer()->resize(
                 $media,
                 $referenceFile,
                 $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
-                'jpg' ,
+                $this->getExtension($media),
                 $settings
             );
         }
@@ -76,5 +85,19 @@ class FormatThumbnail implements ThumbnailInterface
                 $provider->getFilesystem()->delete($path);
             }
         }
+    }
+
+    /**
+     * @param MediaInterface $media
+     * @return string the file extension for the $media, or the $defaultExtension if not available
+     */
+    private function getExtension(MediaInterface $media)
+    {
+        $ext = $media->getExtension();
+        if (!is_string($ext) || strlen($ext) !== 3) {
+            $ext = $this->defaultFormat;
+        }
+        
+        return $ext;
     }
 }
