@@ -28,6 +28,7 @@
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "2.0.*",
         "liip/imagine-bundle": "*"
+        "sonata-project/admin-bundle": "2.0.*"
     },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }
