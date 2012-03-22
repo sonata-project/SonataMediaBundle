@@ -20,6 +20,7 @@
         "php": ">=5.3.2",
         "symfony/framework-bundle": "2.0.*",
         "sonata-project/admin-bundle": "2.0.*",
+        "sonata-project/easy-extends-bundle": "*"
         "knplabs/gaufrette": "*",
         "imagine/Imagine": "*",
         "kriswallsmith/buzz": "*"
