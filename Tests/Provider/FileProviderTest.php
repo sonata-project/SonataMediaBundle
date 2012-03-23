@@ -36,7 +36,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $thumbnail = new FormatThumbnail();
+        $thumbnail = new FormatThumbnail('jpg');
 
         $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail);
         $provider->setResizer($resizer);
