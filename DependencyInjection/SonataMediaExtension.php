@@ -276,6 +276,7 @@ class SonataMediaExtension extends Extension
         if ($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['ftp'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.ftp')
                 ->addArgument($config['filesystem']['ftp']['directory'])
+                ->addArgument($config['filesystem']['ftp']['host'])
                 ->addArgument($config['filesystem']['ftp']['username'])
                 ->addArgument($config['filesystem']['ftp']['password'])
                 ->addArgument($config['filesystem']['ftp']['port'])
