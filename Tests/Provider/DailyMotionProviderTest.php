@@ -42,7 +42,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $thumbnail = new FormatThumbnail;
+        $thumbnail = new FormatThumbnail('jpg');
 
         $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser);
         $provider->setResizer($resizer);
