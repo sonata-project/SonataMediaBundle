@@ -66,7 +66,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
-        $this->assertEquals('/uploads/media/default/0011/24/thumb_1023456_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/uploads/media/default/0011/24/thumb_1023456_big.png', $provider->generatePublicUrl($media, 'big'));
         $this->assertEquals('/uploads/media/default/0011/24/ASDASDAS.png', $provider->generatePublicUrl($media, 'reference'));
     }
 
@@ -96,7 +96,6 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnail()
     {
-
         $provider = $this->getProvider();
 
         $media = new Media;
@@ -112,7 +111,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('default/0011/24/thumb_1023456_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertEquals('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent()
