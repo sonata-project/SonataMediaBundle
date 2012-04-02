@@ -326,6 +326,21 @@ interface MediaInterface
     function getSize();
 
     /**
+     * Set cdn_status
+     *
+     * @param intger $cdnStatus
+     */
+    function setCdnStatus($cdnStatus);
+
+    /**
+     *
+     * Get cdn_status
+     *
+     * @return integer $cdnStatus
+     */
+    function getCdnStatus();
+
+    /**
      * @return \Imagine\Image\Box
      */
     function getBox();
