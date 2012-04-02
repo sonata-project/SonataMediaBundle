@@ -90,6 +90,11 @@ abstract class Media implements MediaInterface
     protected $cdnFlushAt;
 
     /**
+     * @var integer $cdn_status
+     */
+    protected $cdnStatus;
+
+    /**
      * @var datetime $updated_at
      */
     protected $updatedAt;
@@ -498,6 +503,22 @@ abstract class Media implements MediaInterface
     public function getSize()
     {
         return $this->size;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCdnStatus($cdnStatus)
+    {
+        $this->cdnStatus = $cdnStatus;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCdnStatus()
+    {
+        return $this->cdnStatus;
     }
 
     /**

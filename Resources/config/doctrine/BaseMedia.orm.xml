@@ -29,6 +29,7 @@
 
         <field name="cdnIsFlushable"    column="cdn_is_flushable"  type="boolean"  nullable="true" default="false" />
         <field name="cdnFlushAt"        column="cdn_flush_at"      type="datetime" nullable="true"/>
+        <field name="cdnStatus"         column="cdn_status"        type="integer"  nullable="true" />
 
         <field name="updatedAt"         column="updated_at"     type="datetime" />
         <field name="createdAt"         column="created_at"     type="datetime" />
