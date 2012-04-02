@@ -28,6 +28,7 @@
 
         <field name="cdnIsFlushable"    fieldName="cdnIsFlushable"      type="boolean" />
         <field name="cdnFlushAt"        fieldName="cdnFlushAt"          type="date" />
+        <field name="cdnStatus"         fieldName="cdnStatus"           type="long" />
 
         <field name="updatedAt"         fieldName="updatedAt"           type="date" />
         <field name="createdAt"         fieldName="createdAt"           type="date" />
