@@ -315,7 +315,7 @@ class FileProvider extends BaseProvider
             $fileName = $media->getBinaryContent()->getFilename();
         }
 
-        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), array_map('strtolower', $this->allowedExtensions))) {
+        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid extensions')
