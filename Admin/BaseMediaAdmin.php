@@ -171,4 +171,13 @@ abstract class BaseMediaAdmin extends Admin
     {
         return $this->pool;
     }
+    
+    /**
+     * {inheritdoc}
+     */
+    public function setTemplates(array $templates) 
+    {
+        $templates['list'] = 'SonataMediaBundle:GalleryAdmin:list.html.twig';
+        parent::setTemplates($templates);
+    }
 }
