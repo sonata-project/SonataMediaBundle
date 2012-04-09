@@ -118,10 +118,22 @@ abstract class BaseMediaAdmin extends Admin
         if (!$this->hasRequest()) {
             return array();
         }
-
+        
+        $request = $this->getRequest();
+        $context = $request->get('context', $this->pool->getDefaultContext());
+        $providers = $this->pool->getProvidersByContext($context);
+        $provider = $request->get('provider');
+        
+        // if the context has only one provider, set it into the request
+        // so the intermediate provider selection is skipped 
+        if (count($providers) == 1 && null === $provider) {
+            $provider = array_shift($providers)->getName();
+            $request->query->set('provider', $provider);
+        }
+        
         return array(
-            'provider' => $this->getRequest()->get('provider'),
-            'context'  => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
+            'provider' => $provider,
+            'context'  => $context,
         );
     }
 
