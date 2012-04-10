@@ -37,7 +37,7 @@ class FormatThumbnail implements ThumbnailInterface
             $path = sprintf('%s/thumb_%s_%s.%s',  $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
         }
 
-        return $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        return $path;
     }
 
     /**
