@@ -27,6 +27,8 @@ class MediaExtension extends \Twig_Extension
 
     protected $mediaManager;
 
+    protected $environment;
+
     public function __construct(Pool $mediaService, MediaManagerInterface $mediaManager)
     {
         $this->mediaService = $mediaService;
