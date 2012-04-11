@@ -16,14 +16,16 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 class FormatThumbnail implements ThumbnailInterface
 {
-    
     private  $defaultFormat;
-    
+
+    /**
+     * @param string $defaultFormat
+     */
     public function __construct($defaultFormat)
     {
         $this->defaultFormat = $defaultFormat;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +37,7 @@ class FormatThumbnail implements ThumbnailInterface
             $path = sprintf('%s/thumb_%s_%s.%s',  $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
         }
 
-        return $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        return $path;
     }
 
     /**
@@ -61,7 +63,7 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         $referenceFile = $provider->getReferenceFile($media);
-        
+
         foreach ($provider->getFormats() as $format => $settings) {
             $provider->getResizer()->resize(
                 $media,
@@ -88,7 +90,7 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param MediaInterface $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return string the file extension for the $media, or the $defaultExtension if not available
      */
     protected function getExtension(MediaInterface $media)
@@ -97,7 +99,7 @@ class FormatThumbnail implements ThumbnailInterface
         if (!is_string($ext) || strlen($ext) !== 3) {
             $ext = $this->defaultFormat;
         }
-        
+
         return $ext;
     }
 }

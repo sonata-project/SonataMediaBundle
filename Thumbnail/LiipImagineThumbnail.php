@@ -22,6 +22,9 @@ class LiipImagineThumbnail implements ThumbnailInterface
      */
     protected $router;
 
+    /**
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;

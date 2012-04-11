@@ -74,7 +74,7 @@ class FileProvider extends BaseProvider
     public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name');
-        $formMapper->add('enabled');
+        $formMapper->add('enabled', null, array('required' => false));
         $formMapper->add('authorName');
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
@@ -119,6 +119,16 @@ class FileProvider extends BaseProvider
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             return;
+        }
+
+        // Delete the current file from the FS
+        $oldMedia = clone $media;
+        $oldMedia->setProviderReference($media->getPreviousProviderReference());
+
+        $path = $this->getReferenceImage($oldMedia);
+
+        if ($this->getFilesystem()->has($path)) {
+            $this->getFilesystem()->delete($path);
         }
 
         $this->fixBinaryContent($media);
@@ -313,6 +323,8 @@ class FileProvider extends BaseProvider
             $fileName = $media->getBinaryContent()->getClientOriginalName();
         } else if ($media->getBinaryContent() instanceof File) {
             $fileName = $media->getBinaryContent()->getFilename();
+        } else {
+            throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));
         }
 
         if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
