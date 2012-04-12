@@ -96,7 +96,7 @@ abstract class BaseVideoProvider extends BaseProvider
     public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name');
-        $formMapper->add('enabled');
+        $formMapper->add('enabled', null, array('required' => false));
         $formMapper->add('authorName');
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
