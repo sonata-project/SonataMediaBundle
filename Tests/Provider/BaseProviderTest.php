@@ -234,4 +234,15 @@ class TestProvider extends BaseProvider
         // TODO: Implement buildMediaType() method.
     }
 
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param bool $force
+     * @return void
+     */
+    function updateMetadata(MediaInterface $media, $force = false)
+    {
+        // TODO: Implement updateMetadata() method.
+    }
+
+
 }

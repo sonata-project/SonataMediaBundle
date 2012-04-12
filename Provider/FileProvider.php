@@ -206,6 +206,19 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
+    public function updateMetadata(MediaInterface $media, $force = true)
+    {
+        // this is now optimized at all!!!
+        $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+        $fileObject = new \SplFileObject($path, 'w');
+        $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+
+        $media->setSize($fileObject->getSize());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
         if ($format == 'reference') {

@@ -95,28 +95,44 @@ class VimeoProvider extends BaseVideoProvider
             return;
         }
 
-        $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getBinaryContent());
+        // store provider information
+        $media->setProviderName($this->name);
+        $media->setProviderReference($media->getBinaryContent());
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
+
+        $this->updateMetadata($media, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateMetadata(MediaInterface $media, $force = false)
+    {
+        $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getProviderReference());
 
         try {
             $metadata = $this->getMetadata($media, $url);
         } catch(\RuntimeException $e) {
+            $media->setEnabled(false);
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
             return;
         }
 
         // store provider information
-        $media->setProviderName($this->name);
-        $media->setProviderReference($media->getBinaryContent());
         $media->setProviderMetadata($metadata);
 
-        // update Media common field from metadata
-        $media->setName($metadata['title']);
-        $media->setDescription($metadata['description']);
-        $media->setAuthorName($metadata['author_name']);
+        // update Media common fields from metadata
+        if ($force) {
+            $media->setName($metadata['title']);
+            $media->setDescription($metadata['description']);
+            $media->setAuthorName($metadata['author_name']);
+        }
+
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
         $media->setLength($metadata['duration']);
         $media->setContentType('video/x-flv');
-        $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
 
     /**

@@ -245,4 +245,11 @@ interface MediaProviderInterface
      * @return void
      */
     function buildMediaType(FormBuilder $formBuilder);
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param bool $force
+     * @return void
+     */
+    function updateMetadata(MediaInterface $media, $force = false);
 }
