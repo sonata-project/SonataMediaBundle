@@ -350,4 +350,6 @@ interface MediaInterface
     function setGalleryHasMedias($galleryHasMedias);
 
     function getGalleryHasMedias();
+
+    function getPreviousProviderReference();
 }

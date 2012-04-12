@@ -62,7 +62,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     * @return
+     * @return void
      */
     public function postUpdate(EventArgs $args)
     {
@@ -75,7 +75,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     * @return
+     * @return void
      */
     public function postRemove(EventArgs $args)
     {
@@ -88,7 +88,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     * @return
+     * @return void
      */
     public function postPersist(EventArgs $args)
     {
@@ -101,7 +101,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     * @return
+     * @return void
      */
     public function preUpdate(EventArgs $args)
     {
@@ -117,7 +117,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     * @return
+     * @return void
      */
     public function preRemove(EventArgs $args)
     {
@@ -130,7 +130,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     * @return
+     * @return void
      */
     public function prePersist(EventArgs $args)
     {

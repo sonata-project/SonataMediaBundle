@@ -104,8 +104,9 @@ abstract class Media implements MediaInterface
      */
     protected $createdAt;
 
-
     protected $binaryContent;
+
+    protected $previousProviderReference;
 
     /**
      * @var varchar $content_type
@@ -151,6 +152,7 @@ abstract class Media implements MediaInterface
      */
     public function setBinaryContent($binaryContent)
     {
+        $this->previousProviderReference = $this->providerReference;
         $this->providerReference = null;
         $this->binaryContent = $binaryContent;
     }
@@ -551,5 +553,13 @@ abstract class Media implements MediaInterface
     public function getGalleryHasMedias()
     {
         return $this->galleryHasMedias;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPreviousProviderReference()
+    {
+        return $this->previousProviderReference;
     }
 }
