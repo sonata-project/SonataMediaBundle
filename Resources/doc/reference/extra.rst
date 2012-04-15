@@ -6,7 +6,6 @@ The SonataMediaBundle provides some integration with externals services. For now
 Pixlr Integration
 -----------------
 
-
 Edit the ``sonata_media`` configuration:
 
 .. code-block:: yaml
@@ -43,20 +42,14 @@ for each provider::
 .. code-block:: yaml
 
     sonata_media:
-
         # ...
-
         providers:
             # ...
-
             image:
                 thumbnail:  sonata.media.thumbnail.consumer.format
-
             vimeo:
                 thumbnail:  sonata.media.thumbnail.consumer.format
-
             youtube:
                 thumbnail:  sonata.media.thumbnail.consumer.format
-
             dailymotion:
                 thumbnail:  sonata.media.thumbnail.consumer.format
