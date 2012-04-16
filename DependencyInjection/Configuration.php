@@ -158,6 +158,16 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
+                        ->arrayNode('mogilefs')
+                            ->children()
+                                ->scalarNode('domain')->isRequired()->end()
+                                ->arrayNode('hosts')
+                                    ->prototype('scalar')->end()
+                                    ->isRequired()
+                                ->end()
+                            ->end()
+                        ->end()
+
                         ->arrayNode('replicate')
                             ->children()
                                 ->scalarNode('master')->isRequired()->end()

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="sonata.media.adapter.filesystem.local" class="Gaufrette\Adapter\Local" />
+        <service id="sonata.media.adapter.filesystem.ftp"   class="Gaufrette\Adapter\Ftp" />
+        <service id="sonata.media.adapter.service.s3"       class="AmazonS3" >
+            <argument type="collection" />
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.s3"    class="Gaufrette\Adapter\AmazonS3" >
+            <argument />
+            <argument />
+            <argument />
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.replicate"  class="Sonata\MediaBundle\Filesystem\Replicate" >
+            <argument />
+            <argument />
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.mogilefs"  class="Gaufrette\Adapter\MogileFS" >
+            <argument />
+            <argument />
+        </service>
+
+        <service id="sonata.media.filesystem.mogilefs" class="Gaufrette\Filesystem" >
+            <argument type="service" id="sonata.media.adapter.filesystem.mogilefs" />
+        </service>
+
+        <service id="sonata.media.filesystem.ftp" class="Gaufrette\Filesystem" >
+            <argument type="service" id="sonata.media.adapter.filesystem.ftp" />
+        </service>
+
+        <service id="sonata.media.filesystem.local" class="Gaufrette\Filesystem">
+            <argument type="service" id="sonata.media.adapter.filesystem.local" />
+        </service>
+
+        <service id="sonata.media.filesystem.s3" class="Gaufrette\Filesystem">
+            <argument type="service" id="sonata.media.adapter.filesystem.s3" />
+        </service>
+
+        <service id="sonata.media.filesystem.replicate" class="Gaufrette\Filesystem">
+            <argument type="service" id="sonata.media.adapter.filesystem.replicate" />
+        </service>
+    </services>
+
+</container>

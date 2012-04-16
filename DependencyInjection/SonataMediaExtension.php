@@ -51,6 +51,7 @@ class SonataMediaExtension extends Extension
         $loader->load('security.xml');
         $loader->load('extra.xml');
         $loader->load('form.xml');
+        $loader->load('gaufrette.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -319,6 +320,16 @@ class SonataMediaExtension extends Extension
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');
+        }
+
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.mogilefs') && isset($config['filesystem']['mogilefs'])) {
+            $container->getDefinition('sonata.media.adapter.filesystem.mogilefs')
+                ->replaceArgument(0, $config['filesystem']['mogilefs']['domain'])
+                ->replaceArgument(1, $config['filesystem']['mogilefs']['hosts'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.mogilefs');
+            $container->removeDefinition('sonata.media.filesystem.mogilefs');
         }
     }
 
