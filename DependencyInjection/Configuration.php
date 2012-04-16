@@ -204,7 +204,7 @@ class Configuration implements ConfigurationInterface
                                         'application/excel', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint',
                                         'application/vnd.ms-powerpoint', 'application/vnd.oasis.opendocument.text', 'application/vnd.oasis.opendocument.graphics', 'application/vnd.oasis.opendocument.presentation', 'application/vnd.oasis.opendocument.spreadsheet', 'application/vnd.oasis.opendocument.chart', 'application/vnd.oasis.opendocument.formula', 'application/vnd.oasis.opendocument.database', 'application/vnd.oasis.opendocument.image',
                                         'text/comma-separated-values',
-                                        'text/xml',
+                                        'text/xml', 'application/xml',
                                         'application/zip', // seems to be used for xlsx document ...
                                     ))
                                 ->end()
