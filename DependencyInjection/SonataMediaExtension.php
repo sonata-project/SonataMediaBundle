@@ -250,7 +250,7 @@ class SonataMediaExtension extends Extension
 
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
             $container->getDefinition('sonata.media.cdn.fallback')
-                ->replaceArgument(0, new Reference($config['cdn']['fallback']['cdn']))
+                ->replaceArgument(0, new Reference($config['cdn']['fallback']['master']))
                 ->replaceArgument(1, new Reference($config['cdn']['fallback']['fallback']))
             ;
         } else {
