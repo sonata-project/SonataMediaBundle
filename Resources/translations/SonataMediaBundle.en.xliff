@@ -284,6 +284,10 @@
                 <source>filter.label_provider_name</source>
                 <target>Provider Name</target>
             </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>File</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -249,6 +249,10 @@
                 <source>filter.label_provider_name</source>
                 <target>Medienanbieter Name</target>
             </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>Datei</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>

@@ -109,23 +109,38 @@ class DailyMotionProvider extends BaseVideoProvider
             return;
         }
 
-        $url = sprintf('http://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/%s&format=json', $media->getBinaryContent());
+        $media->setProviderName($this->name);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
+        $media->setProviderReference($media->getBinaryContent());
+
+        $this->updateMetadata($media, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateMetadata(MediaInterface $media, $force = false)
+    {
+        $url = sprintf('http://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/%s&format=json', $media->getProviderReference());
 
         try {
             $metadata = $this->getMetadata($media, $url);
         } catch(\RuntimeException $e) {
+            $media->setEnabled(false);
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
             return;
         }
 
-        $media->setProviderName($this->name);
         $media->setProviderMetadata($metadata);
-        $media->setProviderReference($media->getBinaryContent());
-        $media->setName($metadata['title']);
-        $media->setAuthorName($metadata['author_name']);
+
+        if ($force) {
+            $media->setName($metadata['title']);
+            $media->setAuthorName($metadata['author_name']);
+        }
+
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
-        $media->setContentType('video/x-flv');
-        $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
 
     /**

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Document;
+namespace Sonata\MediaBundle\Document\ODM;
 
 use Sonata\MediaBundle\Model\Media;
 
