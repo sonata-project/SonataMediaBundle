@@ -94,7 +94,7 @@ class FormatThumbnail implements ThumbnailInterface
     protected function getExtension(MediaInterface $media)
     {
         $ext = $media->getExtension();
-        if (!is_string($ext) || strlen($ext) !== 3) {
+        if (!is_string($ext) || strlen($ext) < 3) {
             $ext = $this->defaultFormat;
         }
         
