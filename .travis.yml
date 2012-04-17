@@ -5,10 +5,10 @@ php:
 
 env:
   - SYMFONY_VERSION=v2.0.12
-  - SYMFONY_VERSION=origin/2.0
+  - SYMFONY_VERSION=origin/master
 
 before_script: php Tests/tests/vendors.php
 script: phpunit
 
 notifications:
-    webhooks: http://sonata-project.org/bundles/media/2-0/travis
+    webhooks: http://sonata-project.org/bundles/media/master/travis
