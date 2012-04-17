@@ -17,4 +17,8 @@ Media commands
     php app/console sonata:media:sync-thumbnails sonata.media.provider.image default http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=g-all-esi&context=asdasdas
     php app/console sonata:media:sync-thumbnails sonata.media.provider.image default BDYAbAtaDzA
 
-    php  app/console sonata:media:add sonata.media.provider.image default path/to/media.png --description="foo bar" --copyright="Sonata Project" --author="Thomas" --enabled=false
+    php app/console sonata:media:add sonata.media.provider.image default path/to/media.png --description="foo bar" --copyright="Sonata Project" --author="Thomas" --enabled=false
+
+- Update metadata for a set of media
+
+    php app/console sonata:media:refresh-metadata sonata.media.provider.youtube default

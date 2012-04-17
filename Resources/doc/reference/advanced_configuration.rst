@@ -90,6 +90,10 @@ Full configuration options:
                 create:     false
                 region:     # this settings does not seems to be implemented with Zend Framework
 
+            mogilefs:
+                hosts:      []
+                domain:
+
             replicate:
                 master: sonata.media.adapter.filesystem.s3
                 slave: sonata.media.adapter.filesystem.local

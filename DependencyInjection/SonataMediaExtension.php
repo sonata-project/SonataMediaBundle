@@ -51,8 +51,13 @@ class SonataMediaExtension extends Extension
         $loader->load('security.xml');
         $loader->load('extra.xml');
         $loader->load('form.xml');
+        $loader->load('gaufrette.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
+
+        if (isset($bundles['SonataNotificationBundle'])) {
+            $loader->load('consumer.xml');
+        }
 
         if (isset($bundles['SonataFormatterBundle'])) {
             $loader->load('formatter.xml');
@@ -118,7 +123,7 @@ class SonataMediaExtension extends Extension
     public function configureProviders(ContainerBuilder $container, $config)
     {
         $container->getDefinition('sonata.media.provider.image')
-            ->replaceArgument(5, $config['providers']['image']['allowed_extensions'])
+            ->replaceArgument(5, array_map('strtolower', $config['providers']['image']['allowed_extensions']))
             ->replaceArgument(6, $config['providers']['image']['allowed_mime_types'])
             ->replaceArgument(7, new Reference($config['providers']['image']['adapter']))
         ;
@@ -245,7 +250,7 @@ class SonataMediaExtension extends Extension
 
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
             $container->getDefinition('sonata.media.cdn.fallback')
-                ->replaceArgument(0, new Reference($config['cdn']['fallback']['cdn']))
+                ->replaceArgument(0, new Reference($config['cdn']['fallback']['master']))
                 ->replaceArgument(1, new Reference($config['cdn']['fallback']['fallback']))
             ;
         } else {
@@ -276,6 +281,7 @@ class SonataMediaExtension extends Extension
         if ($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['ftp'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.ftp')
                 ->addArgument($config['filesystem']['ftp']['directory'])
+                ->addArgument($config['filesystem']['ftp']['host'])
                 ->addArgument($config['filesystem']['ftp']['username'])
                 ->addArgument($config['filesystem']['ftp']['password'])
                 ->addArgument($config['filesystem']['ftp']['port'])
@@ -314,6 +320,16 @@ class SonataMediaExtension extends Extension
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');
+        }
+
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.mogilefs') && isset($config['filesystem']['mogilefs'])) {
+            $container->getDefinition('sonata.media.adapter.filesystem.mogilefs')
+                ->replaceArgument(0, $config['filesystem']['mogilefs']['domain'])
+                ->replaceArgument(1, $config['filesystem']['mogilefs']['hosts'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.mogilefs');
+            $container->removeDefinition('sonata.media.filesystem.mogilefs');
         }
     }
 

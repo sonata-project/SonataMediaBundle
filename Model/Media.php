@@ -90,6 +90,11 @@ abstract class Media implements MediaInterface
     protected $cdnFlushAt;
 
     /**
+     * @var integer $cdn_status
+     */
+    protected $cdnStatus;
+
+    /**
      * @var datetime $updated_at
      */
     protected $updatedAt;
@@ -99,8 +104,9 @@ abstract class Media implements MediaInterface
      */
     protected $createdAt;
 
-
     protected $binaryContent;
+
+    protected $previousProviderReference;
 
     /**
      * @var varchar $content_type
@@ -146,6 +152,7 @@ abstract class Media implements MediaInterface
      */
     public function setBinaryContent($binaryContent)
     {
+        $this->previousProviderReference = $this->providerReference;
         $this->providerReference = null;
         $this->binaryContent = $binaryContent;
     }
@@ -503,6 +510,22 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
+    public function setCdnStatus($cdnStatus)
+    {
+        $this->cdnStatus = $cdnStatus;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCdnStatus()
+    {
+        return $this->cdnStatus;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getBox()
     {
         return new Box($this->width, $this->height);
@@ -530,5 +553,13 @@ abstract class Media implements MediaInterface
     public function getGalleryHasMedias()
     {
         return $this->galleryHasMedias;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPreviousProviderReference()
+    {
+        return $this->previousProviderReference;
     }
 }
