@@ -26,7 +26,9 @@ class MediaAdmin extends Admin
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
-            ->add('context')
+            ->add('context', null, array(
+                'hidden' => true
+            ))
         ;
 
         $providers = array();
@@ -43,6 +45,7 @@ class MediaAdmin extends Admin
                 'multiple' => false,
                 'expanded' => false,
             ),
+            'hidden' => true,
             'field_type'=> 'choice',
         ));
     }
