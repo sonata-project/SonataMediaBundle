@@ -44,7 +44,7 @@ interface MediaProviderInterface
     function requireThumbnails();
 
     /**
-     * generated thumbnails linked to the media, a thumbnail is a format used on the website
+     * Generated thumbnails linked to the media, a thumbnail is a format used on the website
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
@@ -54,7 +54,7 @@ interface MediaProviderInterface
     /**
      * remove all linked thumbnails
      *
-     * @param MediaInterface $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @return void
      */
     function removeThumbnails(MediaInterface $media);
@@ -245,4 +245,11 @@ interface MediaProviderInterface
      * @return void
      */
     function buildMediaType(FormBuilder $formBuilder);
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param bool $force
+     * @return void
+     */
+    function updateMetadata(MediaInterface $media, $force = false);
 }

@@ -9,6 +9,16 @@
             <option name="service">sonata.media.pool</option>
             <option name="method">validate</option>
         </constraint>
+
+        <property name="name">
+           <constraint name="NotNull" />
+        </property>
+    </class>
+
+    <class name="Application\Sonata\MediaBundle\Entity\Gallery">
+        <property name="name">
+           <constraint name="NotNull" />
+        </property>
     </class>
 
 </constraint-mapping>

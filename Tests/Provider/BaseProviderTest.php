@@ -23,9 +23,9 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMock('Gaufrette\Adapter');
 
-        $file = $this->getMock('Gaufrette\File', array(), array($adapter));
-
         $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
+        $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
+
         $filesystem->expects($this->any())
             ->method('get')
             ->will($this->returnValue($file));
@@ -233,5 +233,16 @@ class TestProvider extends BaseProvider
     {
         // TODO: Implement buildMediaType() method.
     }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param bool $force
+     * @return void
+     */
+    function updateMetadata(MediaInterface $media, $force = false)
+    {
+        // TODO: Implement updateMetadata() method.
+    }
+
 
 }

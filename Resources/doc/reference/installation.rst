@@ -16,19 +16,20 @@ To begin, add the dependent bundles to the ``vendor/bundles`` directory. Add
 the following lines to the file ``deps``::
 
   [SonataMediaBundle]
-      git=http://github.com/sonata-project/SonataMediaBundle.git
+      git=git://github.com/sonata-project/SonataMediaBundle.git
       target=/bundles/Sonata/MediaBundle
+      version=origin/2.0
 
   [EasyExtendsBundle]
-      git=http://github.com/sonata-project/SonataEasyExtendsBundle.git
+      git=git://github.com/sonata-project/SonataEasyExtendsBundle.git
       target=/bundles/Sonata/EasyExtendsBundle
 
   [Imagine]:
-      git=http://github.com/avalanche123/Imagine.git
+      git=git://github.com/avalanche123/Imagine.git
       target=/imagine
 
   [Gaufrette]
-      git=http://github.com/KnpLabs/Gaufrette.git
+      git=git://github.com/KnpLabs/Gaufrette.git
       target=/gaufrette
 
   [buzz]

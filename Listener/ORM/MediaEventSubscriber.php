@@ -17,7 +17,6 @@ use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
-
     /**
      * @return array
      */

@@ -82,6 +82,30 @@ class ImageProvider extends FileProvider
 
             $media->setWidth($size->getWidth());
             $media->setHeight($size->getHeight());
+
+            $media->setProviderStatus(MediaInterface::STATUS_OK);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateMetadata(MediaInterface $media, $force = true)
+    {
+        try {
+            // this is now optimized at all!!!
+            $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+            $fileObject = new \SplFileObject($path, 'w');
+            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+
+            $image = $this->imagineAdapter->open($fileObject->getPathname());
+            $size = $image->getSize();
+
+            $media->setSize($fileObject->getSize());
+            $media->setWidth($size->getWidth());
+            $media->setHeight($size->getHeight());
+        } catch (\LogicException $e) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
         }
     }
 
@@ -90,7 +114,13 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        return $this->thumbnail->generatePublicUrl($this, $media, $format);
+        if ($format == 'reference') {
+            $path = $this->getReferenceImage($media);
+        } else {
+            $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
+        }
+
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
     /**

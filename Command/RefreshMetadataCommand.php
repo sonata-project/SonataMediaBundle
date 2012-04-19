@@ -22,15 +22,15 @@ use Symfony\Component\Console\Input\InputInterface;
  * Useful if you have existing media content and added new formats.
  *
  */
-class SyncThumbsCommand extends BaseCommand
+class RefreshMetadataCommand extends BaseCommand
 {
     protected $quiet = false;
     protected $output;
 
     public function configure()
     {
-        $this->setName('sonata:media:sync-thumbnails')
-            ->setDescription('Sync uploaded image thumbs with new media formats')
+        $this->setName('sonata:media:refresh-metadata')
+            ->setDescription('Refresh meta information')
             ->setDefinition(array(
                 new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
                 new InputArgument('context', InputArgument::REQUIRED, 'The context'),
@@ -56,10 +56,10 @@ class SyncThumbsCommand extends BaseCommand
         foreach ($medias as $media) {
             $provider = $this->getMediaPool()->getProvider($media->getProviderName());
 
-            $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
+            $this->log("Refresh media " . $media->getName() . ' - ' . $media->getId());
 
-            $provider->removeThumbnails($media);
-            $provider->generateThumbnails($media);
+            $provider->updateMetadata($media, false);
+            $this->getMediaManager()->save($media);
         }
 
         $this->log('Done.');

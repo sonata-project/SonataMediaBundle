@@ -27,6 +27,8 @@ class MediaExtension extends \Twig_Extension
 
     protected $mediaManager;
 
+    protected $environment;
+
     public function __construct(Pool $mediaService, MediaManagerInterface $mediaManager)
     {
         $this->mediaService = $mediaService;
@@ -98,14 +100,18 @@ class MediaExtension extends \Twig_Extension
      */
     private function getMedia($media)
     {
-        if ($media instanceof MediaInterface) {
-            return $media;
-        }
-
-        if (strlen($media) > 0) {
+        if (!$media instanceof MediaInterface && strlen($media) > 0) {
             $media = $this->mediaManager->findOneBy(array(
                 'id' => $media
             ));
+        }
+
+        if (!$media instanceof MediaInterface) {
+            return false;
+        }
+
+        if ($media->getProviderStatus() !== MediaInterface::STATUS_OK) {
+            return false;
         }
 
         return $media;

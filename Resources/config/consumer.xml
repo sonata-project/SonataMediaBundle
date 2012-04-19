@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="sonata.media.notification.create_thumbnail" class="Sonata\MediaBundle\Consumer\CreateThumbnailConsumer" >
+            <tag name="sonata.notification.consumer" type="sonata.media.create_thumbnail" />
+
+            <argument type="service" id="sonata.media.manager.media" />
+            <argument type="service" id="sonata.media.pool" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="sonata.media.thumbnail.consumer.format" class="Sonata\MediaBundle\Thumbnail\ConsumerThumbnail" >
+            <argument>sonata.media.thumbnail.format</argument>
+            <argument type="service" id="sonata.media.thumbnail.format"/>
+            <argument type="service" id="sonata.notification.backend" />
+        </service>
+    </services>
+</container>

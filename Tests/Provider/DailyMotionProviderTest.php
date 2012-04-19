@@ -33,9 +33,8 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $adapter = $this->getMock('Gaufrette\Adapter');
 
-        $file = $this->getMock('Gaufrette\File', array(), array($adapter));
-
         $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
+        $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');

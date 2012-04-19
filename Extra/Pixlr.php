@@ -41,7 +41,7 @@ class Pixlr
 
     protected $validFormats;
 
-    protected $allowHosts;
+    protected $allowEreg;
 
     /**
      * @param $referrer
@@ -63,10 +63,7 @@ class Pixlr
         $this->container    = $container;
 
         $this->validFormats = array('jpg', 'png');
-        $this->allowHosts   = array(
-            '173.255.196.130',   // pilxr hosts
-            '173.255.196.177',
-        );
+        $this->allowEreg    = '@http://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
     }
 
     /**
@@ -190,18 +187,17 @@ class Pixlr
         /**
          * Pirlx send back the new image as an url, add some security check before downloading the file
          */
-        if (preg_match('@http://([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/_temp/[0-9a-z]{24}\.[a-z]*@', $request->get('image'), $matches)) {
-            if (!in_array($matches[1], $this->allowHosts)) {
-                throw new NotFoundHttpException(sprintf('Invalid image host : %s', $request->get('image')));
-            }
-        } else {
-            throw new NotFoundHttpException(sprintf('Invalid image format : %s', $request->get('image')));
+        if (!preg_match($this->allowEreg, $request->get('image'), $matches)) {
+            throw new NotFoundHttpException(sprintf('Invalid image host : %s', $request->get('image')));
         }
 
         $file = $provider->getReferenceFile($media);
         $file->setContent(file_get_contents($request->get('image')));
 
+        $provider->updateMetadata($media);
         $provider->generateThumbnails($media);
+
+        $this->mediaManager->save($media);
 
         return new RedirectResponse($this->router->generate('admin_sonata_media_media_view', array('id' => $media->getId())));
     }
