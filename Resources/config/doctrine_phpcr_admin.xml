@@ -34,16 +34,6 @@
             <call method="setTranslationDomain">
                 <argument>%sonata.media.admin.media.translation_domain%</argument>
             </call>
-
-            <call method="setTemplates">
-                <argument type="collection">
-                    <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
-                    <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
-                    <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
-                    <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
-                    <argument key="list">SonataMediaBundle:MediaAdmin:list.html.twig</argument>
-                </argument>
-            </call>
         </service>
 
         <!--<service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineMongoDBManager">-->
@@ -60,16 +50,6 @@
 
             <!--<call method="setTranslationDomain">-->
                 <!--<argument>%sonata.media.admin.gallery.translation_domain%</argument>-->
-            <!--</call>-->
-
-            <!--<call method="setTemplates">-->
-                <!--<argument type="collection">-->
-                    <!--<argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>-->
-                    <!--<argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>-->
-                    <!--<argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>-->
-                    <!--<argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>-->
-                    <!--<argument key="list">SonataMediaBundle:GalleryAdmin:list.html.twig</argument>-->
-                <!--</argument>-->
             <!--</call>-->
         <!--</service>-->
 
