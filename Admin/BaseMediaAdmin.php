@@ -86,15 +86,6 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Show\ShowMapper $filter
-     * @return void
-     */
-    protected function configureShowField(ShowMapper $filter)
-    {
-        // TODO: Implement configureShowField() method.
-    }
-
-    /**
      * @param \Sonata\AdminBundle\Route\RouteCollection $collection
      * @return void
      */
@@ -118,18 +109,18 @@ abstract class BaseMediaAdmin extends Admin
         if (!$this->hasRequest()) {
             return array();
         }
-        
+
         $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
         $providers = $this->pool->getProvidersByContext($context);
         $provider = $this->getRequest()->get('provider');
-        
+
         // if the context has only one provider, set it into the request
-        // so the intermediate provider selection is skipped 
+        // so the intermediate provider selection is skipped
         if (count($providers) == 1 && null === $provider) {
             $provider = array_shift($providers)->getName();
             $this->getRequest()->query->set('provider', $provider);
         }
-        
+
         return array(
             'provider' => $provider,
             'context'  => $context,

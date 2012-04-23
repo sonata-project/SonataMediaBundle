@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class GalleryAdminController extends Controller
 {
     /**
-     * @param $view
+     * @param string $view
      * @param array $parameters
      * @param null|\Symfony\Component\HttpFoundation\Response $response
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
