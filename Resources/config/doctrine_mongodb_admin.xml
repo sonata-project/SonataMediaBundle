@@ -22,7 +22,7 @@
 
     <services>
         <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%">
-            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media" label="media" label_translator_strategy="sonata.admin.label.strategy.underscore" />
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media" label_catalogue="%sonata.media.admin.media.translation_domain%" label="media" label_translator_strategy="sonata.admin.label.strategy.underscore" />
             <argument />
             <argument>%sonata.media.admin.media.entity%</argument>
             <argument>%sonata.media.admin.media.controller%</argument>
@@ -51,7 +51,7 @@
         </service>
 
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">
-            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media" label="gallery" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media"  label_catalogue="%sonata.media.admin.gallery.translation_domain%" label="gallery" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
             <argument />
             <argument>%sonata.media.admin.gallery.entity%</argument>
             <argument>%sonata.media.admin.gallery.controller%</argument>
@@ -73,7 +73,7 @@
         </service>
 
         <service id="sonata.media.admin.gallery_has_media" class="%sonata.media.admin.gallery_has_media.class%">
-            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media" label="gallery_has_media" show_in_dashboard="false" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="sonata_media"  label_catalogue="%sonata.media.admin.gallery_has_media.translation_domain%" label="gallery_has_media" show_in_dashboard="false" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
             <argument />
             <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
             <argument>%sonata.media.admin.gallery_has_media.controller%</argument>
