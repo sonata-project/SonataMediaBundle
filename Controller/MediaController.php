@@ -22,6 +22,7 @@ class MediaController extends Controller
 {
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
      */
     public function getProvider(MediaInterface $media)
@@ -30,7 +31,8 @@ class MediaController extends Controller
     }
 
     /**
-     * @param $id
+     * @param string $id
+     *
      * @return \Sonata\MediaBundle\Model\MediaInterface
      */
     public function getMedia($id)
@@ -40,8 +42,10 @@ class MediaController extends Controller
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @param $id
+     *
+     * @param string $id
      * @param string $format
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      */
     public function viewAction($id, $format = 'reference')
@@ -52,7 +56,7 @@ class MediaController extends Controller
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
-        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())){
+        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())) {
             throw new AccessDeniedException();
         }
 
@@ -65,8 +69,10 @@ class MediaController extends Controller
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @param $id
+     *
+     * @param string $id
      * @param string $format
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      */
     public function downloadAction($id, $format = 'reference')
@@ -77,12 +83,11 @@ class MediaController extends Controller
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
-        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())){
+        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())) {
             throw new AccessDeniedException();
         }
 
-        $response = $this->getProvider($media)
-            ->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
+        $response = $this->getProvider($media)->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
 
         return $response;
     }
@@ -93,8 +98,8 @@ class MediaController extends Controller
      * outputs it to the browser at the same time
      *
      * @param Request $request
-     * @param string $path
-     * @param string $filter
+     * @param string  $path
+     * @param string  $filter
      *
      * @return Response
      */

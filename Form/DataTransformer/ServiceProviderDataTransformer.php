@@ -21,7 +21,7 @@ class ServiceProviderDataTransformer implements DataTransformerInterface
     protected $provider;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      */
     public function __construct(MediaProviderInterface $provider)
     {

@@ -22,12 +22,19 @@ class GalleryManager extends AbstractGalleryManager
     protected $repository;
     protected $class;
 
+    /**
+     * @param \Doctrine\ODM\MongoDB\DocumentManager $dm
+     * @param string                                $class
+     */
     public function __construct(DocumentManager $dm, $class)
     {
         $this->dm    = $dm;
         $this->class = $class;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getRepository()
     {
         if (!$this->repository) {
@@ -36,11 +43,9 @@ class GalleryManager extends AbstractGalleryManager
 
         return $this->repository;
     }
+
     /**
-     * Updates a gallery
-     *
-     * @param Gallery $gallery
-     * @return void
+     * {@inheritdoc}
      */
     public function update(GalleryInterface $gallery)
     {
@@ -49,9 +54,7 @@ class GalleryManager extends AbstractGalleryManager
     }
 
     /**
-     * Returns the gallery's fully qualified class name
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getClass()
     {
@@ -59,10 +62,7 @@ class GalleryManager extends AbstractGalleryManager
     }
 
     /**
-     * Finds one gallery by the given criteria
-     *
-     * @param array $criteria
-     * @return Gallery
+     * {@inheritdoc}
      */
     public function findOneBy(array $criteria)
     {
@@ -70,10 +70,7 @@ class GalleryManager extends AbstractGalleryManager
     }
 
     /**
-     * Finds galleries by the given criteria
-     *
-     * @param array $criteria
-     * @return array
+     * {@inheritdoc}
      */
     public function findBy(array $criteria)
     {
@@ -81,10 +78,7 @@ class GalleryManager extends AbstractGalleryManager
     }
 
     /**
-     * Deletes a gallery
-     *
-     * @param Gallery $gallery
-     * @return void
+     * {@inheritdoc}
      */
     public function delete(GalleryInterface $gallery)
     {

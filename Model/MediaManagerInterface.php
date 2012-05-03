@@ -16,14 +16,15 @@ interface MediaManagerInterface
     /**
      * Creates an empty media instance
      *
-     * @return Media
+     * @return MediaInterface
      */
     function create();
 
     /**
      * Deletes a media
      *
-     * @param Media $media
+     * @param MediaInterface $media
+     *
      * @return void
      */
     function delete(MediaInterface $media);
@@ -32,6 +33,7 @@ interface MediaManagerInterface
      * Finds many media by the given criteria
      *
      * @param array $criteria
+     *
      * @return MediaInterface
      */
     function findBy(array $criteria);
@@ -40,6 +42,7 @@ interface MediaManagerInterface
      * Finds one media by the given criteria
      *
      * @param array $criteria
+     *
      * @return MediaInterface
      */
     function findOneBy(array $criteria);
@@ -53,9 +56,11 @@ interface MediaManagerInterface
 
     /**
      * @abstract
+     *
      * @param MediaInterface $media
-     * @param null $context
-     * @param null $providerName
+     * @param null           $context
+     * @param null           $providerName
+     *
      * @return void
      */
     function save(MediaInterface $media, $context = null, $providerName = null);

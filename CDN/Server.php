@@ -16,7 +16,7 @@ class Server implements CDNInterface
     protected $path;
 
     /**
-     * @param $path
+     * @param string $path
      */
     public function __construct($path)
     {
@@ -26,7 +26,7 @@ class Server implements CDNInterface
     /**
      * {@inheritDoc}
      */
-    public function getPath($relativePath, $isFlushable = false)
+    public function getPath($relativePath, $isFlushable)
     {
         return sprintf('%s/%s', $this->path, $relativePath);
     }

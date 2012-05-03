@@ -15,6 +15,14 @@ class MediaNode extends \Twig_Node
 {
     protected $extensionName;
 
+    /**
+     * @param array                 $extensionName
+     * @param \Twig_Node_Expression $media
+     * @param \Twig_Node_Expression $format
+     * @param \Twig_Node_Expression $attributes
+     * @param int                   $lineno
+     * @param string                $tag
+     */
     public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $format, \Twig_Node_Expression $attributes, $lineno, $tag = null)
     {
         $this->extensionName = $extensionName;
@@ -23,9 +31,7 @@ class MediaNode extends \Twig_Node
     }
 
     /**
-     * Compiles the node to PHP.
-     *
-     * @param \Twig_Compiler A Twig_Compiler instance
+     * {@inheritdoc}
      */
     public function compile(\Twig_Compiler $compiler)
     {

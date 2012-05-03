@@ -28,8 +28,9 @@ class ForbiddenDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return bool
      */
     public function isGranted(MediaInterface $media, Request $request)

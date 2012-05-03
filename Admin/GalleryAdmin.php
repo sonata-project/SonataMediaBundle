@@ -23,9 +23,9 @@ class GalleryAdmin extends Admin
     protected $pool;
 
     /**
-     * @param $code
-     * @param $class
-     * @param $baseControllerName
+     * @param string                            $code
+     * @param string                            $class
+     * @param string                            $baseControllerName
      * @param \Sonata\MediaBundle\Provider\Pool $pool
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
@@ -36,8 +36,7 @@ class GalleryAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -74,8 +73,7 @@ class GalleryAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureListFields(ListMapper $listMapper)
     {
@@ -88,8 +86,7 @@ class GalleryAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\GalleryInterface $gallery
+     * {@inheritdoc}
      */
     public function validate(ErrorElement $errorElement, $gallery)
     {
@@ -103,8 +100,7 @@ class GalleryAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -116,8 +112,7 @@ class GalleryAdmin extends Admin
     }
 
     /**
-     * @param $media
-     * @return void
+     * {@inheritdoc}
      */
     public function prePersist($gallery)
     {
@@ -127,7 +122,7 @@ class GalleryAdmin extends Admin
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getPersistentParameters()
     {
@@ -141,7 +136,7 @@ class GalleryAdmin extends Admin
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getNewInstance()
     {
@@ -153,5 +148,4 @@ class GalleryAdmin extends Admin
 
         return $gallery;
     }
-
 }

@@ -17,17 +17,16 @@ class ThumbnailTokenParser extends \Twig_TokenParser
 {
     protected $extensionName;
 
+    /**
+     * @param string $extensionName
+     */
     public function __construct($extensionName)
     {
         $this->extensionName = $extensionName;
     }
 
     /**
-     * Parses a token and returns a node.
-     *
-     * @param \Twig_Token $token A \Twig_Token instance
-     *
-     * @return \Twig_NodeInterface A \Twig_NodeInterface instance
+     * {@inheritdoc}
      */
     public function parse(\Twig_Token $token)
     {
@@ -52,9 +51,7 @@ class ThumbnailTokenParser extends \Twig_TokenParser
     }
 
     /**
-     * Gets the tag name associated with this token parser.
-     *
-     * @param string The tag name
+     * {@inheritdoc}
      */
     public function getTag()
     {

@@ -28,12 +28,12 @@ abstract class Gallery implements GalleryInterface
     protected $enabled;
 
     /**
-     * @var datetime $updatedAt
+     * @var \Datetime $updatedAt
      */
     protected $updatedAt;
 
     /**
-     * @var datetime $createdAt
+     * @var \Datetime $createdAt
      */
     protected $createdAt;
 
@@ -42,9 +42,7 @@ abstract class Gallery implements GalleryInterface
     protected $galleryHasMedias;
 
     /**
-     * Set name
-     *
-     * @param string $name
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -52,9 +50,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * Get name
-     *
-     * @return string $name
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -62,9 +58,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * Set enabled
-     *
-     * @param boolean $enabled
+     * {@inheritdoc}
      */
     public function setEnabled($enabled)
     {
@@ -72,9 +66,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * Get enabled
-     *
-     * @return boolean $enabled
+     * {@inheritdoc}
      */
     public function getEnabled()
     {
@@ -82,9 +74,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * Set updated_at
-     *
-     * @param datetime $updatedAt
+     * {@inheritdoc}
      */
     public function setUpdatedAt(\DateTime $updatedAt = null)
     {
@@ -92,9 +82,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * Get updated_at
-     *
-     * @return datetime $updatedAt
+     * {@inheritdoc}
      */
     public function getUpdatedAt()
     {
@@ -102,9 +90,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * Set created_at
-     *
-     * @param datetime $createdAt
+     * {@inheritdoc}
      */
     public function setCreatedAt(\DateTime $createdAt = null)
     {
@@ -112,25 +98,32 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * Get created_at
-     *
-     * @return datetime $createdAt
+     * {@inheritdoc}
      */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultFormat($defaultFormat)
     {
         $this->defaultFormat = $defaultFormat;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultFormat()
     {
         return $this->defaultFormat;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setGalleryHasMedias($galleryHasMedias)
     {
         foreach ($galleryHasMedias as $galleryHasMedia) {
@@ -140,11 +133,17 @@ abstract class Gallery implements GalleryInterface
         $this->galleryHasMedias = $galleryHasMedias;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getGalleryHasMedias()
     {
         return $this->galleryHasMedias;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
@@ -152,6 +151,9 @@ abstract class Gallery implements GalleryInterface
         $this->galleryHasMedias[] = $galleryHasMedia;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function __toString()
     {
         return $this->getName() ?: '-';

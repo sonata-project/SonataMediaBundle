@@ -40,9 +40,9 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $thumbnail;
 
     /**
-     * @param $name
-     * @param \Gaufrette\Filesystem $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
+     * @param string                                           $name
+     * @param \Gaufrette\Filesystem                            $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface             $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
      */
@@ -57,6 +57,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return void
      */
     abstract protected function doTransform(MediaInterface $media);

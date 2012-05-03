@@ -16,6 +16,10 @@ class DoctrineORMManager extends ModelManager
 {
     protected $manager;
 
+    /**
+     * @param \Symfony\Bridge\Doctrine\RegistryInterface $doctrine
+     * @param mixed                                      $manager
+     */
     public function __construct(RegistryInterface $doctrine, $manager)
     {
         parent::__construct($doctrine);
@@ -23,16 +27,25 @@ class DoctrineORMManager extends ModelManager
         $this->manager = $manager;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function create($object)
     {
         $this->manager->save($object);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function update($object)
     {
         $this->manager->save($object);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function delete($object)
     {
         $this->manager->delete($object);
@@ -41,8 +54,9 @@ class DoctrineORMManager extends ModelManager
     /**
      * Deletes a set of $class identified by the provided $idx array
      *
-     * @param $class
+     * @param string                                           $class
      * @param \Sonata\AdminBundle\Datagrid\ProxyQueryInterface $queryProxy
+     *
      * @return void
      */
     public function batchDelete($class, ProxyQueryInterface $queryProxy)
@@ -51,10 +65,8 @@ class DoctrineORMManager extends ModelManager
             foreach ($queryProxy->getQuery()->iterate() as $pos => $object) {
                 $this->delete($object[0]);
             }
-        } catch ( \PDOException $e ) {
+        } catch (\PDOException $e) {
             throw new ModelManagerException('', 0, $e);
         }
-
-
     }
 }

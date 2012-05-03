@@ -28,21 +28,19 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     protected $sessionKey = 'sonata/media/session/times';
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Component\Translation\TranslatorInterface        $translator
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param $times
+     * @param int                                                       $times
      */
     public function __construct(TranslatorInterface $translator, ContainerInterface $container, $times)
     {
-        $this->times    = $times;
-        $this->container = $container;
+        $this->times      = $times;
+        $this->container  = $container;
         $this->translator = $translator;
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
+     * {@inheritdoc}
      */
     public function isGranted(MediaInterface $media, Request $request)
     {
@@ -64,7 +62,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription()
     {

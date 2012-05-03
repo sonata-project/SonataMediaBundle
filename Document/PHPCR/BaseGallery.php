@@ -18,18 +18,26 @@ use Sonata\MediaBundle\Model\Gallery;
  */
 abstract class BaseGallery extends Gallery
 {
-
+    /**
+     * {@inheritdoc}
+     */
     public function __construct()
     {
         $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection;
     }
 
+    /**
+     * Pre persist method
+     */
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
+    /**
+     * Pre Update method
+     */
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();

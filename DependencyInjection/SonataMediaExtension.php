@@ -35,15 +35,15 @@ class SonataMediaExtension extends Extension
      * Loads the url shortener configuration.
      *
      * @param array            $configs    An array of configuration settings
-     * @param ContainerBuilder $container A ContainerBuilder instance
+     * @param ContainerBuilder $container  A ContainerBuilder instance
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $processor = new Processor();
+        $processor     = new Processor();
         $configuration = new Configuration();
-        $config = $processor->processConfiguration($configuration, $configs);
+        $config        = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('provider.xml');
         $loader->load('media.xml');
         $loader->load('twig.xml');
@@ -120,6 +120,10 @@ class SonataMediaExtension extends Extension
         $this->configureProviders($container, $config);
     }
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param array                                                   $config
+     */
     public function configureProviders(ContainerBuilder $container, $config)
     {
         $container->getDefinition('sonata.media.provider.image')
@@ -134,12 +138,20 @@ class SonataMediaExtension extends Extension
         ;
     }
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param array                                                   $config
+     */
     public function configureBuzz(ContainerBuilder $container, array $config)
     {
         $container->getDefinition('sonata.media.buzz.browser')
             ->replaceArgument(0, new Reference($config['buzz']['connector']));
     }
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param array                                                   $config
+     */
     public function configureParameterClass(ContainerBuilder $container, array $config)
     {
         $container->setParameter('sonata.media.admin.media.entity', $config['class']['media']);
@@ -153,8 +165,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param array                                                   $config
+     *
      * @return void
      */
     public function registerDoctrineMapping(array $config)
@@ -223,10 +235,11 @@ class SonataMediaExtension extends Extension
      * Inject CDN dependency to default provider
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param  $config
+     * @param array $config
+     *
      * @return void
      */
-    public function configureCdnAdapter(ContainerBuilder $container, $config)
+    public function configureCdnAdapter(ContainerBuilder $container, array $config)
     {
         // add the default configuration for the server cdn
         if ($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['server'])) {
@@ -262,10 +275,11 @@ class SonataMediaExtension extends Extension
      * Inject filesystem dependency to default provider
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param  $config
+     * @param array                                                   $config
+     *
      * @return void
      */
-    public function configureFilesystemAdapter(ContainerBuilder $container, $config)
+    public function configureFilesystemAdapter(ContainerBuilder $container, array $config)
     {
         // add the default configuration for the local filesystem
         if ($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['local'])) {
@@ -333,6 +347,10 @@ class SonataMediaExtension extends Extension
         }
     }
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param array                                                   $config
+     */
     public function configureExtra(ContainerBuilder $container, array $config)
     {
         if ($config['pixlr']['enabled']) {

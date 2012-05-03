@@ -15,6 +15,13 @@ class PathNode extends \Twig_Node
 {
     protected $extensionName;
 
+    /**
+     * @param array                 $extensionName
+     * @param \Twig_Node_Expression $media
+     * @param \Twig_Node_Expression $format
+     * @param integer               $lineno
+     * @param string                $tag
+     */
     public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $format, $lineno, $tag = null)
     {
         $this->extensionName = $extensionName;
@@ -23,9 +30,7 @@ class PathNode extends \Twig_Node
     }
 
     /**
-     * Compiles the node to PHP.
-     *
-     * @param \Twig_Compiler A Twig_Compiler instance
+     * {@inheritdoc}
      */
     public function compile(\Twig_Compiler $compiler)
     {

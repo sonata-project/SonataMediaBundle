@@ -33,13 +33,13 @@ class FileProvider extends BaseProvider
     protected $allowedMimeTypes;
 
     /**
-     * @param $name
-     * @param \Gaufrette\Filesystem $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
+     * @param string                                           $name
+     * @param \Gaufrette\Filesystem                            $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface             $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
-     * @param array $allowedExtensions
-     * @param array $allowedMimeTypes
+     * @param array                                            $allowedExtensions
+     * @param array                                            $allowedMimeTypes
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array())
     {
@@ -140,7 +140,9 @@ class FileProvider extends BaseProvider
 
     /**
      * @throws \RuntimeException
+     *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return
      */
     protected function fixBinaryContent(MediaInterface $media)
@@ -163,7 +165,9 @@ class FileProvider extends BaseProvider
 
     /**
      * @throws \RuntimeException
+     *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return void
      */
     protected function fixFilename(MediaInterface $media)
@@ -262,15 +266,13 @@ class FileProvider extends BaseProvider
      * Set the file contents for an image
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $contents path to contents, defaults to MediaInterface BinaryContent
+     * @param string                                  $contents path to contents, defaults to MediaInterface BinaryContent
+     *
      * @return void
      */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
-        $file = $this->getFilesystem()->get(
-            sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()),
-            true
-        );
+        $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
 
         if (!$contents) {
             $contents = $media->getBinaryContent()->getRealPath();
@@ -284,11 +286,12 @@ class FileProvider extends BaseProvider
      */
     public function postRemove(MediaInterface $media)
     {
-       // never delete icon image
+        // never delete icon image
     }
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return string
      */
     protected function generateReferenceName(MediaInterface $media)

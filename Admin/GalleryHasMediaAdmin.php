@@ -20,6 +20,7 @@ class GalleryHasMediaAdmin extends Admin
 {
     /**
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     *
      * @return void
      */
     protected function configureFormFields(FormMapper $formMapper)

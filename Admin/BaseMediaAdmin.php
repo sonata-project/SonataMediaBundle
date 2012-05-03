@@ -27,9 +27,9 @@ abstract class BaseMediaAdmin extends Admin
     protected $pool;
 
     /**
-     * @param $code
-     * @param $class
-     * @param $baseControllerName
+     * @param string                            $code
+     * @param string                            $class
+     * @param string                            $baseControllerName
      * @param \Sonata\MediaBundle\Provider\Pool $pool
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
@@ -40,8 +40,7 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureListFields(ListMapper $listMapper)
     {
@@ -59,8 +58,7 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
-     * @return
+     * {@inheritdoc}
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -70,7 +68,7 @@ abstract class BaseMediaAdmin extends Admin
             $media = $this->getNewInstance();
         }
 
-        if(!$media || !$media->getProviderName()) {
+        if (!$media || !$media->getProviderName()) {
             return;
         }
 
@@ -86,17 +84,15 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Route\RouteCollection $collection
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->add('view', $this->getRouterIdParameter().'/view');
+        $collection->add('view', $this->getRouterIdParameter() . '/view');
     }
 
     /**
-     * @param $media
-     * @return void
+     * {@inheritdoc}
      */
     public function prePersist($media)
     {
@@ -104,15 +100,18 @@ abstract class BaseMediaAdmin extends Admin
         $media->setContext($parameters['context']);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPersistentParameters()
     {
         if (!$this->hasRequest()) {
             return array();
         }
 
-        $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
+        $context   = $this->getRequest()->get('context', $this->pool->getDefaultContext());
         $providers = $this->pool->getProvidersByContext($context);
-        $provider = $this->getRequest()->get('provider');
+        $provider  = $this->getRequest()->get('provider');
 
         // if the context has only one provider, set it into the request
         // so the intermediate provider selection is skipped
@@ -127,6 +126,9 @@ abstract class BaseMediaAdmin extends Admin
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getNewInstance()
     {
         $media = parent::getNewInstance();
@@ -140,10 +142,7 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @param \Knp\Menu\ItemInterface $menu
-     * @param $action
-     * @param null|\Sonata\AdminBundle\Admin\Admin $childAdmin
-     * @return
+     * {@inheritdoc}
      */
     protected function configureSideMenu(MenuItemInterface $menu, $action, Admin $childAdmin = null)
     {

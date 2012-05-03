@@ -25,20 +25,21 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     protected $translator;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Component\Translation\TranslatorInterface        $translator
      * @param \Symfony\Component\Security\Core\SecurityContextInterface $security
-     * @param array $roles
+     * @param array                                                     $roles
      */
     public function __construct(TranslatorInterface $translator, SecurityContextInterface $security, array $roles = array())
     {
-        $this->roles    = $roles;
-        $this->security = $security;
+        $this->roles      = $roles;
+        $this->security   = $security;
         $this->translator = $translator;
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return bool
      */
     public function isGranted(MediaInterface $media, Request $request)

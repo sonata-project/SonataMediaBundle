@@ -28,7 +28,7 @@ class MediaType extends AbstractType
 
     /**
      * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param string $class
+     * @param string                            $class
      */
     public function __construct(Pool $pool, $class)
     {
@@ -43,7 +43,7 @@ class MediaType extends AbstractType
     {
         $builder->appendNormTransformer(new ProviderDataTransformer($this->pool, array(
             'provider' => $options['provider'],
-            'context' => $options['context'],
+            'context'  => $options['context'],
         )));
 
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);

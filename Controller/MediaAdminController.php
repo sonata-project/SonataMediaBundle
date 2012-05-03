@@ -21,7 +21,9 @@ class MediaAdminController extends Controller
 {
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException|\Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @param $id
+     *
+     * @param string $id
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      */
     public function viewAction($id)
@@ -73,14 +75,15 @@ class MediaAdminController extends Controller
     }
 
     /**
-     * @param $view
-     * @param array $parameters
+     * @param string                                          $view
+     * @param array                                           $parameters
      * @param null|\Symfony\Component\HttpFoundation\Response $response
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      */
     public function render($view, array $parameters = array(), Response $response = null)
     {
-        $parameters['media_pool'] = $this->container->get('sonata.media.pool');
+        $parameters['media_pool']            = $this->container->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
         return parent::render($view, $parameters);
