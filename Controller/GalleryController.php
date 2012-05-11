@@ -31,14 +31,15 @@ class GalleryController extends Controller
     }
 
     /**
-     * @param $id
+     * @param string $id
+     *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function viewAction($id)
     {
         $gallery = $this->get('sonata.media.manager.gallery')->findOneBy(array(
-            'id'      =>  $id,
+            'id'      => $id,
             'enabled' => true
         ));
 

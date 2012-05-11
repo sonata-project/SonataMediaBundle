@@ -2,10 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="messages.en.xliff">
         <body>
-            <trans-unit id="sonata_media">
-                <source>sonata_media</source>
-                <target>Media</target>
-            </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
                 <target>Bearbeiten</target>
@@ -234,7 +230,7 @@
                 <source>filter.label_provider_reference</source>
                 <target>Medienanbieter Referenz</target>
             </trans-unit>
-            
+
             <trans-unit id="filter.label_enabled">
                 <source>filter.label_enabled</source>
                 <target>Aktiviert</target>
@@ -252,7 +248,11 @@
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
                 <target>Datei</target>
-            </trans-unit>            
+            </trans-unit>
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Media Library</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

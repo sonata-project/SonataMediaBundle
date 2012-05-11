@@ -38,10 +38,10 @@ class GalleryBlockService extends BaseBlockService
     protected $galleryManager;
 
     /**
-     * @param $name
-     * @param \Symfony\Component\Templating\EngineInterface $templating
+     * @param string                                                    $name
+     * @param \Symfony\Component\Templating\EngineInterface             $templating
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Sonata\MediaBundle\Model\GalleryManagerInterface $galleryManager
+     * @param \Sonata\MediaBundle\Model\GalleryManagerInterface         $galleryManager
      */
     public function __construct($name, EngineInterface $templating, ContainerInterface $container, GalleryManagerInterface $galleryManager)
     {
@@ -227,6 +227,7 @@ class GalleryBlockService extends BaseBlockService
 
     /**
      * @param \Sonata\MediaBundle\Model\GalleryInterface $gallery
+     *
      * @return array
      */
     private function buildElements(GalleryInterface $gallery)
@@ -255,14 +256,15 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\BlockBundle\Model\MediaInterface $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return false|string
      */
     private function getMediaType(MediaInterface $media)
     {
         if ($media->getContentType() == 'video/x-flv') {
             return 'video';
-        } elseif(substr($media->getContentType(), 0, 5) == 'image') {
+        } elseif (substr($media->getContentType(), 0, 5) == 'image') {
             return 'image';
         }
 

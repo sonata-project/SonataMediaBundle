@@ -29,7 +29,7 @@ class MediaHelper extends Helper
     protected $templating = null;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $mediaService
+     * @param \Sonata\MediaBundle\Provider\Pool             $mediaService
      * @param \Symfony\Component\Templating\EngineInterface $templating
      */
     public function __construct(Pool $pool, EngineInterface $templating)
@@ -39,9 +39,7 @@ class MediaHelper extends Helper
     }
 
     /**
-     * Returns the canonical name of this helper.
-     *
-     * @return string The canonical name
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -51,9 +49,10 @@ class MediaHelper extends Helper
     /**
      * Returns the provider view for the provided media
      *
-     * @param Media $media
-     * @param string $format
-     * @param array $options
+     * @param MediaInterface  $media
+     * @param string          $format
+     * @param array           $options
+     *
      * @return string
      */
     public function media($media, $format, $options = array())
@@ -68,18 +67,16 @@ class MediaHelper extends Helper
 
         $options = $provider->getHelperProperties($media, $format, $options);
 
-        return $this->templating->render(
-            $provider->getTemplate('helper_view'),
-            array(
-                 'media'    => $media,
-                 'format'   => $format,
-                 'options'  => $options,
-            )
-        );
+        return $this->templating->render($provider->getTemplate('helper_view'), array(
+             'media'    => $media,
+             'format'   => $format,
+             'options'  => $options,
+        ));
     }
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
      */
     private function getProvider(MediaInterface $media)
@@ -90,9 +87,10 @@ class MediaHelper extends Helper
     /**
      * Returns the thumbnail for the provided media
      *
-     * @param Media $media
+     * @param MediaInterface $media
      * @param string $format
      * @param array $options
+     *
      * @return string
      */
     public function thumbnail($media, $format, $options = array())
@@ -114,18 +112,16 @@ class MediaHelper extends Helper
 
          $options['src'] = $provider->generatePublicUrl($media, $format);
 
-         return $this->getTemplating()->render(
-            $provider->getTemplate('helper_thumbnail'),
-            array(
-                 'media'    => $media,
-                 'options'  => $options,
-            )
-         );
+         return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), array(
+             'media'    => $media,
+             'options'  => $options,
+         ));
     }
 
     /**
-     * @param Media $media
-     * @param string $format
+     * @param MediaInterface $media
+     * @param string         $format
+     *
      * @return string
      */
     public function path($media, $format)

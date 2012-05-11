@@ -23,17 +23,20 @@ class MediaManager extends AbstractMediaManager
     protected $class;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param \Sonata\MediaBundle\Provider\Pool     $pool
      * @param \Doctrine\ODM\MongoDB\DocumentManager $dm
-     * @param $class
+     * @param string                                $class
      */
     public function __construct(Pool $pool, DocumentManager $dm, $class)
     {
-        $this->dm    = $dm;
+        $this->dm = $dm;
 
         parent::__construct($pool, $class);
     }
 
+    /**
+     * @return mixed
+     */
     protected function getRepository()
     {
         if (!$this->repository) {
@@ -43,14 +46,8 @@ class MediaManager extends AbstractMediaManager
         return $this->repository;
     }
 
-
     /**
-     * Updates a media
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $context
-     * @param string $providerName
-     * @return void
+     * {@inheritdoc}
      */
     public function save(MediaInterface $media, $context = null, $providerName = null)
     {
@@ -68,10 +65,7 @@ class MediaManager extends AbstractMediaManager
     }
 
     /**
-     * Deletes a media
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function delete(MediaInterface $media)
     {

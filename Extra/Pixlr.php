@@ -44,12 +44,12 @@ class Pixlr
     protected $allowEreg;
 
     /**
-     * @param $referrer
-     * @param $secret
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param \Sonata\MediaBundle\Model\MediaManagerInterface $mediaManager
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Symfony\Component\Templating\EngineInterface $templating
+     * @param string                                                    $referrer
+     * @param string                                                    $secret
+     * @param \Sonata\MediaBundle\Provider\Pool                         $pool
+     * @param \Sonata\MediaBundle\Model\MediaManagerInterface           $mediaManager
+     * @param \Symfony\Component\Routing\RouterInterface                $router
+     * @param \Symfony\Component\Templating\EngineInterface             $templating
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, ContainerInterface $container)
@@ -68,16 +68,19 @@ class Pixlr
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return string
      */
     private function generateHash(MediaInterface $media)
     {
-        return sha1($media->getId().$media->getCreatedAt()->format('u').$this->secret);
+        return sha1($media->getId() . $media->getCreatedAt()->format('u') . $this->secret);
     }
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @param $id
+     *
+     * @param string $id
+     *
      * @return \Sonata\MediaBundle\Model\MediaInterface
      */
     private function getMedia($id)
@@ -93,8 +96,10 @@ class Pixlr
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @param $hash
+     *
+     * @param string                                   $hash
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return void
      */
     private function checkMedia($hash, MediaInterface $media)
@@ -110,6 +115,7 @@ class Pixlr
 
     /**
      * @param array $parameters
+     *
      * @return string
      */
     private function buildQuery(array $parameters = array())
@@ -124,8 +130,10 @@ class Pixlr
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @param $id
-     * @param $mode
+     *
+     * @param string $id
+     * @param string $mode
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction($id, $mode)
@@ -157,8 +165,9 @@ class Pixlr
     }
 
     /**
-     * @param $hash
-     * @param $id
+     * @param string $hash
+     * @param string $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function exitAction($hash, $id)
@@ -172,8 +181,9 @@ class Pixlr
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param $hash
-     * @param $id
+     * @param string                                    $hash
+     * @param string                                    $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function targetAction(Request $request, $hash, $id)
@@ -204,6 +214,7 @@ class Pixlr
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return bool
      */
     public function isEditable(MediaInterface $media)
@@ -217,7 +228,9 @@ class Pixlr
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @param $id
+     *
+     * @param string $id
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function openEditorAction($id)

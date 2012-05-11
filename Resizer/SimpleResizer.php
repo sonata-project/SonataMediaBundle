@@ -26,7 +26,7 @@ class SimpleResizer implements ResizerInterface
 
     /**
      * @param \Imagine\Image\ImagineInterface $adapter
-     * @param string $mode
+     * @param string                          $mode
      */
     public function __construct(ImagineInterface $adapter, $mode)
     {
@@ -68,8 +68,10 @@ class SimpleResizer implements ResizerInterface
 
     /**
      * @throws \Imagine\Exception\InvalidArgumentException
+     *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param array $settings
+     * @param array                                    $settings
+     *
      * @return \Imagine\Image\Box
      */
     private function computeBox(MediaInterface $media, array $settings)

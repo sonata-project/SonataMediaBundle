@@ -22,7 +22,7 @@ interface CDNInterface
     /**
      * Return the base path
      *
-     * @param string $relativePath
+     * @param string  $relativePath
      * @param boolean $isFlushable
      *
      * @return string

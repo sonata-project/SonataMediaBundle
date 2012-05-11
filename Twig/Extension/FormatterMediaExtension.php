@@ -29,7 +29,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getAllowedTags()
     {
@@ -41,7 +41,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getAllowedMethods()
     {
@@ -53,7 +53,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getTokenParsers()
     {
@@ -65,7 +65,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @return \Twig_ExtensionInterface
+     * {@inheritdoc}
      */
     public function getTwigExtension()
     {
@@ -73,9 +73,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -83,9 +81,10 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @param null $media
-     * @param $format
-     * @param array $options
+     * @param integer  $media
+     * @param string   $format
+     * @param array    $options
+     *
      * @return string
      */
     public function media($media = null, $format, $options = array())
@@ -94,9 +93,10 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @param null $media
-     * @param $format
-     * @param array $options
+     * @param integer $media
+     * @param string  $format
+     * @param array   $options
+     *
      * @return string
      */
     public function thumbnail($media = null, $format, $options = array())
@@ -105,8 +105,9 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @param null $media
-     * @param $format
+     * @param integer $media
+     * @param string $format
+     *
      * @return string
      */
     public function path($media = null, $format)

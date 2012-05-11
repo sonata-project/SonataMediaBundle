@@ -43,10 +43,10 @@ class PantherPortal implements CDNInterface
     protected $wsdl;
 
     /**
-     * @param $path
-     * @param $username
-     * @param $password
-     * @param $siteId
+     * @param string $path
+     * @param string $username
+     * @param string $password
+     * @param string $siteId
      * @param string $wsdl
      */
     public function __construct($path, $username, $password, $siteId, $wsdl = "https://pantherportal.cdnetworks.com/wsdl/flush.wsdl")
@@ -61,7 +61,7 @@ class PantherPortal implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function getPath($relativePath, $isFlushable = false)
+    public function getPath($relativePath, $isFlushable)
     {
         return sprintf('%s/%s', $this->path, $relativePath);
     }
@@ -87,10 +87,10 @@ class PantherPortal implements CDNInterface
      */
     public function flushPaths(array $paths)
     {
-        $result = $this->getClient()->flush($this->username, $this->password, "paths", $this->siteId, implode("\n",  $paths), true, false);
+        $result = $this->getClient()->flush($this->username, $this->password, "paths", $this->siteId, implode("\n", $paths), true, false);
 
         if ($result != "Flush successfully submitted.") {
-            throw new \RuntimeException('Unable to flush : '. $result);
+            throw new \RuntimeException('Unable to flush : ' . $result);
         }
     }
 
@@ -112,6 +112,7 @@ class PantherPortal implements CDNInterface
      * For testing only
      *
      * @param $client
+     *
      * @return void
      */
     public function setClient($client)
