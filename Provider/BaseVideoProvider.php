@@ -26,12 +26,12 @@ abstract class BaseVideoProvider extends BaseProvider
     protected $browser;
 
     /**
-     * @param $name
-     * @param \Gaufrette\Filesystem $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface $cdn
+     * @param string                                           $name
+     * @param \Gaufrette\Filesystem                            $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface             $cdn
      * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
-     * @param \Buzz\Browser $browser
+     * @param \Buzz\Browser                                    $browser
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser)
     {
@@ -149,15 +149,17 @@ abstract class BaseVideoProvider extends BaseProvider
 
     /**
      * @throws \RuntimeException
+     *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $url
+     * @param string                                   $url
+     *
      * @return mixed
      */
     protected function getMetadata(MediaInterface $media, $url)
     {
         try {
             $response = $this->browser->get($url);
-        } catch(\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             throw new \RuntimeException('Unable to retrieve the video information for :' . $url, null, $e);
         }
 
@@ -172,8 +174,9 @@ abstract class BaseVideoProvider extends BaseProvider
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @param array $options
+     * @param string                                   $format
+     * @param array                                    $options
+     *
      * @return \Imagine\Image\Box
      */
     protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
@@ -184,7 +187,7 @@ abstract class BaseVideoProvider extends BaseProvider
 
         if (isset($options['width']) || isset($options['height'])) {
             $settings = array(
-                'width' => isset($options['width']) ? $options['width'] : null,
+                'width'  => isset($options['width']) ? $options['width'] : null,
                 'height' => isset($options['height']) ? $options['height'] : null,
             );
 

@@ -48,6 +48,9 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addContextsSection(ArrayNodeDefinition $node)
     {
         $node
@@ -88,6 +91,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addCdnSection(ArrayNodeDefinition $node)
     {
         $node
@@ -122,6 +128,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addFilesystemSection(ArrayNodeDefinition $node)
     {
         $node
@@ -181,6 +190,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addProvidersSection(ArrayNodeDefinition $node)
     {
         $node
@@ -288,6 +300,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addExtraSection(ArrayNodeDefinition $node)
     {
         $node
@@ -304,6 +319,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addModelSection(ArrayNodeDefinition $node)
     {
         $node
@@ -320,6 +338,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addBuzzSection(ArrayNodeDefinition $node)
     {
         $node
@@ -334,6 +355,9 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
     private function addResizerSection(ArrayNodeDefinition $node)
     {
         $node

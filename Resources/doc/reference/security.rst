@@ -86,7 +86,7 @@ Let's create the following strategy : a media can be downloaded only once per se
         /**
          * @param \Symfony\Component\Translation\TranslatorInterface $translator
          * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-         * @param $times
+         * @param int $times
          */
         public function __construct(TranslatorInterface $translator, ContainerInterface $container, $times)
         {

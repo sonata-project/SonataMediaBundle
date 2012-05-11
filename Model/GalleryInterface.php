@@ -70,29 +70,26 @@ interface GalleryInterface
 
     /**
      * @param string $defaultFormat
-     * @return void
      */
     function setDefaultFormat($defaultFormat);
 
     /**
-     * @return void
+     * @return string
      */
     function getDefaultFormat();
 
     /**
      * @param array $galleryHasMedias
-     * @return void
      */
     function setGalleryHasMedias($galleryHasMedias);
 
     /**
-     * @return void
+     * @return array
      */
     function getGalleryHasMedias();
 
     /**
      * @param GalleryHasMediaInterface $galleryHasMedia
-     * @return void
      */
     function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
 

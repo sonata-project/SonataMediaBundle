@@ -47,7 +47,12 @@ class AddProviderCompilerPass implements CompilerPassInterface
         }
     }
 
-    public function fixSettings($container)
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     *
+     * @return array
+     */
+    public function fixSettings(ContainerBuilder $container)
     {
         $pool = $container->getDefinition('sonata.media.pool');
 
@@ -71,8 +76,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param ContainerBuilder $container
-     * @return void
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
     public function attachProviders(ContainerBuilder $container)
     {
@@ -83,9 +87,8 @@ class AddProviderCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param array $settings
-     * @return void
      */
     public function attachArguments(ContainerBuilder $container, array $settings)
     {
@@ -112,9 +115,8 @@ class AddProviderCompilerPass implements CompilerPassInterface
     /**
      * Define the default settings to the config array
      *
-     * @param ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param array $settings
-     * @return void
      */
     public function applyFormats(ContainerBuilder $container, array $settings)
     {

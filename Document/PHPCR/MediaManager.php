@@ -24,9 +24,9 @@ class MediaManager extends AbstractMediaManager
     protected $class;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param \Sonata\MediaBundle\Provider\Pool     $pool
      * @param \Doctrine\ODM\MongoDB\DocumentManager $dm
-     * @param $class
+     * @param string                                $class
      */
     public function __construct(Pool $pool, DocumentManager $dm, $class)
     {

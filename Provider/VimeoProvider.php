@@ -28,34 +28,34 @@ class VimeoProvider extends BaseVideoProvider
             'fp_version'      => 10,
 
             // (optional) Enable fullscreen capability. Defaults to true.
-            'fullscreen' => true,
+            'fullscreen'      => true,
 
             // (optional) Show the byline on the video. Defaults to true.
-            'title' => true,
+            'title'           => true,
 
             // (optional) Show the title on the video. Defaults to true.
-            'byline' => 0,
+            'byline'          => 0,
 
             // (optional) Show the user's portrait on the video. Defaults to true.
-            'portrait' => true,
+            'portrait'        => true,
 
             // (optional) Specify the color of the video controls.
-            'color' => null,
+            'color'           => null,
 
             // (optional) Set to 1 to disable HD.
-            'hd_off' => 0,
+            'hd_off'          => 0,
 
             // Set to 1 to enable the Javascript API.
-            'js_api' => null,
+            'js_api'          => null,
 
             // (optional) JS function called when the player loads. Defaults to vimeo_player_loaded.
-            'js_onLoad' => 0,
+            'js_onLoad'       => 0,
 
             // Unique id that is passed into all player events as the ending parameter.
-            'js_swf_id' => uniqid('vimeo_player_'),
+            'js_swf_id'       => uniqid('vimeo_player_'),
         );
 
-        $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
+        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
@@ -112,7 +112,7 @@ class VimeoProvider extends BaseVideoProvider
 
         try {
             $metadata = $this->getMetadata($media, $url);
-        } catch(\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $media->setEnabled(false);
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 

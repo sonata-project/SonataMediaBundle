@@ -24,16 +24,19 @@ class MediaManager extends AbstractMediaManager
 
     /**
      * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param \Doctrine\ORM\EntityManager $em
-     * @param $class
+     * @param \Doctrine\ORM\EntityManager       $em
+     * @param string                            $class
      */
     public function __construct(Pool $pool, EntityManager $em, $class)
     {
-        $this->em    = $em;
+        $this->em = $em;
 
         parent::__construct($pool, $class);
     }
 
+    /**
+     * @return mixed
+     */
     protected function getRepository()
     {
         if (!$this->repository) {
@@ -44,12 +47,7 @@ class MediaManager extends AbstractMediaManager
     }
 
     /**
-     * Updates a media
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string $context
-     * @param string $providerName
-     * @return void
+     * {@inheritdoc}
      */
     public function save(MediaInterface $media, $context = null, $providerName = null)
     {
@@ -67,10 +65,7 @@ class MediaManager extends AbstractMediaManager
     }
 
     /**
-     * Deletes a media
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function delete(MediaInterface $media)
     {

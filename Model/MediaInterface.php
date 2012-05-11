@@ -31,14 +31,14 @@ interface MediaInterface
     function getBinaryContent();
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string $name
+     * @param null   $default
      */
     function getMetadataValue($name, $default = null);
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param mixed  $value
      */
     function setMetadataValue($name, $value);
 
@@ -71,14 +71,14 @@ interface MediaInterface
     /**
      * Set description
      *
-     * @param text $description
+     * @param string $description
      */
     function setDescription($description);
 
     /**
      * Get description
      *
-     * @return text $description
+     * @return string $description
      */
     function getDescription();
 
@@ -183,14 +183,14 @@ interface MediaInterface
     /**
      * Set length
      *
-     * @param decimal $length
+     * @param float $length
      */
     function setLength($length);
 
     /**
      * Get length
      *
-     * @return decimal $length
+     * @return float $length
      */
     function getLength();
 
@@ -253,49 +253,49 @@ interface MediaInterface
     /**
      * Set cdn_flush_at
      *
-     * @param datetime $cdnFlushAt
+     * @param \Datetime $cdnFlushAt
      */
     function setCdnFlushAt(\Datetime $cdnFlushAt = null);
 
     /**
      * Get cdn_flush_at
      *
-     * @return datetime $cdnFlushAt
+     * @return \Datetime $cdnFlushAt
      */
     function getCdnFlushAt();
 
     /**
      * Set updated_at
      *
-     * @param datetime $updatedAt
+     * @param \Datetime $updatedAt
      */
     function setUpdatedAt(\Datetime $updatedAt = null);
 
     /**
      * Get updated_at
      *
-     * @return datetime $updatedAt
+     * @return \Datetime $updatedAt
      */
     function getUpdatedAt();
 
     /**
      * Set created_at
      *
-     * @param datetime $createdAt
+     * @param \Datetime $createdAt
      */
     function setCreatedAt(\Datetime $createdAt = null);
 
     /**
      * Get created_at
      *
-     * @return datetime $createdAt
+     * @return \Datetime $createdAt
      */
     function getCreatedAt();
 
     /**
      * Set content_type
      *
-     * @param varchar $contentType
+     * @param string $contentType
      */
     function setContentType($contentType);
 
@@ -307,7 +307,7 @@ interface MediaInterface
     /**
      * Get content_type
      *
-     * @return varchar $contentType
+     * @return string $contentType
      */
     function getContentType();
 
@@ -328,7 +328,7 @@ interface MediaInterface
     /**
      * Set cdn_status
      *
-     * @param intger $cdnStatus
+     * @param integer $cdnStatus
      */
     function setCdnStatus($cdnStatus);
 
@@ -345,11 +345,25 @@ interface MediaInterface
      */
     function getBox();
 
+    /**
+     * @return mixed
+     */
     function __toString();
 
+    /**
+     * @param array $galleryHasMedias
+     *
+     * @return void
+     */
     function setGalleryHasMedias($galleryHasMedias);
 
+    /**
+     * @return array
+     */
     function getGalleryHasMedias();
 
+    /**
+     * @return string
+     */
     function getPreviousProviderReference();
 }

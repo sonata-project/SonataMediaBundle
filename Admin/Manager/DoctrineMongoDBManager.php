@@ -13,6 +13,10 @@ class DoctrineMongoDBManager extends ModelManager
 {
     protected $manager;
 
+    /**
+     * @param mixed $entityManager
+     * @param mixed $manager
+     */
     public function __construct($entityManager, $manager)
     {
         parent::__construct($entityManager);
@@ -20,27 +24,32 @@ class DoctrineMongoDBManager extends ModelManager
         $this->manager = $manager;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function create($object)
     {
         $this->manager->save($object);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function update($object)
     {
         $this->manager->save($object);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function delete($object)
     {
         $this->manager->delete($object);
     }
 
     /**
-     * Deletes a set of $class identified by the provided $idx array
-     *
-     * @param $class
-     * @param \Sonata\AdminBundle\Datagrid\ProxyQueryInterface $queryProxy
-     * @return void
+     * {@inheritdoc}
      */
     public function batchDelete($class, ProxyQueryInterface $queryProxy)
     {

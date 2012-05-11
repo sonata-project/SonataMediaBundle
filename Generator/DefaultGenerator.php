@@ -19,6 +19,10 @@ class DefaultGenerator implements GeneratorInterface
 
     protected $secondLevel;
 
+    /**
+     * @param int $firstLevel
+     * @param int $secondLevel
+     */
     public function __construct($firstLevel = 100000, $secondLevel = 1000)
     {
         $this->firstLevel = $firstLevel;
@@ -26,9 +30,7 @@ class DefaultGenerator implements GeneratorInterface
     }
 
     /**
-     * @abstract
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePath(MediaInterface $media)
     {

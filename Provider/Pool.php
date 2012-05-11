@@ -30,7 +30,7 @@ class Pool
     protected $defaultContext;
 
     /**
-     * @param $context
+     * @param string $context
      */
     public function __construct($context)
     {
@@ -39,7 +39,9 @@ class Pool
 
     /**
      * @throws \RuntimeException
-     * @param  $name
+     *
+     * @param string $name
+     *
      * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
      */
     public function getProvider($name)
@@ -52,8 +54,9 @@ class Pool
     }
 
     /**
-     * @param $name
+     * @param string                 $name
      * @param MediaProviderInterface $instance
+     *
      * @return void
      */
     public function addProvider($name, MediaProviderInterface $instance)
@@ -62,7 +65,7 @@ class Pool
     }
 
     /**
-     * @param $name
+     * @param string                                                 $name
      * @param \Sonata\MediaBundle\Security\DownloadStrategyInterface $security
      */
     public function addDownloadSecurity($name, DownloadStrategyInterface $security)
@@ -72,6 +75,7 @@ class Pool
 
     /**
      * @param array $providers
+     *
      * @return void
      */
     public function setProviders($providers)
@@ -89,9 +93,10 @@ class Pool
 
     /**
      * @param string $name
-     * @param array $providers
-     * @param array $formats
-     * @param array $download
+     * @param array  $providers
+     * @param array  $formats
+     * @param array  $download
+     *
      * @return void
      */
     public function addContext($name, array $providers = array(), array $formats = array(), array $download = array())
@@ -111,6 +116,7 @@ class Pool
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function hasContext($name)
@@ -120,6 +126,7 @@ class Pool
 
     /**
      * @param string $name
+     *
      * @return array|null
      */
     public function getContext($name)
@@ -141,9 +148,9 @@ class Pool
         return $this->contexts;
     }
 
-
     /**
-     * @param $name
+     * @param string $name
+     *
      * @return array
      */
     public function getProviderNamesByContext($name)
@@ -158,7 +165,8 @@ class Pool
     }
 
     /**
-     * @param $name
+     * @param string $name
+     *
      * @return array
      */
     public function getFormatNamesByContext($name)
@@ -174,9 +182,11 @@ class Pool
 
     /**
      * @param string $name
+     *
      * @return array
      */
-    public function getProvidersByContext($name) {
+    public function getProvidersByContext($name)
+    {
         $providers = array();
 
         if (!$this->hasContext($name)) {
@@ -205,6 +215,7 @@ class Pool
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return \Sonata\MediaBundle\Security\DownloadStrategyInterface
      */
     public function getDownloadSecurity(MediaInterface $media)
@@ -214,7 +225,7 @@ class Pool
         $id = $context['download']['strategy'];
 
         if (!isset($this->downloadSecurities[$id])) {
-            throw new \RuntimeException('Unable to retrieve the download security : '.$id);
+            throw new \RuntimeException('Unable to retrieve the download security : ' . $id);
         }
 
         return $this->downloadSecurities[$id];
@@ -222,6 +233,7 @@ class Pool
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return string
      */
     public function getDownloadMode(MediaInterface $media)
@@ -241,7 +253,8 @@ class Pool
 
     /**
      * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface   $media
+     *
      * @return void
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
@@ -251,4 +264,3 @@ class Pool
         $provider->validate($errorElement, $media);
     }
 }
-

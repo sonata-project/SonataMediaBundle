@@ -27,7 +27,7 @@ abstract class MediaManager implements MediaManagerInterface
 
     /**
      * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param $class
+     * @param string                            $class
      */
     public function __construct(Pool $pool, $class)
     {
@@ -61,6 +61,7 @@ abstract class MediaManager implements MediaManagerInterface
      * Finds one media by the given criteria
      *
      * @param array $criteria
+     *
      * @return Media
      */
     public function findOneBy(array $criteria)
@@ -72,6 +73,7 @@ abstract class MediaManager implements MediaManagerInterface
      * Finds one media by the given criteria
      *
      * @param array $criteria
+     *
      * @return Media
      */
     public function findBy(array $criteria)

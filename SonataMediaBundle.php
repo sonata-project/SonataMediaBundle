@@ -16,11 +16,17 @@ use Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass;
 
 class SonataMediaBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new AddProviderCompilerPass());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function boot()
     {
         // this is required by the AWS SDK (see: https://github.com/knplabs/Gaufrette)
