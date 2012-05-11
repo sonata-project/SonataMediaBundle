@@ -16,11 +16,16 @@ file that was distributed with this source code.
     <ul class="pills">
         <li><a><strong>{{ "label.select_context"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
         {% for name, context in media_pool.contexts %}
-            {% set provider = context.providers[0] %}
-            {% if name == persistent_parameters.context %}
-                <li class="active"><a href="{{ admin.generateUrl('list', {'context' : name, 'provider' : provider }) }}">{{ name }}</a></li>
+            {% if context.providers|length == 0 %}
+                {% set urlParams = {'context' : name } %}
             {% else %}
-                <li><a href="{{ admin.generateUrl('list', {'context' : name, 'provider' : provider }) }}">{{ name }}</a></li>
+                {% set urlParams = {'context' : name, 'provider' : context.providers[0] } %}
+            {% endif %}
+        
+            {% if name == persistent_parameters.context %}
+                <li class="active"><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name }}</a></li>
+            {% else %}
+                <li><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name }}</a></li>
             {% endif %}
         {% endfor %}
 
