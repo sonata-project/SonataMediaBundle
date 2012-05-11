@@ -27,6 +27,9 @@ class SyncThumbsCommand extends BaseCommand
     protected $quiet = false;
     protected $output;
 
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName('sonata:media:sync-thumbnails')
@@ -38,6 +41,9 @@ class SyncThumbsCommand extends BaseCommand
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $provider = $input->getArgument('providerName');
@@ -69,6 +75,7 @@ class SyncThumbsCommand extends BaseCommand
      * Write a message to the output
      *
      * @param string $message
+     *
      * @return void
      */
     protected function log($message)

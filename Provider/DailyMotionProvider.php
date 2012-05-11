@@ -26,19 +26,19 @@ class DailyMotionProvider extends BaseVideoProvider
         $defaults = array(
             // Values: 0 or 1. Default is 0. Determines if the player loads related videos when
             // the current video begins playback.
-            'related'   => 0,
+            'related'           => 0,
 
             // Values: 0 or 1. Default is 1. Determines if the player allows explicit content to
             // be played. This parameter may be added to embed code by platforms which do not
             // want explicit content to be posted by their users.
-            'explicit'  => 0,
+            'explicit'          => 0,
 
             // Values: 0 or 1. Default is 0. Determines if the video will begin playing
             // automatically when the player loads.
-            'autoPlay'      => 0,
+            'autoPlay'          => 0,
 
             // Values: 0 or 1. Default is 0. Determines if the video will begin muted.
-            'autoMute' => 0,
+            'autoMute'          => 0,
 
             // Values: 0 or 1. Default is 0. Determines if the video will unmuted on mouse over.
             // Of course it works only if the player is on automute=1.
@@ -46,36 +46,36 @@ class DailyMotionProvider extends BaseVideoProvider
 
             // Values: a number of seconds. Default is 0. Determines if the video will begin
             // playing the video at a given time.
-            'start' => 0,
+            'start'             => 0,
 
             // Values: 0 or 1. Default is 0. Enable the Javascript API by setting this parameter
             // to 1. For more information and instructions on using the Javascript API, see the
             // JavaScript API documentation.
-            'enableApi' => 0,
+            'enableApi'         => 0,
 
             // Values: 0 or 1. Default is 0. Determines if the player should display controls
             // or not during video playback.
-            'chromeless' => 0,
+            'chromeless'        => 0,
 
             // Values: 0 or 1. Default is 0. Determines if the video should be expended to fit
             // the whole player's size.
-            'expendVideo' => 0,
-            'color2' => null,
+            'expendVideo'       => 0,
+            'color2'            => null,
 
             // Player color changes may be set using color codes. A color is described by its
             // hexadecimal value (eg: FF0000 for red).
-            'foreground' => null,
-            'background' => null,
-            'highlight' => null,
+            'foreground'        => null,
+            'background'        => null,
+            'highlight'         => null,
         );
 
-        $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
+        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $params = array(
             'player_parameters' => http_build_query($player_parameters),
-            'allowFullScreen'   => isset($options['allowFullScreen'])   ? $options['allowFullScreen']     : 'true',
+            'allowFullScreen'   => isset($options['allowFullScreen']) ? $options['allowFullScreen'] : 'true',
             'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
             'width'             => $box->getWidth(),
             'height'            => $box->getHeight(),
@@ -125,7 +125,7 @@ class DailyMotionProvider extends BaseVideoProvider
 
         try {
             $metadata = $this->getMetadata($media, $url);
-        } catch(\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $media->setEnabled(false);
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 

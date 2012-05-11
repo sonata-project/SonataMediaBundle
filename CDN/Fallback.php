@@ -30,7 +30,7 @@ class Fallback implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function getPath($relativePath, $isFlushable = false)
+    public function getPath($relativePath, $isFlushable)
     {
         if ($isFlushable) {
             return $this->fallback->getPath($relativePath, $isFlushable);

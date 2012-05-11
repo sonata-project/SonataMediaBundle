@@ -17,7 +17,9 @@ interface GeneratorInterface
 
     /**
      * @abstract
+     *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
      * @return string
      */
     function generatePath(MediaInterface $media);

@@ -2,10 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="sonata_media">
-                <source>sonata_media</source>
-                <target>Multimedia</target>
-            </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
                 <target>Editar</target>
@@ -197,6 +193,10 @@
             <trans-unit id="link.test_protected_url">
                 <source>link.test_protected_url</source>
                 <target>Link de previsualización</target>
+            </trans-unit>
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Multimedia</target>
             </trans-unit>
         </body>
     </file>

@@ -21,6 +21,9 @@ class AddMediaCommand extends BaseCommand
     protected $quiet = false;
     protected $output;
 
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName('sonata:media:add')
@@ -37,6 +40,9 @@ class AddMediaCommand extends BaseCommand
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $provider = $input->getArgument('providerName');

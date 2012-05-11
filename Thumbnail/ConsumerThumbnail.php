@@ -24,8 +24,8 @@ class ConsumerThumbnail implements ThumbnailInterface
     protected $backend;
 
     /**
-     * @param string $id
-     * @param ThumbnailInterface $thumbnail
+     * @param string                                              $id
+     * @param ThumbnailInterface                                  $thumbnail
      * @param \Sonata\NotificationBundle\Backend\BackendInterface $backend
      */
     public function __construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend)
@@ -57,8 +57,8 @@ class ConsumerThumbnail implements ThumbnailInterface
     public function generate(MediaProviderInterface $provider, MediaInterface $media)
     {
         $this->backend->createAndPublish('sonata.media.create_thumbnail', array(
-            'thumbnailId' => $this->id,
-            'mediaId'     => $media->getId(),
+            'thumbnailId'       => $this->id,
+            'mediaId'           => $media->getId(),
 
             // force this value as the message is sent inside a transaction,
             // so we have a race condition

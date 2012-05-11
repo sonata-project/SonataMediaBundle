@@ -29,8 +29,8 @@ class CreateThumbnailConsumer implements ConsumerInterface
     protected $container;
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaManagerInterface $mediaManager
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param \Sonata\MediaBundle\Model\MediaManagerInterface           $mediaManager
+     * @param \Sonata\MediaBundle\Provider\Pool                         $pool
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(MediaManagerInterface $mediaManager, Pool $pool, ContainerInterface $container)
@@ -42,6 +42,7 @@ class CreateThumbnailConsumer implements ConsumerInterface
 
     /**
      * @param \Sonata\NotificationBundle\Consumer\ConsumerEvent $event
+     *
      * @return void
      */
     public function process(ConsumerEvent $event)
@@ -59,13 +60,14 @@ class CreateThumbnailConsumer implements ConsumerInterface
 
         try {
             $this->getThumbnail($event)->generate($this->pool->getProvider($media->getProviderName()), $media);
-        } catch(\LogicException $e) {
+        } catch (\LogicException $e) {
             throw new HandlingException(sprintf('Error while generating exception for media.id: %s', $event->getMessage()->getValue('mediaId')), 0, $e);
         }
     }
 
     /**
      * @param \Sonata\NotificationBundle\Consumer\ConsumerEvent $event
+     *
      * @return \Sonata\MediaBundle\Thumbnail\ThumbnailInterface
      */
     protected function getThumbnail(ConsumerEvent $event)

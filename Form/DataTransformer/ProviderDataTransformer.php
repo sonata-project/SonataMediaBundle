@@ -23,6 +23,7 @@ class ProviderDataTransformer implements DataTransformerInterface
 
     /**
      * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param array $options
      */
     public function __construct(Pool $pool, array $options = array())
     {
