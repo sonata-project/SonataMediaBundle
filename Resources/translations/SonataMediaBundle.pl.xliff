@@ -26,6 +26,10 @@
                 <source>breadcrumb.link_media_view</source>
                 <target>Widok</target>
             </trans-unit>
+            <trans-unit id="breadcrumb.link_media_delete">
+                <source>breadcrumb.link_media_delete</source>
+                <target>Usuń</target>
+            </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_create">
                 <source>breadcrumb.link_gallery_create</source>
                 <target>Utwórz</target>
@@ -37,6 +41,10 @@
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Edycja</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_delete">
+                <source>breadcrumb.link_gallery_delete</source>
+                <target>Usuń</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
@@ -245,6 +253,22 @@
                 <source>form.label_gallery_has_medias</source>
                 <target>Media</target>
             </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Spłucz CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Opis</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Prawa autorskie</target>
+            </trans-unit> 
             <trans-unit id="list.label_enabled">
                 <source>list.label_enabled</source>
                 <target>Włączony</target>
