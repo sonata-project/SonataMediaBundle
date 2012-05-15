@@ -62,6 +62,10 @@ class SimpleResizer implements ResizerInterface
         if ($settings['height'] == null) {
             $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
         }
+        
+        if ($settings['width'] == null) {
+            $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
+        }
 
         return $this->computeBox($media, $settings);
     }
