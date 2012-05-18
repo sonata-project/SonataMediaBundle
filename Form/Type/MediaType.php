@@ -15,9 +15,6 @@ use Symfony\Component\Form\AbstractType;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormBuilder;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\AdminBundle\Form\DataTransformer\ArrayToModelTransformer;
-use Application\Sonata\MediaBundle\Entity\Media;
 
 class MediaType extends AbstractType
 {
