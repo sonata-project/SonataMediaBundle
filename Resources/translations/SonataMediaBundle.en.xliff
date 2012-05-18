@@ -26,6 +26,10 @@
                 <source>breadcrumb.link_media_view</source>
                 <target>View</target>
             </trans-unit>
+            <trans-unit id="breadcrumb.link_media_delete">
+                <source>breadcrumb.link_media_delete</source>
+                <target>Delete</target>
+            </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_create">
                 <source>breadcrumb.link_gallery_create</source>
                 <target>Create</target>
@@ -37,6 +41,10 @@
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_delete">
+                <source>breadcrumb.link_gallery_delete</source>
+                <target>Delete</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
@@ -245,6 +253,22 @@
                 <source>form.label_gallery_has_medias</source>
                 <target>Medias</target>
             </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Author</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Copyright</target>
+            </trans-unit>   
             <trans-unit id="list.label_enabled">
                 <source>list.label_enabled</source>
                 <target>Enabled</target>
