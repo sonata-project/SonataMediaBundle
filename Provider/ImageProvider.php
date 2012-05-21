@@ -47,7 +47,13 @@ class ImageProvider extends FileProvider
         if ($format == 'reference') {
             $box = $media->getBox();
         } else {
-            $box = $this->resizer->getBox($media, $this->getFormat($format));
+            $resizerFormat = $this->getFormat($format);
+            if ($resizerFormat === false) {
+                throw new \RuntimeException(sprintf('The image format "%s" is not defined. 
+                        Is the format registered in your sonata-media configuration?', $format));
+            }
+            
+            $box = $this->resizer->getBox($media, $resizerFormat);
         }
 
         return array_merge(array(
