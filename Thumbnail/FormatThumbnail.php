@@ -63,7 +63,7 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         $referenceFile = $provider->getReferenceFile($media);
-
+        
         foreach ($provider->getFormats() as $format => $settings) {
             $provider->getResizer()->resize(
                 $media,
@@ -100,7 +100,7 @@ class FormatThumbnail implements ThumbnailInterface
         if (!is_string($ext) || strlen($ext) < 3) {
             $ext = $this->defaultFormat;
         }
-
+        
         return $ext;
     }
 }
