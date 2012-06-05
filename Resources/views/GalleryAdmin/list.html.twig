@@ -13,7 +13,7 @@ file that was distributed with this source code.
 
 {% block preview %}
 
-    <ul class="pills">
+    <ul class="nav nav-pills">
         <li><a><strong>{{ "label.select_context"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
         {% for name, context in media_pool.contexts %}
             {% if name == persistent_parameters.context %}
@@ -40,12 +40,12 @@ file that was distributed with this source code.
                     <table>
                         <tr>
                             <td>
-                                <table>
+                                <table class="table table-bordered">
                                     {% for filter in admin.datagrid.filters %}
                                         <tr id="filter_{{ filter.name }}_row">
                                             <td class="filter-title">{{ admin.trans(filter.label) }}</td>
-                                            <td class="filter-type">{{ form_widget(form.getChild(filter.name).getChild('type')) }}</td>
-                                            <td class="filter-value">{{ form_widget(form.getChild(filter.name).getChild('value')) }}</td>
+                                            <td class="filter-type">{{ form_widget(form.get(filter.name).get('type')) }}</td>
+                                            <td class="filter-value">{{ form_widget(form.get(filter.name).get('value')) }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -62,7 +62,7 @@ file that was distributed with this source code.
                     </table>
                     {{ form_rest(form) }}
 
-                    <input class="btn primary" type="submit" value="{% trans from 'SonataAdminBundle' %}btn_filter{% endtrans %}" />
+                    <input class="btn btn-primary" type="submit" value="{% trans from 'SonataAdminBundle' %}btn_filter{% endtrans %}" />
 
                     <a class="btn" href="{{ admin.generateUrl('list') }}">{% trans from 'SonataAdminBundle' %}link_reset_filter{% endtrans %}</a>
 
