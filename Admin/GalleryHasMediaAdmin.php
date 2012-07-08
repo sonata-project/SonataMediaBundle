@@ -32,8 +32,7 @@ class GalleryHasMediaAdmin extends Admin
         }
 
         $formMapper
-            ->add('media', 'sonata_type_model', array(), array(
-                'edit' => 'list',
+            ->add('media', 'sonata_type_model_list', array('required' => false), array(
                 'link_parameters' => $link_parameters
             ))
             ->add('enabled', null, array('required' => false))
