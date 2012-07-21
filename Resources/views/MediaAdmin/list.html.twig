@@ -21,7 +21,7 @@ file that was distributed with this source code.
             {% else %}
                 {% set urlParams = {'context' : name, 'provider' : context.providers[0] } %}
             {% endif %}
-        
+
             {% if name == persistent_parameters.context %}
                 <li class="active"><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name }}</a></li>
             {% else %}
@@ -30,16 +30,16 @@ file that was distributed with this source code.
         {% endfor %}
 
         {% set providers = media_pool.getProviderNamesByContext(persistent_parameters.context) %}
-        
+
         {% if providers|length > 1 %}
             <li><a><strong>{{ "label.select_provider"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
-            
+
             {% if not persistent_parameters.provider %}
                 <li class="active"><a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': null}) }}">{{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}</a></li>
             {% else %}
                 <li><a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': null}) }}">{{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}</a></li>
             {% endif %}
-    
+
             {% for provider_name in providers %}
                 {% if persistent_parameters.provider == provider_name%}
                     <li class="active"><a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': provider_name}) }}">{{ provider_name|trans({}, 'SonataMediaBundle') }}</a></li>
@@ -66,17 +66,17 @@ file that was distributed with this source code.
                 <div class="filter_container {{ admin.datagrid.hasActiveFilters ? 'active' : 'inactive' }}">
                     <table class="table table-bordered">
                         {% for filter in admin.datagrid.filters %}
-                        <tr id="filter_{{ filter.name }}_row" class="filter {{ filter.isActive ? 'active' : 'inactive' }}">
+                            <tr id="filter_{{ filter.name }}_row" class="filter {{ filter.isActive ? 'active' : 'inactive' }}">
                                 <td class="filter-title">{{ admin.trans(filter.label) }}</td>
-                                <td class="filter-type">{{ form_widget(form.get(filter.name).get('type')) }}</td>
-                                <td class="filter-value">{{ form_widget(form.get(filter.name).get('value')) }}</td>
+                                <td class="filter-type">{{ form_widget(form.children[filter.formName].children['type']) }}</td>
+                                <td class="filter-value">{{ form_widget(form.children[filter.formName].children['value']) }}</td>
                             </tr>
                         {% endfor %}
                     </table>
 
                     <input type="hidden" name="filter[_page]" id="filter__page" value="1" />
 
-                    {% set foo = form.get('_page').setRendered() %}
+                    {% set foo = form.children['_page'].setRendered() %}
                     {{ form_rest(form) }}
 
                     <input type="submit" class="btn btn-primary" value="{% trans from 'SonataAdminBundle' %}btn_filter{% endtrans %}" />
