@@ -25,10 +25,9 @@ class MediaType extends AbstractType
 
     protected $class;
 
-
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param string                            $class
+     * @param Pool   $pool
+     * @param string $class
      */
     public function __construct(Pool $pool, $class)
     {
@@ -49,6 +48,9 @@ class MediaType extends AbstractType
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
