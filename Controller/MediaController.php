@@ -21,9 +21,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MediaController extends Controller
 {
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
-     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
+     * @return MediaProviderInterface
      */
     public function getProvider(MediaInterface $media)
     {
@@ -33,7 +33,7 @@ class MediaController extends Controller
     /**
      * @param string $id
      *
-     * @return \Sonata\MediaBundle\Model\MediaInterface
+     * @return MediaInterface
      */
     public function getMedia($id)
     {
@@ -41,12 +41,12 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      * @param string $format
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return Response
      */
     public function viewAction($id, $format = 'reference')
     {
@@ -68,12 +68,12 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      * @param string $format
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return Response
      */
     public function downloadAction($id, $format = 'reference')
     {

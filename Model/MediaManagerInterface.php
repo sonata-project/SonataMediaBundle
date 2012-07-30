@@ -55,8 +55,6 @@ interface MediaManagerInterface
     function getClass();
 
     /**
-     * @abstract
-     *
      * @param MediaInterface $media
      * @param null           $context
      * @param null           $providerName

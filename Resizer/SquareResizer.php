@@ -38,8 +38,8 @@ class SquareResizer implements ResizerInterface
     protected $mode;
 
     /**
-     * @param \Imagine\Image\ImagineInterface $adapter
-     * @param string                          $mode
+     * @param ImagineInterface $adapter
+     * @param string           $mode
      */
     public function __construct(ImagineInterface $adapter, $mode)
     {
