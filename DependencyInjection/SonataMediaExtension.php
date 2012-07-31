@@ -308,11 +308,17 @@ class SonataMediaExtension extends Extension
         }
 
         // add the default configuration for the S3 filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['s3'])) {
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && $container->hasDefinition('sonata.media.adapter.filesystem.acl_aware_s3') && isset($config['filesystem']['s3'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
                 ->replaceArgument(2, $config['filesystem']['s3']['create'])
+            ;
+            
+            $container->getDefinition('sonata.media.adapter.filesystem.acl_aware_s3')
+                ->replaceArgument(0, new Reference('sonata.media.adapter.filesystem.s3'))
+                ->replaceArgument(1, new Reference('sonata.media.adapter.service.s3'))
+                ->replaceArgument(2, $config['filesystem']['s3']['bucket'])
             ;
 
             $container->getDefinition('sonata.media.adapter.service.s3')
@@ -323,7 +329,9 @@ class SonataMediaExtension extends Extension
             ;
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.s3');
+            $container->removeDefinition('sonata.media.adapter.filesystem.acl_aware_s3');
             $container->removeDefinition('sonata.media.filesystem.s3');
+            $container->removeDefinition('sonata.media.filesystem.acl_aware_s3');
         }
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
