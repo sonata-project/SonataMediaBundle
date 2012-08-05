@@ -11,14 +11,14 @@ file that was distributed with this source code.
 
 {% extends 'SonataAdminBundle:CRUD:action.html.twig' %}
 
-{% block title %}{% trans from 'SonataMediaBundle' %}title_select_provider{% endtrans %}{% endblock %}
+{% block title %}{{ 'title_select_provider'|trans({}, 'SonataMediaBundle') }}{% endblock %}
 
 {% block content %}
     <ul>
         {% for code, provider in providers %}
             <li><a href="{{ admin.generateUrl('create', {'provider': provider.name}) }}">{{ provider.name|trans({}, 'SonataMediaBundle') }}</a></li>
         {% else %}
-            <li>{% trans from 'SonataMediaBundle' %}no_provider_available{% endtrans %}</li>
+            <li>{{ 'no_provider_available'|trans({}, 'SonataMediaBundle') }}</li>
         {% endfor %}
     </ul>
 {% endblock %}

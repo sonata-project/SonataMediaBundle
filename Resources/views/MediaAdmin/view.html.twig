@@ -16,12 +16,12 @@ file that was distributed with this source code.
 {% block content %}
     <h2>{{ media.name }} ({{ format }})</h2>
 
-    <h3>{% trans from 'SonataMediaBundle' %}title.media_preview{% endtrans %}</h3>
+    <h3>{{ 'title.media_preview'|trans({}, 'SonataMediaBundle') }}</h3>
     <div>
         {% media media, format %}
     </div>
 
-    <h3>{% trans from 'SonataMediaBundle' %}title.informations{% endtrans %}</h3>
+    <h3>{{ 'title.informations'|trans({}, 'SonataMediaBundle') }}</h3>
 
     <table>
         {% if pixlr and pixlr.isEditable(media) %}
@@ -31,57 +31,57 @@ file that was distributed with this source code.
             </tr>
         {% endif %}
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.size{% endtrans %}</td>
+            <td>{{ 'label.size'|trans({}, 'SonataMediaBundle') }}</td>
             <td>{{ media.size }}</td>
         <tr>
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.width{% endtrans %}</td>
+            <td>{{ 'label.width'|trans({}, 'SonataMediaBundle') }}</td>
             <td>{{ media.width }}</td>
         <tr>
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.height{% endtrans %}</td>
+            <td>{{ 'label.height'|trans({}, 'SonataMediaBundle') }}</td>
             <td>{{ media.height }}</td>
         <tr>
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.content_type{% endtrans %}</td>
+            <td>{{ 'label.content_type'|trans({}, 'SonataMediaBundle') }}</td>
             <td>{{ media.contenttype }}</td>
         <tr>
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.copyright{% endtrans %}</td>
+            <td>{{ 'label.copyright'|trans({}, 'SonataMediaBundle') }}</td>
             <td>{{ media.copyright }}</td>
         <tr>
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.author_name{% endtrans %}</td>
+            <td>{{ 'label.author_name'|trans({}, 'SonataMediaBundle') }}</td>
             <td>{{ media.authorname }}</td>
         <tr>
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.cdn{% endtrans %}</td>
+            <td>{{ 'label.cdn'|trans({}, 'SonataMediaBundle') }}</td>
             <td>
                 {% if media.cdnisflushable %}
-                    {% trans from 'SonataMediaBundle' %}label.to_be_flushed{% endtrans %}
+                    {{ 'label.to_be_flushed'|trans({}, 'SonataMediaBundle') }}
                 {% else %}
-                    {% trans from 'SonataMediaBundle' %}label.flushed_at{% endtrans %}
+                    {{ 'label.flushed_at'|trans({}, 'SonataMediaBundle') }}
                     {{ media.cdnflushat|date }}
                  {% endif %}
             </td>
         <tr>
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.protected_download_url{% endtrans %}</td>
+            <td>{{ 'label.protected_download_url'|trans({}, 'SonataMediaBundle') }}</td>
             <td>
                 <input type="text" value="{{ path('sonata_media_download', {'id': media.id}) }}" style="width:500px"/>
-                <a href="{{ path('sonata_media_download', {'id': media.id}) }}">{% trans from 'SonataMediaBundle' %}link.test_protected_url{% endtrans %}</a>
+                <a href="{{ path('sonata_media_download', {'id': media.id}) }}">{{ 'link.test_protected_url'|trans({}, 'SonataMediaBundle') }}</a>
                 <br />
-                <span class="label warning">{% trans from 'SonataMediaBundle' %}label.protected_download_url_notice{% endtrans %}</span> {{ security.description }}
+                <span class="label warning">{{ 'label.protected_download_url_notice'|trans({}, 'SonataMediaBundle') }}</span> {{ security.description }}
             </td>
         <tr>
 
         <tr>
-            <td>{% trans from 'SonataMediaBundle' %}label.public_url{% endtrans %}</td>
+            <td>{{ 'label.public_url'|trans({}, 'SonataMediaBundle') }}</td>
             <td><input type="text" value="{% path media, format %}" style="width:500px"/></td>
         <tr>
     </table>
 
-    <h3>{% trans from 'SonataMediaBundle' %}title.formats{% endtrans %}</h3>
+    <h3>{{ 'title.formats'|trans({}, 'SonataMediaBundle') }}</h3>
     <table>
         <tr>
             <td>
