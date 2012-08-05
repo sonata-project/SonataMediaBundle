@@ -42,9 +42,10 @@ class LiipImagineThumbnail implements ThumbnailInterface
                 sprintf('_imagine_%s', $format),
                 array('path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format))
             );
+            $path = ltrim($path, '/');
         }
 
-        return $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        return $path;
     }
 
     /**
