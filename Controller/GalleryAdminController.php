@@ -53,7 +53,7 @@ class GalleryAdminController extends Controller
         // set the theme for the current Admin Form
         $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
 
-        return $this->render($this->admin->getListTemplate(), array(
+        return $this->render($this->admin->getTemplate('list'), array(
             'action'   => 'list',
             'form'     => $formView,
             'datagrid' => $datagrid
