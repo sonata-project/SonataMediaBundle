@@ -63,15 +63,17 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         $referenceFile = $provider->getReferenceFile($media);
-        
+
         foreach ($provider->getFormats() as $format => $settings) {
-            $provider->getResizer()->resize(
-                $media,
-                $referenceFile,
-                $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
-                $this->getExtension($media),
-                $settings
-            );
+            if (substr($format, 0, strlen($media->getContext())) == $media->getContext()) {
+                $provider->getResizer()->resize(
+                    $media,
+                    $referenceFile,
+                    $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
+                    $this->getExtension($media),
+                    $settings
+                );
+            }
         }
     }
 
@@ -100,7 +102,7 @@ class FormatThumbnail implements ThumbnailInterface
         if (!is_string($ext) || strlen($ext) < 3) {
             $ext = $this->defaultFormat;
         }
-        
+
         return $ext;
     }
 }
