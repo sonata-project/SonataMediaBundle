@@ -26,6 +26,10 @@
                 <source>breadcrumb.link_media_view</source>
                 <target>Poglej</target>
             </trans-unit>
+            <trans-unit id="breadcrumb.link_media_delete">
+                <source>breadcrumb.link_media_delete</source>
+                <target>Izbriši</target>
+            </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_create">
                 <source>breadcrumb.link_gallery_create</source>
                 <target>Ustvari</target>
@@ -37,6 +41,10 @@
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Uredi</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_delete">
+                <source>breadcrumb.link_gallery_delete</source>
+                <target>Izbriši</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
@@ -224,6 +232,81 @@
                         Napredni urejevalnik
                     ]]>
                 </target>
+            </trans-unit>
+            <trans-unit id="form.label_enabled">
+                <source>form.label_enabled</source>
+                <target>Omogočeno</target>
+            </trans-unit>
+            <trans-unit id="form.label_context">
+                <source>form.label_context</source>
+                <target>Kontekst</target>
+            </trans-unit>
+            <trans-unit id="form.label_name">
+                <source>form.label_name</source>
+                <target>Ime</target>
+            </trans-unit>
+            <trans-unit id="form.label_default_format">
+                <source>form.label_default_format</source>
+                <target>Format</target>
+            </trans-unit>
+            <trans-unit id="form.label_gallery_has_medias">
+                <source>form.label_gallery_has_medias</source>
+                <target>Medijske vsebine</target>
+            </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Avtor</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Počisti CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Opis</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Avtorske pravice</target>
+            </trans-unit>   
+            <trans-unit id="list.label_enabled">
+                <source>list.label_enabled</source>
+                <target>Omogočeno</target>
+            </trans-unit>
+            <trans-unit id="list.label__action">
+                <source>list.label__action</source>
+                <target>Akcija</target>
+            </trans-unit>
+            <trans-unit id="list.label_custom">
+                <source>list.label_custom</source>
+                <target>Po meri</target>
+            </trans-unit>
+            <trans-unit id="filter.label_name">
+                <source>filter.label_name</source>
+                <target>Ime</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_reference">
+                <source>filter.label_provider_reference</source>
+                <target>Sklic ponudnika</target>
+            </trans-unit>
+
+            <trans-unit id="filter.label_enabled">
+                <source>filter.label_enabled</source>
+                <target>Omogočeno</target>
+            </trans-unit>
+
+            <trans-unit id="filter.label_context">
+                <source>filter.label_context</source>
+                <target>Kontekst</target>
+            </trans-unit>
+
+            <trans-unit id="filter.label_provider_name">
+                <source>filter.label_provider_name</source>
+                <target>Ime ponudnika</target>
+            </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>Datoteka</target>
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
