@@ -40,15 +40,15 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     protected function getProvider(EventArgs $args)
     {
-      $media = $args->getDocument();
-    
-      if (!$media instanceof MediaInterface) {
-        return null;
-      }
-    
-      return $this->getPool()->getProvider($media->getProviderName());
+        $media = $args->getDocument();
+
+        if (!$media instanceof MediaInterface) {
+            return null;
+        }
+
+        return $this->getPool()->getProvider($media->getProviderName());
     }
-    
+
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
@@ -56,13 +56,13 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function postUpdate(EventArgs $args)
     {
-      if (!($provider = $this->getProvider($args))) {
-        return;
-      }
-    
-      $provider->postUpdate($args->getDocument());
+        if (!($provider = $this->getProvider($args))) {
+            return;
+        }
+
+        $provider->postUpdate($args->getDocument());
     }
-    
+
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
@@ -70,13 +70,13 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function postRemove(EventArgs $args)
     {
-      if (!($provider = $this->getProvider($args))) {
-        return;
-      }
-    
-      $provider->postRemove($args->getDocument());
+        if (!($provider = $this->getProvider($args))) {
+            return;
+        }
+
+        $provider->postRemove($args->getDocument());
     }
-    
+
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
@@ -84,13 +84,13 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function postPersist(EventArgs $args)
     {
-      if (!($provider = $this->getProvider($args))) {
-        return;
-      }
-    
-      $provider->postPersist($args->getDocument());
+        if (!($provider = $this->getProvider($args))) {
+            return;
+        }
+
+        $provider->postPersist($args->getDocument());
     }
-    
+
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
@@ -98,16 +98,16 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function preUpdate(EventArgs $args)
     {
-      if (!($provider = $this->getProvider($args))) {
-        return;
-      }
-    
-      $provider->transform($args->getDocument());
-      $provider->preUpdate($args->getDocument());
-    
-      $this->recomputeSingleEntityChangeSet($args);
+        if (!($provider = $this->getProvider($args))) {
+            return;
+        }
+
+        $provider->transform($args->getDocument());
+        $provider->preUpdate($args->getDocument());
+
+        $this->recomputeSingleEntityChangeSet($args);
     }
-    
+
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
@@ -115,13 +115,13 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function preRemove(EventArgs $args)
     {
-      if (!($provider = $this->getProvider($args))) {
-        return;
-      }
-    
-      $provider->preRemove($args->getDocument());
+        if (!($provider = $this->getProvider($args))) {
+            return;
+        }
+
+        $provider->preRemove($args->getDocument());
     }
-    
+
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
@@ -129,13 +129,14 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function prePersist(EventArgs $args)
     {
-      if (!($provider = $this->getProvider($args))) {
-        return;
-      }
-    
-      $provider->transform($args->getDocument());
-      $provider->prePersist($args->getDocument());
+        if (!($provider = $this->getProvider($args))) {
+            return;
+        }
+
+        $provider->transform($args->getDocument());
+        $provider->prePersist($args->getDocument());
     }
+    
     /**
      * @param \Doctrine\Common\EventArgs $args
      * @return void
