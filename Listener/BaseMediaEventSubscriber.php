@@ -52,102 +52,47 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
      *
      * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
      */
-    protected function getProvider(EventArgs $args)
-    {
-        $media = $args->getEntity();
-
-        if (!$media instanceof MediaInterface) {
-            return null;
-        }
-
-        return $this->getPool()->getProvider($media->getProviderName());
-    }
+    abstract protected function getProvider(EventArgs $args); 
 
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
      * @return void
      */
-    public function postUpdate(EventArgs $args)
-    {
-        if (!($provider = $this->getProvider($args))) {
-            return;
-        }
-
-        $provider->postUpdate($args->getEntity());
-    }
+    abstract public function postUpdate(EventArgs $args);
 
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
      * @return void
      */
-    public function postRemove(EventArgs $args)
-    {
-        if (!($provider = $this->getProvider($args))) {
-            return;
-        }
-
-        $provider->postRemove($args->getEntity());
-    }
+    abstract public function postRemove(EventArgs $args);
 
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
      * @return void
      */
-    public function postPersist(EventArgs $args)
-    {
-        if (!($provider = $this->getProvider($args))) {
-            return;
-        }
-
-        $provider->postPersist($args->getEntity());
-    }
+    abstract public function postPersist(EventArgs $args);
 
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
      * @return void
      */
-    public function preUpdate(EventArgs $args)
-    {
-        if (!($provider = $this->getProvider($args))) {
-            return;
-        }
-
-        $provider->transform($args->getEntity());
-        $provider->preUpdate($args->getEntity());
-
-        $this->recomputeSingleEntityChangeSet($args);
-    }
+    abstract public function preUpdate(EventArgs $args);
 
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
      * @return void
      */
-    public function preRemove(EventArgs $args)
-    {
-        if (!($provider = $this->getProvider($args))) {
-            return;
-        }
-
-        $provider->preRemove($args->getEntity());
-    }
+    abstract public function preRemove(EventArgs $args);
 
     /**
      * @param \Doctrine\Common\EventArgs $args
      *
      * @return void
      */
-    public function prePersist(EventArgs $args)
-    {
-        if (!($provider = $this->getProvider($args))) {
-            return;
-        }
-
-        $provider->transform($args->getEntity());
-        $provider->prePersist($args->getEntity());
-    }
+    abstract public function prePersist(EventArgs $args);
 }

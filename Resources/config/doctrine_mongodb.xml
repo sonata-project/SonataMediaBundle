@@ -29,7 +29,7 @@
         </service>
 
         <service id="sonata.media.doctrine.event_subscriber" class="Sonata\MediaBundle\Listener\ODM\MediaEventSubscriber">
-            <tag name="doctrine.event_subscriber" />
+            <tag name="doctrine.common.event_subscriber" />
 
             <argument type="service" id="service_container" />
         </service>
