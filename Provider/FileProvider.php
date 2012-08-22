@@ -110,6 +110,8 @@ class FileProvider extends BaseProvider
         $this->setFileContents($media);
 
         $this->generateThumbnails($media);
+        
+        $this->getFilesystem()->delete(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()));
     }
 
     /**
@@ -136,6 +138,8 @@ class FileProvider extends BaseProvider
         $this->setFileContents($media);
 
         $this->generateThumbnails($media);
+        
+        $this->getFilesystem()->delete(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()));        
     }
 
     /**
