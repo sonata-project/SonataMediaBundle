@@ -17,25 +17,25 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2",
         "symfony/symfony": "dev-master",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/notification-bundle": "dev-master",
-        "sonata-project/easy-extends-bundle": "*",
-        "knplabs/gaufrette": "*",
-        "imagine/Imagine": "*",
-        "kriswallsmith/buzz": "*"
+        "sonata-project/easy-extends-bundle": "dev-master",
+        "knplabs/gaufrette": "dev-master",
+        "imagine/Imagine": "dev-master",
+        "kriswallsmith/buzz": "dev-master"
     },
     "require-dev": {
         "sonata-project/formatter-bundle": "dev-master"
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "liip/imagine-bundle": "*",
+        "liip/imagine-bundle": "dev-master",
         "sonata-project/admin-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }
     },
-    "target-dir": "Sonata/MediaBundle"
+    "target-dir": "Sonata/MediaBundle",
+    "minimum-stability": "dev"
 }

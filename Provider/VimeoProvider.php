@@ -138,8 +138,8 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
-        return new RedirectResponse(sprintf('http://vimeo.com/%s', $media->getProviderReference()));
+        return new RedirectResponse(sprintf('http://vimeo.com/%s', $media->getProviderReference()), 302, $headers);
     }
 }

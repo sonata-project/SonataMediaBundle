@@ -174,10 +174,10 @@ class FileProvider extends BaseProvider
     protected function fixFilename(MediaInterface $media)
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
-            $media->setName($media->getBinaryContent()->getClientOriginalName());
+            $media->setName($media->getName() ?: $media->getBinaryContent()->getClientOriginalName());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getClientOriginalName());
         } else if ($media->getBinaryContent() instanceof File) {
-            $media->setName($media->getBinaryContent()->getBasename());
+            $media->setName($media->getName() ?: $media->getBinaryContent()->getBasename());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getBasename());
         }
 
@@ -303,20 +303,19 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
         // build the default headers
-        $headers = array(
+        $headers = array_merge(array(
             'Content-Type'          => $media->getContentType(),
             'Content-Disposition'   => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
-        );
+        ), $headers);
 
         if (!in_array($mode, array('http', 'X-Sendfile', 'X-Accel-Redirect'))) {
             throw new \RuntimeException('Invalid mode provided');
         }
 
         if ($mode == 'http') {
-
             $provider = $this;
 
             return new StreamedResponse(function() use ($provider, $media) {
