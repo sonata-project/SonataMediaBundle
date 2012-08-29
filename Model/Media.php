@@ -77,7 +77,7 @@ abstract class Media implements MediaInterface
     /**
      * @var string $context
      */
-    protected $context = 'default';
+    protected $context;
 
     /**
      * @var boolean $cdn_is_flushable
