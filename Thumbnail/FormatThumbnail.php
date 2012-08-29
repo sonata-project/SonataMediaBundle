@@ -65,7 +65,7 @@ class FormatThumbnail implements ThumbnailInterface
         $referenceFile = $provider->getReferenceFile($media);
 
         foreach ($provider->getFormats() as $format => $settings) {
-            if (substr($format, 0, strlen($media->getContext())) == $media->getContext()) {
+            if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
                 $provider->getResizer()->resize(
                     $media,
                     $referenceFile,
