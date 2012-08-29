@@ -21,6 +21,7 @@ class MediaManager extends AbstractMediaManager
     protected $dm;
     protected $repository;
     protected $class;
+    protected $pool;
 
     /**
      * @param \Sonata\MediaBundle\Provider\Pool     $pool
@@ -30,7 +31,7 @@ class MediaManager extends AbstractMediaManager
     public function __construct(Pool $pool, DocumentManager $dm, $class)
     {
         $this->dm = $dm;
-
+        $this->pool = $pool;
         parent::__construct($pool, $class);
     }
 
@@ -59,16 +60,20 @@ class MediaManager extends AbstractMediaManager
             $media->setProviderName($providerName);
         }
 
+        $subscriber = new ProviderSubscriber($this->pool->getProvider($media->getProviderName()));
+        $this->dm->getEventManager()->addEventSubscriber($subscriber);
         // just in case the pool alter the media
         $this->dm->persist($media);
         $this->dm->flush();
     }
-
+    
     /**
      * {@inheritdoc}
      */
     public function delete(MediaInterface $media)
     {
+        $subscriber = new ProviderSubscriber($this->pool->getProvider($media->getProviderName()));
+        $this->dm->getEventManager()->addEventSubscriber($subscriber);
         $this->dm->remove($media);
         $this->dm->flush();
     }
