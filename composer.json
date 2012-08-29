@@ -31,7 +31,8 @@
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "liip/imagine-bundle": "dev-master",
-        "sonata-project/admin-bundle": "dev-master"
+        "sonata-project/admin-bundle": "dev-master",
+        "amazonwebservices/aws-sdk-for-php": "1.5.*"
     },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }
