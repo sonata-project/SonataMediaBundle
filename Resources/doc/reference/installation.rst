@@ -14,8 +14,8 @@ Installation
 
 Retrieve the bundle with composer:
 
-    php composer.phar update sonata-project/media-bundle
-
+    php composer.phar require sonata-project/media-bundle --no-update
+    php composer.phar require sonata-project/doctrine-orm-admin-bundle --no-update
 
 Register the new bundle into your AppKernel:
 
