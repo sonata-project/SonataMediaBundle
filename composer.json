@@ -23,7 +23,7 @@
         "sonata-project/easy-extends-bundle": "dev-master",
         "knplabs/gaufrette": "dev-master",
         "imagine/Imagine": "dev-master",
-        "kriswallsmith/buzz": "dev-master"
+        "kriswallsmith/buzz": "0.7"
     },
     "require-dev": {
         "sonata-project/formatter-bundle": "dev-master"
