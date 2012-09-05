@@ -65,13 +65,15 @@ class FormatThumbnail implements ThumbnailInterface
         $referenceFile = $provider->getReferenceFile($media);
 
         foreach ($provider->getFormats() as $format => $settings) {
-            $provider->getResizer()->resize(
-                $media,
-                $referenceFile,
-                $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
-                $this->getExtension($media),
-                $settings
-            );
+            if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
+                $provider->getResizer()->resize(
+                    $media,
+                    $referenceFile,
+                    $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
+                    $this->getExtension($media),
+                    $settings
+                );
+            }
         }
     }
 

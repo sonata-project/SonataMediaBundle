@@ -211,7 +211,7 @@ class TestProvider extends BaseProvider
      * @param $mode
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    function getDownloadResponse(MediaInterface $media, $format, $mode)
+    function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
         // TODO: Implement getDownloadResponse() method.
     }

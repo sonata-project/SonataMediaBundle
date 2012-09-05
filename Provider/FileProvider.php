@@ -22,6 +22,7 @@ use Sonata\AdminBundle\Validator\ErrorElement;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Form\FormBuilder;
 
 use Gaufrette\Filesystem;
@@ -173,10 +174,10 @@ class FileProvider extends BaseProvider
     protected function fixFilename(MediaInterface $media)
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
-            $media->setName($media->getBinaryContent()->getClientOriginalName());
+            $media->setName($media->getName() ?: $media->getBinaryContent()->getClientOriginalName());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getClientOriginalName());
         } else if ($media->getBinaryContent() instanceof File) {
-            $media->setName($media->getBinaryContent()->getBasename());
+            $media->setName($media->getName() ?: $media->getBinaryContent()->getBasename());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getBasename());
         }
 
@@ -302,28 +303,29 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
         // build the default headers
-        $headers = array(
+        $headers = array_merge(array(
             'Content-Type'          => $media->getContentType(),
             'Content-Disposition'   => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
-        );
+        ), $headers);
 
-        // create default variables
-        if ($mode == 'X-Sendfile') {
-            $headers['X-Sendfile'] = $this->generatePrivateUrl($media, $format);
-            $content = '';
-        } else if ($mode == 'X-Accel-Redirect') {
-            $headers['X-Accel-Redirect'] = $this->generatePrivateUrl($media, $format);
-            $content = '';
-        } else if ($mode == 'http') {
-            $content = $this->getReferenceFile($media)->getContent();
-        } else {
-            $content = '';
+        if (!in_array($mode, array('http', 'X-Sendfile', 'X-Accel-Redirect'))) {
+            throw new \RuntimeException('Invalid mode provided');
         }
 
-        return new Response($content, 200, $headers);
+        if ($mode == 'http') {
+            $provider = $this;
+
+            return new StreamedResponse(function() use ($provider, $media) {
+                echo $provider->getReferenceFile($media)->getContent();
+            }, 200, $headers);
+        }
+
+        $headers[$mode] = $this->generatePrivateUrl($media, $format);
+
+        return new Response('', 200, $headers);
     }
 
     /**

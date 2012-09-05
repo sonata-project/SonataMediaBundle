@@ -12,8 +12,11 @@
 namespace Sonata\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\Form\FormBuilder;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 
 class MediaType extends AbstractType
@@ -22,10 +25,9 @@ class MediaType extends AbstractType
 
     protected $class;
 
-
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param string                            $class
+     * @param Pool   $pool
+     * @param string $class
      */
     public function __construct(Pool $pool, $class)
     {
@@ -36,7 +38,7 @@ class MediaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->appendNormTransformer(new ProviderDataTransformer($this->pool, array(
             'provider' => $options['provider'],
@@ -49,19 +51,19 @@ class MediaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => $this->class,
             'provider'   => null,
             'context'    => null
-        );
+        ));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'form';
     }

@@ -13,7 +13,7 @@ file that was distributed with this source code.
 
 {% block preview %}
 
-    <ul class="pills">
+    <ul class="nav nav-pills">
         <li><a><strong>{{ "label.select_context"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
         {% for name, context in media_pool.contexts %}
             {% if name == persistent_parameters.context %}
@@ -34,24 +34,24 @@ file that was distributed with this source code.
             <input type="hidden" name="context" value="{{ persistent_parameters.context }}" />
 
             <fieldset class="filter_legend">
-                <legend class="filter_legend">{% trans from 'SonataAdminBundle' %}label_filters{% endtrans %}</legend>
+                <legend class="filter_legend">{{ 'label_filters'|trans({}, 'SonataAdminBundle') }}</legend>
 
                 <div class="filter_container">
                     <table>
                         <tr>
                             <td>
-                                <table>
+                                <table class="table table-bordered">
                                     {% for filter in admin.datagrid.filters %}
                                         <tr id="filter_{{ filter.name }}_row">
                                             <td class="filter-title">{{ admin.trans(filter.label) }}</td>
-                                            <td class="filter-type">{{ form_widget(form.getChild(filter.name).getChild('type')) }}</td>
-                                            <td class="filter-value">{{ form_widget(form.getChild(filter.name).getChild('value')) }}</td>
+                                            <td class="filter-type">{{ form_widget(form.children[filter.formName].children['type']) }}</td>
+                                            <td class="filter-value">{{ form_widget(form.children[filter.formName].children['value']) }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
                             </td>
                             {#<td>#}
-                                {#<label for="add_filter_select">{% trans from 'SonataAdminBundle' %}add_filter{% endtrans %}</label>#}
+                                {#<label for="add_filter_select">{{ 'add_filter'|trans({}, 'SonataAdminBundle') }}</label>#}
                                 {#<select id="add_filter_select">#}
                                     {#{% for filter in admin.datagrid.filters %}#}
                                         {#<option value="{{ filter.name }}">{{ admin.trans(filter.name) }}</option>#}
@@ -60,11 +60,15 @@ file that was distributed with this source code.
                             {#</td>#}
                         </tr>
                     </table>
+
+                    <input type="hidden" name="filter[_page]" id="filter__page" value="1" />
+
+                    {% set foo = form.children['_page'].setRendered() %}
                     {{ form_rest(form) }}
 
-                    <input class="btn primary" type="submit" value="{% trans from 'SonataAdminBundle' %}btn_filter{% endtrans %}" />
+                    <input class="btn btn-primary" type="submit" value="{{ 'btn_filter'|trans({}, 'SonataAdminBundle') }}" />
 
-                    <a class="btn" href="{{ admin.generateUrl('list') }}">{% trans from 'SonataAdminBundle' %}link_reset_filter{% endtrans %}</a>
+                    <a class="btn" href="{{ admin.generateUrl('list') }}">{{ 'link_reset_filter'|trans({}, 'SonataAdminBundle') }}</a>
 
                 </div>
             </fieldset>

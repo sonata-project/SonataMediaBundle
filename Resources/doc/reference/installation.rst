@@ -12,60 +12,12 @@ This bundle is mainely dependant of the SonataAdminBundle and the SonataDoctrine
 Installation
 ------------
 
-To begin, add the dependent bundles to the ``vendor/bundles`` directory. Add
-the following lines to the file ``deps``::
+Retrieve the bundle with composer:
 
-  [SonataMediaBundle]
-      git=git://github.com/sonata-project/SonataMediaBundle.git
-      target=/bundles/Sonata/MediaBundle
-      version=origin/2.0
+    php composer.phar require sonata-project/media-bundle --no-update
+    php composer.phar require sonata-project/doctrine-orm-admin-bundle --no-update
 
-  [EasyExtendsBundle]
-      git=git://github.com/sonata-project/SonataEasyExtendsBundle.git
-      target=/bundles/Sonata/EasyExtendsBundle
-
-  [Imagine]:
-      git=git://github.com/avalanche123/Imagine.git
-      target=/imagine
-
-  [Gaufrette]
-      git=git://github.com/KnpLabs/Gaufrette.git
-      target=/gaufrette
-
-  [buzz]
-      git=git://github.com/kriswallsmith/Buzz.git
-      target=/buzz
-
-
-  # if you want to use Amazon S3
-  [aws-sdk]
-      git=https://github.com/amazonwebservices/aws-sdk-for-php
-
-and run::
-
-  bin/vendors install
-
-Configuration
--------------
-
-Next, you must complete the new namespaces registration in the ``autoload.php`` config (adding Imagine and Gaufrette)
-
-.. code-block:: php
-
-  <?php
-  $loader->registerNamespaces(array(
-      ...
-      'Application'   => __DIR__,
-      'Imagine'       => __DIR__.'/../vendor/imagine/lib',
-      'Gaufrette'     => __DIR__.'/../vendor/gaufrette/src',
-      'Buzz'          => __DIR__.'/../vendor/buzz/lib',
-      ...
-  ));
-
-  // AWS SDK needs a special autoloader
-  require_once __DIR__.'/../vendor/aws-sdk/sdk.class.php';
-
-Next, be sure to enable the new bundles in your application kernel:
+Register the new bundle into your AppKernel:
 
 .. code-block:: php
 
@@ -106,6 +58,7 @@ Then you must configure the interaction with the orm and add the mediaBundles se
                 default:
                     mappings:
                         SonataMediaBundle: ~
+
     sonata_media:
         default_context: default
         db_driver: doctrine_orm # or doctrine_mongodb

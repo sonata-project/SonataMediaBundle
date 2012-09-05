@@ -112,6 +112,10 @@ class ImageProvider extends FileProvider
             $media->setHeight($size->getHeight());
         } catch (\LogicException $e) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            $media->setSize(0);
+            $media->setWidth(0);
+            $media->setHeight(0);
         }
     }
 

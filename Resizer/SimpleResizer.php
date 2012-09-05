@@ -25,8 +25,8 @@ class SimpleResizer implements ResizerInterface
     protected $mode;
 
     /**
-     * @param \Imagine\Image\ImagineInterface $adapter
-     * @param string                          $mode
+     * @param ImagineInterface $adapter
+     * @param string           $mode
      */
     public function __construct(ImagineInterface $adapter, $mode)
     {
@@ -62,11 +62,11 @@ class SimpleResizer implements ResizerInterface
         if ($settings['width'] == null && $settings['height'] == null) {
             throw new \RuntimeException(sprintf('Width/Height parameter is missing in context "%s" for provider "%s". Please add at least one parameter.', $media->getContext(), $media->getProviderName()));
         }
-        
+
         if ($settings['height'] == null) {
             $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
         }
-        
+
         if ($settings['width'] == null) {
             $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
         }
@@ -75,12 +75,12 @@ class SimpleResizer implements ResizerInterface
     }
 
     /**
-     * @throws \Imagine\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param array                                    $settings
+     * @param MediaInterface $media
+     * @param array          $settings
      *
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     private function computeBox(MediaInterface $media, array $settings)
     {

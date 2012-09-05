@@ -48,6 +48,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $media = new Media;
         $media->setName('test.txt');
         $media->setProviderReference('ASDASD.txt');
+        $media->setContext('default');
 
         $media->setId(1023456);
         $this->assertEquals('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
