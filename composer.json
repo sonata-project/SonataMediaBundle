@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "symfony/symfony": "dev-master",
+        "symfony/symfony": "2.1.x",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/notification-bundle": "dev-master",
         "sonata-project/easy-extends-bundle": "dev-master",
