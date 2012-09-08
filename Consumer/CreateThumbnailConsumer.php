@@ -19,6 +19,7 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\NotificationBundle\Exception\HandlingException;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sonata\NotificationBundle\Backend\BackendInterface;
 
 class CreateThumbnailConsumer implements ConsumerInterface
 {
@@ -41,9 +42,7 @@ class CreateThumbnailConsumer implements ConsumerInterface
     }
 
     /**
-     * @param \Sonata\NotificationBundle\Consumer\ConsumerEvent $event
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function process(ConsumerEvent $event)
     {
@@ -66,9 +65,9 @@ class CreateThumbnailConsumer implements ConsumerInterface
     }
 
     /**
-     * @param \Sonata\NotificationBundle\Consumer\ConsumerEvent $event
+     * @param ConsumerEvent $event
      *
-     * @return \Sonata\MediaBundle\Thumbnail\ThumbnailInterface
+     * @return ThumbnailInterface
      */
     protected function getThumbnail(ConsumerEvent $event)
     {
