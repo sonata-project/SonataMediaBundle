@@ -33,14 +33,15 @@ class LiipImagineThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format, $absolute = false)
     {
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
         } else {
             $path = $this->router->generate(
                 sprintf('_imagine_%s', $format),
-                array('path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format))
+                array('path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format)),
+                $absolute
             );
         }
 

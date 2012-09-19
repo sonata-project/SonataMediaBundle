@@ -38,7 +38,7 @@ class ConsumerThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format, $absolute = false)
     {
         return $this->thumbnail->generatePrivateUrl($provider, $media, $format);
     }

@@ -29,7 +29,7 @@ class FormatThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format, $absolute = false)
     {
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
