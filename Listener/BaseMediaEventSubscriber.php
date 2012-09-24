@@ -47,14 +47,23 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
      */
     abstract protected function recomputeSingleEntityChangeSet(EventArgs $args);
 
+     /**
+     * @abstract
+     *
+     * @param \Doctrine\Common\EventArgs $args
+     *
+     * @return \Sonata\MediaBundle\Model\MediaInterface
+     */
+    abstract protected function getMedia(EventArgs $args);
+    
     /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     * @param \Doctrine\Common\EventArgs $args
      *
      * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
      */
     protected function getProvider(EventArgs $args)
     {
-        $media = $args->getEntity();
+        $media = $this->getMedia($args);
 
         if (!$media instanceof MediaInterface) {
             return null;
@@ -74,7 +83,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
             return;
         }
 
-        $provider->postUpdate($args->getEntity());
+        $provider->postUpdate($this->getMedia($args));
     }
 
     /**
@@ -88,7 +97,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
             return;
         }
 
-        $provider->postRemove($args->getEntity());
+        $provider->postRemove($this->getMedia($args));
     }
 
     /**
@@ -102,7 +111,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
             return;
         }
 
-        $provider->postPersist($args->getEntity());
+        $provider->postPersist($this->getMedia($args));
     }
 
     /**
@@ -116,8 +125,8 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
             return;
         }
 
-        $provider->transform($args->getEntity());
-        $provider->preUpdate($args->getEntity());
+        $provider->transform($this->getMedia($args));
+        $provider->preUpdate($this->getMedia($args));
 
         $this->recomputeSingleEntityChangeSet($args);
     }
@@ -133,7 +142,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
             return;
         }
 
-        $provider->preRemove($args->getEntity());
+        $provider->preRemove($this->getMedia($args));
     }
 
     /**
@@ -147,7 +156,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
             return;
         }
 
-        $provider->transform($args->getEntity());
-        $provider->prePersist($args->getEntity());
+        $provider->transform($this->getMedia($args));
+        $provider->prePersist($this->getMedia($args));
     }
 }
