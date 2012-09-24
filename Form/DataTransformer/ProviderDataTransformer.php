@@ -48,11 +48,11 @@ class ProviderDataTransformer implements DataTransformerInterface
             return $media;
         }
 
-        if (!$media->getProviderName() && isset($this->options['provider'])) {
+        if (!$media->getProviderName() || isset($this->options['provider'])) {
             $media->setProviderName($this->options['provider']);
         }
 
-        if (!$media->getContext() && isset($this->options['context'])) {
+        if (!$media->getContext() || isset($this->options['context'])) {
             $media->setContext($this->options['context']);
         }
 
