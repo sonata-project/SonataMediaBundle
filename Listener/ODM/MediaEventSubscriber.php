@@ -41,8 +41,16 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         $em = $args->getDocumentManager();
 
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet(
-            $em->getClassMetadata(get_class($args->getEntity())),
+            $em->getClassMetadata(get_class($args->getDocument())),
             $args->getEntity()
         );
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    protected function getMedia(EventArgs $args)
+    {
+        return $args->getDocument();
     }
 }

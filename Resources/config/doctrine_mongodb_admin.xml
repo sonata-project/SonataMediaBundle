@@ -46,7 +46,7 @@
         </service>
 
         <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineMongoDBManager">
-            <argument type="service" id="doctrine.odm.mongodb.default_document_manager" />
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>
 
