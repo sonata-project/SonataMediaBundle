@@ -216,6 +216,8 @@ class Pool
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      *
+     * @throws \RuntimeException
+     *
      * @return \Sonata\MediaBundle\Security\DownloadStrategyInterface
      */
     public function getDownloadSecurity(MediaInterface $media)

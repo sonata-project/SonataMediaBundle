@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class GalleryController extends Controller
 {
     /**
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -33,7 +33,7 @@ class GalleryController extends Controller
     /**
      * @param string $id
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function viewAction($id)

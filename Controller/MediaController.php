@@ -41,12 +41,14 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @param string $id
      * @param string $format
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return Response
      */
     public function viewAction($id, $format = 'reference')
     {
@@ -68,12 +70,14 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @param string $id
      * @param string $format
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return Response
      */
     public function downloadAction($id, $format = 'reference')
     {
@@ -97,9 +101,11 @@ class MediaController extends Controller
      * optionally saves the image and
      * outputs it to the browser at the same time
      *
-     * @param Request $request
      * @param string  $path
      * @param string  $filter
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @internal param \Sonata\MediaBundle\Controller\Request $request
      *
      * @return Response
      */

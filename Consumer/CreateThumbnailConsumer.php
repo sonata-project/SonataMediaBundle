@@ -43,7 +43,7 @@ class CreateThumbnailConsumer implements ConsumerInterface
     /**
      * @param \Sonata\NotificationBundle\Consumer\ConsumerEvent $event
      *
-     * @return void
+     * @throws \Sonata\NotificationBundle\Exception\HandlingException
      */
     public function process(ConsumerEvent $event)
     {
@@ -67,6 +67,8 @@ class CreateThumbnailConsumer implements ConsumerInterface
 
     /**
      * @param \Sonata\NotificationBundle\Consumer\ConsumerEvent $event
+     *
+     * @throws \Sonata\NotificationBundle\Exception\HandlingException
      *
      * @return \Sonata\MediaBundle\Thumbnail\ThumbnailInterface
      */

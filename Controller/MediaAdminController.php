@@ -24,7 +24,7 @@ class MediaAdminController extends Controller
      *
      * @param string $id
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction($id)
     {
@@ -52,7 +52,7 @@ class MediaAdminController extends Controller
 
     /**
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createAction()
     {
@@ -77,9 +77,9 @@ class MediaAdminController extends Controller
     /**
      * @param string                                          $view
      * @param array                                           $parameters
-     * @param null|\Symfony\Component\HttpFoundation\Response $response
+     * @param null|Response $response
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return Response
      */
     public function render($view, array $parameters = array(), Response $response = null)
     {
@@ -91,6 +91,8 @@ class MediaAdminController extends Controller
 
     /**
      * return the Response object associated to the list action
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      *
      * @return Response
      */

@@ -57,7 +57,7 @@ class DoctrineORMManager extends ModelManager
      * @param string                                           $class
      * @param \Sonata\AdminBundle\Datagrid\ProxyQueryInterface $queryProxy
      *
-     * @return void
+     * @throws \Sonata\AdminBundle\Exception\ModelManagerException
      */
     public function batchDelete($class, ProxyQueryInterface $queryProxy)
     {

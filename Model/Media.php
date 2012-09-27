@@ -20,7 +20,7 @@ abstract class Media implements MediaInterface
     protected $name;
 
     /**
-     * @var text $description
+     * @var string $description
      */
     protected $description;
 
@@ -60,7 +60,7 @@ abstract class Media implements MediaInterface
     protected $height;
 
     /**
-     * @var decimal $length
+     * @var integer $length
      */
     protected $length;
 
@@ -85,7 +85,7 @@ abstract class Media implements MediaInterface
     protected $cdnIsFlushable;
 
     /**
-     * @var datetime $cdn_flush_at
+     * @var \Datetime $cdn_flush_at
      */
     protected $cdnFlushAt;
 
@@ -95,12 +95,12 @@ abstract class Media implements MediaInterface
     protected $cdnStatus;
 
     /**
-     * @var datetime $updated_at
+     * @var \Datetime $updated_at
      */
     protected $updatedAt;
 
     /**
-     * @var datetime $created_at
+     * @var \Datetime $created_at
      */
     protected $createdAt;
 
@@ -109,7 +109,7 @@ abstract class Media implements MediaInterface
     protected $previousProviderReference;
 
     /**
-     * @var varchar $content_type
+     * @var string $content_type
      */
     protected $contentType;
 

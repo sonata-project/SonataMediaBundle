@@ -70,7 +70,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session
+     * @return \Symfony\Component\HttpFoundation\Session\Session
      */
     private function getSession()
     {

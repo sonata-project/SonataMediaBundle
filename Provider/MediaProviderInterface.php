@@ -32,7 +32,7 @@ interface MediaProviderInterface
      *
      * @param string $name
      *
-     * @return array|false the format settings
+     * @return array|boolean the format settings
      */
     function getFormat($name);
 
@@ -229,7 +229,7 @@ interface MediaProviderInterface
     function getDownloadResponse(MediaInterface $media, $format, $mode);
 
     /**
-     * @return \Sonata\MediaBundle\Media\ResizerInterface
+     * @return \Sonata\MediaBundle\Resizer\ResizerInterface
      */
     function getResizer();
 
