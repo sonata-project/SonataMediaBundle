@@ -34,7 +34,7 @@ interface MediaManagerInterface
      *
      * @param array $criteria
      *
-     * @return MediaInterface
+     * @return MediaInterface[]
      */
     function findBy(array $criteria);
 

@@ -139,11 +139,10 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @throws \RuntimeException
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      *
-     * @return
+     * @throws \RuntimeException
      */
     protected function fixBinaryContent(MediaInterface $media)
     {

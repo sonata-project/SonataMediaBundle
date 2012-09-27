@@ -24,7 +24,7 @@ class GalleryAdminController extends Controller
      * @param array                                           $parameters
      * @param null|\Symfony\Component\HttpFoundation\Response $response
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($view, array $parameters = array(), Response $response = null)
     {
@@ -36,6 +36,8 @@ class GalleryAdminController extends Controller
 
     /**
      * return the Response object associated to the list action
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      *
      * @return Response
      */

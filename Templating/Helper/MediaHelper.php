@@ -29,7 +29,7 @@ class MediaHelper extends Helper
     protected $templating = null;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool             $mediaService
+     * @param \Sonata\MediaBundle\Provider\Pool             $pool
      * @param \Symfony\Component\Templating\EngineInterface $templating
      */
     public function __construct(Pool $pool, EngineInterface $templating)
