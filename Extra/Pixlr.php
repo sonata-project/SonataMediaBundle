@@ -184,6 +184,8 @@ class Pixlr
      * @param string                                    $hash
      * @param string                                    $id
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function targetAction(Request $request, $hash, $id)

@@ -258,7 +258,7 @@ class GalleryBlockService extends BaseBlockService
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      *
-     * @return false|string
+     * @return Boolean|string
      */
     private function getMediaType(MediaInterface $media)
     {

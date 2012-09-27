@@ -91,8 +91,9 @@ class Replicate implements AdapterInterface
     /**
      * Writes the given content into the file
      *
-     * @param  string $key
-     * @param  string $content
+     * @param string $key
+     * @param string $content
+     * @param array  $metadata
      *
      * @return integer The number of bytes that were written into the file, or
      *                 FALSE on failure
@@ -123,7 +124,7 @@ class Replicate implements AdapterInterface
      * @param string $key
      * @param string $new
      *
-     * @throws RuntimeException on failure
+     * @throws \RuntimeException on failure
      */
     public function rename($key, $new)
     {
@@ -156,4 +157,5 @@ class Replicate implements AdapterInterface
     {
         return $this->master->createFileStream($key, $filesystem);
     }
+
 }
