@@ -17,8 +17,6 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Config\Definition\Processor;
 
 use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
@@ -34,8 +32,8 @@ class SonataMediaExtension extends Extension
     /**
      * Loads the url shortener configuration.
      *
-     * @param array            $configs    An array of configuration settings
-     * @param ContainerBuilder $container  A ContainerBuilder instance
+     * @param array            $configs   An array of configuration settings
+     * @param ContainerBuilder $container A ContainerBuilder instance
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -165,7 +163,7 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param array                                                   $config
+     * @param array $config
      *
      * @return void
      */
@@ -235,7 +233,7 @@ class SonataMediaExtension extends Extension
      * Inject CDN dependency to default provider
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array $config
+     * @param array                                                   $config
      *
      * @return void
      */
