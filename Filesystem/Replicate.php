@@ -156,4 +156,12 @@ class Replicate implements AdapterInterface
     {
         return $this->master->createFileStream($key, $filesystem);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function listDirectory($directory = '')
+    {
+        return $this->master->listDirectory($directory);
+    }
 }
