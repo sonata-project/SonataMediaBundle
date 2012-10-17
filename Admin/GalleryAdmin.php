@@ -78,7 +78,7 @@ class GalleryAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('enabled')
+            ->add('enabled', null, array('editable' => true))
             ->addIdentifier('name')
             ->add('context')
             ->add('defaultFormat')
