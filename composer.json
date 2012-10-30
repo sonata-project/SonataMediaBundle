@@ -21,6 +21,7 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/notification-bundle": "dev-master",
         "sonata-project/easy-extends-bundle": "dev-master",
+        "sonata-project/doctrine-extensions": "dev-master",
         "knplabs/gaufrette": "dev-master",
         "imagine/Imagine": "v0.3.0",
         "kriswallsmith/buzz": "0.7"
