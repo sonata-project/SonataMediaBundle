@@ -14,7 +14,7 @@
         <field name="providerName"      column="provider_name"            type="string"   nullable="false" length="255" default="image" />
         <field name="providerStatus"    column="provider_status"          type="integer"  nullable="false" />
         <field name="providerReference" column="provider_reference"       type="string"   nullable="false" length="255"/>
-        <field name="providerMetadata"  column="provider_metadata"        type="array"    nullable="true" />
+        <field name="providerMetadata"  column="provider_metadata"        type="json"     nullable="true" />
 
         <field name="width"             column="width"             type="integer"  nullable="true" />
         <field name="height"            column="height"            type="integer"  nullable="true" />
