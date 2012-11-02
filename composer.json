@@ -23,7 +23,7 @@
         "sonata-project/easy-extends-bundle": "dev-master",
         "sonata-project/doctrine-extensions": "dev-master",
         "knplabs/gaufrette": "dev-master",
-        "imagine/Imagine": "v0.3.0",
+        "imagine/Imagine": "0.3.0",
         "kriswallsmith/buzz": "0.7"
     },
     "require-dev": {
