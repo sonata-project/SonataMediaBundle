@@ -83,8 +83,8 @@ class GalleryAdmin extends Admin
         $listMapper
             ->add('enabled', null, array('editable' => true))
             ->addIdentifier('name')
-            ->add('context')
-            ->add('defaultFormat')
+            ->add('context', 'trans', array('catalogue' => 'SonataMediaBundle'))
+            ->add('defaultFormat', 'trans', array('catalogue' => 'SonataMediaBundle'))
         ;
     }
 
