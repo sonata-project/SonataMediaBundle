@@ -85,7 +85,7 @@ class FormatThumbnail implements ThumbnailInterface
         // delete the differents formats
         foreach ($provider->getFormats() as $format => $definition) {
             $path = $provider->generatePrivateUrl($media, $format);
-            if ($provider->getFilesystem()->has($path)) {
+            if ($path && $provider->getFilesystem()->has($path)) {
                 $provider->getFilesystem()->delete($path);
             }
         }
