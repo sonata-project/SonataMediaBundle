@@ -23,9 +23,9 @@ file that was distributed with this source code.
             {% endif %}
 
             {% if name == persistent_parameters.context %}
-                <li class="active"><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name }}</a></li>
+                <li class="active"><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
             {% else %}
-                <li><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name }}</a></li>
+                <li><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
             {% endif %}
         {% endfor %}
 
