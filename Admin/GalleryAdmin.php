@@ -57,7 +57,10 @@ class GalleryAdmin extends Admin
         }
 
         $formMapper
-            ->add('context', 'choice', array('choices' => $contexts))
+            ->add('context', 'sonata_type_translatable_choice', array(
+                'choices' => $contexts, 
+                'catalogue' => 'SonataMediaBundle'
+            ))
             ->add('enabled', null, array('required' => false))
             ->add('name')
             ->add('defaultFormat', 'choice', array('choices' => $formats))
@@ -80,8 +83,8 @@ class GalleryAdmin extends Admin
         $listMapper
             ->add('enabled', null, array('editable' => true))
             ->addIdentifier('name')
-            ->add('context')
-            ->add('defaultFormat')
+            ->add('context', 'trans', array('catalogue' => 'SonataMediaBundle'))
+            ->add('defaultFormat', 'trans', array('catalogue' => 'SonataMediaBundle'))
         ;
     }
 
