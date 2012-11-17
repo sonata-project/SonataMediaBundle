@@ -52,8 +52,8 @@ class GalleryAdmin extends Admin
         }
 
         $contexts = array();
-        foreach((array)$this->pool->getContexts() as $context => $format) {
-            $contexts[$context] = $context;
+        foreach((array)$this->pool->getContexts() as $contextItem => $format) {
+            $contexts[$contextItem] = $contextItem;
         }
 
         $formMapper
