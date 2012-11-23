@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Gaufrette\Adapter\Local;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
@@ -323,7 +324,14 @@ class FileProvider extends BaseProvider
             }, 200, $headers);
         }
 
-        $headers[$mode] = $this->generatePrivateUrl($media, $format);
+        if (!$this->getFilesystem()->getAdapter() instanceof \Sonata\MediaBundle\Filesystem\Local) {
+            throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
+        }
+
+        $headers[$mode] = sprintf('%s/%s',
+            $this->getFilesystem()->getAdapter()->getDirectory(),
+            $this->generatePrivateUrl($media, $format)
+        );
 
         return new Response('', 200, $headers);
     }
