@@ -122,6 +122,18 @@ class GalleryAdmin extends Admin
         $parameters = $this->getPersistentParameters();
 
         $gallery->setContext($parameters['context']);
+
+        // fix weird bug with setter object not being call
+        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($gallery)
+    {
+        // fix weird bug with setter object not being call
+        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
     }
 
     /**
