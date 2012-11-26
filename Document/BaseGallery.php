@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -8,18 +9,36 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Document\PHPCR;
+namespace Sonata\MediaBundle\Document;
 
-use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\MediaBundle\Model\Gallery;
 
-abstract class BaseGalleryHasMedia extends GalleryHasMedia
+/**
+ * Bundle\MediaBundle\Document\BaseGallery
+ */
+abstract class BaseGallery extends Gallery
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct()
+    {
+        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection;
+    }
+
+    /**
+     * Pre Persist method
+     */
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
+    /**
+     * Pre Update method
+     */
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();

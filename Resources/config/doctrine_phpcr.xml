@@ -18,10 +18,10 @@
             <argument>%sonata.media.media.class%</argument>
         </service>
 
-        <!--<service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">-->
-            <!--<argument type="service" id="sonata.media.document_manager" />-->
-            <!--<argument>Application\Sonata\MediaBundle\Document\PHPCR\Gallery</argument>-->
-        <!--</service>-->
+        <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
+            <argument type="service" id="sonata.media.document_manager" />
+            <argument>Application\Sonata\MediaBundle\Document\PHPCR\Gallery</argument>
+        </service>
 
         <!-- Path generator servive -->
         <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\ODMGenerator">

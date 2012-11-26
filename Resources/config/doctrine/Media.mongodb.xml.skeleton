@@ -11,7 +11,7 @@
             xml mapping          : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/xml-mapping/en
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
-    <document name="Application\Sonata\MediaBundle\Document\ODM\Media" >
+    <document name="Application\Sonata\MediaBundle\Document\Media" >
         <field fieldName="id" id="true" />
     </document>
 </doctrine-mongo-mapping>

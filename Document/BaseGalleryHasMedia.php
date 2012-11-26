@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Sonata project.
  *
@@ -9,11 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Document\ODM;
+namespace Sonata\MediaBundle\Document;
 
-use Sonata\MediaBundle\Model\Media;
+use Sonata\MediaBundle\Model\GalleryHasMedia;
 
-abstract class BaseMedia extends Media
+abstract class BaseGalleryHasMedia extends GalleryHasMedia
 {
     public function prePersist()
     {
