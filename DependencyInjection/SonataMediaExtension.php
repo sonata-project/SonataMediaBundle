@@ -310,7 +310,7 @@ class SonataMediaExtension extends Extension
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
-                ->replaceArgument(2, $config['filesystem']['s3']['create'])
+                ->replaceArgument(2, array('create' => $config['filesystem']['s3']['create']))
                 ->addMethodCall('setDirectory', array($config['filesystem']['s3']['directory']));
             ;
 
