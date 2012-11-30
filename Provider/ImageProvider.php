@@ -136,7 +136,7 @@ class ImageProvider extends FileProvider
     /**
      * {@inheritdoc}
      */
-	public function generatePrivateUrl(MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, $format)
     {
     	if ($format == 'reference') {
     		return $this->getReferenceImage($media);
