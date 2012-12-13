@@ -59,6 +59,10 @@ Then you must configure the interaction with the orm and add the mediaBundles se
                     mappings:
                         SonataMediaBundle: ~
 
+        dbal:
+            types:
+                json: Sonata\Doctrine\Types\JsonType
+
     sonata_media:
         default_context: default
         db_driver: doctrine_orm # or doctrine_mongodb
