@@ -138,12 +138,11 @@ class ImageProvider extends FileProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-    	if ($format == 'reference') {
-    		return $this->getReferenceImage($media);
-    	}
-    	else {
-        	return $this->thumbnail->generatePrivateUrl($this, $media, $format);
-    	}
+        if ($format == 'reference') {
+            return $this->getReferenceImage($media);
+        } else {
+            return $this->thumbnail->generatePrivateUrl($this, $media, $format);
+        }
     }
 
     /**
