@@ -19,7 +19,7 @@ class ProviderDataTransformer implements DataTransformerInterface
 {
     protected $pool;
 
-    protected $array;
+    protected $options;
 
     /**
      * @param \Sonata\MediaBundle\Provider\Pool $pool
