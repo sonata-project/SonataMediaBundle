@@ -22,7 +22,7 @@ Register the new bundle into your AppKernel:
 .. code-block:: php
 
   <?php
-  // app/appkernel.php
+  // app/AppKernel.php
   public function registerBundles()
   {
       return array(
@@ -135,8 +135,8 @@ Now that your module is generated, you can register it
 .. code-block:: php
 
     <?php
-    // app/appkernel.php
-    public function registerbundles()
+    // app/AppKernel.php
+    public function registerBundles()
     {
         return array(
             ...
