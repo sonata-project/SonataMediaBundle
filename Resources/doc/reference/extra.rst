@@ -37,7 +37,7 @@ The bundle provides a specific consumer to generate thumbnails through an asynch
 time for the user after uploading a file.
 
 In order to use this feature, you need to install the Sonata Notification Bundle and change the thumbnail configuration
-for each provider::
+for each provider:
 
 .. code-block:: yaml
 
