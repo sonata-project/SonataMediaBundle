@@ -101,6 +101,11 @@ class MediaBlockService extends BaseBlockService
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $contextChoices = $this->getContextChoices();
+
+        if (!$block->getSetting('mediaId') instanceof MediaInterface) {
+           $this->load($block);
+        }
+
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
