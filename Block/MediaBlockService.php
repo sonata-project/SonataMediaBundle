@@ -103,7 +103,7 @@ class MediaBlockService extends BaseBlockService
         $contextChoices = $this->getContextChoices();
 
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
-           $this->load($block);
+            $this->load($block);
         }
 
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
