@@ -188,8 +188,8 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
-        return new RedirectResponse(sprintf('http://www.youtube.com/watch?v=%s', $media->getProviderReference()));
+        return new RedirectResponse(sprintf('http://www.youtube.com/watch?v=%s', $media->getProviderReference()), 302, $headers);
     }
 }

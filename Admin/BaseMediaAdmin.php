@@ -12,10 +12,9 @@
 namespace Sonata\MediaBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
@@ -47,7 +46,7 @@ abstract class BaseMediaAdmin extends Admin
         $listMapper
 //            ->add('image', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig'))
             ->add('custom', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig'))
-            ->add('enabled', 'boolean')
+            ->add('enabled', 'boolean', array('editable' => true))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'view' => array(),
@@ -144,7 +143,7 @@ abstract class BaseMediaAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureSideMenu(MenuItemInterface $menu, $action, Admin $childAdmin = null)
+    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
         if (!in_array($action, array('edit', 'view'))) {
             return;

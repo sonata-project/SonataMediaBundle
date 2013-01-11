@@ -4,15 +4,13 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Sonata\MediaBundle\Document\ODM\BaseGallery">
+    <mapped-superclass name="Sonata\MediaBundle\Document\BaseGalleryHasMedia">
 
-        <field name="name"          fieldName="name"            type="string"/>
-        <field name="context"       fieldName="context"         type="string"/>
-        <field name="defaultFormat" fieldName="defaultFormat"   type="string" />
-        <field name="enabled"       fieldName="enabled"         type="boolean" />
+        <field name="position"   fieldName="position" type="int" />
+        <field name="enabled"    fieldName="enabled"  type="boolean" />
 
-        <field name="updatedAt"     fieldName="updatedAt"       type="date" />
-        <field name="createdAt"     fieldName="createdAt"       type="date" />
+        <field name="updatedAt"          fieldName="updatedAt"     type="date" />
+        <field name="createdAt"          fieldName="createdAt"     type="date" />
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist"/>

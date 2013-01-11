@@ -61,6 +61,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
+        $media->setContext('default');
 
         $this->assertEquals('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
@@ -79,6 +80,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
         $media->setHeight(100);
+        $media->setContext('default');
 
         $properties = $provider->getHelperProperties($media, 'admin');
 
@@ -101,6 +103,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
+        $media->setContext('default');
 
         $this->assertTrue($provider->requireThumbnails($media));
 

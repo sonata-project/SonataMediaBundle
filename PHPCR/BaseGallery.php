@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Document\ODM;
+namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\MediaBundle\Model\Gallery;
 
@@ -18,7 +18,6 @@ use Sonata\MediaBundle\Model\Gallery;
  */
 abstract class BaseGallery extends Gallery
 {
-
     /**
      * {@inheritdoc}
      */
@@ -28,7 +27,7 @@ abstract class BaseGallery extends Gallery
     }
 
     /**
-     * Pre Persist method
+     * Pre persist method
      */
     public function prePersist()
     {

@@ -32,7 +32,7 @@ class Replicate implements AdapterInterface
     /**
      * Returns the checksum of the file
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return string
      */
@@ -44,9 +44,9 @@ class Replicate implements AdapterInterface
     /**
      * Deletes the file
      *
-     * @param  string $key
+     * @param string $key
      *
-     * @return boolean TRUE on success, or FALSE on failure
+     * @return void TRUE on success, or FALSE on failure
      */
     public function delete($key)
     {
@@ -57,7 +57,7 @@ class Replicate implements AdapterInterface
     /**
      * Returns the last modified time
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return integer An UNIX like timestamp
      */
@@ -79,7 +79,7 @@ class Replicate implements AdapterInterface
     /**
      * Indicates whether the file or directory exists
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return boolean
      */
@@ -91,8 +91,8 @@ class Replicate implements AdapterInterface
     /**
      * Writes the given content into the file
      *
-     * @param  string $key
-     * @param  string $content
+     * @param string $key
+     * @param string $content
      *
      * @return integer The number of bytes that were written into the file, or
      *                 FALSE on failure
@@ -108,7 +108,7 @@ class Replicate implements AdapterInterface
     /**
      * Reads the content of the file
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return string
      */
@@ -155,5 +155,13 @@ class Replicate implements AdapterInterface
     public function createFileStream($key, Filesystem $filesystem)
     {
         return $this->master->createFileStream($key, $filesystem);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function listDirectory($directory = '')
+    {
+        return $this->master->listDirectory($directory);
     }
 }

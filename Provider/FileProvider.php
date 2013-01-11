@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Gaufrette\Adapter\Local;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
@@ -174,10 +175,10 @@ class FileProvider extends BaseProvider
     protected function fixFilename(MediaInterface $media)
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
-            $media->setName($media->getBinaryContent()->getClientOriginalName());
+            $media->setName($media->getName() ?: $media->getBinaryContent()->getClientOriginalName());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getClientOriginalName());
         } else if ($media->getBinaryContent() instanceof File) {
-            $media->setName($media->getBinaryContent()->getBasename());
+            $media->setName($media->getName() ?: $media->getBinaryContent()->getBasename());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getBasename());
         }
 
@@ -303,20 +304,19 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode = null)
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
         // build the default headers
-        $headers = array(
+        $headers = array_merge(array(
             'Content-Type'          => $media->getContentType(),
             'Content-Disposition'   => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
-        );
+        ), $headers);
 
         if (!in_array($mode, array('http', 'X-Sendfile', 'X-Accel-Redirect'))) {
             throw new \RuntimeException('Invalid mode provided');
         }
 
         if ($mode == 'http') {
-
             $provider = $this;
 
             return new StreamedResponse(function() use ($provider, $media) {
@@ -324,7 +324,14 @@ class FileProvider extends BaseProvider
             }, 200, $headers);
         }
 
-        $headers[$mode] = $this->generatePrivateUrl($media, $format);
+        if (!$this->getFilesystem()->getAdapter() instanceof \Sonata\MediaBundle\Filesystem\Local) {
+            throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
+        }
+
+        $headers[$mode] = sprintf('%s/%s',
+            $this->getFilesystem()->getAdapter()->getDirectory(),
+            $this->generatePrivateUrl($media, $format)
+        );
 
         return new Response('', 200, $headers);
     }

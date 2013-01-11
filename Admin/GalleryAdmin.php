@@ -52,18 +52,19 @@ class GalleryAdmin extends Admin
         }
 
         $contexts = array();
-        foreach((array)$this->pool->getContexts() as $context => $format) {
-            $contexts[$context] = $context;
+        foreach((array)$this->pool->getContexts() as $contextItem => $format) {
+            $contexts[$contextItem] = $contextItem;
         }
 
         $formMapper
-            ->add('context', 'choice', array('choices' => $contexts))
+            ->add('context', 'sonata_type_translatable_choice', array(
+                'choices' => $contexts,
+                'catalogue' => 'SonataMediaBundle'
+            ))
             ->add('enabled', null, array('required' => false))
             ->add('name')
             ->add('defaultFormat', 'choice', array('choices' => $formats))
-            ->add('galleryHasMedias', 'sonata_type_collection', array(
-                'by_reference' => false
-            ), array(
+            ->add('galleryHasMedias', 'sonata_type_collection', array(), array(
                 'edit' => 'inline',
                 'inline' => 'table',
                 'sortable'  => 'position',
@@ -78,10 +79,10 @@ class GalleryAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('enabled')
+            ->add('enabled', null, array('editable' => true))
             ->addIdentifier('name')
-            ->add('context')
-            ->add('defaultFormat')
+            ->add('context', 'trans', array('catalogue' => 'SonataMediaBundle'))
+            ->add('defaultFormat', 'trans', array('catalogue' => 'SonataMediaBundle'))
         ;
     }
 
@@ -119,6 +120,18 @@ class GalleryAdmin extends Admin
         $parameters = $this->getPersistentParameters();
 
         $gallery->setContext($parameters['context']);
+
+        // fix weird bug with setter object not being call
+        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($gallery)
+    {
+        // fix weird bug with setter object not being call
+        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
     }
 
     /**

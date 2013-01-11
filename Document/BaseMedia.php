@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Document\PHPCR;
+namespace Sonata\MediaBundle\Document;
 
 use Sonata\MediaBundle\Model\Media;
 

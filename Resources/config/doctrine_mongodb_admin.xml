@@ -36,17 +36,13 @@
             </call>
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
-                    <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
-                    <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
-                    <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
                     <argument key="list">SonataMediaBundle:MediaAdmin:list.html.twig</argument>
                 </argument>
             </call>
         </service>
 
         <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineMongoDBManager">
-            <argument type="service" id="doctrine.odm.mongodb.default_document_manager" />
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
             <argument type="service" id="sonata.media.manager.media" />
         </service>
 
@@ -63,10 +59,6 @@
 
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
-                    <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
-                    <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
-                    <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
                     <argument key="list">SonataMediaBundle:GalleryAdmin:list.html.twig</argument>
                 </argument>
             </call>

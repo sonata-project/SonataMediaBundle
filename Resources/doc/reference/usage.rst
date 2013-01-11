@@ -45,7 +45,7 @@ For instance you can retrieve the original youtube video title with :
 
     $media = $mediaManager->findOneBy(array('id' => 132));
 
-    echo $media->getMetadataValue('title', 'if done use this string');
+    echo $media->getMetadataValue('title', 'if none use this string');
 
 
 

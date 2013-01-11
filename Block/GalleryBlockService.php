@@ -130,7 +130,7 @@ class GalleryBlockService extends BaseBlockService
         }
 
         // simulate an association ...
-        $fieldDescription = $formMapper->getAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media' );
+        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media' );
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');

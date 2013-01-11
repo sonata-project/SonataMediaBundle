@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="fr" datatype="plaintext" original="file.ext">
         <body>
+        	<trans-unit id="default">
+                <source>default</source>
+                <target>default</target>
+            </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
                 <target>Edition</target>
@@ -21,6 +25,10 @@
             <trans-unit id="breadcrumb.link_media_view">
                 <source>breadcrumb.link_media_view</source>
                 <target>Visualiser</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_show">
+                <source>breadcrumb.link_media_show</source>
+                <target>Afficher</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
@@ -61,6 +69,10 @@
             <trans-unit id="title.informations">
                 <source>title.informations</source>
                 <target>Information</target>
+            </trans-unit>
+            <trans-unit id="title.formats">
+                <source>title.formats</source>
+                <target>Formats</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
@@ -188,6 +200,78 @@
                         Pour utilisateurs expérimentés
                     ]]>
                 </target>
+            </trans-unit>
+            <trans-unit id="form.label_enabled">
+                <source>form.label_enabled</source>
+                <target>Actif</target>
+            </trans-unit>
+            <trans-unit id="form.label_context">
+                <source>form.label_context</source>
+                <target>Contexte</target>
+            </trans-unit>
+            <trans-unit id="form.label_name">
+                <source>form.label_name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="form.label_default_format">
+                <source>form.label_default_format</source>
+                <target>Format</target>
+            </trans-unit>
+            <trans-unit id="form.label_gallery_has_medias">
+                <source>form.label_gallery_has_medias</source>
+                <target>Médias</target>
+            </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Auteur</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
+            <trans-unit id="list.label_enabled">
+                <source>list.label_enabled</source>
+                <target>Actif</target>
+            </trans-unit>
+            <trans-unit id="list.label__action">
+                <source>list.label__action</source>
+                <target>Action</target>
+            </trans-unit>
+            <trans-unit id="list.label_custom">
+                <source>list.label_custom</source>
+                <target>Personnalisé</target>
+            </trans-unit>
+            <trans-unit id="filter.label_name">
+                <source>filter.label_name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_reference">
+                <source>filter.label_provider_reference</source>
+                <target>Référence du type</target>
+            </trans-unit>
+            <trans-unit id="filter.label_enabled">
+                <source>filter.label_enabled</source>
+                <target>Actif</target>
+            </trans-unit>
+            <trans-unit id="filter.label_context">
+                <source>filter.label_context</source>
+                <target>Contexte</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_name">
+                <source>filter.label_provider_name</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>Fichier</target>
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>

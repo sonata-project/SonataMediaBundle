@@ -52,7 +52,7 @@ Render the media:
 
     {% media media, 'small' %}
 
-    {% media media, 'small' %}
+    {% media media, 'small' with {'class': 'myclass'} %}
 
 Render the path:
 

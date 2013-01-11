@@ -10,6 +10,8 @@
 
 namespace Sonata\MediaBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Gallery implements GalleryInterface
 {
     /**
@@ -126,11 +128,11 @@ abstract class Gallery implements GalleryInterface
      */
     public function setGalleryHasMedias($galleryHasMedias)
     {
-        foreach ($galleryHasMedias as $galleryHasMedia) {
-            $galleryHasMedia->setGallery($this);
-        }
+        $this->galleryHasMedias = new ArrayCollection();
 
-        $this->galleryHasMedias = $galleryHasMedias;
+        foreach ($galleryHasMedias as $galleryHasMedia) {
+            $this->addGalleryHasMedias($galleryHasMedia);
+        }
     }
 
     /**

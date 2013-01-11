@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="messages.en.xliff">
         <body>
+        	<trans-unit id="default">
+                <source>default</source>
+                <target>default</target>
+            </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
                 <target>Bearbeiten</target>
@@ -26,6 +30,14 @@
                 <source>breadcrumb.link_media_view</source>
                 <target>Anzeigen</target>
             </trans-unit>
+            <trans-unit id="breadcrumb.link_media_delete">
+                <source>breadcrumb.link_media_delete</source>
+                <target>Löschen</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_create">
+                <source>breadcrumb.link_gallery_create</source>
+                <target>Hinzufügen</target>
+            </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
                 <target>Galerien</target>
@@ -33,6 +45,10 @@
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_delete">
+                <source>breadcrumb.link_gallery_delete</source>
+                <target>Löschen</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
@@ -194,6 +210,14 @@
                 <source>form.label_enabled</source>
                 <target>Enabled</target>
             </trans-unit>
+            <trans-unit id="form.label_media">
+                <source>form.label_media</source>
+                <target>Medium</target>
+            </trans-unit>
+            <trans-unit id="form.label_position">
+                <source>form.label_position</source>
+                <target>Position</target>
+            </trans-unit>
             <trans-unit id="form.label_context">
                 <source>form.label_context</source>
                 <target>Kontext</target>
@@ -210,9 +234,37 @@
                 <source>form.label_gallery_has_medias</source>
                 <target>Medien</target>
             </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
             <trans-unit id="list.label_enabled">
                 <source>list.label_enabled</source>
                 <target>Aktiviert</target>
+            </trans-unit>
+            <trans-unit id="list.label_name">
+                <source>list.label_name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="list.label_context">
+                <source>list.label_context</source>
+                <target>Kontext</target>
+            </trans-unit>
+            <trans-unit id="list.label_default_format">
+                <source>list.label_default_format</source>
+                <target>Format</target>
             </trans-unit>
             <trans-unit id="list.label__action">
                 <source>list.label__action</source>
@@ -251,7 +303,7 @@
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
-                <target>Media Library</target>
+                <target>Medienbibliothek</target>
             </trans-unit>
         </body>
     </file>

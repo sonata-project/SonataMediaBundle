@@ -17,25 +17,27 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2",
-        "symfony/symfony": "dev-master",
+        "symfony/symfony": ">=2.1,<2.3-dev",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/notification-bundle": "dev-master",
-        "sonata-project/easy-extends-bundle": "*",
-        "knplabs/gaufrette": "*",
-        "imagine/Imagine": "*",
-        "kriswallsmith/buzz": "*"
+        "sonata-project/easy-extends-bundle": "dev-master",
+        "sonata-project/doctrine-extensions": "dev-master",
+        "knplabs/gaufrette": "dev-master",
+        "imagine/Imagine": "*@stable",
+        "kriswallsmith/buzz": "0.7"
     },
     "require-dev": {
         "sonata-project/formatter-bundle": "dev-master"
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "liip/imagine-bundle": "*",
-        "sonata-project/admin-bundle": "dev-master"
+        "liip/imagine-bundle": "dev-master",
+        "sonata-project/admin-bundle": "dev-master",
+        "amazonwebservices/aws-sdk-for-php": "1.5.*"
     },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }
     },
-    "target-dir": "Sonata/MediaBundle"
+    "target-dir": "Sonata/MediaBundle",
+    "minimum-stability": "dev"
 }

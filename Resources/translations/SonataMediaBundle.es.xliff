@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+        	<trans-unit id="default">
+                <source>default</source>
+                <target>Por defecto</target>
+            </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
                 <target>Editar</target>
@@ -26,6 +30,10 @@
                 <source>breadcrumb.link_media_view</source>
                 <target>Ver</target>
             </trans-unit>
+            <trans-unit id="breadcrumb.link_media_delete">
+                <source>breadcrumb.link_media_delete</source>
+                <target>Borrar</target>
+            </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_create">
                 <source>breadcrumb.link_gallery_create</source>
                 <target>Crear</target>
@@ -37,6 +45,10 @@
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
                 <target>Editar</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_delete">
+                <source>breadcrumb.link_gallery_delete</source>
+                <target>Borrar</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
@@ -193,6 +205,117 @@
             <trans-unit id="link.test_protected_url">
                 <source>link.test_protected_url</source>
                 <target>Link de previsualización</target>
+            </trans-unit>
+            <trans-unit id="label.edit_with_pixlr">
+                <source>label.edit_with_pixlr</source>
+                <target>Editar con Pixlr</target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_warning">
+                <source>label.pixlr_warning</source>
+                <target>
+                    <![CDATA[
+                        <span class="label important">Importante</span> usted esta por exponer el archivo multimedia en un <strong>servicio externo</strong>. <br />
+                        Si esta trabajando sobre materiales confidenciales, por favor no use este servicio.
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_express_editor">
+                <source>label.pixlr_express_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong style="color: white">Editor Express</strong> <br />
+                        Interfaz simple para la edición rápida
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_advanced_editor">
+                <source>label.pixlr_advanced_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong style="color: white">Editor Avanzado</strong> <br />
+                        Solo usuarios experimentados
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="form.label_enabled">
+                <source>form.label_enabled</source>
+                <target>Habilitado</target>
+            </trans-unit>
+            <trans-unit id="form.label_context">
+                <source>form.label_context</source>
+                <target>Contexto</target>
+            </trans-unit>
+            <trans-unit id="form.label_name">
+                <source>form.label_name</source>
+                <target>Nombre</target>
+            </trans-unit>
+            <trans-unit id="form.label_default_format">
+                <source>form.label_default_format</source>
+                <target>Formato</target>
+            </trans-unit>
+            <trans-unit id="form.label_gallery_has_medias">
+                <source>form.label_gallery_has_medias</source>
+                <target>Multimedias</target>
+            </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Sincronizar CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Descripción</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Derechos de autor</target>
+            </trans-unit>   
+            <trans-unit id="list.label_enabled">
+                <source>list.label_enabled</source>
+                <target>Habilitado</target>
+            </trans-unit>
+            <trans-unit id="form.label_media">
+                <source>form.label_media</source>
+                <target>Multimedia</target>
+            </trans-unit>
+            <trans-unit id="form.label_position">
+                <source>form.label_position</source>
+                <target>Posición</target>
+            </trans-unit>
+            <trans-unit id="list.label__action">
+                <source>list.label__action</source>
+                <target>Acción</target>
+            </trans-unit>
+            <trans-unit id="list.label_custom">
+                <source>list.label_custom</source>
+                <target>Personalizado</target>
+            </trans-unit>
+            <trans-unit id="filter.label_name">
+                <source>filter.label_name</source>
+                <target>Nombre</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_reference">
+                <source>filter.label_provider_reference</source>
+                <target>Referencia del proveedor</target>
+            </trans-unit>
+            <trans-unit id="filter.label_enabled">
+                <source>filter.label_enabled</source>
+                <target>Habilitado</target>
+            </trans-unit>
+            <trans-unit id="filter.label_context">
+                <source>filter.label_context</source>
+                <target>Contexto</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_name">
+                <source>filter.label_provider_name</source>
+                <target>Proveedor</target>
+            </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>Archivo</target>
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
