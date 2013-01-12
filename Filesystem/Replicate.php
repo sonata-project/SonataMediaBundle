@@ -30,18 +30,6 @@ class Replicate implements AdapterInterface
     }
 
     /**
-     * Returns the checksum of the file
-     *
-     * @param string $key
-     *
-     * @return string
-     */
-    public function checksum($key)
-    {
-        return $this->master->checksum($key);
-    }
-
-    /**
      * Deletes the file
      *
      * @param string $key
@@ -163,5 +151,13 @@ class Replicate implements AdapterInterface
     public function listDirectory($directory = '')
     {
         return $this->master->listDirectory($directory);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isDirectory($key)
+    {
+        return $this->master->isDirectory($key);
     }
 }
