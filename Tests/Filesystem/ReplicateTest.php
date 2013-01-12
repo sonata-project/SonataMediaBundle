@@ -21,10 +21,6 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $slave = $this->getMock('Gaufrette\Adapter');
         $replicate = new Replicate($master, $slave);
 
-        $master->expects($this->once())->method('checksum')->will($this->returnValue('master'));
-        $slave->expects($this->never())->method('checksum');
-        $this->assertEquals('master', $replicate->checksum('foo'));
-
         $master->expects($this->once())->method('mtime')->will($this->returnValue('master'));
         $slave->expects($this->never())->method('mtime');
         $this->assertEquals('master', $replicate->mtime('foo'));
@@ -52,5 +48,9 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $master->expects($this->once())->method('rename');
         $slave->expects($this->once())->method('rename');
         $replicate->rename('foo', 'bar');
+
+        $master->expects($this->once())->method('isDirectory');
+        $slave->expects($this->never())->method('isDirectory');
+        $replicate->isDirectory('foo');
     }
 }
