@@ -48,7 +48,7 @@
             </trans-unit>
             <trans-unit id="gallery">
                 <source>gallery</source>
-                <target>Gallery</target>
+                <target>Galerie</target>
             </trans-unit>
             <trans-unit id="title_select_provider">
                 <source>title_select_provider</source>
