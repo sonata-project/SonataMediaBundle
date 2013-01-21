@@ -20,6 +20,18 @@ interface GalleryInterface
     function setName($name);
 
     /**
+     * @return string
+     */
+    function getContext();
+
+    /**
+     * @param string $context
+     *
+     * @return string
+     */
+    function setContext($context);
+
+    /**
      * Get name
      *
      * @return string $name

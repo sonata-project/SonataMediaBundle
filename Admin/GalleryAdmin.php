@@ -64,12 +64,15 @@ class GalleryAdmin extends Admin
             ->add('enabled', null, array('required' => false))
             ->add('name')
             ->add('defaultFormat', 'choice', array('choices' => $formats))
-            ->add('galleryHasMedias', 'sonata_type_collection', array(), array(
-                'edit' => 'inline',
-                'inline' => 'table',
-                'sortable'  => 'position',
-                'link_parameters' => array('context' => $context)
-            ))
+            ->add('galleryHasMedias', 'sonata_type_collection', array(
+                    'cascade_validation' => true,
+                ), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable'  => 'position',
+                    'link_parameters' => array('context' => $context),
+                )
+            )
         ;
     }
 
@@ -84,20 +87,6 @@ class GalleryAdmin extends Admin
             ->add('context', 'trans', array('catalogue' => 'SonataMediaBundle'))
             ->add('defaultFormat', 'trans', array('catalogue' => 'SonataMediaBundle'))
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validate(ErrorElement $errorElement, $gallery)
-    {
-        $formats = $this->pool->getFormatNamesByContext($gallery->getContext());
-
-        if (!array_key_exists($gallery->getDefaultFormat(), $formats)) {
-            $errorElement->with('defaultFormat')
-                ->addViolation('invalid format')
-            ->end();
-        }
     }
 
     /**
