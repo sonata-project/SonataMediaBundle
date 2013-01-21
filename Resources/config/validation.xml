@@ -11,13 +11,19 @@
         </constraint>
 
         <property name="name">
-           <constraint name="NotNull" />
+            <constraint name="NotNull" />
         </property>
     </class>
 
+    <class name="Application\Sonata\MediaBundle\Entity\GalleryHasMedia">
+
+    </class>
+
     <class name="Application\Sonata\MediaBundle\Entity\Gallery">
-        <property name="name">
-           <constraint name="NotNull" />
+        <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat" />
+
+        <property name="galleryHasMedias">
+            <constraint name="Valid" />
         </property>
     </class>
 

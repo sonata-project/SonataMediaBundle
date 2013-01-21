@@ -50,6 +50,7 @@ class SonataMediaExtension extends Extension
         $loader->load('extra.xml');
         $loader->load('form.xml');
         $loader->load('gaufrette.xml');
+        $loader->load('validators.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 

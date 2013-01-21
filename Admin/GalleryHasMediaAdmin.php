@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
 
 class GalleryHasMediaAdmin extends Admin
 {
@@ -38,15 +39,6 @@ class GalleryHasMediaAdmin extends Admin
             ->add('enabled', null, array('required' => false))
             ->add('position')
         ;
-    }
-
-    /**
-     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-
     }
 
     /**
