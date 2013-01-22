@@ -88,6 +88,9 @@ abstract class BaseMediaAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('view', $this->getRouterIdParameter() . '/view');
+        $collection->add('show', $this->getRouterIdParameter() . '/show', array(
+            '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view')
+        ));
     }
 
     /**
