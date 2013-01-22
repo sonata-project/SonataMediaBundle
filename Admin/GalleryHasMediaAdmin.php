@@ -26,10 +26,16 @@ class GalleryHasMediaAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        if ($this->hasRequest()) {
-            $link_parameters = array('context' => $this->getRequest()->get('context'));
-        } else {
-            $link_parameters = array();
+        if ($this->hasParentFieldDescription()) {
+            $link_parameters = $this->getParentFieldDescription()->getOption('link_parameters', array());
+        }
+
+        if ($this->hasRequest() && null !== $this->getRequest()->get('context', null)) {
+            $context = $this->getRequest()->get('context', null);
+
+            if (null !== $context) {
+                $link_parameters['context'] = $context;
+            }
         }
 
         $formMapper
