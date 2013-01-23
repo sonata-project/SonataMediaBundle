@@ -15,7 +15,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 use Sonata\MediaBundle\Provider\ImageProvider;
-use Sonata\MediaBundle\Document\MediaManager;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

@@ -12,36 +12,80 @@ namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\MediaBundle\Model\MediaManager as AbstractMediaManager;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\ODM\PHPCR\DocumentRepository;
-
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager;
+
 
 class MediaManager extends AbstractMediaManager
 {
-    protected $dm;
+    protected $modelManager;
     protected $repository;
     protected $class;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool     $pool
-     * @param \Doctrine\ODM\MongoDB\DocumentManager $dm
-     * @param string                                $class
+     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param \Sonata\AdminBundle\Model\ModelManagerInterface $modelManager
+     * @param $class
      */
-    public function __construct(Pool $pool, DocumentManager $dm, $class)
+    public function __construct(Pool $pool, ModelManager $modelManager, $class)
     {
-        $this->dm    = $dm;
+        $this->modelManager = $modelManager;
 
         parent::__construct($pool, $class);
     }
 
-    protected function getRepository()
+    /**
+     * Filter criteria for an identifier, phpcr-odm uses absolute paths and needs an identifier starting with a forward slash
+     *
+     * @param array $criteria
+     * @return array
+     */
+    protected function filterCriteria(array $criteria)
     {
-        if (!$this->repository) {
-            $this->repository = $this->dm->getRepository($this->class);
+        $identifier = $this->modelManager->getModelIdentifier($this->class);
+
+        if (isset($criteria[$identifier])) {
+            $criteria[$identifier] = $this->modelManager->getBackendId($criteria[$identifier]);
         }
 
-        return $this->repository;
+        return $criteria;
+    }
+
+    /**
+     * Finds one media by the given criteria
+     *
+     * @param array $criteria
+     *
+     * @return Media
+     */
+    public function findOneBy(array $criteria)
+    {
+        $identifier = $this->modelManager->getModelIdentifier($this->class);
+
+        if (count($criteria) === 1 && isset($criteria[$identifier])) {
+            return $this->modelManager->find($this->class, $criteria[$identifier]);
+        }
+
+        return $this->modelManager->findOneBy($this->class, $this->filterCriteria($criteria));
+    }
+
+    /**
+     * Finds one media by the given criteria
+     *
+     * @param array $criteria
+     *
+     * @return Media
+     */
+    public function findBy(array $criteria)
+    {
+        $identifier = $this->modelManager->getModelIdentifier($this->class);
+
+        if (count($criteria) === 1 && isset($criteria[$identifier])) {
+            return $this->modelManager->find($this->class, $criteria[$identifier]);
+        }
+
+        return $this->modelManager->findBy($this->class, $this->filterCriteria($criteria));
     }
 
     /**
