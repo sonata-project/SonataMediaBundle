@@ -5,27 +5,29 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="sonata.media.manager.media.class">Sonata\MediaBundle\Document\PHPCR\MediaManager</parameter>
-        <parameter key="sonata.media.manager.gallery.class">Sonata\MediaBundle\Document\PHPCR\GalleryManager</parameter>
+        <parameter key="sonata.media.manager.media.class">Sonata\MediaBundle\PHPCR\MediaManager</parameter>
+        <parameter key="sonata.media.manager.gallery.class">Sonata\MediaBundle\PHPCR\GalleryManager</parameter>
     </parameters>
 
     <services>
-        <service id="sonata.media.document_manager" alias="doctrine_phpcr.odm.default_document_manager" />
-
         <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
             <argument type="service" id="sonata.media.pool" />
-            <argument type="service" id="sonata.media.document_manager" />
+            <argument type="service" id="sonata.admin.manager.doctrine_phpcr" />
             <argument>%sonata.media.media.class%</argument>
         </service>
 
         <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
-            <argument type="service" id="sonata.media.document_manager" />
-            <argument>Application\Sonata\MediaBundle\Document\PHPCR\Gallery</argument>
+            <argument type="service" id="sonata.admin.manager.doctrine_phpcr" />
+            <argument>%sonata.media.manager.gallery.class%</argument>
         </service>
 
         <!-- Path generator servive -->
-        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\ODMGenerator">
+        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\DefaultGenerator" />
 
+        <service id="sonata.media.doctrine.event_subscriber" class="Sonata\MediaBundle\Listener\PHPCR\MediaEventSubscriber">
+            <tag name="doctrine_phpcr.event_subscriber" />
+
+            <argument type="service" id="service_container" />
         </service>
     </services>
 
