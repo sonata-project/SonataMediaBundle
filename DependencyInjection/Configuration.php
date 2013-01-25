@@ -154,6 +154,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('port')->defaultValue(21)->end()
                                 ->scalarNode('passive')->defaultValue(false)->end()
                                 ->scalarNode('create')->defaultValue(false)->end()
+                                ->scalarNode('mode')->defaultValue(FTP_BINARY)->end()
                             ->end()
                         ->end()
 
