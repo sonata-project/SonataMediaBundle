@@ -82,6 +82,7 @@ Full configuration options:
                 port:     21
                 passive:  false
                 create:   false
+                mode:     2 # this is the FTP_BINARY constant. see: http://php.net/manual/en/ftp.constants.php
 
             s3:
                 bucket:
