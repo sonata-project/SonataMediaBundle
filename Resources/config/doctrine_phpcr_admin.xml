@@ -28,9 +28,6 @@
             <argument>%sonata.media.admin.media.controller%</argument>
             <argument type="service" id="sonata.media.pool" />
 
-            <!--<call method="setModelManager">-->
-                <!--<argument type="service" id="sonata.media.admin.media.manager" />-->
-            <!--</call>-->
             <call method="setTranslationDomain">
                 <argument>%sonata.media.admin.media.translation_domain%</argument>
             </call>
@@ -39,6 +36,10 @@
                 <argument type="collection">
                     <argument key="list">SonataMediaBundle:MediaAdmin:list.html.twig</argument>
                 </argument>
+            </call>
+
+            <call method="setRouteBuilder">
+                <argument type="service" id="sonata.admin.route.path_info_slashes" />
             </call>
         </service>
 

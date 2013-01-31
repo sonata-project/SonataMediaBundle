@@ -48,6 +48,8 @@ Next, add the correct routing files:
 
 Then you must configure the interaction with the orm and add the mediaBundles settings:
 
+Doctrine ORM:
+
 .. code-block:: yaml
 
     # app/config/config.yml
@@ -63,9 +65,26 @@ Then you must configure the interaction with the orm and add the mediaBundles se
             types:
                 json: Sonata\Doctrine\Types\JsonType
 
+Doctrine PHPCR:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+
+    doctrine_phpcr:
+        odm:
+            auto_mapping: true
+            mappings:
+                SonataMediaBundle:
+                    prefix: Sonata\MediaBundle\PHPCR
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+
     sonata_media:
         default_context: default
-        db_driver: doctrine_orm # or doctrine_mongodb
+        db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
         contexts:
             default:  # the default context is mandatory
                 providers:
