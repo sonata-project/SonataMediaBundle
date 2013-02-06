@@ -19,10 +19,11 @@
         <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
             <argument type="service" id="sonata.admin.manager.doctrine_phpcr" />
             <argument>%sonata.media.manager.gallery.class%</argument>
+            <argument type="service" id="sonata.media.manager.media" />
         </service>
 
         <!-- Path generator servive -->
-        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\DefaultGenerator" />
+        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\PHPCRGenerator" />
 
         <service id="sonata.media.doctrine.event_subscriber" class="Sonata\MediaBundle\Listener\PHPCR\MediaEventSubscriber">
             <tag name="doctrine_phpcr.event_subscriber" />
