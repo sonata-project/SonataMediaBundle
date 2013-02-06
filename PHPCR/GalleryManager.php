@@ -13,20 +13,23 @@ namespace Sonata\MediaBundle\PHPCR;
 use Sonata\MediaBundle\Model\GalleryManager as AbstractGalleryManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager;
+use Sonata\MediaBundle\PHPCR\MediaManager;
 
 class GalleryManager extends AbstractGalleryManager
 {
     protected $modelManager;
     protected $class;
+    protected $mediaManager;
 
     /**
      * @param \Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager $modelManager
      * @param $class
      */
-    public function __construct(ModelManager $modelManager, $class)
+    public function __construct(ModelManager $modelManager, $class, MediaManager $mediaManager)
     {
         $this->modelManager = $modelManager;
         $this->class        = $class;
+        $this->mediaManager = $mediaManager;
     }
 
     /**
@@ -34,8 +37,7 @@ class GalleryManager extends AbstractGalleryManager
      */
     public function update(GalleryInterface $gallery)
     {
-        $this->dm->persist($gallery);
-        $this->dm->flush();
+        $this->modelManager->update($gallery);
     }
 
     /**
@@ -51,7 +53,7 @@ class GalleryManager extends AbstractGalleryManager
      */
     public function findOneBy(array $criteria)
     {
-        return $this->getRepository()->findOneBy($criteria);
+        return $this->mediaManager->findOneBy($criteria);
     }
 
     /**
@@ -59,7 +61,7 @@ class GalleryManager extends AbstractGalleryManager
      */
     public function findBy(array $criteria)
     {
-        return $this->getRepository()->findBy($criteria);
+        return $this->mediaManager->findBy($criteria);
     }
 
     /**
@@ -67,7 +69,6 @@ class GalleryManager extends AbstractGalleryManager
      */
     public function delete(GalleryInterface $gallery)
     {
-        $this->dm->remove($gallery);
-        $this->dm->flush();
+        $this->modelManager->delete($gallery);
     }
 }

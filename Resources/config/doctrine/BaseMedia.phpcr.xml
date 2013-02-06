@@ -5,7 +5,9 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseMedia" >
+    <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseMedia" referenceable="true" >
+
+        <uuid fieldName="uuid" />
 
         <field name="name"              fieldName="name"                type="string" />
         <field name="description"       fieldName="description"         type="string" />

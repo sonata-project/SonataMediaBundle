@@ -15,6 +15,21 @@ use Sonata\MediaBundle\Model\Media;
 
 abstract class BaseMedia extends Media
 {
+    /**
+     * @var string
+     */
+    private $uuid;
+
+    /**
+     * Get universal unique id
+     *
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
