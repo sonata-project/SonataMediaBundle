@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Tests\Security;
+namespace Sonata\MediaBundle\Tests\Validator;
 
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Validator\FormatValidator;
