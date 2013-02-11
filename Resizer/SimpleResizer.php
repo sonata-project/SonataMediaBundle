@@ -17,6 +17,7 @@ use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Exception\InvalidArgumentException;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 
 class SimpleResizer implements ResizerInterface
 {
@@ -24,14 +25,17 @@ class SimpleResizer implements ResizerInterface
 
     protected $mode;
 
+    protected $metadata;
+
     /**
      * @param ImagineInterface $adapter
      * @param string           $mode
      */
-    public function __construct(ImagineInterface $adapter, $mode)
+    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
-        $this->adapter = $adapter;
-        $this->mode    = $mode;
+        $this->adapter  = $adapter;
+        $this->mode     = $mode;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -49,7 +53,7 @@ class SimpleResizer implements ResizerInterface
             ->thumbnail($this->getBox($media, $settings), $this->mode)
             ->get($format, array('quality' => $settings['quality']));
 
-        $out->setContent($content);
+        $out->setContent($content, $this->metadata->get($media, $out->getName()));
     }
 
     /**

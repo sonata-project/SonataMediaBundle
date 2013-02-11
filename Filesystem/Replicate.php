@@ -11,9 +11,10 @@
 namespace Sonata\MediaBundle\Filesystem;
 
 use Gaufrette\Adapter as AdapterInterface;
+use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Filesystem;
 
-class Replicate implements AdapterInterface
+class Replicate implements AdapterInterface, MetadataSupporter
 {
     protected $master;
 
@@ -38,8 +39,7 @@ class Replicate implements AdapterInterface
      */
     public function delete($key)
     {
-        $this->slave->delete($key);
-        $this->master->delete($key);
+        return $this->slave->delete($key) && $this->master->delete($key);
     }
 
     /**
@@ -120,13 +120,61 @@ class Replicate implements AdapterInterface
     }
 
     /**
-     * If the adapter can allow inserting metadata
+     * If one of the adapters can allow inserting metadata
      *
      * @return bool true if supports metadata, false if not
      */
     public function supportsMetadata()
     {
-        return $this->master->supportsMetadata() && $this->slave->supportsMetadata();
+        return $this->master instanceof MetadataSupporter ||  $this->slave instanceof MetadataSupporter;
+    }
+
+    /**
+     * Sets metadata for adapters if they allow it
+     *
+     * @param string $key
+     * @param array  $metadata
+     *
+     */
+    public function setMetadata($key, $metadata)
+    {
+        if ($this->master instanceof MetadataSupporter) {
+            $this->master->setMetadata($key, $metadata);
+        }
+        if ($this->slave instanceof MetadataSupporter) {
+            $this->slave->setMetadata($key, $metadata);
+        }
+    }
+
+    /**
+     * Gets metadata for master or slave adapter if they allow it
+     *
+     * @param string $key
+     *
+     */
+    public function getMetadata($key)
+    {
+        if ($this->master instanceof MetadataSupporter) {
+            return $this->master->getMetadata($key);
+        } elseif ($this->slave instanceof MetadataSupporter) {
+            return $this->slave->getMetadata($key);
+        }
+
+        return array();
+    }
+
+    /**
+     * Gets the class names as an array for both adapters
+     *
+     * @return array
+     *
+     */
+    public function getAdapterClassNames()
+    {
+        return array(
+            get_class($this->master),
+            get_class($this->slave),
+        );
     }
 
     /**

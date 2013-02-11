@@ -47,7 +47,9 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $adapter = $this->getMock('Imagine\Image\ImagineInterface');
         $adapter->expects($this->any())->method('open')->will($this->returnValue($image));
 
-        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, array(), array(), $adapter);
+        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+
+        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, array(), array(), $adapter, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;

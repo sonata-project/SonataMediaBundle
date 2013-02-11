@@ -35,7 +35,9 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail);
+        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+
+        $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail, array(), array(), $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
