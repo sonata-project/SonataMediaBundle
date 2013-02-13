@@ -152,7 +152,7 @@ class Pixlr
             's'          => 'c', // ??
             'referrer'   => $this->referrer,
             'exit'       => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), true),
-            'image'      => $provider->generatePublicUrl($media, 'reference'),
+            'image'      => $this->container->get('request')->getUriForPath($provider->generatePublicUrl($media, 'reference')),
             'title'      => $media->getName(),
             'target'     => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), true),
             'locktitle'  => true,
