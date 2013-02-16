@@ -55,7 +55,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
      * @return \Sonata\MediaBundle\Model\MediaInterface
      */
     abstract protected function getMedia(EventArgs $args);
-    
+
     /**
      * @param \Doctrine\Common\EventArgs $args
      *

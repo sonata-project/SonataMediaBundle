@@ -11,7 +11,6 @@
 
 namespace Sonata\MediaBundle\Tests\Entity;
 
-
 class MediaTest extends \PHPUnit_Framework_TestCase
 {
     public function testMetadata()
@@ -48,7 +47,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $media->setCdnFlushAt(new \DateTime);
         $media->setContentType('sonata/media');
         $media->setCreatedAt(new \DateTime);
-        
+
         $this->assertEquals(12, $media->getSize());
         $this->assertEquals('description', $media->getDescription());
         $this->assertTrue($media->getEnabled());
@@ -60,7 +59,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('DateTime', $media->getCdnFlushAt());
         $this->assertInstanceOf('DateTime', $media->getCreatedAt());
         $this->assertEquals('sonata/media', $media->getContentType());
-        $this->assertEquals('MediaBundle', (string)$media);
+        $this->assertEquals('MediaBundle', (string) $media);
 
         $this->assertNull($media->getMetadataValue('foo'));
 

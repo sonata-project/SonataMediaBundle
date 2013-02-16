@@ -19,7 +19,6 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\NotificationBundle\Exception\HandlingException;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Sonata\NotificationBundle\Backend\BackendInterface;
 
 class CreateThumbnailConsumer implements ConsumerInterface
 {

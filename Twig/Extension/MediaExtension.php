@@ -30,7 +30,7 @@ class MediaExtension extends \Twig_Extension
     protected $environment;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $mediaService
+     * @param \Sonata\MediaBundle\Provider\Pool               $mediaService
      * @param \Sonata\MediaBundle\Model\MediaManagerInterface $mediaManager
      */
     public function __construct(Pool $mediaService, MediaManagerInterface $mediaManager)

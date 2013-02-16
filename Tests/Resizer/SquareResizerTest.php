@@ -75,7 +75,7 @@ class SquareResizerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected->getHeight(), $box->getHeight());
     }
 
-    static public function getBoxSettings()
+    public static function getBoxSettings()
     {
         return array(
             array(array( 'width' => 90, 'height' => 90 ), new Box(100, 120), new Box(100, 100)),

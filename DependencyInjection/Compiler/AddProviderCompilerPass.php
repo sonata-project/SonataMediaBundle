@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  *
@@ -88,12 +87,12 @@ class AddProviderCompilerPass implements CompilerPassInterface
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array $settings
+     * @param array                                                   $settings
      */
     public function attachArguments(ContainerBuilder $container, array $settings)
     {
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
-            foreach($settings['providers'] as $name => $config) {
+            foreach ($settings['providers'] as $name => $config) {
                 if ($config['service'] == $id) {
                     $definition = $container->getDefinition($id);
 
@@ -116,7 +115,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
      * Define the default settings to the config array
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array $settings
+     * @param array                                                   $settings
      */
     public function applyFormats(ContainerBuilder $container, array $settings)
     {

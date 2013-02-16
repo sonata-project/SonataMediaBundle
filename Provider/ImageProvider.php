@@ -49,10 +49,10 @@ class ImageProvider extends FileProvider
         } else {
             $resizerFormat = $this->getFormat($format);
             if ($resizerFormat === false) {
-                throw new \RuntimeException(sprintf('The image format "%s" is not defined. 
+                throw new \RuntimeException(sprintf('The image format "%s" is not defined.
                         Is the format registered in your sonata-media configuration?', $format));
             }
-            
+
             $box = $this->resizer->getBox($media, $resizerFormat);
         }
 

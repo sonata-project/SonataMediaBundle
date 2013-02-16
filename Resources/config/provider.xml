@@ -11,7 +11,7 @@
         <parameter key="sonata.media.provider.vimeo.class">Sonata\MediaBundle\Provider\VimeoProvider</parameter>
 
         <parameter key="sonata.media.thumbnail.format">Sonata\MediaBundle\Thumbnail\FormatThumbnail</parameter>
-        <parameter key="sonata.media.thumbnail.format.default">jpg</parameter>        
+        <parameter key="sonata.media.thumbnail.format.default">jpg</parameter>
         <parameter key="sonata.media.thumbnail.liip_imagine">Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail</parameter>
 
         <parameter key="sonata.media.pool.class">Sonata\MediaBundle\Provider\Pool</parameter>

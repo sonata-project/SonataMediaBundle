@@ -12,9 +12,7 @@ namespace Sonata\MediaBundle\Document;
 
 use Sonata\MediaBundle\Model\GalleryManager as AbstractGalleryManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
-use Sonata\MediaBundle\Provider\Pool;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class GalleryManager extends AbstractGalleryManager
 {

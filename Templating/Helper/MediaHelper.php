@@ -49,9 +49,9 @@ class MediaHelper extends Helper
     /**
      * Returns the provider view for the provided media
      *
-     * @param MediaInterface  $media
-     * @param string          $format
-     * @param array           $options
+     * @param MediaInterface $media
+     * @param string         $format
+     * @param array          $options
      *
      * @return string
      */
@@ -88,8 +88,8 @@ class MediaHelper extends Helper
      * Returns the thumbnail for the provided media
      *
      * @param MediaInterface $media
-     * @param string $format
-     * @param array $options
+     * @param string         $format
+     * @param array          $options
      *
      * @return string
      */

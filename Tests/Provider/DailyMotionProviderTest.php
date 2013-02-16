@@ -12,7 +12,6 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\DailyMotionProvider;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Buzz\Browser;
@@ -172,7 +171,6 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(10);
         $media->setHeight(100);
         $media->setWidth(100);
-
 
         $properties = $provider->getHelperProperties($media, 'admin');
 

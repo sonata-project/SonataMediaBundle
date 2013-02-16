@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Document;
 use Sonata\MediaBundle\Model\MediaManager as AbstractMediaManager;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use Sonata\MediaBundle\Provider\Pool;
 
 class MediaManager extends AbstractMediaManager

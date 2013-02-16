@@ -81,9 +81,9 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @param integer  $media
-     * @param string   $format
-     * @param array    $options
+     * @param integer $media
+     * @param string  $format
+     * @param array   $options
      *
      * @return string
      */
@@ -106,7 +106,7 @@ class FormatterMediaExtension extends BaseProxyExtension
 
     /**
      * @param integer $media
-     * @param string $format
+     * @param string  $format
      *
      * @return string
      */
@@ -115,4 +115,3 @@ class FormatterMediaExtension extends BaseProxyExtension
         return $this->getTwigExtension()->path($media, $format);
     }
 }
-

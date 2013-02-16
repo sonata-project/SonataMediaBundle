@@ -27,7 +27,7 @@ interface CDNInterface
      *
      * @return string
      */
-    function getPath($relativePath, $isFlushable);
+    public function getPath($relativePath, $isFlushable);
 
     /**
      * Flush the resource
@@ -36,7 +36,7 @@ interface CDNInterface
      *
      * @return void
      */
-    function flush($string);
+    public function flush($string);
 
     /**
      * Flush a set of resources matching the provided string
@@ -45,7 +45,7 @@ interface CDNInterface
      *
      * @return void
      */
-    function flushByString($string);
+    public function flushByString($string);
 
     /**
      * Flush a set of resources matching the paths in provided array
@@ -54,5 +54,5 @@ interface CDNInterface
      *
      * @return void
      */
-    function flushPaths(array $paths);
+    public function flushPaths(array $paths);
 }

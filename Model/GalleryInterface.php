@@ -17,96 +17,96 @@ interface GalleryInterface
      *
      * @param string $name
      */
-    function setName($name);
+    public function setName($name);
 
     /**
      * @return string
      */
-    function getContext();
+    public function getContext();
 
     /**
      * @param string $context
      *
      * @return string
      */
-    function setContext($context);
+    public function setContext($context);
 
     /**
      * Get name
      *
      * @return string $name
      */
-    function getName();
+    public function getName();
 
     /**
      * Set enabled
      *
      * @param boolean $enabled
      */
-    function setEnabled($enabled);
+    public function setEnabled($enabled);
 
     /**
      * Get enabled
      *
      * @return boolean $enabled
      */
-    function getEnabled();
+    public function getEnabled();
 
     /**
      * Set updated_at
      *
      * @param \Datetime $updatedAt
      */
-    function setUpdatedAt(\DateTime $updatedAt = null);
+    public function setUpdatedAt(\DateTime $updatedAt = null);
 
     /**
      * Get updated_at
      *
      * @return \Datetime $updatedAt
      */
-    function getUpdatedAt();
+    public function getUpdatedAt();
 
     /**
      * Set created_at
      *
      * @param \Datetime $createdAt
      */
-    function setCreatedAt(\DateTime $createdAt = null);
+    public function setCreatedAt(\DateTime $createdAt = null);
 
     /**
      * Get created_at
      *
      * @return \Datetime $createdAt
      */
-    function getCreatedAt();
+    public function getCreatedAt();
 
     /**
      * @param string $defaultFormat
      */
-    function setDefaultFormat($defaultFormat);
+    public function setDefaultFormat($defaultFormat);
 
     /**
      * @return string
      */
-    function getDefaultFormat();
+    public function getDefaultFormat();
 
     /**
      * @param array $galleryHasMedias
      */
-    function setGalleryHasMedias($galleryHasMedias);
+    public function setGalleryHasMedias($galleryHasMedias);
 
     /**
      * @return array
      */
-    function getGalleryHasMedias();
+    public function getGalleryHasMedias();
 
     /**
      * @param GalleryHasMediaInterface $galleryHasMedia
      */
-    function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
+    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
 
     /**
      * @return string
      */
-    function __toString();
+    public function __toString();
 }

@@ -21,24 +21,24 @@ interface ThumbnailInterface
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
      * @param string                                              $format
      */
-    function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
     /**
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
      * @param string                                              $format
      */
-    function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
+    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
     /**
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
      */
-    function generate(MediaProviderInterface $provider, MediaInterface $media);
+    public function generate(MediaProviderInterface $provider, MediaInterface $media);
 
     /**
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
      */
-    function delete(MediaProviderInterface $provider, MediaInterface $media);
+    public function delete(MediaProviderInterface $provider, MediaInterface $media);
 }

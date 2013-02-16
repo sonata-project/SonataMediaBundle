@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Entity;
 use Sonata\MediaBundle\Model\MediaManager as AbstractMediaManager;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Sonata\MediaBundle\Provider\Pool;
 
 class MediaManager extends AbstractMediaManager

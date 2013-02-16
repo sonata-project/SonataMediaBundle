@@ -120,7 +120,6 @@ abstract class Media implements MediaInterface
 
     protected $galleryHasMedias;
 
-
     public function prePersist()
     {
         $this->setCreatedAt(new \DateTime);

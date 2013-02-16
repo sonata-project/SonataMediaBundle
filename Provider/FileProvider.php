@@ -177,7 +177,7 @@ class FileProvider extends BaseProvider
         if ($media->getBinaryContent() instanceof UploadedFile) {
             $media->setName($media->getName() ?: $media->getBinaryContent()->getClientOriginalName());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getClientOriginalName());
-        } else if ($media->getBinaryContent() instanceof File) {
+        } elseif ($media->getBinaryContent() instanceof File) {
             $media->setName($media->getName() ?: $media->getBinaryContent()->getBasename());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getBasename());
         }
@@ -268,7 +268,7 @@ class FileProvider extends BaseProvider
      * Set the file contents for an image
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string                                  $contents path to contents, defaults to MediaInterface BinaryContent
+     * @param string                                   $contents path to contents, defaults to MediaInterface BinaryContent
      *
      * @return void
      */
@@ -347,7 +347,7 @@ class FileProvider extends BaseProvider
 
         if ($media->getBinaryContent() instanceof UploadedFile) {
             $fileName = $media->getBinaryContent()->getClientOriginalName();
-        } else if ($media->getBinaryContent() instanceof File) {
+        } elseif ($media->getBinaryContent() instanceof File) {
             $fileName = $media->getBinaryContent()->getFilename();
         } else {
             throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));

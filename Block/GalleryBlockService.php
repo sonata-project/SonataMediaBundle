@@ -25,7 +25,6 @@ use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 /**
  * PageExtension
  *

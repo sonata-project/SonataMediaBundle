@@ -13,9 +13,7 @@ namespace Sonata\MediaBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
 
 class GalleryHasMediaAdmin extends Admin
 {
@@ -42,7 +40,7 @@ class GalleryHasMediaAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
+     * @param  \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
      * @return void
      */
     protected function configureListFields(ListMapper $listMapper)

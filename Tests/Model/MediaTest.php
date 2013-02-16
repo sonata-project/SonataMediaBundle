@@ -65,6 +65,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $rc = new \ReflectionClass('Sonata\MediaBundle\Model\Media');
         $property = $rc->getProperty($propertyName);
         $property->setAccessible(true);
+
         return $property;
     }
 
@@ -74,7 +75,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())
             ->method('getId')
             ->will($this->returnValue($id));
+
         return $media;
     }
 }
- 

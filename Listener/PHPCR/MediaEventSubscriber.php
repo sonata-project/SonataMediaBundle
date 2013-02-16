@@ -40,7 +40,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
 //        $dm = $args->getDocumentManager();
         // TODO: is this needed for PHPCR?
     }
-    
+
     /**
      * @inheritdoc
      */

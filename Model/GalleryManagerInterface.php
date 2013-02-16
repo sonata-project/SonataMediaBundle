@@ -18,7 +18,7 @@ interface GalleryManagerInterface
      *
      * @return GalleryInterface
      */
-    function create();
+    public function create();
 
     /**
      * Deletes a gallery
@@ -27,7 +27,7 @@ interface GalleryManagerInterface
      *
      * @return void
      */
-    function delete(GalleryInterface $gallery);
+    public function delete(GalleryInterface $gallery);
 
     /**
      * Finds one gallery by the given criteria
@@ -36,7 +36,7 @@ interface GalleryManagerInterface
      *
      * @return GalleryInterface
      */
-    function findOneBy(array $criteria);
+    public function findOneBy(array $criteria);
 
     /**
      * Finds galleries by the given criteria
@@ -45,14 +45,14 @@ interface GalleryManagerInterface
      *
      * @return array
      */
-    function findBy(array $criteria);
+    public function findBy(array $criteria);
 
     /**
      * Returns the gallery's fully qualified class name
      *
      * @return string
      */
-    function getClass();
+    public function getClass();
 
     /**
      * Updates a gallery
@@ -61,5 +61,5 @@ interface GalleryManagerInterface
      *
      * @return void
      */
-    function update(GalleryInterface $gallery);
+    public function update(GalleryInterface $gallery);
 }

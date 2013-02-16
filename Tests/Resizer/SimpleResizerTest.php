@@ -75,7 +75,7 @@ class SimpleResizerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($result->getHeight(), $box->getHeight());
     }
 
-    static public function getBoxSettings()
+    public static function getBoxSettings()
     {
         return array(
             array('inset', array( 'width' => 90, 'height' => 90 ), new Box(100, 120), new Box(75, 90)),

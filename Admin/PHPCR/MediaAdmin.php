@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Admin\PHPCR;
 
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 
 class MediaAdmin extends Admin
 {
@@ -46,6 +45,7 @@ class MediaAdmin extends Admin
     public function generateObjectUrl($name, $object, array $parameters = array(), $absolute = false)
     {
         $parameters['id'] = $this->getUrlsafeIdentifier($object);
+
         return $this->generateUrl($name, $parameters, $absolute);
     }
 
@@ -60,7 +60,7 @@ class MediaAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
+     * @param  \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
      * @return void
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

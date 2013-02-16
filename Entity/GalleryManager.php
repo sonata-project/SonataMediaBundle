@@ -13,8 +13,6 @@ namespace Sonata\MediaBundle\Entity;
 use Sonata\MediaBundle\Model\GalleryManager as AbstractGalleryManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryManager extends AbstractGalleryManager
 {

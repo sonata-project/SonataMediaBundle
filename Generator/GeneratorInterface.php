@@ -22,5 +22,5 @@ interface GeneratorInterface
      *
      * @return string
      */
-    function generatePath(MediaInterface $media);
+    public function generatePath(MediaInterface $media);
 }

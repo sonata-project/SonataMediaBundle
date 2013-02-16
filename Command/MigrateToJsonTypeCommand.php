@@ -11,7 +11,6 @@
 
 namespace Sonata\MediaBundle\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,7 +36,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
         $connection = $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection();
         $medias = $connection->fetchAll("SELECT * FROM $table");
 
-        foreach($medias as $media) {
+        foreach ($medias as $media) {
             // if the row need to migrate
             if (0 !== strpos($media[$column], '{') && $media[$column] !== '[]') {
                 $media[$column] = json_encode(unserialize($media[$column]));

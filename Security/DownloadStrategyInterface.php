@@ -24,12 +24,12 @@ interface DownloadStrategyInterface
      *
      * @return bool
      */
-    function isGranted(MediaInterface $media, Request $request);
+    public function isGranted(MediaInterface $media, Request $request);
 
     /**
      * @abstract
      *
      * @return string
      */
-    function getDescription();
+    public function getDescription();
 }

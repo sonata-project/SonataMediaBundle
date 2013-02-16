@@ -16,7 +16,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\AdminBundle\Validator\ErrorElement;
 
 class GalleryAdmin extends Admin
 {
@@ -47,12 +46,12 @@ class GalleryAdmin extends Admin
         }
 
         $formats = array();
-        foreach((array)$this->pool->getFormatNamesByContext($context) as $name => $options) {
+        foreach ((array) $this->pool->getFormatNamesByContext($context) as $name => $options) {
             $formats[$name] = $name;
         }
 
         $contexts = array();
-        foreach((array)$this->pool->getContexts() as $contextItem => $format) {
+        foreach ((array) $this->pool->getContexts() as $contextItem => $format) {
             $contexts[$contextItem] = $contextItem;
         }
 

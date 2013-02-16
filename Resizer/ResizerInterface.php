@@ -25,7 +25,7 @@ interface ResizerInterface
      *
      * @return void
      */
-    function resize(MediaInterface $media, File $in, File $out, $format, array $settings);
+    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings);
 
     /**
      * @param MediaInterface $media
@@ -33,5 +33,5 @@ interface ResizerInterface
      *
      * @return \Imagine\Image\Box
      */
-    function getBox(MediaInterface $media, array $settings);
+    public function getBox(MediaInterface $media, array $settings);
 }

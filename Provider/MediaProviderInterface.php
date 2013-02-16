@@ -25,7 +25,7 @@ interface MediaProviderInterface
      *
      * @return void
      */
-    function addFormat($name, $format);
+    public function addFormat($name, $format);
 
     /**
      * return the format settings
@@ -34,14 +34,14 @@ interface MediaProviderInterface
      *
      * @return array|false the format settings
      */
-    function getFormat($name);
+    public function getFormat($name);
 
     /**
      * return true if the media related to the provider required thumbnails (generation)
      *
      * @return boolean
      */
-    function requireThumbnails();
+    public function requireThumbnails();
 
     /**
      * Generated thumbnails linked to the media, a thumbnail is a format used on the website
@@ -50,7 +50,7 @@ interface MediaProviderInterface
      *
      * @return void
      */
-    function generateThumbnails(MediaInterface $media);
+    public function generateThumbnails(MediaInterface $media);
 
     /**
      * remove all linked thumbnails
@@ -59,14 +59,14 @@ interface MediaProviderInterface
      *
      * @return void
      */
-    function removeThumbnails(MediaInterface $media);
+    public function removeThumbnails(MediaInterface $media);
 
     /**
      * @param MediaInterface $media
      *
      * @return \Gaufrette\File
      */
-    function getReferenceFile(MediaInterface $media);
+    public function getReferenceFile(MediaInterface $media);
 
     /**
      * return the correct format name : providerName_format
@@ -76,7 +76,7 @@ interface MediaProviderInterface
      *
      * @return string
      */
-    function getFormatName(MediaInterface $media, $format);
+    public function getFormatName(MediaInterface $media, $format);
 
     /**
      * return the reference image of the media, can be the video thumbnail or the original uploaded picture
@@ -85,7 +85,7 @@ interface MediaProviderInterface
      *
      * @return string to the reference image
      */
-    function getReferenceImage(MediaInterface $media);
+    public function getReferenceImage(MediaInterface $media);
 
     /**
      *
@@ -93,7 +93,7 @@ interface MediaProviderInterface
      *
      * @return void
      */
-    function preUpdate(MediaInterface $media);
+    public function preUpdate(MediaInterface $media);
 
     /**
      *
@@ -101,42 +101,42 @@ interface MediaProviderInterface
      *
      * @return void
      */
-    function postUpdate(MediaInterface $media);
+    public function postUpdate(MediaInterface $media);
 
     /**
      * @param MediaInterface $media
      *
      * @return void
      */
-    function preRemove(MediaInterface $media);
+    public function preRemove(MediaInterface $media);
 
     /**
      * @param MediaInterface $media
      *
      * @return void
      */
-    function postRemove(MediaInterface $media);
+    public function postRemove(MediaInterface $media);
 
     /**
      * build the related create form
      *
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
-    function buildCreateForm(FormMapper $formMapper);
+    public function buildCreateForm(FormMapper $formMapper);
 
     /**
      * build the related create form
      *
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
-    function buildEditForm(FormMapper $formMapper);
+    public function buildEditForm(FormMapper $formMapper);
 
     /**
      * @param MediaInterface $media
      *
      * @return void
      */
-    function prePersist(MediaInterface $media);
+    public function prePersist(MediaInterface $media);
 
     /**
      *
@@ -144,13 +144,13 @@ interface MediaProviderInterface
      *
      * @return void
      */
-    function postPersist(MediaInterface $media);
+    public function postPersist(MediaInterface $media);
 
     /**
      * @param MediaInterface $media
      * @param string         $format
      */
-    function getHelperProperties(MediaInterface $media, $format);
+    public function getHelperProperties(MediaInterface $media, $format);
 
     /**
      * Generate the media path
@@ -159,7 +159,7 @@ interface MediaProviderInterface
      *
      * @return string
      */
-    function generatePath(MediaInterface $media);
+    public function generatePath(MediaInterface $media);
 
     /**
      * Generate the public path
@@ -169,7 +169,7 @@ interface MediaProviderInterface
      *
      * @return string
      */
-    function generatePublicUrl(MediaInterface $media, $format);
+    public function generatePublicUrl(MediaInterface $media, $format);
 
     /**
      * Generate the private path
@@ -179,43 +179,43 @@ interface MediaProviderInterface
      *
      * @return string
      */
-    function generatePrivateUrl(MediaInterface $media, $format);
+    public function generatePrivateUrl(MediaInterface $media, $format);
 
     /**
      *
      * @return array
      */
-    function getFormats();
+    public function getFormats();
 
     /**
      *
      * @param string $name
      */
-    function setName($name);
+    public function setName($name);
 
     /**
      * @return string
      */
-    function getName();
+    public function getName();
 
     /**
      *
      * @param array $templates
      */
-    function setTemplates(array $templates);
+    public function setTemplates(array $templates);
 
     /**
      *
      * @return array
      */
-    function getTemplates();
+    public function getTemplates();
 
     /**
      * @param string $name
      *
      * @return string
      */
-    function getTemplate($name);
+    public function getTemplate($name);
 
     /**
      * Mode can be x-file
@@ -227,45 +227,45 @@ interface MediaProviderInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array());
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array());
 
     /**
      * @return ResizerInterface
      */
-    function getResizer();
+    public function getResizer();
 
     /**
      * @return Filesystem
      */
-    function getFilesystem();
+    public function getFilesystem();
 
     /**
      * @param string $relativePath
      * @param bool   $isFlushable
      */
-    function getCdnPath($relativePath, $isFlushable);
+    public function getCdnPath($relativePath, $isFlushable);
 
     /**
      * @param MediaInterface $media
      *
      * @return void
      */
-    function transform(MediaInterface $media);
+    public function transform(MediaInterface $media);
 
     /**
-     * @param ErrorElement     $errorElement
-     * @param MediaInterface   $media
+     * @param ErrorElement   $errorElement
+     * @param MediaInterface $media
      *
      * @return void
      */
-    function validate(ErrorElement $errorElement, MediaInterface $media);
+    public function validate(ErrorElement $errorElement, MediaInterface $media);
 
     /**
      * @param FormBuilder $formBuilder
      *
      * @return void
      */
-    function buildMediaType(FormBuilder $formBuilder);
+    public function buildMediaType(FormBuilder $formBuilder);
 
     /**
      * @param MediaInterface $media
@@ -273,5 +273,5 @@ interface MediaProviderInterface
      *
      * @return void
      */
-    function updateMetadata(MediaInterface $media, $force = false);
+    public function updateMetadata(MediaInterface $media, $force = false);
 }

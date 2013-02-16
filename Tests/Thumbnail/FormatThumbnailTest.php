@@ -45,7 +45,6 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
         $provider->expects($this->exactly(2))->method('generatePrivateUrl')->will($this->returnValue('/my/private/path'));
         $provider->expects($this->exactly(2))->method('getFilesystem')->will($this->returnValue($filesystem));
 
-
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->exactly(6))->method('getContext')->will($this->returnValue('mycontext'));
         $media->expects($this->exactly(2))->method('getExtension')->will($this->returnValue('png'));
