@@ -38,6 +38,8 @@ picture format with different sizes and providers. For example:
 
 When you create a new blog post, you might want to link an image to that post.
 
+Doctrine ORM:
+
 .. code-block:: xml
 
         <many-to-one
@@ -49,6 +51,16 @@ When you create a new blog post, you might want to link an image to that post.
             </cascade>
         </many-to-one>
 
+Doctrine PHPCR:
+
+.. code-block:: xml
+
+        <reference-one
+            fieldName="media"
+            strategy="weak"
+            targetDocument="Application\Sonata\MediaBundle\Document\Media"
+        />
+
 In the ``PostAdmin``, you can add a new field ``image`` with a ``link_parameters``
 option. This option will add an extra parameter into the ``add`` link. This
 parameter will be used by the related controller.
@@ -59,7 +71,7 @@ parameter will be used by the related controller.
     public function configureFormFields(FormMapper $form)
     {
         // ...
-        $form->add('image', 'sonata_type_model', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'news')));
+        $form->add('image', 'sonata_type_model_list', array(), array('link_parameters' => array('context' => 'news')));
         // ...
     }
 

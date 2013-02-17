@@ -11,13 +11,13 @@
 
 namespace Sonata\MediaBundle\Admin\PHPCR;
 
-use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\MediaBundle\Admin\GalleryAdmin as BaseGalleryAdmin;
 
-class MediaAdmin extends Admin
+class GalleryAdmin extends BaseGalleryAdmin
 {
     /**
-     * Path to the root node of media documents.
+     * Path to the root node of gallery documents.
      *
      * @var string
      */
@@ -48,17 +48,15 @@ class MediaAdmin extends Admin
     }
 
     /**
-     * @param  \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         // TODO disabled filter due to no attached service for filter types: string, checkbox
 //        $datagridMapper
 //            ->add('name')
-//            ->add('providerReference')
 //            ->add('enabled')
 //            ->add('context')
-//        ;
+        ;
     }
 }
