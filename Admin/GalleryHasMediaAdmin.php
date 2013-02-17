@@ -35,7 +35,7 @@ class GalleryHasMediaAdmin extends Admin
                 'link_parameters' => $link_parameters
             ))
             ->add('enabled', null, array('required' => false))
-            ->add('position')
+            ->add('position', 'hidden')
         ;
     }
 
