@@ -13,21 +13,36 @@ namespace Sonata\MediaBundle\Thumbnail;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class LiipImagineThumbnail implements ThumbnailInterface
 {
+    /**
+     * @var string
+     */
+    private $defaultFormat;
+
     /**
      * @var \Symfony\Component\Routing\RouterInterface
      */
     protected $router;
 
     /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @var \Sonata\AdminBundle\Model\ModelManagerInterface
      */
-    public function __construct(RouterInterface $router)
+    protected $modelManager;
+
+    /**
+     * @param string $defaultFormat
+     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Sonata\AdminBundle\Model\ModelManagerInterface
+     */
+    public function __construct($defaultFormat, RouterInterface $router, ModelManagerInterface $modelManager)
     {
+        $this->defaultFormat = $defaultFormat;
         $this->router = $router;
+        $this->modelManager = $modelManager;
     }
 
     /**
@@ -36,15 +51,23 @@ class LiipImagineThumbnail implements ThumbnailInterface
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         if ($format == 'reference') {
-            $path = $provider->getReferenceImage($media);
+            $relativeWebPath = $provider->getRelativeWebPath();
+            if ($relativeWebPath) {
+                $path = sprintf('%s/%s', $relativeWebPath, $provider->getReferenceImage($media));
+            } else {
+                $path = $provider->getReferenceImage($media);
+            }
         } else {
             $path = $this->router->generate(
                 sprintf('_imagine_%s', $format),
-                array('path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format))
+                array('path' => sprintf('%s/img.%s',
+                    $this->modelManager->getUrlsafeIdentifier($media),
+                    $this->getExtension($media))
+                )
             );
         }
 
-        return $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        return $path;
     }
 
     /**
@@ -56,7 +79,12 @@ class LiipImagineThumbnail implements ThumbnailInterface
             throw new \RuntimeException('No private url for LiipImagineThumbnail');
         }
 
-        $path = $provider->getReferenceImage($media);
+        $relativeWebPath = $provider->getRelativeWebPath();
+        if ($relativeWebPath) {
+            $path = sprintf('%s/%s', $relativeWebPath, $provider->getReferenceImage($media));
+        } else {
+            $path = $provider->getReferenceImage($media);
+        }
 
         return $path;
     }
@@ -77,5 +105,20 @@ class LiipImagineThumbnail implements ThumbnailInterface
     {
         // feature not available
         return;
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
+     * @return string the file extension for the $media, or the $defaultExtension if not available
+     */
+    protected function getExtension(MediaInterface $media)
+    {
+        $ext = $media->getExtension();
+        if (!is_string($ext) || strlen($ext) < 3) {
+            $ext = $this->defaultFormat;
+        }
+
+        return $ext;
     }
 }

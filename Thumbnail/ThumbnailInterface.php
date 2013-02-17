@@ -20,6 +20,7 @@ interface ThumbnailInterface
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
      * @param string                                              $format
+     * @return string                                             url
      */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
@@ -27,6 +28,7 @@ interface ThumbnailInterface
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
      * @param string                                              $format
+     * @return string                                             url
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 

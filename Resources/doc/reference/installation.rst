@@ -4,10 +4,10 @@ Installation
 Base bundles
 ------------
 
-This bundle is mainely dependant of the SonataAdminBundle and the SonataDoctrineORMAdminBundle. So be sure you have install those two bundles before start:
+This bundle is mainly dependant of the SonataAdminBundle and one for the model type of choice. So be sure you have
+installed those two bundles before start:
 
  * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
- * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
 
 Installation
 ------------
@@ -98,13 +98,16 @@ Doctrine PHPCR:
                     big:   { width: 500 , quality: 70}
 
         cdn:
+            # define the base url for the media
             server:
-                path: /uploads/media # http://media.sonata-project.org/
+                path: ~ # http://media.sonata-project.org/
 
         filesystem:
+            # define where the uploaded file will be stored and it's relative path from web
             local:
                 directory:  %kernel.root_dir%/../web/uploads/media
                 create:     false
+                relative_web_path: /uploads/media
 
 .. note::
 
@@ -128,6 +131,15 @@ Also, you can determine the resizer to use; the default value is
     The square resizer works like the simple resizer when the image format has
     only the width. But if you specify the height the resizer crop the image in
     the lower size.
+
+.. note::
+
+    By default thumbnails are generated before the user hits the media url for the first time. The thumbnails are
+    generated when the media is saved. And if the Sonata Notification Bundle is installed, the thumbnails are
+    generated through an asynchronous task.
+
+    It is also possible to have the thumbnails generated when the user hits the media url for the first time. For this
+    feature an integration is provided with the LiipImagineBundle.
 
 At this point, the bundle is not yet ready. You need to generate the correct
 entities for the media::

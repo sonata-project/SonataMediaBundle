@@ -334,9 +334,14 @@ class FileProvider extends BaseProvider
             throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
         }
 
+        $imagePath = $this->generatePrivateUrl($media, $format);
+        if (0 === strpos($imagePath, $this->getRelativeWebPath(), 0)) {
+            $imagePath = ltrim(substr($imagePath, strlen($this->getRelativeWebPath())), '/');
+        }
+
         $headers[$mode] = sprintf('%s/%s',
             $this->getFilesystem()->getAdapter()->getDirectory(),
-            $this->generatePrivateUrl($media, $format)
+            $imagePath
         );
 
         return new Response('', 200, $headers);

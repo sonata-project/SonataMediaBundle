@@ -33,7 +33,14 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $thumbnail = new FormatThumbnail('jpg');
+        $modelManager = $this->getMock('Sonata\AdminBundle\Model\ModelManagerInterface');
+        $modelManager->expects($this->any())->method('getUrlsafeIdentifier')
+            ->will($this->returnCallback(function($media) {
+                return $media->getId();
+            })
+        );
+
+        $thumbnail = new FormatThumbnail('jpg', $modelManager);
 
         $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 

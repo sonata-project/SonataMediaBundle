@@ -105,7 +105,10 @@ class MediaController extends Controller
      */
     public function liipImagineFilterAction($path, $filter)
     {
-        if (!preg_match('@([^/]*)/(.*)/([0-9]*)_([a-z_A-Z]*).jpg@', $path, $matches)) {
+        // format: {id}/{format}.jpg
+        $id = substr($path, 0, strrpos($path, '/'));
+
+        if (!$id) {
             throw new NotFoundHttpException();
         }
 
@@ -116,7 +119,7 @@ class MediaController extends Controller
         }
 
         // get the file
-        $media = $this->getMedia($matches[3]);
+        $media = $this->getMedia($id);
         if (!$media) {
             throw new NotFoundHttpException();
         }

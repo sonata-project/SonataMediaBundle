@@ -224,6 +224,18 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
+    public function getRelativeWebPath()
+    {
+        if (!$this->getFilesystem()->getAdapter() instanceof \Sonata\MediaBundle\Filesystem\Local) {
+            return '';
+        }
+
+        return $this->getFilesystem()->getAdapter()->getRelativeWebPath();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCdn()
     {
         return $this->cdn;
