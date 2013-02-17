@@ -13,7 +13,7 @@ file that was distributed with this source code.
 
 {% block field %}
     <div>
-        <a href="{{ admin.generateUrl('edit', {'id' : admin.id(object)}) }}" style="float: left; margin-right: 6px;">{% thumbnail object, 'admin' with {'width': 75, 'height': 60} %}</a>
+        <a href="{{ admin.generateUrl('edit', {'id' : object|sonata_urlsafeid }) }}" style="float: left; margin-right: 6px;">{% thumbnail object, 'admin' with {'width': 75, 'height': 60} %}</a>
         <strong>{{ object.name }}</strong> <br />
         {{ object.providerName|trans({}, 'SonataMediaBundle') }}: {{ object.width }}x{{ object.height }} <br />
     </div>

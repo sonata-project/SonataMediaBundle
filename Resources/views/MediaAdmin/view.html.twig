@@ -27,7 +27,7 @@ file that was distributed with this source code.
         {% if pixlr and pixlr.isEditable(media) %}
             <tr>
                 <td></td>
-                <td><a class="btn" href="{{ path('sonata_media_pixlr_open_editor', {'id': admin.id(media) }) }}">{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}</a></td>
+                <td><a class="btn" href="{{ path('sonata_media_pixlr_open_editor', {'id': media|sonata_urlsafeid }) }}">{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}</a></td>
             </tr>
         {% endif %}
         <tr>
@@ -68,8 +68,8 @@ file that was distributed with this source code.
         <tr>
             <td>{{ 'label.protected_download_url'|trans({}, 'SonataMediaBundle') }}</td>
             <td>
-                <input type="text" value="{{ path('sonata_media_download', {'id': admin.id(media)}) }}" style="width:500px"/>
-                <a href="{{ path('sonata_media_download', {'id': admin.id(media)}) }}">{{ 'link.test_protected_url'|trans({}, 'SonataMediaBundle') }}</a>
+                <input type="text" value="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}" style="width:500px"/>
+                <a href="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}">{{ 'link.test_protected_url'|trans({}, 'SonataMediaBundle') }}</a>
                 <br />
                 <span class="label warning">{{ 'label.protected_download_url_notice'|trans({}, 'SonataMediaBundle') }}</span> {{ security.description }}
             </td>
@@ -85,7 +85,7 @@ file that was distributed with this source code.
     <table>
         <tr>
             <td>
-                <a href="{{ admin.generateUrl('view', { 'id' : admin.id(media), 'format' : 'reference'}) }}">reference</a>
+                <a href="{{ admin.generateUrl('view', { 'id' : media|sonata_urlsafeid , 'format' : 'reference'}) }}">reference</a>
             </td>
             <td>
                 <input type="text" value="{% path media, 'reference' %}"  style="width:500px" />
@@ -95,7 +95,7 @@ file that was distributed with this source code.
         {% for name, format in formats %}
             <tr>
                 <td>
-                    <a href="{{ admin.generateUrl('view', { 'id' : admin.id(media), 'format' : name}) }}">{{ name }}</a>
+                    <a href="{{ admin.generateUrl('view', { 'id' : media|sonata_urlsafeid , 'format' : name}) }}">{{ name }}</a>
                 </td>
                 <td>
                     <input type="text" value="{% path media, name %}"  style="width:500px"/>

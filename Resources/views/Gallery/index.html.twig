@@ -11,6 +11,6 @@ file that was distributed with this source code.
 
 <ul>
     {% for gallery in galleries %}
-        <li><a href="{{ url('sonata_media_gallery_view', {'id' : gallery.id }) }}">{{ gallery.name }}</a></li>
+        <li><a href="{{ url('sonata_media_gallery_view', {'id' : gallery|sonata_urlsafeid }) }}">{{ gallery.name }}</a></li>
     {% endfor %}
 </ul>
