@@ -15,21 +15,18 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class PHPCRGenerator implements GeneratorInterface
 {
     /**
-     * @abstract
-     *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      *
      * @return string
      */
     public function generatePath(MediaInterface $media)
     {
-        $id = strpos($media->getId(), 0);
-        $parts = explode('/', ltrim($id, '/'));
+        $segments = preg_split('#/#', $media->getId(), null, PREG_SPLIT_NO_EMPTY);
 
-        if (count($parts) > 0) {
+        if (count($segments) > 1) {
             // remove last part from id
-            array_pop($parts);
-            $path = implode('/', $parts);
+            array_pop($segments);
+            $path = join($segments, '/');
         } else {
             $path = '';
         }
