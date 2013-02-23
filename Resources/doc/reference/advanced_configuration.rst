@@ -88,8 +88,14 @@ Full configuration options:
                 bucket:
                 accessKey:
                 secretKey:
-                create:     false
-                region:     # this settings does not seems to be implemented with Zend Framework
+                create:         false
+                region:         # this settings does not seems to be implemented with Zend Framework
+                storage:        standard # can be one of: standard or reduced
+                acl:            public # can be one of: public, private, open, auth_read, owner_read, owner_full_control
+                encryption:     aes256 # can be aes256 or not set
+                cache_control:  max-age=86400 # or any other
+                meta:
+                    key1:       value1 #any amount of metas(sent as x-amz-meta-key1 = value1)
 
             mogilefs:
                 hosts:      []

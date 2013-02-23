@@ -27,8 +27,9 @@ class SquareResizerTest extends \PHPUnit_Framework_TestCase
         $adapter = $this->getMock('Imagine\Image\ImagineInterface');
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $file = $this->getMockBuilder('Gaufrette\File')->disableOriginalConstructor()->getMock();
+        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
-        $resizer = new SquareResizer($adapter, 'foo');
+        $resizer = new SquareResizer($adapter, 'foo', $metadata);
         $resizer->resize($media, $file, $file, 'bar', array());
     }
 
@@ -65,7 +66,9 @@ class SquareResizerTest extends \PHPUnit_Framework_TestCase
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->once())->method('getBox')->will($this->returnValue($mediaSize));
 
-        $resizer = new SquareResizer($adapter, 'foo');
+        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+
+        $resizer = new SquareResizer($adapter, 'foo', $metadata);
 
         $box = $resizer->getBox($media, $settings);
 

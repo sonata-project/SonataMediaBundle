@@ -16,6 +16,7 @@ use Gaufrette\Adapter\Local;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
@@ -34,21 +35,25 @@ class FileProvider extends BaseProvider
 
     protected $allowedMimeTypes;
 
+    protected $metadata;
+
     /**
-     * @param string                                           $name
-     * @param \Gaufrette\Filesystem                            $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface             $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
-     * @param array                                            $allowedExtensions
-     * @param array                                            $allowedMimeTypes
+     * @param string                                                $name
+     * @param \Gaufrette\Filesystem                                 $filesystem
+     * @param \Sonata\MediaBundle\CDN\CDNInterface                  $cdn
+     * @param \Sonata\MediaBundle\Generator\GeneratorInterface      $pathGenerator
+     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface      $thumbnail
+     * @param array                                                 $allowedExtensions
+     * @param array                                                 $allowedMimeTypes
+     * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array())
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
         $this->allowedExtensions = $allowedExtensions;
         $this->allowedMimeTypes  = $allowedMimeTypes;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -280,7 +285,7 @@ class FileProvider extends BaseProvider
             $contents = $media->getBinaryContent()->getRealPath();
         }
 
-        $file->setContent(file_get_contents($contents));
+        $file->setContent(file_get_contents($contents), $this->metadata->get($media, $file->getName()));
     }
 
     /**

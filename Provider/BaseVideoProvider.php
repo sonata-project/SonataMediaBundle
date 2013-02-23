@@ -19,10 +19,12 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Buzz\Browser;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
     protected $browser;
+    protected $metadata;
 
     /**
      * @param string                                           $name
@@ -32,11 +34,12 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
      * @param \Buzz\Browser                                    $browser
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
         $this->browser = $browser;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -59,7 +62,7 @@ abstract class BaseVideoProvider extends BaseProvider
             $referenceFile = $this->getFilesystem()->get($key);
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
-            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)));
+            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)), $this->metadata->get($media, $referenceFile->getName()));
         }
 
         return $referenceFile;

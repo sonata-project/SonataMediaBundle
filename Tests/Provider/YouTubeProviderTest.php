@@ -42,7 +42,9 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $provider = new YouTubeProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser);
+        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+
+        $provider = new YouTubeProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
