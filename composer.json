@@ -24,7 +24,7 @@
         "sonata-project/doctrine-extensions": "dev-master",
         "knplabs/gaufrette": ">=0.1.4",
         "imagine/Imagine": "*@stable",
-        "kriswallsmith/buzz": "0.7"
+        "kriswallsmith/buzz": "0.*@stable"
     },
     "require-dev": {
         "sonata-project/formatter-bundle": "dev-master",
