@@ -318,6 +318,16 @@ class SonataMediaExtension extends Extension
                 ->addMethodCall('setDirectory', array($config['filesystem']['s3']['directory']));
             ;
 
+            $container->getDefinition('sonata.media.metadata.amazon')
+                ->addArgument(array(
+                        'acl' => $config['filesystem']['s3']['acl'],
+                        'storage' => $config['filesystem']['s3']['storage'],
+                        'encryption' => $config['filesystem']['s3']['encryption'],
+                        'meta' => $config['filesystem']['s3']['meta'],
+                        'cache_control' => $config['filesystem']['s3']['cache_control']
+                ))
+            ;
+
             $container->getDefinition('sonata.media.adapter.service.s3')
                 ->replaceArgument(0, array(
                     'secret' => $config['filesystem']['s3']['secretKey'],

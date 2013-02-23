@@ -22,12 +22,13 @@
         "sonata-project/notification-bundle": "dev-master",
         "sonata-project/easy-extends-bundle": "dev-master",
         "sonata-project/doctrine-extensions": "dev-master",
-        "knplabs/gaufrette": "dev-master",
+        "knplabs/gaufrette": ">=0.1.4",
         "imagine/Imagine": "*@stable",
         "kriswallsmith/buzz": "0.7"
     },
     "require-dev": {
-        "sonata-project/formatter-bundle": "dev-master"
+        "sonata-project/formatter-bundle": "dev-master",
+        "amazonwebservices/aws-sdk-for-php": "1.5.*"
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",

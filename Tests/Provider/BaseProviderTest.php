@@ -36,7 +36,9 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $thumbnail = $this->getMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
 
-        $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail);
+        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+
+        $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail, $metadata);
 
         return $provider;
     }

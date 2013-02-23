@@ -16,6 +16,7 @@ use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 
 /**
  * This reziser crop the image when the width and height are specified.
@@ -41,10 +42,11 @@ class SquareResizer implements ResizerInterface
      * @param ImagineInterface $adapter
      * @param string           $mode
      */
-    public function __construct(ImagineInterface $adapter, $mode)
+    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
         $this->mode    = $mode;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -87,7 +89,7 @@ class SquareResizer implements ResizerInterface
             $content = $image->get($format, array('quality' => $settings['quality']));
         }
 
-        $out->setContent($content);
+        $out->setContent($content, $this->metadata->get($media, $out->getName()));
     }
 
     /**
