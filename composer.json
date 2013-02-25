@@ -18,27 +18,34 @@
     ],
     "require": {
         "symfony/symfony": ">=2.1,<2.3-dev",
-        "sonata-project/admin-bundle": "dev-master",
-        "sonata-project/notification-bundle": "dev-master",
-        "sonata-project/easy-extends-bundle": "dev-master",
-        "sonata-project/doctrine-extensions": "dev-master",
+        "sonata-project/admin-bundle": "2.1.x-dev",
+        "sonata-project/notification-bundle": "2.1.x-dev",
+        "sonata-project/easy-extends-bundle": "2.1.*",
+        "sonata-project/doctrine-extensions": "1.*",
         "knplabs/gaufrette": ">=0.1.4",
         "imagine/Imagine": "*@stable",
-        "kriswallsmith/buzz": "0.7"
+        "kriswallsmith/buzz": "0.*"
     },
     "require-dev": {
-        "sonata-project/formatter-bundle": "dev-master",
-        "amazonwebservices/aws-sdk-for-php": "1.5.*"
+        "sonata-project/formatter-bundle": "2.1.*",
+        "amazonwebservices/aws-sdk-for-php": "1.5.*",
+        "sonata-project/formatter-bundle": "2.1.*"
     },
     "suggest": {
-        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "liip/imagine-bundle": "dev-master",
-        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "2.1.x-dev",
+        "liip/imagine-bundle": "0.9.*",
+        "sonata-project/admin-bundle": "2.1.x-dev",
         "amazonwebservices/aws-sdk-for-php": "1.5.*"
     },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }
     },
     "target-dir": "Sonata/MediaBundle",
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-2.0": "2.0.x-dev",
+            "dev-master": "2.1.x-dev"
+        }
+    }
 }
