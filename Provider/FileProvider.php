@@ -47,7 +47,7 @@ class FileProvider extends BaseProvider
      * @param array                                                 $allowedMimeTypes
      * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
@@ -285,7 +285,8 @@ class FileProvider extends BaseProvider
             $contents = $media->getBinaryContent()->getRealPath();
         }
 
-        $file->setContent(file_get_contents($contents), $this->metadata->get($media, $file->getName()));
+        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
+        $file->setContent(file_get_contents($contents), $metadata);
     }
 
     /**

@@ -34,7 +34,7 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
      * @param \Buzz\Browser                                    $browser
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
@@ -62,7 +62,8 @@ abstract class BaseVideoProvider extends BaseProvider
             $referenceFile = $this->getFilesystem()->get($key);
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
-            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)), $this->metadata->get($media, $referenceFile->getName()));
+            $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : array();
+            $referenceFile->setContent(file_get_contents($this->getReferenceImage($media)), $metadata);
         }
 
         return $referenceFile;
