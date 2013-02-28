@@ -29,8 +29,7 @@
     "require-dev": {
         "sonata-project/doctrine-orm-admin-bundle": "2.1.*@dev",
         "sonata-project/formatter-bundle": "2.1.*",
-        "amazonwebservices/aws-sdk-for-php": "1.5.*",
-        "sonata-project/formatter-bundle": "2.1.*"
+        "amazonwebservices/aws-sdk-for-php": "1.5.*"
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "2.1.*@dev",
