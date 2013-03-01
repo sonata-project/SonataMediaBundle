@@ -117,6 +117,7 @@ class SonataMediaExtension extends Extension
         $this->configureExtra($container, $config);
         $this->configureBuzz($container, $config);
         $this->configureProviders($container, $config);
+        $this->configureClassesToCompile();
     }
 
     /**
@@ -374,5 +375,65 @@ class SonataMediaExtension extends Extension
         } else {
             $container->removeDefinition('sonata.media.extra.pixlr');
         }
+    }
+
+    /**
+     * Add class to compile
+     */
+    public function configureClassesToCompile()
+    {
+        $this->addClassesToCompile(array(
+            "Sonata\\MediaBundle\\CDN\\CDNInterface",
+            "Sonata\\MediaBundle\\CDN\\Fallback",
+            "Sonata\\MediaBundle\\CDN\\PantherPortal",
+            "Sonata\\MediaBundle\\CDN\\Server",
+            "Sonata\\MediaBundle\\Extra\\Pixlr",
+            "Sonata\\MediaBundle\\Filesystem\\Local",
+            "Sonata\\MediaBundle\\Filesystem\\Replicate",
+            "Sonata\\MediaBundle\\Generator\\DefaultGenerator",
+            "Sonata\\MediaBundle\\Generator\\GeneratorInterface",
+            "Sonata\\MediaBundle\\Generator\\ODMGenerator",
+            "Sonata\\MediaBundle\\Generator\\PHPCRGenerator",
+            "Sonata\\MediaBundle\\Metadata\\AmazonMetadataBuilder",
+            "Sonata\\MediaBundle\\Metadata\\MetadataBuilderInterface",
+            "Sonata\\MediaBundle\\Metadata\\NoopMetadataBuilder",
+            "Sonata\\MediaBundle\\Metadata\\ProxyMetadataBuilder",
+            "Sonata\\MediaBundle\\Model\\Gallery",
+            "Sonata\\MediaBundle\\Model\\GalleryHasMedia",
+            "Sonata\\MediaBundle\\Model\\GalleryHasMediaInterface",
+            "Sonata\\MediaBundle\\Model\\GalleryInterface",
+            "Sonata\\MediaBundle\\Model\\GalleryManager",
+            "Sonata\\MediaBundle\\Model\\GalleryManagerInterface",
+            "Sonata\\MediaBundle\\Model\\Media",
+            "Sonata\\MediaBundle\\Model\\MediaInterface",
+            "Sonata\\MediaBundle\\Model\\MediaManager",
+            "Sonata\\MediaBundle\\Model\\MediaManagerInterface",
+            "Sonata\\MediaBundle\\Provider\\BaseProvider",
+            "Sonata\\MediaBundle\\Provider\\BaseVideoProvider",
+            "Sonata\\MediaBundle\\Provider\\DailyMotionProvider",
+            "Sonata\\MediaBundle\\Provider\\FileProvider",
+            "Sonata\\MediaBundle\\Provider\\ImageProvider",
+            "Sonata\\MediaBundle\\Provider\\MediaProviderInterface",
+            "Sonata\\MediaBundle\\Provider\\Pool",
+            "Sonata\\MediaBundle\\Provider\\VimeoProvider",
+            "Sonata\\MediaBundle\\Provider\\YouTubeProvider",
+            "Sonata\\MediaBundle\\Resizer\\ResizerInterface",
+            "Sonata\\MediaBundle\\Resizer\\SimpleResizer",
+            "Sonata\\MediaBundle\\Resizer\\SquareResizer",
+            "Sonata\\MediaBundle\\Security\\DownloadStrategyInterface",
+            "Sonata\\MediaBundle\\Security\\ForbiddenDownloadStrategy",
+            "Sonata\\MediaBundle\\Security\\PublicDownloadStrategy",
+            "Sonata\\MediaBundle\\Security\\RolesDownloadStrategy",
+            "Sonata\\MediaBundle\\Security\\SessionDownloadStrategy",
+            "Sonata\\MediaBundle\\Templating\\Helper\\MediaHelper",
+            "Sonata\\MediaBundle\\Thumbnail\\ConsumerThumbnail",
+            "Sonata\\MediaBundle\\Thumbnail\\FormatThumbnail",
+            "Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface",
+            "Sonata\\MediaBundle\\Twig\\Extension\\FormatterMediaExtension",
+            "Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension",
+            "Sonata\\MediaBundle\\Twig\\Node\\MediaNode",
+            "Sonata\\MediaBundle\\Twig\\Node\\PathNode",
+            "Sonata\\MediaBundle\\Twig\\Node\\ThumbnailNode",
+        ));
     }
 }
