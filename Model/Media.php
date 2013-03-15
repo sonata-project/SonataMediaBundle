@@ -117,7 +117,12 @@ abstract class Media implements MediaInterface
      * @var integer $size
      */
     protected $size;
-
+    
+    /**
+     * @var string $extension
+     */
+    protected $extension
+    
     protected $galleryHasMedias;
 
     public function prePersist()
@@ -487,7 +492,18 @@ abstract class Media implements MediaInterface
      */
     public function getExtension()
     {
+        if($this->extension) {
+            return $this->extension;
+        }
         return pathinfo($this->getProviderReference(), PATHINFO_EXTENSION);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = $extension;
     }
 
     /**
