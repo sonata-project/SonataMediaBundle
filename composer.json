@@ -19,9 +19,6 @@
     "require": {
         "symfony/symfony": ">=2.2,<2.3-dev",
         "sonata-project/admin-bundle": "2.2.*@dev",
-        "sonata-project/notification-bundle": "2.2.*@dev",
-        "sonata-project/easy-extends-bundle": "2.1.*",
-        "sonata-project/doctrine-extensions": "1.*",
         "knplabs/gaufrette": ">=0.1.4",
         "imagine/Imagine": "*@stable",
         "kriswallsmith/buzz": "0.*"
@@ -33,6 +30,9 @@
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev",
+        "sonata-project/notification-bundle": "2.2.*@dev",
+        "sonata-project/easy-extends-bundle": "2.1.*",
+        "sonata-project/doctrine-extensions": "1.*",
         "liip/imagine-bundle": "0.9.*",
         "sonata-project/admin-bundle": "2.2.*@dev",
         "amazonwebservices/aws-sdk-for-php": "1.5.*"
