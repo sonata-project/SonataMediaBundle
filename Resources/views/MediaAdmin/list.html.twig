@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 
+
 {% block preview %}
 
     <ul class="nav nav-pills">
@@ -50,42 +51,4 @@ file that was distributed with this source code.
         {% endif %}
     </ul>
 
-{% endblock %}
-
-
-{% block list_filters %}
-    {% if admin.datagrid.filters %}
-        <form class="sonata-filter-form form-stacked {{ admin.isChild and 1 == admin.datagrid.filters|length ? 'hide' : '' }}" action="{{ admin.generateUrl('list') }}" method="GET">
-
-            <input type="hidden" name="context" value="{{ persistent_parameters.context }}" />
-            <input type="hidden" name="provider" value="{{ persistent_parameters.provider }}" />
-
-            <fieldset class="filter_legend">
-                <legend class="filter_legend {{ admin.datagrid.hasActiveFilters ? 'active' : 'inactive' }}">{{ 'label_filters'|trans({}, 'SonataAdminBundle') }}</legend>
-
-                <div class="filter_container {{ admin.datagrid.hasActiveFilters ? 'active' : 'inactive' }}">
-                    <table class="table table-bordered">
-                        {% for filter in admin.datagrid.filters %}
-                            <tr id="filter_{{ filter.name }}_row" class="filter {{ filter.isActive ? 'active' : 'inactive' }}">
-                                <td class="filter-title">{{ admin.trans(filter.label) }}</td>
-                                <td class="filter-type">{{ form_widget(form.children[filter.formName].children['type']) }}</td>
-                                <td class="filter-value">{{ form_widget(form.children[filter.formName].children['value']) }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-
-                    <input type="hidden" name="filter[_page]" id="filter__page" value="1" />
-
-                    {% set foo = form.children['_page'].setRendered() %}
-                    {{ form_rest(form) }}
-
-                    <input type="submit" class="btn btn-primary" value="{{ 'btn_filter'|trans({}, 'SonataAdminBundle') }}" />
-
-                    <a class="btn" href="{{ admin.generateUrl('list') }}">{{ 'link_reset_filter'|trans({}, 'SonataAdminBundle') }}</a>
-
-                </div>
-            </fieldset>
-
-        </form>
-    {% endif %}
 {% endblock %}
