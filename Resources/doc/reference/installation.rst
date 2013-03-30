@@ -171,6 +171,17 @@ Now that your module is generated, you can register it
                   default:
                       mappings:
                           ApplicationSonataMediaBundle: ~
+    
+    // app/autoload.php
+    <?php
+
+    use Doctrine\Common\Annotations\AnnotationRegistry;
+    
+    $loader = require __DIR__.'/../vendor/autoload.php';
+    
+    //custom for Application
+    $loader->add("Application", __DIR__);
+    ...
 
 
 Now, you can build up your database:
