@@ -49,12 +49,12 @@ class CreateThumbnailConsumer implements ConsumerInterface
             'id' => $event->getMessage()->getValue('mediaId')
         ));
 
-        // solve race condition between message queue and database transaction
-        $media->setProviderReference($event->getMessage()->getValue('providerReference'));
-
         if (!$media) {
             throw new HandlingException(sprintf('Media not found - id: %s', $event->getMessage()->getValue('mediaId')));
         }
+
+        // solve race condition between message queue and database transaction
+        $media->setProviderReference($event->getMessage()->getValue('providerReference'));
 
         try {
             $this->getThumbnail($event)->generate($this->pool->getProvider($media->getProviderName()), $media);
