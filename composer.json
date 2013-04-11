@@ -31,6 +31,7 @@
         "sonata-project/formatter-bundle": "2.2.*@dev",
         "amazonwebservices/aws-sdk-for-php": "1.5.*"
     },
+    "minimum-stability": "dev",
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev",
         "liip/imagine-bundle": "0.9.*",
