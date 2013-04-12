@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Bundle\MediaBundle\Document\BaseGallery
@@ -22,14 +23,56 @@ abstract class BaseGallery extends Gallery
     /**
      * @var string
      */
+    protected $id;
+
+    /**
+     * @var string
+     */
     private $uuid;
+
+    /**
+     * The basepath of the id
+     *
+     * @var string
+     */
+    protected $idPrefix;
 
     /**
      * {@inheritdoc}
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection;
+        $this->galleryHasMedias = new ArrayCollection;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get the basepath of the id
+     *
+     * @return string
+     */
+    public function getIdPrefix()
+    {
+        return $this->idPrefix;
+    }
+
+    /**
+     * Set the basepath of the id
+     *
+     * @param string $prefix
+     */
+    public function setPrefix($prefix)
+    {
+        $this->idPrefix = $prefix;
     }
 
     /**
