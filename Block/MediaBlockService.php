@@ -14,12 +14,15 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
+use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
 
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Form;
@@ -81,14 +84,16 @@ class MediaBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function getDefaultSettings()
+    public function getDefaultSettings(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'media'    => false,
             'title'    => false,
             'context'  => false,
+            'mediaId'  => false,
             'format'   => false,
-        );
+            'template' => 'SonataMediaBundle:Block:block_media.html.twig'
+        ));
     }
 
     /**
@@ -181,27 +186,14 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * @return string
-     */
-    protected function getTemplate()
-    {
-        return 'SonataMediaBundle:Block:block_media.html.twig';
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function execute(BlockInterface $block, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
-        // merge settings
-        $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
-
-        $media = $settings['mediaId'];
-
         return $this->renderResponse($this->getTemplate(), array(
-            'media'     => $media,
-            'block'     => $block,
-            'settings'  => $settings
+            'media'     => $blockContext->getSetting('mediaId'),
+            'block'     => $blockContext->getBlock(),
+            'settings'  => $blockContext->getSettings()
         ), $response);
     }
 
