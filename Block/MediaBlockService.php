@@ -84,7 +84,7 @@ class MediaBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function getDefaultSettings(OptionsResolverInterface $resolver)
+    public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'media'    => false,
@@ -188,12 +188,12 @@ class MediaBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockInterface $blockInterface, Response $response = null)
     {
         return $this->renderResponse($this->getTemplate(), array(
-            'media'     => $blockContext->getSetting('mediaId'),
-            'block'     => $blockContext->getBlock(),
-            'settings'  => $blockContext->getSettings()
+            'media'     => $blockInterface->getSetting('mediaId'),
+            'block'     => $blockInterface->getBlock(),
+            'settings'  => $blockInterface->getSettings()
         ), $response);
     }
 
