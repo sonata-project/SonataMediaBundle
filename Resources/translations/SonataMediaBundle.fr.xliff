@@ -2,7 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="fr" datatype="plaintext" original="file.ext">
         <body>
-        	<trans-unit id="default">
+            <trans-unit id="default">
                 <source>default</source>
                 <target>default</target>
             </trans-unit>
@@ -237,9 +237,21 @@
                 <source>form.label_copyright</source>
                 <target>Copyright</target>
             </trans-unit>
+            <trans-unit id="list.label_name">
+                <source>list.label_name</source>
+                <target>Nom</target>
+            </trans-unit>
             <trans-unit id="list.label_enabled">
                 <source>list.label_enabled</source>
                 <target>Actif</target>
+            </trans-unit>
+            <trans-unit id="list.label_context">
+                <source>list.label_context</source>
+                <target>Contexte</target>
+            </trans-unit>
+            <trans-unit id="list.label_default_format">
+                <source>list.label_default_format</source>
+                <target>Format par défaut</target>
             </trans-unit>
             <trans-unit id="list.label__action">
                 <source>list.label__action</source>
@@ -268,6 +280,14 @@
             <trans-unit id="filter.label_provider_name">
                 <source>filter.label_provider_name</source>
                 <target>Type</target>
+            </trans-unit>
+            <trans-unit id="form.label_media">
+                <source>form.label_media</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="form.label_position">
+                <source>form.label_position</source>
+                <target>Position</target>
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
