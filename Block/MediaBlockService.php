@@ -90,7 +90,7 @@ class MediaBlockService extends BaseBlockService
             'media'    => false,
             'title'    => false,
             'context'  => false,
-            'mediaId'  => false,
+            'mediaId'  => null,
             'format'   => false,
             'template' => 'SonataMediaBundle:Block:block_media.html.twig'
         ));
