@@ -57,7 +57,7 @@ class SyncThumbsCommand extends BaseCommand
         if (null === $context) {
             $contexts = array_keys($this->getMediaPool()->getContexts());
             $contextKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the context', $contexts);
-            $context = $providers[$contextKey];
+            $context = $contexts[$contextKey];
         }
 
         $this->quiet = $input->getOption('quiet');
