@@ -61,4 +61,18 @@ class MediaAdmin extends Admin
 //            ->add('context')
 //        ;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        // Allow path in id parameter
+        $collection->add('view', $this->getRouterIdParameter() . '/view', array(), array('id' => '.+', '_method' => 'GET'));
+        $collection->add('show', $this->getRouterIdParameter() . '/show', array(
+                '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view')
+            ),
+            array('id' => '.+', '_method' => 'GET')
+        );
+    }
 }
