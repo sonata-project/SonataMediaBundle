@@ -35,8 +35,8 @@ class SyncThumbsCommand extends BaseCommand
         $this->setName('sonata:media:sync-thumbnails')
             ->setDescription('Sync uploaded image thumbs with new media formats')
             ->setDefinition(array(
-                new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
-                new InputArgument('context', InputArgument::REQUIRED, 'The context'),
+                new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
+                new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
             )
         );
     }
@@ -47,7 +47,18 @@ class SyncThumbsCommand extends BaseCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $provider = $input->getArgument('providerName');
+        if (null === $provider) {
+            $providers = array_keys($this->getMediaPool()->getProviders());
+            $providerKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the provider', $providers);
+            $provider = $providers[$providerKey];
+        }
+
         $context  = $input->getArgument('context');
+        if (null === $context) {
+            $contexts = array_keys($this->getMediaPool()->getContexts());
+            $contextKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the context', $contexts);
+            $context = $contexts[$contextKey];
+        }
 
         $this->quiet = $input->getOption('quiet');
         $this->output = $output;
@@ -80,7 +91,7 @@ class SyncThumbsCommand extends BaseCommand
      */
     protected function log($message)
     {
-        if ($this->quiet === false) {
+        if (false === $this->quiet) {
             $this->output->writeln($message);
         }
     }
