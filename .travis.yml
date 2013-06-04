@@ -10,10 +10,6 @@ env:
 before_script:
   - composer install --dev
 
-branches:
-  only:
-    - 2.1
-
 script: phpunit
 
 notifications:
