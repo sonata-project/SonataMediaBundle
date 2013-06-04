@@ -83,6 +83,11 @@ Doctrine PHPCR:
     # app/config/config.yml
 
     sonata_media:
+        # if you don't use default namespace configuration
+        #class: 
+        #    media: MyVendor\MediaBundle\Entity\Media
+        #    gallery: MyVendor\MediaBundle\Entity\Gallery
+        #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
         default_context: default
         db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
         contexts:

@@ -14,6 +14,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
+use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
 
@@ -21,6 +22,7 @@ use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -37,10 +39,10 @@ class GalleryBlockService extends BaseBlockService
     protected $galleryManager;
 
     /**
-     * @param string                                                    $name
-     * @param \Symfony\Component\Templating\EngineInterface             $templating
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Sonata\MediaBundle\Model\GalleryManagerInterface         $galleryManager
+     * @param string                  $name
+     * @param EngineInterface         $templating
+     * @param ContainerInterface      $container
+     * @param GalleryManagerInterface $galleryManager
      */
     public function __construct($name, EngineInterface $templating, ContainerInterface $container, GalleryManagerInterface $galleryManager)
     {
@@ -89,19 +91,21 @@ class GalleryBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function getDefaultSettings()
+    public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
-        return array(
-            'gallery'  => false,
-            'title'    => false,
-            'context'  => false,
-            'format'   => false,
+        $resolver->setDefaults(array(
+            'gallery'   => false,
+            'title'     => false,
+            'context'   => false,
+            'format'    => false,
             'pauseTime' => 3000,
             'animSpeed' => 300,
-            'startPaused' => false,
+            'startPaused'  => false,
             'directionNav' => true,
-            'progressBar' => true,
-        );
+            'progressBar'  => true,
+            'template'     => 'SonataMediaBundle:Block:block_gallery.html.twig',
+            'galleryId'    => false
+        ));
     }
 
     /**
@@ -159,17 +163,14 @@ class GalleryBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockInterface $block, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
-        // merge settings
-        $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
+        $gallery = $blockContext->getBlock()->getSetting('galleryId');
 
-        $gallery = $settings['galleryId'];
-
-        return $this->renderResponse('SonataMediaBundle:Block:block_gallery.html.twig', array(
+        return $this->renderResponse($blockContext->getTemplate(), array(
             'gallery'   => $gallery,
-            'block'     => $block,
-            'settings'  => $settings,
+            'block'     => $blockContext->getBlock(),
+            'settings'  => $blockContext->getSettings(),
             'elements'  => $gallery ? $this->buildElements($gallery) : array(),
         ), $response);
     }
@@ -179,13 +180,13 @@ class GalleryBlockService extends BaseBlockService
      */
     public function load(BlockInterface $block)
     {
-        $media = $block->getSetting('galleryId', null);
+        $gallery = $block->getSetting('galleryId');
 
-        if ($media) {
-            $media = $this->galleryManager->findOneBy(array('id' => $media));
+        if ($gallery) {
+            $gallery = $this->galleryManager->findOneBy(array('id' => $gallery));
         }
 
-        $block->setSetting('galleryId', $media);
+        $block->setSetting('galleryId', $gallery);
     }
 
     /**

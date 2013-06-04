@@ -12,9 +12,11 @@ namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
 
+use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * PageExtension
@@ -34,16 +36,17 @@ class FeatureMediaBlockService extends MediaBlockService
     /**
      * {@inheritdoc}
      */
-    public function getDefaultSettings()
+    public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'media'   => false,
             'orientation' => 'left',
             'title'   => false,
             'content' => false,
             'context' => false,
             'format'  => false,
-        );
+            'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig'
+        ));
     }
 
     /**
@@ -74,17 +77,12 @@ class FeatureMediaBlockService extends MediaBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockInterface $block, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
-        // merge settings
-        $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
-
-        $media = $settings['mediaId'];
-
-        return $this->renderResponse('SonataMediaBundle:Block:block_feature_media.html.twig', array(
-            'media'     => $media,
-            'block'     => $block,
-            'settings'  => $settings
+        return $this->renderResponse($blockContext->getTemplate(), array(
+            'media'     => $blockContext->getSetting('mediaId'),
+            'block'     => $blockContext->getBlock(),
+            'settings'  => $blockContext->getSettings()
         ), $response);
     }
 
