@@ -19,7 +19,7 @@ For instance, a youtube video can be created and saved like this :
     $media = new Media;
     $media->setBinaryContent('13142153');
     $media->setContext('user'); // video related to the user
-    $media->setProviderName('sonata.provider.youtube');
+    $media->setProviderName('sonata.media.provider.youtube');
 
     $mediaManager->save($media);
 
@@ -27,7 +27,7 @@ For instance, a youtube video can be created and saved like this :
     $media = new Media;
     $media->setBinaryContent('13142153');
 
-    $mediaManager->save($media, 'user', 'sonata.provider.youtube');
+    $mediaManager->save($media, 'user', 'sonata.media.provider.youtube');
 
 
 Retrieving metadata information
