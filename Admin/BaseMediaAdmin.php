@@ -71,7 +71,7 @@ abstract class BaseMediaAdmin extends Admin
             return;
         }
 
-        $formMapper->getFormBuilder()->appendNormTransformer(new ProviderDataTransformer($this->pool));
+        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool));
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
