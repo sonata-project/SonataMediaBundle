@@ -218,7 +218,7 @@ class GalleryBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function getJavacripts($media)
+    public function getJavascripts($media)
     {
         return array(
             '/bundles/sonatamedia/nivo-gallery/jquery.nivo.gallery.js'
