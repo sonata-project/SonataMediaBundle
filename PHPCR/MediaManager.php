@@ -104,7 +104,7 @@ class MediaManager extends AbstractMediaManager
             $media->setProviderName($providerName);
         }
 
-        $isNew = $media->getId() != null;
+        $isNew = $media->getId() === null;
 
         if ($isNew) {
             $this->pool->getProvider($media->getProviderName())->prePersist($media);
