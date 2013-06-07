@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Admin\PHPCR;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\MediaBundle\Admin\GalleryAdmin as BaseGalleryAdmin;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class GalleryAdmin extends BaseGalleryAdmin
 {
