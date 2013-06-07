@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Admin\PHPCR;
 
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class MediaAdmin extends Admin
 {
