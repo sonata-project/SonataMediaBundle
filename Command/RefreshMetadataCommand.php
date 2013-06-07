@@ -88,8 +88,6 @@ class RefreshMetadataCommand extends BaseCommand
                 $this->log(sprintf("<error>Unable saving media, media: %s - %s </error>", $media->getId(), $e->getMessage()));
                 continue;
             }
-
-
         }
 
         $this->log('Done!');

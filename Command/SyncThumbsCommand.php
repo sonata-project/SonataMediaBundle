@@ -75,8 +75,19 @@ class SyncThumbsCommand extends BaseCommand
 
             $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
 
-            $provider->removeThumbnails($media);
-            $provider->generateThumbnails($media);
+            try {
+                $provider->removeThumbnails($media);
+            } catch (\Exception $e) {
+                $this->log(sprintf("<error>Unable to remove old thumbnails, media: %s - %s </error>", $media->getId(), $e->getMessage()));
+                continue;
+            }
+
+            try {
+                $provider->generateThumbnails($media);
+            } catch (\Exception $e) {
+                $this->log(sprintf("<error>Unable to generated new thumbnails, media: %s - %s </error>", $media->getId(), $e->getMessage()));
+                continue;
+            }
         }
 
         $this->log('Done.');
