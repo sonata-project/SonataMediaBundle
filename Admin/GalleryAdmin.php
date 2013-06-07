@@ -66,11 +66,11 @@ class GalleryAdmin extends Admin
             ->add('galleryHasMedias', 'sonata_type_collection', array(
                     'cascade_validation' => true,
                 ), array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                    'sortable'  => 'position',
-                    'link_parameters' => array('context' => $context),
-                    'admin_code' => 'sonata.media.admin.gallery_has_media'
+                    'edit'              => 'inline',
+                    'inline'            => 'table',
+                    'sortable'          => 'position',
+                    'link_parameters'   => array('context' => $context),
+                    'admin_code'        => 'sonata.media.admin.gallery_has_media'
                 )
             )
         ;
