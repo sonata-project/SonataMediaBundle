@@ -8,7 +8,7 @@
 
         <uuid fieldName="uuid" />
 
-        <children fieldName="galleryHasMedias" />
+        <children name="galleryHasMedias" fieldName="galleryHasMedias" />
 
         <field name="name"          fieldName="name"                type="string" />
         <field name="context"       fieldName="context"             type="string" />
