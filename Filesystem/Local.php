@@ -14,8 +14,34 @@ use Gaufrette\Adapter\Local as BaseLocal;
 
 class Local extends BaseLocal
 {
+    /**
+     * @var path of directory relative to web
+     */
+    protected $relativeWebPath;
+
     public function getDirectory()
     {
         return $this->directory;
+    }
+
+    /**
+     * Set path of the directory relative to the web path
+     *
+     * @param string $path
+     */
+    public function setRelativeWebPath($path)
+    {
+        $this->relativeWebPath = $path;
+    }
+
+    /**
+     * Get path of the directory relative to the web path,
+     * can be used in the url
+     *
+     * @return string path
+     */
+    public function getRelativeWebPath()
+    {
+        return $this->relativeWebPath;
     }
 }

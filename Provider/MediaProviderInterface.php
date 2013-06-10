@@ -240,6 +240,13 @@ interface MediaProviderInterface
     public function getFilesystem();
 
     /**
+     * Get path relative to the web path if media is saved in the web folder
+     *
+     * @return string
+     */
+    public function getRelativeWebPath();
+
+    /**
      * @param string $relativePath
      * @param bool   $isFlushable
      */

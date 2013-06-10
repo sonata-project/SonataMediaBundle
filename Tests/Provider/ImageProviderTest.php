@@ -35,7 +35,14 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $thumbnail = new FormatThumbnail('jpg');
+        $modelManager = $this->getMock('Sonata\AdminBundle\Model\ModelManagerInterface');
+        $modelManager->expects($this->any())->method('getUrlsafeIdentifier')
+            ->will($this->returnCallback(function($media) {
+                return $media->getId();
+            })
+        );
+
+        $thumbnail = new FormatThumbnail('jpg', $modelManager);
 
         $size = $this->getMock('Imagine\Image\BoxInterface');
         $size->expects($this->any())->method('getWidth')->will($this->returnValue(100));

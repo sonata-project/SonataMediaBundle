@@ -23,7 +23,14 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
 {
     public function testGenerate()
     {
-        $thumbnail = new FormatThumbnail('foo');
+        $modelManager = $this->getMock('Sonata\AdminBundle\Model\ModelManagerInterface');
+        $modelManager->expects($this->any())->method('getUrlsafeIdentifier')
+            ->will($this->returnCallback(function($media) {
+                return $media->getId();
+            })
+        );
+
+        $thumbnail = new FormatThumbnail('foo', $modelManager);
 
         $filesystem = new Filesystem(new InMemory());
         $referenceFile = new File('myfile', $filesystem);

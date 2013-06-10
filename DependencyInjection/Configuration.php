@@ -103,7 +103,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('server')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('path')->defaultValue('/uploads/media')->end()
+                                ->scalarNode('path')->defaultValue(null)->end()
                             ->end()
                         ->end()
 
@@ -142,6 +142,7 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('directory')->defaultValue('%kernel.root_dir%/../web/uploads/media')->end()
                                 ->scalarNode('create')->defaultValue(false)->end()
+                                ->scalarNode('relative_web_path')->defaultValue('/uploads/media')->end()
                             ->end()
                         ->end()
 

@@ -56,8 +56,9 @@ Full configuration options:
                     big:   { width: 500 , quality: 90}
 
         cdn:
+            # define the base url for the media
             server:
-                path:      /uploads/media # http://media.sonata-project.org
+                path:      ~ # http://media.sonata-project.org
 
             panther:
                 path:       http://domain.pantherportal.com/uploads/media
@@ -70,9 +71,11 @@ Full configuration options:
                 fallback:   sonata.media.cdn.server
 
         filesystem:
+            # define where the uploaded file will be stored and it's relative path from web
             local:
                 directory:  %kernel.root_dir%/../web/uploads/media
                 create:     false
+                relative_web_path: /uploads/media
 
             ftp:
                 directory:

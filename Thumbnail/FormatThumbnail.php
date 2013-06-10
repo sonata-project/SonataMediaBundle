@@ -13,17 +13,28 @@ namespace Sonata\MediaBundle\Thumbnail;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\AdminBundle\Model\ModelManagerInterface;
 
 class FormatThumbnail implements ThumbnailInterface
 {
+    /**
+     * @var string
+     */
     private $defaultFormat;
 
     /**
-     * @param string $defaultFormat
+     * @var \Sonata\AdminBundle\Model\ModelManagerInterface
      */
-    public function __construct($defaultFormat)
+    protected $modelManager;
+
+    /**
+     * @param string $defaultFormat
+     * @param \Sonata\AdminBundle\Model\ModelManagerInterface
+     */
+    public function __construct($defaultFormat, ModelManagerInterface $modelManager)
     {
         $this->defaultFormat = $defaultFormat;
+        $this->modelManager = $modelManager;
     }
 
     /**
@@ -34,10 +45,21 @@ class FormatThumbnail implements ThumbnailInterface
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
         } else {
-            $path = sprintf('%s/thumb_%s_%s.%s',  $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
+            $path = sprintf('%s/thumb_%s_%s.%s',
+                $provider->generatePath($media),
+                $this->modelManager->getUrlsafeIdentifier($media),
+                $format,
+                $this->getExtension($media)
+            );
         }
 
-        return $path;
+        if ($this->isExternalUrl($path)) {
+            return $path;
+        }
+
+        $relativeWebPath = $provider->getRelativeWebPath();
+
+        return $relativeWebPath ? sprintf('%s/%s', $relativeWebPath, $path) : $path;
     }
 
     /**
@@ -45,12 +67,16 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s.%s',
+        $path = sprintf('%s/thumb_%s_%s.%s',
             $provider->generatePath($media),
-            $media->getId(),
+            $this->modelManager->getUrlsafeIdentifier($media),
             $format,
             $this->getExtension($media)
         );
+
+        $relativeWebPath = $provider->getRelativeWebPath();
+
+        return $relativeWebPath ? sprintf('%s/%s', $relativeWebPath, $path) : $path;
     }
 
     /**
@@ -66,10 +92,15 @@ class FormatThumbnail implements ThumbnailInterface
 
         foreach ($provider->getFormats() as $format => $settings) {
             if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
+                $path = $provider->generatePrivateUrl($media, $format);
+                if (0 === strpos($path, $provider->getRelativeWebPath(), 0)) {
+                    $path = ltrim(substr($path, strlen($provider->getRelativeWebPath())), '/');
+                }
+
                 $provider->getResizer()->resize(
                     $media,
                     $referenceFile,
-                    $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
+                    $provider->getFilesystem()->get($path, true),
                     $this->getExtension($media),
                     $settings
                 );
@@ -104,5 +135,14 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         return $ext;
+    }
+
+    /**
+     * @param $path
+     * @return bool
+     */
+    protected function isExternalUrl($path)
+    {
+        return 0 === strpos($path, 'http', 0);
     }
 }

@@ -56,6 +56,9 @@ abstract class BaseVideoProvider extends BaseProvider
     public function getReferenceFile(MediaInterface $media)
     {
         $key = $this->generatePrivateUrl($media, 'reference');
+        if (0 === strpos($key, $this->getRelativeWebPath(), 0)) {
+            $key = ltrim(substr($key, strlen($this->getRelativeWebPath())), '/');
+        }
 
         // the reference file is remote, get it and store it with the 'reference' format
         if ($this->getFilesystem()->has($key)) {
@@ -74,11 +77,9 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        ), $media->getCdnIsFlushable());
+        $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
+
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
     /**
@@ -86,11 +87,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        );
+        return $this->thumbnail->generatePrivateUrl($this, $media, $format);
     }
 
     /**

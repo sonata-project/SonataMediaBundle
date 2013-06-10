@@ -63,3 +63,23 @@ Available services
 
 More services will be available in the future depending on your contributions! :)
 
+Media path generation
+---------------------
+
+Media path generation: http://mycdn.com/uploads/media/context/01223/023/thumb_1232_small.jpg
+
+1. CDN http://mycdn.com
+2. Relative web path : relative path from the web root when using the local filesystem
+3. Path Generator : context/01223/023
+4. Thumbnail - internal generation: thumb_1232_small.jpg
+5. Thumbnail - return the relative path: uploads/media/context/01223/023/thumb_1232_small.jpg
+
+
+http://mycdn.com/uploads/media/context/01223/023/thumb_1232_small.jpg
+----------------
+       [1]      --------------
+                     [2]      ------------------
+                                     [3]        ---------------------
+                                                         [4]
+                -----------------------------------------------------
+                                       [5]

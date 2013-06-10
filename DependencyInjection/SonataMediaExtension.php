@@ -62,10 +62,6 @@ class SonataMediaExtension extends Extension
             $loader->load('formatter.xml');
         }
 
-        if (!isset($bundles['LiipImagineBundle'])) {
-            $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
-        }
-
         if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'))) {
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
@@ -76,6 +72,10 @@ class SonataMediaExtension extends Extension
 
         $loader->load(sprintf('%s.xml', $config['db_driver']));
         $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
+
+        if (!$container->has('sonata.media.admin.media.manager')) {
+            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - missing ModelManager definition with the id "sonata.media.admin.media.manager" for the db driver "%s".', $config['db_driver']));
+        }
 
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
@@ -118,6 +118,7 @@ class SonataMediaExtension extends Extension
         $this->configureBuzz($container, $config);
         $this->configureProviders($container, $config);
         $this->configureClassesToCompile();
+        $this->configureLiipImagine($container, $config);
     }
 
     /**
@@ -135,6 +136,10 @@ class SonataMediaExtension extends Extension
         $container->getDefinition('sonata.media.provider.file')
             ->replaceArgument(5, $config['providers']['file']['allowed_extensions'])
             ->replaceArgument(6, $config['providers']['file']['allowed_mime_types'])
+        ;
+
+        $container->getDefinition('sonata.media.thumbnail.format')
+            ->replaceArgument(1, new Reference('sonata.media.admin.media.manager'))
         ;
     }
 
@@ -286,6 +291,7 @@ class SonataMediaExtension extends Extension
             $container->getDefinition('sonata.media.adapter.filesystem.local')
                 ->addArgument($config['filesystem']['local']['directory'])
                 ->addArgument($config['filesystem']['local']['create'])
+                ->addMethodCall('setRelativeWebPath', array($config['filesystem']['local']['relative_web_path']))
             ;
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.local');
@@ -359,6 +365,23 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.adapter.filesystem.mogilefs');
             $container->removeDefinition('sonata.media.filesystem.mogilefs');
         }
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param array                                                   $config
+     */
+    public function configureLiipImagine(ContainerBuilder $container, array $config)
+    {
+        $bundles = $container->getParameter('kernel.bundles');
+        if (!isset($bundles['LiipImagineBundle'])) {
+            $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
+            return;
+        }
+
+        $container->getDefinition('sonata.media.thumbnail.liip_imagine')
+            ->replaceArgument(2, new Reference('sonata.media.admin.media.manager'))
+        ;
     }
 
     /**
