@@ -37,8 +37,13 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
-//        $dm = $args->getDocumentManager();
-        // TODO: is this needed for PHPCR?
+        /** @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
+        /** @var $dm \Doctrine\ODM\PHPCR\DocumentManager */
+        $dm = $args->getObjectManager();
+
+        $dm->getUnitOfWork()->computeSingleDocumentChangeSet(
+            $this->getMedia($args)
+        );
     }
 
     /**
@@ -46,6 +51,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     protected function getMedia(EventArgs $args)
     {
-        return $args->getDocument();
+        return $args->getObject();
     }
 }

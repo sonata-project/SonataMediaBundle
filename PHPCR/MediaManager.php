@@ -104,21 +104,6 @@ class MediaManager extends AbstractMediaManager
             $media->setProviderName($providerName);
         }
 
-        $isNew = $media->getId() === null;
-
-        if ($isNew) {
-            $this->pool->getProvider($media->getProviderName())->prePersist($media);
-            $this->modelManager->create($media);
-        } else {
-            $this->pool->getProvider($media->getProviderName())->preUpdate($media);
-        }
-
-        if ($isNew) {
-            $this->pool->getProvider($media->getProviderName())->postPersist($media);
-        } else {
-            $this->pool->getProvider($media->getProviderName())->postUpdate($media);
-        }
-
         // just in case the pool alter the media
         $this->modelManager->update($media);
     }
@@ -131,10 +116,6 @@ class MediaManager extends AbstractMediaManager
      */
     public function delete(MediaInterface $media)
     {
-        $this->pool->preRemove($media);
         $this->modelManager->delete($media);
-
-        $this->pool->postRemove($media);
-        $this->modelManager->getDocumentManager()->flush();
     }
 }
