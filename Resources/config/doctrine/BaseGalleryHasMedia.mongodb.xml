@@ -6,11 +6,11 @@
 
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseGalleryHasMedia">
 
-        <field name="position"   fieldName="position" type="int" />
-        <field name="enabled"    fieldName="enabled"  type="boolean" />
+        <field name="position" type="int"/>
+        <field name="enabled"  type="boolean"/>
 
-        <field name="updatedAt"          fieldName="updatedAt"     type="date" />
-        <field name="createdAt"          fieldName="createdAt"     type="date" />
+        <field name="updatedAt" type="date"/>
+        <field name="createdAt" type="date"/>
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist"/>
