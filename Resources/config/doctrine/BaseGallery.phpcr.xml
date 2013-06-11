@@ -6,17 +6,17 @@
 
     <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseGallery" referenceable="true" >
 
-        <uuid fieldName="uuid" />
+        <uuid name="uuid" />
 
-        <children fieldName="galleryHasMedias" />
+        <children name="galleryHasMedias"/>
 
-        <field name="name"          fieldName="name"                type="string" />
-        <field name="context"       fieldName="context"             type="string" />
-        <field name="defaultFormat" fieldName="defaultFormat"       type="string" />
-        <field name="enabled"       fieldName="enabled"             type="boolean" />
+        <field name="name"          type="string"/>
+        <field name="context"       type="string"/>
+        <field name="defaultFormat" type="string" />
+        <field name="enabled"       type="boolean"/>
 
-        <field name="updatedAt"     fieldName="updatedAt"           type="date" />
-        <field name="createdAt"     fieldName="createdAt"           type="date" />
+        <field name="updatedAt"     type="date"/>
+        <field name="createdAt"     type="date"/>
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist" />

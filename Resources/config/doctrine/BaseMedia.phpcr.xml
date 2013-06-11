@@ -9,31 +9,31 @@
 
         <uuid fieldName="uuid" />
 
-        <field name="name"              fieldName="name"                type="string" />
-        <field name="description"       fieldName="description"         type="string" />
-        <field name="enabled"           fieldName="enabled"             type="boolean" />
+        <field name="name"               type="string" />
+        <field name="description"        type="string" />
+        <field name="enabled"            type="boolean" />
 
-        <field name="providerName"      fieldName="providerName"        type="string" />
-        <field name="providerStatus"    fieldName="providerStatus"      type="long" />
-        <field name="providerReference" fieldName="providerReference"   type="string" />
-        <field name="providerMetadata"  fieldName="providerMetadata"    type="string" multivalue="true" />
+        <field name="providerName"       type="string" />
+        <field name="providerStatus"     type="long" />
+        <field name="providerReference"  type="string" />
+        <field name="providerMetadata"   type="string" multivalue="true" />
 
-        <field name="width"             fieldName="width"               type="long" />
-        <field name="height"            fieldName="height"              type="long" />
-        <field name="length"            fieldName="length"              type="double" />
-        <field name="contentType"       fieldName="contentType"         type="string" />
-        <field name="size"              fieldName="size"                type="long" />
+        <field name="width"              type="long" />
+        <field name="height"             type="long" />
+        <field name="length"             type="double" />
+        <field name="contentType"        type="string" />
+        <field name="size"               type="long" />
 
-        <field name="copyright"         fieldName="copyright"           type="string" />
-        <field name="authorName"        fieldName="authorName"          type="string" />
-        <field name="context"           fieldName="context"             type="string" />
+        <field name="copyright"          type="string" />
+        <field name="authorName"         type="string" />
+        <field name="context"            type="string" />
 
-        <field name="cdnIsFlushable"    fieldName="cdnIsFlushable"      type="boolean" />
-        <field name="cdnFlushAt"        fieldName="cdnFlushAt"          type="date" />
-        <field name="cdnStatus"         fieldName="cdnStatus"           type="long" />
+        <field name="cdnIsFlushable"     type="boolean" />
+        <field name="cdnFlushAt"         type="date" />
+        <field name="cdnStatus"          type="long" />
 
-        <field name="updatedAt"         fieldName="updatedAt"           type="date" />
-        <field name="createdAt"         fieldName="createdAt"           type="date" />
+        <field name="updatedAt"          type="date" />
+        <field name="createdAt"          type="date" />
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist" />
