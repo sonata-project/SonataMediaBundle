@@ -11,9 +11,9 @@ Synchronize thumbnail for the provider ``sonata.media.provider.image`` with the 
 
 .. note::
 
-   There is also a interactive shell for the parameter.
+   There is also an interactive shell for the parameter.
 
-.. highlights:: shell
+.. code-block:: shell
 
    php app/console sonata:media:sync-thumbnails sonata.media.provider.image default
 
@@ -24,7 +24,7 @@ Update metadata for a set of media for the provider ``sonata.media.provider.yout
 
 .. note::
 
-   There is also a interactive shell for the parameter.
+   There is also an interactive shell for the parameter.
 
 .. code-block:: shell
 
