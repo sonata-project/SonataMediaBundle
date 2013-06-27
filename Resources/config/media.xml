@@ -16,13 +16,11 @@
 
         <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
             <argument type="service" id="sonata.media.adapter.image.gd" />
-            <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
             <argument type="service" id="sonata.media.metadata.proxy" />
         </service>
 
         <service id="sonata.media.resizer.square" class="%sonata.media.resizer.square.class%">
             <argument type="service" id="sonata.media.adapter.image.gd" />
-            <argument>%sonata.media.resizer.square.adapter.mode%</argument>
             <argument type="service" id="sonata.media.metadata.proxy" />
         </service>
 
