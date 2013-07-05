@@ -325,8 +325,12 @@ class FileProvider extends BaseProvider
         if ($mode == 'http') {
             $provider = $this;
 
-            return new StreamedResponse(function() use ($provider, $media) {
-                echo $provider->getReferenceFile($media)->getContent();
+            return new StreamedResponse(function() use ($provider, $media, $format) {
+                if($format == 'reference') {
+                    echo $provider->getReferenceFile($media)->getContent();
+                } else {
+                    echo $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format))->getContent();
+                }
             }, 200, $headers);
         }
 
