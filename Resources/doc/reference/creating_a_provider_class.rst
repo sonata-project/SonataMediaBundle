@@ -271,9 +271,12 @@ added to the provider pool.
     <service id="sonata.media.provider.vimeo" class="Sonata\MediaBundle\Provider\VimeoProvider">
         <tag name="sonata.media.provider" />
         <argument>sonata.media.provider.vimeo</argument>
-        <argument type="service" id="sonata.media.entity_manager" />
-        <argument />
-        <argument />
+        <argument type="service" id="sonata.media.filesystem.local" />
+        <argument type="service" id="sonata.media.cdn.server" />
+        <argument type="service" id="sonata.media.generator.default" />
+        <argument type="service" id="sonata.media.thumbnail.format" />
+        <argument type="service" id="sonata.media.buzz.browser" />
+        <argument type="service" id="sonata.media.metadata.proxy" />
         <call method="setTemplates">
             <argument type="collection">
                 <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
