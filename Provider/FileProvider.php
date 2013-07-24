@@ -251,7 +251,7 @@ class FileProvider extends BaseProvider
             $path = sprintf('media_bundle/images/files/%s/file.png', $format);
         }
 
-        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());    
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
     /**

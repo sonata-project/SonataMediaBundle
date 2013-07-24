@@ -141,7 +141,7 @@ class ImageProvider extends FileProvider
             $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
         }
 
-        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());        
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
     /**
