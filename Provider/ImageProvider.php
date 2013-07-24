@@ -35,7 +35,7 @@ class ImageProvider extends FileProvider
      * @param array                                                 $allowedMimeTypes
      * @param \Imagine\Image\ImagineInterface                       $adapter
      * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
-     * @param \Symfony\Component\Routing\RouterInterface             $router
+     * @param \Symfony\Component\Routing\RouterInterface            $router
      * @param boolean                                               $fancyUrl
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ImagineInterface $adapter, MetadataBuilderInterface $metadata = null, RouterInterface $router, $fancyUrl = false)

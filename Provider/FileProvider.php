@@ -51,7 +51,7 @@ class FileProvider extends BaseProvider
      * @param array                                                 $allowedExtensions
      * @param array                                                 $allowedMimeTypes
      * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
-     * @param \Symfony\Component\Routing\RouterInterface             $router
+     * @param \Symfony\Component\Routing\RouterInterface            $router
      * @param boolean                                               $fancyUrl
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata = null, RouterInterface $router, $fancyUrl = false)
