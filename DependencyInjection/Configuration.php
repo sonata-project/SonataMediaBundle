@@ -335,6 +335,7 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
+                ->scalarNode('fancy_url')->defaultValue(false)->end()
                 ->arrayNode('pixlr')
                     ->addDefaultsIfNotSet()
                     ->children()

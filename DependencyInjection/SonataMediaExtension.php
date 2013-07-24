@@ -375,6 +375,8 @@ class SonataMediaExtension extends Extension
         } else {
             $container->removeDefinition('sonata.media.extra.pixlr');
         }
+
+        $container->setParameter('sonata.media.extra.fancy_url', $config['fancy_url']);
     }
 
     /**

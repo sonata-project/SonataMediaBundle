@@ -16,6 +16,8 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 
+use Symfony\Component\Routing\RouterInterface;
+
 use Imagine\Image\ImagineInterface;
 use Gaufrette\Filesystem;
 
@@ -33,10 +35,12 @@ class ImageProvider extends FileProvider
      * @param array                                                 $allowedMimeTypes
      * @param \Imagine\Image\ImagineInterface                       $adapter
      * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
+     * @param \Symfony\Component\Routing\RouterInterface             $router
+     * @param boolean                                               $fancyUrl
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ImagineInterface $adapter, MetadataBuilderInterface $metadata = null)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ImagineInterface $adapter, MetadataBuilderInterface $metadata = null, RouterInterface $router, $fancyUrl = false)
     {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata, $router, $fancyUrl);
 
         $this->imagineAdapter = $adapter;
     }
@@ -127,13 +131,17 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
+        if ($this->fancyUrl) {
+            return $this->router->generate('sonata_media_fancy_url', array('format' => $format, 'id' => $media->getId(), 'name' => $media->getName()));
+        }
+        
         if ($format == 'reference') {
             $path = $this->getReferenceImage($media);
         } else {
             $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
         }
 
-        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());        
     }
 
     /**
