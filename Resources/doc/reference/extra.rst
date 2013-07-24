@@ -53,3 +53,17 @@ for each provider:
                 thumbnail:  sonata.media.thumbnail.consumer.format
             dailymotion:
                 thumbnail:  sonata.media.thumbnail.consumer.format
+
+Fancy URL
+=========
+
+This bundle provides fancy SEO URL.
+
+In order to use this feature, you need to install the Igorw FileServe Bundle and change the ``sonata_media`` configuration:
+
+.. code-block:: yaml
+
+    # app/config/sonata_media.yml
+    sonata_media:
+        # ...
+        fancy_url:  true

@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Routing\RouterInterface;
 
 use Gaufrette\Filesystem;
 
@@ -36,6 +37,10 @@ class FileProvider extends BaseProvider
     protected $allowedMimeTypes;
 
     protected $metadata;
+    
+    protected $router;
+    
+    protected $fancyUrl;
 
     /**
      * @param string                                                $name
@@ -46,14 +51,18 @@ class FileProvider extends BaseProvider
      * @param array                                                 $allowedExtensions
      * @param array                                                 $allowedMimeTypes
      * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
+     * @param \Symfony\Component\Routing\RouterInterface            $router
+     * @param boolean                                               $fancyUrl
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata = null)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata = null, RouterInterface $router, $fancyUrl = false)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
         $this->allowedExtensions = $allowedExtensions;
         $this->allowedMimeTypes  = $allowedMimeTypes;
         $this->metadata = $metadata;
+        $this->router = $router;
+        $this->fancyUrl = $fancyUrl;
     }
 
     /**
@@ -232,6 +241,10 @@ class FileProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
+        if ($this->fancyUrl) {
+            return $this->router->generate('sonata_media_fancy_url', array('format' => $format, 'id' => $media->getId(), 'name' => $media->getName()));
+        }
+        
         if ($format == 'reference') {
             $path = $this->getReferenceImage($media);
         } else {

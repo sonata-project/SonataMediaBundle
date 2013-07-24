@@ -32,12 +32,19 @@ class MediaController extends Controller
 
     /**
      * @param string $id
+     * @param string $file
      *
      * @return MediaInterface
      */
-    public function getMedia($id)
+    public function getMedia($id, $file = null)
     {
-        return $this->get('sonata.media.manager.media')->findOneBy(array('id' => $id));
+        $criteria = array('id' => $id);
+        
+        if ($file !== null) {
+            $criteria['name'] = $file;
+        }
+        
+        return $this->get('sonata.media.manager.media')->findOneBy($criteria);
     }
 
     /**
@@ -136,6 +143,45 @@ class MediaController extends Controller
             $response = $this->get('liip_imagine.cache.manager')->store($response, $targetPath, $filter);
         }
 
+        return $response;
+    }
+
+    /**
+     * This action returns a file by format, id and name.
+     * 
+     * @param string $format
+     * @param string $id
+     * @param string $name
+     * @return Response
+     * @throws NotFoundHttpException
+     */
+    public function fancyUrlAction($format, $id, $name)
+    {
+        if (!$this->container->getParameter('sonata.media.extra.fancy_url')) {
+            throw new NotFoundHttpException();
+        }
+        
+        $media = $this->getMedia($id, $name);
+        if (!$media) {
+            throw new NotFoundHttpException(sprintf('unable to find the media with the id %s and the name %s', $id, $name));
+        }
+        
+        $provider = $this->getProvider($media);
+        
+        $responseFactory = $this->get('igorw_file_serve.response_factory');
+        
+        $fileSystemLocal = $this->get('sonata.media.adapter.filesystem.local');
+        
+        $thumbnailFormat = $this->get('sonata.media.thumbnail.format');
+                
+        $path = sprintf('%s/%s', $fileSystemLocal->getDirectory(), $thumbnailFormat->generatePublicUrl($provider, $media, $format));
+        
+        try {
+            $response = $responseFactory->create($path, $media->getContentType(), array('absolute_path' => true));
+        } catch (\InvalidArgumentException $e) {
+            throw new NotFoundHttpException(sprintf('unable to find the media with the format %s', $format));
+        }
+        
         return $response;
     }
 }

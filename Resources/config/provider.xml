@@ -41,6 +41,8 @@
             <argument />
             <argument />
             <argument type="service" id="sonata.media.metadata.proxy" />
+            <argument type="service" id="router" />
+            <argument>%sonata.media.extra.fancy_url%</argument>
 
             <call method="setTemplates">
                 <argument type="collection">
@@ -60,6 +62,8 @@
             <argument />
             <argument />
             <argument type="service" id="sonata.media.metadata.proxy" />
+            <argument type="service" id="router" />
+            <argument>%sonata.media.extra.fancy_url%</argument>
 
             <call method="setTemplates">
                 <argument type="collection">
