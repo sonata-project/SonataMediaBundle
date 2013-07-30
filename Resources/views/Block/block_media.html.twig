@@ -16,10 +16,10 @@ file that was distributed with this source code.
     {% endif %}
 
     <div class="sonata-media-block-media-container">
-        {% if media %}
+        {% if media and settings.format%}
             {% media media, settings.format %}
         {% else %}
-            {# no media selected ... #}
+            {# no media selected or format defined... #}
         {% endif %}
     </div>
 {% endblock %}
