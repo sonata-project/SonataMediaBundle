@@ -334,7 +334,7 @@
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
-                <target>Media Bibliotheek</target>
+                <target>Mediabibliotheek</target>
             </trans-unit>
         </body>
     </file>
