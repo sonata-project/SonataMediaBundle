@@ -112,7 +112,7 @@
             </trans-unit>
             <trans-unit id="label.flushed_at">
                 <source>label.flushed_at</source>
-                <target>Spłukany</target>
+                <target>Wyczyszczony CDN</target>
             </trans-unit>
             <trans-unit id="label.public_url">
                 <source>label.public_url</source>
@@ -136,7 +136,7 @@
             </trans-unit>
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
-                <target>Spłucz CDN</target>
+                <target>Wyczyszczony CDN</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
@@ -263,7 +263,7 @@
             </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
-                <target>Spłucz CDN</target>
+                <target>Wyczyść CDN</target>
             </trans-unit>
             <trans-unit id="form.label_description">
                 <source>form.label_description</source>
