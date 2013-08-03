@@ -157,12 +157,12 @@ abstract class BaseMediaAdmin extends Admin
         $id = $this->getRequest()->get('id');
 
         $menu->addChild(
-            $this->trans('sidemenu.link_edit_media'),
+            $this->trans('sidemenu.link_edit_media', array(), 'SonataMediaBundle'),
             array('uri' => $admin->generateUrl('edit', array('id' => $id)))
         );
 
         $menu->addChild(
-            $this->trans('sidemenu.link_media_view'),
+            $this->trans('sidemenu.link_media_view', array(), 'SonataMediaBundle'),
             array('uri' => $admin->generateUrl('view', array('id' => $id)))
         );
     }
