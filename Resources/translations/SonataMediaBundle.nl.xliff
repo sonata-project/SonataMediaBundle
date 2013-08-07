@@ -40,7 +40,7 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
-                <target>Gallerijen</target>
+                <target>Galerijen</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
@@ -56,7 +56,7 @@
             </trans-unit>
             <trans-unit id="gallery">
                 <source>gallery</source>
-                <target>Gallerij</target>
+                <target>Galerij</target>
             </trans-unit>
             <trans-unit id="title_select_provider">
                 <source>title_select_provider</source>
@@ -311,7 +311,7 @@
             </trans-unit>
             <trans-unit id="filter.label_provider_reference">
                 <source>filter.label_provider_reference</source>
-                <target>Bron Referentie</target>
+                <target>Referentie bron</target>
             </trans-unit>
 
             <trans-unit id="filter.label_enabled">
@@ -326,7 +326,7 @@
 
             <trans-unit id="filter.label_provider_name">
                 <source>filter.label_provider_name</source>
-                <target>Bron Naam</target>
+                <target>Naam bron</target>
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
