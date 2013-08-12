@@ -25,6 +25,10 @@
         <property name="galleryHasMedias">
             <constraint name="Valid" />
         </property>
+
+        <property name="name">
+            <constraint name="NotNull" />
+        </property>
     </class>
 
 </constraint-mapping>
