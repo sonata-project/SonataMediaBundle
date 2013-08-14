@@ -158,7 +158,7 @@ abstract class Gallery implements GalleryInterface
      */
     public function __toString()
     {
-        return $this->getName() ?: '-';
+        return (string) $this->getName();
     }
 
     /**
