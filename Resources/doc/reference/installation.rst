@@ -176,6 +176,8 @@ Now that your module is generated, you can register it
                   default:
                       mappings:
                           ApplicationSonataMediaBundle: ~
+                          SonataMediaBundle: ~
+                          # add your own bundles here
 
 
 Now, you can build up your database:
