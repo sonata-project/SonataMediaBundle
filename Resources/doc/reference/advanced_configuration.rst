@@ -107,20 +107,27 @@ Full configuration options:
 
         providers:
             file:
+                service:    sonata.media.provider.file
                 resizer:    false
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
+                allowed_extensions: ['pdf', 'txt', 'rtf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pttx', 'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb', 'csv', 'xml']
+                allowed_mime_types: ['application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain']
 
             image:
+                service:    sonata.media.provider.image
                 resizer:    sonata.media.resizer.simple # sonata.media.resizer.square
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
+                allowed_extensions: ['jpg', 'png', 'jpeg']
+                allowed_mime_types: ['image/pjpeg', 'image/jpeg', 'image/png', 'image/x-png']
 
             youtube:
+                service:    sonata.media.provider.youtube
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
@@ -128,6 +135,7 @@ Full configuration options:
                 thumbnail:  sonata.media.thumbnail.format
 
             dailymotion:
+                service:    sonata.media.provider.dailymotion
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
