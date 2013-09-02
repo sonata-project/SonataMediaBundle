@@ -241,7 +241,7 @@ class Configuration implements ConfigurationInterface
                                     ->prototype('scalar')->end()
                                     ->defaultValue(array(
                                         'pdf', 'txt', 'rtf',
-                                        'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pttx',
+                                        'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
                                         'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb',
                                         'csv',
                                         'xml',
