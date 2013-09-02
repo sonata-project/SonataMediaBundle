@@ -58,7 +58,7 @@ Doctrine PHPCR:
         <reference-one
             fieldName="media"
             strategy="weak"
-            targetDocument="Application\Sonata\MediaBundle\Document\Media"
+            target-document="Application\Sonata\MediaBundle\Document\Media"
         />
 
 In the ``PostAdmin``, you can add a new field ``image`` with a ``link_parameters``
