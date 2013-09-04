@@ -258,6 +258,10 @@ class FileProvider extends BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
+        if ($format == 'reference') {
+            return $this->getReferenceImage($media);
+        }
+
         return false;
     }
 

@@ -143,6 +143,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('file.txt', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false');
+        $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false on non reference formate');
+        $this->assertNotNull($provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
     }
 }
