@@ -54,7 +54,7 @@ class DoctrineMongoDBManager extends ModelManager
     public function batchDelete($class, ProxyQueryInterface $queryProxy)
     {
         foreach ($queryProxy->getQuery()->iterate() as $pos => $object) {
-            $this->delete($object[0]);
+            $this->delete($object);
         }
     }
 }
