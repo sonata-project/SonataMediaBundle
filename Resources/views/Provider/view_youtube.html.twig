@@ -9,17 +9,4 @@ file that was distributed with this source code.
 
 #}
 
-<object width="{{ options.width }}" height="{{ options.height }}">
-    <param name="movie" value="//www.youtube.com/v/{{ media.providerreference }}?{{ options.player_parameters }}"></param>
-    <param name="allowFullScreen" value="{{ options.allowFullScreen }}"></param>
-    <param name="allowscriptaccess" value="{{ options.allowScriptAccess }}"></param>
-
-    <embed
-        src="//www.youtube.com/v/{{ media.providerreference }}?{{ options.player_parameters }}"
-        type="application/x-shockwave-flash"
-        allowscriptaccess="{{ options.allowScriptAccess }}"
-        allowfullscreen="{{ options.allowFullScreen }}"
-        width="{{ options.width }}"
-        height="{{ options.height }}">
-    </embed>
-</object>
+<iframe width="{{ options.width }}" height="{{ options.height }}" src="//www.youtube.com/embed/{{ media.providerreference }}?{{ options.player_parameters }}" frameborder="0"{% if options.allowFullScreen %} allowfullscreen{% endif %}{% if options.allowFullScreen %} allowfullscreen {% endif %}></iframe>
