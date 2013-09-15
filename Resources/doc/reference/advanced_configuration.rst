@@ -133,6 +133,7 @@ Full configuration options:
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
+                html5: false
 
             dailymotion:
                 service:    sonata.media.provider.dailymotion
