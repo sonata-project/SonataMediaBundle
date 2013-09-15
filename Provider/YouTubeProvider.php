@@ -4,6 +4,7 @@
  * This file is part of the Sonata project.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ * (c) Jean-Louis Pirson <jl.pirson@grizzlylab.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -45,19 +46,6 @@ class YouTubeProvider extends BaseVideoProvider
             // API documentation.
             'enablejsapi'    => 0,
 
-            // Value can be any alphanumeric string. This setting is used in conjunction with the
-            // JavaScript API. See the JavaScript API documentation for details.
-            'playerapiid'    => null,
-
-            // Values: 0 or 1. Default is 0. Setting to 1 will disable the player keyboard controls.
-            // Keyboard controls are as follows:
-            //      Spacebar: Play / Pause
-            //      Arrow Left: Jump back 10% in the current video
-            //      Arrow Right: Jump ahead 10% in the current video
-            //      Arrow Up: Volume up
-            //      Arrow Down: Volume Down
-            'disablekb'      => 0,
-
             // Values: 0 or 1. Default is 0. Setting to 1 enables the "Enhanced Genie Menu". This
             // behavior causes the genie menu (if present) to appear when the user's mouse enters
             // the video display area, as opposed to only appearing when the menu button is pressed.
@@ -72,6 +60,9 @@ class YouTubeProvider extends BaseVideoProvider
             // color2 is the video control bar background color and secondary border color.
             'color1'         => null,
             'color2'         => null,
+            
+            // Values: 0 or 1. Default is 1. Setting to 0 disables the fullscreen button.
+            'allowfullscreen' => 1,
 
             // Values: A positive integer. This parameter causes the player to begin playing the video
             // at the given number of seconds from the start of the video. Note that similar to the
@@ -79,11 +70,6 @@ class YouTubeProvider extends BaseVideoProvider
             // This means sometimes the play head may seek to just before the requested time, usually
             // no more than ~2 seconds
             'start'          => 0,
-
-            // Values: 0 or 1. Default is 0. Setting to 1 enables the fullscreen button. This has no
-            // effect on the Chromeless Player. Note that you must include some extra arguments to
-            // your embed code for this to work.
-            'fs'             => 1,
 
             // Values: 0 or 1. Default is 0. Setting to 1 enables HD playback by default. This has no
             // effect on the Chromeless Player. This also has no effect if an HD version of the video
@@ -103,11 +89,7 @@ class YouTubeProvider extends BaseVideoProvider
 
             // Values: 1 or 3. Default is 1. Setting to 1 will cause video annotations to be shown by
             // default, whereas setting to 3 will cause video annotation to not be shown by default.
-            'iv_load_policy' => 1,
-
-            // Values: 1. Default is based on user preference. Setting to 1 will cause closed captions
-            // to be shown by default, even if the user has turned captions off.
-            'cc_load_policy' => 1
+            'iv_load_policy' => 1
         );
 
         $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
@@ -116,8 +98,6 @@ class YouTubeProvider extends BaseVideoProvider
 
         $params = array(
             'player_parameters' => http_build_query($player_parameters),
-            'allowFullScreen'   => $player_parameters['fs'] == '1' ? 'true' : 'false',
-            'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
             'width'             => $box->getWidth(),
             'height'            => $box->getHeight(),
         );
