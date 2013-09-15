@@ -22,7 +22,6 @@ class YouTubeProvider extends BaseVideoProvider {
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array()) {
         // documentation : http://code.google.com/apis/youtube/player_parameters.html
-
         $default_player_parameters = array(
             //Values: 0 or 1. Default is 1. Sets whether the player should load related
             // videos once playback of the initial video starts. Related videos are
