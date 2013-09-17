@@ -296,6 +296,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                                ->scalarNode('html5')->defaultValue(false)->end()
                             ->end()
                         ->end()
 
