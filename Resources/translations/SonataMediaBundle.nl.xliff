@@ -1,18 +1,30 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="en" target-language="nl" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
-        	<trans-unit id="default">
+            <trans-unit id="default">
                 <source>default</source>
                 <target>default</target>
             </trans-unit>
-            <trans-unit id="sidemenu.link_edit_media">
-                <source>sidemenu.link_edit_media</source>
-                <target>Bewerken</target>
+            <trans-unit id="media">
+                <source>media</source>
+                <target>Media</target>
             </trans-unit>
-            <trans-unit id="sidemenu.link_media_view">
-                <source>sidemenu.link_media_view</source>
-                <target>Tonen</target>
+            <trans-unit id="gallery">
+                <source>gallery</source>
+                <target>Galerij</target>
+            </trans-unit>
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Mediabibliotheek</target>
+            </trans-unit>
+            <trans-unit id="no_provider_available">
+                <source>no_provider_available</source>
+                <target>Geen bronnen beschikbaar</target>
+            </trans-unit>
+            <trans-unit id="title_select_provider">
+                <source>title_select_provider</source>
+                <target>Selecteer bron</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_create">
                 <source>breadcrumb.link_media_create</source>
@@ -38,6 +50,10 @@
                 <source>breadcrumb.link_gallery_create</source>
                 <target>Nieuwe toevoegen</target>
             </trans-unit>
+            <trans-unit id="breadcrumb.link_media_show">
+                <source>breadcrumb.link_media_show</source>
+                <target>breadcrumb.link_media_show</target>
+            </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
                 <target>Galerijen</target>
@@ -50,33 +66,85 @@
                 <source>breadcrumb.link_gallery_delete</source>
                 <target>Verwijderen</target>
             </trans-unit>
-            <trans-unit id="media">
-                <source>media</source>
+            <trans-unit id="description.roles_download_strategy">
+                <source>description.roles_download_strategy</source>
+                <target>Dit media item kan bekeken worden door gebruikers met de volgende rollen: %roles%.</target>
+            </trans-unit>
+            <trans-unit id="description.public_download_strategy">
+                <source>description.public_download_strategy</source>
+                <target>>Dit media item kan door iedereen bekeken worden.</target>
+            </trans-unit>
+            <trans-unit id="description.forbidden_download_strategy">
+                <source>description.forbidden_download_strategy</source>
+                <target>Dit media item kan door niemand bekeken worden.</target>
+            </trans-unit>
+            <trans-unit id="filter.label_name">
+                <source>filter.label_name</source>
+                <target>Naam</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_reference">
+                <source>filter.label_provider_reference</source>
+                <target>Referentie bron</target>
+            </trans-unit>
+            <trans-unit id="filter.label_enabled">
+                <source>filter.label_enabled</source>
+                <target>Actief</target>
+            </trans-unit>
+            <trans-unit id="filter.label_context">
+                <source>filter.label_context</source>
+                <target>Context</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_name">
+                <source>filter.label_provider_name</source>
+                <target>Naam bron</target>
+            </trans-unit>
+            <trans-unit id="form.label_enabled">
+                <source>form.label_enabled</source>
+                <target>Actief</target>
+            </trans-unit>
+            <trans-unit id="form.label_media">
+                <source>form.label_media</source>
                 <target>Media</target>
             </trans-unit>
-            <trans-unit id="gallery">
-                <source>gallery</source>
-                <target>Galerij</target>
+            <trans-unit id="form.label_position">
+                <source>form.label_position</source>
+                <target>Positie</target>
             </trans-unit>
-            <trans-unit id="title_select_provider">
-                <source>title_select_provider</source>
-                <target>Selecteer bron</target>
+            <trans-unit id="form.label_context">
+                <source>form.label_context</source>
+                <target>Context</target>
             </trans-unit>
-            <trans-unit id="no_provider_available">
-                <source>no_provider_available</source>
-                <target>Geen bronnen beschikbaar</target>
+            <trans-unit id="form.label_name">
+                <source>form.label_name</source>
+                <target>Naam</target>
             </trans-unit>
-            <trans-unit id="title.media_preview">
-                <source>title.media_preview</source>
-                <target>Voorbeeld</target>
+            <trans-unit id="form.label_default_format">
+                <source>form.label_default_format</source>
+                <target>Formaat</target>
             </trans-unit>
-            <trans-unit id="title.media_thumbnail">
-                <source>title.media_thumbnail</source>
-                <target>Miniatuur</target>
+            <trans-unit id="form.label_gallery_has_medias">
+                <source>form.label_gallery_has_medias</source>
+                <target>Media items</target>
             </trans-unit>
-            <trans-unit id="title.informations">
-                <source>title.informations</source>
-                <target>Informatie</target>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Auteur</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Omschrijving</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>Bestand</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
@@ -146,10 +214,6 @@
                 <source>label.description</source>
                 <target>Omschrijving</target>
             </trans-unit>
-            <trans-unit id="title.formats">
-                <source>title.formats</source>
-                <target>Formaten</target>
-            </trans-unit>
             <trans-unit id="label.select_context">
                 <source>label.select_context</source>
                 <target>Context : </target>
@@ -158,53 +222,13 @@
                 <source>label.select_provider</source>
                 <target>Bron : </target>
             </trans-unit>
-            <trans-unit id="link.all_providers">
-                <source>link.all_providers</source>
-                <target>Allemaal</target>
-            </trans-unit>
-            <trans-unit id="sonata.media.provider.dailymotion">
-                <source>sonata.media.provider.dailymotion</source>
-                <target>DailyMotion</target>
-            </trans-unit>
-            <trans-unit id="sonata.media.provider.youtube">
-                <source>sonata.media.provider.youtube</source>
-                <target>YouTube</target>
-            </trans-unit>
-            <trans-unit id="sonata.media.provider.vimeo">
-                <source>sonata.media.provider.vimeo</source>
-                <target>Vimeo</target>
-            </trans-unit>
-            <trans-unit id="sonata.media.provider.image">
-                <source>sonata.media.provider.image</source>
-                <target>Afbeelding</target>
-            </trans-unit>
-            <trans-unit id="sonata.media.provider.file">
-                <source>sonata.media.provider.file</source>
-                <target>Bestand</target>
-            </trans-unit>
             <trans-unit id="label.protected_download_url">
                 <source>label.protected_download_url</source>
                 <target>Afgeschermde URL</target>
             </trans-unit>
-            <trans-unit id="description.roles_download_strategy">
-                <source>description.roles_download_strategy</source>
-                <target>Dit media item kan bekeken worden door gebruikers met de volgende rollen: %roles%.</target>
-            </trans-unit>
             <trans-unit id="label.protected_download_url_notice">
                 <source>label.protected_download_url_notice</source>
                 <target>Waarschuwing</target>
-            </trans-unit>
-            <trans-unit id="description.public_download_strategy">
-                <source>description.public_download_strategy</source>
-                <target>>Dit media item kan door iedereen bekeken worden.</target>
-            </trans-unit>
-            <trans-unit id="description.forbidden_download_strategy">
-                <source>description.forbidden_download_strategy</source>
-                <target>Dit media item kan door niemand bekeken worden.</target>
-            </trans-unit>
-            <trans-unit id="link.test_protected_url">
-                <source>link.test_protected_url</source>
-                <target>Link voorbeeld</target>
             </trans-unit>
             <trans-unit id="label.edit_with_pixlr">
                 <source>label.edit_with_pixlr</source>
@@ -237,61 +261,17 @@
                     ]]>
                 </target>
             </trans-unit>
-            <trans-unit id="form.label_enabled">
-                <source>form.label_enabled</source>
-                <target>Actief</target>
+            <trans-unit id="link.all_providers">
+                <source>link.all_providers</source>
+                <target>Allemaal</target>
             </trans-unit>
-            <trans-unit id="form.label_media">
-                <source>form.label_media</source>
-                <target>Media</target>
-            </trans-unit>
-            <trans-unit id="form.label_position">
-                <source>form.label_position</source>
-                <target>Positie</target>
-            </trans-unit>
-            <trans-unit id="form.label_context">
-                <source>form.label_context</source>
-                <target>Context</target>
-            </trans-unit>
-            <trans-unit id="form.label_name">
-                <source>form.label_name</source>
-                <target>Naam</target>
-            </trans-unit>
-            <trans-unit id="form.label_default_format">
-                <source>form.label_default_format</source>
-                <target>Formaat</target>
-            </trans-unit>
-            <trans-unit id="form.label_gallery_has_medias">
-                <source>form.label_gallery_has_medias</source>
-                <target>Media items</target>
-            </trans-unit>
-            <trans-unit id="form.label_author_name">
-                <source>form.label_author_name</source>
-                <target>Auteur</target>
-            </trans-unit>
-            <trans-unit id="form.label_cdn_is_flushable">
-                <source>form.label_cdn_is_flushable</source>
-                <target>Flush CDN</target>
-            </trans-unit>
-            <trans-unit id="form.label_description">
-                <source>form.label_description</source>
-                <target>Omschrijving</target>
-            </trans-unit>
-            <trans-unit id="form.label_copyright">
-                <source>form.label_copyright</source>
-                <target>Copyright</target>
+            <trans-unit id="link.test_protected_url">
+                <source>link.test_protected_url</source>
+                <target>Link voorbeeld</target>
             </trans-unit>
             <trans-unit id="list.label_enabled">
                 <source>list.label_enabled</source>
                 <target>Actief</target>
-            </trans-unit>
-            <trans-unit id="list.label__action">
-                <source>list.label__action</source>
-                <target>Actie</target>
-            </trans-unit>
-            <trans-unit id="list.label_custom">
-                <source>list.label_custom</source>
-                <target>Media</target>
             </trans-unit>
             <trans-unit id="list.label_name">
                 <source>list.label_name</source>
@@ -305,36 +285,57 @@
                 <source>list.label_default_format</source>
                 <target>Formaat</target>
             </trans-unit>
-            <trans-unit id="filter.label_name">
-                <source>filter.label_name</source>
-                <target>Naam</target>
+            <trans-unit id="list.label__action">
+                <source>list.label__action</source>
+                <target>Actie</target>
             </trans-unit>
-            <trans-unit id="filter.label_provider_reference">
-                <source>filter.label_provider_reference</source>
-                <target>Referentie bron</target>
+            <trans-unit id="list.label_custom">
+                <source>list.label_custom</source>
+                <target>Media</target>
             </trans-unit>
-
-            <trans-unit id="filter.label_enabled">
-                <source>filter.label_enabled</source>
-                <target>Actief</target>
+            <trans-unit id="sidemenu.link_edit_media">
+                <source>sidemenu.link_edit_media</source>
+                <target>Bewerken</target>
             </trans-unit>
-
-            <trans-unit id="filter.label_context">
-                <source>filter.label_context</source>
-                <target>Context</target>
+            <trans-unit id="sidemenu.link_media_view">
+                <source>sidemenu.link_media_view</source>
+                <target>Tonen</target>
             </trans-unit>
-
-            <trans-unit id="filter.label_provider_name">
-                <source>filter.label_provider_name</source>
-                <target>Naam bron</target>
+            <trans-unit id="sonata.media.provider.dailymotion">
+                <source>sonata.media.provider.dailymotion</source>
+                <target>DailyMotion</target>
             </trans-unit>
-            <trans-unit id="form.label_binary_content">
-                <source>form.label_binary_content</source>
+            <trans-unit id="sonata.media.provider.youtube">
+                <source>sonata.media.provider.youtube</source>
+                <target>YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo">
+                <source>sonata.media.provider.vimeo</source>
+                <target>Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image">
+                <source>sonata.media.provider.image</source>
+                <target>Afbeelding</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file">
+                <source>sonata.media.provider.file</source>
                 <target>Bestand</target>
             </trans-unit>
-            <trans-unit id="sonata_media">
-                <source>sonata_media</source>
-                <target>Mediabibliotheek</target>
+            <trans-unit id="title.media_preview">
+                <source>title.media_preview</source>
+                <target>Voorbeeld</target>
+            </trans-unit>
+            <trans-unit id="title.media_thumbnail">
+                <source>title.media_thumbnail</source>
+                <target>Miniatuur</target>
+            </trans-unit>
+            <trans-unit id="title.informations">
+                <source>title.informations</source>
+                <target>Informatie</target>
+            </trans-unit>
+            <trans-unit id="title.formats">
+                <source>title.formats</source>
+                <target>Formaten</target>
             </trans-unit>
         </body>
     </file>
