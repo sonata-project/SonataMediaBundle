@@ -176,7 +176,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $properties = $provider->getHelperProperties($media, 'admin');
 
         $this->assertInternalType('array', $properties);
-        $this->assertEquals(100, $properties['height']);
-        $this->assertEquals(100, $properties['width']);
+        $this->assertEquals(100, $properties['player_parameters']['height']);
+        $this->assertEquals(100, $properties['player_parameters']['width']);
     }
 }
