@@ -270,7 +270,11 @@ class FileProvider extends BaseProvider
      */
     public function preRemove(MediaInterface $media)
     {
-        // never delete icon image
+        $path = $this->getReferenceImage($media);
+        
+        if ($this->getFilesystem()->has($path)) {
+            $this->getFilesystem()->delete($path);
+        }
     }
 
     /**
