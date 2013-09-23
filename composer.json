@@ -41,8 +41,6 @@
     "target-dir": "Sonata/MediaBundle",
     "extra": {
         "branch-alias": {
-            "dev-2.0": "2.0.x-dev",
-            "dev-2.1": "2.1.x-dev",
             "dev-master": "2.2.x-dev"
         }
     }
