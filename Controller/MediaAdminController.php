@@ -25,9 +25,9 @@ class MediaAdminController extends Controller
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      */
-    public function viewAction($id)
+    public function showAction($id)
     {
-        if (false === $this->admin->isGranted('VIEW')) {
+        if (false === $this->admin->isGranted('SHOW')) {
             throw new AccessDeniedException();
         }
 
@@ -37,7 +37,7 @@ class MediaAdminController extends Controller
             throw new NotFoundHttpException('unable to find the media with the id');
         }
 
-        return $this->render('SonataMediaBundle:MediaAdmin:view.html.twig', array(
+        return $this->render('SonataMediaBundle:MediaAdmin:show.html.twig', array(
             'media'         => $media,
             'formats'       => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
             'format'        => $this->get('request')->get('format', 'reference'),

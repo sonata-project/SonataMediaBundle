@@ -44,12 +44,11 @@ abstract class BaseMediaAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-//            ->add('image', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_image.html.twig'))
             ->add('custom', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig'))
             ->add('enabled', 'boolean', array('editable' => true))
             ->add('_action', 'actions', array(
                 'actions' => array(
-                    'view' => array(),
+                    'show' => array(),
                     'edit' => array(),
                 )
             ))
@@ -80,17 +79,6 @@ abstract class BaseMediaAdmin extends Admin
         } else {
             $provider->buildCreateForm($formMapper);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->add('view', $this->getRouterIdParameter() . '/view');
-        $collection->add('show', $this->getRouterIdParameter() . '/show', array(
-            '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view')
-        ));
     }
 
     /**
@@ -163,7 +151,7 @@ abstract class BaseMediaAdmin extends Admin
 
         $menu->addChild(
             $this->trans('sidemenu.link_media_view'),
-            array('uri' => $admin->generateUrl('view', array('id' => $id)))
+            array('uri' => $admin->generateUrl('show', array('id' => $id)))
         );
     }
 
