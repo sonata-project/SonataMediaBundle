@@ -343,7 +343,7 @@
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>No media link to the object</target>
+                <target>No media linked to the object</target>
             </trans-unit>
         </body>
     </file>
