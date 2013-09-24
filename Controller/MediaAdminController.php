@@ -25,7 +25,7 @@ class MediaAdminController extends Controller
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      */
-    public function showAction($id)
+    public function showAction($id = null)
     {
         if (false === $this->admin->isGranted('SHOW')) {
             throw new AccessDeniedException();
