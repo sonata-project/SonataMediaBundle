@@ -1,10 +1,16 @@
 {% block sonata_media_type_widget %}
-    <div class="span5 pull-left">
+    <div class="span3 pull-left">
         {% if value is not empty %}
             <div class="pull-left" style="margin-right: 5px">
                 {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
             </div>
-            <strong>{{ value.name }}</strong> <br />
+
+            {% if sonata_admin_enabled is defined and sonata_admin_enabled %}
+                <a href="{{ url('admin_sonata_media_media_edit', {id: value.id}) }}"><strong>{{ value.name }}</strong></a>
+            {% else %}
+                <strong>{{ value.name }}</strong>
+            {% endif %}
+             <br />
             <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span> ~ {{ value.context }}
         {% else %}
             <div class="pull-left" style="margin-right: 5px">
@@ -15,7 +21,7 @@
         {% endif %}
     </div>
 
-    <div class="span5 pull-left">
+    <div class="span3 pull-left">
         {{ 'link_media'|trans({}, 'SonataMediaBundle') }}
         {{ block('form_widget') }}
     </div>

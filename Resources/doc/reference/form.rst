@@ -29,3 +29,17 @@ The ``sonata_media_type`` can be used to assign a Media instance to another enti
 
         // do stuff ...
     }
+
+
+You also need to add a new template for the form component:
+
+.. code-block:: yaml
+
+    twig:
+        debug:            %kernel.debug%
+        strict_variables: %kernel.debug%
+
+        form:
+            resources:
+                # other files
+                - 'SonataMediaBundle:Form:media_widgets.html.twig'

@@ -337,6 +337,14 @@
                 <source>title.formats</source>
                 <target>Formats</target>
             </trans-unit>
+            <trans-unit id="link_media">
+                <source>link_media</source>
+                <target>Link the object to a new media</target>
+            </trans-unit>
+            <trans-unit id="no_linked_media">
+                <source>no_linked_media</source>
+                <target>No media link to the object</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

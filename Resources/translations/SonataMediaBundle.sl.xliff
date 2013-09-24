@@ -337,6 +337,14 @@
                 <source>title.formats</source>
                 <target>Vrste</target>
             </trans-unit>
+            <trans-unit id="link_media">
+                <source>link_media</source>
+                <target>link_media</target>
+            </trans-unit>
+            <trans-unit id="no_linked_media">
+                <source>no_linked_media</source>
+                <target>no_linked_media</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
