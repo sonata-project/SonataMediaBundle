@@ -45,6 +45,7 @@ class Configuration implements ConfigurationInterface
         $this->addModelSection($node);
         $this->addBuzzSection($node);
         $this->addResizerSection($node);
+        $this->addAdminSection($node);
 
         return $treeBuilder;
     }
@@ -460,6 +461,49 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('mode')->defaultValue('inset')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    private function addAdminSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('admin')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('media')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('SonataMediaBundle:MediaAdmin')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataMediaBundle')->end()
+                                ->booleanNode('show_in_dashboard')->defaultValue(true)->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('gallery')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('SonataMediaBundle:GalleryAdmin')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataMediaBundle')->end()
+                                ->booleanNode('show_in_dashboard')->defaultValue(true)->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('gallery_has_media')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('SonataAdminBundle:CRUD')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataMediaBundle')->end()
+                                ->booleanNode('show_in_dashboard')->defaultValue(false)->end()
                             ->end()
                         ->end()
                     ->end()
