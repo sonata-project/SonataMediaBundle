@@ -48,6 +48,16 @@ class ProviderDataTransformer implements DataTransformerInterface
             return $media;
         }
 
+        // the binary field is empty and the media does not exist ... return null
+        if (!$media->getBinaryContent() && $media->getId() === null) {
+            return null;
+        }
+
+        // no update, but the the media exists ...
+        if (!$media->getBinaryContent() && $media->getId() !== null) {
+            return $media;
+        }
+
         if (!$media->getProviderName() && isset($this->options['provider'])) {
             $media->setProviderName($this->options['provider']);
         }
