@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 {
@@ -85,5 +86,21 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
         $transformer = new ProviderDataTransformer($pool);
         $this->assertEquals($media, $transformer->reverseTransform($media));
+    }
+
+    public function testReverseTransformWithMediaAndUploadFileInstance()
+    {
+        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $pool = new Pool('default');
+        $pool->addProvider('default', $provider);
+
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
+        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
+
+        $transformer = new ProviderDataTransformer($pool);
+        $transformer->reverseTransform($media);
+
     }
 }
