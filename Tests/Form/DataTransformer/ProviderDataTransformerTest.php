@@ -26,7 +26,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \RuntimeException
-     */
+     */ 
     public function testReverseTransformUnknowProvider()
     {
         $pool = new Pool('default');
@@ -48,10 +48,14 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
+        $uploadedFile = $this->getMock('\Symfony\Component\HttpFoundation\File\UploadedFile', array(), array('xcs', 'xcs', null, null, null, true), 'UploadedFile', false);
+
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('default'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
+
+
+        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue($uploadedFile));
 
         $transformer = new ProviderDataTransformer($pool);
         $transformer->reverseTransform($media);

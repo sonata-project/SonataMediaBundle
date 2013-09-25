@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
@@ -44,17 +45,37 @@ class ProviderDataTransformer implements DataTransformerInterface
      */
     public function reverseTransform($media)
     {
+
+        
         if (!$media instanceof MediaInterface) {
             return $media;
         }
 
+        $bc = $media->getBinaryContent();
+        $binaryContent = false;
+
+        if (is_object($bc)) {
+            $reflection = new \ReflectionClass($bc);
+            $shortName = $reflection->getShortName();
+            if ($shortName == 'UploadedFile') {
+                $binaryContent = true;    
+            }
+            
+        } elseif (is_array($bc)) {
+            $binaryContent = true;
+        } elseif ($bc) {
+            $binaryContent = true;
+        }
+       
         // the binary field is empty and the media does not exist ... return null
-        if (!$media->getBinaryContent() && $media->getId() === null) {
+        if (!$binaryContent  && $media->getId() === null) {
             return null;
         }
 
-        // no update, but the the media exists ...
-        if (!$media->getBinaryContent() && $media->getId() !== null) {
+        // no update, but the the media exists ..
+        // 
+        if (!$binaryContent  && $media->getId() !== null) {
+            
             return $media;
         }
 
