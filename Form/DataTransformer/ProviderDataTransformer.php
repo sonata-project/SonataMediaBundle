@@ -51,21 +51,30 @@ class ProviderDataTransformer implements DataTransformerInterface
             return $media;
         }
 
-        if (is_object($media->getBinaryContent())) {
-            $reflection = new \ReflectionClass($media->getBinaryContent());
+        $bc = $media->getBinaryContent();
+        $binaryContent = false;
+
+        if (is_object($bc)) {
+            $reflection = new \ReflectionClass($bc);
             $shortName = $reflection->getShortName();
-        } else {
-            $shortName = null;
+            if ($shortName == 'UploadedFile') {
+                $binaryContent = true;    
+            }
+            
+        } elseif (is_array($bc)) {
+            $binaryContent = true;
+        } elseif ($bc) {
+            $binaryContent = true;
         }
        
         // the binary field is empty and the media does not exist ... return null
-        if ($shortName !== 'UploadedFile' && $media->getId() === null) {
+        if (!$binaryContent  && $media->getId() === null) {
             return null;
         }
 
         // no update, but the the media exists ..
         // 
-        if ($shortName !== 'UploadedFile' && $media->getId() !== null) {
+        if (!$binaryContent  && $media->getId() !== null) {
             
             return $media;
         }
