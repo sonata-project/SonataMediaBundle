@@ -55,7 +55,7 @@ class ProviderDataTransformer implements DataTransformerInterface
         }
 
         // no update, but the the media exists ...
-        if (($media->getBinaryContent() instanceof UploadedFile) && $media->getId() !== null) {
+        if (!($media->getBinaryContent() instanceof UploadedFile) && $media->getId() !== null) {
             return $media;
         }
 
