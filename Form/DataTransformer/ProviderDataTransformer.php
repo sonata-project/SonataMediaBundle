@@ -45,17 +45,28 @@ class ProviderDataTransformer implements DataTransformerInterface
      */
     public function reverseTransform($media)
     {
+
+        
         if (!$media instanceof MediaInterface) {
             return $media;
         }
 
+        if (is_object($media->getBinaryContent())) {
+            $reflection = new \ReflectionClass($media->getBinaryContent());
+            $shortName = $reflection->getShortName();
+        } else {
+            $shortName = null;
+        }
+       
         // the binary field is empty and the media does not exist ... return null
-        if (!($media->getBinaryContent() instanceof UploadedFile)&& $media->getId() === null) {
+        if ($shortName !== 'UploadedFile' && $media->getId() === null) {
             return null;
         }
 
-        // no update, but the the media exists ...
-        if (!($media->getBinaryContent() instanceof UploadedFile) && $media->getId() !== null) {
+        // no update, but the the media exists ..
+        // 
+        if ($shortName !== 'UploadedFile' && $media->getId() !== null) {
+            
             return $media;
         }
 
