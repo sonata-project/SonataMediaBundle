@@ -4,6 +4,12 @@ Form Type
 Media Type
 ----------
 
+.. figure:: ../images/sonata_media_type.png
+   :align: center
+   :alt: The sonata_media_type widget
+
+   The sonata_media_type widget
+
 The ``sonata_media_type`` can be used to assign a Media instance to another entity. There are 2 required parameters :
  * the provider : sonata.media.provider.youtube, sonata.media.provider.image, etc ...
  * context : the context to use
