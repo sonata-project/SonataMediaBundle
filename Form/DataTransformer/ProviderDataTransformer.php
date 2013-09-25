@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
@@ -49,12 +50,12 @@ class ProviderDataTransformer implements DataTransformerInterface
         }
 
         // the binary field is empty and the media does not exist ... return null
-        if (!$media->getBinaryContent() && $media->getId() === null) {
+        if ($media->getBinaryContent() instanceof UploadedFile && $media->getId() === null) {
             return null;
         }
 
         // no update, but the the media exists ...
-        if (!$media->getBinaryContent() && $media->getId() !== null) {
+        if ($media->getBinaryContent() instanceof UploadedFile && $media->getId() !== null) {
             return $media;
         }
 
