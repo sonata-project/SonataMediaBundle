@@ -4,13 +4,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <!-- MEDIA -->
         <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\ORM\MediaAdmin</parameter>
-
-        <!-- GALLERY -->
         <parameter key="sonata.media.admin.gallery.class">Sonata\MediaBundle\Admin\GalleryAdmin</parameter>
-
-        <!-- GALLERY HAS MEDIA -->
         <parameter key="sonata.media.admin.gallery_has_media.class">Sonata\MediaBundle\Admin\GalleryHasMediaAdmin</parameter>
     </parameters>
 
