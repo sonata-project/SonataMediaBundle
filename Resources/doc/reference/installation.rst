@@ -25,7 +25,7 @@ Register the new bundle into your AppKernel:
 .. code-block:: php
 
   <?php
-  // app/AppKernel.php
+  // app/appkernel.php
   public function registerBundles()
   {
       return array(
@@ -87,7 +87,7 @@ Doctrine PHPCR:
 
     sonata_media:
         # if you don't use default namespace configuration
-        #class: 
+        #class:
         #    media: MyVendor\MediaBundle\Entity\Media
         #    gallery: MyVendor\MediaBundle\Entity\Gallery
         #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
@@ -162,8 +162,8 @@ Now that your module is generated, you can register it
 .. code-block:: php
 
     <?php
-    // app/AppKernel.php
-    public function registerBundles()
+    // app/appkernel.php
+    public function registerbundles()
     {
         return array(
             ...
@@ -179,8 +179,6 @@ Now that your module is generated, you can register it
                   default:
                       mappings:
                           ApplicationSonataMediaBundle: ~
-                          SonataMediaBundle: ~
-                          # add your own bundles here
 
 
 Now, you can build up your database:

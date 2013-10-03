@@ -7,6 +7,7 @@
         <parameter key="sonata.media.metadata.proxy.class">Sonata\MediaBundle\Metadata\ProxyMetadataBuilder</parameter>
         <parameter key="sonata.media.metadata.amazon.class">Sonata\MediaBundle\Metadata\AmazonMetadataBuilder</parameter>
         <parameter key="sonata.media.metadata.noop.class">Sonata\MediaBundle\Metadata\NoopMetadataBuilder</parameter>
+        <parameter id="sonata.media.adapater.filesystem.opencloud.class"/>
     </parameters>
 
     <services>
@@ -30,6 +31,24 @@
         <service id="sonata.media.adapter.filesystem.mogilefs"  class="Gaufrette\Adapter\MogileFS" >
             <argument />
             <argument />
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.opencloud" class="Gaufrette\Adapter\OpenCloud">
+            <argument type="service" id="sonata.media.adapter.filesystem.opencloud.objectstore"/>
+            <argument/>
+            <argument/>
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.opencloud.connection" class="%sonata.media.adapter.filesystem.opencloud.class%">
+            <argument/>
+            <argument/>
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.opencloud.objectstore" class="OpenCloud\ObjectSource\Service"
+                 factory-service="sonata.media.adapter.filesystem.opencloud.connection"
+                 factory-method="ObjectStore">
+            <argument/>
+            <argument/>
         </service>
 
         <service id="sonata.media.filesystem.mogilefs" class="Gaufrette\Filesystem" >
