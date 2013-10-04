@@ -7,7 +7,7 @@
         <parameter key="sonata.media.metadata.proxy.class">Sonata\MediaBundle\Metadata\ProxyMetadataBuilder</parameter>
         <parameter key="sonata.media.metadata.amazon.class">Sonata\MediaBundle\Metadata\AmazonMetadataBuilder</parameter>
         <parameter key="sonata.media.metadata.noop.class">Sonata\MediaBundle\Metadata\NoopMetadataBuilder</parameter>
-        <parameter id="sonata.media.adapater.filesystem.opencloud.class"/>
+        <parameter key="sonata.media.adapater.filesystem.opencloud.class"/>
     </parameters>
 
     <services>
