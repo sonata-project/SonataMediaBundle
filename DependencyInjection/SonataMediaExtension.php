@@ -361,6 +361,31 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.adapter.filesystem.mogilefs');
             $container->removeDefinition('sonata.media.filesystem.mogilefs');
         }
+
+        if($container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
+            (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))) {
+            if(isset($config['filesystem']['openstack'])) {
+                $container->setParameter('sonata.media.adapter.filesystem.opencloud.class', 'OpenCloud\OpenStack');
+                $settings = 'openstack';
+            } else {
+                $container->setParameter('sonata.media.adapter.filesystem.opencloud.class', 'OpenCloud\Rackspace');
+                $settings = 'rackspace';
+            }
+            $container->getDefinition('sonata.media.adapter.filesystem.opencloud.connection')
+                ->replaceArgument(0, $config['filesystem'][$settings]['url'])
+                ->replaceArgument(1, $config['filesystem'][$settings]['secret'])
+                ;
+            $container->getDefinition('sonata.media.adapter.filesystem.opencloud')
+                ->replaceArgument(1, $config['filesystem'][$settings]['containerName'])
+                ->replaceArgument(2, $config['filesystem'][$settings]['create_container']);
+            $container->getDefinition('sonata.media.adapter.filesystem.opencloud.objectstore')
+                ->replaceArgument(1, $config['filesystem'][$settings]['region']);
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.opencloud');
+            $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection');
+            $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.objectstore');
+            $container->removeDefinition('sonata.media.filesystem.opencloud');
+        }
     }
 
     /**
