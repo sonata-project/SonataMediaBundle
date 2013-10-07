@@ -87,7 +87,7 @@ Doctrine PHPCR:
 
     sonata_media:
         # if you don't use default namespace configuration
-        #class: 
+        #class:
         #    media: MyVendor\MediaBundle\Entity\Media
         #    gallery: MyVendor\MediaBundle\Entity\Gallery
         #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
