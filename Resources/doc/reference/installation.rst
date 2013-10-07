@@ -25,7 +25,7 @@ Register the new bundle into your AppKernel:
 .. code-block:: php
 
   <?php
-  // app/Appkernel.php
+  // app/AppKernel.php
   public function registerBundles()
   {
       return array(

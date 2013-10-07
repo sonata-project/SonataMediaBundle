@@ -239,6 +239,7 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('create_container')->defaultValue(false)->end()
                                 ->end()
                             ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
