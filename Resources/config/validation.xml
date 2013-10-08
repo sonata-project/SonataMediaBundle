@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
 
-    <class name="Application\Sonata\MediaBundle\Entity\Media">
+    <class name="Sonata\MediaBundle\Model\MediaInterface">
         <constraint name="Callback" >
             <option name="methods">
                 <value>isStatusErroneous</value>
@@ -15,25 +15,21 @@
             <option name="method">validate</option>
         </constraint>
 
-        <property name="name">
+        <getter property="name">
             <constraint name="NotNull" />
-        </property>
+        </getter>
     </class>
 
-    <class name="Application\Sonata\MediaBundle\Entity\GalleryHasMedia">
-
-    </class>
-
-    <class name="Application\Sonata\MediaBundle\Entity\Gallery">
+    <class name="Sonata\MediaBundle\Model\GalleryInterface">
         <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat" />
 
-        <property name="galleryHasMedias">
+        <getter property="galleryHasMedias">
             <constraint name="Valid" />
-        </property>
+        </getter>
 
-        <property name="name">
+        <getter property="name">
             <constraint name="NotNull" />
-        </property>
+        </getter>
     </class>
 
 </constraint-mapping>
