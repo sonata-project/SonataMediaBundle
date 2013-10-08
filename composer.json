@@ -21,7 +21,7 @@
         "sonata-project/notification-bundle": "2.2.*@dev",
         "sonata-project/easy-extends-bundle": "2.1.*",
         "sonata-project/doctrine-extensions": "1.*",
-        "knplabs/gaufrette": ">=0.1.4",
+        "knplabs/gaufrette": "dev-master",
         "imagine/Imagine": "*@stable",
         "kriswallsmith/buzz": "0.*"
     },

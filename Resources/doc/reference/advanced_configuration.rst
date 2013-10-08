@@ -106,6 +106,7 @@ Full configuration options:
                 slave: sonata.media.adapter.filesystem.local
 
             rackspace:
+               lazy: false # set to true to use lazyConnection
                url:
                secret:
                  username:
@@ -115,6 +116,7 @@ Full configuration options:
                create_container: false
 
             openstack:
+               lazy: false # set to true to use lazyConnection
                url:
                secret:
                  username:
