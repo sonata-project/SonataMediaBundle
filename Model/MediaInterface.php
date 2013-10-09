@@ -345,11 +345,6 @@ interface MediaInterface
     public function getBox();
 
     /**
-     * @return mixed
-     */
-    public function __toString();
-
-    /**
      * @param array $galleryHasMedias
      *
      * @return void
