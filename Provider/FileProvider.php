@@ -94,7 +94,12 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'file');
+        $formMapper->add('binaryContent', 'file', array(
+            'constraints' => array(
+                new \Symfony\Component\Validator\Constraints\NotNull(),
+                new \Symfony\Component\Validator\Constraints\NotBlank()
+            )
+        ));
     }
 
     /**
@@ -102,7 +107,12 @@ class FileProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add('binaryContent', 'file');
+        $formBuilder->add('binaryContent', 'file', array(
+            'constraints' => array(
+                new \Symfony\Component\Validator\Constraints\NotNull(),
+                new \Symfony\Component\Validator\Constraints\NotBlank()
+            )
+        ));
     }
 
     /**

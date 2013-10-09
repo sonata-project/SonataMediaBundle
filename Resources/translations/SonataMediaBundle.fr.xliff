@@ -144,7 +144,7 @@
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
-                <target>Fichier</target>
+                <target>Fichier/Référence</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>

@@ -112,7 +112,12 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'text');
+        $formMapper->add('binaryContent', 'text', array(
+            'constraints' => array(
+                new \Symfony\Component\Validator\Constraints\NotNull(),
+                new \Symfony\Component\Validator\Constraints\NotBlank()
+            )
+        ));
     }
 
     /**
@@ -120,7 +125,12 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add('binaryContent', 'text');
+        $formBuilder->add('binaryContent', 'text', array(
+            'constraints' => array(
+                new \Symfony\Component\Validator\Constraints\NotNull(),
+                new \Symfony\Component\Validator\Constraints\NotBlank()
+            )
+        ));
     }
 
     /**

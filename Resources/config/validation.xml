@@ -14,22 +14,28 @@
             <option name="service">sonata.media.pool</option>
             <option name="method">validate</option>
         </constraint>
-
         <getter property="name">
             <constraint name="NotNull" />
+            <constraint name="NotBlank" />
+        </getter>
+        <getter property="providerReference">
+            <constraint name="NotNull" />
+            <constraint name="NotBlank" />
+        </getter>
+        <getter property="providerStatus">
+            <constraint name="NotNull" />
+            <constraint name="NotBlank" />
         </getter>
     </class>
 
     <class name="Sonata\MediaBundle\Model\GalleryInterface">
         <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat" />
-
         <getter property="galleryHasMedias">
             <constraint name="Valid" />
         </getter>
-
         <getter property="name">
             <constraint name="NotNull" />
+            <constraint name="NotBlank" />
         </getter>
     </class>
-
 </constraint-mapping>

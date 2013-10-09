@@ -22,13 +22,15 @@ class ProviderDataTransformer implements DataTransformerInterface
     protected $options;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param array                             $options
+     * @param Pool   $pool
+     * @param string $class
+     * @param array  $options
      */
-    public function __construct(Pool $pool, array $options = array())
+    public function __construct(Pool $pool, $class, array $options = array())
     {
         $this->pool    = $pool;
         $this->options = $options;
+        $this->class   = $class;
     }
 
     /**
@@ -36,6 +38,10 @@ class ProviderDataTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+        if ($value === null) {
+            return new $this->class;
+        }
+
         return $value;
     }
 
@@ -49,11 +55,6 @@ class ProviderDataTransformer implements DataTransformerInterface
         }
 
         $binaryContent = $media->getBinaryContent();
-
-        // the binary field is empty and the media does not exist ... return null
-        if (empty($binaryContent) && $media->getId() === null) {
-            return null;
-        }
 
         // no update, but the the media exists ...
         if (empty($binaryContent) && $media->getId() !== null) {
