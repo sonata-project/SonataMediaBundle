@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
 
-    <class name="Sonata\MediaBundle\Model\MediaInterface">
+    <class name="Sonata\MediaBundle\Model\Media">
         <constraint name="Callback" >
             <option name="methods">
                 <value>isStatusErroneous</value>
@@ -14,28 +14,28 @@
             <option name="service">sonata.media.pool</option>
             <option name="method">validate</option>
         </constraint>
-        <getter property="name">
+        <property name="name">
             <constraint name="NotNull" />
             <constraint name="NotBlank" />
-        </getter>
-        <getter property="providerReference">
+        </property>
+        <property name="providerReference">
             <constraint name="NotNull" />
             <constraint name="NotBlank" />
-        </getter>
-        <getter property="providerStatus">
+        </property>
+        <property name="providerStatus">
             <constraint name="NotNull" />
             <constraint name="NotBlank" />
-        </getter>
+        </property>
     </class>
 
-    <class name="Sonata\MediaBundle\Model\GalleryInterface">
+    <class name="Sonata\MediaBundle\Model\Gallery">
         <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat" />
-        <getter property="galleryHasMedias">
+        <property name="galleryHasMedias">
             <constraint name="Valid" />
-        </getter>
-        <getter property="name">
+        </property>
+        <property name="name">
             <constraint name="NotNull" />
             <constraint name="NotBlank" />
-        </getter>
+        </property>
     </class>
 </constraint-mapping>
