@@ -14,6 +14,8 @@ namespace Sonata\MediaBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -43,11 +45,25 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer(new ProviderDataTransformer($this->pool, $this->class, array(
-            'provider' => $options['provider'],
-            'context'  => $options['context'],
+            'provider'      => $options['provider'],
+            'context'       => $options['context'],
+            'empty_on_new'  => $options['empty_on_new'],
+            'new_on_update' => $options['new_on_update'],
         )));
 
+        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+            if ($event->getForm()->get('unlink')->getData()) {
+                $event->setData(null);
+            }
+        });
+
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
+
+        $builder->add('unlink', 'checkbox', array(
+            'mapped'   => false,
+            'data'     => false,
+            'required' => false
+        ));
     }
 
     /**
@@ -65,9 +81,11 @@ class MediaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class,
-            'provider'   => null,
-            'context'    => null
+            'data_class'    => $this->class,
+            'provider'      => null,
+            'context'       => null,
+            'empty_on_new'  => true,
+            'new_on_update' => true,
         ));
     }
 

@@ -78,8 +78,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 class TestProvider extends BaseProvider
 {
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string                                   $format
+     * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format)
     {
@@ -87,9 +86,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     *
-     * @param  $media
-     * @return void
+     * {@inheritdoc}
      */
     public function postPersist(MediaInterface $media)
     {
@@ -97,8 +94,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * build the related create form
-     *
+     * {@inheritdoc}
      */
     public function buildEditForm(FormMapper $form)
     {
@@ -106,8 +102,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * build the related create form
-     *
+     * {@inheritdoc}
      */
     public function buildCreateForm(FormMapper $form)
     {
@@ -115,9 +110,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     *
-     * @param  $media
-     * @return void
+     * {@inheritdoc}
      */
     public function postUpdate(MediaInterface $media)
     {
@@ -125,9 +118,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * return the absolute path of the reference image or the service provider reference
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function getAbsolutePath(MediaInterface $media)
     {
@@ -135,9 +126,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * return the reference image of the media, can be the videa thumbnail or the original uploaded picture
-     *
-     * @return string to the reference image
+     * {@inheritdoc}
      */
     public function getReferenceImage(MediaInterface $media)
     {
@@ -145,11 +134,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * Generate the private path
-     *
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  string                                   $format
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
@@ -157,11 +142,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * Generate the public path
-     *
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  string                                   $format
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
@@ -169,8 +150,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     *
-     * @return \Gaufrette\File
+     * {@inheritdoc}
      */
     public function getReferenceFile(MediaInterface $media)
     {
@@ -178,9 +158,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     *
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function preUpdate(MediaInterface $media)
     {
@@ -188,8 +166,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function postRemove(MediaInterface $media)
     {
@@ -197,8 +174,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     public function prePersist(MediaInterface $media)
     {
@@ -206,12 +182,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * Mode can be x-file
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param $format
-     * @param $mode
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
@@ -219,8 +190,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
     protected function doTransform(MediaInterface $media)
     {
@@ -228,8 +198,7 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * @param  \Symfony\Component\Form\FormBuilder $formBuilder
-     * @return void
+     * {@inheritdoc}
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
@@ -237,13 +206,10 @@ class TestProvider extends BaseProvider
     }
 
     /**
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  bool                                     $force
-     * @return void
+     * {@inheritdoc}
      */
     public function updateMetadata(MediaInterface $media, $force = false)
     {
         // TODO: Implement updateMetadata() method.
     }
-
 }

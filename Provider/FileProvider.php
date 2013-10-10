@@ -28,6 +28,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Form\FormBuilder;
 
 use Gaufrette\Filesystem;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class FileProvider extends BaseProvider
 {
@@ -96,8 +98,8 @@ class FileProvider extends BaseProvider
     {
         $formMapper->add('binaryContent', 'file', array(
             'constraints' => array(
-                new \Symfony\Component\Validator\Constraints\NotNull(),
-                new \Symfony\Component\Validator\Constraints\NotBlank()
+                new NotBlank(),
+                new NotNull()
             )
         ));
     }
@@ -107,12 +109,7 @@ class FileProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add('binaryContent', 'file', array(
-            'constraints' => array(
-                new \Symfony\Component\Validator\Constraints\NotNull(),
-                new \Symfony\Component\Validator\Constraints\NotBlank()
-            )
-        ));
+        $formBuilder->add('binaryContent', 'file');
     }
 
     /**

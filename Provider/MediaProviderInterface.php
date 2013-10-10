@@ -247,31 +247,23 @@ interface MediaProviderInterface
 
     /**
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function transform(MediaInterface $media);
 
     /**
      * @param ErrorElement   $errorElement
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media);
 
     /**
      * @param FormBuilder $formBuilder
-     *
-     * @return void
      */
     public function buildMediaType(FormBuilder $formBuilder);
 
     /**
      * @param MediaInterface $media
      * @param bool           $force
-     *
-     * @return void
      */
     public function updateMetadata(MediaInterface $media, $force = false);
 }

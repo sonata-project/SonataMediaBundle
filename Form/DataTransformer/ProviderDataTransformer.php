@@ -29,8 +29,25 @@ class ProviderDataTransformer implements DataTransformerInterface
     public function __construct(Pool $pool, $class, array $options = array())
     {
         $this->pool    = $pool;
-        $this->options = $options;
+        $this->options = $this->getOptions($options);
         $this->class   = $class;
+
+    }
+
+    /**
+     * Define the default options for the DataTransformer
+     *
+     * @param array $options
+     * @return array
+     */
+    protected function getOptions(array $options) {
+
+        return array_merge(array(
+            'provider'      => false,
+            'context'       => false,
+            'empty_on_new'  => true,
+            'new_on_update' => true,
+        ), $options);
     }
 
     /**
@@ -56,23 +73,39 @@ class ProviderDataTransformer implements DataTransformerInterface
 
         $binaryContent = $media->getBinaryContent();
 
+        // no binary content and no media id
+        if (empty($binaryContent) && $media->getId() === null) {
+            if ($this->options['empty_on_new']) {
+                return null;
+            }
+
+            return $media;
+        }
+
         // no update, but the the media exists ...
         if (empty($binaryContent) && $media->getId() !== null) {
             return $media;
         }
 
-        if (!$media->getProviderName() && isset($this->options['provider'])) {
-            $media->setProviderName($this->options['provider']);
+        // create a new media to avoid erasing other media or not ...
+        $newMedia = $this->options['new_on_update'] ? new $this->class : $media;
+
+        $newMedia->setProviderName($media->getProviderName());
+        $newMedia->setContext($media->getContext());
+        $newMedia->setBinaryContent($binaryContent);
+
+        if (!$newMedia->getProviderName() && $this->options['provider']) {
+            $newMedia->setProviderName($this->options['provider']);
         }
 
-        if (!$media->getContext() && isset($this->options['context'])) {
-            $media->setContext($this->options['context']);
+        if (!$newMedia->getContext() && $this->options['context']) {
+            $newMedia->setContext($this->options['context']);
         }
 
-        $provider = $this->pool->getProvider($media->getProviderName());
+        $provider = $this->pool->getProvider($newMedia->getProviderName());
 
-        $provider->transform($media);
+        $provider->transform($newMedia);
 
-        return $media;
+        return $newMedia;
     }
 }
