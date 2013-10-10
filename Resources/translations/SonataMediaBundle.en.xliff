@@ -104,7 +104,7 @@
             </trans-unit>
             <trans-unit id="form.label_media">
                 <source>form.label_media</source>
-                <target>Medium</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="form.label_position">
                 <source>form.label_position</source>
@@ -144,7 +144,7 @@
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
-                <target>File</target>
+                <target>File/Reference</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>

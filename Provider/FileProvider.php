@@ -28,6 +28,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Form\FormBuilder;
 
 use Gaufrette\Filesystem;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class FileProvider extends BaseProvider
 {
@@ -94,7 +96,12 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'file');
+        $formMapper->add('binaryContent', 'file', array(
+            'constraints' => array(
+                new NotBlank(),
+                new NotNull()
+            )
+        ));
     }
 
     /**

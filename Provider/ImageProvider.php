@@ -85,15 +85,24 @@ class ImageProvider extends FileProvider
     {
         parent::doTransform($media);
 
-        if ($media->getBinaryContent()) {
-            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
-            $size  = $image->getSize();
-
-            $media->setWidth($size->getWidth());
-            $media->setHeight($size->getHeight());
-
-            $media->setProviderStatus(MediaInterface::STATUS_OK);
+        if (!is_object($media->getBinaryContent()) && !$media->getBinaryContent()) {
+            return;
         }
+
+        try {
+            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
+        } catch(\RuntimeException $e) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+            return;
+        }
+
+        $size  = $image->getSize();
+
+        $media->setWidth($size->getWidth());
+        $media->setHeight($size->getHeight());
+
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
+
     }
 
     /**

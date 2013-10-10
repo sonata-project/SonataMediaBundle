@@ -1,6 +1,6 @@
 {% block sonata_media_type_widget %}
     <div class="span3 pull-left">
-        {% if value is not empty %}
+        {% if value is not empty and value.providerReference %}
             <div class="pull-left" style="margin-right: 5px">
                 {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
             </div>

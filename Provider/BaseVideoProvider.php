@@ -20,6 +20,8 @@ use Buzz\Browser;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
@@ -112,7 +114,12 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'text');
+        $formMapper->add('binaryContent', 'text', array(
+            'constraints' => array(
+                new NotBlank(),
+                new NotNull()
+            )
+        ));
     }
 
     /**
