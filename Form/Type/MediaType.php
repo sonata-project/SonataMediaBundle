@@ -51,7 +51,7 @@ class MediaType extends AbstractType
             'new_on_update' => $options['new_on_update'],
         )));
 
-        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::BIND, function(FormEvent $event) {
             if ($event->getForm()->get('unlink')->getData()) {
                 $event->setData(null);
             }
