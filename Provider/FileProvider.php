@@ -334,13 +334,14 @@ class FileProvider extends BaseProvider
             throw new \RuntimeException('Invalid mode provided');
         }
 
-        if($format == 'reference') {
-            $file = $this->getReferenceFile($media);
-        } else {
-            $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
-        }
-
         if ($mode == 'http') {
+
+            if($format == 'reference') {
+                $file = $this->getReferenceFile($media);
+            } else {
+                $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
+            }
+
             return new StreamedResponse(function() use ($file) {
                 echo $file->getContent();
             }, 200, $headers);
@@ -355,11 +356,7 @@ class FileProvider extends BaseProvider
             $this->generatePrivateUrl($media, $format)
         );
 
-        $response = new BinaryFileResponse($filename, 200, $headers);
-
-        $response->trustXSendfileTypeHeader();
-
-        return $response;
+        return new BinaryFileResponse($filename, 200, $headers);
     }
 
     /**

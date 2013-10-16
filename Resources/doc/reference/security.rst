@@ -24,6 +24,11 @@ the HTTP server you used:
     Some file storage abstractions might not be compatible with some specific server flag,
     if you are not sure always use ``http``.
 
+.. note::
+
+    If you use ``X-Sendfile`` or ``X-Accel-Redirect`` download mode, don't forget to specify that you trust this
+    header by adding ``BinaryFileResponse::trustXSendfileTypeHeader();`` in your app controller.
+
 
 Configuration Example
 ---------------------
