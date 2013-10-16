@@ -21,6 +21,7 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -334,14 +335,15 @@ class FileProvider extends BaseProvider
         }
 
         if ($mode == 'http') {
-            $provider = $this;
 
-            return new StreamedResponse(function() use ($provider, $media, $format) {
-                if($format == 'reference') {
-                    echo $provider->getReferenceFile($media)->getContent();
-                } else {
-                    echo $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format))->getContent();
-                }
+            if($format == 'reference') {
+                $file = $this->getReferenceFile($media);
+            } else {
+                $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
+            }
+
+            return new StreamedResponse(function() use ($file) {
+                echo $file->getContent();
             }, 200, $headers);
         }
 
@@ -349,12 +351,12 @@ class FileProvider extends BaseProvider
             throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
         }
 
-        $headers[$mode] = sprintf('%s/%s',
+        $filename = sprintf('%s/%s',
             $this->getFilesystem()->getAdapter()->getDirectory(),
             $this->generatePrivateUrl($media, $format)
         );
 
-        return new Response('', 200, $headers);
+        return new BinaryFileResponse($filename, 200, $headers);
     }
 
     /**
