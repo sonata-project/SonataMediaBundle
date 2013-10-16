@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Symfony\Component\HttpFoundation\File\File;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
@@ -23,7 +24,8 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
-        $adapter = $this->getMock('Gaufrette\Adapter');
+        $adapter = $this->getMockBuilder('Sonata\MediaBundle\Filesystem\Local')->disableOriginalConstructor()->getMock();
+        $adapter->expects($this->any())->method('getDirectory')->will($this->returnValue(realpath(__DIR__).'/../fixtures'));
 
         $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
         $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
@@ -145,5 +147,22 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false on non reference formate');
         $this->assertNotNull($provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
+    }
+
+    public function testDownload()
+    {
+        $provider = $this->getProvider();
+
+        $file = new File(realpath(__DIR__.'/../fixtures/FileProviderTest/0011/24/file.txt'));
+
+        $media = new Media;
+        $media->setBinaryContent($file);
+        $media->setProviderReference('file.txt');
+        $media->setContext('FileProviderTest');
+        $media->setId(1023456);
+
+        $response = $provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
+
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\BinaryFileResponse', $response);
     }
 }

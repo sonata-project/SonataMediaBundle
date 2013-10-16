@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -88,6 +89,10 @@ class MediaController extends Controller
         }
 
         $response = $this->getProvider($media)->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
+
+        if ($response instanceof BinaryFileResponse) {
+            $response->prepare($this->get('request'));
+        }
 
         return $response;
     }
