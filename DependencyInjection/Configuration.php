@@ -187,6 +187,7 @@ class Configuration implements ConfigurationInterface
                                         ->thenInvalid('Invalid encryption type - "%s"')
                                     ->end()
                                 ->end()
+                                ->scalarNode('region')->defaultValue('s3.amazonaws.com')->end()
                                 ->arrayNode('meta')
                                     ->useAttributeAsKey('name')
                                     ->prototype('scalar')
