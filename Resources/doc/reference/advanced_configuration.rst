@@ -89,7 +89,7 @@ Full configuration options:
                 accessKey:
                 secretKey:
                 create:         false
-                region:         # this settings does not seems to be implemented with Zend Framework
+                region:         s3.amazonaws.com # change if not using US Standard region
                 storage:        standard # can be one of: standard or reduced
                 acl:            public # can be one of: public, private, open, auth_read, owner_read, owner_full_control
                 encryption:     aes256 # can be aes256 or not set
