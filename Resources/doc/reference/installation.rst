@@ -182,6 +182,21 @@ Now that your module is generated, you can register it
                           SonataMediaBundle: ~
                           # add your own bundles here
 
+.. note::
+    
+    As we are using Composer to generate the autoloader we have to add the newly 
+    generated sonata application namespace manually.
+    
+    .. code-block:: php
+    
+        ...
+        // app/autoload.php
+        $loader = require __DIR__.'/../vendor/autoload.php';
+
+        //custom for Applications
+        $loader->add("Application", __DIR__);
+        ...
+
 
 Now, you can build up your database:
 
