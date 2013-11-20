@@ -208,7 +208,7 @@ class Pixlr
 
         $this->mediaManager->save($media);
 
-        return new RedirectResponse($this->router->generate('admin_sonata_media_media_view', array('id' => $media->getId())));
+        return new RedirectResponse($this->router->generate('admin_sonata_media_media_show', array('id' => $media->getId())));
     }
 
     /**
