@@ -107,7 +107,7 @@ class AddMassMediaCommand extends BaseCommand
     protected function optimize()
     {
         if ($this->getContainer()->has('doctrine')) {
-            $this->getContainer()->get('doctrine')->getEntityManager()->getUnitOfWork()->clear();
+            $this->getContainer()->get('doctrine')->getManager()->getUnitOfWork()->clear();
         }
     }
 }
