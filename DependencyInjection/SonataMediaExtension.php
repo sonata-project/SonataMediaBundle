@@ -378,25 +378,50 @@ class SonataMediaExtension extends Extension
             (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))) {
             if(isset($config['filesystem']['openstack'])) {
                 $container->setParameter('sonata.media.adapter.filesystem.opencloud.class', 'OpenCloud\OpenStack');
+                $container->setParameter('sonata.media.adapter.filesystem.lazyopencloud.authfactory',
+                                         'Gaufrette\Adapter\OpenStackCloudFiles\OpenStackAuthenticationFactory');
                 $settings = 'openstack';
             } else {
                 $container->setParameter('sonata.media.adapter.filesystem.opencloud.class', 'OpenCloud\Rackspace');
+                $container->setParameter('sonata.media.adapter.filesystem.lazyopencloud.authfactory',
+                                         'Gaufrette\Adapter\OpenStackCloudFiles\RackspaceAuthenticationFactory');
                 $settings = 'rackspace';
             }
-            $container->getDefinition('sonata.media.adapter.filesystem.opencloud.connection')
-                ->replaceArgument(0, $config['filesystem'][$settings]['url'])
-                ->replaceArgument(1, $config['filesystem'][$settings]['secret'])
+            if ($config['filesystem'][$settings]['lazy'])
+            {
+                $secret = $config['filesystem'][$settings]['secret'];
+                list($username, $authKey) = array_values($secret);
+                $container->getDefinition('sonata.media.adapter.filesystem.lazyopencloud.authfactory')
+                    ->replaceArgument(0, $config['filesystem'][$settings]['url'])
+                    ->replaceArgument(1, $username)
+                    ->replaceArgument(2, $authKey);
+                $container->getDefinition('sonata.media.adapter.filesystem.opencloud')
+                    ->replaceArgument(0, new Reference('sonata.media.adapter.filesystem.lazyopencloud.authfactory'))
+                    ->replaceArgument(1, $config['filesystem'][$settings]['containerName'])
+                    ->replaceArgument(2, $config['filesystem'][$settings]['create_container']);
+
+                $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection');
+                $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.objectstore');
+            } else {
+                $container->getDefinition('sonata.media.adapter.filesystem.opencloud.connection')
+                          ->replaceArgument(0, $config['filesystem'][$settings]['url'])
+                          ->replaceArgument(1, $config['filesystem'][$settings]['secret'])
                 ;
-            $container->getDefinition('sonata.media.adapter.filesystem.opencloud')
-                ->replaceArgument(1, $config['filesystem'][$settings]['containerName'])
-                ->replaceArgument(2, $config['filesystem'][$settings]['create_container']);
-            $container->getDefinition('sonata.media.adapter.filesystem.opencloud.objectstore')
-                ->replaceArgument(1, $config['filesystem'][$settings]['region']);
+                $container->getDefinition('sonata.media.adapter.filesystem.opencloud')
+                          ->replaceArgument(1, $config['filesystem'][$settings]['containerName'])
+                          ->replaceArgument(2, $config['filesystem'][$settings]['create_container']);
+                $container->getDefinition('sonata.media.adapter.filesystem.opencloud.objectstore')
+                          ->replaceArgument(1, $config['filesystem'][$settings]['region']);
+                $container->removeDefinition('sonata.media.adapter.filesystem.lazyopencloud');
+                $container->removeDefinition('sonata.media.adapter.filesystem.lazyopencloud.authfactory');
+            }
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.opencloud');
             $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection');
             $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.objectstore');
             $container->removeDefinition('sonata.media.filesystem.opencloud');
+            $container->removeDefinition('sonata.media.adapter.filesystem.lazyopencloud');
+            $container->removeDefinition('sonata.media.adapater.filesystem.lazyopencloud.authfactory');
         }
     }
 
