@@ -70,7 +70,14 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnail()
     {
-        $provider = $this->getProvider();
+        $response = $this->getMock('Buzz\Message\MessageInterface');
+        $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
+
+        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+
+        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+
+        $provider = $this->getProvider($browser);
 
         $media = new Media;
         $media->setName('Blinky™');
