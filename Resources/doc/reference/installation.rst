@@ -30,6 +30,7 @@ Register the new bundle into your AppKernel:
   {
       return array(
           // ...
+          new Sonata\CoreBundle\SonataCoreBundle(),
           new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
           // ...
