@@ -10,65 +10,50 @@
  */
 namespace Sonata\MediaBundle\Entity;
 
-use Sonata\MediaBundle\Model\MediaManager as AbstractMediaManager;
-use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\CoreBundle\Entity\DoctrineBaseManager;
 use Doctrine\ORM\EntityManager;
 use Sonata\MediaBundle\Provider\Pool;
 
-class MediaManager extends AbstractMediaManager
+class MediaManager extends DoctrineBaseManager
 {
-    protected $em;
-    protected $repository;
-    protected $class;
-
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param \Doctrine\ORM\EntityManager       $em
-     * @param string                            $class
+     * Constructor.
+     * 
+     * @param string        $class
+     * @param EntityManager $em
+     * @param Pool          $pool
      */
-    public function __construct(Pool $pool, EntityManager $em, $class)
+    public function __construct($class, EntityManager $em, Pool $pool)
     {
-        $this->em = $em;
+        $this->pool = $pool;
 
-        parent::__construct($pool, $class);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getRepository()
-    {
-        if (!$this->repository) {
-            $this->repository = $this->em->getRepository($this->class);
-        }
-
-        return $this->repository;
+        parent::__construct($class, $em);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(MediaInterface $media, $context = null, $providerName = null)
+    public function save($media, $andFlush = true)
     {
-        if ($context) {
-            $media->setContext($context);
+        /*
+         * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
+         */
+
+        // BC compatibility for $context parameter
+        if ($andFlush && is_string($andFlush)) {
+            $media->setContext($andFlush);
         }
 
-        if ($providerName) {
-            $media->setProviderName($providerName);
+        // BC compatibility for $providerName parameter
+        if (3 == func_num_args()) {
+            $media->setProviderName(func_get_arg(2));
         }
 
-        // just in case the pool alter the media
-        $this->em->persist($media);
-        $this->em->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(MediaInterface $media)
-    {
-        $this->em->remove($media);
-        $this->em->flush();
+        if ($andFlush && is_bool($andFlush)) {
+            parent::save($media, $andFlush);
+        } else {
+            // BC compatibility with previous signature
+            parent::save($media, true);
+        }
     }
 }

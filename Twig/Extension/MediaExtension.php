@@ -14,9 +14,8 @@ namespace Sonata\MediaBundle\Twig\Extension;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
-
+use Sonata\CoreBundle\Entity\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
 class MediaExtension extends \Twig_Extension
@@ -30,10 +29,10 @@ class MediaExtension extends \Twig_Extension
     protected $environment;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool               $mediaService
-     * @param \Sonata\MediaBundle\Model\MediaManagerInterface $mediaManager
+     * @param Pool             $mediaService
+     * @param ManagerInterface $mediaManager
      */
-    public function __construct(Pool $mediaService, MediaManagerInterface $mediaManager)
+    public function __construct(Pool $mediaService, ManagerInterface $mediaManager)
     {
         $this->mediaService = $mediaService;
         $this->mediaManager = $mediaManager;
