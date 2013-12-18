@@ -11,14 +11,13 @@
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
 
-use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Sonata\CoreBundle\Entity\ManagerInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
@@ -39,12 +38,12 @@ class GalleryBlockService extends BaseBlockService
     protected $galleryManager;
 
     /**
-     * @param string                  $name
-     * @param EngineInterface         $templating
-     * @param ContainerInterface      $container
-     * @param GalleryManagerInterface $galleryManager
+     * @param string             $name
+     * @param EngineInterface    $templating
+     * @param ContainerInterface $container
+     * @param ManagerInterface   $galleryManager
      */
-    public function __construct($name, EngineInterface $templating, ContainerInterface $container, GalleryManagerInterface $galleryManager)
+    public function __construct($name, EngineInterface $templating, ContainerInterface $container, ManagerInterface $galleryManager)
     {
         parent::__construct($name, $templating);
 

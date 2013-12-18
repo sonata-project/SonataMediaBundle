@@ -11,21 +11,18 @@
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
 
-use Sonata\MediaBundle\Model\MediaManagerInterface;
+use Sonata\CoreBundle\Entity\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Form;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -40,12 +37,12 @@ class MediaBlockService extends BaseBlockService
     protected $mediaManager;
 
     /**
-     * @param string                                                    $name
-     * @param \Symfony\Component\Templating\EngineInterface             $templating
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Sonata\MediaBundle\Model\MediaManagerInterface           $mediaManager
+     * @param string             $name
+     * @param EngineInterface    $templating
+     * @param ContainerInterface $container
+     * @param ManagerInterface   $mediaManager
      */
-    public function __construct($name, EngineInterface $templating, ContainerInterface $container, MediaManagerInterface $mediaManager)
+    public function __construct($name, EngineInterface $templating, ContainerInterface $container, ManagerInterface $mediaManager)
     {
         parent::__construct($name, $templating);
 

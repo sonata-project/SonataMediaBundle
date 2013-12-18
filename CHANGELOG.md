@@ -7,6 +7,11 @@ A [BC BREAK] means the update will break the project for many reasons:
 * new dependencies
 * class refactoring
 
+### 2013-12-16
+
+* GalleryManager & MediaManager now extend DoctrineBaseManager from SonataCoreBundle.
+* GalleryManager::update() is now deprecated, please use save() instead.
+
 ### 2013-09-16
 
 * YouTube videos can now be inserted in HTML5. 
