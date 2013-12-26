@@ -11,55 +11,12 @@
 
 namespace Sonata\MediaBundle\Model;
 
-interface MediaManagerInterface
+use Sonata\CoreBundle\Entity\ManagerInterface;
+
+/**
+ * @deprecated Use Sonata\CoreBundle\Entity\ManagerInterface instead
+ */
+interface MediaManagerInterface extends ManagerInterface
 {
-    /**
-     * Creates an empty media instance
-     *
-     * @return MediaInterface
-     */
-    public function create();
 
-    /**
-     * Deletes a media
-     *
-     * @param MediaInterface $media
-     *
-     * @return void
-     */
-    public function delete(MediaInterface $media);
-
-    /**
-     * Finds many media by the given criteria
-     *
-     * @param array $criteria
-     *
-     * @return MediaInterface
-     */
-    public function findBy(array $criteria);
-
-    /**
-     * Finds one media by the given criteria
-     *
-     * @param array $criteria
-     *
-     * @return MediaInterface
-     */
-    public function findOneBy(array $criteria);
-
-    /**
-     * Returns the media's fully qualified class name
-     *
-     * @return string
-     */
-    public function getClass();
-
-    /**
-     * @param MediaInterface $media
-     * @param null           $context
-     * @param null           $providerName
-     *
-     * @return void
-     */
-    public function save(MediaInterface $media, $context = null, $providerName = null);
 }
