@@ -45,7 +45,10 @@ abstract class BaseMediaAdmin extends Admin
     {
         $listMapper
             ->add('custom', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig'))
-            ->add('enabled', 'boolean', array('editable' => true))
+            ->add('enabled', 'boolean', array(
+                'editable'     => true,
+                'confirmation' => true,
+            ))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
