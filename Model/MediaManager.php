@@ -64,7 +64,7 @@ abstract class MediaManager implements MediaManagerInterface
      *
      * @return Media
      */
-    public function findOneBy(array $criteria)
+    public function findOneBy(array $criteria, array $orderBy = null)
     {
         return $this->getRepository()->findOneBy($criteria);
     }
@@ -76,7 +76,7 @@ abstract class MediaManager implements MediaManagerInterface
      *
      * @return Media
      */
-    public function findBy(array $criteria)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->getRepository()->findBy($criteria);
     }
