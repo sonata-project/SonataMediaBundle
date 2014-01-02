@@ -10,11 +10,13 @@
  */
 namespace Sonata\MediaBundle\Entity;
 
-use Sonata\CoreBundle\Entity\DoctrineBaseManager;
 use Doctrine\ORM\EntityManager;
+
+use Sonata\CoreBundle\Entity\DoctrineBaseManager;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
-class MediaManager extends DoctrineBaseManager
+class MediaManager extends DoctrineBaseManager implements MediaManagerInterface
 {
     /**
      * Constructor.
