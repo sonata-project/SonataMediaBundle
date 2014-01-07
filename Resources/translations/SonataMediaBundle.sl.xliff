@@ -150,6 +150,10 @@
                 <source>label.size</source>
                 <target>Velikost</target>
             </trans-unit>
+            <trans-unit id="label.length">
+                <source>label.length</source>
+                <target>label.length</target>
+            </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
                 <target>Širina</target>
