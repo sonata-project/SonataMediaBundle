@@ -150,6 +150,10 @@
                 <source>label.size</source>
                 <target>Size</target>
             </trans-unit>
+            <trans-unit id="label.length">
+                <source>label.length</source>
+                <target>Length</target>
+            </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
                 <target>Width</target>
