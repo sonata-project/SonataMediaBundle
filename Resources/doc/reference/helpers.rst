@@ -63,7 +63,7 @@ Render the path:
 Thumbnails for files
 --------------------
 
-The ``sonata.media.provider.file`` provider does not generate thumbnails. This provider try to display a default thumbnail by context and format.
+The ``sonata.media.provider.file`` provider does not generate thumbnails. This provider tries to display a default thumbnail by context and format.
 
 The default thumbnail must be put in the ``web/uploads/media/media_bundle/images/<context-name>_<format-name>/`` directory (be sure to replace ``<context-name>`` and ``<format-name>``).
 The file must be called ``file.png`` and must comply with the size configured for this format.
