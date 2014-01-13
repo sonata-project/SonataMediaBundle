@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Model;
 
-use Sonata\CoreBundle\Entity\ManagerInterface;
+use Sonata\CoreBundle\Model\ManagerInterface;
 
 /**
- * @deprecated Use Sonata\CoreBundle\Entity\ManagerInterface instead
+ * @deprecated Use Sonata\CoreBundle\Model\ManagerInterface instead
  */
 interface MediaManagerInterface extends ManagerInterface
 {
