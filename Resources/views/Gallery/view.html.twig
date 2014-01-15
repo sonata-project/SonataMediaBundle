@@ -15,10 +15,14 @@ file that was distributed with this source code.
 
 <div class="sonata-media-gallery-media-list">
     {% for galleryHasMedia in gallery.GalleryHasMedias %}
-        <div class="sonata-media-gallery-media-item">
-            <a class="sonata-media-gallery-media-item-link" href="{{ url('sonata_media_view', {'id': galleryHasMedia.media|sonata_urlsafeid }) }}">
-                {% thumbnail galleryHasMedia.media, gallery.defaultFormat %}
+        <div class="media sonata-media-gallery-media-item">
+            <a class="pull-left sonata-media-gallery-media-item-link" href="{{ url('sonata_media_view', {'id': galleryHasMedia.media|sonata_urlsafeid }) }}">
+                {% thumbnail galleryHasMedia.media, gallery.defaultFormat with {'class': 'media-object'} %}
             </a>
+            <div class="media-body">
+                <h4 class="media-heading">{{ galleryHasMedia.media.name }}</h4>
+                <p>{{ galleryHasMedia.media.description|raw }}</p>
+            </div>
         </div>
     {% endfor %}
 </div>

@@ -7,6 +7,10 @@ A [BC BREAK] means the update will break the project for many reasons:
 * new dependencies
 * class refactoring
 
+### 2014-01-15
+
+* Updated twig template ``SonataMediaBundle:Gallery:view.html.twig``
+
 ### 2013-12-16
 
 * GalleryManager & MediaManager now extend DoctrineBaseManager from SonataCoreBundle.
@@ -14,10 +18,10 @@ A [BC BREAK] means the update will break the project for many reasons:
 
 ### 2013-09-16
 
-* YouTube videos can now be inserted in HTML5. 
+* YouTube videos can now be inserted in HTML5.
 
   Add in your config.yml:
-  ```yaml 
+  ```yaml
   sonata_media:
       providers:
           youtube:
