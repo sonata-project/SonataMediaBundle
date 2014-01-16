@@ -30,7 +30,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
@@ -71,7 +71,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetCdnPath()
     {
         $provider = $this->getProvider();
-        $this->assertEquals('/updoads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
+        $this->assertEquals('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
     }
 }
 

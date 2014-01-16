@@ -36,7 +36,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
@@ -65,7 +65,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $provider->getReferenceImage($media));
 
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
-        $this->assertEquals('/updoads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail()
