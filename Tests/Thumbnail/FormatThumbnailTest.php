@@ -25,7 +25,7 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
     {
         $thumbnail = new FormatThumbnail('foo');
 
-        $filesystem = new Filesystem(new InMemory());
+        $filesystem = new Filesystem(new InMemory(array('myfile' => 'content')));
         $referenceFile = new File('myfile', $filesystem);
 
         $formats = array(
