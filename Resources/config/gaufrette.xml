@@ -26,6 +26,7 @@
         <service id="sonata.media.adapter.filesystem.replicate"  class="Sonata\MediaBundle\Filesystem\Replicate" >
             <argument />
             <argument />
+            <argument type="service" id="logger"/>
         </service>
 
         <service id="sonata.media.adapter.filesystem.mogilefs"  class="Gaufrette\Adapter\MogileFS" >
