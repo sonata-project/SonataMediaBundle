@@ -243,7 +243,8 @@ class FileProvider extends BaseProvider
         if ($format == 'reference') {
             $path = $this->getReferenceImage($media);
         } else {
-            $path = sprintf('media_bundle/images/files/%s/file.png', $format);
+            // @todo: fix the asset path
+            $path = sprintf('sonatamedia/files/%s/file.png', $format);
         }
 
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
@@ -274,14 +275,6 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function preRemove(MediaInterface $media)
-    {
-        // never delete icon image
-    }
-
-    /**
      * Set the file contents for an image
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
@@ -299,14 +292,6 @@ class FileProvider extends BaseProvider
 
         $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
         $file->setContent(file_get_contents($contents), $metadata);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postRemove(MediaInterface $media)
-    {
-        // never delete icon image
     }
 
     /**

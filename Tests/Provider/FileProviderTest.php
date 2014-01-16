@@ -60,7 +60,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
 
         // default icon image
-        $this->assertEquals('/uploads/media/media_bundle/images/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+        $this->assertEquals('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testHelperProperies()

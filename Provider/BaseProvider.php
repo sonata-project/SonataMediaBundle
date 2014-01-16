@@ -145,7 +145,17 @@ abstract class BaseProvider implements MediaProviderInterface
             $this->getFilesystem()->delete($path);
         }
 
-        $this->thumbnail->delete($this, $media);
+        if ($this->requireThumbnails()) {
+            $this->thumbnail->delete($this, $media);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postRemove(MediaInterface $media)
+    {
+
     }
 
     /**

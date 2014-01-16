@@ -102,7 +102,6 @@ class ImageProvider extends FileProvider
         $media->setHeight($size->getHeight());
 
         $media->setProviderStatus(MediaInterface::STATUS_OK);
-
     }
 
     /**
@@ -151,19 +150,5 @@ class ImageProvider extends FileProvider
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function preRemove(MediaInterface $media)
-    {
-        $path = $this->getReferenceImage($media);
-
-        if ($this->getFilesystem()->has($path)) {
-            $this->getFilesystem()->delete($path);
-        }
-
-        $this->thumbnail->delete($this, $media);
     }
 }
