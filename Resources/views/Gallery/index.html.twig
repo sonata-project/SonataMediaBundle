@@ -9,6 +9,14 @@ file that was distributed with this source code.
 
 #}
 
+{% sonata_template_box 'This is the gallery index template. Feel free to override it.' %}
+
+{% block sonata_page_breadcrumb %}
+    <div class="row-fluid clearfix">
+        {{ sonata_block_render_event('breadcrumb', { 'context': 'gallery_index', 'current_uri': app.request.requestUri }) }}
+    </div>
+{% endblock %}
+
 <ul>
     {% for gallery in galleries %}
         <li><a href="{{ url('sonata_media_gallery_view', {'id' : gallery|sonata_urlsafeid }) }}">{{ gallery.name }}</a></li>
