@@ -6,6 +6,7 @@
     <parameters>
         <parameter key="sonata.media.block.breadcrumb_view.class">Sonata\MediaBundle\Block\Breadcrumb\GalleryViewBreadcrumbBlockService</parameter>
         <parameter key="sonata.media.block.breadcrumb_index.class">Sonata\MediaBundle\Block\Breadcrumb\GalleryIndexBreadcrumbBlockService</parameter>
+        <parameter key="sonata.media.block.breadcrumb_media.class">Sonata\MediaBundle\Block\Breadcrumb\MediaViewBreadcrumbBlockService</parameter>
     </parameters>
 
     <services>
@@ -26,6 +27,17 @@
 
             <argument>gallery_index</argument>
             <argument>sonata.media.block.breadcrumb_view</argument>
+            <argument type="service" id="templating" />
+            <argument type="service" id="knp_menu.menu_provider" />
+            <argument type="service" id="knp_menu.factory" />
+        </service>
+
+        <service id="sonata.media.block.breadcrumb_view_media" class="%sonata.media.block.breadcrumb_media.class%">
+            <tag name="sonata.block"/>
+            <tag name="sonata.breadcrumb"/>
+
+            <argument>media_view</argument>
+            <argument>sonata.media.block.breadcrumb_view_media</argument>
             <argument type="service" id="templating" />
             <argument type="service" id="knp_menu.menu_provider" />
             <argument type="service" id="knp_menu.factory" />
