@@ -10,7 +10,7 @@
     </parameters>
 
     <services>
-        <service id="sonata.media.entity_manager" alias="doctrine.orm.default_entity_manager" />
+        <service id="sonata.media.entity_manager" alias="doctrine.orm.entity_manager" />
 
         <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
             <argument>%sonata.media.media.class%</argument>
