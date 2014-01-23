@@ -58,6 +58,12 @@ Render the path:
 
 .. code-block:: jinja
 
+    {% path media, 'small' %}
+    
+Render the path to a ``sonata.media.provider.file`` context:
+
+.. code-block:: jinja
+    
     {% path media, 'reference' %}
     
 
