@@ -58,7 +58,8 @@ Render the path:
 
 .. code-block:: jinja
 
-    {% path media, 'small' %}
+    {% path media, 'reference' %}
+    
 
 Thumbnails for files
 --------------------
