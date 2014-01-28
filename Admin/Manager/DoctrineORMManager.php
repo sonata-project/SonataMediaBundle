@@ -2,6 +2,7 @@
 
 namespace Sonata\MediaBundle\Admin\Manager;
 
+use Doctrine\DBAL\DBALException;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Exception\ModelManagerException;
@@ -32,7 +33,13 @@ class DoctrineORMManager extends ModelManager
      */
     public function create($object)
     {
-        $this->manager->save($object);
+        try {
+            $this->manager->save($object);
+        } catch (DBALException $e) {
+            throw new ModelManagerException('', 0, $e);
+        } catch (\PDOException $e) {
+            throw new ModelManagerException('', 0, $e);
+        }
     }
 
     /**
@@ -40,7 +47,13 @@ class DoctrineORMManager extends ModelManager
      */
     public function update($object)
     {
-        $this->manager->save($object);
+        try {
+            $this->manager->save($object);
+        } catch (DBALException $e) {
+            throw new ModelManagerException('', 0, $e);
+        } catch (\PDOException $e) {
+            throw new ModelManagerException('', 0, $e);
+        }
     }
 
     /**
@@ -48,7 +61,13 @@ class DoctrineORMManager extends ModelManager
      */
     public function delete($object)
     {
-        $this->manager->delete($object);
+        try {
+            $this->manager->delete($object);
+        } catch (DBALException $e) {
+            throw new ModelManagerException('', 0, $e);
+        } catch (\PDOException $e) {
+            throw new ModelManagerException('', 0, $e);
+        }
     }
 
     /**
@@ -65,6 +84,8 @@ class DoctrineORMManager extends ModelManager
             foreach ($queryProxy->getQuery()->iterate() as $pos => $object) {
                 $this->delete($object[0]);
             }
+        } catch (DBALException $e) {
+            throw new ModelManagerException('', 0, $e);
         } catch (\PDOException $e) {
             throw new ModelManagerException('', 0, $e);
         }
