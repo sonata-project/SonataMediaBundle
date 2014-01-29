@@ -44,6 +44,7 @@ class Configuration implements ConfigurationInterface
         $this->addModelSection($node);
         $this->addBuzzSection($node);
         $this->addResizerSection($node);
+        $this->addCkeditorSection($node);
 
         return $treeBuilder;
     }
@@ -443,6 +444,30 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('mode')->defaultValue('inset')->end()
                             ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * Adds CKEditor configuration section to root node configuration
+     *
+     * @param ArrayNodeDefinition $node
+     */
+    private function addCkeditorSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('ckeditor')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('templates')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                            ->scalarNode('browser')->defaultValue('SonataMediaBundle:Ckeditor:browser.html.twig')->cannotBeEmpty()->end()
+                            ->scalarNode('upload')->defaultValue('SonataMediaBundle:Ckeditor:upload.html.twig')->cannotBeEmpty()->end()
                         ->end()
                     ->end()
                 ->end()
