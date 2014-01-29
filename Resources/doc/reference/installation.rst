@@ -138,6 +138,19 @@ Also, you can determine the resizer to use; the default value is
     only the width. But if you specify the height the resizer crop the image in
     the lower size.
 
+If you want to use medias browsing/uploading using CKEditor (via ``SonataFormatterBundle``), you can also define
+some custom browsing and uploading templates with the following optional configuration:
+
+.. code-block:: yaml
+
+  # app/config/config.yml
+
+  sonata_media:
+      ckeditor:
+          templates:
+              browser: 'SonataMediaBundle:Ckeditor:browser.html.twig'
+              upload: 'SonataMediaBundle:Ckeditor:upload.html.twig'
+
 At this point, the bundle is not yet ready. You need to generate the correct
 entities for the media::
 

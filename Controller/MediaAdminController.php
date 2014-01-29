@@ -115,4 +115,91 @@ class MediaAdminController extends Controller
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ));
     }
+
+    /**
+     * Returns the response object associated with the browser action
+     *
+     * @return Response
+     *
+     * @throws AccessDeniedException
+     */
+    public function ckeditorBrowserAction()
+    {
+        if (false === $this->admin->isGranted('LIST')) {
+            throw new AccessDeniedException();
+        }
+
+        $datagrid = $this->admin->getDatagrid();
+        $datagrid->setValue('context', null, $this->admin->getPersistentParameter('context'));
+        $datagrid->setValue('providerName', null, $this->admin->getPersistentParameter('provider'));
+
+        $formats = array();
+
+        foreach ($datagrid->getResults() as $media) {
+            $formats[$media->getId()] = $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext());
+        }
+
+        $formView = $datagrid->getForm()->createView();
+
+        $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
+
+        return $this->render($this->getTemplate('browser'), array(
+            'action' => 'browser',
+            'form' => $formView,
+            'datagrid' => $datagrid,
+            'formats' => $formats,
+            'base_template' => $this->getTemplate('layout')
+        ));
+    }
+
+    /**
+     * Returns the response object associated with the upload action
+     *
+     * @return Response
+     *
+     * @throws NotFoundHttpException
+     */
+    public function ckeditorUploadAction()
+    {
+        $mediaManager = $this->get('sonata.media.manager.media');
+
+        $request = $this->getRequest();
+        $provider = $request->get('provider');
+        $file = $request->files->get('upload');
+
+        if (!$request->isMethod('POST') || !$provider || null === $file) {
+            throw $this->createNotFoundException();
+        }
+
+        $context = $request->get('context', $this->get('sonata.media.pool')->getDefaultContext());
+
+        $media = $mediaManager->create();
+        $media->setBinaryContent($file);
+
+        $mediaManager->save($media, $context, $provider);
+        $this->admin->createObjectSecurity($media);
+
+        return $this->render($this->getTemplate('upload'), array(
+            'action' => 'list',
+            'object' => $media
+        ));
+    }
+
+    /**
+     * Returns a template
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    private function getTemplate($name)
+    {
+        $templates = $this->container->getParameter('sonata.media.ckeditor.configuration.templates');
+
+        if (isset($templates[$name])) {
+            return $templates[$name];
+        }
+
+        return null;
+    }
 }

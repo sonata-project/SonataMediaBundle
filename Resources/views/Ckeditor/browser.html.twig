@@ -1,0 +1,238 @@
+{% extends base_template %}
+
+{% set ckParameters = {'CKEditor': app.request.get('CKEditor'), 'CKEditorFuncNum': app.request.get('CKEditorFuncNum')} %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(function () {
+            $(".select").click(function (e) {
+                e.preventDefault();
+                window.opener.CKEDITOR.tools.callFunction({{ app.request.get('CKEditorFuncNum')|escape('js') }}, $(this).attr("href"));
+                window.close();
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block preview %}
+
+    <ul class="nav nav-pills">
+        <li><a><strong>{{ "label.select_context"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
+        {% for name, context in media_pool.contexts %}
+            {% if context.providers|length == 0 %}
+                {% set urlParams = {'context' : name}|merge(ckParameters) %}
+            {% else %}
+                {% set urlParams = {'context' : name, 'provider' : context.providers[0]}|merge(ckParameters) %}
+            {% endif %}
+
+            {% if name == persistent_parameters.context %}
+                <li class="active"><a href="{{ admin.generateUrl('ckeditor_browser', urlParams) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
+            {% else %}
+                <li><a href="{{ admin.generateUrl('ckeditor_browser', urlParams) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% set providers = media_pool.getProviderNamesByContext(persistent_parameters.context) %}
+
+        {% if providers|length > 1 %}
+            <li><a><strong>{{ "label.select_provider"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
+
+            {% if not persistent_parameters.provider %}
+                <li class="active"><a href="{{ admin.generateUrl('ckeditor_browser', {'context': persistent_parameters.context, 'provider': null}|merge(ckParameters)) }}">{{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}</a></li>
+            {% else %}
+                <li><a href="{{ admin.generateUrl('ckeditor_browser', {'context': persistent_parameters.context, 'provider': null}|merge(ckParameters)) }}">{{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}</a></li>
+            {% endif %}
+
+            {% for provider_name in providers %}
+                {% if persistent_parameters.provider == provider_name%}
+                    <li class="active"><a href="{{ admin.generateUrl('ckeditor_browser', {'context': persistent_parameters.context, 'provider': provider_name}|merge(ckParameters)) }}">{{ provider_name|trans({}, 'SonataMediaBundle') }}</a></li>
+                {% else %}
+                    <li><a href="{{ admin.generateUrl('ckeditor_browser', {'context': persistent_parameters.context, 'provider': provider_name}|merge(ckParameters)) }}">{{ provider_name|trans({}, 'SonataMediaBundle') }}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+{% endblock %}
+
+{% block list_table %}
+    {% set batchactions = admin.batchactions %}
+    {% if admin.datagrid.results|length > 0 %}
+        <table class="table table-bordered table-striped">
+            {% block table_header %}
+                <thead>
+                <tr class="sonata-ba-list-field-header">
+                    {% for field_description in admin.list.elements %}
+                        {% if field_description.getOption('code') == '_batch' or field_description.name == '_action' %}
+                            {# Disable batch and actions #}
+                        {% else %}
+                            {% set sortable = false %}
+                            {% if field_description.options.sortable is defined and field_description.options.sortable%}
+                                {% set sortable             = true %}
+                                {% set current              = admin.datagrid.values._sort_by == field_description %}
+                                {% set sort_parameters      = admin.modelmanager.sortparameters(field_description, admin.datagrid)|merge(ckParameters) %}
+                                {% set sort_active_class    = current ? 'sonata-ba-list-field-order-active' : '' %}
+                                {% set sort_by              = current ? admin.datagrid.values._sort_order : field_description.options._sort_order %}
+                            {% endif %}
+
+                            {% spaceless %}
+                                <th class="sonata-ba-list-field-header-{{ field_description.type}} {% if sortable %} sonata-ba-list-field-header-order-{{ sort_by|lower }} {{ sort_active_class }}{% endif %}">
+                                    {% if sortable %}<a href="{{ admin.generateUrl('ckeditor_browser', sort_parameters) }}">{% endif %}
+                                        {{ admin.trans(field_description.label) }}
+                                        {% if sortable %}</a>{% endif %}
+                                </th>
+                            {% endspaceless %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                </thead>
+            {% endblock %}
+
+            {% block table_body %}
+                <tbody>
+                {% for object in admin.datagrid.results %}
+                    <tr>
+                        {% for field_description in admin.list.elements %}
+                            {% if field_description.getOption('code') == '_batch' or field_description.name == '_action' %}
+                                {# Disable batch and actions #}
+                            {% elseif field_description.name == 'custom' %}
+                                <td>
+                                    <div>
+                                        <a href="{% path object, 'reference' %}" class="select" style="float: left; margin-right: 6px;">{% thumbnail object, 'admin' with {'width': 75, 'height': 60} %}</a>
+
+                                        <strong><a href="{% path object, 'reference' %}" class="select">{{ object.name }}</a></strong> <br />
+                                        {{ object.providerName|trans({}, 'SonataMediaBundle') }}{% if object.width %}: {{ object.width }}{% if object.height %}x{{ object.height }}{% endif %}px{% endif %}
+
+                                        {% if formats[object.id]|length > 0 %}
+                                            - {{ 'title.formats'|trans({}, 'SonataMediaBundle') }}:
+                                            {% for name, format in formats[object.id] %}
+                                                <a href="{% path object, name %}" class="select">{{ name }}</a> {% if format.width %}({{ format.width }}{% if format.height %}x{{ format.height }}{% endif %}px){% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        <br />
+                                    </div>
+                                </td>
+                            {% else %}
+                                {{ object|render_list_element(field_description) }}
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% endblock %}
+
+            {% block table_footer %}
+                <tr>
+                    <th colspan="{{ admin.list.elements|length - 2 }}">
+                        <div class="form-inline">
+                            <div class="pull-right">
+                                {% block pager_results %}
+                                    {% block num_pages %}
+                                        {{ admin.datagrid.pager.page }} / {{ admin.datagrid.pager.lastpage }}
+                                        &nbsp;-&nbsp;
+                                    {% endblock %}
+
+                                    {% block num_results %}
+                                        {% transchoice admin.datagrid.pager.nbresults with {'%count%': admin.datagrid.pager.nbresults} from 'SonataAdminBundle' %}list_results_count{% endtranschoice %}
+                                        &nbsp;-&nbsp;
+                                    {% endblock %}
+
+                                    {% block max_per_page %}
+                                        <label class="control-label" for="{{ admin.uniqid }}_per_page">{% trans from 'SonataAdminBundle' %}label_per_page{% endtrans %}</label>
+                                        <select class="per-page small" id="{{ admin.uniqid }}_per_page" style="width: auto; height: auto">
+                                            {% for per_page in admin.getperpageoptions %}
+                                                <option {% if per_page == admin.datagrid.pager.maxperpage %}selected="selected"{% endif %} value="{{ admin.generateUrl('ckeditor_browser', {'filter': admin.datagrid.values|merge({'_per_page': per_page})}|merge(ckParameters)) }}">
+                                                    {{ per_page }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endblock %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+
+                {% block pager_links %}
+                    {% if admin.datagrid.pager.haveToPaginate() %}
+                        <tr>
+                            <td colspan="{{ admin.list.elements|length }}">
+                                <div class="pagination pagination-centered">
+                                    <ul>
+                                        {% if admin.datagrid.pager.page > 2  %}
+                                            <li><a href="{{ admin.generateUrl('ckeditor_browser', admin.modelmanager.paginationparameters(admin.datagrid, 1)|merge(ckParameters)) }}" title="{{ 'link_first_pager'|trans({}, 'SonataAdminBundle') }}">&laquo;</a></li>
+                                        {% endif %}
+
+                                        {% if admin.datagrid.pager.page != admin.datagrid.pager.previouspage %}
+                                            <li><a href="{{ admin.generateUrl('ckeditor_browser', admin.modelmanager.paginationparameters(admin.datagrid, admin.datagrid.pager.previouspage)|merge(ckParameters)) }}" title="{{ 'link_previous_pager'|trans({}, 'SonataAdminBundle') }}">&lsaquo;</a></li>
+                                        {% endif %}
+
+                                        {# Set the number of pages to display in the pager #}
+                                        {% for page in admin.datagrid.pager.getLinks() %}
+                                            {% if page == admin.datagrid.pager.page %}
+                                                <li class="active"><a href="{{ admin.generateUrl('ckeditor_browser', admin.modelmanager.paginationparameters(admin.datagrid, page)|merge(ckParameters)) }}">{{ page }}</a></li>
+                                            {% else %}
+                                                <li><a href="{{ admin.generateUrl('ckeditor_browser', admin.modelmanager.paginationparameters(admin.datagrid, page)|merge(ckParameters)) }}">{{ page }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if admin.datagrid.pager.page != admin.datagrid.pager.nextpage %}
+                                            <li><a href="{{ admin.generateUrl('ckeditor_browser', admin.modelmanager.paginationparameters(admin.datagrid, admin.datagrid.pager.nextpage)|merge(ckParameters)) }}" title="{{ 'link_next_pager'|trans({}, 'SonataAdminBundle') }}">&rsaquo;</a></li>
+                                        {% endif %}
+
+                                        {% if admin.datagrid.pager.page != admin.datagrid.pager.lastpage and admin.datagrid.pager.lastpage != admin.datagrid.pager.nextpage %}
+                                            <li><a href="{{ admin.generateUrl('ckeditor_browser', admin.modelmanager.paginationparameters(admin.datagrid, admin.datagrid.pager.lastpage)|merge(ckParameters)) }}" title="{{ 'link_last_pager'|trans({}, 'SonataAdminBundle') }}">&raquo;</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                    {% endif %}
+                {% endblock %}
+
+            {% endblock %}
+        </table>
+    {% else %}
+        <p class="notice">
+            {{ 'no_result'|trans({}, 'SonataAdminBundle') }}
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block list_filters %}
+    {% if admin.datagrid.filters %}
+        <form class="sonata-filter-form {{ admin.isChild and 1 == admin.datagrid.filters|length ? 'hide' : '' }}" action="{{ admin.generateUrl('ckeditor_browser') }}" method="GET">
+            <fieldset class="filter_legend">
+                <legend class="filter_legend {{ admin.datagrid.hasActiveFilters ? 'active' : 'inactive' }}">{{ 'label_filters'|trans({}, 'SonataAdminBundle') }}</legend>
+
+                <div class="filter_container {{ admin.datagrid.hasActiveFilters ? 'active' : 'inactive' }}">
+                    <div>
+                        {% for filter in admin.datagrid.filters %}
+                            <div class="clearfix">
+                                <label for="{{ form.children[filter.formName].children['value'].vars.id }}">{{ admin.trans(filter.label) }}</label>
+                                {{ form_widget(form.children[filter.formName].children['type'], {'attr': {'class': 'span8 sonata-filter-option'}}) }}
+                                {{ form_widget(form.children[filter.formName].children['value'], {'attr': {'class': 'span8'}}) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <input type="hidden" name="filter[_page]" id="filter__page" value="1" />
+
+                    {% set foo = form.children['_page'].setRendered() %}
+                    {{ form_rest(form) }}
+
+                    <input type="submit" class="btn btn-primary" value="{{ 'btn_filter'|trans({}, 'SonataAdminBundle') }}" />
+
+                    <a class="btn" href="{{ admin.generateUrl('ckeditor_browser', {filters: 'reset'}|merge(ckParameters)) }}">{{ 'link_reset_filter'|trans({}, 'SonataAdminBundle') }}</a>
+                </div>
+
+                {% for paramKey, paramValue in admin.persistentParameters|merge(ckParameters) %}
+                    <input type="hidden" name="{{ paramKey }}" value="{{ paramValue }}" />
+                {% endfor %}
+            </fieldset>
+        </form>
+    {% endif %}
+{% endblock %}

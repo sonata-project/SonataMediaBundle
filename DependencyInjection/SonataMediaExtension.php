@@ -51,6 +51,7 @@ class SonataMediaExtension extends Extension
         $loader->load('form.xml');
         $loader->load('gaufrette.xml');
         $loader->load('validators.xml');
+        $loader->load('ckeditor.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -116,6 +117,8 @@ class SonataMediaExtension extends Extension
 
         $container->setParameter('sonata.media.resizer.simple.adapter.mode', $config['resizer']['simple']['mode']);
         $container->setParameter('sonata.media.resizer.square.adapter.mode', $config['resizer']['square']['mode']);
+
+        $container->setParameter('sonata.media.ckeditor.configuration.templates', $config['ckeditor']['templates']);
 
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
