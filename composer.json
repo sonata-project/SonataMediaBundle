@@ -37,7 +37,8 @@
         "liip/imagine-bundle": "~0.9",
         "amazonwebservices/aws-sdk-for-php": "~1.5",
         "rackspace/php-opencloud": "~1.6",
-        "sonata-project/seo-bundle": "~1.1"
+        "sonata-project/seo-bundle": "~1.1",
+        "tilleuls/ckeditor-sonata-mediabundle": "~1.0"
     },
     "autoload": {
         "psr-0": { "Sonata\\MediaBundle": "" }

@@ -113,3 +113,36 @@ You also need to alter the ``sonata_media`` configuration to use the ``sonata.me
 
     The ``SonataMediaBundle:Media:liipImagineFilter`` is a specific controller to link the MediaBundle with LiipImagineBundle
 
+CKEditor Integration
+====================
+
+`CoopTilleulsCKEditorSonataMediaBundle <https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle>`_ allows to browse and upload files managed by SonataMedia directly from the UI of the `CKEditor <http://ckeditor.com/>`_ WYSIWYG editor.
+
+To use this feature, follow `CoopTilleulsCKEditorSonataMediaBundle installation instructions <https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle/blob/master/Resources/doc/install.md>`.
+
+Now, just create a field with ckeditor as type and your done:
+
+.. code-block:: yaml
+
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            ->add(
+                'mytext',
+                'ckeditor',
+                array(
+                'config' => array(
+                    'toolbar' => array(
+                        array(
+                            'name' => 'links',
+                            'items' => array('Link','Unlink'),
+                        ),
+                        array(
+                            'name' => 'insert',
+                            'items' => array('Image'),
+                        ),
+                    )
+                );
+            );
+    }
+
