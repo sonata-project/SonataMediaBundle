@@ -79,7 +79,10 @@ class SonataMediaExtension extends Extension
         }
 
         $loader->load(sprintf('%s.xml', $config['db_driver']));
-        $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
+
+        if (isset($bundles['SonataAdminBundle'])) {
+            $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
+        }
 
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
