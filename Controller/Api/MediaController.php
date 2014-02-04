@@ -57,6 +57,41 @@ class MediaController extends FOSRestController
     }
 
     /**
+     * Returns media urls for each format
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="media id"}
+     *  },
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when media is not found"
+     *  }
+     * )
+     *
+     *
+     * @param $id
+     *
+     * @return array
+     */
+    public function getMediaFormatsAction($id)
+    {
+        $media = $this->getMedia($id);
+
+        $formats = array('reference');
+        $formats = array_merge($formats, array_keys($this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext())));
+
+        $properties = array();
+        foreach ($formats as $format) {
+            $properties[$format]['protected_url'] = $this->get('router')->generate('sonata_media_download', array('id' => $id));
+            $properties[$format]['properties'] = $this->get('sonata.media.pool')->getProvider($media->getProviderName())->getHelperProperties($media, $format);
+        }
+
+        return $properties;
+    }
+
+    /**
      * Retrieves media with id $id or throws an exception if not found
      *
      * @param $id

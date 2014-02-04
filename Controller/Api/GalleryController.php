@@ -18,6 +18,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\MediaBundle\Model\Gallery;
+use Sonata\MediaBundle\Model\GalleryHasMedia;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -122,6 +123,31 @@ class GalleryController extends FOSRestController
         }
 
         return $media;
+    }
+
+    /**
+     * Retrieves the galleryhasmedias of specified gallery
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
+     *  },
+     *  output={"class"="Sonata\MediaBundle\Model\GalleryHasMedia", "groups"="sonata_api_read"},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when gallery is not found"
+     *  }
+     * )
+     *
+     * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
+     *
+     * @param $id
+     *
+     * @return GalleryHasMedia[]
+     */
+    public function getGalleryGalleryhasmediasAction($id)
+    {
+        return $this->getGallery($id)->getGalleryHasMedias();
     }
 
     /**
