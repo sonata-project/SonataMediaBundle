@@ -18,6 +18,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -60,7 +61,6 @@ class MediaController extends FOSRestController
      * Returns media urls for each format
      *
      * @ApiDoc(
-     *  resource=true,
      *  requirements={
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="media id"}
      *  },
@@ -69,7 +69,6 @@ class MediaController extends FOSRestController
      *      404="Returned when media is not found"
      *  }
      * )
-     *
      *
      * @param $id
      *
@@ -89,6 +88,38 @@ class MediaController extends FOSRestController
         }
 
         return $properties;
+    }
+
+    /**
+     * Returns media urls for each format
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="media id"},
+     *      {"name"="format", "dataType"="string", "description"="media format"}
+     *  },
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when media is not found"
+     *  }
+     * )
+     *
+     * @param integer $id     The media id
+     * @param string  $format The format
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getMediaBinaryAction($id, $format)
+    {
+        $media = $this->getMedia($id);
+
+        $response = $this->get('sonata.media.pool')->getProvider($media->getProviderName())->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
+
+        if ($response instanceof BinaryFileResponse) {
+            $response->prepare($this->get('request'));
+        }
+
+        return $response;
     }
 
     /**
