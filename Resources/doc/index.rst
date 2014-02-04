@@ -36,6 +36,7 @@ Reference Guide
    reference/command_line
    reference/advanced_configuration
    reference/extra
+   reference/api
 
 Available services
 ------------------

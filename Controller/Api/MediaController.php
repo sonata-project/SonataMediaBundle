@@ -15,13 +15,10 @@ use Sonata\MediaBundle\Model\Media;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 /**
@@ -74,10 +71,6 @@ class MediaController extends FOSRestController
 
         if (null === $media) {
             throw new NotFoundHttpException(sprintf('Media (%d) was not found', $id));
-        }
-
-        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())) {
-            throw new AccessDeniedException();
         }
 
         return $media;
