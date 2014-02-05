@@ -45,22 +45,15 @@ class MediaController
     protected $mediaPool;
 
     /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
      * Constructor
      *
      * @param MediaManagerInterface $mediaManager
      * @param Pool                  $mediaPool
-     * @param RouterInterface       $router
      */
-    public function __construct(MediaManagerInterface $mediaManager, Pool $mediaPool, RouterInterface $router)
+    public function __construct(MediaManagerInterface $mediaManager, Pool $mediaPool)
     {
         $this->mediaManager = $mediaManager;
         $this->mediaPool    = $mediaPool;
-        $this->router       = $router;
     }
 
     /**
@@ -113,10 +106,12 @@ class MediaController
         $formats = array('reference');
         $formats = array_merge($formats, array_keys($this->mediaPool->getFormatNamesByContext($media->getContext())));
 
+        $provider = $this->mediaPool->getProvider($media->getProviderName());
+
         $properties = array();
         foreach ($formats as $format) {
-            $properties[$format]['protected_url'] = $this->router->generate('sonata_media_download', array('id' => $id));
-            $properties[$format]['properties'] = $this->mediaPool->getProvider($media->getProviderName())->getHelperProperties($media, $format);
+            $properties[$format]['url']        = $provider->generatePublicUrl($media, $format);
+            $properties[$format]['properties'] = $provider->getHelperProperties($media, $format);
         }
 
         return $properties;

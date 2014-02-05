@@ -63,16 +63,16 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $expected = array(
             'reference' => array(
-                'protected_url' => null,
                 'properties' => array(
                     'foo' => "bar"
                 ),
+                'url' => null,
             ),
             'format_name1' =>array(
-                'protected_url' => null,
                 'properties' => array(
                     'foo' => "bar"
                 ),
+                'url' => null,
             ),
         );
         $this->assertEquals($expected, $controller->getMediaFormatsAction(1));
@@ -98,7 +98,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($binaryResponse, $controller->getMediaBinaryAction(1, 'format', new Request()));
     }
 
-    protected function createMediaController($manager = null, $pool = null, $router = null)
+    protected function createMediaController($manager = null, $pool = null)
     {
         if (null === $manager) {
             $manager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
@@ -106,10 +106,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
         if (null === $pool) {
             $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
         }
-        if (null === $router) {
-            $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        }
 
-        return new MediaController($manager, $pool, $router);
+        return new MediaController($manager, $pool);
     }
 }
