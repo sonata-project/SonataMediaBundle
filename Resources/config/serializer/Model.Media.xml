@@ -16,7 +16,7 @@
 
         <property name="width"       type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
         <property name="height"      type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
-        <property name="length"      type="decimal" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="length"      type="double" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
         <property name="contentType" type="string"  expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
         <property name="size"        type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
 
