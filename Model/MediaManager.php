@@ -36,7 +36,7 @@ abstract class MediaManager implements MediaManagerInterface
     }
 
     /**
-     * Creates an empty media instance
+     * {@inheritdoc}
      *
      * @return Media
      */
@@ -45,6 +45,14 @@ abstract class MediaManager implements MediaManagerInterface
         $class = $this->getClass();
 
         return new $class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
     }
 
     /**
@@ -58,11 +66,19 @@ abstract class MediaManager implements MediaManagerInterface
     }
 
     /**
-     * Finds one media by the given criteria
+     * {@inheritdoc}
      *
-     * @param array $criteria
+     * @return MediaInterface[]
+     */
+    public function findAll()
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
      *
-     * @return Media
+     * @return MediaInterface|null
      */
     public function findOneBy(array $criteria, array $orderBy = null)
     {
@@ -70,11 +86,9 @@ abstract class MediaManager implements MediaManagerInterface
     }
 
     /**
-     * Finds one media by the given criteria
+     * {@inheritdoc}
      *
-     * @param array $criteria
-     *
-     * @return Media
+     * @return MediaInterface[]
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
@@ -82,10 +96,17 @@ abstract class MediaManager implements MediaManagerInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getClass()
     {
         return $this->class;
     }
+
+    /**
+     * Return the related Entity Repository.
+     *
+     * @return \Doctrine\Common\Persistence\ObjectRepository
+     */
+    abstract protected function getRepository();
 }

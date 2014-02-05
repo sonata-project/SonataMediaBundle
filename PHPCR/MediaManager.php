@@ -17,105 +17,106 @@ use Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager;
 
 class MediaManager extends AbstractMediaManager
 {
-    protected $modelManager;
-    protected $repository;
-    protected $class;
+    /**
+     * @var \Doctrine\ODM\PHPCR\DocumentManager
+     */
+    protected $dm;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool               $pool
-     * @param \Sonata\AdminBundle\Model\ModelManagerInterface $modelManager
-     * @param $class
+     * @param Pool         $pool
+     * @param ModelManager $modelManager
+     * @param string       $class
      */
     public function __construct(Pool $pool, ModelManager $modelManager, $class)
     {
-        $this->modelManager = $modelManager;
+        $this->dm = $modelManager->getDocumentManager();
 
         parent::__construct($pool, $class);
     }
 
     /**
-     * Filter criteria for an identifier, phpcr-odm uses absolute paths and needs an identifier starting with a forward slash
+     * {@inheritdoc}
      *
-     * @param  array $criteria
-     * @return array
+     * @throws \InvalidArgumentException When entity is an invalid object
      */
-    protected function filterCriteria(array $criteria)
+    public function save($entity, $andFlush = true)
     {
-        $identifier = $this->modelManager->getModelIdentifier($this->class);
+        /*
+         * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
+         */
 
-        if (isset($criteria[$identifier])) {
-            $criteria[$identifier] = $this->modelManager->getBackendId($criteria[$identifier]);
+        if (!$entity instanceof MediaInterface) {
+            throw new \InvalidArgumentException(sprintf(
+                'Entity remove must be instance of Sonata\\MediaBundle\\Model\\MediaInterface, %s given',
+                is_object($entity)? get_class($entity) : gettype($entity)
+            ));
         }
 
-        return $criteria;
+        // BC compatibility for $context parameter
+        if ($andFlush && is_string($andFlush)) {
+            $entity->setContext($andFlush);
+        }
+
+        // BC compatibility for $providerName parameter
+        if (3 == func_num_args()) {
+            $entity->setProviderName(func_get_arg(2));
+        }
+
+        $this->dm->persist($entity);
+
+        if ($andFlush && is_bool($andFlush)) {
+            $this->dm->flush();
+        }
     }
 
     /**
-     * Finds one media by the given criteria
+     * {@inheritdoc}
      *
-     * @param array $criteria
-     *
-     * @return Media
+     * @throws \InvalidArgumentException When entity is an invalid object
      */
-    public function findOneBy(array $criteria)
+    public function delete($entity, $andFlush = true)
     {
-        $identifier = $this->modelManager->getModelIdentifier($this->class);
-
-        if (count($criteria) === 1 && isset($criteria[$identifier])) {
-            return $this->modelManager->find($this->class, $criteria[$identifier]);
+        if (!$entity instanceof MediaInterface) {
+            throw new \InvalidArgumentException(sprintf(
+                'Entity remove must be instance of Sonata\\MediaBundle\\Model\\MediaInterface, %s given',
+                is_object($entity)? get_class($entity) : gettype($entity)
+            ));
         }
 
-        return $this->modelManager->findOneBy($this->class, $this->filterCriteria($criteria));
+        $this->dm->remove($entity);
+
+        if ($andFlush && is_bool($andFlush)) {
+            $this->dm->flush();
+        }
     }
 
     /**
-     * Finds one media by the given criteria
+     * {@inheritdoc}
      *
-     * @param array $criteria
-     *
-     * @return Media
+     * @throws \LogicException Each call
      */
-    public function findBy(array $criteria)
+    public function getConnection()
     {
-        $identifier = $this->modelManager->getModelIdentifier($this->class);
-
-        if (count($criteria) === 1 && isset($criteria[$identifier])) {
-            return $this->modelManager->find($this->class, $criteria[$identifier]);
-        }
-
-        return $this->modelManager->findBy($this->class, $this->filterCriteria($criteria));
+        throw new \LogicException('PHPCR does not use a database connection.');
     }
 
     /**
-     * Updates a media
+     * {@inheritdoc}
      *
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  string                                   $context
-     * @param  string                                   $providerName
-     * @return void
+     * @throws \LogicException Each call
      */
-    public function save(MediaInterface $media, $context = null, $providerName = null)
+    public function getTableName()
     {
-        if ($context) {
-            $media->setContext($context);
-        }
-
-        if ($providerName) {
-            $media->setProviderName($providerName);
-        }
-
-        // just in case the pool alter the media
-        $this->modelManager->update($media);
+        throw new \LogicException('PHPCR does not use a reference name for a list of data.');
     }
 
     /**
-     * Deletes a media
+     * {@inheritdoc}
      *
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * @return \Doctrine\ODM\PHPCR\DocumentRepository
      */
-    public function delete(MediaInterface $media)
+    protected function getRepository()
     {
-        $this->modelManager->delete($media);
+        return $this->dm->getRepository($this->class);
     }
 }
