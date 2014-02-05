@@ -64,7 +64,7 @@ class MediaManager extends AbstractMediaManager
 
         $this->dm->persist($entity);
 
-        if ($andFlush && is_bool($andFlush)) {
+        if ($andFlush && is_bool($andFlush) || 3 == func_num_args()) {
             $this->dm->flush();
         }
     }

@@ -30,7 +30,9 @@
         "sonata-project/doctrine-orm-admin-bundle": "~2.2@dev,>=2.2.1",
         "sonata-project/formatter-bundle": "~2.2@dev",
         "amazonwebservices/aws-sdk-for-php": "~1.5",
-        "sonata-project/seo-bundle": "~1.1"
+        "sonata-project/seo-bundle": "~1.1",
+        "doctrine/mongodb-odm": "~1.0@dev",
+        "sonata-project/doctrine-phpcr-admin-bundle": "~1.0"
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "~2.2,>=2.2.1",
