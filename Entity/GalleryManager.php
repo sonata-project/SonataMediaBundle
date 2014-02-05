@@ -12,8 +12,9 @@ namespace Sonata\MediaBundle\Entity;
 
 use Sonata\CoreBundle\Entity\DoctrineBaseManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
-class GalleryManager extends DoctrineBaseManager
+class GalleryManager extends DoctrineBaseManager implements GalleryManagerInterface
 {
     /**
      * BC Compatibility.

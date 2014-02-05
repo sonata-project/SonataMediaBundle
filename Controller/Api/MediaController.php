@@ -13,13 +13,16 @@ namespace Sonata\MediaBundle\Controller\Api;
 
 use Sonata\MediaBundle\Model\Media;
 
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use Sonata\MediaBundle\Model\MediaManagerInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\RouterInterface;
 
 
 /**
@@ -29,8 +32,37 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *
  * @author Hugo Briand <briand@ekino.com>
  */
-class MediaController extends FOSRestController
+class MediaController
 {
+    /**
+     * @var MediaManagerInterface
+     */
+    protected $mediaManager;
+
+    /**
+     * @var Pool
+     */
+    protected $mediaPool;
+
+    /**
+     * @var RouterInterface
+     */
+    protected $router;
+
+    /**
+     * Constructor
+     *
+     * @param MediaManagerInterface $mediaManager
+     * @param Pool                  $mediaPool
+     * @param RouterInterface       $router
+     */
+    public function __construct(MediaManagerInterface $mediaManager, Pool $mediaPool, RouterInterface $router)
+    {
+        $this->mediaManager = $mediaManager;
+        $this->mediaPool    = $mediaPool;
+        $this->router       = $router;
+    }
+
     /**
      * Retrieves a specific media
      *
@@ -79,12 +111,12 @@ class MediaController extends FOSRestController
         $media = $this->getMedia($id);
 
         $formats = array('reference');
-        $formats = array_merge($formats, array_keys($this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext())));
+        $formats = array_merge($formats, array_keys($this->mediaPool->getFormatNamesByContext($media->getContext())));
 
         $properties = array();
         foreach ($formats as $format) {
-            $properties[$format]['protected_url'] = $this->get('router')->generate('sonata_media_download', array('id' => $id));
-            $properties[$format]['properties'] = $this->get('sonata.media.pool')->getProvider($media->getProviderName())->getHelperProperties($media, $format);
+            $properties[$format]['protected_url'] = $this->router->generate('sonata_media_download', array('id' => $id));
+            $properties[$format]['properties'] = $this->mediaPool->getProvider($media->getProviderName())->getHelperProperties($media, $format);
         }
 
         return $properties;
@@ -106,17 +138,18 @@ class MediaController extends FOSRestController
      *
      * @param integer $id     The media id
      * @param string  $format The format
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getMediaBinaryAction($id, $format)
+    public function getMediaBinaryAction($id, $format, Request $request)
     {
         $media = $this->getMedia($id);
 
-        $response = $this->get('sonata.media.pool')->getProvider($media->getProviderName())->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
+        $response = $this->mediaPool->getProvider($media->getProviderName())->getDownloadResponse($media, $format, $this->mediaPool->getDownloadMode($media));
 
         if ($response instanceof BinaryFileResponse) {
-            $response->prepare($this->get('request'));
+            $response->prepare($request);
         }
 
         return $response;
@@ -133,7 +166,7 @@ class MediaController extends FOSRestController
      */
     protected function getMedia($id)
     {
-        $media = $this->get('sonata.media.manager.media')->findOneBy(array('id' => $id));
+        $media = $this->mediaManager->findOneBy(array('id' => $id));
 
         if (null === $media) {
             throw new NotFoundHttpException(sprintf('Media (%d) was not found', $id));

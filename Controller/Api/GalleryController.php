@@ -11,7 +11,6 @@
 
 namespace Sonata\MediaBundle\Controller\Api;
 
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\View;
 
@@ -19,6 +18,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -28,8 +28,23 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *
  * @author Hugo Briand <briand@ekino.com>
  */
-class GalleryController extends FOSRestController
+class GalleryController
 {
+    /**
+     * @var GalleryManagerInterface
+     */
+    protected $galleryManager;
+
+    /**
+     * Constructor
+     *
+     * @param GalleryManagerInterface $galleryManager
+     */
+    public function __construct(GalleryManagerInterface $galleryManager)
+    {
+        $this->galleryManager = $galleryManager;
+    }
+
     /**
      * Retrieves the list of galleries (paginated)
      *
@@ -170,10 +185,10 @@ class GalleryController extends FOSRestController
     }
 
     /**
-     * @return \Sonata\MediaBundle\Entity\GalleryManager
+     * @return GalleryManagerInterface
      */
     protected function getGalleryManager()
     {
-        return $this->get('sonata.media.manager.gallery');
+        return $this->galleryManager;
     }
 }

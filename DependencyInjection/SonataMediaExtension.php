@@ -54,6 +54,10 @@ class SonataMediaExtension extends Extension
 
         $bundles = $container->getParameter('kernel.bundles');
 
+        if (isset($bundles['FOSRestBundle'])) {
+            $loader->load('api_controllers.xml');
+        }
+
         if (isset($bundles['SonataNotificationBundle'])) {
             $loader->load('consumer.xml');
         }
