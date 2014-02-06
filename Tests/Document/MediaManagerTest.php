@@ -4,20 +4,25 @@ namespace Sonata\MediaBundle\Tests\Document;
 
 use Sonata\MediaBundle\Document\MediaManager;
 
+/**
+ * @group document
+ * @group mongo
+ */
 class MediaManagerTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var MediaManager */
+    private $manager;
+
     public function testSave()
     {
-        $manager = new MediaManager($this->createPoolMock(), $this->createDocumentManagerMock(), null);
-
         $media = new Media();
-        $manager->save($media, 'default', 'media.test');
+        $this->manager->save($media, 'default', 'media.test');
 
         $this->assertEquals('default', $media->getContext());
         $this->assertEquals('media.test', $media->getProviderName());
 
         $media = new Media();
-        $manager->save($media, true);
+        $this->manager->save($media, true);
 
         $this->assertNull($media->getContext());
         $this->assertNull($media->getProviderName());
@@ -28,9 +33,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveException()
     {
-        $manager = new MediaManager($this->createPoolMock(), $this->createDocumentManagerMock(), null);
-
-        $manager->save(null);
+        $this->manager->save(null);
     }
 
     /**
@@ -38,9 +41,16 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteException()
     {
-        $manager = new MediaManager($this->createPoolMock(), $this->createDocumentManagerMock(), null);
+        $this->manager->delete(null);
+    }
 
-        $manager->delete(null);
+    protected function setUp()
+    {
+        if (!class_exists('Doctrine\\ODM\MongoDB\\DocumentManager', true)) {
+            $this->markTestSkipped('Sonata\\MediaBundle\\Document\\MediaManager requires "Doctrine\\ODM\\MongoDB" lib.');
+        }
+
+        $this->manager = new MediaManager($this->createPoolMock(), $this->createDocumentManagerMock(), null);
     }
 
     /**
