@@ -10,65 +10,117 @@
  */
 namespace Sonata\MediaBundle\Document;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\DocumentRepository;
+
 use Sonata\MediaBundle\Model\MediaManager as AbstractMediaManager;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Sonata\MediaBundle\Provider\Pool;
 
 class MediaManager extends AbstractMediaManager
 {
+    /**
+     * @var DocumentManager
+     */
     protected $dm;
-    protected $repository;
-    protected $class;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool     $pool
-     * @param \Doctrine\ODM\MongoDB\DocumentManager $dm
-     * @param string                                $class
+     * Constructor.
+     *
+     * @param Pool            $pool
+     * @param DocumentManager $dm
+     * @param string          $class
      */
     public function __construct(Pool $pool, DocumentManager $dm, $class)
     {
-        $this->dm = $dm;
-
         parent::__construct($pool, $class);
+
+        $this->dm = $dm;
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
+     *
+     * @throws \InvalidArgumentException When entity is an invalid object
+     */
+    public function save($entity, $andFlush = true)
+    {
+        /*
+         * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
+         */
+
+        if (!$entity instanceof MediaInterface) {
+            throw new \InvalidArgumentException(sprintf(
+                'Entity remove must be instance of Sonata\\MediaBundle\\Model\\MediaInterface, %s given',
+                is_object($entity)? get_class($entity) : gettype($entity)
+            ));
+        }
+
+        // BC compatibility for $context parameter
+        if ($andFlush && is_string($andFlush)) {
+            $entity->setContext($andFlush);
+        }
+
+        // BC compatibility for $providerName parameter
+        if (3 == func_num_args()) {
+            $entity->setProviderName(func_get_arg(2));
+        }
+
+        $this->dm->persist($entity);
+
+        if ($andFlush && is_bool($andFlush) || 3 == func_num_args()) {
+            $this->dm->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \InvalidArgumentException When entity is an invalid object
+     */
+    public function delete($entity, $andFlush = true)
+    {
+        if (!$entity instanceof MediaInterface) {
+            throw new \InvalidArgumentException(sprintf(
+                'Entity remove must be instance of Sonata\\MediaBundle\\Model\\MediaInterface, %s given',
+                is_object($entity)? get_class($entity) : gettype($entity)
+            ));
+        }
+
+        $this->dm->remove($entity);
+
+        if ($andFlush) {
+            $this->dm->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Doctrine\MongoDB\Connection
+     */
+    public function getConnection()
+    {
+        return $this->dm->getConnection();
+    }
+
+    /**
+     * Get the related collection name.
+     *
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->dm->getClassMetadata($this->class)->getCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return DocumentRepository
      */
     protected function getRepository()
     {
-        if (!$this->repository) {
-            $this->repository = $this->dm->getRepository($this->class);
-        }
-
-        return $this->repository;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function save(MediaInterface $media, $context = null, $providerName = null)
-    {
-        if ($context) {
-            $media->setContext($context);
-        }
-
-        if ($providerName) {
-            $media->setProviderName($providerName);
-        }
-
-        // just in case the pool alter the media
-        $this->dm->persist($media);
-        $this->dm->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(MediaInterface $media)
-    {
-        $this->dm->remove($media);
-        $this->dm->flush();
+        return $this->dm->getRepository($this->class);
     }
 }
