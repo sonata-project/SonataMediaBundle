@@ -26,6 +26,22 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetMediaAction()
     {
+        $mManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+        $media    = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+
+        $mManager->expects($this->once())->method('findBy')->will($this->returnValue(array($media)));
+
+        $mController = $this->createMediaController($mManager);
+
+        $params = $this->getMock('FOS\RestBundle\Request\ParamFetcherInterface');
+        $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => "ASC"))));
+        $params->expects($this->exactly(3))->method('get');
+
+        $this->assertEquals(array($media), $mController->getMediaAction($params));
+    }
+
+    public function testGetMediumAction()
+    {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
 
         $manager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
@@ -33,19 +49,19 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $controller = $this->createMediaController($manager);
 
-        $this->assertEquals($media, $controller->getMediaAction(1));
+        $this->assertEquals($media, $controller->getMediumAction(1));
     }
 
     /**
      * @expectedException        \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @expectedExceptionMessage Media (42) was not found
      */
-    public function testGetMediaNotFoundExceptionAction()
+    public function testGetMediumNotFoundExceptionAction()
     {
-        $this->createMediaController()->getMediaAction(42);
+        $this->createMediaController()->getMediumAction(42);
     }
 
-    public function testGetMediaFormatsAction()
+    public function testGetMediumFormatsAction()
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
 
@@ -75,10 +91,10 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
                 'url' => null,
             ),
         );
-        $this->assertEquals($expected, $controller->getMediaFormatsAction(1));
+        $this->assertEquals($expected, $controller->getMediumFormatsAction(1));
     }
 
-    public function testGetMediaBinariesAction()
+    public function testGetMediumBinariesAction()
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
 
@@ -95,7 +111,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $controller = $this->createMediaController($manager, $pool);
 
-        $this->assertEquals($binaryResponse, $controller->getMediaBinaryAction(1, 'format', new Request()));
+        $this->assertEquals($binaryResponse, $controller->getMediumBinaryAction(1, 'format', new Request()));
     }
 
     protected function createMediaController($manager = null, $pool = null)
