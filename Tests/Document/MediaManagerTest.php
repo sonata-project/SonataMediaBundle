@@ -50,26 +50,21 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Sonata\\MediaBundle\\Document\\MediaManager requires "Doctrine\\ODM\\MongoDB" lib.');
         }
 
-        $this->manager = new MediaManager($this->createPoolMock(), $this->createDocumentManagerMock(), null);
-    }
-
-    /**
-     * Returns mock of pool provider.
-     *
-     * @return \Sonata\MediaBundle\Provider\Pool
-     */
-    protected function createPoolMock()
-    {
-        return $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->manager = new MediaManager('Sonata\MediaBundle\Model\MediaInterface', $this->createRegistryMock());
     }
 
     /**
      * Returns mock of doctrine document manager.
      *
-     * @return \Doctrine\ODM\MongoDB\DocumentManager
+     * @return \Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager
      */
-    protected function createDocumentManagerMock()
+    protected function createRegistryMock()
     {
-        return $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')->disableOriginalConstructor()->getMock();
+        $dm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')->disableOriginalConstructor()->getMock();
+
+        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($dm));
+
+        return $registry;
     }
 }

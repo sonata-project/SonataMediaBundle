@@ -50,17 +50,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Sonata\\MediaBundle\\PHPCR\\MediaManager requires "Doctrine\\ODM\\PHPCR" lib.');
         }
 
-        $this->manager = new MediaManager($this->createPoolMock(), $this->createDocumentManagerMock(), null);
-    }
-
-    /**
-     * Returns mock of pool provider.
-     *
-     * @return \Sonata\MediaBundle\Provider\Pool
-     */
-    protected function createPoolMock()
-    {
-        return $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->manager = new MediaManager('Sonata\MediaBundle\Model\MediaInterface', $this->createRegistryMock());
     }
 
     /**
@@ -68,15 +58,13 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @return \Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager
      */
-    protected function createDocumentManagerMock()
+    protected function createRegistryMock()
     {
         $dm = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')->disableOriginalConstructor()->getMock();
 
-        $manager = $this->getMockBuilder('Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager')->disableOriginalConstructor()->getMock();
-        $manager->expects($this->any())
-            ->method('getDocumentManager')
-            ->will($this->returnValue($dm));
+        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($dm));
 
-        return $manager;
+        return $registry;
     }
 }

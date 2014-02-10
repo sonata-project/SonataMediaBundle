@@ -10,28 +10,11 @@
  */
 namespace Sonata\MediaBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
-
-use Sonata\CoreBundle\Entity\DoctrineBaseManager;
+use Sonata\CoreBundle\Model\BaseEntityManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\MediaBundle\Provider\Pool;
 
-class MediaManager extends DoctrineBaseManager implements MediaManagerInterface
+class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
-    /**
-     * Constructor.
-     * 
-     * @param string        $class
-     * @param EntityManager $em
-     * @param Pool          $pool
-     */
-    public function __construct($class, EntityManager $em, Pool $pool)
-    {
-        $this->pool = $pool;
-
-        parent::__construct($class, $em);
-    }
-
     /**
      * {@inheritdoc}
      */
