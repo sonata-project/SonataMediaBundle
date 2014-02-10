@@ -456,7 +456,6 @@ class SonataMediaExtension extends Extension
             "Sonata\\MediaBundle\\Model\\GalleryManagerInterface",
             "Sonata\\MediaBundle\\Model\\Media",
             "Sonata\\MediaBundle\\Model\\MediaInterface",
-            "Sonata\\MediaBundle\\Model\\MediaManager",
             "Sonata\\MediaBundle\\Model\\MediaManagerInterface",
             "Sonata\\MediaBundle\\Provider\\BaseProvider",
             "Sonata\\MediaBundle\\Provider\\BaseVideoProvider",
