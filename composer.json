@@ -27,10 +27,10 @@
         "kriswallsmith/buzz": "0.*",
 
         "friendsofsymfony/rest-bundle": "~1.1",
+        "jms/serializer-bundle": "~0.11",
         "nelmio/api-doc-bundle": "~2.4"
     },
     "require-dev": {
-        "friendsofsymfony/rest-bundle": "~1.2",
         "sonata-project/doctrine-orm-admin-bundle": "~2.2@dev,>=2.2.1",
         "sonata-project/formatter-bundle": "~2.2@dev",
         "amazonwebservices/aws-sdk-for-php": "~1.5",
