@@ -7,7 +7,7 @@ $files = array(
     __DIR__.'/../../../../../app/autoload.php',
     __DIR__.'/../../../../../apps/autoload.php',
 );
-taut
+
 $autoload = false;
 foreach ($files as $file) {
     if (is_file($file)) {
