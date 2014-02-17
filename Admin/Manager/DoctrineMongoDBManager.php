@@ -19,6 +19,8 @@ use Symfony\Bridge\Doctrine\ManagerRegistry;
 /**
  * this method overwrite the default AdminModelManager to call
  * the custom methods from the dedicated media manager.
+ *
+ * @deprecated This class is deprecated since version 2.4 and will be removed in 3.0.
  */
 class DoctrineMongoDBManager extends ModelManager
 {

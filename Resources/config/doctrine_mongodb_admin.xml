@@ -44,9 +44,8 @@
             </call>
         </service>
 
-        <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineMongoDBManager">
+        <service id="sonata.media.admin.media.manager" class="Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager">
             <argument type="service" id="doctrine_mongodb" />
-            <argument type="service" id="sonata.media.manager.media" />
         </service>
 
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">
