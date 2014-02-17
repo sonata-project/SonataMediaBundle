@@ -46,9 +46,8 @@
             </call>
         </service>
 
-        <service id="sonata.media.admin.media.manager" class="Sonata\MediaBundle\Admin\Manager\DoctrineORMManager">
+        <service id="sonata.media.admin.media.manager" class="Sonata\DoctrineORMAdminBundle\Model\ModelManager">
             <argument type="service" id="doctrine" />
-            <argument type="service" id="sonata.media.manager.media" />
         </service>
 
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">
