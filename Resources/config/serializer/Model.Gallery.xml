@@ -11,9 +11,5 @@
         <property name="createdAt" type="DateTime" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
         <property name="updatedAt" type="DateTime" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
 
-        <property name="galleryHasMedias" type="Sonata\MediaBundle\Model\GalleryHasMedia" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" max-depth="2">
-            <xml-list inline="false" entry-name="media" />
-        </property>
-
     </class>
 </serializer>
