@@ -8,8 +8,8 @@ Setup
 
 If you wish to use it, you must first follow the installation instructions of both bundles:
 
-* `FOSRestBundle<https://github.com/FriendsOfSymfony/FOSRestBundle>`_
-* `NelmioApiDocBundle<https://github.com/nelmio/NelmioApiDocBundle>`_
+* `FOSRestBundle <https://github.com/FriendsOfSymfony/FOSRestBundle>`_
+* `NelmioApiDocBundle <https://github.com/nelmio/NelmioApiDocBundle>`_
 
 Here's the configuration we used, you may adapt it to your needs:
 

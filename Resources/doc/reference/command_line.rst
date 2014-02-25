@@ -13,7 +13,7 @@ Synchronize thumbnail for the provider ``sonata.media.provider.image`` with the 
 
    There is also an interactive shell for the parameter.
 
-.. code-block:: shell
+.. code-block:: bash
 
    php app/console sonata:media:sync-thumbnails sonata.media.provider.image default
 
@@ -26,7 +26,7 @@ Update metadata for a set of media for the provider ``sonata.media.provider.yout
 
    There is also an interactive shell for the parameter.
 
-.. code-block:: shell
+.. code-block:: bash
 
    php app/console sonata:media:refresh-metadata sonata.media.provider.youtube default
 
@@ -35,25 +35,25 @@ Add a media
 
 Add a media to the provider ``sonata.media.provider.image`` with the ``default`` context from path.
 
-.. code-block:: shell
+.. code-block:: bash
 
    php app/console sonata:media:add sonata.media.provider.image default path/to/image.jpg
 
 Add youtube media from url.
 
-.. code-block:: shell
+.. code-block:: bash
 
    php app/console sonata:media:add sonata.media.provider.youtube default http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=g-all-esi&context=asdasdas
 
 Add dailymotion video from provider reference.
 
-.. code-block:: shell
+.. code-block:: bash
 
    php app/console sonata:media:add sonata.media.provider.dailymotion default BDYAbAtaDzA
 
 Add image from given path with additional attributes.
 
-.. code-block:: shell
+.. code-block:: bash
 
    php app/console sonata:media:add sonata.media.provider.image default path/to/media.png --description="foo bar" --copyright="Sonata Project" --author="Thomas" --enabled=false
 
@@ -62,13 +62,13 @@ Mass import
 
 Add multiple media files from csv file
 
-.. code-block:: shell
+.. code-block:: bash
 
    php app/console sonata:media:add-multiple --file=medias.csv
 
 Add multiple media files from stdin
 
-.. code-block:: shell
+.. code-block:: bash
 
    cat medias.csv | php app/console sonata:media:add-multiple
 

@@ -4,10 +4,11 @@ Installation
 Base bundles
 ------------
 
-This bundle is mainely dependant of the SonataAdminBundle and the SonataDoctrineORMAdminBundle. So be sure you have install those two bundles before start:
+This bundle is mainly dependant of the ``SonataAdminBundle`` and the ``SonataDoctrineORMAdminBundle`` or ``SonataDoctrineMongoDBAdminBundle``. So be sure you have installed those two bundles before starting:
 
  * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
+ * http://sonata-project.org/bundles/mongo-admin/master/doc/reference/installation.html
 
 Installation
 ------------
@@ -17,7 +18,6 @@ Retrieve the bundle with composer:
 .. code-block:: sh
 
     php composer.phar require sonata-project/media-bundle --no-update
-    php composer.phar require sonata-project/doctrine-orm-admin-bundle --no-update
 
 
 Register the new bundle into your AppKernel:

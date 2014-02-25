@@ -52,6 +52,8 @@ Take this video, for example:
 * video player documentation : http://vimeo.com/api/docs/moogaloop
 * metadata : http://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
 
+.. code-block:: json
+
    {
      "type":"video",
      "version":"1.0",
