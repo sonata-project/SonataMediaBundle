@@ -10,7 +10,7 @@ a context has its own set of media providers and its own set of formats.
 That means you can have a ``small`` user picture format and a ``small`` news
 picture format with different sizes and providers. For example:
 
-.. code-block:: yml
+.. code-block:: yaml
 
     contexts:
         default:  # the default context is mandatory
