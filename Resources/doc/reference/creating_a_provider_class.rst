@@ -88,7 +88,7 @@ Let's initialize the ``VimeoProvider`` class.
 
     use Sonata\MediaBundle\Provider\BaseProvider;
     use Sonata\AdminBundle\Form\FormMapper;
-    use Sonata\MediaBundle\Entity\MediaInterface;
+    use Sonata\MediaBundle\Model\MediaInterface;
     use Symfony\Component\Form\Form;
 
     class VimeoProvider extends BaseProvider
