@@ -88,7 +88,7 @@ Let's initialize the ``VimeoProvider`` class.
 
     use Sonata\MediaBundle\Provider\BaseProvider;
     use Sonata\AdminBundle\Form\FormMapper;
-    use Sonata\MediaBundle\Entity\BaseMedia as Media;
+    use Sonata\MediaBundle\Entity\MediaInterface;
     use Symfony\Component\Form\Form;
 
     class VimeoProvider extends BaseProvider
@@ -133,7 +133,7 @@ is going to be used to store ``Media`` information :
 .. code-block:: php
 
     <?php
-    public function getMetadata(Media $media)
+    public function getMetadata(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -168,7 +168,7 @@ The ``MediaAdmin`` delegates this management to the media provider.
 .. code-block:: php
 
     <?php
-    public function prePersist(Media $media)
+    public function prePersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -202,7 +202,7 @@ The update method should only update data that cannot be managed by the user.
 .. code-block:: php
 
     <?php
-    public function preUpdate(Media $media)
+    public function preUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -230,12 +230,12 @@ thumbnails.
 .. code-block:: php
 
     <?php
-    public function postUpdate(Media $media)
+    public function postUpdate(MediaInterface $media)
     {
         $this->postPersist($media);
     }
 
-    public function postPersist(Media $media)
+    public function postPersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -253,7 +253,7 @@ image.
 .. code-block:: php
 
     <?php
-    public function getReferenceImage(Media $media)
+    public function getReferenceImage(MediaInterface $media)
     {
         return $media->getMetadataValue('thumbnail_url');
     }
