@@ -120,7 +120,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     public function applyFormats(ContainerBuilder $container, array $settings)
     {
         foreach ($settings['contexts'] as $name => $context) {
-            // add the differents related formats
+            // add the different related formats
             foreach ($context['providers'] as $id) {
                 $definition = $container->getDefinition($id);
 

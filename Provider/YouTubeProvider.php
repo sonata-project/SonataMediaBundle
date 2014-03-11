@@ -259,5 +259,4 @@ class YouTubeProvider extends BaseVideoProvider
     {
         return new RedirectResponse(sprintf('http://www.youtube.com/watch?v=%s', $media->getProviderReference()), 302, $headers);
     }
-
 }

@@ -75,6 +75,6 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
             return false;
         }
 
-        return $this->container->get('sonata.media.metadata.amazon')->get($media, $filename);;
+        return $this->container->get('sonata.media.metadata.amazon')->get($media, $filename);
     }
 }

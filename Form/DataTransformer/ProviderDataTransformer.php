@@ -40,7 +40,8 @@ class ProviderDataTransformer implements DataTransformerInterface
      * @param array $options
      * @return array
      */
-    protected function getOptions(array $options) {
+    protected function getOptions(array $options)
+    {
 
         return array_merge(array(
             'provider'      => false,

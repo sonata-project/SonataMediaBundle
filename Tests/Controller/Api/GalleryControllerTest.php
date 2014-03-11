@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Tests\Controller\Api;
 
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 
-
 /**
  * Class GalleryControllerTest
  *

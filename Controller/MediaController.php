@@ -102,7 +102,6 @@ class MediaController extends Controller
      * optionally saves the image and
      * outputs it to the browser at the same time
      *
-     * @param Request $request
      * @param string  $path
      * @param string  $filter
      *
@@ -129,7 +128,7 @@ class MediaController extends Controller
         $provider = $this->getProvider($media);
         $file     = $provider->getReferenceFile($media);
 
-        // load the file content from the abstrated file system
+        // load the file content from the abstracted file system
         $tmpFile = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'sonata_media_liip_imagine'), $media->getExtension());
         file_put_contents($tmpFile, $file->getContent());
 

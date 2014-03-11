@@ -168,7 +168,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $provider->buildEditForm($formMapper);
     }
 
-    public function testHelperProperies()
+    public function testHelperProperties()
     {
         $provider = $this->getProvider();
 

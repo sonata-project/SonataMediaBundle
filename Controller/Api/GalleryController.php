@@ -184,7 +184,7 @@ class GalleryController
      *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when an error has occured while gallery creation",
+     *      400="Returned when an error has occurred while gallery creation",
      *  }
      * )
      *
@@ -210,7 +210,7 @@ class GalleryController
      *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when an error has occured while gallery creation",
+     *      400="Returned when an error has occurred while gallery creation",
      *      404="Returned when unable to find gallery"
      *  }
      * )
@@ -236,7 +236,7 @@ class GalleryController
      *  },
      *  statusCodes={
      *      200="Returned when gallery is successfully deleted",
-     *      400="Returned when an error has occured while gallery deletion",
+     *      400="Returned when an error has occurred while gallery deletion",
      *      404="Returned when unable to find gallery"
      *  }
      * )

@@ -387,9 +387,9 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.filesystem.mogilefs');
         }
 
-        if($container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
             (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))) {
-            if(isset($config['filesystem']['openstack'])) {
+            if (isset($config['filesystem']['openstack'])) {
                 $container->setParameter('sonata.media.adapter.filesystem.opencloud.class', 'OpenCloud\OpenStack');
                 $settings = 'openstack';
             } else {

@@ -321,7 +321,7 @@ class FileProvider extends BaseProvider
 
         if ($mode == 'http') {
 
-            if($format == 'reference') {
+            if ($format == 'reference') {
                 $file = $this->getReferenceFile($media);
             } else {
                 $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
