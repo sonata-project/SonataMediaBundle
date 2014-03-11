@@ -33,7 +33,15 @@
         <property name="galleryHasMedias">
             <constraint name="Valid" />
         </property>
+        <property name="context">
+            <constraint name="NotNull" />
+            <constraint name="NotBlank" />
+        </property>
         <property name="name">
+            <constraint name="NotNull" />
+            <constraint name="NotBlank" />
+        </property>
+        <property name="defaultFormat">
             <constraint name="NotNull" />
             <constraint name="NotBlank" />
         </property>
