@@ -13,13 +13,17 @@ namespace Sonata\MediaBundle\Controller\Api;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\View;
-
+use JMS\Serializer\SerializationContext;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\View\View as FOSRestView;
 
 /**
  * Class GalleryController
@@ -36,13 +40,20 @@ class GalleryController
     protected $galleryManager;
 
     /**
+     * @var FormFactoryInterface
+     */
+    protected $formFactory;
+
+    /**
      * Constructor
      *
      * @param GalleryManagerInterface $galleryManager
+     * @param FormFactoryInterface    $formFactory
      */
-    public function __construct(GalleryManagerInterface $galleryManager)
+    public function __construct(GalleryManagerInterface $galleryManager, FormFactoryInterface $formFactory)
     {
         $this->galleryManager = $galleryManager;
+        $this->formFactory    = $formFactory;
     }
 
     /**
@@ -166,6 +177,86 @@ class GalleryController
     }
 
     /**
+     * Adds a gallery
+     *
+     * @ApiDoc(
+     *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
+     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when an error has occured while gallery creation",
+     *  }
+     * )
+     *
+     * @param Request $request A Symfony request
+     *
+     * @return GalleryInterface
+     *
+     * @throws NotFoundHttpException
+     */
+    public function postGalleryAction(Request $request)
+    {
+        return $this->handleWriteGallery($request);
+    }
+
+    /**
+     * Updates a gallery
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"}
+     *  },
+     *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
+     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when an error has occured while gallery creation",
+     *      404="Returned when unable to find gallery"
+     *  }
+     * )
+     *
+     * @param int     $id      User id
+     * @param Request $request A Symfony request
+     *
+     * @return GalleryInterface
+     *
+     * @throws NotFoundHttpException
+     */
+    public function putGalleryAction($id, Request $request)
+    {
+        return $this->handleWriteGallery($request, $id);
+    }
+
+    /**
+     * Deletes a gallery
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"}
+     *  },
+     *  statusCodes={
+     *      200="Returned when gallery is successfully deleted",
+     *      400="Returned when an error has occured while gallery deletion",
+     *      404="Returned when unable to find gallery"
+     *  }
+     * )
+     *
+     * @param integer $id A Gallery identifier
+     *
+     * @return \FOS\RestBundle\View\View
+     *
+     * @throws NotFoundHttpException
+     */
+    public function deleteGalleryAction($id)
+    {
+        $gallery = $this->getGallery($id);
+
+        $this->galleryManager->delete($gallery);
+
+        return array('deleted' => true);
+    }
+
+    /**
      * Retrieves gallery with id $id or throws an exception if it doesn't exist
      *
      * @param $id
@@ -190,5 +281,39 @@ class GalleryController
     protected function getGalleryManager()
     {
         return $this->galleryManager;
+    }
+
+    /**
+     * Write a Gallery, this method is used by both POST and PUT action methods
+     *
+     * @param Request      $request Symfony request
+     * @param integer|null $id      A Gallery identifier
+     *
+     * @return \FOS\RestBundle\View\View|FormInterface
+     */
+    protected function handleWriteGallery($request, $id = null)
+    {
+        $gallery = $id ? $this->getGallery($id) : null;
+
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery', $gallery, array(
+            'csrf_protection' => false
+        ));
+
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $gallery = $form->getData();
+            $this->galleryManager->save($gallery);
+
+            $view = FOSRestView::create($gallery);
+            $serializationContext = SerializationContext::create();
+            $serializationContext->setGroups(array('sonata_api_read'));
+            $serializationContext->enableMaxDepthChecks();
+            $view->setSerializationContext($serializationContext);
+
+            return $view;
+        }
+
+        return $form;
     }
 }

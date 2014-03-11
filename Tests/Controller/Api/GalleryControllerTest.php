@@ -27,10 +27,11 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
     {
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
 
         $gManager->expects($this->once())->method('findBy')->will($this->returnValue(array($gallery)));
 
-        $gController = new GalleryController($gManager);
+        $gController = new GalleryController($gManager, $formFactory);
 
         $params = $this->getMock('FOS\RestBundle\Request\ParamFetcherInterface');
         $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => "ASC"))));
@@ -43,10 +44,11 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
     {
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
 
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
-        $gController = new GalleryController($gManager);
+        $gController = new GalleryController($gManager, $formFactory);
 
         $this->assertEquals($gallery, $gController->getGalleryAction(1));
     }
@@ -58,9 +60,11 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
     public function testGetGalleryNotFoundAction()
     {
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+
         $gManager->expects($this->once())->method('findOneBy');
 
-        $gController = new GalleryController($gManager);
+        $gController = new GalleryController($gManager, $formFactory);
 
         $gController->getGalleryAction(42);
     }
@@ -70,11 +74,13 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryHasMedia = $this->getMock('Sonata\MediaBundle\Model\GalleryHasMediaInterface');
         $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+
         $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
 
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
-        $gController = new GalleryController($gManager);
+        $gController = new GalleryController($gManager, $formFactory);
 
         $this->assertEquals(array($galleryHasMedia), $gController->getGalleryGalleryhasmediasAction(1));
     }
@@ -82,6 +88,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
     public function testGetGalleryMediaAction()
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
 
         $galleryHasMedia = $this->getMock('Sonata\MediaBundle\Model\GalleryHasMediaInterface');
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
@@ -92,7 +99,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
-        $gController = new GalleryController($gManager);
+        $gController = new GalleryController($gManager, $formFactory);
 
         $this->assertEquals(array($media), $gController->getGalleryMediasAction(1));
     }
