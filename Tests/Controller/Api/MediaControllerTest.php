@@ -14,7 +14,6 @@ namespace Sonata\MediaBundle\Tests\Controller\Api;
 use Sonata\MediaBundle\Controller\Api\MediaController;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * Class MediaControllerTest
  *

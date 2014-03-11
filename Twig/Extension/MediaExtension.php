@@ -22,7 +22,7 @@ class MediaExtension extends \Twig_Extension
 {
     protected $mediaService;
 
-    protected $ressources = array();
+    protected $resources = array();
 
     protected $mediaManager;
 
@@ -173,11 +173,11 @@ class MediaExtension extends \Twig_Extension
      */
     public function render($template, array $parameters = array())
     {
-        if (!isset($this->ressources[$template])) {
-            $this->ressources[$template] = $this->environment->loadTemplate($template);
+        if (!isset($this->resources[$template])) {
+            $this->resources[$template] = $this->environment->loadTemplate($template);
         }
 
-        return $this->ressources[$template]->render($parameters);
+        return $this->resources[$template]->render($parameters);
     }
 
     /**

@@ -30,7 +30,7 @@ class AmazonMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $filename = '/test/folder/testfile.png';
 
-        foreach ($this->provider() as $provider ) {
+        foreach ($this->provider() as $provider) {
             list($a, $b) = $provider;
             $amazonmetadatabuilder = new AmazonMetadataBuilder($a);
             $this->assertEquals($b, $amazonmetadatabuilder->get($media, $filename));

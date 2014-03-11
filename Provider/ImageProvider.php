@@ -91,7 +91,7 @@ class ImageProvider extends FileProvider
 
         try {
             $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
-        } catch(\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
             return;
         }

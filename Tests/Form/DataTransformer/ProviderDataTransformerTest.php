@@ -28,12 +28,12 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \RuntimeException
      */
-    public function testReverseTransformUnknowProvider()
+    public function testReverseTransformUnknownProvider()
     {
         $pool = new Pool('default');
 
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('unknow'));
+        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('unknown'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
 

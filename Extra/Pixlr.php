@@ -194,7 +194,7 @@ class Pixlr
         $provider = $this->pool->getProvider($media->getProviderName());
 
         /**
-         * Pirlx send back the new image as an url, add some security check before downloading the file
+         * Pixlr send back the new image as an url, add some security check before downloading the file
          */
         if (!preg_match($this->allowEreg, $request->get('image'), $matches)) {
             throw new NotFoundHttpException(sprintf('Invalid image host : %s', $request->get('image')));

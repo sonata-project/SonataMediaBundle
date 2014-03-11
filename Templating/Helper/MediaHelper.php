@@ -95,27 +95,27 @@ class MediaHelper extends Helper
      */
     public function thumbnail($media, $format, $options = array())
     {
-         if (!$media) {
-             return '';
-         }
+        if (!$media) {
+            return '';
+        }
 
-         $provider = $this->getProvider($media);
+        $provider = $this->getProvider($media);
 
-         $format = $provider->getFormatName($media, $format);
-         $formatDefinition = $provider->getFormat($format);
+        $format = $provider->getFormatName($media, $format);
+        $formatDefinition = $provider->getFormat($format);
 
-         // build option
-         $options = array_merge(array(
-             'title' => $media->getName(),
-             'width' => $formatDefinition['width'],
-         ), $options);
+        // build option
+        $options = array_merge(array(
+            'title' => $media->getName(),
+            'width' => $formatDefinition['width'],
+        ), $options);
 
-         $options['src'] = $provider->generatePublicUrl($media, $format);
+        $options['src'] = $provider->generatePublicUrl($media, $format);
 
-         return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), array(
-             'media'    => $media,
-             'options'  => $options,
-         ));
+        return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), array(
+            'media'    => $media,
+            'options'  => $options,
+        ));
     }
 
     /**
