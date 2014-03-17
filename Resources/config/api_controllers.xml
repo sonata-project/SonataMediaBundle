@@ -7,13 +7,15 @@
     <services>
         <service id="sonata.media.controller.api.gallery" class="Sonata\MediaBundle\Controller\Api\GalleryController" >
             <argument type="service" id="sonata.media.manager.gallery" />
+            <argument type="service" id="sonata.media.manager.media" />
             <argument type="service" id="form.factory" />
+            <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
         </service>
 
         <service id="sonata.media.controller.api.media" class="Sonata\MediaBundle\Controller\Api\MediaController" >
             <argument type="service" id="sonata.media.manager.media" />
             <argument type="service" id="sonata.media.pool" />
-            <argument type="service" id="router" />
+            <argument type="service" id="form.factory" />
         </service>
     </services>
 </container>
