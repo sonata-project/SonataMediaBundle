@@ -11,7 +11,15 @@
 
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Sonata\MediaBundle\Controller\Api\GalleryController;
+use Sonata\MediaBundle\Model\GalleryHasMedia;
+
+class GalleryTest extends GalleryHasMedia
+{
+
+}
 
 /**
  * Class GalleryControllerTest
@@ -25,12 +33,13 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
     public function testGetGalleriesAction()
     {
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
         $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
 
         $gManager->expects($this->once())->method('findBy')->will($this->returnValue(array($gallery)));
 
-        $gController = new GalleryController($gManager, $formFactory);
+        $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
         $params = $this->getMock('FOS\RestBundle\Request\ParamFetcherInterface');
         $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => "ASC"))));
@@ -42,12 +51,13 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
     public function testGetGalleryAction()
     {
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
         $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
 
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
-        $gController = new GalleryController($gManager, $formFactory);
+        $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
         $this->assertEquals($gallery, $gController->getGalleryAction(1));
     }
@@ -59,11 +69,13 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
     public function testGetGalleryNotFoundAction()
     {
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+
         $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
 
         $gManager->expects($this->once())->method('findOneBy');
 
-        $gController = new GalleryController($gManager, $formFactory);
+        $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
         $gController->getGalleryAction(42);
     }
@@ -79,7 +91,9 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
 
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
-        $gController = new GalleryController($gManager, $formFactory);
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+
+        $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
         $this->assertEquals(array($galleryHasMedia), $gController->getGalleryGalleryhasmediasAction(1));
     }
@@ -98,8 +112,116 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $gManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
-        $gController = new GalleryController($gManager, $formFactory);
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+
+        $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
         $this->assertEquals(array($media), $gController->getGalleryMediasAction(1));
+    }
+
+    public function testPostGalleryMediaAction()
+    {
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+
+        $media2 = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media2->expects($this->any())->method('getId')->will($this->returnValue(1));
+
+        $galleryHasMedia = $this->getMock('Sonata\MediaBundle\Model\GalleryHasMediaInterface');
+        $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media2));
+
+        $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+
+        $galleryManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
+
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+        $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
+
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'Sonata\MediaBundle\Tests\Controller\Api\GalleryTest');
+        $view = $galleryController->postGalleryMediaAction(1, 2);
+
+        $this->assertEquals(array('added' => true), $view);
+    }
+
+    public function testPostGalleryMediaInvalidAction()
+    {
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
+
+        $galleryHasMedia = $this->getMock('Sonata\MediaBundle\Model\GalleryHasMediaInterface');
+        $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
+
+        $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+
+        $galleryManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
+
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+        $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
+
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'Sonata\MediaBundle\Tests\Controller\Api\GalleryTest');
+        $view = $galleryController->postGalleryMediaAction(1, 1);
+
+        $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
+        $this->assertEquals(400, $view->getStatusCode(), 'Should return 400');
+    }
+
+    public function testDeleteGalleryMediaAction()
+    {
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
+
+        $galleryHasMedia = $this->getMock('Sonata\MediaBundle\Model\GalleryHasMediaInterface');
+        $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
+
+        $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery->expects($this->any())->method('getGalleryHasMedias')->will($this->returnValue(new ArrayCollection(array($galleryHasMedia))));
+
+        $galleryManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
+
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+        $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
+
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'Sonata\MediaBundle\Tests\Controller\Api\GalleryTest');
+        $view = $galleryController->deleteGalleryMediaAction(1, 1);
+
+        $this->assertEquals(array('deleted' => true), $view);
+    }
+
+    public function testDeleteGalleryMediaInvalidAction()
+    {
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+
+        $media2 = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media2->expects($this->any())->method('getId')->will($this->returnValue(2));
+
+        $galleryHasMedia = $this->getMock('Sonata\MediaBundle\Model\GalleryHasMediaInterface');
+        $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media2));
+
+        $gallery = $this->getMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery->expects($this->any())->method('getGalleryHasMedias')->will($this->returnValue(new ArrayCollection(array($galleryHasMedia))));
+
+        $galleryManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
+
+        $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+        $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
+
+        $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'Sonata\MediaBundle\Tests\Controller\Api\GalleryTest');
+        $view = $galleryController->deleteGalleryMediaAction(1, 1);
+
+        $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
+        $this->assertEquals(400, $view->getStatusCode(), 'Should return 400');
     }
 }
