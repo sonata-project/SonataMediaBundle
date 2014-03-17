@@ -51,13 +51,13 @@ class SonataMediaExtension extends Extension
         $loader->load('form.xml');
         $loader->load('gaufrette.xml');
         $loader->load('validators.xml');
+        $loader->load('serializer.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 
         if (isset($bundles['FOSRestBundle']) && isset($bundles['NelmioApiDocBundle'])) {
             $loader->load('api_controllers.xml');
             $loader->load('api_form.xml');
-            $loader->load('serializer.xml');
         }
 
         if (isset($bundles['SonataNotificationBundle'])) {
