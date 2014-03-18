@@ -338,7 +338,8 @@ class MediaController
     protected function handleWriteMedium($request, MediaInterface $medium, MediaProviderInterface $provider)
     {
         $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $medium, array(
-            'provider_name'   => $provider->getName()
+            'provider_name'   => $provider->getName(),
+            'csrf_protection' => false
         ));
 
         $form->bind($request);

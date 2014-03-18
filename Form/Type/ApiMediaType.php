@@ -66,7 +66,6 @@ class ApiMediaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'csrf_protection' => false,
             'provider_name'   => "sonata.media.provider.image",
         ));
     }
