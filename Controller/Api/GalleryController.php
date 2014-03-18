@@ -21,6 +21,7 @@ use Sonata\MediaBundle\Model\GalleryHasMedia;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Symfony\Component\Form\FormInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

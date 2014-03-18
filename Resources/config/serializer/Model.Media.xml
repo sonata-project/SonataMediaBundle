@@ -12,8 +12,6 @@
         <property         name="providerReference" type="string"  expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
         <virtual-property name="providerMetadata"  type="array"   expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" method="getProviderMetadata" />
 
-        <virtual-property name="binaryContent"  type="string" expose="true" since-version="1.0" groups="sonata_api_write" method="setBinaryContent" />
-
         <property name="width"       type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
         <property name="height"      type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
         <property name="length"      type="double" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />

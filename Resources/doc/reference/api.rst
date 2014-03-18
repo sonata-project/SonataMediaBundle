@@ -56,3 +56,52 @@ The taxonomy is as follows:
 * ``sonata_api_write`` is the group used for input entities (when used instead of forms)
 
 If you wish to customize the outputted data, feel free to setup your own serialization options by configuring JMSSerializer with those groups.
+
+Sending a media file
+--------------------
+
+Some providers (file or image for instance) require that you send a file upon the medium creation. To do so through the API, you will need to send the data as a ``multipart/form-data`` query.
+
+This would look like this for the cURL call:
+
+.. code-block:: bash
+
+    curl 'http://demo.sonata-project.org/api/media/providers/sonata.media.provider.image/media.json' -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H 'Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryFhX9k2FPT3sQos00' -H 'Accept: */*' --compressed
+
+And like this for the request body:
+
+.. code-block::
+
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00
+    Content-Disposition: form-data; name="name"
+
+    medium name
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00
+    Content-Disposition: form-data; name="description"
+
+    medium description
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00
+    Content-Disposition: form-data; name="enabled"
+
+    1
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00
+    Content-Disposition: form-data; name="copyright"
+
+    copyright informations
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00
+    Content-Disposition: form-data; name="authorName"
+
+    medium author name
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00
+    Content-Disposition: form-data; name="cdnIsFlushable"
+
+    1
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00
+    Content-Disposition: form-data; name="binaryContent"; filename="my-awesome-image.jpg"
+    Content-Type: image/jpeg
+
+
+    ------WebKitFormBoundaryFhX9k2FPT3sQos00--
+
+
+You may of course still use JSON body for creating a video media (you only have to set the ``binaryContent`` argument to the video URL).

@@ -15,7 +15,7 @@
         <service id="sonata.media.controller.api.media" class="Sonata\MediaBundle\Controller\Api\MediaController" >
             <argument type="service" id="sonata.media.manager.media" />
             <argument type="service" id="sonata.media.pool" />
-            <argument type="service" id="router" />
+            <argument type="service" id="form.factory" />
         </service>
     </services>
 </container>
