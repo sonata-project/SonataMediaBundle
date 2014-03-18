@@ -18,8 +18,10 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -250,6 +252,7 @@ class GalleryController
      *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"},
      *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
      *  },
+     *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
      *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
@@ -260,11 +263,13 @@ class GalleryController
      * @param integer $galleryId A gallery identifier
      * @param integer $mediaId   A media identifier
      *
+     * @param Request $request A Symfony request
+
      * @return GalleryInterface
      *
      * @throws NotFoundHttpException
      */
-    public function postGalleryMediaAction($galleryId, $mediaId)
+    public function postGalleryMediaGalleryhasmediaAction($galleryId, $mediaId, Request $request)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
@@ -277,13 +282,83 @@ class GalleryController
             }
         }
 
-        $galleryHasMedia = new $this->galleryHasMediaClass;
-        $galleryHasMedia->setMedia($media);
+        return $this->handleWriteGalleryhasmedia($gallery, $media, null, $request);
+    }
 
-        $gallery->addGalleryHasMedias($galleryHasMedia);
-        $this->getGalleryManager()->save($gallery);
+    /**
+     * Updates a media to a gallery
+     *
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"},
+     *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
+     *  },
+     *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
+     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when an error if media cannot be found in gallery",
+     *  }
+     * )
+     *
+     * @param integer $galleryId A gallery identifier
+     * @param integer $mediaId   A media identifier
+     *
+     * @param Request $request A Symfony request
 
-        return array('added' => true);
+     * @return GalleryInterface
+     *
+     * @throws NotFoundHttpException
+     */
+    public function putGalleryMediaGalleryhasmediaAction($galleryId, $mediaId, Request $request)
+    {
+        $gallery = $this->getGallery($galleryId);
+        $media = $this->getMedia($mediaId);
+
+        foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
+            if ($galleryHasMedia->getMedia()->getId() == $media->getId()) {
+                return $this->handleWriteGalleryhasmedia($gallery, $media, $galleryHasMedia, $request);
+            }
+        }
+
+        throw new NotFoundHttpException(sprintf('Gallery "%s" does not have media "%s"', $galleryId, $mediaId));
+    }
+
+    /**
+     * Write a GalleryHasMedia, this method is used by both POST and PUT action methods
+     *
+     * @param GalleryInterface $gallery
+     * @param MediaInterface $media
+     * @param GalleryHasMediaInterface $galleryHasMedia
+     * @param Request $request
+     *
+     * @return FOSRestView|\Symfony\Component\Form\FormInterface
+     */
+    protected function handleWriteGalleryhasmedia(GalleryInterface $gallery, MediaInterface $media, GalleryHasMediaInterface $galleryHasMedia = null, Request $request)
+    {
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery_has_media', $galleryHasMedia, array(
+            'csrf_protection' => false
+        ));
+
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $galleryHasMedia = $form->getData();
+            $galleryHasMedia->setMedia($media);
+
+            $gallery->addGalleryHasMedias($galleryHasMedia);
+            $this->galleryManager->save($gallery);
+
+            $view = FOSRestView::create($galleryHasMedia);
+            $serializationContext = SerializationContext::create();
+            $serializationContext->setGroups(array('sonata_api_read'));
+            $serializationContext->enableMaxDepthChecks();
+            $view->setSerializationContext($serializationContext);
+
+            return $view;
+        }
+
+        return $form;
     }
 
     /**
@@ -308,7 +383,7 @@ class GalleryController
      *
      * @throws NotFoundHttpException
      */
-    public function deleteGalleryMediaAction($galleryId, $mediaId)
+    public function deleteGalleryMediaGalleryhasmediaAction($galleryId, $mediaId)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
