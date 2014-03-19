@@ -7,7 +7,7 @@
 
     <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseMedia" referenceable="true" >
 
-        <uuid fieldName="uuid" />
+        <uuid name="uuid" />
 
         <field name="name"               type="string" />
         <field name="description"        type="string" />
