@@ -110,7 +110,7 @@ class MediaController extends Controller
     public function liipImagineFilterAction($path, $filter)
     {
         if (!preg_match('@([^/]*)/(.*)/([0-9]*)_([a-z_A-Z]*).jpg@', $path, $matches)) {
-            throw new NotFoundHttpException();
+            return $this->get('liip_imagine.controller')->filterAction($this->get('request'), $path, $filter);
         }
 
         $targetPath = $this->get('liip_imagine.cache.manager')->resolve($this->get('request'), $path, $filter);
