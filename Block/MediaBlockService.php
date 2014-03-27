@@ -167,7 +167,7 @@ class MediaBlockService extends BaseBlockService
             'type'      => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE
         ));
 
-        return $formMapper->create('mediaId', 'sonata_type_model', array(
+        return $formMapper->create('mediaId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
             'class'                    => $this->getMediaAdmin()->getClass(),
             'model_manager'            => $this->getMediaAdmin()->getModelManager()
