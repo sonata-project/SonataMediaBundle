@@ -16,91 +16,176 @@ file that was distributed with this source code.
 {% block content %}
     <h2>{{ media.name }}</h2>
 
-    <h3>{{ 'title.media_preview'|trans({}, 'SonataMediaBundle') }} ~ {{ format }}</h3>
-    <div>
-        {% media media, format %}
+    <div class="row">
+        <div class="col-md-12">
+            {% block sonata_media_show_reference %}
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">{{ 'title.media_preview'|trans({}, 'SonataMediaBundle') }} ~ {{ format }}</h3>
+                </div>
+                <div class="box-body">
+                    {% media media, format with {'class': 'img-responsive img-rounded', 'width': null, 'height': null} %}
+                </div>
+
+                {% if pixlr and pixlr.isEditable(media) %}
+                    <div class="box-footer">
+                        <button class="btn btn-default pixlr-link"
+                           data-href="{{ path('sonata_media_pixlr_edit', { 'id': media|sonata_urlsafeid, 'mode': 'express' }) }}"
+                           data-toggle="modal"
+                           data-target="#pixlr-modal"
+                            >
+                            {{ "label.pixlr_express_editor"|trans({}, "SonataMediaBundle")|raw }}
+                        </button>
+                        <button class="btn btn-default pixlr-link"
+                           data-href="{{ path('sonata_media_pixlr_edit', { 'id': media|sonata_urlsafeid, 'mode': 'editor' }) }}"
+                           data-toggle="modal"
+                           data-target="#pixlr-modal"
+                            >
+                            {{ "label.pixlr_advanced_editor"|trans({}, "SonataMediaBundle")|raw }}
+                        </button>
+                    </div>
+
+                    <div class="modal fade" id="pixlr-modal" tabindex="-1" role="dialog" aria-labelledby="{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}</h4>
+                                </div>
+                                <div class="modal-body" id="pixlr-modal-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $('button.pixlr-link').on('click', function(e) {
+                            e.preventDefault();
+                            var url = $(this).attr('data-href');
+                            $("#pixlr-modal-body").html('<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+url+'"></iframe>');
+
+                        });
+
+                        $('#pixlr-modal').on('show.bs.modal', function () {
+
+                            $(this).find('.modal-dialog').css({
+                                width:'60%', //choose your width
+                                height:'80%',
+                                'padding':'0'
+                            });
+                            $(this).find('.modal-content').css({
+                                'border-radius':'0',
+                                height: '100%',
+                                'padding':'0'
+                            });
+                            $(this).find('.modal-body').css({
+                                width:'auto',
+                                height:'100%',
+                                'padding':'0'
+                            });
+                        });
+                    </script>
+                {% endif %}
+            </div>
+            {% endblock sonata_media_show_reference %}
+        </div>
     </div>
 
-    <h3>{{ 'title.informations'|trans({}, 'SonataMediaBundle') }}</h3>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            {% block sonata_media_show_information %}
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">{{ 'title.informations'|trans({}, 'SonataMediaBundle') }}</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table">
+                        <tr>
+                            <th>{{ 'label.size'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>{{ media.size }}</td>
+                        <tr>
+                        <tr>
+                            <th>{{ 'label.width'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>{{ media.width }}</td>
+                        <tr>
+                        <tr>
+                            <th>{{ 'label.height'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>{{ media.height }}</td>
+                        <tr>
+                        <tr>
+                            <th>{{ 'label.content_type'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>{{ media.contenttype }}</td>
+                        <tr>
+                        <tr>
+                            <th>{{ 'label.copyright'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>{{ media.copyright }}</td>
+                        <tr>
+                        <tr>
+                            <th>{{ 'label.author_name'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>{{ media.authorname }}</td>
+                        <tr>
+                        <tr>
+                            <th>{{ 'label.cdn'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>
+                                {% if media.cdnisflushable %}
+                                    {{ 'label.to_be_flushed'|trans({}, 'SonataMediaBundle') }}
+                                {% else %}
+                                    {{ 'label.flushed_at'|trans({}, 'SonataMediaBundle') }}
+                                    {{ media.cdnflushat|date }}
+                                {% endif %}
+                            </td>
+                        <tr>
+                        <tr>
+                            <th>{{ 'label.protected_download_url'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td>
+                                <input type="text" value="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}" style="width:500px"/>
+                                <a href="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}">{{ 'link.test_protected_url'|trans({}, 'SonataMediaBundle') }}</a>
+                                <br />
+                                <span class="label warning">{{ 'label.protected_download_url_notice'|trans({}, 'SonataMediaBundle') }}</span> {{ security.description }}
+                            </td>
+                        <tr>
 
-    <table>
-        {% if pixlr and pixlr.isEditable(media) %}
-            <tr>
-                <td></td>
-                <td><a class="btn" href="{{ path('sonata_media_pixlr_open_editor', {'id': media|sonata_urlsafeid }) }}">{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}</a></td>
-            </tr>
-        {% endif %}
-        <tr>
-            <td>{{ 'label.size'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>{{ media.size }}</td>
-        <tr>
-        <tr>
-            <td>{{ 'label.width'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>{{ media.width }}</td>
-        <tr>
-        <tr>
-            <td>{{ 'label.height'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>{{ media.height }}</td>
-        <tr>
-        <tr>
-            <td>{{ 'label.content_type'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>{{ media.contenttype }}</td>
-        <tr>
-        <tr>
-            <td>{{ 'label.copyright'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>{{ media.copyright }}</td>
-        <tr>
-        <tr>
-            <td>{{ 'label.author_name'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>{{ media.authorname }}</td>
-        <tr>
-        <tr>
-            <td>{{ 'label.cdn'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>
-                {% if media.cdnisflushable %}
-                    {{ 'label.to_be_flushed'|trans({}, 'SonataMediaBundle') }}
-                {% else %}
-                    {{ 'label.flushed_at'|trans({}, 'SonataMediaBundle') }}
-                    {{ media.cdnflushat|date }}
-                 {% endif %}
-            </td>
-        <tr>
-        <tr>
-            <td>{{ 'label.protected_download_url'|trans({}, 'SonataMediaBundle') }}</td>
-            <td>
-                <input type="text" value="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}" style="width:500px"/>
-                <a href="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}">{{ 'link.test_protected_url'|trans({}, 'SonataMediaBundle') }}</a>
-                <br />
-                <span class="label warning">{{ 'label.protected_download_url_notice'|trans({}, 'SonataMediaBundle') }}</span> {{ security.description }}
-            </td>
-        <tr>
+                        <tr>
+                            <th>{{ 'label.public_url'|trans({}, 'SonataMediaBundle') }}</th>
+                            <td><input type="text" value="{% path media, format %}" style="width:500px"/></td>
+                        <tr>
+                    </table>
+                </div>
+            </div>
+            {% endblock sonata_media_show_information %}
+        </div>
 
-        <tr>
-            <td>{{ 'label.public_url'|trans({}, 'SonataMediaBundle') }}</td>
-            <td><input type="text" value="{% path media, format %}" style="width:500px"/></td>
-        <tr>
-    </table>
+        <div class="col-md-6 col-sm-12">
+            {% block sonata_media_show_formats %}
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">{{ 'title.formats'|trans({}, 'SonataMediaBundle') }}</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                <a href="{{ admin.generateUrl('show', { 'id' : media|sonata_urlsafeid , 'format' : 'reference'}) }}">reference</a>
+                            </th>
+                            <td>
+                                <input type="text" value="{% path media, 'reference' %}"  style="width:500px" />
+                            </td>
+                        </tr>
 
-    <h3>{{ 'title.formats'|trans({}, 'SonataMediaBundle') }}</h3>
-    <table>
-        <tr>
-            <td>
-                <a href="{{ admin.generateUrl('show', { 'id' : media|sonata_urlsafeid , 'format' : 'reference'}) }}">reference</a>
-            </td>
-            <td>
-                <input type="text" value="{% path media, 'reference' %}"  style="width:500px" />
-            </td>
-        </tr>
-
-        {% for name, format in formats %}
-            <tr>
-                <td>
-                    <a href="{{ admin.generateUrl('show', { 'id' : media|sonata_urlsafeid , 'format' : name}) }}">{{ name }}</a>
-                </td>
-                <td>
-                    <input type="text" value="{% path media, name %}"  style="width:500px"/>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+                        {% for name, format in formats %}
+                            <tr>
+                                <th>
+                                    <a href="{{ admin.generateUrl('show', { 'id' : media|sonata_urlsafeid , 'format' : name}) }}">{{ name }}</a>
+                                </th>
+                                <td>
+                                    <input type="text" value="{% path media, name %}"  style="width:500px"/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            {% endblock sonata_media_show_formats %}
+        </div>
+    </div>
 {% endblock %}
