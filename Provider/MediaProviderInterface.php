@@ -200,16 +200,6 @@ interface MediaProviderInterface
     public function getName();
 
     /**
-     * @return mixed
-     */
-    public function getIcon();
-
-    /**
-     * @return string
-     */
-    public function getDescription();
-
-    /**
      * @return MetadataInterface
      */
     public function getProviderMetadata();

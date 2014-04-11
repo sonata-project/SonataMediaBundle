@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Gaufrette\Adapter\Local;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -60,12 +61,13 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function getIcon()
+    public function getProviderMetadata()
     {
-        return 'fa fa-file-text-o';
+        return new Metadata($this->getName(), $this->getName().".description", null, "SonataMediaBundle", array('class' => 'fa fa-file-text-o'));
     }
+
     /**
      * {@inheritdoc}
      */

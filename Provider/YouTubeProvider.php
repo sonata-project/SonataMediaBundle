@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Gaufrette\Filesystem;
@@ -43,11 +44,11 @@ class YouTubeProvider extends BaseVideoProvider
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function getIcon()
+    public function getProviderMetadata()
     {
-        return 'fa fa-youtube';
+        return new Metadata($this->getName(), $this->getName().".description", null, "SonataMediaBundle", array('class' => 'fa fa-youtube'));
     }
 
     /**
