@@ -44,11 +44,10 @@ abstract class BaseMediaAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('custom', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig'))
+            ->add('custom', 'string', array('template' => 'SonataMediaBundle:MediaAdmin:list_custom.html.twig', 'label' => 'Media'))
             ->add('enabled', 'boolean', array('editable' => true))
             ->add('_action', 'actions', array(
                 'actions' => array(
-                    'show' => array(),
                     'edit' => array(),
                 )
             ))
@@ -129,30 +128,6 @@ abstract class BaseMediaAdmin extends Admin
         }
 
         return $media;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
-    {
-        if (!in_array($action, array('edit', 'view'))) {
-            return;
-        }
-
-        $admin = $this->isChild() ? $this->getParent() : $this;
-
-        $id = $this->getRequest()->get('id');
-
-        $menu->addChild(
-            $this->trans('sidemenu.link_edit_media'),
-            array('uri' => $admin->generateUrl('edit', array('id' => $id)))
-        );
-
-        $menu->addChild(
-            $this->trans('sidemenu.link_media_view'),
-            array('uri' => $admin->generateUrl('show', array('id' => $id)))
-        );
     }
 
     /**

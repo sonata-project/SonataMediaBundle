@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label important">Important</span> you are going to expose the media to an <strong>external service</strong>. <br />
+                        <span class="label label-warning">Important</span> you are going to expose the media to an <strong>external service</strong>. <br />
                         If you are working on confidentiel materials, please do not use this service.
                     ]]>
                 </target>

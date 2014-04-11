@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label important">Let op</span> je maakt dit item zichtbaar voor een <strong>externe service</strong>. <br />
+                        <span class="label label-warning">Let op</span> je maakt dit item zichtbaar voor een <strong>externe service</strong>. <br />
                         Indien het om een vertrouwelijke informatie gaat dien je deze service niet te gebruiken.
                     ]]>
                 </target>

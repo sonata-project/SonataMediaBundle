@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label important">Svarbu</span> jūs atskleisite media <strong>išorinei paslaugai</strong>. <br />
+                        <span class="label label-warning">Svarbu</span> jūs atskleisite media <strong>išorinei paslaugai</strong>. <br />
                         Jeigu dirbate su konfidencialia informacija, prašome nesinaudoti šia paslauga.
                     ]]>
                 </target>

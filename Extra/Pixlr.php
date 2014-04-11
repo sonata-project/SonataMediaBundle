@@ -175,7 +175,7 @@ class Pixlr
 
         $this->checkMedia($hash, $media);
 
-        return new RedirectResponse($this->router->generate('admin_sonata_media_media_edit', array('id' => $media->getId())));
+        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_exit.html.twig'));
     }
 
     /**
@@ -208,7 +208,7 @@ class Pixlr
 
         $this->mediaManager->save($media);
 
-        return new RedirectResponse($this->router->generate('admin_sonata_media_media_show', array('id' => $media->getId())));
+        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_exit.html.twig'));
     }
 
     /**
@@ -241,7 +241,8 @@ class Pixlr
         }
 
         return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_editor.html.twig', array(
-            'media' => $media
+            'media'      => $media,
+            'admin_pool' => $this->container->get('sonata.admin.pool'),
         )));
     }
 }

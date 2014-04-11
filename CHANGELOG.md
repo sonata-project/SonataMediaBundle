@@ -7,6 +7,10 @@ A [BC BREAK] means the update will break the project for many reasons:
 * new dependencies
 * class refactoring
 
+### 2014-04-11
+
+* [BC BREAK] Removed admin show action, now merged with admin edit action. As a result, controller method, route and template no longer exist.
+
 ### 2014-01-15
 
 * Updated twig template ``SonataMediaBundle:Gallery:view.html.twig``
