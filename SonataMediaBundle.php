@@ -10,6 +10,7 @@
 
 namespace Sonata\MediaBundle;
 
+use Sonata\MediaBundle\DependencyInjection\Compiler\GlobalVariablesCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass;
@@ -22,6 +23,7 @@ class SonataMediaBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new AddProviderCompilerPass());
+        $container->addCompilerPass(new GlobalVariablesCompilerPass());
     }
 
     /**

@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label important">Fontos</span> a médiát <strong>külső szolgáltatás</string> számára teszi elérhetőve. <br />
+                        <span class="label label-warning">Fontos</span> a médiát <strong>külső szolgáltatás</string> számára teszi elérhetőve. <br />
                         Ha bizalmas anyaggal dolgozik, kérjük, ne használja ezt a szolgáltatást!
                     ]]>
                 </target>
