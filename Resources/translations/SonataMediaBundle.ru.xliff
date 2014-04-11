@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-<span class="label important">Важно</span> вы собираетесь отправить медиа на <strong>сторонний сервис</strong>. <br />
+<span class="label label-warning">Важно</span> вы собираетесь отправить медиа на <strong>сторонний сервис</strong>. <br />
 Если вы работаете с конфиденциальными материалами, пожалуйста не используйте эту функцию.
 ]]>
                 </target>

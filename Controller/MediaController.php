@@ -49,33 +49,6 @@ class MediaController extends Controller
      *
      * @return Response
      */
-    public function viewAction($id, $format = 'reference')
-    {
-        $media = $this->getMedia($id);
-
-        if (!$media) {
-            throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
-        }
-
-        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())) {
-            throw new AccessDeniedException();
-        }
-
-        return $this->render('SonataMediaBundle:Media:view.html.twig', array(
-            'media'     => $media,
-            'formats'   => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
-            'format'    => $format
-        ));
-    }
-
-    /**
-     * @throws NotFoundHttpException
-     *
-     * @param string $id
-     * @param string $format
-     *
-     * @return Response
-     */
     public function downloadAction($id, $format = 'reference')
     {
         $media = $this->getMedia($id);
@@ -95,6 +68,33 @@ class MediaController extends Controller
         }
 
         return $response;
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     *
+     * @param string $id
+     * @param string $format
+     *
+     * @return Response
+     */
+    public function viewAction($id, $format = 'reference')
+    {
+        $media = $this->getMedia($id);
+
+        if (!$media) {
+            throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
+        }
+
+        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())) {
+            throw new AccessDeniedException();
+        }
+
+        return $this->render('SonataMediaBundle:Media:view.html.twig', array(
+                'media'     => $media,
+                'formats'   => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
+                'format'    => $format
+            ));
     }
 
     /**

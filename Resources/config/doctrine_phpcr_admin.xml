@@ -37,6 +37,7 @@
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key="list">SonataMediaBundle:MediaAdmin:list.html.twig</argument>
+                    <argument key="edit">SonataMediaBundle:MediaAdmin:edit.html.twig</argument>
                 </argument>
             </call>
 

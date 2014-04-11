@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label important">Pomembno</span> medijske vsebine boste izpostavili <strong>zunanjim storitvam</strong>.<br />
+                        <span class="label label-warning">Pomembno</span> medijske vsebine boste izpostavili <strong>zunanjim storitvam</strong>.<br />
                         Če so vsebine zasebne narave, prosimo ne uporabljajte te storitve.
                     ]]>
                 </target>

@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label important">Ważne</span> jeśli masz zamiar wystawiać media na <strong> zewnętrzną usługę </ strong>. <br />
+                        <span class="label label-warning">Ważne</span> jeśli masz zamiar wystawiać media na <strong> zewnętrzną usługę </ strong>. <br />
                          Jeśli pracujesz nad poufnymi materiałami, proszę nie używać tej usługi.
                     ]]>
                 </target>

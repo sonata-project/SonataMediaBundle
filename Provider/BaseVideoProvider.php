@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -42,6 +43,14 @@ abstract class BaseVideoProvider extends BaseProvider
 
         $this->browser = $browser;
         $this->metadata = $metadata;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviderMetadata()
+    {
+        return new Metadata($this->getName(), $this->getName().".description", null, "SonataMediaBundle", array('class' => 'fa fa-video-camera'));
     }
 
     /**
