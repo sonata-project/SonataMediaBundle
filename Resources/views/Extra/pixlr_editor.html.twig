@@ -72,14 +72,9 @@ file that was distributed with this source code.
 {% block sonata_left_side %}{% endblock %}
 {% block sonata_wrapper %}
     <section class="content">
-        <div class="row">
-            <div class="alert alert-warning">
-                {{ "label.pixlr_warning"|trans({}, "SonataMediaBundle")|raw }}
-            </div>
-        </div>
 
         <div class="row">
-            <div class="col-sm-8 centered">
+            <div class="col-sm-6 centered">
                 <div class="row">
                     <div class="col-sm-6">
                         <a href="{{ url('sonata_media_pixlr_edit', {'id': media|sonata_urlsafeid , 'mode': 'express'}) }}" class="pixlr-box">
@@ -94,9 +89,15 @@ file that was distributed with this source code.
                         </a>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12 centered">
+                        <div class="alert alert-warning">
+                            {{ "label.pixlr_warning"|trans({}, "SonataMediaBundle")|raw }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div style="clear: both"></div>
     </section>
 {% endblock %}
