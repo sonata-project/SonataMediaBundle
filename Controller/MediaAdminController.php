@@ -19,37 +19,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MediaAdminController extends Controller
 {
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException|\Symfony\Component\Security\Core\Exception\AccessDeniedException
-     *
-     * @param string $id
-     *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
-     */
-    public function showAction($id = null)
-    {
-        if (false === $this->admin->isGranted('VIEW')) {
-            throw new AccessDeniedException();
-        }
-
-        $media = $this->admin->getObject($id);
-
-        if (!$media) {
-            throw new NotFoundHttpException('unable to find the media with the id');
-        }
-
-        return $this->render('SonataMediaBundle:MediaAdmin:show.html.twig', array(
-            'media'         => $media,
-            'formats'       => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
-            'format'        => $this->get('request')->get('format', 'reference'),
-            'base_template' => $this->getBaseTemplate(),
-            'admin'         => $this->admin,
-            'security'      => $this->get('sonata.media.pool')->getDownloadSecurity($media),
-            'action'        => 'view',
-            'pixlr'         => $this->container->has('sonata.media.extra.pixlr') ? $this->container->get('sonata.media.extra.pixlr') : false,
-        ));
-    }
-
-    /**
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
      */
