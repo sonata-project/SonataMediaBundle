@@ -14,11 +14,25 @@ file that was distributed with this source code.
 {% block title %}{{ 'title_select_provider'|trans({}, 'SonataMediaBundle') }}{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for code, provider in providers %}
-            <li><a href="{{ admin.generateUrl('create', {'provider': provider.name}) }}">{{ provider.name|trans({}, 'SonataMediaBundle') }}</a></li>
-        {% else %}
-            <li>{{ 'no_provider_available'|trans({}, 'SonataMediaBundle') }}</li>
-        {% endfor %}
-    </ul>
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="box-title">
+                {{ block('title') }}
+            </h3>
+        </div>
+        <div class="box-body">
+            {% for code, provider in providers %}
+                <a href="{{ admin.generateUrl('create', {'provider': provider.name}) }}"
+                   class="btn btn-app"
+                   data-toggle="tooltip"
+                   data-placement="top"
+                   title="{{ provider.providerMetadata.description|trans({}, provder.providerMetadata.domain|default('SonataMediaBundle')) }}"
+                        >
+                    <i class="{{ provider.providerMetadata.image }}"></i> {{ provider.providerMetadata.title|trans({}, provder.providerMetadata.domain|default('SonataMediaBundle')) }}
+                </a>
+            {% else %}
+                <span class="alert alert-info">{{ 'no_provider_available'|trans({}, 'SonataMediaBundle') }}</span>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

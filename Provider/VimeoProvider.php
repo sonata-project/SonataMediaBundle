@@ -73,6 +73,14 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
+    public function getIcon()
+    {
+        return 'fa fa-vimeo-square';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function fixBinaryContent(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {

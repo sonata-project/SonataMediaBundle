@@ -60,6 +60,13 @@ class FileProvider extends BaseProvider
     }
 
     /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return 'fa fa-file-text-o';
+    }
+    /**
      * {@inheritdoc}
      */
     public function getReferenceImage(MediaInterface $media)

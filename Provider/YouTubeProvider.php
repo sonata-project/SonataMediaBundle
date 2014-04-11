@@ -43,6 +43,14 @@ class YouTubeProvider extends BaseVideoProvider
     }
 
     /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return 'fa fa-youtube';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
@@ -141,13 +149,13 @@ class YouTubeProvider extends BaseVideoProvider
             // Values: 1. Default is based on user preference. Setting to 1 will cause closed captions
             // to be shown by default, even if the user has turned captions off.
             'cc_load_policy' => 1,
-            
+
             // Values: 'window' or 'opaque' or 'transparent'.
             // When wmode=window, the Flash movie is not rendered in the page.
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
             'wmode' => 'window'
-            
+
         );
 
         $default_player_parameters = array(
@@ -171,7 +179,7 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
             'wmode' => $default_player_url_parameters['wmode']
-            
+
         );
 
         $player_url_parameters = array_merge($default_player_url_parameters, isset($options['player_url_parameters']) ? $options['player_url_parameters'] : array());

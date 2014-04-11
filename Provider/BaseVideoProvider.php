@@ -45,6 +45,14 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return 'fa fa-video-camera';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getReferenceImage(MediaInterface $media)

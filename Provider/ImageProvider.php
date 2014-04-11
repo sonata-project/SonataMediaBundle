@@ -42,6 +42,14 @@ class ImageProvider extends FileProvider
     }
 
     /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return 'fa fa-picture-o';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())

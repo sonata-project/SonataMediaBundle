@@ -10,6 +10,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Sonata\CoreBundle\Model\MetadataInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
@@ -197,6 +198,21 @@ interface MediaProviderInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * @return mixed
+     */
+    public function getIcon();
+
+    /**
+     * @return string
+     */
+    public function getDescription();
+
+    /**
+     * @return MetadataInterface
+     */
+    public function getProviderMetadata();
 
     /**
      *

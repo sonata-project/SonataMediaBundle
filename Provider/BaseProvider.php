@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -132,6 +133,30 @@ abstract class BaseProvider implements MediaProviderInterface
         }
 
         return $baseName.$format;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviderMetadata()
+    {
+        return new Metadata($this->getName(), $this->getDescription(), $this->getIcon(), "SonataMediaBundle");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescription()
+    {
+        return $this->getName().".description";
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return "fa fa-file";
     }
 
     /**
