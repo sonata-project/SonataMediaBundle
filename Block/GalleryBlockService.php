@@ -93,17 +93,15 @@ class GalleryBlockService extends BaseBlockService
     public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'gallery'   => false,
-            'title'     => false,
-            'context'   => false,
-            'format'    => false,
-            'pauseTime' => 3000,
-            'animSpeed' => 300,
-            'startPaused'  => false,
-            'directionNav' => true,
-            'progressBar'  => true,
-            'template'     => 'SonataMediaBundle:Block:block_gallery.html.twig',
-            'galleryId'    => false
+            'gallery'     => false,
+            'title'       => false,
+            'context'     => false,
+            'format'      => false,
+            'pauseTime'   => 3000,
+            'startPaused' => false,
+            'wrap'        => true,
+            'template'    => 'SonataMediaBundle:Block:block_gallery.html.twig',
+            'galleryId'   => false
         ));
     }
 
@@ -151,10 +149,8 @@ class GalleryBlockService extends BaseBlockService
                 array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
                 array($builder, null, array()),
                 array('pauseTime', 'number', array()),
-                array('animSpeed', 'number', array()),
                 array('startPaused', 'sonata_type_boolean', array()),
-                array('directionNav', 'sonata_type_boolean', array()),
-                array('progressBar', 'sonata_type_boolean', array()),
+                array('wrap', 'sonata_type_boolean', array()),
             )
         ));
     }
@@ -202,26 +198,6 @@ class GalleryBlockService extends BaseBlockService
     public function preUpdate(BlockInterface $block)
     {
         $block->setSetting('galleryId', is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getStylesheets($media)
-    {
-        return array(
-            '/bundles/sonatamedia/nivo-gallery/nivo-gallery.css'
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getJavascripts($media)
-    {
-        return array(
-            '/bundles/sonatamedia/nivo-gallery/jquery.nivo.gallery.js'
-        );
     }
 
     /**
