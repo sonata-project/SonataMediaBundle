@@ -73,6 +73,17 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
         $this->assertEquals('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
     }
+
+    public function testMetadata()
+    {
+        $provider = $this->getProvider();
+
+        $this->assertEquals("test", $provider->getProviderMetadata()->getTitle());
+        $this->assertEquals("test.description", $provider->getProviderMetadata()->getDescription());
+        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertEquals("fa fa-file", $provider->getProviderMetadata()->getOption('class'));
+        $this->assertEquals("SonataMediaBundle", $provider->getProviderMetadata()->getDomain());
+    }
 }
 
 class TestProvider extends BaseProvider
