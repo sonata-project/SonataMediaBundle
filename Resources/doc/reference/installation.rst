@@ -17,7 +17,7 @@ Retrieve the bundle with composer:
 
 .. code-block:: sh
 
-    php composer.phar require sonata-project/media-bundle --no-update
+    php composer.phar require sonata-project/media-bundle
 
 
 Register the new bundle into your AppKernel:
@@ -141,7 +141,7 @@ Also, you can determine the resizer to use; the default value is
 At this point, the bundle is not yet ready. You need to generate the correct
 entities for the media::
 
-    php app/console sonata:easy-extends:generate SonataMediaBundle
+    php app/console sonata:easy-extends:generate SonataMediaBundle -d src
 
 .. note::
 
