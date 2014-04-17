@@ -9,6 +9,13 @@ This bundle is mainly dependant of the ``SonataAdminBundle`` and the ``SonataDoc
  * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/mongo-admin/master/doc/reference/installation.html
+ 
+Additional Base bundles
+------------
+
+If you plan on integrating this bundle with the ``SonataAdminBundle`` you'll need to also install ``SonataIntlBundle``. The Twig templates that are used depend on it.
+
+ * http://sonata-project.org/bundles/intl/master/doc/reference/installation.html
 
 Installation
 ------------
@@ -17,7 +24,7 @@ Retrieve the bundle with composer:
 
 .. code-block:: sh
 
-    php composer.phar require sonata-project/media-bundle --no-update
+    php composer.phar require sonata-project/media-bundle
 
 
 Register the new bundle into your AppKernel:
