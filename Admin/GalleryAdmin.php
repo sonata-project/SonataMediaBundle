@@ -39,6 +39,12 @@ class GalleryAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        // define group zoning
+        $formMapper
+            ->with($this->trans('Gallery'), array('class' => 'col-md-9'))
+            ->with($this->trans('Options'), array('class' => 'col-md-3'))
+        ;
+
         $context = $this->getPersistentParameter('context');
 
         if (!$context) {
@@ -56,23 +62,27 @@ class GalleryAdmin extends Admin
         }
 
         $formMapper
-            ->add('context', 'sonata_type_translatable_choice', array(
-                'choices' => $contexts,
-                'catalogue' => 'SonataMediaBundle'
-            ))
-            ->add('enabled', null, array('required' => false))
-            ->add('name')
-            ->add('defaultFormat', 'choice', array('choices' => $formats))
-            ->add('galleryHasMedias', 'sonata_type_collection', array(
-                    'cascade_validation' => true,
-                ), array(
-                    'edit'              => 'inline',
-                    'inline'            => 'table',
-                    'sortable'          => 'position',
-                    'link_parameters'   => array('context' => $context),
-                    'admin_code'        => 'sonata.media.admin.gallery_has_media'
+            ->with('Options')
+                ->add('context', 'sonata_type_translatable_choice', array(
+                    'choices' => $contexts,
+                    'catalogue' => 'SonataMediaBundle'
+                ))
+                ->add('enabled', null, array('required' => false))
+                ->add('name')
+                ->add('defaultFormat', 'choice', array('choices' => $formats))
+            ->end()
+            ->with('Gallery')
+                ->add('galleryHasMedias', 'sonata_type_collection', array(
+                        'cascade_validation' => true,
+                    ), array(
+                        'edit'              => 'inline',
+                        'inline'            => 'table',
+                        'sortable'          => 'position',
+                        'link_parameters'   => array('context' => $context),
+                        'admin_code'        => 'sonata.media.admin.gallery_has_media'
+                    )
                 )
-            )
+            ->end()
         ;
     }
 

@@ -357,6 +357,14 @@
                 <source>sonata_template_box_media_gallery_block</source>
                 <target>Ceci est un bloc de gallerie de médias. Vous pouvez le surcharger librement.</target>
             </trans-unit>
+            <trans-unit id="list.label_description">
+                <source>list.label_description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="list.label_size">
+                <source>list.label_size</source>
+                <target>Taille</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
