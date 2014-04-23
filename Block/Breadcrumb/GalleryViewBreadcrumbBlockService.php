@@ -25,7 +25,7 @@ class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockServic
      */
     public function getName()
     {
-        return 'sonata.media.block.breadcrumb_view';
+        return 'Breadcrumb View: Media Gallery';
     }
 
     /**
