@@ -125,34 +125,16 @@ file that was distributed with this source code.
 
         <script type="text/javascript">
             window.closeModal = function() {
-                $('#pixlr-modal').modal('hide');
+                jQuery('#pixlr-modal').modal('hide');
             }
 
-            $('button.pixlr-link').on('click', function(e) {
+            jQuery('button.pixlr-link').on('click', function(e) {
                 e.preventDefault();
-                var url = $(this).attr('data-href');
-                $("#pixlr-modal-body").html('<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+url+'"></iframe>');
-
+                var url = jQuery(this).attr('data-href');
+                jQuery("#pixlr-modal-body").html('<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+url+'"></iframe>');
             });
 
-            $('#pixlr-modal').on('show.bs.modal', function () {
-
-                $(this).find('.modal-dialog').css({
-                    width:  '90%', //choose your width
-                    height: '85%',
-                    padding: '0'
-                });
-                $(this).find('.modal-content').css({
-                    'border-radius':'0',
-                    height: '100%',
-                    'padding':'0'
-                });
-                $(this).find('.modal-body').css({
-                    width:'auto',
-                    height:'100%',
-                    'padding':'0'
-                });
-            });
+            Admin.setup_list_modal(jQuery('#pixlr-modal'));
         </script>
     {% endif %}
 
