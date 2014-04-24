@@ -98,8 +98,6 @@ class MediaBlockService extends BaseBlockService
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
-        $contextChoices = $this->getContextChoices();
-
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
             $this->load($block);
         }
@@ -109,25 +107,10 @@ class MediaBlockService extends BaseBlockService
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
                 array('title', 'text', array('required' => false)),
-                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
                 array($this->getMediaBuilder($formMapper), null, array()),
+                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
             )
         ));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getContextChoices()
-    {
-        $contextChoices = array();
-
-        foreach ($this->getMediaPool()->getContexts() as $name => $context) {
-            $contextChoices[$name] = $name;
-        }
-
-        return $contextChoices;
     }
 
     /**
@@ -139,12 +122,14 @@ class MediaBlockService extends BaseBlockService
     {
         $formatChoices = array();
 
-        if ($media instanceof MediaInterface) {
-            $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
+        if (!$media instanceof MediaInterface) {
+            return $formatChoices;
+        }
 
-            foreach ($formats as $code => $format) {
-                $formatChoices[$code] = $code;
-            }
+        $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
+
+        foreach ($formats as $code => $format) {
+            $formatChoices[$code] = $code;
         }
 
         return $formatChoices;
@@ -177,16 +162,9 @@ class MediaBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-    {
-
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
+
         return $this->renderResponse($blockContext->getTemplate(), array(
             'media'     => $blockContext->getSetting('mediaId'),
             'block'     => $blockContext->getBlock(),
