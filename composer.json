@@ -1,5 +1,5 @@
 {
-    "name": "warxcell/media-bundle",
+    "name": "sonata-project/media-bundle",
     "type": "symfony-bundle",
     "description": "Symfony SonataMediaBundle",
     "keywords": ["media", "sonata", "youtube", "dailymotion", "vimeo", "pdf", "file", "upload"],
