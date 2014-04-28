@@ -33,7 +33,7 @@ class MediaManager extends BasePHPCRManager
             $entity->setProviderName(func_get_arg(2));
         }
 
-        if ($andFlush && is_bool($andFlush)) {
+        if (is_bool($andFlush)) {
             parent::save($entity, $andFlush);
         } else {
             // BC compatibility with previous signature
