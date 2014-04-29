@@ -51,8 +51,8 @@ file that was distributed with this source code.
                             <table class="table">
                                 <tr>
                                     <th>{{ 'label.size'|trans({}, 'SonataMediaBundle') }}</th>
-                                    <td>{{ object.width|number_format_decimal }}px x {{ object.height|number_format_decimal }}px
-                                        {% if object.size > 0 %}({{ object.size|number_format_decimal }}o){% endif %}</td>
+                                    <td>{{ object.width|number_format }}px x {{ object.height|number_format }}px
+                                        {% if object.size > 0 %}({{ object.size|number_format }}o){% endif %}</td>
                                 <tr>
                                 <tr>
                                     <th>{{ 'label.content_type'|trans({}, 'SonataMediaBundle') }}</th>
