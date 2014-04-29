@@ -55,7 +55,6 @@ class FeatureMediaBlockService extends MediaBlockService
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
-        $contextChoices = $this->getContextChoices();
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
         $translator = $this->container->get('translator');
@@ -68,23 +67,10 @@ class FeatureMediaBlockService extends MediaBlockService
                     'left'  => $translator->trans('feature_left_choice', array(), 'SonataMediaBundle'),
                     'right' => $translator->trans('feature_right_choice', array(), 'SonataMediaBundle')
                 ))),
-                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
                 array($this->getMediaBuilder($formMapper), null, array()),
+                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
             )
         ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
-    {
-        return $this->renderResponse($blockContext->getTemplate(), array(
-            'media'     => $blockContext->getSetting('mediaId'),
-            'block'     => $blockContext->getBlock(),
-            'settings'  => $blockContext->getSettings()
-        ), $response);
     }
 
     /**

@@ -164,6 +164,15 @@ class MediaBlockService extends BaseBlockService
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
+        // make sure we have a valid format
+        $media = $blockContext->getBlock()->getSetting('mediaId');
+        if ($media instanceof MediaInterface) {
+            $choices = $this->getFormatChoices($media);
+
+            if (!array_key_exists($blockContext->getSetting('format'), $choices)) {
+                $blockContext->setSetting('format', key($choices));
+            }
+        }
 
         return $this->renderResponse($blockContext->getTemplate(), array(
             'media'     => $blockContext->getSetting('mediaId'),
@@ -179,7 +188,7 @@ class MediaBlockService extends BaseBlockService
     {
         $media = $block->getSetting('mediaId', null);
 
-        if ($media) {
+        if (is_int($media)) {
             $media = $this->mediaManager->findOneBy(array('id' => $media));
         }
 
