@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 #}
 
-{% extends "SonataAdminBundle::standard_layout.html.twig" %}
+{% extends "SonataAdminBundle::empty_layout.html.twig" %}
 
 
 {% block title %}Pixlr Editor{% endblock title %}
@@ -22,10 +22,6 @@ file that was distributed with this source code.
             background: none repeat scroll 0 0 #222222;
             border-bottom: 5px solid #B6B6B6;
             padding: 15px 0;
-        }
-
-        body.fixed .wrapper {
-            margin-top: 90px;
         }
 
         a.pixlr-box {
@@ -64,14 +60,14 @@ file that was distributed with this source code.
     </style>
 {% endblock stylesheets %}
 
-{% block logo %}
-    <img src="{{ asset('bundles/sonatamedia/extra/pixlr/pixlr.png')}}" alt="Pixlr"/>
-{% endblock %}
 
-{% block sonata_nav %}{% endblock %}
-{% block sonata_left_side %}{% endblock %}
 {% block sonata_wrapper %}
     <section class="content">
+        <div class="row header">
+           <div class="col-sm-12">
+               <img src="{{ asset('bundles/sonatamedia/extra/pixlr/pixlr.png')}}" alt="Pixlr"/>
+           </div>
+       </div>
 
         <div class="row">
             <div class="col-sm-6 centered">
@@ -98,6 +94,5 @@ file that was distributed with this source code.
                 </div>
             </div>
         </div>
-
     </section>
 {% endblock %}
