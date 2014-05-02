@@ -7,6 +7,11 @@ A [BC BREAK] means the update will break the project for many reasons:
 * new dependencies
 * class refactoring
 
+
+### 2014-05-02
+
+* [BC BREAK] Add dependency to SonataIntlBundle, just enable the bundle in your AppKernel.
+
 ### 2014-04-11
 
 * [BC BREAK] Removed admin show action, now merged with admin edit action. As a result, controller method, route and template no longer exist.
