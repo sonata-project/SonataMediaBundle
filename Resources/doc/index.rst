@@ -37,6 +37,7 @@ Reference Guide
    reference/advanced_configuration
    reference/extra
    reference/api
+   reference/troubleshooting
 
 Available services
 ------------------
