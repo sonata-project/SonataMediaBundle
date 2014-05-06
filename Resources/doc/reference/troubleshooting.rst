@@ -2,11 +2,17 @@ Troubleshooting
 ===============
 
 Media Formats
---------------
+-------------
 
-You can define formats per provider type, there's something important that you should bear in mind, the quality for each format type should be 100 as maximun value. Do not confuse the value belonging to the format quality by the format height.
+You can define formats per provider type, there is something important that you should bear in mind, the quality for each format type should get a numeric value no higher than 100, this is the maximun value you should set. Do not confuse the value belonging to the format quality by the format height.
 
-Let's suppose you got a HQ format, so you want a 1920 value as width in your format, then the quality should be 100 as maximun value. Don't make the mistake of setting 1080 in the quality value.
+#### Prevent this possible issue:
+
+> **imagepng(): gd-png error: compression level must be 0 through 9**
+
+#### Use case:
+
+For example, let's suppose you got a format called hq, and you want to set 1920 as the width value in your format, then the quality should be 100 as maximun value. Don't make the mistake of setting 1080 in the quality value.
 
 Please take a look at how the images are compressed by this function in the image class:
 
@@ -65,7 +71,6 @@ Please take a look at how the images are compressed by this function in the imag
 
         $this->resetExceptionHandler();
     }
-
 
 Finally your settings in your sonataMedia parameters will look like this:
 
