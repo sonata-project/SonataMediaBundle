@@ -25,6 +25,12 @@
             <argument>%sonata.media.resizer.square.adapter.mode%</argument>
             <argument type="service" id="sonata.media.metadata.proxy" />
         </service>
+           
+        <service id="sonata.media.resizer.crop" class="Application\Sonata\MediaBundle\Resizer\CropResizer">
+            <argument type="service" id="sonata.media.adapter.image.gd" />
+            <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
+            <argument type="service" id="sonata.media.metadata.proxy" />
+        </service>
 
         <!-- CDN abstraction service -->
         <service id="sonata.media.cdn.server" class="Sonata\MediaBundle\CDN\Server">
