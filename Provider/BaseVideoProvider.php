@@ -27,6 +27,7 @@ abstract class BaseVideoProvider extends BaseProvider
 {
     protected $browser;
     protected $metadata;
+	private $thumbnail;
 
     /**
      * @param string                                           $name
@@ -44,6 +45,10 @@ abstract class BaseVideoProvider extends BaseProvider
         $this->metadata = $metadata;
     }
 
+	public function setThumbnail(ThumbnailInterface $Thumbnail) {
+		$this->thumbnail = $Thumbnail;
+	}
+	
     /**
      * {@inheritdoc}
      */
@@ -74,14 +79,10 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function generatePublicUrl(MediaInterface $media, $format)
-    {
-        return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        ), $media->getCdnIsFlushable());
-    }
+    public function generatePublicUrl(MediaInterface $media, $format) {
+		$path = $this->thumbnail->generatePublicUrl($this, $media, $format);
+		return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
+	}
 
     /**
      * {@inheritdoc}

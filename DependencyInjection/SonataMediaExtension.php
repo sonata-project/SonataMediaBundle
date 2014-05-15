@@ -142,6 +142,22 @@ class SonataMediaExtension extends Extension
         ;
 
         $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(7, $config['providers']['youtube']['html5']);
+		
+		$videoProviders = array(
+			'sonata.media.provider.youtube',
+			'sonata.media.provider.dailymotion',
+			'sonata.media.provider.vimeo'
+		);
+		foreach ($videoProviders as $videoProvider) {
+			$videoProviderDefinition = $container->getDefinition($videoProvider);
+			$methodCalls = $videoProviderDefinition->getMethodCalls();
+			foreach ($methodCalls as &$methodCall) {
+				if ($methodCall[0] == 'setThumbnail') {
+					$methodCall[1][0] = new Reference($config['providers'][str_replace('sonata.media.provider.', '', $videoProvider)]['thumbnail']);
+				}
+			}
+			$videoProviderDefinition->setMethodCalls($methodCalls);
+		}
     }
 
     /**
