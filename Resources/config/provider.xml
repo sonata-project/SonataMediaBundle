@@ -85,6 +85,9 @@
                     <argument key='helper_view'>SonataMediaBundle:Provider:view_youtube.html.twig</argument>
                 </argument>
             </call>
+            <call method="setThumbnail">
+	     <argument type="service" id="sonata.media.thumbnail.format" />
+	 </call>
         </service>
 
         <service id="sonata.media.provider.dailymotion" class="%sonata.media.provider.dailymotion.class%">
@@ -103,6 +106,9 @@
                     <argument key='helper_view'>SonataMediaBundle:Provider:view_dailymotion.html.twig</argument>
                 </argument>
             </call>
+            <call method="setThumbnail">
+	     <argument type="service" id="sonata.media.thumbnail.format" />
+	 </call>
         </service>
 
         <service id="sonata.media.provider.vimeo" class="%sonata.media.provider.vimeo.class%">
@@ -121,6 +127,9 @@
                     <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
                 </argument>
             </call>
+            <call method="setThumbnail">
+	     <argument type="service" id="sonata.media.thumbnail.format" />
+	 </call>
         </service>
 
         <service id="sonata.media.buzz.connector.file_get_contents" class="Buzz\Client\FileGetContents" />
