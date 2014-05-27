@@ -57,7 +57,7 @@ class YouTubeProvider extends BaseVideoProvider
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
 
-        // Override html5 value if $options['html5'] is a boolean
+        // Override html5 value if $options['html5'] is not set
         if (!isset($options['html5'])) {
             $options['html5'] = $this->html5;
         }
@@ -211,7 +211,7 @@ class YouTubeProvider extends BaseVideoProvider
         }
 
         if (preg_match("/(?<=v(\=|\/))([-a-zA-Z0-9_]+)|(?<=youtu\.be\/)([-a-zA-Z0-9_]+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[2]);
+            $media->setBinaryContent($matches[0]);
         }
     }
 
