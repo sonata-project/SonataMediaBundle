@@ -47,7 +47,7 @@ class FormatThumbnail implements ThumbnailInterface
     {
         return sprintf('%s/thumb_%s_%s.%s',
             $provider->generatePath($media),
-            $media->getId(),
+            $media->getId() ?: $media->getDeletedId(),
             $format,
             $this->getExtension($media)
         );
