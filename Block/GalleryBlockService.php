@@ -101,7 +101,7 @@ class GalleryBlockService extends BaseBlockService
             'startPaused' => false,
             'wrap'        => true,
             'template'    => 'SonataMediaBundle:Block:block_gallery.html.twig',
-            'galleryId'   => false
+            'galleryId'   => null
         ));
     }
 
