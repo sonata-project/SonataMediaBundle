@@ -13,7 +13,6 @@
         <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
             <argument>%sonata.media.media.class%</argument>
             <argument type="service" id="doctrine" />
-            <argument type="service" id="sonata.media.pool" />
         </service>
 
         <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
