@@ -89,7 +89,8 @@ abstract class BaseMediaAdmin extends Admin
             ->add('size')
             ->add('name')
             ->add('description')
-            ->add('copyright');
+            ->add('copyright')
+        ;
     }
 
     /**
