@@ -74,10 +74,9 @@ Please take a look at how the images are compressed by this function in the imag
 
 Finally your settings in your sonataMedia parameters will look like this:
 
-.. code-block::
+.. code-block:: yaml
 
     # app/config/config.yml
-
     sonata_media:
         # if you don't use default namespace configuration
         #class:
