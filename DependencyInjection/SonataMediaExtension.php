@@ -205,6 +205,7 @@ class SonataMediaExtension extends Extension
             'targetEntity'  => $config['class']['gallery_has_media'],
             'cascade'       => array(
                 'persist',
+                'remove'
             ),
             'mappedBy'      => 'media',
             'orphanRemoval' => false,
