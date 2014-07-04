@@ -51,7 +51,7 @@ class Pool
             if (empty($name)) {
                 $message .= 'Did you forget to call Sonata\MediaBundle\Model\MediaInterface::setProviderName("some.service.provider") ?';
             } elseif (!empty($this->providers)) {
-                $message .= 'Available providers:' . PHP_EOL . implode(PHP_EOL, array_keys($this->providers));
+                $message .= 'Available providers:' . PHP_EOL . implode(PHP_EOL, $this->getProviderList());
             }
             throw new \RuntimeException($message);
         }
