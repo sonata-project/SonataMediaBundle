@@ -12,7 +12,7 @@
             </trans-unit>
             <trans-unit id="gallery">
                 <source>gallery</source>
-                <target>Galeria</target>
+                <target>Galería</target>
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
@@ -52,11 +52,11 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_show">
                 <source>breadcrumb.link_media_show</source>
-                <target>breadcrumb.link_media_show</target>
+                <target>Mostrar</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
-                <target>Galerias</target>
+                <target>Galerías</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
@@ -152,7 +152,7 @@
             </trans-unit>
             <trans-unit id="label.length">
                 <source>label.length</source>
-                <target>label.length</target>
+                <target>Longitud</target>
             </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
@@ -188,7 +188,7 @@
             </trans-unit>
             <trans-unit id="label.public_url">
                 <source>label.public_url</source>
-                <target>URL publica</target>
+                <target>URL pública</target>
             </trans-unit>
             <trans-unit id="label.name">
                 <source>label.name</source>
@@ -242,7 +242,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label label-warning">Importante</span> usted esta por exponer el archivo multimedia en un <strong>servicio externo</strong>. <br />
+                        <span class="label label-warning">Importante</span> usted está por exponer el archivo multimedia en un <strong>servicio externo</strong>. <br />
                         Si esta trabajando sobre materiales confidenciales, por favor no use este servicio.
                     ]]>
                 </target>
@@ -261,7 +261,7 @@
                 <target>
                     <![CDATA[
                         <strong style="color: white">Editor Avanzado</strong> <br />
-                        Solo usuarios experimentados
+                        Sólo usuarios experimentados
                     ]]>
                 </target>
             </trans-unit>
@@ -279,15 +279,15 @@
             </trans-unit>
             <trans-unit id="list.label_name">
                 <source>list.label_name</source>
-                <target>list.label_name</target>
+                <target>Nombre</target>
             </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
-                <target>list.label_context</target>
+                <target>Contexto</target>
             </trans-unit>
             <trans-unit id="list.label_default_format">
                 <source>list.label_default_format</source>
-                <target>list.label_default_format</target>
+                <target>Formato</target>
             </trans-unit>
             <trans-unit id="list.label__action">
                 <source>list.label__action</source>
@@ -343,27 +343,27 @@
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>link_media</target>
+                <target>Asocia el objeto a un nuevo media</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>no_linked_media</target>
+                <target>Ningún media asociado al objeto</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
-                <target>sonata_media_gallery_index</target>
+                <target>Galería</target>
             </trans-unit>
             <trans-unit id="sonata_template_box_media_gallery_block">
                 <source>sonata_template_box_media_gallery_block</source>
-                <target>This is the gallery media block. Feel free to override it.</target>
+                <target>Este es el bloque media para la gelería. Puedes sobreescribirlo cuando gustes.</target>
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
-                <target>list.label_description</target>
+                <target>Descripción</target>
             </trans-unit>
             <trans-unit id="list.label_size">
                 <source>list.label_size</source>
-                <target>list.label_size</target>
+                <target>Tamaño</target>
             </trans-unit>
         </body>
     </file>
