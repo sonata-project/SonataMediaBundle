@@ -5,7 +5,7 @@
                 {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
             </div>
 
-            {% if sonata_admin_enabled is defined and sonata_admin_enabled %}
+            {% if sonata_admin_enabled is defined and sonata_admin_enabled and sonata_admin.field_description.associationAdmin.hasRoute('edit') %}
                 <a href="{{ sonata_admin.field_description.associationAdmin.generateObjectUrl('edit', value) }}"><strong>{{ value.name }}</strong></a>
             {% else %}
                 <strong>{{ value.name }}</strong>
