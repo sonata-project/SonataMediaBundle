@@ -285,6 +285,9 @@ added to the provider pool.
                 <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
             </argument>
         </call>
+        <call method="setResizer">
+            <argument type="service" id="sonata.media.resizer.simple" />
+        </call>
     </service>
 
 The last important part is how the vimeo media should be displayed.
