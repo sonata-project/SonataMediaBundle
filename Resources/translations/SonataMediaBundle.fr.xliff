@@ -325,6 +325,26 @@
                 <source>sonata.media.provider.file</source>
                 <target>Fichier</target>
             </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>Ajouter une vidéo venant de dailymotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>Ajouter une vidéo venant de YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Ajouter une vidéo venant de Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Ajouter une image</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Ajouter un document</target>
+            </trans-unit>
             <trans-unit id="title.media_preview">
                 <source>title.media_preview</source>
                 <target>Visualiser</target>
