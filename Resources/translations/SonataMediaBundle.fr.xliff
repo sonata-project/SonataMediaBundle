@@ -132,7 +132,7 @@
             </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
-                <target>A raffraichir sur le CDN</target>
+                <target>À rafraîchir sur le CDN</target>
             </trans-unit>
             <trans-unit id="form.label_description">
                 <source>form.label_description</source>
@@ -152,7 +152,7 @@
             </trans-unit>
             <trans-unit id="label.length">
                 <source>label.length</source>
-                <target>label.length</target>
+                <target>Longueur</target>
             </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
@@ -180,7 +180,7 @@
             </trans-unit>
             <trans-unit id="label.to_be_flushed">
                 <source>label.to_be_flushed</source>
-                <target>A vider</target>
+                <target>À vider</target>
             </trans-unit>
             <trans-unit id="label.flushed_at">
                 <source>label.flushed_at</source>
@@ -208,11 +208,11 @@
             </trans-unit>
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
-                <target>A raffraichir sur le CDN</target>
+                <target>À rafraîchir sur le CDN</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
-                <target>Change video</target>
+                <target>Changer la video</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
@@ -363,11 +363,11 @@
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>link_media</target>
+                <target>Média lié</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>no_linked_media</target>
+                <target>Aucun média lié</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
