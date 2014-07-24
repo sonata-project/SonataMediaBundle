@@ -71,7 +71,10 @@ abstract class BaseProvider implements MediaProviderInterface
             return;
         }
 
-        $this->doTransform($media);
+        try {
+            $this->doTransform($media);
+        } catch (\Exception $e) {
+        }
     }
 
     /**

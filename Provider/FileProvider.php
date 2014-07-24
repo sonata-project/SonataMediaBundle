@@ -218,6 +218,12 @@ class FileProvider extends BaseProvider
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
 
+        if ($media->getBinaryContent()->getClientSize() == 0) {
+            $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)));
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+            throw new UploadException('The uploaded file is not found');
+        }
+
         // this is the name used to store the file
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
@@ -370,14 +376,19 @@ class FileProvider extends BaseProvider
             throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));
         }
 
+        if ($media->getBinaryContent() instanceof UploadedFile && $media->getBinaryContent()->getClientSize() == 0) {
+             $errorElement
+                ->with('binaryContent')
+                    ->addViolation('The file is too big, max size: '. ini_get('upload_max_filesize'))
+                ->end();
+        }
         if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid extensions')
                 ->end();
         }
-
-        if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+        if ($media->getBinaryContent()->getFilename() != '' && !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid mime type : ' . $media->getBinaryContent()->getMimeType())
