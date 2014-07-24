@@ -45,9 +45,13 @@ abstract class BaseVideoProvider extends BaseProvider
         $this->metadata = $metadata;
     }
 
-	public function setThumbnail(ThumbnailInterface $Thumbnail) {
-		$this->thumbnail = $Thumbnail;
-	}
+    /**
+     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
+     */
+    public function setThumbnail(ThumbnailInterface $thumbnail) 
+    {
+	$this->thumbnail = $thumbnail;
+    }
 	
     /**
      * {@inheritdoc}
