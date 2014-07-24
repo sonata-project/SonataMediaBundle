@@ -218,7 +218,7 @@ class FileProvider extends BaseProvider
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
 
-        if ($media->getBinaryContent()->getClientSize() == 0) {
+        if ($media->getBinaryContent() instanceof UploadedFile && $media->getBinaryContent()->getClientSize() == 0) {
             $media->setProviderReference(sha1($media->getName() . rand(11111, 99999)));
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
             throw new UploadException('The uploaded file is not found');
