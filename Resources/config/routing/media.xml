@@ -12,5 +12,6 @@
     <route id="sonata_media_download" pattern="/download/{id}/{format}">
         <default key="_controller">SonataMediaBundle:Media:download</default>
         <default key="format">reference</default>
+        <requirement key="id">.*</requirement>
     </route>
 </routes>

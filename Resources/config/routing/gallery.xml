@@ -10,6 +10,7 @@
 
     <route id="sonata_media_gallery_view" pattern="/view/{id}">
         <default key="_controller">SonataMediaBundle:Gallery:view</default>
+        <requirement key="id">.*</requirement>
     </route>
 
 </routes>
