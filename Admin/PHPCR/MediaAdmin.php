@@ -34,7 +34,7 @@ class MediaAdmin extends Admin
      */
     public function createQuery($context = 'list')
     {
-        $query = $this->getModelManager()->createQuery($this->getClass(), '', $this->root);
+        $query = $this->getModelManager()->createQuery($this->getClass(), 'a', $this->root);
 
         foreach ($this->extensions as $extension) {
             $extension->configureQuery($this, $query, $context);
