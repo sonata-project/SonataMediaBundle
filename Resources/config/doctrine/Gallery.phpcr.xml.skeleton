@@ -13,7 +13,7 @@
     -->
 
     <document name="Application\Sonata\MediaBundle\PHPCR\Gallery"
-              repository-class="Application\Sonata\MediaBundle\PHPCR\GalleryRepository">
+              repository-class="Sonata\MediaBundle\PHPCR\GalleryRepository">
 
         <id name="id" type="id">
             <generator strategy="repository" />
