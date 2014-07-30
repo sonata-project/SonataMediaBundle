@@ -38,7 +38,7 @@ class MediaController extends Controller
      */
     public function getMedia($id)
     {
-        return $this->get('sonata.media.manager.media')->findOneBy(array('id' => $id));
+        return $this->get('sonata.media.manager.media')->find($id);
     }
 
     /**

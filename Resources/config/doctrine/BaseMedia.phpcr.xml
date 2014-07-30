@@ -10,7 +10,7 @@
         <uuid name="uuid" />
 
         <field name="name"               type="string" />
-        <field name="description"        type="string" />
+        <field name="description"        type="string" nullable="true"/>
         <field name="enabled"            type="boolean" />
 
         <field name="providerName"       type="string" />
@@ -20,17 +20,17 @@
 
         <field name="width"              type="long" />
         <field name="height"             type="long" />
-        <field name="length"             type="double" />
+        <field name="length"             type="double" nullable="true" />
         <field name="contentType"        type="string" />
         <field name="size"               type="long" />
 
-        <field name="copyright"          type="string" />
-        <field name="authorName"         type="string" />
+        <field name="copyright"          type="string" nullable="true" />
+        <field name="authorName"         type="string" nullable="true" />
         <field name="context"            type="string" />
 
-        <field name="cdnIsFlushable"     type="boolean" />
-        <field name="cdnFlushAt"         type="date" />
-        <field name="cdnStatus"          type="long" />
+        <field name="cdnIsFlushable"     type="boolean" nullable="true" />
+        <field name="cdnFlushAt"         type="date" nullable="true" />
+        <field name="cdnStatus"          type="long" nullable="true" />
 
         <field name="updatedAt"          type="date" />
         <field name="createdAt"          type="date" />
