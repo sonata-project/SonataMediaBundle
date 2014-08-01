@@ -12,4 +12,3 @@ class GalleryHasMediaRepository extends DocumentRepository implements Repository
         return '/cms/gallery-has-media/'  . uniqid();
     }
 }
-
