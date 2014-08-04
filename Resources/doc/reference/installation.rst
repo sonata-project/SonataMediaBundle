@@ -141,7 +141,7 @@ Also, you can determine the resizer to use; the default value is
 At this point, the bundle is not yet ready. You need to generate the correct
 entities for the media::
 
-    php app/console sonata:easy-extends:generate SonataMediaBundle
+    php app/console sonata:easy-extends:generate --dest=src SonataMediaBundle
 
 .. note::
 
