@@ -51,7 +51,6 @@ class SonataMediaExtension extends Extension
         $loader->load('form.xml');
         $loader->load('gaufrette.xml');
         $loader->load('validators.xml');
-        $loader->load('serializer.xml');
         
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -60,6 +59,7 @@ class SonataMediaExtension extends Extension
         }
         
         if (isset($bundles['JMSSerializerBundle'])) {
+            $loader->load('serializer.xml');
             $loader->load('api_form.xml');
         }
 
