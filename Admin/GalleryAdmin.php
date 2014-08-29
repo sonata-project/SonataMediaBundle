@@ -41,8 +41,8 @@ class GalleryAdmin extends Admin
     {
         // define group zoning
         $formMapper
-            ->with($this->trans('Gallery'), array('class' => 'col-md-9'))
-            ->with($this->trans('Options'), array('class' => 'col-md-3'))
+            ->with('Gallery', array('class' => 'col-md-9'))
+            ->with('Options', array('class' => 'col-md-3'))
         ;
 
         $context = $this->getPersistentParameter('context');
