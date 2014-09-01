@@ -52,7 +52,12 @@ class SonataMediaExtension extends Extension
         $loader->load('gaufrette.xml');
         $loader->load('validators.xml');
         $loader->load('serializer.xml');
-        $loader->load('api_form.xml');
+
+        if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'))) {
+            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
+        }
+
+        $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
 
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -74,10 +79,6 @@ class SonataMediaExtension extends Extension
 
         if (!isset($bundles['LiipImagineBundle'])) {
             $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
-        }
-
-        if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'))) {
-            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
 
         if (!array_key_exists($config['default_context'], $config['contexts'])) {
