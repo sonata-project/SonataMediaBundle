@@ -54,7 +54,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('Nono le petit robot');
         $media->setProviderName('youtube');
         $media->setProviderReference('BDYAbAtaDzA');
@@ -185,5 +185,13 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $properties);
         $this->assertEquals(100, $properties['player_parameters']['height']);
         $this->assertEquals(100, $properties['player_parameters']['width']);
+    }
+
+    public function testGetReferenceUrl()
+    {
+        $media = new Media();
+        $media->setProviderReference('123456');
+
+        $this->assertEquals('http://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
     }
 }

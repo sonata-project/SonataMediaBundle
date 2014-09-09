@@ -54,7 +54,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('Blinky™');
         $media->setProviderName('vimeo');
         $media->setProviderReference('21216091');
@@ -188,5 +188,13 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(100, $properties['height']);
         $this->assertEquals(100, $properties['width']);
 
+    }
+
+    public function testGetReferenceUrl()
+    {
+        $media = new Media();
+        $media->setProviderReference('123456');
+
+        $this->assertEquals('http://vimeo.com/123456', $this->getProvider()->getReferenceUrl($media));
     }
 }

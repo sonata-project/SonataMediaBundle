@@ -158,6 +158,15 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
+     * Get provider reference url
+     *
+     * @param MediaInterface $media
+     *
+     * @return string
+     */
+    abstract public function getReferenceUrl(MediaInterface $media);
+
+    /**
      * @throws \RuntimeException
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
