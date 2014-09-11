@@ -375,7 +375,7 @@
             </trans-unit>
             <trans-unit id="sonata_template_box_media_gallery_block">
                 <source>sonata_template_box_media_gallery_block</source>
-                <target>Ceci est un bloc de gallerie de médias. Vous pouvez le surcharger librement.</target>
+                <target>Ceci est un bloc de galerie de médias. Vous pouvez le surcharger librement.</target>
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
