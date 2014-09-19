@@ -27,6 +27,7 @@ class MediaAdmin extends Admin
             ->add('providerReference')
             ->add('enabled')
             ->add('context')
+            ->add('category')
         ;
 
         $providers = array();

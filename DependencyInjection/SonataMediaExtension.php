@@ -257,6 +257,26 @@ class SonataMediaExtension extends Extension
                 'position'  => 'ASC',
             ),
         ));
+
+        if (interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface')) {
+            $collector->addAssociation($config['class']['media'], 'mapManyToOne', array(
+                'fieldName'     => 'category',
+                'targetEntity'  => $config['class']['category'],
+                'cascade'       => array(
+                    'persist',
+                ),
+                'mappedBy'      => NULL,
+                'inversedBy'    => NULL,
+                'joinColumns'   => array(
+                    array(
+                     'name'                 => 'category_id',
+                     'referencedColumnName' => 'id',
+                     'onDelete'             => 'SET NULL',
+                    ),
+                ),
+                'orphanRemoval' => false,
+            ));
+        }
     }
 
     /**

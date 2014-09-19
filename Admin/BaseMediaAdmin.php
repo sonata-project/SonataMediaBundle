@@ -16,6 +16,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 
@@ -25,17 +26,22 @@ abstract class BaseMediaAdmin extends Admin
 {
     protected $pool;
 
+    protected $categoryManager;
+
     /**
-     * @param string                            $code
-     * @param string                            $class
-     * @param string                            $baseControllerName
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param string                   $code
+     * @param string                   $class
+     * @param string                   $baseControllerName
+     * @param Pool                     $pool
+     * @param CategoryManagerInterface $categoryManager
      */
-    public function __construct($code, $class, $baseControllerName, Pool $pool)
+    public function __construct($code, $class, $baseControllerName, Pool $pool, CategoryManagerInterface $categoryManager)
     {
         parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
+
+        $this->categoryManager = $categoryManager;
     }
 
     /**
@@ -75,6 +81,14 @@ abstract class BaseMediaAdmin extends Admin
         } else {
             $provider->buildCreateForm($formMapper);
         }
+
+        $formMapper->add('category', 'sonata_type_model_list', array(), array(
+            'link_parameters' => array(
+                'context'      => $media->getContext(),
+                'hide_context' => 1,
+                'mode'         => 'tree',
+            )
+        ));
     }
 
     /**
@@ -109,6 +123,7 @@ abstract class BaseMediaAdmin extends Admin
         return array(
             'provider' => $provider,
             'context'  => $context,
+            'category' => $this->getRequest()->get('category')
         );
     }
 
@@ -119,9 +134,18 @@ abstract class BaseMediaAdmin extends Admin
     {
         $media = parent::getNewInstance();
 
+
         if ($this->hasRequest()) {
             $media->setProviderName($this->getRequest()->get('provider'));
-            $media->setContext($this->getRequest()->get('context'));
+            $media->setContext($context = $this->getRequest()->get('context'));
+
+            if ($categoryId = $this->getPersistentParameter('category')) {
+                $category = $this->categoryManager->find($categoryId);
+
+                if ($category && $category->getContext()->getId() == $context) {
+                    $media->setCategory($category);
+                }
+            }
         }
 
         return $media;

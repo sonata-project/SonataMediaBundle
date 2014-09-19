@@ -75,12 +75,20 @@ class MediaAdminController extends Controller
         }
 
         $datagrid = $this->admin->getDatagrid();
-        if ($this->admin->getPersistentParameter('context')) {
-            $datagrid->setValue('context', null, $this->admin->getPersistentParameter('context'));
-        }
+
+        // set the default context
+        $context = $this->admin->getPersistentParameter('context',  $this->get('sonata.media.pool')->getDefaultContext());
+        $datagrid->setValue('context', null, $context);
+
+        // retrieve the main category for the tree view
+        $category = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
 
         if ($this->admin->getPersistentParameter('provider')) {
             $datagrid->setValue('providerName', null, $this->admin->getPersistentParameter('provider'));
+        }
+
+        if ($this->admin->getPersistentParameter('category')) {
+            $datagrid->setValue('category', null, $this->admin->getPersistentParameter('category'));
         }
 
         $formView = $datagrid->getForm()->createView();
@@ -89,10 +97,11 @@ class MediaAdminController extends Controller
         $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
 
         return $this->render($this->admin->getTemplate('list'), array(
-            'action'     => 'list',
-            'form'       => $formView,
-            'datagrid'   => $datagrid,
-            'csrf_token' => $this->getCsrfToken('sonata.batch'),
+            'action'        => 'list',
+            'form'          => $formView,
+            'datagrid'      => $datagrid,
+            'root_category' => $category,
+            'csrf_token'    => $this->getCsrfToken('sonata.batch'),
         ));
     }
 }

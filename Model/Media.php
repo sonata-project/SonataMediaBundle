@@ -11,6 +11,7 @@
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 abstract class Media implements MediaInterface
@@ -120,6 +121,8 @@ abstract class Media implements MediaInterface
     protected $size;
 
     protected $galleryHasMedias;
+
+    protected $category;
 
     public function prePersist()
     {
@@ -571,5 +574,21 @@ abstract class Media implements MediaInterface
         if ($this->getBinaryContent() && $this->getProviderStatus() == self::STATUS_ERROR) {
             $context->addViolationAt('binaryContent', 'invalid', array(), null);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory(CategoryInterface $category = null)
+    {
+        $this->category = $category;
     }
 }

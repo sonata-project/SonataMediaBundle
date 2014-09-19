@@ -22,6 +22,7 @@
         "sonata-project/notification-bundle": "~2.2",
         "sonata-project/easy-extends-bundle": "~2.1",
         "sonata-project/doctrine-extensions": "~1.0",
+        "sonata-project/classification-bundle": "~2.3@dev",
         "knplabs/gaufrette": ">=0.1.4",
         "imagine/Imagine": "*@stable",
         "kriswallsmith/buzz": "0.*",
@@ -53,7 +54,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "2.4.x-dev"
         }
     }
 }
