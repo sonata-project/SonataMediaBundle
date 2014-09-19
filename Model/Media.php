@@ -121,6 +121,8 @@ abstract class Media implements MediaInterface
 
     protected $galleryHasMedias;
 
+    protected $deletedId;
+
     public function prePersist()
     {
         $this->setCreatedAt(new \DateTime);
@@ -571,5 +573,21 @@ abstract class Media implements MediaInterface
         if ($this->getBinaryContent() && $this->getProviderStatus() == self::STATUS_ERROR) {
             $context->addViolationAt('binaryContent', 'invalid', array(), null);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDeletedId()
+    {
+        return $this->deletedId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDeletedId($deletedId)
+    {
+        $this->deletedId = $deletedId;
     }
 }

@@ -148,7 +148,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function preRemove(MediaInterface $media)
     {
-
+        $media->setDeletedId($media->getId());
     }
 
     /**

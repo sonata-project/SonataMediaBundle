@@ -99,7 +99,7 @@ abstract class BaseVideoProvider extends BaseProvider
     {
         return sprintf('%s/thumb_%d_%s.jpg',
             $this->generatePath($media),
-            $media->getId(),
+            $media->getId() ?: $media->getDeletedId(),
             $format
         );
     }
@@ -162,8 +162,25 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
+    public function preRemove(MediaInterface $media)
+    {
+        $media->setDeletedId($media->getId());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function postRemove(MediaInterface $media)
     {
+        $path = $this->getReferenceFile($media)->getName();
+
+        if ($this->getFilesystem()->has($path)) {
+            $this->getFilesystem()->delete($path);
+        }
+
+        if ($this->requireThumbnails()) {
+            $this->thumbnail->delete($this, $media);
+        }
     }
 
     /**

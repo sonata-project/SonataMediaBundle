@@ -360,4 +360,14 @@ interface MediaInterface
      * @return string
      */
     public function getPreviousProviderReference();
+
+    /**
+     * @return mixed
+     */
+    public function getDeletedId();
+
+    /**
+     * @param mixed $deletedId
+     */
+    public function setDeletedId($deletedId);
 }
