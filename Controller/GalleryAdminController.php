@@ -43,6 +43,10 @@ class GalleryAdminController extends Controller
             throw new AccessDeniedException();
         }
 
+        if ($listMode = $this->getRequest()->get('_list_mode')) {
+            $this->admin->setListMode($listMode);
+        }
+
         $datagrid = $this->admin->getDatagrid();
         $datagrid->setValue('context', null, $this->admin->getPersistentParameter('context'));
 

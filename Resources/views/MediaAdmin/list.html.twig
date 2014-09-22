@@ -12,30 +12,22 @@ file that was distributed with this source code.
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 
 {% import _self as tree %}
-{% macro navigate_child(collection, admin, root) %}
+{% macro navigate_child(collection, admin, root, current_category) %}
     <ul{% if root %} class="sonata-tree sonata-tree--toggleable js-treeview"{% endif %}>
         {% for element in collection %}
             <li>
-                <div class="sonata-tree__item">
+                <div class="sonata-tree__item{% if element.id == current_category %} is-active{% endif %}">
                     {% if element.parent %}<i class="fa fa-caret-right" data-treeview-toggler></i>{% endif %}
                     <a class="sonata-tree__item__edit" href="{{ url(app.request.attributes.get('_route'), app.request.query.all|merge({category: element.id})) }}">{{ element.name }}</a>
                 </div>
 
                 {% if element.children|length %}
-                    {{ _self.navigate_child(element.children, admin, false) }}
+                    {{ _self.navigate_child(element.children, admin, false, current_category) }}
                 {% endif %}
             </li>
         {% endfor %}
     </ul>
 {% endmacro %}
-
-{% block list_header %}
-    <div class="pull-left">
-        {{ tree.navigate_child(root_category.children, admin, true) }}
-    </div>
-
-{% endblock %}
-
 
 {% block list_table %}
     <div class="box box-primary">
@@ -83,6 +75,12 @@ file that was distributed with this source code.
         </div>
     </div>
 
-    {{ parent() }}
-
+    <div class="row">
+        <div class="col-xs-6 col-md-3" style="background: #ffffff">
+            {{ tree.navigate_child(root_category.children, admin, true, datagrid.values['category']['value']) }}
+        </div>
+        <div class="col-xs-12 col-md-9">
+            {{ parent() }}
+        </div>
+    </div>
 {% endblock %}

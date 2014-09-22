@@ -17,6 +17,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 
@@ -105,8 +106,10 @@ abstract class BaseMediaAdmin extends Admin
      */
     public function getPersistentParameters()
     {
+        $parameters = parent::getPersistentParameters();
+
         if (!$this->hasRequest()) {
-            return array();
+            return $parameters;
         }
 
         $context   = $this->getRequest()->get('context', $this->pool->getDefaultContext());
@@ -120,11 +123,11 @@ abstract class BaseMediaAdmin extends Admin
             $this->getRequest()->query->set('provider', $provider);
         }
 
-        return array(
+        return array_merge($parameters,array(
             'provider' => $provider,
             'context'  => $context,
-            'category' => $this->getRequest()->get('category')
-        );
+//            'category' => $this->getRequest()->get('category')
+        ));
     }
 
     /**
@@ -133,7 +136,6 @@ abstract class BaseMediaAdmin extends Admin
     public function getNewInstance()
     {
         $media = parent::getNewInstance();
-
 
         if ($this->hasRequest()) {
             $media->setProviderName($this->getRequest()->get('provider'));
@@ -157,5 +159,17 @@ abstract class BaseMediaAdmin extends Admin
     public function getPool()
     {
         return $this->pool;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getObjectMetadata($object)
+    {
+        $provider = $this->pool->getProvider($object->getProviderName());
+
+        $url = $provider->generatePublicUrl($object, $provider->getFormatName($object, 'admin'));
+
+        return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 }
