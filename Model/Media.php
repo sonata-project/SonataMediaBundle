@@ -163,6 +163,14 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
+    public function resetBinaryContent()
+    {
+        $this->binaryContent = null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getBinaryContent()
     {
         return $this->binaryContent;

@@ -134,6 +134,8 @@ class FileProvider extends BaseProvider
         $this->setFileContents($media);
 
         $this->generateThumbnails($media);
+
+        $media->resetBinaryContent();
     }
 
     /**
@@ -160,6 +162,8 @@ class FileProvider extends BaseProvider
         $this->setFileContents($media);
 
         $this->generateThumbnails($media);
+
+        $media->resetBinaryContent();
     }
 
     /**

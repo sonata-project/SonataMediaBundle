@@ -30,6 +30,11 @@ interface MediaInterface
     public function getBinaryContent();
 
     /**
+     * Reset the binary content
+     */
+    public function resetBinaryContent();
+
+    /**
      * @param string $name
      * @param null   $default
      */
