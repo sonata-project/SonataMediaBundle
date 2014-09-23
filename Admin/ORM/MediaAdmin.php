@@ -16,18 +16,31 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
 class MediaAdmin extends Admin
 {
+
+
     /**
      * @param  \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
      * @return void
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+
+        $contexts = array();
+
+        foreach ($this->pool->getContexts() as $name => $context) {
+            $contexts[$name] = $name;
+        }
+
         $datagridMapper
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
-            ->add('context')
-            ->add('category')
+            ->add('context', null, array(), 'choice', array(
+                'choices' => $contexts
+            ))
+            ->add('category', null, array(
+                'show_filter' => false,
+            ))
         ;
 
         $providers = array();

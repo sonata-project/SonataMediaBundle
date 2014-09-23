@@ -126,7 +126,6 @@ abstract class BaseMediaAdmin extends Admin
         return array_merge($parameters,array(
             'provider' => $provider,
             'context'  => $context,
-//            'category' => $this->getRequest()->get('category')
         ));
     }
 

@@ -79,19 +79,32 @@ class MediaAdminController extends Controller
 
         $datagrid = $this->admin->getDatagrid();
 
+        $filters = $this->getRequest()->get('filter');
+
         // set the default context
-        $context = $this->admin->getPersistentParameter('context',  $this->get('sonata.media.pool')->getDefaultContext());
+        if (!$filters) {
+            $context = $this->admin->getPersistentParameter('context',  $this->get('sonata.media.pool')->getDefaultContext());
+        } else {
+            $context = $filters['context']['value'];
+        }
+
         $datagrid->setValue('context', null, $context);
 
         // retrieve the main category for the tree view
         $category = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
 
-        if ($this->admin->getPersistentParameter('provider')) {
-            $datagrid->setValue('providerName', null, $this->admin->getPersistentParameter('provider'));
+        if (!$filters) {
+            $datagrid->setValue('category', null, $category->getId());
         }
 
-        $datagrid->setValue('category', null, $this->getRequest()->get('category', $category->getId()));
-        
+        if ($this->getRequest()->get('category')) {
+            $datagrid->setValue('category', null, $this->getRequest()->get('category'));
+        }
+
+//        if (!$this->getRequest()->get('filter') && $this->admin->getPersistentParameter('provider')) {
+//            $datagrid->setValue('providerName', null, $this->admin->getPersistentParameter('provider'));
+//        }
+
         $formView = $datagrid->getForm()->createView();
 
         // set the theme for the current Admin Form
