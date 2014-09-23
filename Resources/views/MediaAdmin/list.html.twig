@@ -18,7 +18,7 @@ file that was distributed with this source code.
             <p class="bg-warning">{{ admin.trans('warning_no_category') }}</p>
         </div>
     {% endif %}
-    <ul{% if root %} class="sonata-tree sonata-tree--toggleable js-treeview"{% endif %}>
+    <ul{% if root %} class="sonata-tree sonata-tree--small sonata-tree--toggleable js-treeview"{% endif %}>
         {% for element in collection %}
             <li>
                 <div class="sonata-tree__item{% if element.id == current_category %} is-active{% endif %}">
@@ -35,7 +35,7 @@ file that was distributed with this source code.
 {% endmacro %}
 
 {% block list_table %}
-    <div class="col-xs-6 col-md-3" style="background: #ffffff">
+    <div class="col-xs-6 col-md-3">
         {{ tree.navigate_child(root_category.children, admin, true, datagrid.values['category']['value']) }}
     </div>
     <div class="col-xs-12 col-md-9">
