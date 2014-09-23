@@ -112,7 +112,12 @@ abstract class BaseMediaAdmin extends Admin
             return $parameters;
         }
 
-        $context   = $this->getRequest()->get('context', $this->pool->getDefaultContext());
+        if ($filter = $this->getRequest()->get('filter')) {
+            $context = $filter['context']['value'];
+        } else {
+            $context   = $this->getRequest()->get('context', $this->pool->getDefaultContext());
+        }
+
         $providers = $this->pool->getProvidersByContext($context);
         $provider  = $this->getRequest()->get('provider');
 
@@ -126,6 +131,7 @@ abstract class BaseMediaAdmin extends Admin
         return array_merge($parameters,array(
             'provider' => $provider,
             'context'  => $context,
+            'category' => $this->getRequest()->get('category'),
         ));
     }
 
