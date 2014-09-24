@@ -140,7 +140,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", null, "SonataMediaBundle", array('class' => 'fa fa-file'));
+        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-file'));
     }
 
     /**

@@ -48,7 +48,7 @@ class YouTubeProvider extends BaseVideoProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", null, "SonataMediaBundle", array('class' => 'fa fa-youtube'));
+        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-youtube'));
     }
 
     /**
