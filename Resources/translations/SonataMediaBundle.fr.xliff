@@ -385,6 +385,10 @@
                 <source>list.label_size</source>
                 <target>Taille</target>
             </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Pas de catégories définies</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

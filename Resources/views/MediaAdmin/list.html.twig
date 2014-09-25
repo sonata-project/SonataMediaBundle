@@ -15,7 +15,7 @@ file that was distributed with this source code.
 {% macro navigate_child(collection, admin, root, current_category) %}
     {% if root and collection|length == 0 %}
         <div>
-            <p class="bg-warning">{{ admin.trans('warning_no_category') }}</p>
+            <p class="bg-warning">{{ admin.trans('warning_no_category', {}, admin.translationdomain) }}</p>
         </div>
     {% endif %}
     <ul{% if root %} class="sonata-tree sonata-tree--small sonata-tree--toggleable js-treeview"{% endif %}>
