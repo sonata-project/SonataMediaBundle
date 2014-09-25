@@ -260,6 +260,10 @@ class Pool
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
+        if (!$media->getProviderName()) {
+            return;
+        }
+
         $provider = $this->getProvider($media->getProviderName());
 
         $provider->validate($errorElement, $media);
