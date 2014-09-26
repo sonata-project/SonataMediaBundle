@@ -389,6 +389,14 @@
                 <source>warning_no_category</source>
                 <target>Pas de catégories définies</target>
             </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Catégorie</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Référence du type</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
