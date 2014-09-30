@@ -154,10 +154,6 @@
                 <source>form.label_binary_content</source>
                 <target>Fichier/Référence</target>
             </trans-unit>
-            <trans-unit id="form.label_category">
-                <source>form.label_category</source>
-                <target>Catégorie</target>
-            </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
                 <target>Taille</target>
