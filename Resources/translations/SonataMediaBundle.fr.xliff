@@ -98,6 +98,14 @@
                 <source>filter.label_provider_name</source>
                 <target>Type</target>
             </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>Catégorie</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>Auteur</target>
+            </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
                 <target>Actif</target>
@@ -145,6 +153,14 @@
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
                 <target>Fichier/Référence</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Catégorie</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Référence du type</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
@@ -281,6 +297,10 @@
                 <source>list.label_name</source>
                 <target>Nom</target>
             </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>Auteur</target>
+            </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
                 <target>Contexte</target>
@@ -296,6 +316,10 @@
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
                 <target>Personnalisé</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>Auteur</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
@@ -388,14 +412,6 @@
             <trans-unit id="warning_no_category">
                 <source>warning_no_category</source>
                 <target>Pas de catégories définies</target>
-            </trans-unit>
-            <trans-unit id="form.label_category">
-                <source>form.label_category</source>
-                <target>Catégorie</target>
-            </trans-unit>
-            <trans-unit id="form.label_provider_reference">
-                <source>form.label_provider_reference</source>
-                <target>Référence du type</target>
             </trans-unit>
         </body>
     </file>

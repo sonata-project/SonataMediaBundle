@@ -98,6 +98,14 @@
                 <source>filter.label_provider_name</source>
                 <target>Provider Name</target>
             </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>filter.label_category</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>filter.label_author_name</target>
+            </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
                 <target>Enabled</target>
@@ -281,6 +289,10 @@
                 <source>list.label_name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>list.label_author_name</target>
+            </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
                 <target>Context</target>
@@ -296,6 +308,10 @@
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
                 <target>Custom</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>list.label_author</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
