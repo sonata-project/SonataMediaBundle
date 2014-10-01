@@ -82,6 +82,10 @@
                 <source>filter.label_name</source>
                 <target>Pavadinimas</target>
             </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>form.label_category</target>
+            </trans-unit>
             <trans-unit id="filter.label_provider_reference">
                 <source>filter.label_provider_reference</source>
                 <target>Tiekėjo nuoroda</target>
@@ -97,6 +101,14 @@
             <trans-unit id="filter.label_provider_name">
                 <source>filter.label_provider_name</source>
                 <target>Tiekėjo pavadinimas</target>
+            </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>filter.label_category</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>filter.label_author_name</target>
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
@@ -281,6 +293,10 @@
                 <source>list.label_name</source>
                 <target>Pavadinimas</target>
             </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>list.label_author_name</target>
+            </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
                 <target>Kontekstas</target>
@@ -296,6 +312,10 @@
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
                 <target>Individualizuota</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>list.label_author</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
