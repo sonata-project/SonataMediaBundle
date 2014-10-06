@@ -34,7 +34,7 @@ class FormatThumbnail implements ThumbnailInterface
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
         } else {
-            $path = sprintf('%s/thumb_%s_%s.%s',  $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
+            $path = $this->generatePrivateUrl($provider, $media, $format);
         }
 
         return $path;
