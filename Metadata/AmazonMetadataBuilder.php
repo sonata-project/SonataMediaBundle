@@ -15,17 +15,21 @@ use AmazonS3 as AmazonS3;
 use CFMimeTypes;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+use Aws\S3\Enum\CannedAcl;
+use Aws\S3\Enum\Storage;
+use Guzzle\Http\Mimetypes;
+
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
     protected $settings;
 
     protected $acl = array(
-        'private'            => AmazonS3::ACL_PRIVATE,
-        'public'             => AmazonS3::ACL_PUBLIC,
-        'open'               => AmazonS3::ACL_OPEN,
-        'auth_read'          => AmazonS3::ACL_AUTH_READ,
-        'owner_read'         => AmazonS3::ACL_OWNER_READ,
-        'owner_full_control' => AmazonS3::ACL_OWNER_FULL_CONTROL,
+        'private'            => CannedAcl::PRIVATE_ACCESS,
+        'public'             => CannedAcl::PUBLIC_READ,
+        'open'               => CannedAcl::PUBLIC_READ_WRITE,
+        'auth_read'          => CannedAcl::AUTHENTICATED_READ,
+        'owner_read'         => CannedAcl::BUCKET_OWNER_READ,
+        'owner_full_control' => CannedAcl::BUCKET_OWNER_FULL_CONTROL,
     );
 
     /**
@@ -52,9 +56,9 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         //merge storage
         if (isset($this->settings['storage'])) {
             if ($this->settings['storage'] == 'standard') {
-                $output['storage'] = AmazonS3::STORAGE_STANDARD;
+                $output['storage'] = Storage::STANDARD;
             } elseif ($this->settings['storage'] == 'reduced') {
-                $output['storage'] = AmazonS3::STORAGE_REDUCED;
+                $output['storage'] = Storage::REDUCED;
             }
         }
 
@@ -87,8 +91,8 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = CFMimeTypes::get_mimetype($extension);
+        $extension   = pathinfo($filename, PATHINFO_EXTENSION);
+        $contentType = Mimetypes::getInstance()->fromExtension($extension);
 
         return array('contentType' => $contentType);
     }
