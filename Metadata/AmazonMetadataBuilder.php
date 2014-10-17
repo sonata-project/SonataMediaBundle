@@ -50,7 +50,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         //merge acl
         $output = array();
         if (isset($this->settings['acl']) && !empty($this->settings['acl'])) {
-            $output['acl'] = $this->acl[$this->settings['acl']];
+            $output['ACL'] = $this->acl[$this->settings['acl']];
         }
 
         //merge storage
