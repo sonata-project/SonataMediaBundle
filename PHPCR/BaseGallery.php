@@ -67,7 +67,7 @@ abstract class BaseGallery extends Gallery
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
 
-        $this->reorderGalleryHasMedia();
+        //$this->reorderGalleryHasMedia();
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class BaseGallery extends Gallery
     {
         $this->updatedAt = new \DateTime();
 
-        $this->reorderGalleryHasMedia();
+        //$this->reorderGalleryHasMedia();
     }
 
     /**
