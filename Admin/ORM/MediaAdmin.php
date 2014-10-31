@@ -42,6 +42,7 @@ class MediaAdmin extends Admin
             ))
             ->add('width')
             ->add('height')
+            ->add('contentType')
         ;
 
         $providers = array();
