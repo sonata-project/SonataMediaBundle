@@ -110,6 +110,18 @@
                 <source>filter.label_author_name</source>
                 <target>filter.label_author_name</target>
             </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>filter.label_width</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>filter.label_height</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>filter.label_content_type</target>
+            </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
                 <target>Įjungta</target>

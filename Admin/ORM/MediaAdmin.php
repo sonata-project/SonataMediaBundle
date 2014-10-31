@@ -40,6 +40,8 @@ class MediaAdmin extends Admin
             ->add('category', null, array(
                 'show_filter' => false,
             ))
+            ->add('width')
+            ->add('height')
         ;
 
         $providers = array();
