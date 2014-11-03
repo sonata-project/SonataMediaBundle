@@ -116,7 +116,7 @@
             </trans-unit>
             <trans-unit id="filter.label_content_type">
                 <source>filter.label_content_type</source>
-                <target>filter.label_content_type</target>
+                <target>Content type</target>
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
