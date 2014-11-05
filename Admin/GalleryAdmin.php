@@ -39,12 +39,6 @@ class GalleryAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        // define group zoning
-        $formMapper
-            ->with($this->trans('Gallery'), array('class' => 'col-md-9'))->end()
-            ->with($this->trans('Options'), array('class' => 'col-md-3'))->end()
-        ;
-
         $context = $this->getPersistentParameter('context');
 
         if (!$context) {
@@ -62,7 +56,7 @@ class GalleryAdmin extends Admin
         }
 
         $formMapper
-            ->with('Options')
+            ->with($this->trans('Options'), array('class' => 'col-md-3'))->end()
                 ->add('context', 'sonata_type_translatable_choice', array(
                     'choices' => $contexts,
                     'catalogue' => 'SonataMediaBundle'
@@ -71,7 +65,7 @@ class GalleryAdmin extends Admin
                 ->add('name')
                 ->add('defaultFormat', 'choice', array('choices' => $formats))
             ->end()
-            ->with('Gallery')
+            ->with($this->trans('Gallery'), array('class' => 'col-md-9'))->end()
                 ->add('galleryHasMedias', 'sonata_type_collection', array(
                         'cascade_validation' => true,
                     ), array(
