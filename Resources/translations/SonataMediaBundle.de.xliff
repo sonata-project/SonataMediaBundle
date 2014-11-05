@@ -382,6 +382,18 @@
                 <source>list.label_size</source>
                 <target>list.label_size</target>
             </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Keine Kategorie definiert</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Kategorie</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Provider Referenz</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>
