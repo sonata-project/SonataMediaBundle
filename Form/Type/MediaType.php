@@ -52,7 +52,7 @@ class MediaType extends AbstractType
         )));
 
         $builder->addEventListener(FormEvents::BIND, function(FormEvent $event) {
-            if ($event->getForm()->get('unlink')->getData()) {
+            if ($event->getForm()->has('unlink') && $event->getForm()->get('unlink')->getData()) {
                 $event->setData(null);
             }
         });
