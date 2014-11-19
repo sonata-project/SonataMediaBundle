@@ -96,15 +96,12 @@ class ImageProvider extends FileProvider
     {
         parent::doTransform($media);
 
-        if (!is_object($media->getBinaryContent()) && !$media->getBinaryContent()) {
-            return;
-        }
-
         if ($media->getBinaryContent() instanceof UploadedFile) {
             $fileName = $media->getBinaryContent()->getClientOriginalName();
         } elseif ($media->getBinaryContent() instanceof File) {
             $fileName = $media->getBinaryContent()->getFilename();
         } else {
+            // Should not append, FileProvider should throw an exception in that case
             return;
         }
 
