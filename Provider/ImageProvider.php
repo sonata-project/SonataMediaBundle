@@ -19,6 +19,8 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 
 use Imagine\Image\ImagineInterface;
 use Gaufrette\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageProvider extends FileProvider
 {
@@ -94,7 +96,17 @@ class ImageProvider extends FileProvider
     {
         parent::doTransform($media);
 
-        if (!is_object($media->getBinaryContent()) && !$media->getBinaryContent()) {
+        if ($media->getBinaryContent() instanceof UploadedFile) {
+            $fileName = $media->getBinaryContent()->getClientOriginalName();
+        } elseif ($media->getBinaryContent() instanceof File) {
+            $fileName = $media->getBinaryContent()->getFilename();
+        } else {
+            // Should not append, FileProvider should throw an exception in that case
+            return;
+        }
+
+        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
+            || !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             return;
         }
 
