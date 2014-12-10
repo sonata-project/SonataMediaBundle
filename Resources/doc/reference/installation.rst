@@ -30,10 +30,14 @@ Register the new bundle into your AppKernel:
   {
       return array(
           // ...
+          // Check if you don't already have these dependencies
           new Sonata\CoreBundle\SonataCoreBundle(),
           new Sonata\IntlBundle\SonataIntlBundle(),
-          new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+          
+          //You need to add this dependency to make media functional
+          new JMS\SerializerBundle\JMSSerializerBundle(),
+          new Sonata\MediaBundle\SonataMediaBundle(),
           // ...
       );
   }
