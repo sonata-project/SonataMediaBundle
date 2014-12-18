@@ -4,11 +4,19 @@ Installation
 Base bundles
 ------------
 
-This bundle is mainly dependant of the ``SonataAdminBundle`` and the ``SonataDoctrineORMAdminBundle`` or ``SonataDoctrineMongoDBAdminBundle``. So be sure you have installed those two bundles before starting:
+This bundle is mainly dependant of:
 
- * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
- * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
- * http://sonata-project.org/bundles/mongo-admin/master/doc/reference/installation.html
+* Classification: http://sonata-project.org/bundles/classification
+* Core: http://sonata-project.org/bundles/core
+* Intl: http://sonata-project.org/bundles/intl
+
+This bundle has optional dependancies of:
+
+ * Admin: http://sonata-project.org/bundles/admin
+ * DoctrineOrm: http://sonata-project.org/bundles/doctrine-orm-admin
+ * MongoAdmin: http://sonata-project.org/bundles/mongo-admin
+
+So be sure you have installed those bundles before starting
 
 Installation
 ------------
@@ -30,11 +38,9 @@ Register the new bundle into your AppKernel:
   {
       return array(
           // ...
-          // Check if you don't already have these dependencies
-          new Sonata\CoreBundle\SonataCoreBundle(),
-          new Sonata\IntlBundle\SonataIntlBundle(),
+          new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-          
+
           //You need to add this dependency to make media functional
           new JMS\SerializerBundle\JMSSerializerBundle(),
           new Sonata\MediaBundle\SonataMediaBundle(),

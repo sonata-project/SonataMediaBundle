@@ -8,6 +8,11 @@ A [BC BREAK] means the update will break the project for many reasons:
 * class refactoring
 
 
+### 2014-09-01
+
+* [BC BREAK] Add dependency to SonataClassificationBundle to support virtual folders
+
+
 ### 2014-05-02
 
 * [BC BREAK] Add dependency to SonataIntlBundle, just enable the bundle in your AppKernel.
