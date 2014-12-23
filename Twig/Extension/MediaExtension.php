@@ -146,6 +146,7 @@ class MediaExtension extends \Twig_Extension
         // build option
         $defaultOptions = array(
             'title' => $media->getName(),
+            'alt' => $media->getName(),
         );
 
         if ($format_definition['width']) {
