@@ -58,27 +58,33 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generate(MediaProviderInterface $provider, MediaInterface $media)
     {
+        $thumbnailSet = array();
+
         if (!$provider->requireThumbnails()) {
-            return;
+            return $thumbnailSet;
         }
 
         $referenceFile = $provider->getReferenceFile($media);
 
         if (!$referenceFile->exists()) {
-            return;
+            return $thumbnailSet;
         }
 
         foreach ($provider->getFormats() as $format => $settings) {
             if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
+                $thumbnail = $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true);
+                $thumbnailSet[$format] = $thumbnail;
                 $provider->getResizer()->resize(
                     $media,
                     $referenceFile,
-                    $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
+                    $thumbnail,
                     $this->getExtension($media),
                     $settings
                 );
             }
         }
+
+        return $thumbnailSet;
     }
 
     /**

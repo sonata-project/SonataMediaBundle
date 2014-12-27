@@ -33,6 +33,8 @@ interface ThumbnailInterface
     /**
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
+     *
+     * @return \Gaufrette\File[]
      */
     public function generate(MediaProviderInterface $provider, MediaInterface $media);
 

@@ -123,7 +123,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function generateThumbnails(MediaInterface $media)
     {
-        $this->thumbnail->generate($this, $media);
+        return $this->thumbnail->generate($this, $media);
     }
 
     /**

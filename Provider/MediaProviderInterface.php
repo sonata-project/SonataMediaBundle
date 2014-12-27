@@ -47,6 +47,8 @@ interface MediaProviderInterface
      * Generated thumbnails linked to the media, a thumbnail is a format used on the website.
      *
      * @param MediaInterface $media
+     *
+     * @return \Gaufrette\File[]
      */
     public function generateThumbnails(MediaInterface $media);
 
