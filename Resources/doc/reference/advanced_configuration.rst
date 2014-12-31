@@ -65,6 +65,12 @@ Full configuration options:
                 password:
                 username:
 
+            cloudfront:
+                path:       http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                distribution_id:
+                key:
+                secret:
+
             fallback:
                 master:     sonata.media.cdn.panther
                 fallback:   sonata.media.cdn.server

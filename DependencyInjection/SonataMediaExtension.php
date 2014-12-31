@@ -309,6 +309,17 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.cdn.panther');
         }
 
+        if ($container->hasDefinition('sonata.media.cdn.cloudfront') && isset($config['cdn']['cloudfront'])) {
+            $container->getDefinition('sonata.media.cdn.cloudfront')
+                ->replaceArgument(0, $config['cdn']['cloudfront']['path'])
+                ->replaceArgument(1, $config['cdn']['cloudfront']['key'])
+                ->replaceArgument(2, $config['cdn']['cloudfront']['secret'])
+                ->replaceArgument(3, $config['cdn']['cloudfront']['distribution_id'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.cdn.cloudfront');
+        }
+
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
             $container->getDefinition('sonata.media.cdn.fallback')
                 ->replaceArgument(0, new Reference($config['cdn']['fallback']['master']))
@@ -456,6 +467,7 @@ class SonataMediaExtension extends Extension
     {
         $this->addClassesToCompile(array(
             "Sonata\\MediaBundle\\CDN\\CDNInterface",
+            "Sonata\\MediaBundle\\CDN\\CloudFront",
             "Sonata\\MediaBundle\\CDN\\Fallback",
             "Sonata\\MediaBundle\\CDN\\PantherPortal",
             "Sonata\\MediaBundle\\CDN\\Server",

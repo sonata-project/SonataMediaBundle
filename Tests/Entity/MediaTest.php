@@ -44,6 +44,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $media->setCopyright('copyleft');
         $media->setAuthorName('Thomas');
         $media->setCdnIsFlushable(true);
+        $media->setCdnFlushIdentifier('identifier_123');
         $media->setCdnFlushAt(new \DateTime);
         $media->setContentType('sonata/media');
         $media->setCreatedAt(new \DateTime);
@@ -56,6 +57,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('copyleft', $media->getCopyright());
         $this->assertEquals('Thomas', $media->getAuthorName());
         $this->assertTrue($media->getCdnIsFlushable());
+        $this->assertEquals('identifier_123', $media->getCdnFlushIdentifier());
         $this->assertInstanceOf('DateTime', $media->getCdnFlushAt());
         $this->assertInstanceOf('DateTime', $media->getCreatedAt());
         $this->assertEquals('sonata/media', $media->getContentType());

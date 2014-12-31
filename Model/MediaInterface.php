@@ -257,6 +257,20 @@ interface MediaInterface
     public function getCdnIsFlushable();
 
     /**
+     * Set cdn_flush_identifier
+     *
+     * @param boolean $cdnFlushIdentifier
+     */
+    public function setCdnFlushIdentifier($cdnFlushIdentifier);
+
+    /**
+     * Get cdn_flush_identifier
+     *
+     * @return string $cdnFlushIdentifier
+     */
+    public function getCdnFlushIdentifier();
+
+    /**
      * Set cdn_flush_at
      *
      * @param \Datetime $cdnFlushAt

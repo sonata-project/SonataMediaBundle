@@ -116,6 +116,15 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
+                        ->arrayNode('cloudfront')
+                            ->children()
+                                ->scalarNode('path')->isRequired()->end() // http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                                ->scalarNode('distribution_id')->isRequired()->end()
+                                ->scalarNode('key')->isRequired()->end()
+                                ->scalarNode('secret')->isRequired()->end()
+                            ->end()
+                        ->end()
+
                         ->arrayNode('fallback')
                             ->children()
                                 ->scalarNode('master')->isRequired()->end()

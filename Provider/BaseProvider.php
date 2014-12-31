@@ -72,6 +72,30 @@ abstract class BaseProvider implements MediaProviderInterface
         }
 
         $this->doTransform($media);
+        $this->flushCdn($media);
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
+     * @return void
+     */
+    public function flushCdn(MediaInterface $media)
+    {
+        if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
+            $flushPaths = array();
+            foreach ($this->getFormats() as $format => $settings) {
+                if ('admin' === $format || substr($format, 0, strlen($media->getContext())) == $media->getContext()) {
+                    $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format))->getKey();
+                }
+            }
+            if (!empty($flushPaths)) {
+                $cdnFlushIdentifier = $this->getCdn()->flushPaths($flushPaths);
+                $media->setCdnFlushIdentifier($cdnFlushIdentifier);
+                $media->setCdnIsFlushable(true);
+                $media->setCdnStatus(CDNInterface::STATUS_TO_FLUSH);
+            }
+        }
     }
 
     /**

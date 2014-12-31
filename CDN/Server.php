@@ -54,4 +54,12 @@ class Server implements CDNInterface
     {
         // nothing to do
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFlushStatus($identifier)
+    {
+        // nothing to do
+    }
 }
