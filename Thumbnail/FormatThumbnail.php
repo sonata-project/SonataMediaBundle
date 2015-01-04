@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Thumbnail;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 
 class FormatThumbnail implements ThumbnailInterface
 {
@@ -21,12 +22,41 @@ class FormatThumbnail implements ThumbnailInterface
      */
     private $defaultFormat;
 
+    private $resizers = array();
+
     /**
      * @param string $defaultFormat
      */
     public function __construct($defaultFormat)
     {
         $this->defaultFormat = $defaultFormat;
+    }
+
+    /**
+     * @param string           $id
+     * @param ResizerInterface $resizer
+     */
+    public function addResizer($id, ResizerInterface $resizer)
+    {
+        if (!isset($this->resizers[$id])) {
+            $this->resizers[$id] = $resizer;
+        }
+    }
+
+    /**
+     * @param string $id
+     *
+     * @throws \Exception
+     *
+     * @return ResizerInterface
+     */
+    public function getResizer($id)
+    {
+        if (!isset($this->resizers[$id])) {
+            throw new \Exception('Resizer with id: '.$id.' is not attached.');
+        }
+
+        return $this->resizers[$id];
     }
 
     /**
@@ -78,7 +108,8 @@ class FormatThumbnail implements ThumbnailInterface
 
         foreach ($provider->getFormats() as $format => $settings) {
             if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
-                $provider->getResizer()->resize(
+                $resizer = (isset($settings['resizer']) && ($settings['resizer'])) ? $this->getResizer($settings['resizer']) : $provider->getResizer();
+                $resizer->resize(
                     $media,
                     $referenceFile,
                     $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),

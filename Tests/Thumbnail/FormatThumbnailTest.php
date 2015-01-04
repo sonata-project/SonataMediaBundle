@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Tests\Security;
+namespace Sonata\MediaBundle\Tests\Thumbnail;
 
 use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
@@ -26,25 +26,31 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
         $referenceFile = new File('myfile', $filesystem);
 
         $formats = array(
-           'admin'                => array('height' => 50, 'width' => 50, 'quality' => 100),
-           'mycontext_medium'     => array('height' => 500, 'width' => 500, 'quality' => 100),
-           'anothercontext_large' => array('height' => 500, 'width' => 500, 'quality' => 100),
+           'admin'                 => array('height' => 50, 'width' => 50, 'quality' => 100),
+           'mycontext_medium'      => array('height' => 500, 'width' => 500, 'quality' => 100),
+           'mycontext_large'       => array('height' => 500, 'width' => 500, 'quality' => 100, 'resizer' => 'some.other.resizer'),
+           'anothercontext_larger' => array('height' => 500, 'width' => 500, 'quality' => 100),
         );
 
         $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->exactly(2))->method('resize')->will($this->returnValue(true));
+
+        $customResizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $customResizer->expects($this->exactly(1))->method('resize')->will($this->returnValue(true));
 
         $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->once())->method('requireThumbnails')->will($this->returnValue(true));
         $provider->expects($this->once())->method('getReferenceFile')->will($this->returnValue($referenceFile));
         $provider->expects($this->once())->method('getFormats')->will($this->returnValue($formats));
         $provider->expects($this->exactly(2))->method('getResizer')->will($this->returnValue($resizer));
-        $provider->expects($this->exactly(2))->method('generatePrivateUrl')->will($this->returnValue('/my/private/path'));
-        $provider->expects($this->exactly(2))->method('getFilesystem')->will($this->returnValue($filesystem));
+        $provider->expects($this->exactly(3))->method('generatePrivateUrl')->will($this->returnValue('/my/private/path'));
+        $provider->expects($this->exactly(3))->method('getFilesystem')->will($this->returnValue($filesystem));
 
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $media->expects($this->exactly(6))->method('getContext')->will($this->returnValue('mycontext'));
-        $media->expects($this->exactly(2))->method('getExtension')->will($this->returnValue('png'));
+        $media->expects($this->exactly(8))->method('getContext')->will($this->returnValue('mycontext'));
+        $media->expects($this->exactly(3))->method('getExtension')->will($this->returnValue('png'));
+
+        $thumbnail->addResizer('some.other.resizer', $customResizer);
 
         $thumbnail->generate($provider, $media);
     }
