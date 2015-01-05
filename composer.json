@@ -36,7 +36,8 @@
         "sonata-project/admin-bundle": "~2.3@dev",
         "sonata-project/formatter-bundle": "~2.2@dev",
         "sonata-project/core-bundle": "~2.2@dev",
-        "amazonwebservices/aws-sdk-for-php": "~1.5",
+        "sonata-project/datagrid-bundle": "~2.2@dev",
+        "aws/aws-sdk-php": "~2.7",
         "sonata-project/seo-bundle": "~1.1",
         "doctrine/mongodb-odm": "~1.0@dev",
         "jackalope/jackalope-doctrine-dbal": "~1.1"
@@ -44,7 +45,6 @@
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
         "liip/imagine-bundle": "~0.9",
-        "aws/aws-sdk-php": "~2.7",
         "rackspace/php-opencloud": "~1.6",
         "sonata-project/seo-bundle": "~1.1",
         "tilleuls/ckeditor-sonata-mediabundle": "~1.0"
