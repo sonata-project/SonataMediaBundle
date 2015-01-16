@@ -173,13 +173,6 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function postRemove(MediaInterface $media)
-    {
-    }
-
-    /**
      * @throws \RuntimeException
      *
      * @param MediaInterface $media
@@ -227,5 +220,20 @@ abstract class BaseVideoProvider extends BaseProvider
         }
 
         return $this->resizer->getBox($media, $settings);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preRemove(MediaInterface $media)
+    {
+        $assetPaths[] = $this->generatePrivateUrl($media, 'reference');
+        if ($this->requireThumbnails()) {
+            foreach ($this->getFormats() as $format => $definition) {
+                $assetPaths[] = $this->generatePrivateUrl($media, $format);
+            }
+        }
+
+        $media->setAssetPaths($assetPaths);
     }
 }

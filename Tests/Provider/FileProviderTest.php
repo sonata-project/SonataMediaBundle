@@ -61,6 +61,16 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         // default icon image
         $this->assertSame('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+
+        $provider->preRemove($media);
+        $this->assertSame(
+            array(
+                'default/0011/24/ASDASD.txt',
+            ),
+            $media->getAssetPaths(),
+            'Media::getAssetPaths() return the correct paths to delete'
+        );
+        $provider->postRemove($media);
     }
 
     public function testHelperProperies()

@@ -143,6 +143,11 @@ abstract class Media implements MediaInterface
      */
     protected $category;
 
+    /**
+     * @var array
+     */
+    protected $assetPaths = array();
+
     public function prePersist()
     {
         $this->setCreatedAt(new \DateTime());
@@ -646,5 +651,21 @@ abstract class Media implements MediaInterface
     public function setCategory(CategoryInterface $category = null)
     {
         $this->category = $category;
+    }
+
+    /**
+     * @param array $paths
+     */
+    public function setAssetPaths($paths)
+    {
+        $this->assetPaths = $paths;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAssetPaths()
+    {
+        return $this->assetPaths;
     }
 }

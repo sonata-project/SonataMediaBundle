@@ -186,15 +186,14 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function preRemove(MediaInterface $media)
     {
-        $path = $this->getReferenceImage($media);
-
-        if ($this->getFilesystem()->has($path)) {
-            $this->getFilesystem()->delete($path);
-        }
-
+        $assetPaths[] = $this->getReferenceImage($media);
         if ($this->requireThumbnails()) {
-            $this->thumbnail->delete($this, $media);
+            foreach ($this->getFormats() as $format => $definition) {
+                $assetPaths[] = $this->generatePrivateUrl($media, $format);
+            }
         }
+
+        $media->setAssetPaths($assetPaths);
     }
 
     /**
@@ -202,6 +201,11 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function postRemove(MediaInterface $media)
     {
+        foreach ($media->getAssetPaths() as $path) {
+            if ($this->getFilesystem()->has($path)) {
+                $this->getFilesystem()->delete($path);
+            }
+        }
     }
 
     /**

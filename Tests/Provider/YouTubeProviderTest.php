@@ -97,6 +97,17 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
         $provider->generateThumbnails($media);
 
         $this->assertSame('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+
+        $provider->preRemove($media);
+        $this->assertSame(
+            array(
+                'default/0011/24/thumb_1023457_reference.jpg',
+                'default/0011/24/thumb_1023457_big.jpg',
+            ),
+            $media->getAssetPaths(),
+            'Media::getAssetPaths() return the correct paths to delete'
+        );
+        $provider->postRemove($media);
     }
 
     public function testTransformWithSig()
