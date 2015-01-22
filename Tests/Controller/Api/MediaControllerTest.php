@@ -28,7 +28,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
         $mManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $media    = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
 
-        $mManager->expects($this->once())->method('findBy')->will($this->returnValue(array($media)));
+        $mManager->expects($this->once())->method('getPager')->will($this->returnValue(array($media)));
 
         $mController = $this->createMediaController($mManager);
 

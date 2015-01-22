@@ -40,4 +40,11 @@ class MediaManager extends BasePHPCRManager
             parent::save($entity, true);
         }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array()){
+        throw new \RuntimeException("Not Implemented yet");
+    }
 }
