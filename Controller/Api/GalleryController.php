@@ -79,7 +79,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  resource=true,
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"="sonata_api_read"}
+     *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"="sonata_api_read"}
      * )
      *
      * @QueryParam(name="page", requirements="\d+", default="1", description="Page for gallery list pagination")
@@ -91,25 +91,32 @@ class GalleryController
      *
      * @param ParamFetcherInterface $paramFetcher
      *
-     * @return Gallery[]
+     * @return Sonata\DatagridBundle\Pager\PagerInterface
      */
     public function getGalleriesAction(ParamFetcherInterface $paramFetcher)
     {
+        $supportedCriteria = array(
+            'enabled' => "",
+        );
+
         $page    = $paramFetcher->get('page');
-        $count   = $paramFetcher->get('count');
-        $orderBy = $paramFetcher->get('orderBy');
+        $limit   = $paramFetcher->get('count');
+        $sort    = $paramFetcher->get('orderBy');
+        $criteria = array_intersect_key($paramFetcher->all(), $supportedCriteria);
 
-        $criteria = $paramFetcher->all();
-
-        unset($criteria['page'], $criteria['count'], $criteria['orderBy']);
-
-        foreach ($criteria as $key => $crit) {
-            if (null === $crit) {
+        foreach ($criteria as $key => $value) {
+            if (null === $value) {
                 unset($criteria[$key]);
-            }
+             }
         }
 
-        return $this->getGalleryManager()->findBy($criteria, $orderBy, $count, $page);
+        if (!$sort) {
+            $sort = array();
+        } elseif (!is_array($sort)) {
+            $sort = array($sort => 'asc');
+        }
+
+        return $this->getGalleryManager()->getPager($criteria, $page, $limit, $sort);
     }
 
     /**
