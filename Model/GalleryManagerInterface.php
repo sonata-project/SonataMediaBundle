@@ -12,7 +12,8 @@
 namespace Sonata\MediaBundle\Model;
 
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\CoreBundle\Model\PageableManagerInterface;
 
-interface GalleryManagerInterface extends ManagerInterface
+interface GalleryManagerInterface extends ManagerInterface, PageableManagerInterface
 {
 }
