@@ -126,7 +126,7 @@ class GalleryController
      *  requirements={
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
      *  },
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"="sonata_api_read"},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"="sonata_api_read"},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when gallery is not found"
@@ -206,7 +206,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      400="Returned when an error has occurred while gallery creation",
@@ -232,7 +232,7 @@ class GalleryController
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      400="Returned when an error has occurred while gallery creation",
@@ -261,7 +261,7 @@ class GalleryController
      *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      400="Returned when an error has occurred while gallery/media attachment",
@@ -302,7 +302,7 @@ class GalleryController
      *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when an error if media cannot be found in gallery",
