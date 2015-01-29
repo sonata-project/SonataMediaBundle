@@ -19,6 +19,8 @@ interface MediaInterface
     const STATUS_ERROR       = 4;
     const STATUS_ENCODING    = 5;
 
+    const MISSING_BINARY_REFERENCE = "missing_binary_content";
+
     /**
      * @param mixed $binaryContent
      */

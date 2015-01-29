@@ -74,17 +74,18 @@ class ProviderDataTransformer implements DataTransformerInterface
 
         $binaryContent = $media->getBinaryContent();
 
-        // no binary content and no media id
-        if (empty($binaryContent) && $media->getId() === null) {
-            if ($this->options['empty_on_new']) {
+        // no binary
+        if (empty($binaryContent)){
+            // and no media id
+            if ($media->getId() === null && $this->options['empty_on_new']) {
                 return null;
+            } elseif ($media->getId()) {
+                return $media;
             }
 
-            return $media;
-        }
+            $media->setProviderStatus(MediaInterface::STATUS_PENDING);
+            $media->setProviderReference(MediaInterface::MISSING_BINARY_REFERENCE);
 
-        // no update, but the the media exists ...
-        if (empty($binaryContent) && $media->getId() !== null) {
             return $media;
         }
 

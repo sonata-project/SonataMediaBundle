@@ -175,7 +175,7 @@ class MediaController
     }
 
     /**
-     * Returns media urls for each format
+     * Returns media binary content for each format
      *
      * @ApiDoc(
      *  requirements={
@@ -313,6 +313,36 @@ class MediaController
         return $this->handleWriteMedium($request, $medium, $mediaProvider);
     }
 
+
+    /**
+     * Set Binary content for a specific media
+     *
+     * @ApiDoc(
+     *  input={"groups"={"sonata_api_write"}},
+     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"="sonata_api_read"},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when media is not found"
+     *  }
+     * )
+     *
+     * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
+     *
+     * @param $id
+     * @param Request $request A Symfony request
+     *
+     * @return Media
+     *
+     * @throws NotFoundHttpException
+     */
+    public function putMediumBinaryContentAction($id, Request $request)
+    {
+        $media = $this->getMedium($id);
+        $this->handleRequestBinaryContent($media, $request);
+
+        return $media;
+    }
+
     /**
      * Retrieves media with id $id or throws an exception if not found
      *
@@ -346,7 +376,7 @@ class MediaController
     {
         $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $medium, array(
             'provider_name'   => $provider->getName(),
-            'csrf_protection' => false
+            'csrf_protection' => false,
         ));
 
         $form->bind($request);
@@ -365,5 +395,26 @@ class MediaController
         }
 
         return $form;
+    }
+
+    /**
+     * Try to update a media binaryContent thanks to request content
+     *
+     * @param MediaInterface $media
+     * @param Request        $request
+     *
+     * @throws NotFoundHttpException
+     */
+    protected function handleRequestBinaryContent(MediaInterface $media, Request $request)
+    {
+        try {
+            $mediaProvider = $this->mediaPool->getProvider($media->getProviderName());
+        } catch (\RuntimeException $ex) {
+            throw new NotFoundHttpException($ex->getMessage(), $ex);
+        }
+
+        $media->setBinaryContent($request);
+
+        $this->mediaManager->save($media);
     }
 }
