@@ -7,6 +7,7 @@ Base bundles
 This bundle depends on ``JMSSerializerBundle``, ``SonataAdminBundle``, and ``SonataDoctrineORMAdminBundle`` or ``SonataDoctrineMongoDBAdminBundle`` (depending on your project's ORM). Be sure you have installed these bundles before starting:
 
  * http://jmsyst.com/bundles/JMSSerializerBundle/master/installation
+ * http://sonata-project.org/bundles/intl/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/mongo-admin/master/doc/reference/installation.html
@@ -61,27 +62,12 @@ Doctrine ORM:
 
     doctrine:
         orm:
-            entity_managers:
-                default:
-                    mappings:
-                        SonataMediaBundle: ~
+            mappings:
+                SonataMediaBundle: ~
 
         dbal:
             types:
                 json: Sonata\Doctrine\Types\JsonType
-
-Doctrine PHPCR:
-
-.. code-block:: yaml
-
-    # app/config/config.yml
-
-    doctrine_phpcr:
-        odm:
-            auto_mapping: true
-            mappings:
-                SonataMediaBundle:
-                    prefix: Sonata\MediaBundle\PHPCR
 
 .. code-block:: yaml
 
