@@ -114,7 +114,7 @@ abstract class BaseMediaAdmin extends Admin
             return $parameters;
         }
 
-        if ($filter = $this->getRequest()->get('filter')) {
+        if ($filter = $this->getRequest()->get('filter')  && array_key_exists('context', $this->getRequest()->get('filter'))) {
             $context = $filter['context']['value'];
         } else {
             $context   = $this->getRequest()->get('context', $this->pool->getDefaultContext());
