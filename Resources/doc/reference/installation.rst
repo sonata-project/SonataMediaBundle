@@ -43,7 +43,6 @@ Register the new bundle into your AppKernel:
 
           //You need to add this dependency to make media functional
           new JMS\SerializerBundle\JMSSerializerBundle(),
-          new Sonata\MediaBundle\SonataMediaBundle(),
           // ...
       );
   }
@@ -104,7 +103,8 @@ Doctrine PHPCR:
         #    gallery: MyVendor\MediaBundle\Entity\Gallery
         #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
         default_context: default
-        db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
+        db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
+        default_context: default # you need to set a context
         contexts:
             default:  # the default context is mandatory
                 providers:
