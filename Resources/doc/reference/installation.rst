@@ -43,7 +43,6 @@ Register the new bundle into your AppKernel:
 
           //You need to add this dependency to make media functional
           new JMS\SerializerBundle\JMSSerializerBundle(),
-          new Sonata\MediaBundle\SonataMediaBundle(),
           // ...
       );
   }
