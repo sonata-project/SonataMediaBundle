@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
@@ -92,6 +93,21 @@ abstract class BaseMediaAdmin extends Admin
                 'mode'         => 'tree',
             )
         ));
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('id')
+            ->add('enabled')
+            ->add('size')
+            ->add('name')
+            ->add('description')
+            ->add('copyright')
+        ;
     }
 
     /**

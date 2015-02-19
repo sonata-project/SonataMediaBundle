@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdmin extends Admin
@@ -110,7 +111,21 @@ class GalleryAdmin extends Admin
             ->add('context')
         ;
     }
-
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('id')
+            ->add('enabled')
+            ->add('name')
+            ->add('context')
+            ->add('defaultFormat')
+        ;
+    }
+    
     /**
      * {@inheritdoc}
      */
