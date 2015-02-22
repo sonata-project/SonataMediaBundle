@@ -41,7 +41,8 @@ class AddProviderCompilerPass implements CompilerPassInterface
                 'width'         => 200,
                 'format'        => 'jpg',
                 'height'        => false,
-                'constraint'    => true
+                'constraint'    => true,
+                'mode'          => 'inset'
             )));
         }
     }
@@ -129,6 +130,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
                     $config['format']       = isset($config['format'])  ? $config['format'] : 'jpg';
                     $config['height']       = isset($config['height'])  ? $config['height'] : false;
                     $config['constraint']   = isset($config['constraint'])  ? $config['constraint'] : true;
+                    $config['mode']         = isset($config['mode'])  ? $config['mode'] : 'inset';
 
                     $formatName = sprintf('%s_%s', $name, $format);
                     $definition->addMethodCall('addFormat', array($formatName, $config));

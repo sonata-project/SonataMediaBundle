@@ -33,19 +33,14 @@ class SquareResizer implements ResizerInterface
      */
     protected $adapter;
 
-    /**
-     * string
-     */
-    protected $mode;
 
     /**
      * @param ImagineInterface $adapter
      * @param string           $mode
      */
-    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
+    public function __construct(ImagineInterface $adapter, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
-        $this->mode    = $mode;
         $this->metadata = $metadata;
     }
 
@@ -83,7 +78,7 @@ class SquareResizer implements ResizerInterface
 
         if ($settings['height'] < $size->getHeight() && $settings['width'] < $size->getWidth()) {
             $content = $image
-                ->thumbnail(new Box($settings['width'], $settings['height']), $this->mode)
+                ->thumbnail(new Box($settings['width'], $settings['height']), $settings['mode'])
                 ->get($format, array('quality' => $settings['quality']));
         } else {
             $content = $image->get($format, array('quality' => $settings['quality']));

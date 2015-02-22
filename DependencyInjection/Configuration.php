@@ -43,7 +43,6 @@ class Configuration implements ConfigurationInterface
         $this->addExtraSection($node);
         $this->addModelSection($node);
         $this->addBuzzSection($node);
-        $this->addResizerSection($node);
 
         return $treeBuilder;
     }
@@ -81,6 +80,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('quality')->defaultValue(80)->end()
                                         ->scalarNode('format')->defaultValue('jpg')->end()
                                         ->scalarNode('constraint')->defaultValue(true)->end()
+                                        ->scalarNode('mode')->defaultValue('inset')->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -416,34 +416,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('timeout')->defaultValue(5)->end()
                             ->booleanNode('verify_peer')->defaultValue(true)->end()
                             ->scalarNode('proxy')->defaultNull()->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-    }
-
-    /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-     */
-    private function addResizerSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->arrayNode('resizer')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('simple')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('mode')->defaultValue('inset')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('square')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('mode')->defaultValue('inset')->end()
-                            ->end()
                         ->end()
                     ->end()
                 ->end()
