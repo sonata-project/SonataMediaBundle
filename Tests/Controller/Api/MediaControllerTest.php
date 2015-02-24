@@ -222,6 +222,25 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
         $controller->postProviderMediumAction("non existing provider", new Request());
     }
 
+    public function testPutMediumBinaryContentAction()
+    {
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media->expects($this->once())->method('setBinaryContent');
+
+        $manager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+        $manager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
+
+        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider->expects($this->once())->method('transform');
+
+        $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $pool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));
+
+        $controller = $this->createMediaController($manager, $pool);
+
+        $this->assertEquals($media, $controller->putMediumBinaryContentAction(1, new Request()));
+    }
+
     protected function createMediaController($manager = null, $pool = null, $factory = null)
     {
         if (null === $manager) {

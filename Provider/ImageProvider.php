@@ -101,7 +101,7 @@ class ImageProvider extends FileProvider
         } elseif ($media->getBinaryContent() instanceof File) {
             $fileName = $media->getBinaryContent()->getFilename();
         } else {
-            // Should not append, FileProvider should throw an exception in that case
+            // Should not happen, FileProvider should throw an exception in that case
             return;
         }
 
