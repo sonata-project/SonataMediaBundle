@@ -39,8 +39,11 @@ class LiipImagineThumbnail implements ThumbnailInterface
             $path = $provider->getReferenceImage($media);
         } else {
             $path = $this->router->generate(
-                sprintf('_imagine_%s', $format),
-                array('path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format))
+                'liip_imagine_filter',
+                array(
+                    'path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format),
+                    'filter' => $format
+                )
             );
         }
 
