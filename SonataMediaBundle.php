@@ -14,6 +14,7 @@ use Sonata\MediaBundle\DependencyInjection\Compiler\GlobalVariablesCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass;
+use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
 
 class SonataMediaBundle extends Bundle
 {
@@ -24,6 +25,17 @@ class SonataMediaBundle extends Bundle
     {
         $container->addCompilerPass(new AddProviderCompilerPass());
         $container->addCompilerPass(new GlobalVariablesCompilerPass());
+
+        if (class_exists('Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass')) {
+            $container->addCompilerPass(
+                DoctrinePhpcrMappingsPass::createXmlMappingDriver(
+                    array(
+                        realpath(__DIR__ . '/Resources/config/doctrine-phpcr') => 'Sonata\MediaBundle\PHPCR',
+                    )
+                )
+            );
+        }
+
     }
 
     /**
@@ -37,3 +49,4 @@ class SonataMediaBundle extends Bundle
         }
     }
 }
+
