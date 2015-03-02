@@ -22,7 +22,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class SimpleResizer implements ResizerInterface
 {
     /**
-     * @var ImagineInterface
+     * @var ImagineInterface.
      */
     protected $adapter;
 
