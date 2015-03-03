@@ -22,7 +22,7 @@
         <field name="height"             type="long" />
         <field name="length"             type="double" nullable="true" />
         <field name="contentType"        type="string" />
-        <field name="size"               type="long" />
+        <field name="size"               type="long" nullable="true"/>
 
         <field name="copyright"          type="string" nullable="true" />
         <field name="authorName"         type="string" nullable="true" />
