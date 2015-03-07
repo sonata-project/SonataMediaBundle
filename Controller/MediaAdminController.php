@@ -12,8 +12,9 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaAdminController extends Controller
@@ -21,13 +22,13 @@ class MediaAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function createAction()
+    public function createAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('CREATE')) {
             throw new AccessDeniedException();
         }
 
-        if (!$this->getRequest()->get('provider') && $this->getRequest()->isMethod('get')) {
+        if (!$request->get('provider') && $request->isMethod('get')) {
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
                 'providers'     => $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', $this->get('sonata.media.pool')->getDefaultContext())),
                 'base_template' => $this->getBaseTemplate(),
@@ -42,30 +43,30 @@ class MediaAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function render($view, array $parameters = array(), Response $response = null)
+    public function render($view, array $parameters = array(), Response $response = null, Request $request = null)
     {
         $parameters['media_pool']            = $this->container->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
-        return parent::render($view, $parameters);
+        return parent::render($view, $parameters, $response, $request);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function listAction()
+    public function listAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('LIST')) {
             throw new AccessDeniedException();
         }
 
-        if ($listMode = $this->getRequest()->get('_list_mode')) {
+        if ($listMode = $request->get('_list_mode')) {
             $this->admin->setListMode($listMode);
         }
 
         $datagrid = $this->admin->getDatagrid();
 
-        $filters = $this->getRequest()->get('filter');
+        $filters = $request->get('filter');
 
         // set the default context
         if (!$filters || !array_key_exists('context', $filters)) {
@@ -83,14 +84,14 @@ class MediaAdminController extends Controller
             $datagrid->setValue('category', null, $category->getId());
         }
 
-        if ($this->getRequest()->get('category')) {
+        if ($request->get('category')) {
             $contextInCategory = $this->container->get('sonata.classification.manager.category')->findBy(array(
-                'id'      => (int) $this->getRequest()->get('category'),
+                'id'      => (int) $request->get('category'),
                 'context' => $context
             ));
 
             if (!empty($contextInCategory)) {
-                $datagrid->setValue('category', null, $this->getRequest()->get('category'));
+                $datagrid->setValue('category', null, $request->get('category'));
             } else {
                 $datagrid->setValue('category', null, $category->getId());
             }
