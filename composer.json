@@ -35,7 +35,7 @@
         "sonata-project/doctrine-orm-admin-bundle": "~2.3@dev",
         "sonata-project/admin-bundle": "~2.3@dev",
         "sonata-project/formatter-bundle": "~2.2@dev",
-        "sonata-project/core-bundle": "~2.2@dev",
+        "sonata-project/core-bundle": "~2.3,>=2.3.1",
         "sonata-project/datagrid-bundle": "~2.2@dev",
         "aws/aws-sdk-php": "~2.7",
         "sonata-project/seo-bundle": "~1.1",
