@@ -4,9 +4,10 @@ Installation
 Base bundles
 ------------
 
-This bundle depends on ``JMSSerializerBundle``, ``SonataAdminBundle``, and ``SonataDoctrineORMAdminBundle`` or ``SonataDoctrineMongoDBAdminBundle`` (depending on your project's ORM). Be sure you have installed these bundles before starting:
+This bundle depends on ``JMSSerializerBundle``, ``SonataAdminBundle``, ``SonataEasyExtendsBundle`` and ``SonataDoctrineORMAdminBundle`` or ``SonataDoctrineMongoDBAdminBundle`` (depending on your project's ORM). Be sure you have installed these bundles before starting:
 
  * http://jmsyst.com/bundles/JMSSerializerBundle/master/installation
+ * http://sonata-project.org/bundles/easy-extends/master/doc/index.html
  * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
  * http://sonata-project.org/bundles/mongo-admin/master/doc/reference/installation.html
