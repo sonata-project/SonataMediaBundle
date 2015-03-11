@@ -404,7 +404,7 @@ class FileProvider extends BaseProvider
         if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
-                ->addViolation('Invalid mime type : ' . $media->getBinaryContent()->getMimeType())
+                ->addViolation('Invalid mime type : %type%' ,array("%type%"=>$media->getBinaryContent()->getMimeType()))
                 ->end();
         }
     }
