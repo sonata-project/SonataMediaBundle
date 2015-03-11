@@ -28,7 +28,7 @@ Retrieve the bundle with composer:
     php composer.phar require sonata-project/media-bundle --no-update
 
 
-Register the new bundle into your AppKernel:
+Register these bundles in your AppKernel:
 
 .. code-block:: php
 
@@ -40,6 +40,7 @@ Register the new bundle into your AppKernel:
           // ...
           new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+          new Sonata\IntlBundle\SonataIntlBundle(),
 
           //You need to add this dependency to make media functional
           new JMS\SerializerBundle\JMSSerializerBundle(),
