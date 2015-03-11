@@ -22,7 +22,7 @@ Retrieve the bundle with composer:
     php composer.phar require sonata-project/media-bundle --no-update
 
 
-Register the new bundle into your AppKernel:
+Register these bundles in your AppKernel:
 
 .. code-block:: php
 
@@ -33,6 +33,7 @@ Register the new bundle into your AppKernel:
       return array(
           // ...
           new Sonata\CoreBundle\SonataCoreBundle(),
+          new Sonata\IntlBundle\SonataIntlBundle(),
           new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
           // ...
