@@ -376,11 +376,11 @@
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
-                <target>list.label_description</target>
+                <target>Beschreibung</target>
             </trans-unit>
             <trans-unit id="list.label_size">
                 <source>list.label_size</source>
-                <target>list.label_size</target>
+                <target>Größe</target>
             </trans-unit>
             <trans-unit id="warning_no_category">
                 <source>warning_no_category</source>
