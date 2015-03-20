@@ -75,7 +75,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     protected function getRootCategory(MediaInterface $media)
     {
         if (!$this->rootCategories) {
-            $this->rootCategories = $this->container->get('sonata.classification.manager.category')->getRootCategories(false);
+            $this->rootCategories = $this->container->get('sonata.classification.manager.category')->getRootCategories(false, 'contextName');
         }
 
         if (!array_key_exists($media->getContext(), $this->rootCategories)) {
