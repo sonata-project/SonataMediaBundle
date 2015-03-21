@@ -17,6 +17,13 @@ use Aws\S3\Enum\Storage;
 
 class AmazonMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (!class_exists('Aws\S3\Enum\CannedAcl')) {
+            $this->markTestSkipped("Missing Aws\\S3\\Enum\\CannedAcl");
+        }
+    }
+
     public function testAmazon()
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');

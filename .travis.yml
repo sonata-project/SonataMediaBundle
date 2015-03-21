@@ -26,7 +26,7 @@ before_script:
 script: make test
 
 notifications:
-    webhooks: http://sonata-project.org/bundles/media/master/travis
+    webhooks: https://sonata-project.org/bundles/media/master/travis
 
 matrix:
   allow_failures:

@@ -3,13 +3,13 @@
     "type": "symfony-bundle",
     "description": "Symfony SonataMediaBundle",
     "keywords": ["media", "sonata", "youtube", "dailymotion", "vimeo", "pdf", "file", "upload"],
-    "homepage": "http://sonata-project.org/bundles/media",
+    "homepage": "https://sonata-project.org/bundles/media",
     "license": "MIT",
     "authors": [
         {
             "name": "Thomas Rabaix",
             "email": "thomas.rabaix@sonata-project.org",
-            "homepage": "http://sonata-project.org"
+            "homepage": "https://sonata-project.org"
         },
         {
             "name": "Sonata Community",
