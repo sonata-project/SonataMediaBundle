@@ -38,7 +38,7 @@ class SyncThumbsCommand extends BaseCommand
             ->setDefinition(array(
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size', 100)
+                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100)
             )
         );
     }
