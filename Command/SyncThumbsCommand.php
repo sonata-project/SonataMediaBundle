@@ -67,6 +67,11 @@ class SyncThumbsCommand extends BaseCommand
 
         $provider = $this->getMediaPool()->getProvider($providerName);
 
+        $filesystem = $provider->getFilesystem();
+        $fsReflection = new \ReflectionClass($filesystem);
+        $fsRegister = $fsReflection->getProperty('fileRegister');
+        $fsRegister->setAccessible(true);
+
         $batchCounter = 0;
         $batchSize = intval($input->getOption('batchSize'));
         $totalMediasCount = 0;
@@ -106,27 +111,47 @@ class SyncThumbsCommand extends BaseCommand
             );
 
             foreach ($medias as $media) {
-                $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
-
-                try {
-                    $provider->removeThumbnails($media);
-                } catch (\Exception $e) {
-                    $this->log(sprintf("<error>Unable to remove old thumbnails, media: %s - %s </error>",
-                        $media->getId(), $e->getMessage()));
+                if (!$this->processMedia($media, $provider)) {
                     continue;
                 }
-
-                try {
-                    $provider->generateThumbnails($media);
-                } catch (\Exception $e) {
-                    $this->log(sprintf("<error>Unable to generated new thumbnails, media: %s - %s </error>",
-                        $media->getId(), $e->getMessage()));
-                    continue;
-                }
+                //clean filesystem registry for saving memory
+                $fsRegister->setValue($filesystem, array());
             }
+
+            //clear entity manager for saving memory
+            $this->getMediaManager()->getEntityManager()->clear();
         } while (true);
 
         $this->log("Done (total medias processed: {$totalMediasCount}).");
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
+     *
+     * @return bool
+     */
+    protected function processMedia($media, $provider)
+    {
+        $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
+
+        try {
+            $provider->removeThumbnails($media);
+        } catch (\Exception $e) {
+            $this->log(sprintf("<error>Unable to remove old thumbnails, media: %s - %s </error>",
+                $media->getId(), $e->getMessage()));
+            return false;
+        }
+
+        try {
+            $provider->generateThumbnails($media);
+        } catch (\Exception $e) {
+            $this->log(sprintf("<error>Unable to generated new thumbnails, media: %s - %s </error>",
+                $media->getId(), $e->getMessage()));
+            return false;
+        }
+
+        return true;
     }
 
     /**
