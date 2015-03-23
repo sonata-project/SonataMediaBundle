@@ -38,7 +38,9 @@ class SyncThumbsCommand extends BaseCommand
             ->setDefinition(array(
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100)
+                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
+                new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
+                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0)
             )
         );
     }
@@ -74,10 +76,13 @@ class SyncThumbsCommand extends BaseCommand
 
         $batchCounter = 0;
         $batchSize = intval($input->getOption('batchSize'));
+        $batchesLimit = intval($input->getOption('batchesLimit'));
+        $startOffset = intval($input->getOption('startOffset'));
         $totalMediasCount = 0;
         do {
             $batchCounter++;
             try {
+                $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->getMediaManager()->findBy(
                     array(
                         'providerName' => $providerName,
@@ -87,7 +92,7 @@ class SyncThumbsCommand extends BaseCommand
                         'id' => 'ASC'
                     ),
                     $batchSize,
-                    ($batchCounter - 1) * $batchSize
+                    $batchOffset
                 );
             } catch (\Exception $e) {
                 $this->log('Error: ' . $e->getMessage());
@@ -102,9 +107,10 @@ class SyncThumbsCommand extends BaseCommand
             $totalMediasCount += $batchMediasCount;
             $this->log(
                 sprintf(
-                    "Loaded %s medias (batch #%d) for generating thumbs (provider: %s, context: %s)",
+                    "Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)",
                     $batchMediasCount,
                     $batchCounter,
+                    $batchOffset,
                     $providerName,
                     $context
                 )
@@ -120,6 +126,10 @@ class SyncThumbsCommand extends BaseCommand
 
             //clear entity manager for saving memory
             $this->getMediaManager()->getEntityManager()->clear();
+
+            if ($batchesLimit > 0 && $batchCounter == $batchesLimit) {
+                break;
+            }
         } while (true);
 
         $this->log("Done (total medias processed: {$totalMediasCount}).");
