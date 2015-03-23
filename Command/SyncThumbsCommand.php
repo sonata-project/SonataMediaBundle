@@ -156,7 +156,7 @@ class SyncThumbsCommand extends BaseCommand
         try {
             $provider->generateThumbnails($media);
         } catch (\Exception $e) {
-            $this->log(sprintf("<error>Unable to generated new thumbnails, media: %s - %s </error>",
+            $this->log(sprintf("<error>Unable to generate new thumbnails, media: %s - %s </error>",
                 $media->getId(), $e->getMessage()));
             return false;
         }
