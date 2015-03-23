@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -37,6 +38,9 @@ class SyncThumbsCommand extends BaseCommand
             ->setDefinition(array(
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
+                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
+                new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
+                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0)
             )
         );
     }
@@ -46,11 +50,11 @@ class SyncThumbsCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $provider = $input->getArgument('providerName');
-        if (null === $provider) {
+        $providerName = $input->getArgument('providerName');
+        if (null === $providerName) {
             $providers = array_keys($this->getMediaPool()->getProviders());
             $providerKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the provider', $providers);
-            $provider = $providers[$providerKey];
+            $providerName = $providers[$providerKey];
         }
 
         $context  = $input->getArgument('context');
@@ -63,34 +67,101 @@ class SyncThumbsCommand extends BaseCommand
         $this->quiet = $input->getOption('quiet');
         $this->output = $output;
 
-        $medias = $this->getMediaManager()->findBy(array(
-            'providerName' => $provider,
-            'context'      => $context
-        ));
+        $provider = $this->getMediaPool()->getProvider($providerName);
 
-        $this->log(sprintf("Loaded %s medias for generating thumbs (provider: %s, context: %s)", count($medias), $provider, $context));
+        $filesystem = $provider->getFilesystem();
+        $fsReflection = new \ReflectionClass($filesystem);
+        $fsRegister = $fsReflection->getProperty('fileRegister');
+        $fsRegister->setAccessible(true);
 
-        foreach ($medias as $media) {
-            $provider = $this->getMediaPool()->getProvider($media->getProviderName());
-
-            $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
-
+        $batchCounter = 0;
+        $batchSize = intval($input->getOption('batchSize'));
+        $batchesLimit = intval($input->getOption('batchesLimit'));
+        $startOffset = intval($input->getOption('startOffset'));
+        $totalMediasCount = 0;
+        do {
+            $batchCounter++;
             try {
-                $provider->removeThumbnails($media);
+                $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
+                $medias = $this->getMediaManager()->findBy(
+                    array(
+                        'providerName' => $providerName,
+                        'context' => $context
+                    ),
+                    array(
+                        'id' => 'ASC'
+                    ),
+                    $batchSize,
+                    $batchOffset
+                );
             } catch (\Exception $e) {
-                $this->log(sprintf("<error>Unable to remove old thumbnails, media: %s - %s </error>", $media->getId(), $e->getMessage()));
-                continue;
+                $this->log('Error: ' . $e->getMessage());
+                break;
             }
 
-            try {
-                $provider->generateThumbnails($media);
-            } catch (\Exception $e) {
-                $this->log(sprintf("<error>Unable to generated new thumbnails, media: %s - %s </error>", $media->getId(), $e->getMessage()));
-                continue;
+            $batchMediasCount = count($medias);
+            if ($batchMediasCount === 0) {
+                break;
             }
+
+            $totalMediasCount += $batchMediasCount;
+            $this->log(
+                sprintf(
+                    "Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)",
+                    $batchMediasCount,
+                    $batchCounter,
+                    $batchOffset,
+                    $providerName,
+                    $context
+                )
+            );
+
+            foreach ($medias as $media) {
+                if (!$this->processMedia($media, $provider)) {
+                    continue;
+                }
+                //clean filesystem registry for saving memory
+                $fsRegister->setValue($filesystem, array());
+            }
+
+            //clear entity manager for saving memory
+            $this->getMediaManager()->getEntityManager()->clear();
+
+            if ($batchesLimit > 0 && $batchCounter == $batchesLimit) {
+                break;
+            }
+        } while (true);
+
+        $this->log("Done (total medias processed: {$totalMediasCount}).");
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
+     *
+     * @return bool
+     */
+    protected function processMedia($media, $provider)
+    {
+        $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
+
+        try {
+            $provider->removeThumbnails($media);
+        } catch (\Exception $e) {
+            $this->log(sprintf("<error>Unable to remove old thumbnails, media: %s - %s </error>",
+                $media->getId(), $e->getMessage()));
+            return false;
         }
 
-        $this->log('Done.');
+        try {
+            $provider->generateThumbnails($media);
+        } catch (\Exception $e) {
+            $this->log(sprintf("<error>Unable to generate new thumbnails, media: %s - %s </error>",
+                $media->getId(), $e->getMessage()));
+            return false;
+        }
+
+        return true;
     }
 
     /**
