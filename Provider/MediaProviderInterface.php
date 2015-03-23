@@ -15,7 +15,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Gaufrette\Filesystem;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\Form\FormBuilder;
 
 interface MediaProviderInterface
