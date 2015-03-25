@@ -82,10 +82,6 @@
                 <source>filter.label_name</source>
                 <target>Name</target>
             </trans-unit>
-            <trans-unit id="form.label_category">
-                <source>form.label_category</source>
-                <target>form.label_category</target>
-            </trans-unit>
             <trans-unit id="filter.label_provider_reference">
                 <source>filter.label_provider_reference</source>
                 <target>Medienanbieter Referenz</target>
