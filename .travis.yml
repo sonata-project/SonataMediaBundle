@@ -42,7 +42,3 @@ script: make test
 
 notifications:
     webhooks: https://sonata-project.org/bundles/media/master/travis
-
-matrix:
-  allow_failures:
-    - php: hhvm
