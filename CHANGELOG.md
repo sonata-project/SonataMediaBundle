@@ -7,6 +7,11 @@ A [BC BREAK] means the update will break the project for many reasons:
 * new dependencies
 * class refactoring
 
+### 2015-04-03
+
+* [BC BREAK] Add `formats` param to `removeThumbnails` method of `MediaProviderInterface`
+* [BC BREAK] Add `formats` param to `delete` method of `ThumbnailInterface`
+
 
 ### 2014-09-01
 

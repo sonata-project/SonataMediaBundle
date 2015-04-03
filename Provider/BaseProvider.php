@@ -109,9 +109,9 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function removeThumbnails(MediaInterface $media)
+    public function removeThumbnails(MediaInterface $media, $formats = null)
     {
-        $this->thumbnail->delete($this, $media);
+        $this->thumbnail->delete($this, $media, $formats);
     }
 
     /**

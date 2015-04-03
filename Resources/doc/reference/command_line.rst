@@ -4,18 +4,31 @@ Command Line Tools
 Media commands
 --------------
 
-Synchronize
-^^^^^^^^^^^
+Synchronize thumbnails
+^^^^^^^^^^^^^^^^^^^^^^
 
-Synchronize thumbnail for the provider ``sonata.media.provider.image`` with the ``default`` context.
+Synchronize thumbnails for the provider ``sonata.media.provider.image`` in the ``default`` context.
 
 .. note::
 
-   There is also an interactive shell for the parameter.
+   There is also an interactive shell for parameters.
 
 .. code-block:: bash
 
    php app/console sonata:media:sync-thumbnails sonata.media.provider.image default
+
+Remove thumbnails
+^^^^^^^^^^^^^^^^^
+
+Remove thumbnails for the provider ``sonata.media.provider.image`` in the ``default`` context and ``small`` format.
+
+.. note::
+
+   There is also an interactive shell for parameters.
+
+.. code-block:: bash
+
+   php app/console sonata:media:remove-thumbnails sonata.media.provider.image default small
 
 Update metadata
 ^^^^^^^^^^^^^^^
@@ -24,7 +37,7 @@ Update metadata for a set of media for the provider ``sonata.media.provider.yout
 
 .. note::
 
-   There is also an interactive shell for the parameter.
+   There is also an interactive shell for parameters.
 
 .. code-block:: bash
 

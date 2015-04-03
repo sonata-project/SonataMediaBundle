@@ -69,8 +69,8 @@ class ConsumerThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
-        return $this->thumbnail->delete($provider, $media);
+        return $this->thumbnail->delete($provider, $media, $formats);
     }
 }
