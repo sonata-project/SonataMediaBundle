@@ -32,7 +32,7 @@ Media Entity
 
 The ``Media`` entity comes with common media fields: ``size``, ``length``,
 ``width`` and ``height``. However the provider might require you to add more
-information. As it not possible to store all of the possible information
+information. As it is not possible to store all of the possible information
 into database columns, the provider class can use the ``provider_metadata``
 field to store metadata as a serialize array.
 
