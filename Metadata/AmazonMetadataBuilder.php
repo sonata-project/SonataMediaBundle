@@ -69,7 +69,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
 
         //merge cache control header
         if (isset($this->settings['cache_control']) && !empty($this->settings['cache_control'])) {
-            $output['headers']['Cache-Control'] = $this->settings['cache_control'];
+            $output['CacheControl'] = $this->settings['cache_control'];
         }
 
         //merge encryption
