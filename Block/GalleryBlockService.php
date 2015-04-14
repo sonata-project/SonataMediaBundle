@@ -160,7 +160,7 @@ class GalleryBlockService extends BaseBlockService
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
-        $gallery = $blockContext->getBlock()->getSetting('galleryId');
+        $gallery = $blockContext->getSetting('gallery');
 
         return $this->renderResponse($blockContext->getTemplate(), array(
             'gallery'   => $gallery,
