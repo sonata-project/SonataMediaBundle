@@ -29,6 +29,7 @@
         <field name="context"            type="string" />
 
         <field name="cdnIsFlushable"     type="boolean" nullable="true" />
+        <field name="cdnFlushIdentifier" type="string"  nullable="true" />
         <field name="cdnFlushAt"         type="date" nullable="true" />
         <field name="cdnStatus"          type="long" nullable="true" />
 

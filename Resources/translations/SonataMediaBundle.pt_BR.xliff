@@ -226,6 +226,10 @@
                 <source>label.cdn_is_flushable</source>
                 <target>Atualizar CDN</target>
             </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
+            </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
                 <target>Alterar vídeo</target>
