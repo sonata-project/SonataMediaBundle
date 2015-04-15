@@ -11,6 +11,7 @@ Full configuration options:
             media:              Application\Sonata\MediaBundle\Entity\Media
             gallery:            Application\Sonata\MediaBundle\Entity\Gallery
             gallery_has_media:  Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+            category:           Application\Sonata\ClassificationBundle\Entity\Category
 
         default_context: default
         contexts:
