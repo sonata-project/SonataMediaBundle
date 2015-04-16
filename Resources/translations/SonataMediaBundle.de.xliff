@@ -120,7 +120,7 @@
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
-                <target>Enabled</target>
+                <target>Aktiviert</target>
             </trans-unit>
             <trans-unit id="form.label_media">
                 <source>form.label_media</source>
