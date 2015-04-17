@@ -77,16 +77,14 @@ abstract class BaseProvider implements MediaProviderInterface
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return void
      */
     public function flushCdn(MediaInterface $media)
     {
         if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
             $flushPaths = array();
             foreach ($this->getFormats() as $format => $settings) {
-                if ('admin' === $format || substr($format, 0, strlen($media->getContext())) == $media->getContext()) {
-                    $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format))->getKey();
+                if ('admin' === $format || substr($format, 0, strlen($media->getContext())) === $media->getContext()) {
+                    $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
                 }
             }
             if (!empty($flushPaths)) {

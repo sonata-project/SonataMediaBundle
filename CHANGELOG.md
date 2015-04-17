@@ -11,6 +11,7 @@ A [BC BREAK] means the update will break the project for many reasons:
 
 * [BC BREAK] Add `formats` param to `removeThumbnails` method of `MediaProviderInterface`
 * [BC BREAK] Add `formats` param to `delete` method of `ThumbnailInterface`
+* [BC BREAK] Add `getFlushStatus` method to `CDN\CDNInterface`
 
 
 ### 2014-09-01
