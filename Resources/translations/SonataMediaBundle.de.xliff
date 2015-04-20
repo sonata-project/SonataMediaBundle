@@ -100,7 +100,7 @@
             </trans-unit>
             <trans-unit id="filter.label_category">
                 <source>filter.label_category</source>
-                <target>filter.label_category</target>
+                <target>Kategorie</target>
             </trans-unit>
             <trans-unit id="filter.label_author_name">
                 <source>filter.label_author_name</source>
@@ -108,15 +108,15 @@
             </trans-unit>
             <trans-unit id="filter.label_width">
                 <source>filter.label_width</source>
-                <target>filter.label_width</target>
+                <target>Breite</target>
             </trans-unit>
             <trans-unit id="filter.label_height">
                 <source>filter.label_height</source>
-                <target>filter.label_height</target>
+                <target>Höhe</target>
             </trans-unit>
             <trans-unit id="filter.label_content_type">
                 <source>filter.label_content_type</source>
-                <target>filter.label_content_type</target>
+                <target>Inhalts-Typ</target>
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
@@ -172,7 +172,7 @@
             </trans-unit>
             <trans-unit id="label.length">
                 <source>label.length</source>
-                <target>label.length</target>
+                <target>Länge</target>
             </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
@@ -184,7 +184,7 @@
             </trans-unit>
             <trans-unit id="label.content_type">
                 <source>label.content_type</source>
-                <target>Content type</target>
+                <target>Inhalts-Typ</target>
             </trans-unit>
             <trans-unit id="label.copyright">
                 <source>label.copyright</source>
