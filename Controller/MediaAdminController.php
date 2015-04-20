@@ -60,7 +60,7 @@ class MediaAdminController extends Controller
             throw new AccessDeniedException();
         }
 
-        if ($listMode = $request->get('_list_mode')) {
+        if ($listMode = $request->get('_list_mode', 'mosaic')) {
             $this->admin->setListMode($listMode);
         }
 
