@@ -1,28 +1,30 @@
 {% block sonata_media_type_widget %}
-    <div class="span3 pull-left">
-        {% if value is not empty and value.providerReference %}
-            <div class="pull-left" style="margin-right: 5px">
-                {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
-            </div>
+    <div class="row">
+        <div class="col-md-3 pull-left">
+            {% if value is not empty and value.providerReference %}
+                <div class="pull-left" style="margin-right: 5px">
+                    {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
+                </div>
 
-            {% if sonata_admin_enabled is defined and sonata_admin_enabled %}
-                <a href="{{ url('admin_sonata_media_media_edit', {id: value.id}) }}"><strong>{{ value.name }}</strong></a>
+                {% if sonata_admin_enabled is defined and sonata_admin_enabled %}
+                    <a href="{{ url('admin_sonata_media_media_edit', {id: value.id}) }}"><strong>{{ value.name }}</strong></a>
+                {% else %}
+                    <strong>{{ value.name }}</strong>
+                {% endif %}
+                 <br />
+                <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span> ~ {{ value.context }}
             {% else %}
-                <strong>{{ value.name }}</strong>
+                <div class="pull-left" style="margin-right: 5px">
+                    <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
+                </div>
+                <strong>{{ 'no_linked_media'|trans({}, 'SonataMediaBundle') }}</strong> <br />
+                <span type="label">{{ form.vars['provider']|trans({}, 'SonataMediaBundle') }} ~ {{ form.vars['context']|trans({}, 'SonataMediaBundle') }}</span>
             {% endif %}
-             <br />
-            <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span> ~ {{ value.context }}
-        {% else %}
-            <div class="pull-left" style="margin-right: 5px">
-                <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
-            </div>
-            <strong>{{ 'no_linked_media'|trans({}, 'SonataMediaBundle') }}</strong> <br />
-            <span type="label">{{ form.vars['provider']|trans({}, 'SonataMediaBundle') }} ~ {{ form.vars['context']|trans({}, 'SonataMediaBundle') }}</span>
-        {% endif %}
-    </div>
+        </div>
 
-    <div class="span3 pull-left">
-        {{ 'link_media'|trans({}, 'SonataMediaBundle') }}
-        {{ block('form_widget') }}
+        <div class="col-md-3 pull-left">
+            {{ 'link_media'|trans({}, 'SonataMediaBundle') }}
+            {{ block('form_widget') }}
+        </div>
     </div>
 {% endblock sonata_media_type_widget %}
