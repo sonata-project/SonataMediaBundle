@@ -230,10 +230,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
         $manager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $manager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
-
         $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
-        $pool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));
 
         $controller = $this->createMediaController($manager, $pool);
 
