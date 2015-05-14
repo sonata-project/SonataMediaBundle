@@ -54,6 +54,14 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
+    public function getReferenceImage(MediaInterface $media)
+    {
+        return sprintf('http://i.ytimg.com/vi/%s/hqdefault.jpg', $media->getProviderReference());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
 
