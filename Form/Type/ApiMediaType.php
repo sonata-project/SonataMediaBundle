@@ -66,7 +66,8 @@ class ApiMediaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'provider_name'   => "sonata.media.provider.image",
+            'provider_name' => "sonata.media.provider.image",
+            'context'       => 'api'
         ));
     }
 
