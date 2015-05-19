@@ -416,7 +416,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('buzz')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.file_get_contents')->end()
+                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.curl')->end()
                         ->arrayNode('client')
                         ->addDefaultsIfNotSet()
                         ->children()
