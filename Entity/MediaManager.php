@@ -59,9 +59,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
                 throw new \RuntimeException(sprintf("Invalid sort field '%s' in '%s' class", $field, $this->class));
             }
         }
-        if (count($sort) == 0) {
-            $sort = array('name' => 'ASC');
-        }
+
         foreach ($sort as $field => $direction) {
             $query->orderBy(sprintf('m.%s', $field), strtoupper($direction));
         }
