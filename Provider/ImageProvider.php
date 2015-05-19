@@ -131,10 +131,14 @@ class ImageProvider extends FileProvider
     public function updateMetadata(MediaInterface $media, $force = true)
     {
         try {
-            // this is now optimized at all!!!
-            $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
-            $fileObject = new \SplFileObject($path, 'w');
-            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+                // this is now optimized at all!!!
+                $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+                $fileObject = new \SplFileObject($path, 'w');
+                $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            } else {
+                $fileObject = $media->getBinaryContent();
+            }
 
             $image = $this->imagineAdapter->open($fileObject->getPathname());
             $size  = $image->getSize();

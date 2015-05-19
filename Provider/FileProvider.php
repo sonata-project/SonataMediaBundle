@@ -184,6 +184,7 @@ class FileProvider extends BaseProvider
 
         if ($media->getBinaryContent() instanceof Request) {
             $this->generateBinaryFromRequest($media);
+            $this->updateMetadata($media);
 
             return;
         }
@@ -248,10 +249,14 @@ class FileProvider extends BaseProvider
      */
     public function updateMetadata(MediaInterface $media, $force = true)
     {
-        // this is now optimized at all!!!
-        $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
-        $fileObject = new \SplFileObject($path, 'w');
-        $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+            // this is now optimized at all!!!
+            $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
+            $fileObject = new \SplFileObject($path, 'w');
+            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+        } else {
+            $fileObject = $media->getBinaryContent();
+        }
 
         $media->setSize($fileObject->getSize());
     }
@@ -436,6 +441,7 @@ class FileProvider extends BaseProvider
         }
 
         $content = $request->getContent();
+
         // create unique id for media reference
         $guesser = ExtensionGuesser::getInstance();
         $extension = $guesser->guess($media->getContentType());
