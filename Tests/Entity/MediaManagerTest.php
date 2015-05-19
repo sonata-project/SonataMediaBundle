@@ -42,10 +42,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this
             ->getMediaManager(function ($qb) use ($self) {
                 $qb->expects($self->never())->method('andWhere');
-                $qb->expects($self->once())->method('orderBy')->with(
-                    $self->equalTo('m.name'),
-                    $self->equalTo('ASC')
-                );
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array()));
             })
             ->getPager(array(), 1);
