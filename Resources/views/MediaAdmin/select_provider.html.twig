@@ -28,7 +28,7 @@ file that was distributed with this source code.
                    data-placement="top"
                    title="{{ provider.providerMetadata.description|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}"
                         >
-                    {% if provider.providerMetadata.image is null %}
+                    {% if not provider.providerMetadata.image %}
                         <i class="{{ provider.providerMetadata.option('class') }}"></i>
                     {% else %}
                         <img src="{{ asset(provider.providerMetadata.image) }}" style="max-height: 20px; max-width: 100px;"/>
