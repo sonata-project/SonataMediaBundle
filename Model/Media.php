@@ -522,7 +522,8 @@ abstract class Media implements MediaInterface
      */
     public function getExtension()
     {
-        return pathinfo($this->getProviderReference(), PATHINFO_EXTENSION);
+        // strips off query strings or hashes, which are common in URIs remote references
+        return preg_replace('{(\?|#).*}', '', pathinfo($this->getProviderReference(), PATHINFO_EXTENSION));
     }
 
     /**
