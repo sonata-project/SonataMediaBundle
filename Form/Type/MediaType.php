@@ -59,11 +59,14 @@ class MediaType extends AbstractType
 
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 
-        $builder->add('unlink', 'checkbox', array(
-            'mapped'   => false,
-            'data'     => false,
-            'required' => false
-        ));
+        // We add a new option to the form for adding or not the unlink checkbox
+        if ($options['unlink_enabled']) {
+            $builder->add('unlink', 'checkbox', array(
+                'mapped'   => false,
+                'data'     => false,
+                'required' => false
+            ));
+        }
     }
 
     /**
@@ -86,6 +89,7 @@ class MediaType extends AbstractType
             'context'       => null,
             'empty_on_new'  => true,
             'new_on_update' => true,
+            'unlink_enabled'=> true,
         ));
     }
 
