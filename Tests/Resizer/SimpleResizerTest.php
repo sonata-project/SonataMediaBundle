@@ -35,16 +35,22 @@ class SimpleResizerTest extends \PHPUnit_Framework_TestCase
 
     public function testResize()
     {
+        $thumbnail = $this->getMock('Imagine\Image\ImageInterface');
+        $thumbnail->expects($this->once())->method('getSize')->will($this->returnValue(new Box(535, 132)));
+        $thumbnail->expects($this->once())->method('get')->will($this->returnValue(file_get_contents(__DIR__.'/../fixtures/logo.png')));
+        $thumbnail->expects($this->once())->method('resize')->will($this->returnValue($thumbnail));
+        $thumbnail->expects($this->once())->method('crop')->will($this->returnValue($thumbnail));
 
         $image = $this->getMock('Imagine\Image\ImageInterface');
-        $image->expects($this->once())->method('thumbnail')->will($this->returnValue($image));
-        $image->expects($this->once())->method('get')->will($this->returnValue(file_get_contents(__DIR__.'/../fixtures/logo.png')));
+        $image->expects($this->once())->method('getSize')->will($this->returnValue(new Box(535, 132)));
+        $image->expects($this->once())->method('copy')->will($this->returnValue($thumbnail));
+
 
         $adapter = $this->getMock('Imagine\Image\ImagineInterface');
         $adapter->expects($this->any())->method('load')->will($this->returnValue($image));
 
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $media->expects($this->exactly(2))->method('getBox')->will($this->returnValue(new Box(535, 132)));
+        $media->expects($this->exactly(3))->method('getBox')->will($this->returnValue(new Box(535, 132)));
 
         $filesystem = new Filesystem(new InMemory);
         $in = $filesystem->get('in', true);
@@ -57,6 +63,7 @@ class SimpleResizerTest extends \PHPUnit_Framework_TestCase
 
         $resizer = new SimpleResizer($adapter, 'outbound', $metadata);
         $resizer->resize($media, $in, $out, 'bar', array('height' => null, 'width' => 90, 'quality' => 100));
+
     }
 
     /**
@@ -87,7 +94,7 @@ class SimpleResizerTest extends \PHPUnit_Framework_TestCase
             array('inset', array( 'width' => 90, 'height' => 90 ), new Box(100, 120), new Box(75, 90)),
             array('inset', array( 'width' => 90, 'height' => 90 ), new Box(50, 50), new Box(90, 90)),
             array('inset', array( 'width' => 90, 'height' => null ), new Box(50, 50), new Box(90, 90)),
-            array('inset', array( 'width' => 90, 'height' => null ), new Box(567, 200), new Box(88, 31)),
+            array('inset', array( 'width' => 90, 'height' => null ), new Box(567, 200), new Box(90, 32)),
             array('inset', array( 'width' => 100, 'height' => 100 ), new Box(567, 200), new Box(100, 35)),
 
             array('outbound', array( 'width' => 90, 'height' => 90 ), new Box(100, 120), new Box(90, 108)),
