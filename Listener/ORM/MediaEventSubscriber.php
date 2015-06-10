@@ -32,7 +32,13 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
             Events::postUpdate,
             Events::postRemove,
             Events::postPersist,
+            Events::onClear,
         );
+    }
+
+    public function onClear()
+    {
+        $this->rootCategories = null;
     }
 
     /**
