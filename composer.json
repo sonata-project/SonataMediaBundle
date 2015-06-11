@@ -40,7 +40,8 @@
         "aws/aws-sdk-php": "~2.7",
         "sonata-project/seo-bundle": "~1.1",
         "doctrine/mongodb-odm": "~1.0@dev",
-        "jackalope/jackalope-doctrine-dbal": "~1.1"
+        "jackalope/jackalope-doctrine-dbal": "~1.1",
+        "symfony/phpunit-bridge": "~2.7|~3.0"
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
