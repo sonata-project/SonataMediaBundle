@@ -15,8 +15,11 @@ use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Validator\FormatValidator;
 use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 
-class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
+class FormatValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testValidate()
     {
         $pool = new Pool('defaultContext');

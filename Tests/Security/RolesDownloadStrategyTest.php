@@ -15,6 +15,9 @@ use Sonata\MediaBundle\Security\RolesDownloadStrategy;
 
 class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testIsGrantedTrue()
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
