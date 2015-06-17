@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -9,7 +10,6 @@
  */
 
 namespace Sonata\MediaBundle\Extra;
-
 
 use Symfony\Component\HttpFoundation\File\File;
 

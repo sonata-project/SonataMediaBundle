@@ -11,9 +11,8 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Filesystem\Replicate;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProxyMetadataBuilder implements MetadataBuilderInterface
@@ -33,8 +32,8 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function get(MediaInterface $media, $filename)
     {
         //get adapter for current media

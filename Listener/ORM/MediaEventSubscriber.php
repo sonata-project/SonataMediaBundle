@@ -36,8 +36,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @param  \Doctrine\Common\EventArgs $args
-     * @return void
+     * @param \Doctrine\Common\EventArgs $args
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {

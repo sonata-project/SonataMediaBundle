@@ -18,7 +18,7 @@ class PantherPortalTest extends \PHPUnit_Framework_TestCase
     public function testPortal()
     {
         $client = $this->getMock('ClientSpy', array('flush'), array(), '', false);
-        $client->expects($this->exactly(3))->method('flush')->will($this->returnValue("Flush successfully submitted."));
+        $client->expects($this->exactly(3))->method('flush')->will($this->returnValue('Flush successfully submitted.'));
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);

@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
-use Sonata\CoreBundle\Validator\ErrorElement;
 
 class Pool
 {
@@ -55,8 +55,6 @@ class Pool
     /**
      * @param string                 $name
      * @param MediaProviderInterface $instance
-     *
-     * @return void
      */
     public function addProvider($name, MediaProviderInterface $instance)
     {
@@ -74,8 +72,6 @@ class Pool
 
     /**
      * @param array $providers
-     *
-     * @return void
      */
     public function setProviders($providers)
     {
@@ -95,8 +91,6 @@ class Pool
      * @param array  $providers
      * @param array  $formats
      * @param array  $download
-     *
-     * @return void
      */
     public function addContext($name, array $providers = array(), array $formats = array(), array $download = array())
     {
@@ -131,14 +125,14 @@ class Pool
     public function getContext($name)
     {
         if (!$this->hasContext($name)) {
-            return null;
+            return;
         }
 
         return $this->contexts[$name];
     }
 
     /**
-     * Returns the context list
+     * Returns the context list.
      *
      * @return array
      */
@@ -157,7 +151,7 @@ class Pool
         $context = $this->getContext($name);
 
         if (!$context) {
-            return null;
+            return;
         }
 
         return $context['providers'];
@@ -173,7 +167,7 @@ class Pool
         $context = $this->getContext($name);
 
         if (!$context) {
-            return null;
+            return;
         }
 
         return $context['formats'];
@@ -216,6 +210,7 @@ class Pool
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      *
      * @return \Sonata\MediaBundle\Security\DownloadStrategyInterface
+     *
      * @throws \RuntimeException
      */
     public function getDownloadSecurity(MediaInterface $media)
@@ -225,7 +220,7 @@ class Pool
         $id = $context['download']['strategy'];
 
         if (!isset($this->downloadSecurities[$id])) {
-            throw new \RuntimeException('Unable to retrieve the download security : ' . $id);
+            throw new \RuntimeException('Unable to retrieve the download security : '.$id);
         }
 
         return $this->downloadSecurities[$id];
@@ -253,9 +248,7 @@ class Pool
 
     /**
      * @param \Sonata\CoreBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\MediaInterface   $media
-     *
-     * @return void
+     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {

@@ -14,7 +14,7 @@ namespace Sonata\MediaBundle\Twig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * GlobalVariables
+ * GlobalVariables.
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */

@@ -15,7 +15,7 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\SeoBundle\Block\Breadcrumb\BaseBreadcrumbMenuBlockService;
 
 /**
- * Abstract class for media breadcrumbs
+ * Abstract class for media breadcrumbs.
  *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
@@ -30,7 +30,7 @@ abstract class BaseGalleryBreadcrumbBlockService extends BaseBreadcrumbMenuBlock
 
         $menu->addChild('sonata_media_gallery_index', array(
             'route'  => 'sonata_media_gallery_index',
-            'extras' => array('translation_domain' => 'SonataMediaBundle')
+            'extras' => array('translation_domain' => 'SonataMediaBundle'),
         ));
 
         return $menu;

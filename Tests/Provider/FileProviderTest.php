@@ -11,15 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Symfony\Component\HttpFoundation\File\File;
-use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function getProvider()
     {
         $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
@@ -50,7 +49,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.txt');
         $media->setProviderReference('ASDASD.txt');
         $media->setContext('default');
@@ -69,7 +68,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('admin', array('width' => 100));
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
@@ -107,7 +106,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.png');
         $media->setId(1023456);
 
@@ -122,7 +121,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $file = __DIR__.'/../fixtures/file.txt';
 
-        $media = new Media;
+        $media = new Media();
         $provider->preUpdate($media);
         $this->assertNull($media->getProviderReference());
 
@@ -136,7 +135,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent($file);
         $media->setId(1023456);
 
@@ -156,7 +155,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $file = new File(realpath(__DIR__.'/../fixtures/FileProviderTest/0011/24/file.txt'));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent($file);
         $media->setProviderReference('file.txt');
         $media->setContext('FileProviderTest');
@@ -169,15 +168,14 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider mediaProvider
-     *
      */
     public function testTransform($expected, $media, $overridePhpSapiName = true)
     {
         $self = $this;
 
-        $closure = function() use ($self, $expected, $media, $overridePhpSapiName){
+        $closure = function () use ($self, $expected, $media, $overridePhpSapiName) {
             if ($overridePhpSapiName) {
-                require_once ('phpSapiNameOverride.php');
+                require_once 'phpSapiNameOverride.php';
             }
 
             $provider = $self->getProvider();

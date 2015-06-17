@@ -22,8 +22,6 @@ interface ResizerInterface
      * @param File           $out
      * @param string         $format
      * @param array          $settings
-     *
-     * @return void
      */
     public function resize(MediaInterface $media, File $in, File $out, $format, array $settings);
 

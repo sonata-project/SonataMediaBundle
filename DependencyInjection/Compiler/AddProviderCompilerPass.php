@@ -11,14 +11,11 @@
 
 namespace Sonata\MediaBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- *
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class AddProviderCompilerPass implements CompilerPassInterface
@@ -41,7 +38,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
                 'width'         => 200,
                 'format'        => 'jpg',
                 'height'        => false,
-                'constraint'    => true
+                'constraint'    => true,
             )));
         }
     }
@@ -112,7 +109,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * Define the default settings to the config array
+     * Define the default settings to the config array.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param array                                                   $settings

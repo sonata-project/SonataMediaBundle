@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -11,7 +12,6 @@
 namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\MediaBundle\Model\GalleryHasMedia;
-use Sonata\MediaBundle\Model\GalleryInterface;
 
 abstract class BaseGalleryHasMedia extends GalleryHasMedia
 {
@@ -21,7 +21,7 @@ abstract class BaseGalleryHasMedia extends GalleryHasMedia
     protected $nodename;
 
     /**
-     * Set node name
+     * Set node name.
      *
      * @param string $nodename
      */
@@ -31,7 +31,7 @@ abstract class BaseGalleryHasMedia extends GalleryHasMedia
     }
 
     /**
-     * Get node name
+     * Get node name.
      *
      * @return string
      */

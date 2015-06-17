@@ -11,16 +11,13 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
-
 use Aws\S3\Enum\CannedAcl;
 use Aws\S3\Enum\Storage;
 use Guzzle\Http\Mimetypes;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
-
     protected $settings;
 
     protected $acl = array(
@@ -41,7 +38,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Get data passed from the config
+     * Get data passed from the config.
      *
      * @return array
      */
@@ -83,7 +80,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Gets the correct content-type
+     * Gets the correct content-type.
      *
      * @param string $filename
      *
@@ -94,7 +91,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         $extension   = pathinfo($filename, PATHINFO_EXTENSION);
         $contentType = Mimetypes::getInstance()->fromExtension($extension);
 
-        return array('contentType'=> $contentType);
+        return array('contentType' => $contentType);
     }
 
     /**

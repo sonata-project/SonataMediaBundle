@@ -39,7 +39,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
-            'new_on_update' => false
+            'new_on_update' => false,
         ));
         $transformer->reverseTransform($media);
     }
@@ -58,7 +58,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
-            'new_on_update' => false
+            'new_on_update' => false,
         ));
         $transformer->reverseTransform($media);
     }
@@ -79,7 +79,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
             'new_on_update' => false,
-            'empty_on_new' => false
+            'empty_on_new'  => false,
         ));
         $this->assertEquals($media, $transformer->reverseTransform($media));
     }
@@ -111,9 +111,8 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
-            'new_on_update' => false
+            'new_on_update' => false,
         ));
         $transformer->reverseTransform($media);
-
     }
 }

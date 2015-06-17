@@ -11,19 +11,18 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\CoreBundle\Model\Metadata;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Buzz\Browser;
 use Gaufrette\Filesystem;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Buzz\Browser;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class YouTubeProvider extends BaseVideoProvider
 {
-
     /* @var boolean */
     protected $html5;
 
@@ -35,7 +34,7 @@ class YouTubeProvider extends BaseVideoProvider
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface      $thumbnail
      * @param \Buzz\Browser                                         $browser
      * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
-     * @param boolean                                               $html5
+     * @param bool                                                  $html5
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null, $html5 = false)
     {
@@ -48,7 +47,7 @@ class YouTubeProvider extends BaseVideoProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-youtube'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-youtube'));
     }
 
     /**
@@ -155,7 +154,7 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=window, the Flash movie is not rendered in the page.
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
-            'wmode' => 'window'
+            'wmode' => 'window',
 
         );
 
@@ -179,7 +178,7 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=window, the Flash movie is not rendered in the page.
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
-            'wmode' => $default_player_url_parameters['wmode']
+            'wmode' => $default_player_url_parameters['wmode'],
 
         );
 
@@ -188,14 +187,14 @@ class YouTubeProvider extends BaseVideoProvider
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $player_parameters = array_merge($default_player_parameters, isset($options['player_parameters']) ? $options['player_parameters'] : array(), array(
-            'width' => $box->getWidth(),
-            'height' => $box->getHeight()
+            'width'  => $box->getWidth(),
+            'height' => $box->getHeight(),
         ));
 
         $params = array(
-            'html5' => $options['html5'],
+            'html5'                 => $options['html5'],
             'player_url_parameters' => http_build_query($player_url_parameters),
-            'player_parameters' => $player_parameters
+            'player_parameters'     => $player_parameters,
         );
 
         return $params;

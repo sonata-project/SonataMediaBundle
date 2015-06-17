@@ -11,24 +11,23 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\CoreBundle\Model\Metadata;
-use Sonata\MediaBundle\Extra\ApiMediaFile;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\CDN\CDNInterface;
-use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\CoreBundle\Validator\ErrorElement;
-
+use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\Extra\ApiMediaFile;
+use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Form\FormBuilder;
-use Gaufrette\Filesystem;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -64,7 +63,7 @@ class FileProvider extends BaseProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-file-text-o'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-file-text-o'));
     }
 
     /**
@@ -108,8 +107,8 @@ class FileProvider extends BaseProvider
         $formMapper->add('binaryContent', 'file', array(
             'constraints' => array(
                 new NotBlank(),
-                new NotNull()
-            )
+                new NotNull(),
+            ),
         ));
     }
 
@@ -202,8 +201,6 @@ class FileProvider extends BaseProvider
      * @throws \RuntimeException
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return void
      */
     protected function fixFilename(MediaInterface $media)
     {
@@ -301,12 +298,10 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * Set the file contents for an image
+     * Set the file contents for an image.
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string                                   $contents path to contents, defaults to MediaInterface BinaryContent
-     *
-     * @return void
      */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
@@ -368,7 +363,7 @@ class FileProvider extends BaseProvider
                 $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
             }
 
-            return new StreamedResponse(function() use ($file) {
+            return new StreamedResponse(function () use ($file) {
                 echo $file->getContent();
             }, 200, $headers);
         }
@@ -412,13 +407,13 @@ class FileProvider extends BaseProvider
         if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
-                    ->addViolation('Invalid mime type : %type%', array("%type%" => $media->getBinaryContent()->getMimeType()))
+                    ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
                 ->end();
         }
     }
 
     /**
-     * Set media binary content according to request content
+     * Set media binary content according to request content.
      *
      * @param MediaInterface $media
      */

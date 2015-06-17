@@ -11,18 +11,17 @@
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * This command can be used to re-generate the thumbnails for all uploaded medias.
  *
  * Useful if you have existing media content and added new formats.
- *
  */
 class RemoveThumbsCommand extends BaseCommand
 {
@@ -54,7 +53,7 @@ class RemoveThumbsCommand extends BaseCommand
                 new InputArgument('format', InputArgument::OPTIONAL, 'The format (pass `all` to delete all thumbs)'),
                 new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
                 new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
-                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0)
+                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
             )
         );
     }
@@ -85,22 +84,22 @@ class RemoveThumbsCommand extends BaseCommand
         $startOffset = intval($input->getOption('startOffset'));
         $totalMediasCount = 0;
         do {
-            $batchCounter++;
+            ++$batchCounter;
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->getMediaManager()->findBy(
                     array(
                         'providerName' => $provider->getName(),
-                        'context' => $context
+                        'context'      => $context,
                     ),
                     array(
-                        'id' => 'ASC'
+                        'id' => 'ASC',
                     ),
                     $batchSize,
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log('Error: ' . $e->getMessage());
+                $this->log('Error: '.$e->getMessage());
                 break;
             }
 
@@ -112,7 +111,7 @@ class RemoveThumbsCommand extends BaseCommand
             $totalMediasCount += $batchMediasCount;
             $this->log(
                 sprintf(
-                    "Loaded %s medias (batch #%d, offset %d) for removing thumbs (provider: %s, format: %s)",
+                    'Loaded %s medias (batch #%d, offset %d) for removing thumbs (provider: %s, format: %s)',
                     $batchMediasCount,
                     $batchCounter,
                     $batchOffset,
@@ -174,7 +173,7 @@ class RemoveThumbsCommand extends BaseCommand
 
     /**
      * @param MediaProviderInterface $provider
-     * @param string $context
+     * @param string                 $context
      *
      * @return mixed|string
      */
@@ -189,10 +188,10 @@ class RemoveThumbsCommand extends BaseCommand
             $formatKey = $dialog->select($this->output, 'Please select the format', $formats);
             $format = $formats[$formatKey];
             if ($format === '<ALL THUMBNAILS>') {
-                $format = $context . '_all';
+                $format = $context.'_all';
             }
         } else {
-            $format = $context . '_' . $format;
+            $format = $context.'_'.$format;
         }
 
         return $format;
@@ -208,17 +207,18 @@ class RemoveThumbsCommand extends BaseCommand
      */
     protected function processMedia(MediaInterface $media, MediaProviderInterface $provider, $context, $format)
     {
-        $this->log("Deleting thumbs for " . $media->getName() . ' - ' . $media->getId());
+        $this->log('Deleting thumbs for '.$media->getName().' - '.$media->getId());
 
         try {
-            if ($format === $context . '_all') {
+            if ($format === $context.'_all') {
                 $format = null;
             }
 
             $provider->removeThumbnails($media, $format);
         } catch (\Exception $e) {
-            $this->log(sprintf("<error>Unable to remove thumbnails, media: %s - %s </error>",
+            $this->log(sprintf('<error>Unable to remove thumbnails, media: %s - %s </error>',
                 $media->getId(), $e->getMessage()));
+
             return false;
         }
 
@@ -226,11 +226,9 @@ class RemoveThumbsCommand extends BaseCommand
     }
 
     /**
-     * Write a message to the output
+     * Write a message to the output.
      *
      * @param string $message
-     *
-     * @return void
      */
     protected function log($message)
     {

@@ -19,10 +19,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class GalleryAdminController extends Controller
 {
     /**
-     * @param string    $view
-     * @param array     $parameters
-     * @param Response  $response
-     * @param Request   $request
+     * @param string   $view
+     * @param array    $parameters
+     * @param Response $response
+     * @param Request  $request
      *
      * @return Response
      */
@@ -35,7 +35,7 @@ class GalleryAdminController extends Controller
     }
 
     /**
-     * return the Response object associated to the list action
+     * return the Response object associated to the list action.
      *
      * @param Request $request
      *

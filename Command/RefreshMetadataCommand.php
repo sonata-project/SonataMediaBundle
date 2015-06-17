@@ -12,15 +12,13 @@
 namespace Sonata\MediaBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
-
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * This command can be used to re-generate the thumbnails for all uploaded medias.
  *
  * Useful if you have existing media content and added new formats.
- *
  */
 class RefreshMetadataCommand extends BaseCommand
 {
@@ -65,27 +63,27 @@ class RefreshMetadataCommand extends BaseCommand
 
         $medias = $this->getMediaManager()->findBy(array(
             'providerName' => $provider,
-            'context'      => $context
+            'context'      => $context,
         ));
 
-        $this->log(sprintf("Loaded %s medias for generating thumbs (provider: %s, context: %s)", count($medias), $provider, $context));
+        $this->log(sprintf('Loaded %s medias for generating thumbs (provider: %s, context: %s)', count($medias), $provider, $context));
 
         foreach ($medias as $media) {
             $provider = $this->getMediaPool()->getProvider($media->getProviderName());
 
-            $this->log("Refresh media " . $media->getName() . ' - ' . $media->getId());
+            $this->log('Refresh media '.$media->getName().' - '.$media->getId());
 
             try {
                 $provider->updateMetadata($media, false);
             } catch (\Exception $e) {
-                $this->log(sprintf("<error>Unable to update metadata, media: %s - %s </error>", $media->getId(), $e->getMessage()));
+                $this->log(sprintf('<error>Unable to update metadata, media: %s - %s </error>', $media->getId(), $e->getMessage()));
                 continue;
             }
 
             try {
                 $this->getMediaManager()->save($media);
             } catch (\Exception $e) {
-                $this->log(sprintf("<error>Unable saving media, media: %s - %s </error>", $media->getId(), $e->getMessage()));
+                $this->log(sprintf('<error>Unable saving media, media: %s - %s </error>', $media->getId(), $e->getMessage()));
                 continue;
             }
         }
@@ -94,11 +92,9 @@ class RefreshMetadataCommand extends BaseCommand
     }
 
     /**
-     * Write a message to the output
+     * Write a message to the output.
      *
      * @param string $message
-     *
-     * @return void
      */
     protected function log($message)
     {

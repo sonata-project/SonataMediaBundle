@@ -16,13 +16,11 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 
 class DefaultGeneratorTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testProvider()
     {
+        $generator = new DefaultGenerator();
 
-        $generator = new DefaultGenerator;
-
-        $media = new Media;
+        $media = new Media();
         $media->setContext('user');
 
         $media->setId(10);
@@ -36,6 +34,5 @@ class DefaultGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $media->setId(999999999);
         $this->assertEquals('user/10000/100', $generator->generatePath($media));
-
     }
 }

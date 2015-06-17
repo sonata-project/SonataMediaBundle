@@ -11,13 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Security;
 
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
+use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
-use Gaufrette\Adapter\InMemory;
-use Sonata\MediaBundle\Resizer\ResizerInterface;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,8 +26,8 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
         $referenceFile = new File('myfile', $filesystem);
 
         $formats = array(
-           'admin' => array('height' => 50, 'width' => 50, 'quality' => 100),
-           'mycontext_medium' => array('height' => 500, 'width' => 500, 'quality' => 100),
+           'admin'                => array('height' => 50, 'width' => 50, 'quality' => 100),
+           'mycontext_medium'     => array('height' => 500, 'width' => 500, 'quality' => 100),
            'anothercontext_large' => array('height' => 500, 'width' => 500, 'quality' => 100),
         );
 

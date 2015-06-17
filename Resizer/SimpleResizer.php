@@ -11,13 +11,13 @@
 
 namespace Sonata\MediaBundle\Resizer;
 
-use Imagine\Image\ImagineInterface;
-use Imagine\Image\Box;
 use Gaufrette\File;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Imagine\Image\ImageInterface;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class SimpleResizer implements ResizerInterface
 {
@@ -96,7 +96,7 @@ class SimpleResizer implements ResizerInterface
 
         $ratios = array(
             $settings['width'] / $size->getWidth(),
-            $settings['height'] / $size->getHeight()
+            $settings['height'] / $size->getHeight(),
         );
 
         if ($this->mode === ImageInterface::THUMBNAIL_INSET) {

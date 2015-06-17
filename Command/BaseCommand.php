@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
  * This command can be used to re-generate the thumbnails for all uploaded medias.
  *
  * Useful if you have existing media content and added new formats.
- *
  */
 abstract class BaseCommand extends ContainerAwareCommand
 {

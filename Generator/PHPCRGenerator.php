@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -26,7 +27,7 @@ class PHPCRGenerator implements GeneratorInterface
         if (count($segments) > 1) {
             // remove last part from id
             array_pop($segments);
-            $path = join($segments, '/');
+            $path = implode($segments, '/');
         } else {
             $path = '';
         }

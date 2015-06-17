@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -8,24 +9,20 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryHasMedia;
 use Symfony\Component\HttpFoundation\Request;
 
 class GalleryTest extends GalleryHasMedia
 {
-
 }
 
 /**
- * Class GalleryControllerTest
+ * Class GalleryControllerTest.
  *
- * @package Sonata\MediaBundle\Tests\Controller\Api
  *
  * @author Hugo Briand <briand@ekino.com>
  */
@@ -42,7 +39,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
         $params = $this->getMock('FOS\RestBundle\Request\ParamFetcherInterface');
-        $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => "ASC"))));
+        $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => 'ASC'))));
         $params->expects($this->exactly(3))->method('get');
 
         $this->assertEquals(array(), $gController->getGalleriesAction($params));

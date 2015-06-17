@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Sonata package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
@@ -66,10 +66,10 @@ class UpdateCdnStatusCommand extends BaseCommand
         $medias = $this->getMediaManager()->findBy(array(
             'providerName'   => $provider,
             'context'        => $context,
-            'cdnIsFlushable' => true
+            'cdnIsFlushable' => true,
         ));
 
-        $this->log(sprintf("Loaded %s medias for updating CDN status (provider: %s, context: %s)", count($medias), $provider, $context));
+        $this->log(sprintf('Loaded %s medias for updating CDN status (provider: %s, context: %s)', count($medias), $provider, $context));
 
         foreach ($medias as $media) {
             $cdn = $this->getMediaPool()->getProvider($media->getProviderName())->getCdn();
@@ -93,7 +93,7 @@ class UpdateCdnStatusCommand extends BaseCommand
                 if (OutputInterface::VERBOSITY_VERBOSE <= $this->output->getVerbosity()) {
                     if ($previousStatus == $cdnStatus) {
                         $this->log(sprintf('No changes (%d)', $cdnStatus));
-                    } elseif(CDNInterface::STATUS_OK === $cdnStatus) {
+                    } elseif (CDNInterface::STATUS_OK === $cdnStatus) {
                         $this->log(sprintf('<info>Flush completed</info> (%d => %d)', $previousStatus, $cdnStatus));
                     } else {
                         $this->log(sprintf('Updated status (%d => %d)', $previousStatus, $cdnStatus));
@@ -116,11 +116,9 @@ class UpdateCdnStatusCommand extends BaseCommand
     }
 
     /**
-     * Write a message to the output
+     * Write a message to the output.
      *
      * @param string $message
-     *
-     * @return void
      */
     protected function log($message, $newLine = true)
     {

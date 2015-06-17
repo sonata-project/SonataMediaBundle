@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -10,17 +11,16 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Gaufrette\Filesystem;
+use Imagine\Image\ImagineInterface;
 use Sonata\CoreBundle\Model\Metadata;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-
-use Imagine\Image\ImagineInterface;
-use Gaufrette\Filesystem;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageProvider extends FileProvider
 {
@@ -49,7 +49,7 @@ class ImageProvider extends FileProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-picture-o'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-picture-o'));
     }
 
     /**
@@ -74,7 +74,7 @@ class ImageProvider extends FileProvider
             'title'    => $media->getName(),
             'src'      => $this->generatePublicUrl($media, $format),
             'width'    => $box->getWidth(),
-            'height'   => $box->getHeight()
+            'height'   => $box->getHeight(),
         ), $options);
     }
 
@@ -114,6 +114,7 @@ class ImageProvider extends FileProvider
             $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
         } catch (\RuntimeException $e) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
             return;
         }
 
