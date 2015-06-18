@@ -12,8 +12,8 @@
 namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\CoreBundle\Model\BaseDocumentManager;
-use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 class GalleryManager extends BaseDocumentManager implements GalleryManagerInterface
 {
@@ -34,6 +34,6 @@ class GalleryManager extends BaseDocumentManager implements GalleryManagerInterf
      */
     public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
     {
-        throw new \RuntimeException("Not Implemented yet");
+        throw new \RuntimeException('Not Implemented yet');
     }
 }

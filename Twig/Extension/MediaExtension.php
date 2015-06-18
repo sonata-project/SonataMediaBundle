@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Twig\Extension;
 
-use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
-use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
-use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
+use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
+use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 
 class MediaExtension extends \Twig_Extension
 {
@@ -105,7 +105,7 @@ class MediaExtension extends \Twig_Extension
     {
         if (!$media instanceof MediaInterface && strlen($media) > 0) {
             $media = $this->mediaManager->findOneBy(array(
-                'id' => $media
+                'id' => $media,
             ));
         }
 
@@ -121,7 +121,7 @@ class MediaExtension extends \Twig_Extension
     }
 
     /**
-     * Returns the thumbnail for the provided media
+     * Returns the thumbnail for the provided media.
      *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
      * @param string                                   $format
@@ -191,7 +191,7 @@ class MediaExtension extends \Twig_Extension
         $media = $this->getMedia($media);
 
         if (!$media) {
-             return '';
+            return '';
         }
 
         $provider = $this->getMediaService()

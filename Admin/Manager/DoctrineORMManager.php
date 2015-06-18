@@ -3,15 +3,14 @@
 namespace Sonata\MediaBundle\Admin\Manager;
 
 use Doctrine\DBAL\DBALException;
-use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Exception\ModelManagerException;
-
+use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * this method overwrite the default AdminModelManager to call
- * the custom methods from the dedicated media manager
+ * the custom methods from the dedicated media manager.
  */
 class DoctrineORMManager extends ModelManager
 {
@@ -71,12 +70,10 @@ class DoctrineORMManager extends ModelManager
     }
 
     /**
-     * Deletes a set of $class identified by the provided $idx array
+     * Deletes a set of $class identified by the provided $idx array.
      *
      * @param string                                           $class
      * @param \Sonata\AdminBundle\Datagrid\ProxyQueryInterface $queryProxy
-     *
-     * @return void
      */
     public function batchDelete($class, ProxyQueryInterface $queryProxy)
     {

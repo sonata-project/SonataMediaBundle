@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\Command;
 
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
 
 class AddMassMediaCommand extends BaseCommand
 {
@@ -48,7 +48,7 @@ class AddMassMediaCommand extends BaseCommand
             if ($imported === -1) {
                 $this->setters = $data;
 
-                $imported++;
+                ++$imported;
                 continue;
             }
 
@@ -56,13 +56,13 @@ class AddMassMediaCommand extends BaseCommand
                 continue;
             }
 
-            $imported++;
+            ++$imported;
 
             $this->insertMedia($data, $output);
             $this->optimize();
         }
 
-        $output->writeln("Done!");
+        $output->writeln('Done!');
     }
 
     /**

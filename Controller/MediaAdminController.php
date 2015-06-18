@@ -14,7 +14,6 @@ namespace Sonata\MediaBundle\Controller;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaAdminController extends Controller
@@ -33,7 +32,7 @@ class MediaAdminController extends Controller
                 'providers'     => $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', $this->get('sonata.media.pool')->getDefaultContext())),
                 'base_template' => $this->getBaseTemplate(),
                 'admin'         => $this->admin,
-                'action'        => 'create'
+                'action'        => 'create',
             ));
         }
 
@@ -87,7 +86,7 @@ class MediaAdminController extends Controller
         if ($request->get('category')) {
             $contextInCategory = $this->container->get('sonata.classification.manager.category')->findBy(array(
                 'id'      => (int) $request->get('category'),
-                'context' => $context
+                'context' => $context,
             ));
 
             if (!empty($contextInCategory)) {

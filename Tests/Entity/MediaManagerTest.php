@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -7,16 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Sonata\MediaBundle\Test\Entity;
 
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
-use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Entity\MediaManager;
 
 /**
- * Class MediaManagerTest
+ * Class MediaManagerTest.
  *
- * @package Sonata\MediaBundle\Test\Entity
  *
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
  */
@@ -78,7 +78,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array()));
             })
             ->getPager(array(), 1, 10, array(
-                'name' => 'ASC',
+                'name'         => 'ASC',
                 'description'  => 'DESC',
             ));
     }

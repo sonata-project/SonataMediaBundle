@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -8,33 +9,29 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Sonata\MediaBundle\Controller\Api;
 
-use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Route;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
+use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use Sonata\MediaBundle\Model\Media;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\MediaBundle\Provider\Pool;
-
 /**
- * Class MediaController
+ * Class MediaController.
  *
  * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator)
  *
- * @package Sonata\MediaBundle\Controller\Api
  *
  * @author Hugo Briand <briand@ekino.com>
  */
@@ -56,7 +53,7 @@ class MediaController
     protected $formFactory;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param MediaManagerInterface $mediaManager
      * @param Pool                  $mediaPool
@@ -70,7 +67,7 @@ class MediaController
     }
 
     /**
-     * Retrieves the list of medias (paginated)
+     * Retrieves the list of medias (paginated).
      *
      * @ApiDoc(
      *  resource=true,
@@ -91,7 +88,7 @@ class MediaController
     public function getMediaAction(ParamFetcherInterface $paramFetcher)
     {
         $supportedCriteria = array(
-            'enabled' => "",
+            'enabled' => '',
         );
 
         $page    = $paramFetcher->get('page');
@@ -115,7 +112,7 @@ class MediaController
     }
 
     /**
-     * Retrieves a specific media
+     * Retrieves a specific media.
      *
      * @ApiDoc(
      *  requirements={
@@ -140,7 +137,7 @@ class MediaController
     }
 
     /**
-     * Returns media urls for each format
+     * Returns media urls for each format.
      *
      * @ApiDoc(
      *  requirements={
@@ -175,7 +172,7 @@ class MediaController
     }
 
     /**
-     * Returns media binary content for each format
+     * Returns media binary content for each format.
      *
      * @ApiDoc(
      *  requirements={
@@ -188,8 +185,8 @@ class MediaController
      *  }
      * )
      *
-     * @param integer $id     The media id
-     * @param string  $format The format
+     * @param int     $id      The media id
+     * @param string  $format  The format
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -208,7 +205,7 @@ class MediaController
     }
 
     /**
-     * Deletes a medium
+     * Deletes a medium.
      *
      * @ApiDoc(
      *  requirements={
@@ -221,7 +218,7 @@ class MediaController
      *  }
      * )
      *
-     * @param integer $id A medium identifier
+     * @param int $id A medium identifier
      *
      * @return \FOS\RestBundle\View\View
      *
@@ -239,7 +236,7 @@ class MediaController
     /**
      * Updates a medium
      * If you need to upload a file (depends on the provider) you will need to do so by sending content as a multipart/form-data HTTP Request
-     * See documentation for more details
+     * See documentation for more details.
      *
      * @ApiDoc(
      *  requirements={
@@ -254,7 +251,7 @@ class MediaController
      *  }
      * )
      *
-     * @param integer $id      A Medium identifier
+     * @param int     $id      A Medium identifier
      * @param Request $request A Symfony request
      *
      * @return Media
@@ -277,7 +274,7 @@ class MediaController
     /**
      * Adds a medium of given provider
      * If you need to upload a file (depends on the provider) you will need to do so by sending content as a multipart/form-data HTTP Request
-     * See documentation for more details
+     * See documentation for more details.
      *
      * @ApiDoc(
      *  resource=true,
@@ -293,7 +290,7 @@ class MediaController
      * @Route(requirements={"provider"="[A-Za-z0-9.]*"})
      *
      * @param string  $provider A media provider
-     * @param Request $request A Symfony request
+     * @param Request $request  A Symfony request
      *
      * @return Media
      *
@@ -313,9 +310,8 @@ class MediaController
         return $this->handleWriteMedium($request, $medium, $mediaProvider);
     }
 
-
     /**
-     * Set Binary content for a specific media
+     * Set Binary content for a specific media.
      *
      * @ApiDoc(
      *  input={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_write"}},
@@ -347,9 +343,9 @@ class MediaController
     }
 
     /**
-     * Retrieves media with id $id or throws an exception if not found
+     * Retrieves media with id $id or throws an exception if not found.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return Media
      *
@@ -368,7 +364,7 @@ class MediaController
     }
 
     /**
-     * Write a medium, this method is used by both POST and PUT action methods
+     * Write a medium, this method is used by both POST and PUT action methods.
      *
      * @param Request                $request
      * @param MediaInterface         $medium

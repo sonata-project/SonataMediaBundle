@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -10,10 +11,10 @@
 
 namespace Sonata\MediaBundle;
 
-use Sonata\MediaBundle\DependencyInjection\Compiler\GlobalVariablesCompilerPass;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass;
+use Sonata\MediaBundle\DependencyInjection\Compiler\GlobalVariablesCompilerPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SonataMediaBundle extends Bundle
 {
@@ -32,8 +33,8 @@ class SonataMediaBundle extends Bundle
     public function boot()
     {
         // this is required by the AWS SDK (see: https://github.com/knplabs/Gaufrette)
-        if (!defined("AWS_CERTIFICATE_AUTHORITY")) {
-            define("AWS_CERTIFICATE_AUTHORITY", true);
+        if (!defined('AWS_CERTIFICATE_AUTHORITY')) {
+            define('AWS_CERTIFICATE_AUTHORITY', true);
         }
     }
 }

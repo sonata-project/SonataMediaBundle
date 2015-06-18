@@ -11,14 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Provider\YouTubeProvider;
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Buzz\Browser;
 use Buzz\Message\Response;
 use Imagine\Image\Box;
+use Sonata\MediaBundle\Provider\YouTubeProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
+class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function getProvider(Browser $browser = null)
     {
@@ -54,7 +54,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('Nono le petit robot');
         $media->setProviderName('youtube');
         $media->setProviderReference('BDYAbAtaDzA');
@@ -80,7 +80,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $media = new Media;
+        $media = new Media();
         $media->setProviderName('youtube');
         $media->setProviderReference('BDYAbAtaDzA');
         $media->setContext('default');
@@ -111,7 +111,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1023456);
 
@@ -137,7 +137,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent($url);
         $media->setId(1023456);
 
@@ -148,7 +148,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    static function getUrls()
+    public static function getUrls()
     {
         return array(
             array('BDYAbAtaDzA'),
@@ -189,7 +189,7 @@ class YoutubeProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('admin', array('width' => 100));
-        $media = new Media;
+        $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);

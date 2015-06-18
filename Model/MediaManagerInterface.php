@@ -19,5 +19,4 @@ use Sonata\CoreBundle\Model\PageableManagerInterface;
  */
 interface MediaManagerInterface extends ManagerInterface, PageableManagerInterface
 {
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -11,15 +12,11 @@
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
-
-use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
-
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * PageExtension
+ * PageExtension.
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
@@ -39,14 +36,14 @@ class FeatureMediaBlockService extends MediaBlockService
     public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'media'   => false,
+            'media'       => false,
             'orientation' => 'left',
-            'title'   => false,
-            'content' => false,
-            'context' => false,
-            'mediaId'  => null,
-            'format'  => false,
-            'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig'
+            'title'       => false,
+            'content'     => false,
+            'context'     => false,
+            'mediaId'     => null,
+            'format'      => false,
+            'template'    => 'SonataMediaBundle:Block:block_feature_media.html.twig',
         ));
     }
 
@@ -65,11 +62,11 @@ class FeatureMediaBlockService extends MediaBlockService
                 array('content', 'textarea', array('required' => false)),
                 array('orientation', 'choice', array('choices' => array(
                     'left'  => $translator->trans('feature_left_choice', array(), 'SonataMediaBundle'),
-                    'right' => $translator->trans('feature_right_choice', array(), 'SonataMediaBundle')
+                    'right' => $translator->trans('feature_right_choice', array(), 'SonataMediaBundle'),
                 ))),
                 array($this->getMediaBuilder($formMapper), null, array()),
                 array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
-            )
+            ),
         ));
     }
 
@@ -79,7 +76,7 @@ class FeatureMediaBlockService extends MediaBlockService
     public function getStylesheets($media)
     {
         return array(
-            '/bundles/sonatamedia/blocks/feature_media/theme.css'
+            '/bundles/sonatamedia/blocks/feature_media/theme.css',
         );
     }
 }

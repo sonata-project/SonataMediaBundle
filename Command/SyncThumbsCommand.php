@@ -12,16 +12,14 @@
 namespace Sonata\MediaBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
-
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * This command can be used to re-generate the thumbnails for all uploaded medias.
  *
  * Useful if you have existing media content and added new formats.
- *
  */
 class SyncThumbsCommand extends BaseCommand
 {
@@ -40,7 +38,7 @@ class SyncThumbsCommand extends BaseCommand
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
                 new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
                 new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
-                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0)
+                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
             )
         );
     }
@@ -80,22 +78,22 @@ class SyncThumbsCommand extends BaseCommand
         $startOffset = intval($input->getOption('startOffset'));
         $totalMediasCount = 0;
         do {
-            $batchCounter++;
+            ++$batchCounter;
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->getMediaManager()->findBy(
                     array(
                         'providerName' => $providerName,
-                        'context' => $context
+                        'context'      => $context,
                     ),
                     array(
-                        'id' => 'ASC'
+                        'id' => 'ASC',
                     ),
                     $batchSize,
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log('Error: ' . $e->getMessage());
+                $this->log('Error: '.$e->getMessage());
                 break;
             }
 
@@ -107,7 +105,7 @@ class SyncThumbsCommand extends BaseCommand
             $totalMediasCount += $batchMediasCount;
             $this->log(
                 sprintf(
-                    "Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)",
+                    'Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)',
                     $batchMediasCount,
                     $batchCounter,
                     $batchOffset,
@@ -136,28 +134,30 @@ class SyncThumbsCommand extends BaseCommand
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param \Sonata\MediaBundle\Model\MediaInterface            $media
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      *
      * @return bool
      */
     protected function processMedia($media, $provider)
     {
-        $this->log("Generating thumbs for " . $media->getName() . ' - ' . $media->getId());
+        $this->log('Generating thumbs for '.$media->getName().' - '.$media->getId());
 
         try {
             $provider->removeThumbnails($media);
         } catch (\Exception $e) {
-            $this->log(sprintf("<error>Unable to remove old thumbnails, media: %s - %s </error>",
+            $this->log(sprintf('<error>Unable to remove old thumbnails, media: %s - %s </error>',
                 $media->getId(), $e->getMessage()));
+
             return false;
         }
 
         try {
             $provider->generateThumbnails($media);
         } catch (\Exception $e) {
-            $this->log(sprintf("<error>Unable to generate new thumbnails, media: %s - %s </error>",
+            $this->log(sprintf('<error>Unable to generate new thumbnails, media: %s - %s </error>',
                 $media->getId(), $e->getMessage()));
+
             return false;
         }
 
@@ -165,11 +165,9 @@ class SyncThumbsCommand extends BaseCommand
     }
 
     /**
-     * Write a message to the output
+     * Write a message to the output.
      *
      * @param string $message
-     *
-     * @return void
      */
     protected function log($message)
     {

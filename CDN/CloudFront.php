@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -14,8 +15,7 @@ use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\Exception\CloudFrontException;
 
 /**
- *
- * From http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html
+ * From http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html.
  *
  * Invalidating Objects (Web Distributions Only)
  * If you need to remove an object from CloudFront edge-server caches before it
@@ -40,7 +40,9 @@ use Aws\CloudFront\Exception\CloudFrontException;
  * invalidation, see Paying for Object Invalidation.
  *
  * @uses CloudFrontClient for stablish connection with CloudFront service
+ *
  * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.htmlInvalidating Objects (Web Distributions Only)
+ *
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
 class CloudFront implements CDNInterface
@@ -116,32 +118,32 @@ class CloudFront implements CDNInterface
         }
         // Normalizes paths due possible typos since all the CloudFront's
         // objects starts with a leading slash
-        $normalizedPaths = array_map(function($path) {
-            return '/' . ltrim($path, '/');
+        $normalizedPaths = array_map(function ($path) {
+            return '/'.ltrim($path, '/');
         }, $paths);
 
         try {
             $result = $this->getClient()->createInvalidation(array(
                 'DistributionId' => $this->distributionId,
-                'Paths' => array(
+                'Paths'          => array(
                     'Quantity' => count($normalizedPaths),
-                    'Items' => $normalizedPaths
+                    'Items'    => $normalizedPaths,
                 ),
                 'CallerReference' => $this->getCallerReference($normalizedPaths),
             ));
 
             if (!in_array($status = $result->get('Status'), array('Completed', 'InProgress'))) {
-                throw new \RuntimeException('Unable to flush : ' . $status);
+                throw new \RuntimeException('Unable to flush : '.$status);
             }
 
             return $result->get('Id');
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException('Unable to flush : ' . $ex->getMessage());
+            throw new \RuntimeException('Unable to flush : '.$ex->getMessage());
         }
     }
 
     /**
-     * Return a CloudFrontClient
+     * Return a CloudFrontClient.
      *
      * @return CloudFrontClient
      */
@@ -150,7 +152,7 @@ class CloudFront implements CDNInterface
         if (!$this->client) {
             $this->client = CloudFrontClient::factory(array(
                 'key'    => $this->key,
-                'secret' => $this->secret
+                'secret' => $this->secret,
             ));
         }
 
@@ -158,11 +160,9 @@ class CloudFront implements CDNInterface
     }
 
     /**
-     * For testing only
+     * For testing only.
      *
      * @param $client
-     *
-     * @return void
      */
     public function setClient($client)
     {
@@ -170,9 +170,10 @@ class CloudFront implements CDNInterface
     }
 
     /**
-     * Generates a valid caller reference from given paths regardless its order
+     * Generates a valid caller reference from given paths regardless its order.
      *
      * @param array $paths
+     *
      * @return string a md5 representation
      */
     protected function getCallerReference(array $paths)
@@ -192,17 +193,18 @@ class CloudFront implements CDNInterface
         try {
             $result = $this->getClient()->getInvalidation(array(
                 'DistributionId' => $this->distributionId,
-                'Id'             => $identifier
+                'Id'             => $identifier,
             ));
 
             return array_search($result->get('Status'), self::getStatusList());
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException('Unable to retrieve flush status : ' . $ex->getMessage());
+            throw new \RuntimeException('Unable to retrieve flush status : '.$ex->getMessage());
         }
     }
 
     /**
      * @static
+     *
      * @return array
      */
     public static function getStatusList()

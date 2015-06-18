@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
@@ -31,18 +31,17 @@ class ProviderDataTransformer implements DataTransformerInterface
         $this->pool    = $pool;
         $this->options = $this->getOptions($options);
         $this->class   = $class;
-
     }
 
     /**
-     * Define the default options for the DataTransformer
+     * Define the default options for the DataTransformer.
      *
      * @param array $options
+     *
      * @return array
      */
     protected function getOptions(array $options)
     {
-
         return array_merge(array(
             'provider'      => false,
             'context'       => false,
@@ -57,7 +56,7 @@ class ProviderDataTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if ($value === null) {
-            return new $this->class;
+            return new $this->class();
         }
 
         return $value;
@@ -75,10 +74,10 @@ class ProviderDataTransformer implements DataTransformerInterface
         $binaryContent = $media->getBinaryContent();
 
         // no binary
-        if (empty($binaryContent)){
+        if (empty($binaryContent)) {
             // and no media id
             if ($media->getId() === null && $this->options['empty_on_new']) {
-                return null;
+                return;
             } elseif ($media->getId()) {
                 return $media;
             }
@@ -90,7 +89,7 @@ class ProviderDataTransformer implements DataTransformerInterface
         }
 
         // create a new media to avoid erasing other media or not ...
-        $newMedia = $this->options['new_on_update'] ? new $this->class : $media;
+        $newMedia = $this->options['new_on_update'] ? new $this->class() : $media;
 
         $newMedia->setProviderName($media->getProviderName());
         $newMedia->setContext($media->getContext());

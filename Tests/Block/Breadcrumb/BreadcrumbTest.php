@@ -16,7 +16,6 @@ use Sonata\SeoBundle\Tests\Block\BaseBlockTest;
 
 class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockService
 {
-
 }
 
 /**

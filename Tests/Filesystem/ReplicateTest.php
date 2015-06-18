@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Tests\Filesystem;
 
 use Sonata\MediaBundle\Filesystem\Replicate;
 
-class MediaTest extends \PHPUnit_Framework_TestCase
+class ReplicateTest extends \PHPUnit_Framework_TestCase
 {
     public function testReplicate()
     {

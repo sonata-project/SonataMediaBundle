@@ -11,7 +11,6 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class NoopMetadataBuilder implements MetadataBuilderInterface

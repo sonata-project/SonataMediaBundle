@@ -27,7 +27,7 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
 
         $security->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnCallback(function(array $roles) {
+            ->will($this->returnCallback(function (array $roles) {
                 return in_array('ROLE_ADMIN', $roles);
             }));
         $security->expects($this->once())
@@ -48,7 +48,7 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
 
         $security->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnCallback(function(array $roles) {
+            ->will($this->returnCallback(function (array $roles) {
                 return in_array('FOO', $roles);
             }));
 
