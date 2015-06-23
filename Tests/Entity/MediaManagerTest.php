@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Test\Entity;
 
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
 use Sonata\MediaBundle\Entity\MediaManager;
+use Sonata\MediaBundle\Tests\Entity\Media;
 
 /**
  * Class MediaManagerTest.
@@ -103,5 +104,18 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => false)));
             })
             ->getPager(array('enabled' => false), 1);
+    }
+
+    public function testSaveFlushesProperlyUsingNewInterface()
+    {
+        $manager = $this->getMediaManager(function () {
+        });
+        $manager->getEntityManager()->expects($this->once())->method('flush');
+        $manager->save(new Media());
+
+        $manager = $this->getMediaManager(function () {
+        });
+        $manager->getEntityManager()->expects($this->never())->method('flush');
+        $manager->save(new Media(), false);
     }
 }
