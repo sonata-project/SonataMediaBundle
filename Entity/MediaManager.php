@@ -37,7 +37,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
             $media->setProviderName(func_get_arg(2));
         }
 
-        if ($andFlush && is_bool($andFlush)) {
+        if (is_bool($andFlush)) {
             parent::save($media, $andFlush);
         } else {
             // BC compatibility with previous signature
