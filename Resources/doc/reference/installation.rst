@@ -103,7 +103,6 @@ Doctrine PHPCR:
         #    media: MyVendor\MediaBundle\Entity\Media
         #    gallery: MyVendor\MediaBundle\Entity\Gallery
         #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
-        default_context: default
         db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
         default_context: default # you need to set a context
         contexts:
