@@ -7,6 +7,11 @@ A [BC BREAK] means the update will break the project for many reasons:
 * new dependencies
 * class refactoring
 
+### 2015-06-29
+
+* Bump `jms/serializer-bundle` requirement to include ~1.0
+
+
 ### 2015-04-03
 
 * [BC BREAK] Add `formats` param to `removeThumbnails` method of `MediaProviderInterface`

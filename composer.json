@@ -27,8 +27,7 @@
         "imagine/imagine": "~0.3",
         "kriswallsmith/buzz": "~0.6",
         "friendsofsymfony/rest-bundle": "~1.1",
-        "jms/serializer-bundle": "~0.11",
-        "jms/serializer": "~0.13",
+        "jms/serializer-bundle": "~0.11|~1.0",
         "nelmio/api-doc-bundle": "~2.4",
         "sonata-project/intl-bundle": "~2.2"
     },
@@ -51,6 +50,9 @@
         "rackspace/php-opencloud": "~1.6",
         "sonata-project/seo-bundle": "^1.1.5",
         "tilleuls/ckeditor-sonata-mediabundle": "~1.0"
+    },
+    "conflict": {
+        "jms/serializer": "<0.13"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
