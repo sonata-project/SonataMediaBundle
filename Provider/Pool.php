@@ -46,7 +46,13 @@ class Pool
     public function getProvider($name)
     {
         if (!isset($this->providers[$name])) {
-            throw new \RuntimeException(sprintf('unable to retrieve the provider named : `%s`', $name));
+            $message = sprintf('Unable to retrieve the provider named : `%s`', $name) . PHP_EOL;
+            if (empty($name)) {
+                $message .= 'Did you forget to call Sonata\MediaBundle\Model\MediaInterface::setProviderName("some.service.provider") ?';
+            } elseif (!empty($this->providers)) {
+                $message .= 'Available providers:' . PHP_EOL . implode(PHP_EOL, $this->getProviderList());
+            }
+            throw new \RuntimeException($message);
         }
 
         return $this->providers[$name];
