@@ -1,0 +1,434 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="it" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Default</target>
+            </trans-unit>
+            <trans-unit id="media">
+                <source>media</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="gallery">
+                <source>gallery</source>
+                <target>Galleria</target>
+            </trans-unit>
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Libreria</target>
+            </trans-unit>
+            <trans-unit id="no_provider_available">
+                <source>no_provider_available</source>
+                <target>Nessun media provider disponibile</target>
+            </trans-unit>
+            <trans-unit id="title_select_provider">
+                <source>title_select_provider</source>
+                <target>Scegli un media provider</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_create">
+                <source>breadcrumb.link_media_create</source>
+                <target>Crea</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_list">
+                <source>breadcrumb.link_media_list</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_edit">
+                <source>breadcrumb.link_media_edit</source>
+                <target>Modifica</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_view">
+                <source>breadcrumb.link_media_view</source>
+                <target>Mostra</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_delete">
+                <source>breadcrumb.link_media_delete</source>
+                <target>Rimuovi</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_create">
+                <source>breadcrumb.link_gallery_create</source>
+                <target>Crea</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_show">
+                <source>breadcrumb.link_media_show</source>
+                <target>Mostra</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_list">
+                <source>breadcrumb.link_gallery_list</source>
+                <target>Gallerie</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_edit">
+                <source>breadcrumb.link_gallery_edit</source>
+                <target>Modifica</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_delete">
+                <source>breadcrumb.link_gallery_delete</source>
+                <target>Rimuovi</target>
+            </trans-unit>
+            <trans-unit id="description.roles_download_strategy">
+                <source>description.roles_download_strategy</source>
+                <target>The media can be retrieved by users with the following roles : %roles%.</target>
+            </trans-unit>
+            <trans-unit id="description.public_download_strategy">
+                <source>description.public_download_strategy</source>
+                <target>The media can be retrieved by anyone.</target>
+            </trans-unit>
+            <trans-unit id="description.forbidden_download_strategy">
+                <source>description.forbidden_download_strategy</source>
+                <target>The media can be retrieved by nobody.</target>
+            </trans-unit>
+            <trans-unit id="filter.label_name">
+                <source>filter.label_name</source>
+                <target>Nome</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_reference">
+                <source>filter.label_provider_reference</source>
+                <target>Provider Reference</target>
+            </trans-unit>
+            <trans-unit id="filter.label_enabled">
+                <source>filter.label_enabled</source>
+                <target>Pubblicato</target>
+            </trans-unit>
+            <trans-unit id="filter.label_context">
+                <source>filter.label_context</source>
+                <target>Contesto</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_name">
+                <source>filter.label_provider_name</source>
+                <target>Nome Provider</target>
+            </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>filter.label_category</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>Nome autore</target>
+            </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>Larghezza</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>Altezza</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>Content Type</target>
+            </trans-unit>
+            <trans-unit id="form.label_enabled">
+                <source>form.label_enabled</source>
+                <target>Pubblicato</target>
+            </trans-unit>
+            <trans-unit id="form.label_media">
+                <source>form.label_media</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="form.label_position">
+                <source>form.label_position</source>
+                <target>Posizione</target>
+            </trans-unit>
+            <trans-unit id="form.label_context">
+                <source>form.label_context</source>
+                <target>Contesto</target>
+            </trans-unit>
+            <trans-unit id="form.label_name">
+                <source>form.label_name</source>
+                <target>Nome</target>
+            </trans-unit>
+            <trans-unit id="form.label_default_format">
+                <source>form.label_default_format</source>
+                <target>Formato</target>
+            </trans-unit>
+            <trans-unit id="form.label_gallery_has_medias">
+                <source>form.label_gallery_has_medias</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Autore</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Descrizione</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>File/Sorgente</target>
+            </trans-unit>
+            <trans-unit id="label.size">
+                <source>label.size</source>
+                <target>Dimensioni</target>
+            </trans-unit>
+            <trans-unit id="label.length">
+                <source>label.length</source>
+                <target>Lunghezza</target>
+            </trans-unit>
+            <trans-unit id="label.width">
+                <source>label.width</source>
+                <target>Larghezza</target>
+            </trans-unit>
+            <trans-unit id="label.height">
+                <source>label.height</source>
+                <target>Altezza</target>
+            </trans-unit>
+            <trans-unit id="label.content_type">
+                <source>label.content_type</source>
+                <target>Tipo di contenuto</target>
+            </trans-unit>
+            <trans-unit id="label.copyright">
+                <source>label.copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
+            <trans-unit id="label.author_name">
+                <source>label.author_name</source>
+                <target>Autore</target>
+            </trans-unit>
+            <trans-unit id="label.cdn">
+                <source>label.cdn</source>
+                <target>CDN</target>
+            </trans-unit>
+            <trans-unit id="label.to_be_flushed">
+                <source>label.to_be_flushed</source>
+                <target>Flushable</target>
+            </trans-unit>
+            <trans-unit id="label.flushed_at">
+                <source>label.flushed_at</source>
+                <target>Flushed at</target>
+            </trans-unit>
+            <trans-unit id="label.public_url">
+                <source>label.public_url</source>
+                <target>URL Pubblico</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Nome</target>
+            </trans-unit>
+            <trans-unit id="label.file">
+                <source>label.file</source>
+                <target>File</target>
+            </trans-unit>
+            <trans-unit id="label.author">
+                <source>label.author</source>
+                <target>Autore</target>
+            </trans-unit>
+            <trans-unit id="label.enabled">
+                <source>label.enabled</source>
+                <target>Pubblicato</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_is_flushable">
+                <source>label.cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>Identificatore CDN flush</target>
+            </trans-unit>
+            <trans-unit id="label.video_reference">
+                <source>label.video_reference</source>
+                <target>Cambia sorgente video</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Descrizione</target>
+            </trans-unit>
+            <trans-unit id="label.select_context">
+                <source>label.select_context</source>
+                <target>Contesto</target>
+            </trans-unit>
+            <trans-unit id="label.select_provider">
+                <source>label.select_provider</source>
+                <target>Tipo</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url">
+                <source>label.protected_download_url</source>
+                <target>URL Protetto</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url_notice">
+                <source>label.protected_download_url_notice</source>
+                <target>Attenzione</target>
+            </trans-unit>
+            <trans-unit id="label.edit_with_pixlr">
+                <source>label.edit_with_pixlr</source>
+                <target>Modifica con Pixlr</target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_warning">
+                <source>label.pixlr_warning</source>
+                <target>
+                    <![CDATA[
+                        <span class="label label-warning">Important</span> you are going to expose the media to an <strong>external service</strong>. <br />
+                        If you are working on confidentiel materials, please do not use this service.
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_express_editor">
+                <source>label.pixlr_express_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong>Pixlr Express Editor</strong> <br />
+                        Simple interface for quick editing
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_advanced_editor">
+                <source>label.pixlr_advanced_editor</source>
+                <target>
+                    <![CDATA[
+                        <strong>Pixlr Advanced Editor</strong> <br />
+                        Experimented users only
+                    ]]>
+                </target>
+            </trans-unit>
+            <trans-unit id="link.all_providers">
+                <source>link.all_providers</source>
+                <target>Tutti</target>
+            </trans-unit>
+            <trans-unit id="link.test_protected_url">
+                <source>link.test_protected_url</source>
+                <target>Link anteprima</target>
+            </trans-unit>
+            <trans-unit id="list.label_enabled">
+                <source>list.label_enabled</source>
+                <target>Pubblicato</target>
+            </trans-unit>
+            <trans-unit id="list.label_name">
+                <source>list.label_name</source>
+                <target>Nome</target>
+            </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>Autore</target>
+            </trans-unit>
+            <trans-unit id="list.label_context">
+                <source>list.label_context</source>
+                <target>Contesto</target>
+            </trans-unit>
+            <trans-unit id="list.label_default_format">
+                <source>list.label_default_format</source>
+                <target>Formato</target>
+            </trans-unit>
+            <trans-unit id="list.label__action">
+                <source>list.label__action</source>
+                <target>Azione</target>
+            </trans-unit>
+            <trans-unit id="list.label_custom">
+                <source>list.label_custom</source>
+                <target>Custom</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>Autore</target>
+            </trans-unit>
+            <trans-unit id="sidemenu.link_edit_media">
+                <source>sidemenu.link_edit_media</source>
+                <target>Modifica</target>
+            </trans-unit>
+            <trans-unit id="sidemenu.link_media_view">
+                <source>sidemenu.link_media_view</source>
+                <target>Mostra</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion">
+                <source>sonata.media.provider.dailymotion</source>
+                <target>DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube">
+                <source>sonata.media.provider.youtube</source>
+                <target>YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo">
+                <source>sonata.media.provider.vimeo</source>
+                <target>Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image">
+                <source>sonata.media.provider.image</source>
+                <target>Immagine</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file">
+                <source>sonata.media.provider.file</source>
+                <target>File</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>Aggiungi un video da DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>Aggiungi un video da YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Aggiungi un video da Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Aggiungi una immagine</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Aggiungi un file</target>
+            </trans-unit>
+            <trans-unit id="title.media_preview">
+                <source>title.media_preview</source>
+                <target>Anteprima</target>
+            </trans-unit>
+            <trans-unit id="title.media_thumbnail">
+                <source>title.media_thumbnail</source>
+                <target>Miniatura</target>
+            </trans-unit>
+            <trans-unit id="title.informations">
+                <source>title.informations</source>
+                <target>Informazioni</target>
+            </trans-unit>
+            <trans-unit id="title.formats">
+                <source>title.formats</source>
+                <target>Formati</target>
+            </trans-unit>
+            <trans-unit id="link_media">
+                <source>link_media</source>
+                <target>Collega l'oggetto ad un nuovo media</target>
+            </trans-unit>
+            <trans-unit id="no_linked_media">
+                <source>no_linked_media</source>
+                <target>Nessun media al link</target>
+            </trans-unit>
+            <trans-unit id="sonata_media_gallery_index">
+                <source>sonata_media_gallery_index</source>
+                <target>Galleria</target>
+            </trans-unit>
+            <trans-unit id="sonata_template_box_media_gallery_block">
+                <source>sonata_template_box_media_gallery_block</source>
+                <target>This is the gallery media block. Feel free to override it.</target>
+            </trans-unit>
+            <trans-unit id="list.label_description">
+                <source>list.label_description</source>
+                <target>Descrizione</target>
+            </trans-unit>
+            <trans-unit id="list.label_size">
+                <source>list.label_size</source>
+                <target>Dimensioni</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Nessuna categoria definita</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Categoria</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Provider sorgente</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
