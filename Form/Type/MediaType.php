@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Sonata\MediaBundle\Provider\Pool;
@@ -80,13 +81,31 @@ class MediaType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'    => $this->class,
-            'provider'      => null,
-            'context'       => null,
-            'empty_on_new'  => true,
-            'new_on_update' => true,
-        ));
+        $resolver
+            ->setDefaults(array(
+                'data_class'    => $this->class,
+                'empty_on_new'  => true,
+                'new_on_update' => true,
+            ))
+            ->setRequired(array('provider', 'context'))
+            ->setAllowedTypes(array(
+                'provider' => 'string',
+                'context'  => 'string',
+            ))
+        ;
+
+        // Use proper syntax based on Symfony version
+        if (version_compare(Kernel::VERSION, '2.6.0') >= 0) {
+            $resolver
+                ->setAllowedValues('provider', $this->pool->getProviderList())
+                ->setAllowedValues('context', array_keys($this->pool->getContexts()))
+            ;
+        } else {
+            $resolver->setAllowedValues(array(
+                array('provider' => $this->pool->getProviderList()),
+                array('context' => array_keys($this->pool->getContexts())),
+            ));
+        }
     }
 
     /**
