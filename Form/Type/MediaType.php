@@ -89,13 +89,18 @@ class MediaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'    => $this->class,
-            'provider'      => null,
-            'context'       => null,
-            'empty_on_new'  => true,
-            'new_on_update' => true,
-        ));
+        $resolver
+            ->setDefaults(array(
+                'data_class'    => $this->class,
+                'empty_on_new'  => true,
+                'new_on_update' => true,
+            ))
+            ->setRequired(array('provider', 'context'))
+            ->setAllowedTypes(array(
+                'provider' => 'string',
+                'context' => 'string',
+            ))
+        ;
     }
 
     /**
