@@ -56,6 +56,10 @@ The related download route name is ``sonata_media_download``.
 
     <a href="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}">Download file</a>
 
+.. note::
+
+    You must have an admin registered for the media object in order to work with this route.
+
 Creating your own Security Download Strategy
 --------------------------------------------
 
