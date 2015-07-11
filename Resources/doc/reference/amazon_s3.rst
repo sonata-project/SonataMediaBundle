@@ -3,7 +3,8 @@ Amazon S3
 
 In order to use Amazon S3, you will need to add the following dependency to your composer.json:
 
-    composer require aws/aws-sdk-php
+    composer require aws/aws-sdk-php:2.8.* 
+
 
 Configuration
 -------------
