@@ -100,7 +100,7 @@
             </trans-unit>
             <trans-unit id="filter.label_category">
                 <source>filter.label_category</source>
-                <target>filter.label_category</target>
+                <target>Categoria</target>
             </trans-unit>
             <trans-unit id="filter.label_author_name">
                 <source>filter.label_author_name</source>
@@ -266,17 +266,17 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label label-warning">Important</span> you are going to expose the media to an <strong>external service</strong>. <br />
-                        If you are working on confidentiel materials, please do not use this service.
+                        <span class="label label-warning">Importante</span> se esponi questo elemento ad un <strong>servizio esterno</strong>. <br />
+                        Se lavori con materiale riservato, non usare questo servizio.
                     ]]>
                 </target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
-                <source>label.pixlr_express_editor</source>
+                <source>Editor rapido</source>
                 <target>
                     <![CDATA[
                         <strong>Pixlr Express Editor</strong> <br />
-                        Simple interface for quick editing
+                        Interfaccia semplice per modifiche veloci
                     ]]>
                 </target>
             </trans-unit>
@@ -284,8 +284,8 @@
                 <source>label.pixlr_advanced_editor</source>
                 <target>
                     <![CDATA[
-                        <strong>Pixlr Advanced Editor</strong> <br />
-                        Experimented users only
+                        <strong>Pixlr Editor Avanzato</strong> <br />
+                        Solo per utenti esperti
                     ]]>
                 </target>
             </trans-unit>
