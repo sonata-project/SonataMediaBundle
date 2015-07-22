@@ -33,7 +33,7 @@ class GalleryAdminController extends Controller
     }
 
     /**
-     * return the Response object associated to the list action
+     * return the Response object associated to the list action.
      *
      * @return Response
      */

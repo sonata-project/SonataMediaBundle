@@ -11,11 +11,10 @@
 
 namespace Sonata\MediaBundle\Templating\Helper;
 
-use Symfony\Component\Templating\Helper\Helper;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Templating\Helper\Helper;
 
 /**
  * MediaHelper manages action inclusions.
@@ -47,7 +46,7 @@ class MediaHelper extends Helper
     }
 
     /**
-     * Returns the provider view for the provided media
+     * Returns the provider view for the provided media.
      *
      * @param MediaInterface $media
      * @param string         $format
@@ -85,7 +84,7 @@ class MediaHelper extends Helper
     }
 
     /**
-     * Returns the thumbnail for the provided media
+     * Returns the thumbnail for the provided media.
      *
      * @param MediaInterface $media
      * @param string         $format
@@ -127,7 +126,7 @@ class MediaHelper extends Helper
     public function path($media, $format)
     {
         if (!$media) {
-             return '';
+            return '';
         }
 
         $provider = $this->getProvider($media);

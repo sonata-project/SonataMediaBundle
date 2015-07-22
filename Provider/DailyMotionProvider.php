@@ -90,7 +90,7 @@ class DailyMotionProvider extends BaseVideoProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", "bundles/sonatamedia/dailymotion-icon.png", "SonataMediaBundle");
+        return new Metadata($this->getName(), $this->getName().'.description', 'bundles/sonatamedia/dailymotion-icon.png', 'SonataMediaBundle');
     }
 
     /**

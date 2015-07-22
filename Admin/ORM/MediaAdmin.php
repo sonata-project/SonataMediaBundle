@@ -11,14 +11,13 @@
 
 namespace Sonata\MediaBundle\Admin\ORM;
 
-use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 
 class MediaAdmin extends Admin
 {
     /**
-     * @param  \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
+     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -37,13 +36,13 @@ class MediaAdmin extends Admin
         }
 
         $datagridMapper->add('providerName', 'doctrine_orm_choice', array(
-            'field_options'=> array(
-                'choices' => $providers,
+            'field_options' => array(
+                'choices'  => $providers,
                 'required' => false,
                 'multiple' => false,
                 'expanded' => false,
             ),
-            'field_type'=> 'choice',
+            'field_type' => 'choice',
         ));
     }
 }

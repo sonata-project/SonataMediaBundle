@@ -12,7 +12,6 @@
 namespace Sonata\MediaBundle\Tests\Metadata;
 
 use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
-use Sonata\MediaBundle\Model\MediaInterface;
 
 class NoopMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,5 +24,4 @@ class NoopMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(), $noopmetadatabuilder->get($media, $filename));
     }
-
 }

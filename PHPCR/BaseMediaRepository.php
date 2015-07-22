@@ -9,7 +9,6 @@ class BaseMediaRepository extends DocumentRepository implements RepositoryIdInte
 {
     public function generateId($document, $parent = null)
     {
-        return '/cms/media/'  . uniqid();
+        return '/cms/media/'.uniqid();
     }
 }
-

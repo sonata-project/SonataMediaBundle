@@ -48,7 +48,6 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getDescription()

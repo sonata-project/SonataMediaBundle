@@ -12,13 +12,13 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
+use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\CoreBundle\Model\Metadata;
-use Sonata\MediaBundle\Resizer\ResizerInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
-use Sonata\AdminBundle\Validator\ErrorElement;
 
 abstract class BaseProvider implements MediaProviderInterface
 {
@@ -57,8 +57,6 @@ abstract class BaseProvider implements MediaProviderInterface
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return void
      */
     abstract protected function doTransform(MediaInterface $media);
 
@@ -140,7 +138,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-file'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-file'));
     }
 
     /**
@@ -164,7 +162,6 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function postRemove(MediaInterface $media)
     {
-
     }
 
     /**
@@ -208,7 +205,6 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     *
      * @return array
      */
     public function getTemplates()
@@ -286,6 +282,5 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
-
     }
 }

@@ -14,7 +14,7 @@ namespace Sonata\MediaBundle\Model;
 abstract class GalleryManager implements GalleryManagerInterface
 {
     /**
-     * Creates an empty gallery instance
+     * Creates an empty gallery instance.
      *
      * @return Gallery
      */
@@ -22,6 +22,6 @@ abstract class GalleryManager implements GalleryManagerInterface
     {
         $class = $this->getClass();
 
-        return new $class;
+        return new $class();
     }
 }

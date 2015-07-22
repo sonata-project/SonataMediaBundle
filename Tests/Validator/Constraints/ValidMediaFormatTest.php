@@ -15,7 +15,6 @@ use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 
 class ValidMediaFormatTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testInstance()
     {
         $constraint = new ValidMediaFormat();

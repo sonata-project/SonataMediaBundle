@@ -15,9 +15,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 interface MetadataBuilderInterface
 {
-
     /**
-     * Get metadata for media object
+     * Get metadata for media object.
      *
      * @param MediaInterface $media
      * @param string         $filename

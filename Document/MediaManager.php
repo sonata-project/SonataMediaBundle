@@ -11,14 +11,10 @@
 
 namespace Sonata\MediaBundle\Document;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
-
 use Sonata\CoreBundle\Model\BaseDocumentManager;
 
 class MediaManager extends BaseDocumentManager
 {
-
     /**
      * {@inheritdoc}
      *

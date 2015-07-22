@@ -9,7 +9,6 @@ class BaseGalleryHasMediaRepository extends DocumentRepository implements Reposi
 {
     public function generateId($document, $parent = null)
     {
-        return '/cms/gallery-has-media/'  . uniqid();
+        return '/cms/gallery-has-media/'.uniqid();
     }
 }
-

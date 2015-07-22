@@ -2,12 +2,12 @@
 
 namespace Sonata\MediaBundle\Admin\Manager;
 
-use Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager;
 
 /**
  * this method overwrite the default AdminModelManager to call
- * the custom methods from the dedicated media manager
+ * the custom methods from the dedicated media manager.
  */
 class DoctrineMongoDBManager extends ModelManager
 {
