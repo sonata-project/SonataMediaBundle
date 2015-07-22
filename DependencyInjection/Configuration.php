@@ -388,9 +388,33 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('class')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Media')->end()
-                        ->scalarNode('gallery')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Gallery')->end()
-                        ->scalarNode('gallery_has_media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia')->end()
+                        ->scalarNode('media')
+                            ->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Media')
+                            ->validate()
+                                ->ifTrue(function ($v) {
+                                    return !(class_exists($v) && in_array('Sonata\MediaBundle\Model\MediaInterface', class_implements($v)));
+                                })
+                                ->thenInvalid('Invalid model class (not found or not implementing \Sonata\MediaBundle\Model\MediaInterface) - %s')
+                            ->end()
+                        ->end()
+                        ->scalarNode('gallery')
+                            ->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Gallery')
+                            ->validate()
+                                ->ifTrue(function ($v) {
+                                    return !(class_exists($v) && in_array('Sonata\MediaBundle\Model\GalleryInterface', class_implements($v)));
+                                })
+                                ->thenInvalid('Invalid model class (not found or not implementing \Sonata\MediaBundle\Model\GalleryInterface) - %s')
+                            ->end()
+                        ->end()
+                        ->scalarNode('gallery_has_media')
+                            ->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia')
+                            ->validate()
+                                ->ifTrue(function ($v) {
+                                    return !(class_exists($v) && in_array('Sonata\MediaBundle\Model\GalleryHasMediaInterface', class_implements($v)));
+                                })
+                                ->thenInvalid('Invalid model class (not found or not implementing \Sonata\MediaBundle\Model\GalleryHasMediaInterface) - %s')
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
