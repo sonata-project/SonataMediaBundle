@@ -37,7 +37,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
-        /** @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
+        /* @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
         /** @var $dm \Doctrine\ODM\PHPCR\DocumentManager */
         $dm = $args->getObjectManager();
 

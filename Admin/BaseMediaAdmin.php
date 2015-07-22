@@ -12,14 +12,10 @@
 namespace Sonata\MediaBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\MediaBundle\Provider\Pool;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
-
-use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\MediaBundle\Provider\Pool;
 
 abstract class BaseMediaAdmin extends Admin
 {

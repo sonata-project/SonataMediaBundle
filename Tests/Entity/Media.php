@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Tests\Entity;
 
 class Media extends \Sonata\MediaBundle\Entity\BaseMedia
 {
-
     protected $id;
 
     public function setId($id)

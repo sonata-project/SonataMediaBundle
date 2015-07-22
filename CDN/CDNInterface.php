@@ -20,39 +20,33 @@ interface CDNInterface
     const STATUS_WAITING  = 5;
 
     /**
-     * Return the base path
+     * Return the base path.
      *
-     * @param string  $relativePath
-     * @param boolean $isFlushable
+     * @param string $relativePath
+     * @param bool   $isFlushable
      *
      * @return string
      */
     public function getPath($relativePath, $isFlushable);
 
     /**
-     * Flush the resource
+     * Flush the resource.
      *
      * @param string $string
-     *
-     * @return void
      */
     public function flush($string);
 
     /**
-     * Flush a set of resources matching the provided string
+     * Flush a set of resources matching the provided string.
      *
      * @param string $string
-     *
-     * @return void
      */
     public function flushByString($string);
 
     /**
-     * Flush a set of resources matching the paths in provided array
+     * Flush a set of resources matching the paths in provided array.
      *
      * @param array $paths
-     *
-     * @return void
      */
     public function flushPaths(array $paths);
 }

@@ -11,22 +11,20 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use AmazonS3 as AmazonS3;
+use CFMimeTypes;
 use Sonata\MediaBundle\Model\MediaInterface;
-use \AmazonS3 as AmazonS3;
-use \CFMimeTypes;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
-
     protected $settings;
 
     protected $acl = array(
-        'private' => AmazonS3::ACL_PRIVATE,
-        'public' => AmazonS3::ACL_PUBLIC,
-        'open' => AmazonS3::ACL_OPEN,
-        'auth_read' => AmazonS3::ACL_AUTH_READ,
-        'owner_read' => AmazonS3::ACL_OWNER_READ,
+        'private'            => AmazonS3::ACL_PRIVATE,
+        'public'             => AmazonS3::ACL_PUBLIC,
+        'open'               => AmazonS3::ACL_OPEN,
+        'auth_read'          => AmazonS3::ACL_AUTH_READ,
+        'owner_read'         => AmazonS3::ACL_OWNER_READ,
         'owner_full_control' => AmazonS3::ACL_OWNER_FULL_CONTROL,
     );
 
@@ -39,7 +37,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Get data passed from the config
+     * Get data passed from the config.
      *
      * @return array
      */
@@ -81,7 +79,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Gets the correct content-type
+     * Gets the correct content-type.
      *
      * @param string $filename
      *
@@ -92,7 +90,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $contentType = CFMimeTypes::get_mimetype($extension);
 
-        return array('contentType'=> $contentType);
+        return array('contentType' => $contentType);
     }
 
     /**

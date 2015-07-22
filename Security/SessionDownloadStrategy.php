@@ -12,9 +12,9 @@
 namespace Sonata\MediaBundle\Security;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SessionDownloadStrategy implements DownloadStrategyInterface
 {
@@ -53,7 +53,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
             return false;
         }
 
-        $times++;
+        ++$times;
 
         $this->getSession()->set($this->sessionKey, $times);
 

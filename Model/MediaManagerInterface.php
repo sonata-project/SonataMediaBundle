@@ -18,5 +18,4 @@ use Sonata\CoreBundle\Model\ManagerInterface;
  */
 interface MediaManagerInterface extends ManagerInterface
 {
-
 }

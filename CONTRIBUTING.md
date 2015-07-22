@@ -4,7 +4,7 @@ Sonata respects the symfony’s conventions about contributing to the code. So b
 
 If you happen to find a bug, we kindly request you to report it. However, before submitting it, please:
 
-  * Check the [project documentation available online](http://sonata-project.org/bundles/)
+  * Check the [project documentation available online](https://sonata-project.org/bundles/)
 
 Then, if it appears that it’s a real bug, you may report it using Github by following these 3 points:
 
@@ -14,13 +14,29 @@ Then, if it appears that it’s a real bug, you may report it using Github by fo
 
 > _NOTE:_ Don’t hesitate giving as much information as you can (OS, PHP version extensions …)
 
-## Sending a Pull Request
+## Pull requests
+
+### Matching coding standards
+
+Before each commit, be sure to match sonata coding standards by running the following command for fix:
+
+```bash
+make cs
+```
+
+And then, add fixed file to your commit before push.
+
+Be sure to add only **your modified files**. If another files are fixed by cs tools, just revert it before commit.
+
+### Sending a Pull Request
 
 When you send a PR, just make sure that:
 
 * You add valid test cases.
 * Tests are green.
 * The related documentation is up-to-date.
+* You make the PR on the same branch you based your changes on. If you see commits
+that you did not make in your PR, you're doing it wrong.
 * Also don't forget to add a comment when you update a PR with a ping to the maintainer (``@username``), so he/she will get a notification.
 
 ## Contributing to the documentation

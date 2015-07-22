@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -14,7 +15,6 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 interface GeneratorInterface
 {
-
     /**
      * @abstract
      *

@@ -8,17 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Sonata\MediaBundle\Document;
 
-use Doctrine\DBAL\Connection;
 use Sonata\CoreBundle\Model\BaseDocumentManager;
-use Sonata\MediaBundle\Model\GalleryManager as AbstractGalleryManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
 
 class GalleryManager extends BaseDocumentManager
 {
-
     /**
      * BC Compatibility.
      *

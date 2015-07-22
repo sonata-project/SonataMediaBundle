@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaController extends Controller
@@ -93,17 +93,17 @@ class MediaController extends Controller
         return $this->render('SonataMediaBundle:Media:view.html.twig', array(
                 'media'     => $media,
                 'formats'   => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
-                'format'    => $format
+                'format'    => $format,
             ));
     }
 
     /**
      * This action applies a given filter to a given image,
      * optionally saves the image and
-     * outputs it to the browser at the same time
+     * outputs it to the browser at the same time.
      *
-     * @param string  $path
-     * @param string  $filter
+     * @param string $path
+     * @param string $filter
      *
      * @return Response
      */

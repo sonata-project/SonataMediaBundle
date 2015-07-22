@@ -11,9 +11,8 @@
 
 namespace Sonata\MediaBundle\Listener;
 
-use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\EventArgs;
-
+use Doctrine\Common\EventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -42,12 +41,10 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
      * @abstract
      *
      * @param \Doctrine\Common\EventArgs $args
-     *
-     * @return void
      */
     abstract protected function recomputeSingleEntityChangeSet(EventArgs $args);
 
-     /**
+    /**
      * @abstract
      *
      * @param \Doctrine\Common\EventArgs $args
@@ -66,7 +63,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $media = $this->getMedia($args);
 
         if (!$media instanceof MediaInterface) {
-            return null;
+            return;
         }
 
         return $this->getPool()->getProvider($media->getProviderName());
@@ -74,8 +71,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     *
-     * @return void
      */
     public function postUpdate(EventArgs $args)
     {
@@ -88,8 +83,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     *
-     * @return void
      */
     public function postRemove(EventArgs $args)
     {
@@ -102,8 +95,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     *
-     * @return void
      */
     public function postPersist(EventArgs $args)
     {
@@ -116,8 +107,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     *
-     * @return void
      */
     public function preUpdate(EventArgs $args)
     {
@@ -133,8 +122,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     *
-     * @return void
      */
     public function preRemove(EventArgs $args)
     {
@@ -147,8 +134,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     /**
      * @param \Doctrine\Common\EventArgs $args
-     *
-     * @return void
      */
     public function prePersist(EventArgs $args)
     {
