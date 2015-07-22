@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Provider\BaseProvider;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\BaseProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
 use Symfony\Component\Form\FormBuilder;
 
 class BaseProviderTest extends \PHPUnit_Framework_TestCase
@@ -47,7 +47,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
         $provider->setTemplates(array(
-            'edit' => 'edit.twig'
+            'edit' => 'edit.twig',
         ));
 
         $this->assertInternalType('array', $provider->getTemplates());
@@ -59,7 +59,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('array', $provider->getFormat('small'));
 
-        $media = new \Sonata\MediaBundle\Tests\Entity\Media;
+        $media = new \Sonata\MediaBundle\Tests\Entity\Media();
         $media->setContext('test');
 
         $this->assertEquals('admin', $provider->getFormatName($media, 'admin'));
@@ -72,6 +72,17 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
         $this->assertEquals('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
+    }
+
+    public function testMetadata()
+    {
+        $provider = $this->getProvider();
+
+        $this->assertEquals('test', $provider->getProviderMetadata()->getTitle());
+        $this->assertEquals('test.description', $provider->getProviderMetadata()->getDescription());
+        $this->assertFalse($provider->getProviderMetadata()->getImage());
+        $this->assertEquals('fa fa-file', $provider->getProviderMetadata()->getOption('class'));
+        $this->assertEquals('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 }
 
@@ -138,7 +149,7 @@ class TestProvider extends BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-      // TODO: Implement generatePrivateUrl() method.
+        // TODO: Implement generatePrivateUrl() method.
     }
 
     /**
@@ -146,7 +157,7 @@ class TestProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-      // TODO: Implement generatePublicUrl() method.
+        // TODO: Implement generatePublicUrl() method.
     }
 
     /**
@@ -154,7 +165,7 @@ class TestProvider extends BaseProvider
      */
     public function getReferenceFile(MediaInterface $media)
     {
-      // TODO: Implement getReferenceFile() method.
+        // TODO: Implement getReferenceFile() method.
     }
 
     /**

@@ -15,8 +15,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 {
     public function testMetadata()
     {
-
-        $media = new Media;
+        $media = new Media();
 
         $media->setProviderMetadata(array('thumbnail_url' => 'http://pasloin.com/thumb.png'));
 
@@ -34,7 +33,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGet()
     {
-        $media = new Media;
+        $media = new Media();
         $media->setName('MediaBundle');
         $media->setSize(12);
         $media->setDescription('description');
@@ -44,9 +43,10 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $media->setCopyright('copyleft');
         $media->setAuthorName('Thomas');
         $media->setCdnIsFlushable(true);
-        $media->setCdnFlushAt(new \DateTime);
+        $media->setCdnFlushIdentifier('identifier_123');
+        $media->setCdnFlushAt(new \DateTime());
         $media->setContentType('sonata/media');
-        $media->setCreatedAt(new \DateTime);
+        $media->setCreatedAt(new \DateTime());
 
         $this->assertEquals(12, $media->getSize());
         $this->assertEquals('description', $media->getDescription());
@@ -56,13 +56,12 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('copyleft', $media->getCopyright());
         $this->assertEquals('Thomas', $media->getAuthorName());
         $this->assertTrue($media->getCdnIsFlushable());
+        $this->assertEquals('identifier_123', $media->getCdnFlushIdentifier());
         $this->assertInstanceOf('DateTime', $media->getCdnFlushAt());
         $this->assertInstanceOf('DateTime', $media->getCreatedAt());
         $this->assertEquals('sonata/media', $media->getContentType());
         $this->assertEquals('MediaBundle', (string) $media);
 
         $this->assertNull($media->getMetadataValue('foo'));
-
     }
-
 }

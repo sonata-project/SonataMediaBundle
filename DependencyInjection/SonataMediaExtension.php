@@ -11,18 +11,16 @@
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Definition\Processor;
-
 use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * MediaExtension
+ * MediaExtension.
  *
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
@@ -41,7 +39,7 @@ class SonataMediaExtension extends Extension
         $configuration = new Configuration();
         $config        = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('provider.xml');
         $loader->load('media.xml');
         $loader->load('twig.xml');
@@ -51,10 +49,17 @@ class SonataMediaExtension extends Extension
         $loader->load('form.xml');
         $loader->load('gaufrette.xml');
         $loader->load('validators.xml');
+        $loader->load('serializer.xml');
+
+        if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'))) {
+            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
+        }
+
+        $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
 
         $bundles = $container->getParameter('kernel.bundles');
 
-        if (isset($bundles['FOSRestBundle'])) {
+        if ('doctrine_orm' == $config['db_driver'] && isset($bundles['FOSRestBundle']) && isset($bundles['NelmioApiDocBundle'])) {
             $loader->load('api_controllers.xml');
         }
 
@@ -72,10 +77,6 @@ class SonataMediaExtension extends Extension
 
         if (!isset($bundles['LiipImagineBundle'])) {
             $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
-        }
-
-        if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'))) {
-            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
 
         if (!array_key_exists($config['default_context'], $config['contexts'])) {
@@ -162,7 +163,7 @@ class SonataMediaExtension extends Extension
 
         foreach (array(
             'sonata.media.buzz.connector.curl',
-            'sonata.media.buzz.connector.file_get_contents'
+            'sonata.media.buzz.connector.file_get_contents',
         ) as $connector) {
             $container->getDefinition($connector)
                 ->addMethodCall('setIgnoreErrors', array($config['buzz']['client']['ignore_errors']))
@@ -191,8 +192,6 @@ class SonataMediaExtension extends Extension
 
     /**
      * @param array $config
-     *
-     * @return void
      */
     public function registerDoctrineMapping(array $config)
     {
@@ -214,11 +213,11 @@ class SonataMediaExtension extends Extension
             'cascade'       => array(
                 'persist',
             ),
-            'mappedBy'      => NULL,
+            'mappedBy'      => null,
             'inversedBy'    => 'galleryHasMedias',
-            'joinColumns'   =>  array(
+            'joinColumns'   => array(
                 array(
-                    'name'  => 'gallery_id',
+                    'name'                 => 'gallery_id',
                     'referencedColumnName' => 'id',
                 ),
             ),
@@ -231,11 +230,11 @@ class SonataMediaExtension extends Extension
             'cascade'       => array(
                  'persist',
             ),
-            'mappedBy'      => NULL,
+            'mappedBy'      => null,
             'inversedBy'    => 'galleryHasMedias',
             'joinColumns'   => array(
                 array(
-                    'name'  => 'media_id',
+                    'name'                 => 'media_id',
                     'referencedColumnName' => 'id',
                 ),
             ),
@@ -254,15 +253,33 @@ class SonataMediaExtension extends Extension
                 'position'  => 'ASC',
             ),
         ));
+
+        if (interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface')) {
+            $collector->addAssociation($config['class']['media'], 'mapManyToOne', array(
+                'fieldName'     => 'category',
+                'targetEntity'  => $config['class']['category'],
+                'cascade'       => array(
+                    'persist',
+                ),
+                'mappedBy'      => null,
+                'inversedBy'    => null,
+                'joinColumns'   => array(
+                    array(
+                     'name'                 => 'category_id',
+                     'referencedColumnName' => 'id',
+                     'onDelete'             => 'SET NULL',
+                    ),
+                ),
+                'orphanRemoval' => false,
+            ));
+        }
     }
 
     /**
-     * Inject CDN dependency to default provider
+     * Inject CDN dependency to default provider.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param array                                                   $config
-     *
-     * @return void
      */
     public function configureCdnAdapter(ContainerBuilder $container, array $config)
     {
@@ -286,6 +303,17 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.cdn.panther');
         }
 
+        if ($container->hasDefinition('sonata.media.cdn.cloudfront') && isset($config['cdn']['cloudfront'])) {
+            $container->getDefinition('sonata.media.cdn.cloudfront')
+                ->replaceArgument(0, $config['cdn']['cloudfront']['path'])
+                ->replaceArgument(1, $config['cdn']['cloudfront']['key'])
+                ->replaceArgument(2, $config['cdn']['cloudfront']['secret'])
+                ->replaceArgument(3, $config['cdn']['cloudfront']['distribution_id'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.cdn.cloudfront');
+        }
+
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
             $container->getDefinition('sonata.media.cdn.fallback')
                 ->replaceArgument(0, new Reference($config['cdn']['fallback']['master']))
@@ -297,12 +325,10 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * Inject filesystem dependency to default provider
+     * Inject filesystem dependency to default provider.
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param array                                                   $config
-     *
-     * @return void
      */
     public function configureFilesystemAdapter(ContainerBuilder $container, array $config)
     {
@@ -322,12 +348,12 @@ class SonataMediaExtension extends Extension
                 ->addArgument($config['filesystem']['ftp']['directory'])
                 ->addArgument($config['filesystem']['ftp']['host'])
                 ->addArgument(array(
-                    'port' => $config['filesystem']['ftp']['port'],
+                    'port'     => $config['filesystem']['ftp']['port'],
                     'username' => $config['filesystem']['ftp']['username'],
                     'password' => $config['filesystem']['ftp']['password'],
-                    'passive' => $config['filesystem']['ftp']['passive'],
-                    'create' => $config['filesystem']['ftp']['create'],
-                    'mode' => $config['filesystem']['ftp']['mode']
+                    'passive'  => $config['filesystem']['ftp']['passive'],
+                    'create'   => $config['filesystem']['ftp']['create'],
+                    'mode'     => $config['filesystem']['ftp']['mode'],
                 ))
             ;
         } else {
@@ -340,17 +366,16 @@ class SonataMediaExtension extends Extension
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
-                ->replaceArgument(2, array('create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region']))
-                ->addMethodCall('setDirectory', array($config['filesystem']['s3']['directory']));
+                ->replaceArgument(2, array('create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']))
             ;
 
             $container->getDefinition('sonata.media.metadata.amazon')
                 ->addArgument(array(
-                        'acl' => $config['filesystem']['s3']['acl'],
-                        'storage' => $config['filesystem']['s3']['storage'],
-                        'encryption' => $config['filesystem']['s3']['encryption'],
-                        'meta' => $config['filesystem']['s3']['meta'],
-                        'cache_control' => $config['filesystem']['s3']['cache_control']
+                        'acl'           => $config['filesystem']['s3']['acl'],
+                        'storage'       => $config['filesystem']['s3']['storage'],
+                        'encryption'    => $config['filesystem']['s3']['encryption'],
+                        'meta'          => $config['filesystem']['s3']['meta'],
+                        'cache_control' => $config['filesystem']['s3']['cache_control'],
                 ))
             ;
 
@@ -385,9 +410,9 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.filesystem.mogilefs');
         }
 
-        if($container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
             (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))) {
-            if(isset($config['filesystem']['openstack'])) {
+            if (isset($config['filesystem']['openstack'])) {
                 $container->setParameter('sonata.media.adapter.filesystem.opencloud.class', 'OpenCloud\OpenStack');
                 $settings = 'openstack';
             } else {
@@ -428,60 +453,61 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * Add class to compile
+     * Add class to compile.
      */
     public function configureClassesToCompile()
     {
         $this->addClassesToCompile(array(
-            "Sonata\\MediaBundle\\CDN\\CDNInterface",
-            "Sonata\\MediaBundle\\CDN\\Fallback",
-            "Sonata\\MediaBundle\\CDN\\PantherPortal",
-            "Sonata\\MediaBundle\\CDN\\Server",
-            "Sonata\\MediaBundle\\Extra\\Pixlr",
-            "Sonata\\MediaBundle\\Filesystem\\Local",
-            "Sonata\\MediaBundle\\Filesystem\\Replicate",
-            "Sonata\\MediaBundle\\Generator\\DefaultGenerator",
-            "Sonata\\MediaBundle\\Generator\\GeneratorInterface",
-            "Sonata\\MediaBundle\\Generator\\ODMGenerator",
-            "Sonata\\MediaBundle\\Generator\\PHPCRGenerator",
-            "Sonata\\MediaBundle\\Metadata\\AmazonMetadataBuilder",
-            "Sonata\\MediaBundle\\Metadata\\MetadataBuilderInterface",
-            "Sonata\\MediaBundle\\Metadata\\NoopMetadataBuilder",
-            "Sonata\\MediaBundle\\Metadata\\ProxyMetadataBuilder",
-            "Sonata\\MediaBundle\\Model\\Gallery",
-            "Sonata\\MediaBundle\\Model\\GalleryHasMedia",
-            "Sonata\\MediaBundle\\Model\\GalleryHasMediaInterface",
-            "Sonata\\MediaBundle\\Model\\GalleryInterface",
-            "Sonata\\MediaBundle\\Model\\GalleryManager",
-            "Sonata\\MediaBundle\\Model\\GalleryManagerInterface",
-            "Sonata\\MediaBundle\\Model\\Media",
-            "Sonata\\MediaBundle\\Model\\MediaInterface",
-            "Sonata\\MediaBundle\\Model\\MediaManagerInterface",
-            "Sonata\\MediaBundle\\Provider\\BaseProvider",
-            "Sonata\\MediaBundle\\Provider\\BaseVideoProvider",
-            "Sonata\\MediaBundle\\Provider\\DailyMotionProvider",
-            "Sonata\\MediaBundle\\Provider\\FileProvider",
-            "Sonata\\MediaBundle\\Provider\\ImageProvider",
-            "Sonata\\MediaBundle\\Provider\\MediaProviderInterface",
-            "Sonata\\MediaBundle\\Provider\\Pool",
-            "Sonata\\MediaBundle\\Provider\\VimeoProvider",
-            "Sonata\\MediaBundle\\Provider\\YouTubeProvider",
-            "Sonata\\MediaBundle\\Resizer\\ResizerInterface",
-            "Sonata\\MediaBundle\\Resizer\\SimpleResizer",
-            "Sonata\\MediaBundle\\Resizer\\SquareResizer",
-            "Sonata\\MediaBundle\\Security\\DownloadStrategyInterface",
-            "Sonata\\MediaBundle\\Security\\ForbiddenDownloadStrategy",
-            "Sonata\\MediaBundle\\Security\\PublicDownloadStrategy",
-            "Sonata\\MediaBundle\\Security\\RolesDownloadStrategy",
-            "Sonata\\MediaBundle\\Security\\SessionDownloadStrategy",
-            "Sonata\\MediaBundle\\Templating\\Helper\\MediaHelper",
-            "Sonata\\MediaBundle\\Thumbnail\\ConsumerThumbnail",
-            "Sonata\\MediaBundle\\Thumbnail\\FormatThumbnail",
-            "Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface",
-            "Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension",
-            "Sonata\\MediaBundle\\Twig\\Node\\MediaNode",
-            "Sonata\\MediaBundle\\Twig\\Node\\PathNode",
-            "Sonata\\MediaBundle\\Twig\\Node\\ThumbnailNode",
+            'Sonata\\MediaBundle\\CDN\\CDNInterface',
+            'Sonata\\MediaBundle\\CDN\\CloudFront',
+            'Sonata\\MediaBundle\\CDN\\Fallback',
+            'Sonata\\MediaBundle\\CDN\\PantherPortal',
+            'Sonata\\MediaBundle\\CDN\\Server',
+            'Sonata\\MediaBundle\\Extra\\Pixlr',
+            'Sonata\\MediaBundle\\Filesystem\\Local',
+            'Sonata\\MediaBundle\\Filesystem\\Replicate',
+            'Sonata\\MediaBundle\\Generator\\DefaultGenerator',
+            'Sonata\\MediaBundle\\Generator\\GeneratorInterface',
+            'Sonata\\MediaBundle\\Generator\\ODMGenerator',
+            'Sonata\\MediaBundle\\Generator\\PHPCRGenerator',
+            'Sonata\\MediaBundle\\Metadata\\AmazonMetadataBuilder',
+            'Sonata\\MediaBundle\\Metadata\\MetadataBuilderInterface',
+            'Sonata\\MediaBundle\\Metadata\\NoopMetadataBuilder',
+            'Sonata\\MediaBundle\\Metadata\\ProxyMetadataBuilder',
+            'Sonata\\MediaBundle\\Model\\Gallery',
+            'Sonata\\MediaBundle\\Model\\GalleryHasMedia',
+            'Sonata\\MediaBundle\\Model\\GalleryHasMediaInterface',
+            'Sonata\\MediaBundle\\Model\\GalleryInterface',
+            'Sonata\\MediaBundle\\Model\\GalleryManager',
+            'Sonata\\MediaBundle\\Model\\GalleryManagerInterface',
+            'Sonata\\MediaBundle\\Model\\Media',
+            'Sonata\\MediaBundle\\Model\\MediaInterface',
+            'Sonata\\MediaBundle\\Model\\MediaManagerInterface',
+            'Sonata\\MediaBundle\\Provider\\BaseProvider',
+            'Sonata\\MediaBundle\\Provider\\BaseVideoProvider',
+            'Sonata\\MediaBundle\\Provider\\DailyMotionProvider',
+            'Sonata\\MediaBundle\\Provider\\FileProvider',
+            'Sonata\\MediaBundle\\Provider\\ImageProvider',
+            'Sonata\\MediaBundle\\Provider\\MediaProviderInterface',
+            'Sonata\\MediaBundle\\Provider\\Pool',
+            'Sonata\\MediaBundle\\Provider\\VimeoProvider',
+            'Sonata\\MediaBundle\\Provider\\YouTubeProvider',
+            'Sonata\\MediaBundle\\Resizer\\ResizerInterface',
+            'Sonata\\MediaBundle\\Resizer\\SimpleResizer',
+            'Sonata\\MediaBundle\\Resizer\\SquareResizer',
+            'Sonata\\MediaBundle\\Security\\DownloadStrategyInterface',
+            'Sonata\\MediaBundle\\Security\\ForbiddenDownloadStrategy',
+            'Sonata\\MediaBundle\\Security\\PublicDownloadStrategy',
+            'Sonata\\MediaBundle\\Security\\RolesDownloadStrategy',
+            'Sonata\\MediaBundle\\Security\\SessionDownloadStrategy',
+            'Sonata\\MediaBundle\\Templating\\Helper\\MediaHelper',
+            'Sonata\\MediaBundle\\Thumbnail\\ConsumerThumbnail',
+            'Sonata\\MediaBundle\\Thumbnail\\FormatThumbnail',
+            'Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface',
+            'Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension',
+            'Sonata\\MediaBundle\\Twig\\Node\\MediaNode',
+            'Sonata\\MediaBundle\\Twig\\Node\\PathNode',
+            'Sonata\\MediaBundle\\Twig\\Node\\ThumbnailNode',
         ));
     }
 }

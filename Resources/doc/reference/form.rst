@@ -15,7 +15,7 @@ The ``sonata_media_type`` can be used to assign a Media instance to another enti
  * context : the context to use
 
 And optionals parameters:
- * empty_on_new (default is true): the related data transformer will return null instead of an empty Media instance if not binary content is provided
+ * empty_on_new (default is true): the related data transformer will return null instead of an empty Media instance if no binary content is provided
  * new_on_update (default is true): create a new media instance if a binary content is set. If the value is set to ``false``, then the media will be overwritten and related entities can be affected by this change.
 
 .. code-block:: php

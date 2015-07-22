@@ -98,6 +98,26 @@
                 <source>filter.label_provider_name</source>
                 <target>Type</target>
             </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>Catégorie</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>Auteur</target>
+            </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>Largeur</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>Hauteur</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>Type MIME du média</target>
+            </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
                 <target>Actif</target>
@@ -132,7 +152,7 @@
             </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
-                <target>A raffraichir sur le CDN</target>
+                <target>À rafraîchir sur le CDN</target>
             </trans-unit>
             <trans-unit id="form.label_description">
                 <source>form.label_description</source>
@@ -146,13 +166,21 @@
                 <source>form.label_binary_content</source>
                 <target>Fichier/Référence</target>
             </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Catégorie</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Référence du type</target>
+            </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
                 <target>Taille</target>
             </trans-unit>
             <trans-unit id="label.length">
                 <source>label.length</source>
-                <target>label.length</target>
+                <target>Longueur</target>
             </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
@@ -180,7 +208,7 @@
             </trans-unit>
             <trans-unit id="label.to_be_flushed">
                 <source>label.to_be_flushed</source>
-                <target>A vider</target>
+                <target>À vider</target>
             </trans-unit>
             <trans-unit id="label.flushed_at">
                 <source>label.flushed_at</source>
@@ -208,11 +236,15 @@
             </trans-unit>
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
-                <target>A raffraichir sur le CDN</target>
+                <target>À rafraîchir sur le CDN</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
-                <target>Change video</target>
+                <target>Changer la video</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
@@ -242,7 +274,7 @@
                 <source>label.pixlr_warning</source>
                 <target>
                     <![CDATA[
-                        <span class="label important">Important</span> vous allez envoyer le média sur un <strong>service externe</strong>. <br />
+                        <span class="label label-warning">Important</span> vous allez envoyer le média sur un <strong>service externe</strong>. <br />
                         Si vous travaillez sur des éléments confidentiels, il ne faut pas utiliser ce service.
                     ]]>
                 </target>
@@ -281,6 +313,10 @@
                 <source>list.label_name</source>
                 <target>Nom</target>
             </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>Auteur</target>
+            </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
                 <target>Contexte</target>
@@ -296,6 +332,10 @@
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
                 <target>Personnalisé</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>Auteur</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
@@ -325,6 +365,26 @@
                 <source>sonata.media.provider.file</source>
                 <target>Fichier</target>
             </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>Ajouter une vidéo venant de dailymotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>Ajouter une vidéo venant de YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Ajouter une vidéo venant de Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Ajouter une image</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Ajouter un document</target>
+            </trans-unit>
             <trans-unit id="title.media_preview">
                 <source>title.media_preview</source>
                 <target>Visualiser</target>
@@ -343,11 +403,11 @@
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>link_media</target>
+                <target>Média lié</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>no_linked_media</target>
+                <target>Aucun média lié</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
@@ -355,7 +415,19 @@
             </trans-unit>
             <trans-unit id="sonata_template_box_media_gallery_block">
                 <source>sonata_template_box_media_gallery_block</source>
-                <target>Ceci est un bloc de gallerie de médias. Vous pouvez le surcharger librement.</target>
+                <target>Ceci est un bloc de galerie de médias. Vous pouvez le surcharger librement.</target>
+            </trans-unit>
+            <trans-unit id="list.label_description">
+                <source>list.label_description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="list.label_size">
+                <source>list.label_size</source>
+                <target>Taille</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Pas de catégories définies</target>
             </trans-unit>
         </body>
     </file>

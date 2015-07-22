@@ -12,8 +12,8 @@
 namespace Sonata\MediaBundle\Admin\PHPCR;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\MediaBundle\Admin\GalleryAdmin as BaseGalleryAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\MediaBundle\Admin\GalleryAdmin as BaseGalleryAdmin;
 
 class GalleryAdmin extends BaseGalleryAdmin
 {
@@ -34,7 +34,7 @@ class GalleryAdmin extends BaseGalleryAdmin
      */
     public function createQuery($context = 'list')
     {
-        $query = $this->getModelManager()->createQuery($this->getClass(), '', $this->root);
+        $query = $this->getModelManager()->createQuery($this->getClass(), 'a', $this->root);
 
         foreach ($this->extensions as $extension) {
             $extension->configureQuery($this, $query, $context);
@@ -47,7 +47,6 @@ class GalleryAdmin extends BaseGalleryAdmin
     {
         return $this->getUrlsafeIdentifier($object);
     }
-
 
     /**
      * {@inheritdoc}
@@ -68,9 +67,9 @@ class GalleryAdmin extends BaseGalleryAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         // Allow path in id parameter
-        $collection->add('view', $this->getRouterIdParameter() . '/view', array(), array('id' => '.+', '_method' => 'GET'));
-        $collection->add('show', $this->getRouterIdParameter() . '/show', array(
-                '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view')
+        $collection->add('view', $this->getRouterIdParameter().'/view', array(), array('id' => '.+', '_method' => 'GET'));
+        $collection->add('show', $this->getRouterIdParameter().'/show', array(
+                '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view'),
             ),
             array('id' => '.+', '_method' => 'GET')
         );

@@ -21,7 +21,7 @@ abstract class BaseMedia extends Media
     private $uuid;
 
     /**
-     * Get universal unique id
+     * Get universal unique id.
      *
      * @return string
      */

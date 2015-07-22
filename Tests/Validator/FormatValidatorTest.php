@@ -12,11 +12,14 @@
 namespace Sonata\MediaBundle\Tests\Validator;
 
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Validator\FormatValidator;
 use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
+use Sonata\MediaBundle\Validator\FormatValidator;
 
-class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
+class FormatValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testValidate()
     {
         $pool = new Pool('defaultContext');
@@ -32,7 +35,7 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
         $validator = new FormatValidator($pool);
         $validator->initialize($context);
 
-        $validator->validate($gallery, new ValidMediaFormat);
+        $validator->validate($gallery, new ValidMediaFormat());
     }
 
     public function testValidateWithValidContext()
@@ -50,6 +53,6 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
         $validator = new FormatValidator($pool);
         $validator->initialize($context);
 
-        $validator->validate($gallery, new ValidMediaFormat);
+        $validator->validate($gallery, new ValidMediaFormat());
     }
 }

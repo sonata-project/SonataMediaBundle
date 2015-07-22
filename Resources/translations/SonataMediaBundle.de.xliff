@@ -98,9 +98,29 @@
                 <source>filter.label_provider_name</source>
                 <target>Medienanbieter Name</target>
             </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>Kategorie</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>Author</target>
+            </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>Breite</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>Höhe</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>Inhalts-Typ</target>
+            </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
-                <target>Enabled</target>
+                <target>Aktiviert</target>
             </trans-unit>
             <trans-unit id="form.label_media">
                 <source>form.label_media</source>
@@ -152,7 +172,7 @@
             </trans-unit>
             <trans-unit id="label.length">
                 <source>label.length</source>
-                <target>label.length</target>
+                <target>Länge</target>
             </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
@@ -164,7 +184,7 @@
             </trans-unit>
             <trans-unit id="label.content_type">
                 <source>label.content_type</source>
-                <target>Content type</target>
+                <target>Inhalts-Typ</target>
             </trans-unit>
             <trans-unit id="label.copyright">
                 <source>label.copyright</source>
@@ -209,6 +229,10 @@
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
                 <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
@@ -266,6 +290,10 @@
                 <source>list.label_name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>list.label_author_name</target>
+            </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
                 <target>Kontext</target>
@@ -281,6 +309,10 @@
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
                 <target>Medium</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>Author</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
@@ -342,6 +374,26 @@
                 <source>sonata_template_box_media_gallery_block</source>
                 <target>This is the gallery media block. Feel free to override it.</target>
             </trans-unit>
+            <trans-unit id="list.label_description">
+                <source>list.label_description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="list.label_size">
+                <source>list.label_size</source>
+                <target>Größe</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Keine Kategorie definiert</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Kategorie</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Provider Referenz</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>

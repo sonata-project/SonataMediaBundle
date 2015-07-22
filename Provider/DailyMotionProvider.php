@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -82,6 +83,14 @@ class DailyMotionProvider extends BaseVideoProvider
         );
 
         return $params;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviderMetadata()
+    {
+        return new Metadata($this->getName(), $this->getName().'.description', 'bundles/sonatamedia/dailymotion-icon.png', 'SonataMediaBundle');
     }
 
     /**

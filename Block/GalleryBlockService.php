@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -11,23 +12,20 @@
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
-
+use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\BlockBundle\Block\BaseBlockService;
-
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * PageExtension
+ * PageExtension.
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
@@ -84,7 +82,6 @@ class GalleryBlockService extends BaseBlockService
      */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
-
     }
 
     /**
@@ -93,17 +90,15 @@ class GalleryBlockService extends BaseBlockService
     public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'gallery'   => false,
-            'title'     => false,
-            'context'   => false,
-            'format'    => false,
-            'pauseTime' => 3000,
-            'animSpeed' => 300,
-            'startPaused'  => false,
-            'directionNav' => true,
-            'progressBar'  => true,
-            'template'     => 'SonataMediaBundle:Block:block_gallery.html.twig',
-            'galleryId'    => false
+            'gallery'     => false,
+            'title'       => false,
+            'context'     => false,
+            'format'      => false,
+            'pauseTime'   => 3000,
+            'startPaused' => false,
+            'wrap'        => true,
+            'template'    => 'SonataMediaBundle:Block:block_gallery.html.twig',
+            'galleryId'   => null,
         ));
     }
 
@@ -123,7 +118,6 @@ class GalleryBlockService extends BaseBlockService
         $formatChoices = array();
 
         if ($gallery instanceof GalleryInterface) {
-
             $formats = $this->getMediaPool()->getFormatNamesByContext($gallery->getContext());
 
             foreach ($formats as $code => $format) {
@@ -132,16 +126,16 @@ class GalleryBlockService extends BaseBlockService
         }
 
         // simulate an association ...
-        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media' );
+        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media');
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE));
 
-        $builder = $formMapper->create('galleryId', 'sonata_type_model', array(
+        $builder = $formMapper->create('galleryId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
-            'class'             => $this->getGalleryAdmin()->getClass(),
-            'model_manager'     => $this->getGalleryAdmin()->getModelManager()
+            'class'                    => $this->getGalleryAdmin()->getClass(),
+            'model_manager'            => $this->getGalleryAdmin()->getModelManager(),
         ));
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
@@ -151,11 +145,9 @@ class GalleryBlockService extends BaseBlockService
                 array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
                 array($builder, null, array()),
                 array('pauseTime', 'number', array()),
-                array('animSpeed', 'number', array()),
                 array('startPaused', 'sonata_type_boolean', array()),
-                array('directionNav', 'sonata_type_boolean', array()),
-                array('progressBar', 'sonata_type_boolean', array()),
-            )
+                array('wrap', 'sonata_type_boolean', array()),
+            ),
         ));
     }
 
@@ -202,26 +194,6 @@ class GalleryBlockService extends BaseBlockService
     public function preUpdate(BlockInterface $block)
     {
         $block->setSetting('galleryId', is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getStylesheets($media)
-    {
-        return array(
-            '/bundles/sonatamedia/nivo-gallery/nivo-gallery.css'
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getJavascripts($media)
-    {
-        return array(
-            '/bundles/sonatamedia/nivo-gallery/jquery.nivo.gallery.js'
-        );
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -10,12 +11,12 @@
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
@@ -113,6 +114,15 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('site_id')->isRequired()->end()
                                 ->scalarNode('password')->isRequired()->end()
                                 ->scalarNode('username')->isRequired()->end()
+                            ->end()
+                        ->end()
+
+                        ->arrayNode('cloudfront')
+                            ->children()
+                                ->scalarNode('path')->isRequired()->end() // http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                                ->scalarNode('distribution_id')->isRequired()->end()
+                                ->scalarNode('key')->isRequired()->end()
+                                ->scalarNode('secret')->isRequired()->end()
                             ->end()
                         ->end()
 
@@ -390,6 +400,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Media')->end()
                         ->scalarNode('gallery')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Gallery')->end()
                         ->scalarNode('gallery_has_media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia')->end()
+                        ->scalarNode('category')->defaultValue('Application\\Sonata\\ClassificationBundle\\Entity\\Category')->end()
                     ->end()
                 ->end()
             ->end()
@@ -406,7 +417,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('buzz')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.file_get_contents')->end()
+                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.curl')->end()
                         ->arrayNode('client')
                         ->addDefaultsIfNotSet()
                         ->children()

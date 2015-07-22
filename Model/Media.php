@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -11,97 +12,103 @@
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 abstract class Media implements MediaInterface
 {
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var text $description
+     * @var text
      */
     protected $description;
 
     /**
-     * @var boolean $enabled
+     * @var bool
      */
     protected $enabled = false;
 
     /**
-     * @var string $provider_name
+     * @var string
      */
     protected $providerName;
 
     /**
-     * @var integer $provider_status
+     * @var int
      */
     protected $providerStatus;
 
     /**
-     * @var string $provider_reference
+     * @var string
      */
     protected $providerReference;
 
     /**
-     * @var array $provider_metadata
+     * @var array
      */
     protected $providerMetadata = array();
 
     /**
-     * @var integer $width
+     * @var int
      */
     protected $width;
 
     /**
-     * @var integer $height
+     * @var int
      */
     protected $height;
 
     /**
-     * @var decimal $length
+     * @var decimal
      */
     protected $length;
 
     /**
-     * @var string $copyright
+     * @var string
      */
     protected $copyright;
 
     /**
-     * @var string $author_name
+     * @var string
      */
     protected $authorName;
 
     /**
-     * @var string $context
+     * @var string
      */
     protected $context;
 
     /**
-     * @var boolean $cdn_is_flushable
+     * @var bool
      */
     protected $cdnIsFlushable;
 
     /**
-     * @var datetime $cdn_flush_at
+     * @var string
+     */
+    protected $cdnFlushIdentifier;
+
+    /**
+     * @var datetime
      */
     protected $cdnFlushAt;
 
     /**
-     * @var integer $cdn_status
+     * @var int
      */
     protected $cdnStatus;
 
     /**
-     * @var datetime $updated_at
+     * @var datetime
      */
     protected $updatedAt;
 
     /**
-     * @var datetime $created_at
+     * @var datetime
      */
     protected $createdAt;
 
@@ -110,30 +117,33 @@ abstract class Media implements MediaInterface
     protected $previousProviderReference;
 
     /**
-     * @var varchar $content_type
+     * @var varchar
      */
     protected $contentType;
 
     /**
-     * @var integer $size
+     * @var int
      */
     protected $size;
 
     protected $galleryHasMedias;
 
+    protected $category;
+
     public function prePersist()
     {
-        $this->setCreatedAt(new \DateTime);
-        $this->setUpdatedAt(new \DateTime);
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
     }
 
     public function preUpdate()
     {
-        $this->setUpdatedAt(new \DateTime);
+        $this->setUpdatedAt(new \DateTime());
     }
 
     /**
      * @static
+     *
      * @return array
      */
     public static function getStatusList()
@@ -155,6 +165,14 @@ abstract class Media implements MediaInterface
         $this->previousProviderReference = $this->providerReference;
         $this->providerReference = null;
         $this->binaryContent = $binaryContent;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resetBinaryContent()
+    {
+        $this->binaryContent = null;
     }
 
     /**
@@ -422,6 +440,22 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
+    public function setCdnFlushIdentifier($cdnFlushIdentifier)
+    {
+        $this->cdnFlushIdentifier = $cdnFlushIdentifier;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCdnFlushIdentifier()
+    {
+        return $this->cdnFlushIdentifier;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setCdnFlushAt(\DateTime $cdnFlushAt = null)
     {
         $this->cdnFlushAt = $cdnFlushAt;
@@ -571,5 +605,21 @@ abstract class Media implements MediaInterface
         if ($this->getBinaryContent() && $this->getProviderStatus() == self::STATUS_ERROR) {
             $context->addViolationAt('binaryContent', 'invalid', array(), null);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory(CategoryInterface $category = null)
+    {
+        $this->category = $category;
     }
 }

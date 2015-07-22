@@ -73,7 +73,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
         // feature not available
         return;

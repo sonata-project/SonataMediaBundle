@@ -39,7 +39,6 @@ class PublicDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getDescription()

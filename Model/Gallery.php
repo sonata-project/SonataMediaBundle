@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -15,27 +16,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class Gallery implements GalleryInterface
 {
     /**
-     * @var string $name
+     * @var string
      */
     protected $context;
 
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var boolean $enabled
+     * @var bool
      */
     protected $enabled;
 
     /**
-     * @var \Datetime $updatedAt
+     * @var \Datetime
      */
     protected $updatedAt;
 
     /**
-     * @var \Datetime $createdAt
+     * @var \Datetime
      */
     protected $createdAt;
 

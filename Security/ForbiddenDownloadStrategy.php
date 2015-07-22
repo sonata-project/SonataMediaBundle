@@ -39,7 +39,6 @@ class ForbiddenDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getDescription()

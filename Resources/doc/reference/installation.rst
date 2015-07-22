@@ -4,10 +4,19 @@ Installation
 Base bundles
 ------------
 
-This bundle is mainely dependant of the SonataAdminBundle and the SonataDoctrineORMAdminBundle. So be sure you have install those two bundles before start:
+This bundle is mainly dependant of:
 
- * http://sonata-project.org/bundles/admin/master/doc/reference/installation.html
- * http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html
+* Classification: https://sonata-project.org/bundles/classification
+* Core: https://sonata-project.org/bundles/core
+* Intl: https://sonata-project.org/bundles/intl
+
+This bundle has optional dependancies of:
+
+ * Admin: https://sonata-project.org/bundles/admin
+ * DoctrineOrm: https://sonata-project.org/bundles/doctrine-orm-admin
+ * MongoAdmin: https://sonata-project.org/bundles/mongo-admin
+
+So be sure you have installed those bundles before starting
 
 Installation
 ------------
@@ -17,10 +26,9 @@ Retrieve the bundle with composer:
 .. code-block:: sh
 
     php composer.phar require sonata-project/media-bundle --no-update
-    php composer.phar require sonata-project/doctrine-orm-admin-bundle --no-update
 
 
-Register the new bundle into your AppKernel:
+Register these bundles in your AppKernel:
 
 .. code-block:: php
 
@@ -30,9 +38,12 @@ Register the new bundle into your AppKernel:
   {
       return array(
           // ...
-          new Sonata\CoreBundle\SonataCoreBundle(),
           new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+          new Sonata\IntlBundle\SonataIntlBundle(),
+
+          //You need to add this dependency to make media functional
+          new JMS\SerializerBundle\JMSSerializerBundle(),
           // ...
       );
   }
@@ -92,8 +103,8 @@ Doctrine PHPCR:
         #    media: MyVendor\MediaBundle\Entity\Media
         #    gallery: MyVendor\MediaBundle\Entity\Gallery
         #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
-        default_context: default
-        db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
+        db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
+        default_context: default # you need to set a context
         contexts:
             default:  # the default context is mandatory
                 providers:
@@ -141,7 +152,7 @@ Also, you can determine the resizer to use; the default value is
 At this point, the bundle is not yet ready. You need to generate the correct
 entities for the media::
 
-    php app/console sonata:easy-extends:generate SonataMediaBundle
+    php app/console sonata:easy-extends:generate --dest=src SonataMediaBundle
 
 .. note::
 

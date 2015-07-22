@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -10,11 +11,12 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Gaufrette\Filesystem;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Model\MetadataInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilder;
 
 interface MediaProviderInterface
@@ -22,13 +24,11 @@ interface MediaProviderInterface
     /**
      * @param string $name
      * @param array  $format
-     *
-     * @return void
      */
     public function addFormat($name, $format);
 
     /**
-     * return the format settings
+     * return the format settings.
      *
      * @param string $name
      *
@@ -37,29 +37,26 @@ interface MediaProviderInterface
     public function getFormat($name);
 
     /**
-     * return true if the media related to the provider required thumbnails (generation)
+     * return true if the media related to the provider required thumbnails (generation).
      *
-     * @return boolean
+     * @return bool
      */
     public function requireThumbnails();
 
     /**
-     * Generated thumbnails linked to the media, a thumbnail is a format used on the website
+     * Generated thumbnails linked to the media, a thumbnail is a format used on the website.
      *
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function generateThumbnails(MediaInterface $media);
 
     /**
-     * remove all linked thumbnails
+     * remove linked thumbnails.
      *
      * @param MediaInterface $media
-     *
-     * @return void
+     * @param string|array   $formats
      */
-    public function removeThumbnails(MediaInterface $media);
+    public function removeThumbnails(MediaInterface $media, $formats = null);
 
     /**
      * @param MediaInterface $media
@@ -69,7 +66,7 @@ interface MediaProviderInterface
     public function getReferenceFile(MediaInterface $media);
 
     /**
-     * return the correct format name : providerName_format
+     * return the correct format name : providerName_format.
      *
      * @param MediaInterface $media
      * @param string         $format
@@ -79,7 +76,7 @@ interface MediaProviderInterface
     public function getFormatName(MediaInterface $media, $format);
 
     /**
-     * return the reference image of the media, can be the video thumbnail or the original uploaded picture
+     * return the reference image of the media, can be the video thumbnail or the original uploaded picture.
      *
      * @param MediaInterface $media
      *
@@ -88,44 +85,34 @@ interface MediaProviderInterface
     public function getReferenceImage(MediaInterface $media);
 
     /**
-     *
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function preUpdate(MediaInterface $media);
 
     /**
-     *
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function postUpdate(MediaInterface $media);
 
     /**
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function preRemove(MediaInterface $media);
 
     /**
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function postRemove(MediaInterface $media);
 
     /**
-     * build the related create form
+     * build the related create form.
      *
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
     public function buildCreateForm(FormMapper $formMapper);
 
     /**
-     * build the related create form
+     * build the related create form.
      *
      * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
      */
@@ -133,16 +120,11 @@ interface MediaProviderInterface
 
     /**
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function prePersist(MediaInterface $media);
 
     /**
-     *
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function postPersist(MediaInterface $media);
 
@@ -153,7 +135,7 @@ interface MediaProviderInterface
     public function getHelperProperties(MediaInterface $media, $format);
 
     /**
-     * Generate the media path
+     * Generate the media path.
      *
      * @param MediaInterface $media
      *
@@ -162,7 +144,7 @@ interface MediaProviderInterface
     public function generatePath(MediaInterface $media);
 
     /**
-     * Generate the public path
+     * Generate the public path.
      *
      * @param MediaInterface $media
      * @param string         $format
@@ -172,7 +154,7 @@ interface MediaProviderInterface
     public function generatePublicUrl(MediaInterface $media, $format);
 
     /**
-     * Generate the private path
+     * Generate the private path.
      *
      * @param MediaInterface $media
      * @param string         $format
@@ -182,13 +164,11 @@ interface MediaProviderInterface
     public function generatePrivateUrl(MediaInterface $media, $format);
 
     /**
-     *
      * @return array
      */
     public function getFormats();
 
     /**
-     *
      * @param string $name
      */
     public function setName($name);
@@ -199,13 +179,16 @@ interface MediaProviderInterface
     public function getName();
 
     /**
-     *
+     * @return MetadataInterface
+     */
+    public function getProviderMetadata();
+
+    /**
      * @param array $templates
      */
     public function setTemplates(array $templates);
 
     /**
-     *
      * @return array
      */
     public function getTemplates();
@@ -218,7 +201,7 @@ interface MediaProviderInterface
     public function getTemplate($name);
 
     /**
-     * Mode can be x-file
+     * Mode can be x-file.
      *
      * @param MediaInterface $media
      * @param string         $format

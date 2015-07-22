@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -11,22 +12,18 @@
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
-
+use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\BlockBundle\Block\BaseBlockService;
-
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * PageExtension
+ * PageExtension.
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
@@ -89,7 +86,7 @@ class MediaBlockService extends BaseBlockService
             'context'  => false,
             'mediaId'  => null,
             'format'   => false,
-            'template' => 'SonataMediaBundle:Block:block_media.html.twig'
+            'template' => 'SonataMediaBundle:Block:block_media.html.twig',
         ));
     }
 
@@ -98,8 +95,6 @@ class MediaBlockService extends BaseBlockService
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
-        $contextChoices = $this->getContextChoices();
-
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
             $this->load($block);
         }
@@ -109,25 +104,10 @@ class MediaBlockService extends BaseBlockService
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
                 array('title', 'text', array('required' => false)),
-                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
                 array($this->getMediaBuilder($formMapper), null, array()),
-            )
+                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+            ),
         ));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getContextChoices()
-    {
-        $contextChoices = array();
-
-        foreach ($this->getMediaPool()->getContexts() as $name => $context) {
-            $contextChoices[$name] = $name;
-        }
-
-        return $contextChoices;
     }
 
     /**
@@ -139,12 +119,14 @@ class MediaBlockService extends BaseBlockService
     {
         $formatChoices = array();
 
-        if ($media instanceof MediaInterface) {
-            $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
+        if (!$media instanceof MediaInterface) {
+            return $formatChoices;
+        }
 
-            foreach ($formats as $code => $format) {
-                $formatChoices[$code] = $code;
-            }
+        $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
+
+        foreach ($formats as $code => $format) {
+            $formatChoices[$code] = $code;
         }
 
         return $formatChoices;
@@ -164,22 +146,14 @@ class MediaBlockService extends BaseBlockService
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(array(
             'fieldName' => 'media',
-            'type'      => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE
+            'type'      => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE,
         ));
 
-        return $formMapper->create('mediaId', 'sonata_type_model', array(
+        return $formMapper->create('mediaId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
             'class'                    => $this->getMediaAdmin()->getClass(),
-            'model_manager'            => $this->getMediaAdmin()->getModelManager()
+            'model_manager'            => $this->getMediaAdmin()->getModelManager(),
         ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-    {
-
     }
 
     /**
@@ -187,10 +161,20 @@ class MediaBlockService extends BaseBlockService
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
+        // make sure we have a valid format
+        $media = $blockContext->getBlock()->getSetting('mediaId');
+        if ($media instanceof MediaInterface) {
+            $choices = $this->getFormatChoices($media);
+
+            if (!array_key_exists($blockContext->getSetting('format'), $choices)) {
+                $blockContext->setSetting('format', key($choices));
+            }
+        }
+
         return $this->renderResponse($blockContext->getTemplate(), array(
             'media'     => $blockContext->getSetting('mediaId'),
             'block'     => $blockContext->getBlock(),
-            'settings'  => $blockContext->getSettings()
+            'settings'  => $blockContext->getSettings(),
         ), $response);
     }
 
@@ -201,7 +185,7 @@ class MediaBlockService extends BaseBlockService
     {
         $media = $block->getSetting('mediaId', null);
 
-        if ($media) {
+        if (is_int($media)) {
             $media = $this->mediaManager->findOneBy(array('id' => $media));
         }
 

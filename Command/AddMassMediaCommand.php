@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\Command;
 
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
 
 class AddMassMediaCommand extends BaseCommand
 {
@@ -28,7 +28,7 @@ class AddMassMediaCommand extends BaseCommand
             ->setDescription('Add medias in mass into the database')
             ->setDefinition(array(
                 new InputOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse'),
-                new InputOption('delimeter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ','),
+                new InputOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ','),
                 new InputOption('enclosure', null, InputOption::VALUE_OPTIONAL, 'Set the field enclosure character (one character only).', '"'),
                 new InputOption('escape', null, InputOption::VALUE_OPTIONAL, 'Set the escape character (one character only). Defaults as a backslash', '\\'),
             ));
@@ -43,12 +43,12 @@ class AddMassMediaCommand extends BaseCommand
         $imported = -1;
 
         while (!feof($fp)) {
-            $data = fgetcsv($fp, null, $input->getOption('delimeter'), $input->getOption('enclosure'), $input->getOption('escape'));
+            $data = fgetcsv($fp, null, $input->getOption('delimiter'), $input->getOption('enclosure'), $input->getOption('escape'));
 
             if ($imported === -1) {
                 $this->setters = $data;
 
-                $imported++;
+                ++$imported;
                 continue;
             }
 
@@ -56,13 +56,13 @@ class AddMassMediaCommand extends BaseCommand
                 continue;
             }
 
-            $imported++;
+            ++$imported;
 
             $this->insertMedia($data, $output);
             $this->optimize();
         }
 
-        $output->writeln("Done!");
+        $output->writeln('Done!');
     }
 
     /**

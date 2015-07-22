@@ -11,11 +11,10 @@
 
 namespace Sonata\MediaBundle\Templating\Helper;
 
-use Symfony\Component\Templating\Helper\Helper;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Templating\Helper\Helper;
 
 /**
  * MediaHelper manages action inclusions.
@@ -47,7 +46,7 @@ class MediaHelper extends Helper
     }
 
     /**
-     * Returns the provider view for the provided media
+     * Returns the provider view for the provided media.
      *
      * @param MediaInterface $media
      * @param string         $format
@@ -85,7 +84,7 @@ class MediaHelper extends Helper
     }
 
     /**
-     * Returns the thumbnail for the provided media
+     * Returns the thumbnail for the provided media.
      *
      * @param MediaInterface $media
      * @param string         $format
@@ -95,27 +94,27 @@ class MediaHelper extends Helper
      */
     public function thumbnail($media, $format, $options = array())
     {
-         if (!$media) {
-             return '';
-         }
+        if (!$media) {
+            return '';
+        }
 
-         $provider = $this->getProvider($media);
+        $provider = $this->getProvider($media);
 
-         $format = $provider->getFormatName($media, $format);
-         $formatDefinition = $provider->getFormat($format);
+        $format = $provider->getFormatName($media, $format);
+        $formatDefinition = $provider->getFormat($format);
 
-         // build option
-         $options = array_merge(array(
-             'title' => $media->getName(),
-             'width' => $formatDefinition['width'],
-         ), $options);
+        // build option
+        $options = array_merge(array(
+            'title' => $media->getName(),
+            'width' => $formatDefinition['width'],
+        ), $options);
 
-         $options['src'] = $provider->generatePublicUrl($media, $format);
+        $options['src'] = $provider->generatePublicUrl($media, $format);
 
-         return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), array(
-             'media'    => $media,
-             'options'  => $options,
-         ));
+        return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), array(
+            'media'    => $media,
+            'options'  => $options,
+        ));
     }
 
     /**
@@ -127,7 +126,7 @@ class MediaHelper extends Helper
     public function path($media, $format)
     {
         if (!$media) {
-             return '';
+            return '';
         }
 
         $provider = $this->getProvider($media);

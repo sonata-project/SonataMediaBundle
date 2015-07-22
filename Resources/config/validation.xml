@@ -10,7 +10,7 @@
                 <value>isStatusErroneous</value>
             </option>
         </constraint>
-        <constraint name="Sonata\AdminBundle\Validator\Constraints\InlineConstraint">
+        <constraint name="Sonata\CoreBundle\Validator\Constraints\InlineConstraint">
             <option name="service">sonata.media.pool</option>
             <option name="method">validate</option>
         </constraint>
@@ -33,7 +33,15 @@
         <property name="galleryHasMedias">
             <constraint name="Valid" />
         </property>
+        <property name="context">
+            <constraint name="NotNull" />
+            <constraint name="NotBlank" />
+        </property>
         <property name="name">
+            <constraint name="NotNull" />
+            <constraint name="NotBlank" />
+        </property>
+        <property name="defaultFormat">
             <constraint name="NotNull" />
             <constraint name="NotBlank" />
         </property>

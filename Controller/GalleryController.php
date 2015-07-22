@@ -22,7 +22,7 @@ class GalleryController extends Controller
     public function indexAction()
     {
         $galleries = $this->get('sonata.media.manager.gallery')->findBy(array(
-            'enabled' => true
+            'enabled' => true,
         ));
 
         return $this->render('SonataMediaBundle:Gallery:index.html.twig', array(
@@ -34,13 +34,14 @@ class GalleryController extends Controller
      * @param string $id
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function viewAction($id)
     {
         $gallery = $this->get('sonata.media.manager.gallery')->findOneBy(array(
             'id'      => $id,
-            'enabled' => true
+            'enabled' => true,
         ));
 
         if (!$gallery) {

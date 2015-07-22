@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="sonata.media.api.form.type.doctrine.media" class="Sonata\CoreBundle\Form\Type\DoctrineORMSerializationType">
+            <tag name="form.type" alias="sonata_media_api_form_doctrine_media" />
+
+            <argument type="service" id="jms_serializer.metadata_factory" />
+            <argument type="service" id="doctrine" />
+            <argument>sonata_media_api_form_doctrine_media</argument>
+            <argument>%sonata.media.admin.media.entity%</argument>
+            <argument>sonata_api_write</argument>
+        </service>
+
+        <service id="sonata.media.api.form.type.media" class="Sonata\MediaBundle\Form\Type\ApiMediaType">
+            <tag name="form.type" alias="sonata_media_api_form_media" />
+
+            <argument type="service" id="sonata.media.pool" />
+            <argument>%sonata.media.admin.media.entity%</argument>
+        </service>
+
+        <service id="sonata.media.api.form.type.gallery" class="Sonata\CoreBundle\Form\Type\DoctrineORMSerializationType">
+            <tag name="form.type" alias="sonata_media_api_form_gallery" />
+
+            <argument type="service" id="jms_serializer.metadata_factory" />
+            <argument type="service" id="doctrine" />
+            <argument>sonata_media_api_form_gallery</argument>
+            <argument>%sonata.media.admin.gallery.entity%</argument>
+            <argument>sonata_api_write</argument>
+        </service>
+
+        <service id="sonata.media.api.form.type.gallery_has_media" class="Sonata\CoreBundle\Form\Type\DoctrineORMSerializationType">
+            <tag name="form.type" alias="sonata_media_api_form_gallery_has_media" />
+
+            <argument type="service" id="jms_serializer.metadata_factory" />
+            <argument type="service" id="doctrine" />
+            <argument>sonata_media_api_form_gallery_has_media</argument>
+            <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
+            <argument>sonata_api_write</argument>
+        </service>
+
+    </services>
+</container>

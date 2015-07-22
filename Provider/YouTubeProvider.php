@@ -11,18 +11,18 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Buzz\Browser;
 use Gaufrette\Filesystem;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Buzz\Browser;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class YouTubeProvider extends BaseVideoProvider
 {
-
     /* @var boolean */
     protected $html5;
 
@@ -34,12 +34,20 @@ class YouTubeProvider extends BaseVideoProvider
      * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface      $thumbnail
      * @param \Buzz\Browser                                         $browser
      * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
-     * @param boolean                                               $html5
+     * @param bool                                                  $html5
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null, $html5 = false)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $browser, $metadata);
         $this->html5 = $html5;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviderMetadata()
+    {
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-youtube'));
     }
 
     /**
@@ -141,13 +149,13 @@ class YouTubeProvider extends BaseVideoProvider
             // Values: 1. Default is based on user preference. Setting to 1 will cause closed captions
             // to be shown by default, even if the user has turned captions off.
             'cc_load_policy' => 1,
-            
+
             // Values: 'window' or 'opaque' or 'transparent'.
             // When wmode=window, the Flash movie is not rendered in the page.
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
-            'wmode' => 'window'
-            
+            'wmode' => 'window',
+
         );
 
         $default_player_parameters = array(
@@ -170,8 +178,8 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=window, the Flash movie is not rendered in the page.
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
-            'wmode' => $default_player_url_parameters['wmode']
-            
+            'wmode' => $default_player_url_parameters['wmode'],
+
         );
 
         $player_url_parameters = array_merge($default_player_url_parameters, isset($options['player_url_parameters']) ? $options['player_url_parameters'] : array());
@@ -179,14 +187,14 @@ class YouTubeProvider extends BaseVideoProvider
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $player_parameters = array_merge($default_player_parameters, isset($options['player_parameters']) ? $options['player_parameters'] : array(), array(
-            'width' => $box->getWidth(),
-            'height' => $box->getHeight()
+            'width'  => $box->getWidth(),
+            'height' => $box->getHeight(),
         ));
 
         $params = array(
-            'html5' => $options['html5'],
+            'html5'                 => $options['html5'],
             'player_url_parameters' => http_build_query($player_url_parameters),
-            'player_parameters' => $player_parameters
+            'player_parameters'     => $player_parameters,
         );
 
         return $params;
@@ -201,8 +209,12 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/(?<=v(\=|\/))([-a-zA-Z0-9_]+)|(?<=youtu\.be\/)([-a-zA-Z0-9_]+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[2]);
+        if (strlen($media->getBinaryContent()) === 11) {
+            return;
+        }
+
+        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\#\?&\"'>]+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[1]);
         }
     }
 
@@ -259,5 +271,4 @@ class YouTubeProvider extends BaseVideoProvider
     {
         return new RedirectResponse(sprintf('http://www.youtube.com/watch?v=%s', $media->getProviderReference()), 302, $headers);
     }
-
 }

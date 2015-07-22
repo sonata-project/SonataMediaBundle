@@ -11,17 +11,16 @@
 
 namespace Sonata\MediaBundle\Form\Type;
 
+use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 
 class MediaType extends AbstractType
 {
@@ -51,8 +50,8 @@ class MediaType extends AbstractType
             'new_on_update' => $options['new_on_update'],
         )));
 
-        $builder->addEventListener(FormEvents::BIND, function(FormEvent $event) {
-            if ($event->getForm()->get('unlink')->getData()) {
+        $builder->addEventListener(FormEvents::BIND, function (FormEvent $event) {
+            if ($event->getForm()->has('unlink') && $event->getForm()->get('unlink')->getData()) {
                 $event->setData(null);
             }
         });
@@ -62,7 +61,7 @@ class MediaType extends AbstractType
         $builder->add('unlink', 'checkbox', array(
             'mapped'   => false,
             'data'     => false,
-            'required' => false
+            'required' => false,
         ));
     }
 
@@ -77,8 +76,18 @@ class MediaType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Remove it when bumping requirements to Symfony >=2.7
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class'    => $this->class,

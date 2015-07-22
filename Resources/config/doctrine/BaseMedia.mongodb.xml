@@ -7,31 +7,32 @@
 
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseMedia" >
 
-        <field name="name"              fieldName="name"                type="string" />
-        <field name="description"       fieldName="description"         type="string" />
-        <field name="enabled"           fieldName="enabled"             type="boolean" />
+        <field name="name"               fieldName="name"                type="string" />
+        <field name="description"        fieldName="description"         type="string" />
+        <field name="enabled"            fieldName="enabled"             type="boolean" />
 
-        <field name="providerName"      fieldName="providerName"        type="string" />
-        <field name="providerStatus"    fieldName="providerStatus"      type="int" />
-        <field name="providerReference" fieldName="providerReference"   type="string" />
-        <field name="providerMetadata"  fieldName="providerMetadata"    type="hash" />
+        <field name="providerName"       fieldName="providerName"        type="string" />
+        <field name="providerStatus"     fieldName="providerStatus"      type="int" />
+        <field name="providerReference"  fieldName="providerReference"   type="string" />
+        <field name="providerMetadata"   fieldName="providerMetadata"    type="hash" />
 
-        <field name="width"             fieldName="width"               type="int" />
-        <field name="height"            fieldName="height"              type="int" />
-        <field name="length"            fieldName="length"              type="float" />
-        <field name="contentType"       fieldName="contentType"         type="string" />
-        <field name="size"              fieldName="size"                type="int" />
+        <field name="width"              fieldName="width"               type="int" />
+        <field name="height"             fieldName="height"              type="int" />
+        <field name="length"             fieldName="length"              type="float" />
+        <field name="contentType"        fieldName="contentType"         type="string" />
+        <field name="size"               fieldName="size"                type="int" />
 
-        <field name="copyright"         fieldName="copyright"           type="string" />
-        <field name="authorName"        fieldName="authorName"          type="string" />
-        <field name="context"           fieldName="context"             type="string" />
+        <field name="copyright"          fieldName="copyright"           type="string" />
+        <field name="authorName"         fieldName="authorName"          type="string" />
+        <field name="context"            fieldName="context"             type="string" />
 
-        <field name="cdnIsFlushable"    fieldName="cdnIsFlushable"      type="boolean" />
-        <field name="cdnFlushAt"        fieldName="cdnFlushAt"          type="date" />
-        <field name="cdnStatus"         fieldName="cdnStatus"           type="int" />
+        <field name="cdnIsFlushable"     fieldName="cdnIsFlushable"      type="boolean" />
+        <field name="cdnFlushIdentifier" fieldName="cdnFlushIdentifier"  type="string" />
+        <field name="cdnFlushAt"         fieldName="cdnFlushAt"          type="date" />
+        <field name="cdnStatus"          fieldName="cdnStatus"           type="int" />
 
-        <field name="updatedAt"         fieldName="updatedAt"     type="date" />
-        <field name="createdAt"         fieldName="createdAt"     type="date" />
+        <field name="updatedAt"          fieldName="updatedAt"     type="date" />
+        <field name="createdAt"          fieldName="createdAt"     type="date" />
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist" />

@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Provider\VimeoProvider;
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Buzz\Browser;
 use Buzz\Message\Response;
 use Imagine\Image\Box;
+use Sonata\MediaBundle\Provider\VimeoProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +54,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('Blinky™');
         $media->setProviderName('vimeo');
         $media->setProviderReference('21216091');
@@ -79,7 +79,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('Blinky™');
         $media->setProviderName('vimeo');
         $media->setProviderReference('21216091');
@@ -111,7 +111,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1023456);
 
@@ -135,7 +135,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent('http://vimeo.com/012341231');
         $media->setId(1023456);
 
@@ -175,7 +175,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('admin', array('width' => 100));
-        $media = new Media;
+        $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
@@ -187,6 +187,5 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $properties);
         $this->assertEquals(100, $properties['height']);
         $this->assertEquals(100, $properties['width']);
-
     }
 }

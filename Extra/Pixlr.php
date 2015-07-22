@@ -11,16 +11,16 @@
 
 namespace Sonata\MediaBundle\Extra;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 class Pixlr
 {
@@ -72,7 +72,7 @@ class Pixlr
      */
     private function generateHash(MediaInterface $media)
     {
-        return sha1($media->getId() . $media->getCreatedAt()->format('u') . $this->secret);
+        return sha1($media->getId().$media->getCreatedAt()->format('u').$this->secret);
     }
 
     /**
@@ -98,8 +98,6 @@ class Pixlr
      *
      * @param string                                   $hash
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return void
      */
     private function checkMedia($hash, MediaInterface $media)
     {
@@ -175,7 +173,7 @@ class Pixlr
 
         $this->checkMedia($hash, $media);
 
-        return new RedirectResponse($this->router->generate('admin_sonata_media_media_edit', array('id' => $media->getId())));
+        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_exit.html.twig'));
     }
 
     /**
@@ -193,8 +191,8 @@ class Pixlr
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
-        /**
-         * Pirlx send back the new image as an url, add some security check before downloading the file
+        /*
+         * Pixlr send back the new image as an url, add some security check before downloading the file
          */
         if (!preg_match($this->allowEreg, $request->get('image'), $matches)) {
             throw new NotFoundHttpException(sprintf('Invalid image host : %s', $request->get('image')));
@@ -208,7 +206,7 @@ class Pixlr
 
         $this->mediaManager->save($media);
 
-        return new RedirectResponse($this->router->generate('admin_sonata_media_media_show', array('id' => $media->getId())));
+        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_exit.html.twig'));
     }
 
     /**
@@ -241,7 +239,8 @@ class Pixlr
         }
 
         return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_editor.html.twig', array(
-            'media' => $media
+            'media'      => $media,
+            'admin_pool' => $this->container->get('sonata.admin.pool'),
         )));
     }
 }

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\CoreBundle\Model\BasePHPCRManager;
@@ -39,5 +40,13 @@ class MediaManager extends BasePHPCRManager
             // BC compatibility with previous signature
             parent::save($entity, true);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
+    {
+        throw new \RuntimeException('Not Implemented yet');
     }
 }

@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<doctrine-phpcr-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
-                        http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping
+    https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd"
+    >
 
     <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseMedia" referenceable="true" >
 
-        <uuid fieldName="uuid" />
+        <uuid name="uuid" />
 
         <field name="name"               type="string" />
-        <field name="description"        type="string" />
+        <field name="description"        type="string" nullable="true"/>
         <field name="enabled"            type="boolean" />
 
         <field name="providerName"       type="string" />
@@ -20,17 +20,18 @@
 
         <field name="width"              type="long" />
         <field name="height"             type="long" />
-        <field name="length"             type="double" />
+        <field name="length"             type="double" nullable="true" />
         <field name="contentType"        type="string" />
-        <field name="size"               type="long" />
+        <field name="size"               type="long" nullable="true"/>
 
-        <field name="copyright"          type="string" />
-        <field name="authorName"         type="string" />
+        <field name="copyright"          type="string" nullable="true" />
+        <field name="authorName"         type="string" nullable="true" />
         <field name="context"            type="string" />
 
-        <field name="cdnIsFlushable"     type="boolean" />
-        <field name="cdnFlushAt"         type="date" />
-        <field name="cdnStatus"          type="long" />
+        <field name="cdnIsFlushable"     type="boolean" nullable="true" />
+        <field name="cdnFlushIdentifier" type="string"  nullable="true" />
+        <field name="cdnFlushAt"         type="date" nullable="true" />
+        <field name="cdnStatus"          type="long" nullable="true" />
 
         <field name="updatedAt"          type="date" />
         <field name="createdAt"          type="date" />
@@ -42,4 +43,4 @@
 
     </mapped-superclass>
 
-</doctrine-phpcr-mapping>
+</doctrine-mapping>

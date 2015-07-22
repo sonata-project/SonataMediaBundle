@@ -12,12 +12,13 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
-use Sonata\MediaBundle\Resizer\ResizerInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\CoreBundle\Model\Metadata;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
-use Sonata\AdminBundle\Validator\ErrorElement;
 
 abstract class BaseProvider implements MediaProviderInterface
 {
@@ -56,8 +57,6 @@ abstract class BaseProvider implements MediaProviderInterface
 
     /**
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return void
      */
     abstract protected function doTransform(MediaInterface $media);
 
@@ -71,6 +70,28 @@ abstract class BaseProvider implements MediaProviderInterface
         }
 
         $this->doTransform($media);
+        $this->flushCdn($media);
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     */
+    public function flushCdn(MediaInterface $media)
+    {
+        if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
+            $flushPaths = array();
+            foreach ($this->getFormats() as $format => $settings) {
+                if ('admin' === $format || substr($format, 0, strlen($media->getContext())) === $media->getContext()) {
+                    $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
+                }
+            }
+            if (!empty($flushPaths)) {
+                $cdnFlushIdentifier = $this->getCdn()->flushPaths($flushPaths);
+                $media->setCdnFlushIdentifier($cdnFlushIdentifier);
+                $media->setCdnIsFlushable(true);
+                $media->setCdnStatus(CDNInterface::STATUS_TO_FLUSH);
+            }
+        }
     }
 
     /**
@@ -108,9 +129,9 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function removeThumbnails(MediaInterface $media)
+    public function removeThumbnails(MediaInterface $media, $formats = null)
     {
-        $this->thumbnail->delete($this, $media);
+        $this->thumbnail->delete($this, $media, $formats);
     }
 
     /**
@@ -137,15 +158,15 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function preRemove(MediaInterface $media)
+    public function getProviderMetadata()
     {
-
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-file'));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function postRemove(MediaInterface $media)
+    public function preRemove(MediaInterface $media)
     {
         $path = $this->getReferenceImage($media);
 
@@ -156,6 +177,13 @@ abstract class BaseProvider implements MediaProviderInterface
         if ($this->requireThumbnails()) {
             $this->thumbnail->delete($this, $media);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postRemove(MediaInterface $media)
+    {
     }
 
     /**
@@ -199,7 +227,6 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     *
      * @return array
      */
     public function getTemplates()
@@ -277,6 +304,5 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
-
     }
 }

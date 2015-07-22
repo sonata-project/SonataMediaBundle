@@ -1,0 +1,59 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'SonataAdminBundle:CRUD:base_list_flat_inner_row.html.twig' %}
+
+{% block row %}
+
+    <div class="col-sm-12">
+        <div class="pull-left">
+            {% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
+                <a href="{{ admin.generateUrl('edit', {'id' : object|sonata_urlsafeid }) }}" style="float: left; margin-right: 6px;">{% thumbnail object, 'admin' with {'width': 90} %}</a>
+            {% else %}
+                {% thumbnail object, 'admin' with {'height': 90} %}
+            {% endif %}
+        </div>
+        <span class="badge pull-right">{{ object.providerName|trans({}, 'SonataMediaBundle') }}</span>
+        {% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
+            <a href="{{ admin.generateUrl('edit', {'id' : object|sonata_urlsafeid }) }}"><strong>{{ object.name }}</strong></a>
+        {% else %}
+            <strong>{{ object.name }}</strong>
+        {% endif %}
+
+
+        <br />
+        {% if object.width %} {{ object.width }}{% if object.height %}x{{ object.height }}{% endif %}px{% endif %}
+        {% if object.length > 0 %}
+            ({{ object.length }})
+        {% endif %}
+
+        <br />
+
+        {% if object.authorname is not empty %}
+           {{ object.authorname }}
+        {% endif %}
+
+        {% if object.copyright is not empty and object.authorname is not empty %}
+            ~
+        {% endif %}
+
+        {% if object.copyright is not empty %}
+            &copy; {{ object.copyright }}
+        {% endif  %}
+
+        {#{% set enabled_field_description = admin.getListFieldDescription('enabled') %}#}
+        {#{% set url = path('sonata_admin_set_object_field_value', { 'context': 'list', 'field': enabled_field_description.name, 'objectId': admin.id(object), 'code': admin.code(object) })  %}#}
+        {#<span {% block field_span_attributes %}class="x-editable" data-type="{{ enabled_field_description.type|sonata_xeditable_type }}" data-value="{{ object.enabled }}" data-title="{{ enabled_field_description.label|trans({}, enabled_field_description.translationDomain) }}" data-pk="{{ admin.id(object) }}" data-url="{{ url }}" {% endblock %}>#}
+            {#{{ block('field') }}#}
+        {#</span>#}
+
+    </div>
+{% endblock %}

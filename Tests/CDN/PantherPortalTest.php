@@ -17,8 +17,8 @@ class PantherPortalTest extends \PHPUnit_Framework_TestCase
 {
     public function testPortal()
     {
-        $client = $this->getMock('\SoapClient', array('flush'), array(), '', false);
-        $client->expects($this->exactly(3))->method('flush')->will($this->returnValue("Flush successfully submitted."));
+        $client = $this->getMock('ClientSpy', array('flush'), array(), '', false);
+        $client->expects($this->exactly(3))->method('flush')->will($this->returnValue('Flush successfully submitted.'));
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);
@@ -36,12 +36,19 @@ class PantherPortalTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\RuntimeException', 'Unable to flush : Failed!!');
 
-        $client = $this->getMock('\SoapClient', array('flush'), array(), '', false);
+        $client = $this->getMock('ClientSpy', array('flush'), array(), '', false);
         $client->expects($this->exactly(1))->method('flush')->will($this->returnValue('Failed!!'));
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);
 
         $panther->flushPaths(array('boom'));
+    }
+}
+
+class ClientSpy
+{
+    public function flush()
+    {
     }
 }

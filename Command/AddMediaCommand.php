@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Command;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class AddMediaCommand extends BaseCommand
 {
@@ -49,7 +49,7 @@ class AddMediaCommand extends BaseCommand
         $context  = $input->getArgument('context');
         $binaryContent = $input->getArgument('binaryContent');
 
-        $output->writeln(sprintf("Add a new media - context: %s, provider: %s, content: %s", $context, $provider, $binaryContent));
+        $output->writeln(sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));
 
         $media = $this->getMediaManager()->create();
         $media->setBinaryContent($binaryContent);
@@ -74,6 +74,6 @@ class AddMediaCommand extends BaseCommand
 
         $this->getMediaManager()->save($media, $context, $provider);
 
-        $output->writeln("done!");
+        $output->writeln('done!');
     }
 }
