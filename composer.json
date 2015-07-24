@@ -24,7 +24,7 @@
         "sonata-project/doctrine-extensions": "~1.0",
         "knplabs/gaufrette": ">=0.1.4",
         "imagine/Imagine": "~0.3",
-        "kriswallsmith/buzz": "0.*",
+        "kriswallsmith/buzz": "~0.1",
         "friendsofsymfony/rest-bundle": "~1.1",
         "jms/serializer-bundle": "~0.11|~1.0",
         "nelmio/api-doc-bundle": "~2.4",
