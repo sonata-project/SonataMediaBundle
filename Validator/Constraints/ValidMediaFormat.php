@@ -21,7 +21,7 @@ class ValidMediaFormat extends Constraint
     public $message = 'The format is not valid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validatedBy()
     {
@@ -29,7 +29,7 @@ class ValidMediaFormat extends Constraint
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTargets()
     {
