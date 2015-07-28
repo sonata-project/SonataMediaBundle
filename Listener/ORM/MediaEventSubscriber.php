@@ -49,7 +49,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getMedia(EventArgs $args)
     {

@@ -209,7 +209,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createFile($key, Filesystem $filesystem)
     {
@@ -217,7 +217,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createFileStream($key, Filesystem $filesystem)
     {
@@ -225,7 +225,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function listDirectory($directory = '')
     {
@@ -233,7 +233,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isDirectory($key)
     {

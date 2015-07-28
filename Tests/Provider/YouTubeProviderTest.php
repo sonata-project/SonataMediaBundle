@@ -71,7 +71,7 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnail()
     {
-        $response = $this->getMock('Buzz\Message\MessageInterface');
+        $response = $this->getMock('Buzz\Message\AbstractMessage');
         $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
 
         $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
