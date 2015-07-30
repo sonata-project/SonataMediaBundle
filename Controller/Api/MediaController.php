@@ -266,6 +266,8 @@ class MediaController
             $provider = $this->mediaPool->getProvider($medium->getProviderName());
         } catch (\RuntimeException $ex) {
             throw new NotFoundHttpException($ex->getMessage(), $ex);
+        } catch (\InvalidArgumentException $ex) {
+            throw new NotFoundHttpException($ex->getMessage(), $ex);
         }
 
         return $this->handleWriteMedium($request, $medium, $provider);
