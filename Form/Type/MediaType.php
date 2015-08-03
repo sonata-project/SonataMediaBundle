@@ -50,7 +50,7 @@ class MediaType extends AbstractType
             'new_on_update' => $options['new_on_update'],
         )));
 
-        $builder->addEventListener(FormEvents::BIND, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
             if ($event->getForm()->has('unlink') && $event->getForm()->get('unlink')->getData()) {
                 $event->setData(null);
             }
@@ -77,11 +77,21 @@ class MediaType extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @deprecated Remove it when bumping requirements to Symfony >=2.7
+     * @deprecated Remove it when bumping requirements to Symfony >=2.7, use MediaType::configureOptions() instead
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $this->configureOptions($resolver);
+        if ($resolver instanceof OptionsResolver) {
+            $this->configureOptions($resolver);
+        } else {
+            $resolver->setDefaults(array(
+                'data_class' => $this->class,
+                'provider' => null,
+                'context' => null,
+                'empty_on_new' => true,
+                'new_on_update' => true,
+            ));
+        }
     }
 
     /**
@@ -90,10 +100,10 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'    => $this->class,
-            'provider'      => null,
-            'context'       => null,
-            'empty_on_new'  => true,
+            'data_class' => $this->class,
+            'provider' => null,
+            'context' => null,
+            'empty_on_new' => true,
             'new_on_update' => true,
         ));
     }
