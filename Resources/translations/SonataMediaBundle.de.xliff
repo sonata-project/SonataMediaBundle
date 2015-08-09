@@ -52,7 +52,7 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_show">
                 <source>breadcrumb.link_media_show</source>
-                <target>breadcrumb.link_media_show</target>
+                <target>Anzeigen</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
@@ -104,7 +104,7 @@
             </trans-unit>
             <trans-unit id="filter.label_author_name">
                 <source>filter.label_author_name</source>
-                <target>Author</target>
+                <target>Autor</target>
             </trans-unit>
             <trans-unit id="filter.label_width">
                 <source>filter.label_width</source>
@@ -144,7 +144,7 @@
             </trans-unit>
             <trans-unit id="form.label_gallery_has_medias">
                 <source>form.label_gallery_has_medias</source>
-                <target>Medien</target>
+                <target>Medium</target>
             </trans-unit>
             <trans-unit id="form.label_author_name">
                 <source>form.label_author_name</source>
@@ -260,19 +260,34 @@
             </trans-unit>
             <trans-unit id="label.edit_with_pixlr">
                 <source>label.edit_with_pixlr</source>
-                <target>label.edit_with_pixlr</target>
+                <target>Mit Pixlr bearbeiten</target>
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
-                <target>label.pixlr_warning</target>
+                <target>
+                    <![CDATA[
+                        <span class="label label-warning">Achtung</span> Sie bearbeiten das Medium auf einen <strong>externen Server</strong>. <br />
+                        Verwenden Sie diesen Service nicht, wenn Sie mit geschützten Medien arbeiten.
+                    ]]>
+                </target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
-                <target>label.pixlr_express_editor</target>
+                <target>
+                    <![CDATA[
+                        <strong style="color: white">Express Editor</strong> <br />
+                        Einfacher Editor zur schnellen Bearbeitung
+                    ]]>
+                </target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
-                <target>label.pixlr_advanced_editor</target>
+                <target>
+                    <![CDATA[
+                        <strong>Pixlr Erweiterter Editor</strong> <br />
+                        Nur für erfahrende Anwender
+                    ]]>
+                </target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>
@@ -292,7 +307,7 @@
             </trans-unit>
             <trans-unit id="list.label_author_name">
                 <source>list.label_author_name</source>
-                <target>list.label_author_name</target>
+                <target>Autor</target>
             </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
@@ -312,7 +327,7 @@
             </trans-unit>
             <trans-unit id="list.label_author">
                 <source>list.label_author</source>
-                <target>Author</target>
+                <target>Autor</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
@@ -360,19 +375,19 @@
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>link_media</target>
+                <target>Neues Medium</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>no_linked_media</target>
+                <target>Kein Medium</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
-                <target>sonata_media_gallery_index</target>
+                <target>Galerie</target>
             </trans-unit>
             <trans-unit id="sonata_template_box_media_gallery_block">
                 <source>sonata_template_box_media_gallery_block</source>
-                <target>This is the gallery media block. Feel free to override it.</target>
+                <target>as ist ein Galerie Media Block den Sie überschreiben können.</target>
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
