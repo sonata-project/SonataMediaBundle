@@ -120,6 +120,12 @@ Doctrine PHPCR:
         cdn:
             server:
                 path: /uploads/media # http://media.sonata-project.org/
+                
+                # ensure the path stated for CDN is the actual route of your desired 
+                # upload directory
+                # (eg. SymSon/web/uploads/media ) would equal to http://localhost/symson/web/uploads/media 
+                # where leaving it as /uploads/media/ would point at http://localhost/uploads/media causing an error
+                # in app_dev or a none loading image in prod env.
 
         filesystem:
             local:
