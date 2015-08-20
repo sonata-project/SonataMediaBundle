@@ -13,9 +13,10 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\CoreBundle\Model\Metadata;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\Extra\ApiMediaFile;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -23,7 +24,9 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -115,6 +118,10 @@ class FileProvider extends BaseProvider
     public function buildMediaType(FormBuilder $formBuilder)
     {
         $formBuilder->add('binaryContent', 'file');
+
+        if ($formBuilder->getOption('context') == 'api') {
+            $formBuilder->add('contentType');
+        }
     }
 
     /**
@@ -129,6 +136,8 @@ class FileProvider extends BaseProvider
         $this->setFileContents($media);
 
         $this->generateThumbnails($media);
+
+        $media->resetBinaryContent();
     }
 
     /**
@@ -142,12 +151,16 @@ class FileProvider extends BaseProvider
 
         // Delete the current file from the FS
         $oldMedia = clone $media;
-        $oldMedia->setProviderReference($media->getPreviousProviderReference());
+        // if no previous reference is provided, it prevents
+        // Filesystem from trying to remove a directory
+        if ($media->getPreviousProviderReference() !== null) {
+            $oldMedia->setProviderReference($media->getPreviousProviderReference());
 
-        $path = $this->getReferenceImage($oldMedia);
+            $path = $this->getReferenceImage($oldMedia);
 
-        if ($this->getFilesystem()->has($path)) {
-            $this->getFilesystem()->delete($path);
+            if ($this->getFilesystem()->has($path)) {
+                $this->getFilesystem()->delete($path);
+            }
         }
 
         $this->fixBinaryContent($media);
@@ -155,31 +168,33 @@ class FileProvider extends BaseProvider
         $this->setFileContents($media);
 
         $this->generateThumbnails($media);
+
+        $media->resetBinaryContent();
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
-        if ($media->getBinaryContent() === null) {
+        if ($media->getBinaryContent() === null || $media->getBinaryContent() instanceof File) {
+            return;
+        }
+
+        if ($media->getBinaryContent() instanceof Request) {
+            $this->generateBinaryFromRequest($media);
+            $this->updateMetadata($media);
+
             return;
         }
 
         // if the binary content is a filename => convert to a valid File
-        if (!$media->getBinaryContent() instanceof File) {
-            if (!is_file($media->getBinaryContent())) {
-                throw new \RuntimeException('The file does not exist : '.$media->getBinaryContent());
-            }
-
-            $binaryContent = new File($media->getBinaryContent());
-
-            $media->setBinaryContent($binaryContent);
+        if (!is_file($media->getBinaryContent())) {
+            throw new \RuntimeException('The file does not exist : '.$media->getBinaryContent());
         }
+
+        $binaryContent = new File($media->getBinaryContent());
+        $media->setBinaryContent($binaryContent);
     }
 
     /**
@@ -212,11 +227,13 @@ class FileProvider extends BaseProvider
         $this->fixFilename($media);
 
         // this is the name used to store the file
-        if (!$media->getProviderReference()) {
+        if (!$media->getProviderReference() ||
+            $media->getProviderReference() === MediaInterface::MISSING_BINARY_REFERENCE
+        ) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
 
-        if ($media->getBinaryContent()) {
+        if ($media->getBinaryContent() instanceof File) {
             $media->setContentType($media->getBinaryContent()->getMimeType());
             $media->setSize($media->getBinaryContent()->getSize());
         }
@@ -229,10 +246,14 @@ class FileProvider extends BaseProvider
      */
     public function updateMetadata(MediaInterface $media, $force = true)
     {
-        // this is now optimized at all!!!
-        $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
-        $fileObject = new \SplFileObject($path, 'w');
-        $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+            // this is now optimized at all!!!
+            $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
+            $fileObject = new \SplFileObject($path, 'w');
+            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+        } else {
+            $fileObject = $media->getBinaryContent();
+        }
 
         $media->setSize($fileObject->getSize());
     }
@@ -285,13 +306,19 @@ class FileProvider extends BaseProvider
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
         $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
+        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
 
-        if (!$contents) {
-            $contents = $media->getBinaryContent()->getRealPath();
+        if ($contents) {
+            $file->setContent($contents, $metadata);
+
+            return;
         }
 
-        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
-        $file->setContent(file_get_contents($contents), $metadata);
+        if ($media->getBinaryContent() instanceof File) {
+            $file->setContent(file_get_contents($media->getBinaryContent()->getRealPath()), $metadata);
+
+            return;
+        }
     }
 
     /**
@@ -301,7 +328,17 @@ class FileProvider extends BaseProvider
      */
     protected function generateReferenceName(MediaInterface $media)
     {
-        return sha1($media->getName().rand(11111, 99999)).'.'.$media->getBinaryContent()->guessExtension();
+        return $this->generateMediaUniqId($media).'.'.$media->getBinaryContent()->guessExtension();
+    }
+
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
+     * @return string
+     */
+    protected function generateMediaUniqId(MediaInterface $media)
+    {
+        return sha1($media->getName().uniqid().rand(11111, 99999));
     }
 
     /**
@@ -363,15 +400,59 @@ class FileProvider extends BaseProvider
         if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
             $errorElement
                 ->with('binaryContent')
-                    ->addViolation('Invalid extensions')
+                ->addViolation('Invalid extensions')
                 ->end();
         }
 
         if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
-                    ->addViolation('Invalid mime type : '.$media->getBinaryContent()->getMimeType())
+                    ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
                 ->end();
         }
+    }
+
+    /**
+     * Set media binary content according to request content.
+     *
+     * @param MediaInterface $media
+     */
+    protected function generateBinaryFromRequest(MediaInterface $media)
+    {
+        if (php_sapi_name() === 'cli') {
+            throw new \RuntimeException('The current process cannot be executed in cli environment');
+        }
+
+        if (!$media->getContentType()) {
+            throw new \RuntimeException(
+                'You must provide the content type value for your media before setting the binary content'
+            );
+        }
+
+        $request = $media->getBinaryContent();
+
+        if (!$request instanceof Request) {
+            throw new \RuntimeException('Expected Request in binary content');
+        }
+
+        $content = $request->getContent();
+
+        // create unique id for media reference
+        $guesser = ExtensionGuesser::getInstance();
+        $extension = $guesser->guess($media->getContentType());
+
+        if (!$extension) {
+            throw new \RuntimeException(
+                sprintf('Unable to guess extension for content type %s', $media->getContentType())
+            );
+        }
+
+        $handle = tmpfile();
+        fwrite($handle, $content);
+        $file = new ApiMediaFile($handle);
+        $file->setExtension($extension);
+        $file->setMimetype($media->getContentType());
+
+        $media->setBinaryContent($file);
     }
 }

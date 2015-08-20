@@ -94,6 +94,10 @@
                 <source>filter.label_context</source>
                 <target>Contexto</target>
             </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>form.label_category</target>
+            </trans-unit>
             <trans-unit id="filter.label_provider_name">
                 <source>filter.label_provider_name</source>
                 <target>Nome do provisionador</target>
@@ -129,6 +133,18 @@
             <trans-unit id="form.label_author_name">
                 <source>form.label_author_name</source>
                 <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>filter.label_width</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>filter.label_height</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>filter.label_content_type</target>
             </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
@@ -210,6 +226,10 @@
                 <source>label.cdn_is_flushable</source>
                 <target>Atualizar CDN</target>
             </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
+            </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
                 <target>Alterar vídeo</target>
@@ -281,6 +301,10 @@
                 <source>list.label_name</source>
                 <target>Nome</target>
             </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>list.label_author_name</target>
+            </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
                 <target>Contexto</target>
@@ -296,6 +320,10 @@
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
                 <target>Personalizado</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>list.label_author</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>

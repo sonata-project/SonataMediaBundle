@@ -32,7 +32,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Class GalleryController.
  *
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class GalleryController
@@ -78,7 +77,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  resource=true,
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"="sonata_api_read"}
+     *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"="sonata_api_read"}
      * )
      *
      * @QueryParam(name="page", requirements="\d+", default="1", description="Page for gallery list pagination")
@@ -90,25 +89,32 @@ class GalleryController
      *
      * @param ParamFetcherInterface $paramFetcher
      *
-     * @return Gallery[]
+     * @return Sonata\DatagridBundle\Pager\PagerInterface
      */
     public function getGalleriesAction(ParamFetcherInterface $paramFetcher)
     {
+        $supportedCriteria = array(
+            'enabled' => '',
+        );
+
         $page    = $paramFetcher->get('page');
-        $count   = $paramFetcher->get('count');
-        $orderBy = $paramFetcher->get('orderBy');
+        $limit   = $paramFetcher->get('count');
+        $sort    = $paramFetcher->get('orderBy');
+        $criteria = array_intersect_key($paramFetcher->all(), $supportedCriteria);
 
-        $criteria = $paramFetcher->all();
-
-        unset($criteria['page'], $criteria['count'], $criteria['orderBy']);
-
-        foreach ($criteria as $key => $crit) {
-            if (null === $crit) {
+        foreach ($criteria as $key => $value) {
+            if (null === $value) {
                 unset($criteria[$key]);
             }
         }
 
-        return $this->getGalleryManager()->findBy($criteria, $orderBy, $count, $page);
+        if (!$sort) {
+            $sort = array();
+        } elseif (!is_array($sort)) {
+            $sort = array($sort => 'asc');
+        }
+
+        return $this->getGalleryManager()->getPager($criteria, $page, $limit, $sort);
     }
 
     /**
@@ -118,7 +124,7 @@ class GalleryController
      *  requirements={
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
      *  },
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"="sonata_api_read"},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"="sonata_api_read"},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when gallery is not found"
@@ -198,7 +204,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      400="Returned when an error has occurred while gallery creation",
@@ -224,7 +230,7 @@ class GalleryController
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      400="Returned when an error has occurred while gallery creation",
@@ -253,7 +259,7 @@ class GalleryController
      *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      400="Returned when an error has occurred while gallery/media attachment",
@@ -263,7 +269,7 @@ class GalleryController
      * @param int     $galleryId A gallery identifier
      * @param int     $mediaId   A media identifier
      * @param Request $request   A Symfony request
-     
+     *
      * @return GalleryInterface
      *
      * @throws NotFoundHttpException
@@ -293,7 +299,7 @@ class GalleryController
      *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Gallery", "groups"={"sonata_api_read"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when an error if media cannot be found in gallery",
@@ -303,7 +309,7 @@ class GalleryController
      * @param int     $galleryId A gallery identifier
      * @param int     $mediaId   A media identifier
      * @param Request $request   A Symfony request
-     
+     *
      * @return GalleryInterface
      *
      * @throws NotFoundHttpException

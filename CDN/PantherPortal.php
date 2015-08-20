@@ -117,4 +117,12 @@ class PantherPortal implements CDNInterface
     {
         $this->client = $client;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFlushStatus($identifier)
+    {
+        // nothing to do
+    }
 }

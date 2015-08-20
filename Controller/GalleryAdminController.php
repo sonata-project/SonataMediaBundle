@@ -12,35 +12,43 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GalleryAdminController extends Controller
 {
     /**
-     * @param string                                          $view
-     * @param array                                           $parameters
-     * @param null|\Symfony\Component\HttpFoundation\Response $response
+     * @param string   $view
+     * @param array    $parameters
+     * @param Response $response
+     * @param Request  $request
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return Response
      */
-    public function render($view, array $parameters = array(), Response $response = null)
+    public function render($view, array $parameters = array(), Response $response = null, Request $request = null)
     {
         $parameters['media_pool']            = $this->container->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
-        return parent::render($view, $parameters);
+        return parent::render($view, $parameters, $response, $request);
     }
 
     /**
      * return the Response object associated to the list action.
      *
+     * @param Request $request
+     *
      * @return Response
      */
-    public function listAction()
+    public function listAction(Request $request = null)
     {
         if (false === $this->admin->isGranted('LIST')) {
             throw new AccessDeniedException();
+        }
+
+        if ($listMode = $request->get('_list_mode')) {
+            $this->admin->setListMode($listMode);
         }
 
         $datagrid = $this->admin->getDatagrid();

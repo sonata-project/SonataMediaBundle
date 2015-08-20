@@ -21,11 +21,27 @@ class MediaAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $options = array(
+            'choices' => array(),
+        );
+
+        foreach ($this->pool->getContexts() as $name => $context) {
+            $options['choices'][$name] = $name;
+        }
+
         $datagridMapper
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
-            ->add('context')
+            ->add('context', null, array(
+                'show_filter' => $this->getPersistentParameter('hide_context') !== true,
+            ), 'choice', $options)
+            ->add('category', null, array(
+                'show_filter' => false,
+            ))
+            ->add('width')
+            ->add('height')
+            ->add('contentType')
         ;
 
         $providers = array();

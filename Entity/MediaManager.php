@@ -12,6 +12,8 @@
 namespace Sonata\MediaBundle\Entity;
 
 use Sonata\CoreBundle\Model\BaseEntityManager;
+use Sonata\DatagridBundle\Pager\Doctrine\Pager;
+use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
 class MediaManager extends BaseEntityManager implements MediaManagerInterface
@@ -26,7 +28,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
          */
 
         // BC compatibility for $context parameter
-        if ($andFlush && is_string($andFlush)) {
+        if (is_string($andFlush)) {
             $media->setContext($andFlush);
         }
 
@@ -35,11 +37,49 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
             $media->setProviderName(func_get_arg(2));
         }
 
-        if ($andFlush && is_bool($andFlush)) {
+        if (is_bool($andFlush)) {
             parent::save($media, $andFlush);
         } else {
             // BC compatibility with previous signature
             parent::save($media, true);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
+    {
+        $query = $this->getRepository()
+            ->createQueryBuilder('m')
+            ->select('m');
+
+        $fields = $this->getEntityManager()->getClassMetadata($this->class)->getFieldNames();
+        foreach ($sort as $field => $direction) {
+            if (!in_array($field, $fields)) {
+                throw new \RuntimeException(sprintf("Invalid sort field '%s' in '%s' class", $field, $this->class));
+            }
+        }
+
+        foreach ($sort as $field => $direction) {
+            $query->orderBy(sprintf('m.%s', $field), strtoupper($direction));
+        }
+
+        $parameters = array();
+
+        if (isset($criteria['enabled'])) {
+            $query->andWhere('m.enabled = :enabled');
+            $parameters['enabled'] = $criteria['enabled'];
+        }
+
+        $query->setParameters($parameters);
+
+        $pager = new Pager();
+        $pager->setMaxPerPage($limit);
+        $pager->setQuery(new ProxyQuery($query));
+        $pager->setPage($page);
+        $pager->init();
+
+        return $pager;
     }
 }

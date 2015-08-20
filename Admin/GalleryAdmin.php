@@ -138,13 +138,15 @@ class GalleryAdmin extends Admin
      */
     public function getPersistentParameters()
     {
+        $parameters = parent::getPersistentParameters();
+
         if (!$this->hasRequest()) {
-            return array();
+            return $parameters;
         }
 
-        return array(
+        return array_merge($parameters, array(
             'context'  => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
-        );
+        ));
     }
 
     /**

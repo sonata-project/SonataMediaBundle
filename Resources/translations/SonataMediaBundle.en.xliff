@@ -98,6 +98,26 @@
                 <source>filter.label_provider_name</source>
                 <target>Provider Name</target>
             </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>filter.label_category</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>Author name</target>
+            </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>Width</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>Height</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>Content type</target>
+            </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
                 <target>Enabled</target>
@@ -210,6 +230,10 @@
                 <source>label.cdn_is_flushable</source>
                 <target>Flush CDN</target>
             </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
+            </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
                 <target>Change video</target>
@@ -281,6 +305,10 @@
                 <source>list.label_name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>Author name</target>
+            </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
                 <target>Context</target>
@@ -296,6 +324,10 @@
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
                 <target>Custom</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>list.label_author</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
@@ -384,6 +416,18 @@
             <trans-unit id="list.label_size">
                 <source>list.label_size</source>
                 <target>Size</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>No category defined</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Category</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Provider Reference</target>
             </trans-unit>
         </body>
     </file>

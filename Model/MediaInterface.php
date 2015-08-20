@@ -19,6 +19,8 @@ interface MediaInterface
     const STATUS_ERROR       = 4;
     const STATUS_ENCODING    = 5;
 
+    const MISSING_BINARY_REFERENCE = 'missing_binary_content';
+
     /**
      * @param mixed $binaryContent
      */
@@ -28,6 +30,11 @@ interface MediaInterface
      * @return mixed
      */
     public function getBinaryContent();
+
+    /**
+     * Reset the binary content.
+     */
+    public function resetBinaryContent();
 
     /**
      * @param string $name
@@ -248,6 +255,20 @@ interface MediaInterface
      * @return bool $cdnIsFlushable
      */
     public function getCdnIsFlushable();
+
+    /**
+     * Set cdn_flush_identifier.
+     *
+     * @param bool $cdnFlushIdentifier
+     */
+    public function setCdnFlushIdentifier($cdnFlushIdentifier);
+
+    /**
+     * Get cdn_flush_identifier.
+     *
+     * @return string $cdnFlushIdentifier
+     */
+    public function getCdnFlushIdentifier();
 
     /**
      * Set cdn_flush_at.

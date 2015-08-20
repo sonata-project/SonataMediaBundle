@@ -19,6 +19,8 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageProvider extends FileProvider
 {
@@ -94,7 +96,17 @@ class ImageProvider extends FileProvider
     {
         parent::doTransform($media);
 
-        if (!is_object($media->getBinaryContent()) && !$media->getBinaryContent()) {
+        if ($media->getBinaryContent() instanceof UploadedFile) {
+            $fileName = $media->getBinaryContent()->getClientOriginalName();
+        } elseif ($media->getBinaryContent() instanceof File) {
+            $fileName = $media->getBinaryContent()->getFilename();
+        } else {
+            // Should not happen, FileProvider should throw an exception in that case
+            return;
+        }
+
+        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
+            || !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             return;
         }
 
@@ -120,10 +132,14 @@ class ImageProvider extends FileProvider
     public function updateMetadata(MediaInterface $media, $force = true)
     {
         try {
-            // this is now optimized at all!!!
-            $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
-            $fileObject = new \SplFileObject($path, 'w');
-            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+                // this is now optimized at all!!!
+                $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+                $fileObject = new \SplFileObject($path, 'w');
+                $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            } else {
+                $fileObject = $media->getBinaryContent();
+            }
 
             $image = $this->imagineAdapter->open($fileObject->getPathname());
             $size  = $image->getSize();

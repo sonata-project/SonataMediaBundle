@@ -13,8 +13,8 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\CoreBundle\Model\MetadataInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilder;
@@ -51,11 +51,12 @@ interface MediaProviderInterface
     public function generateThumbnails(MediaInterface $media);
 
     /**
-     * remove all linked thumbnails.
+     * remove linked thumbnails.
      *
      * @param MediaInterface $media
+     * @param string|array   $formats
      */
-    public function removeThumbnails(MediaInterface $media);
+    public function removeThumbnails(MediaInterface $media, $formats = null);
 
     /**
      * @param MediaInterface $media

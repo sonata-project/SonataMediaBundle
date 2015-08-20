@@ -84,10 +84,19 @@ class FormatThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
-        // delete the differents formats
-        foreach ($provider->getFormats() as $format => $definition) {
+        if (is_null($formats)) {
+            $formats = array_keys($provider->getFormats());
+        } elseif (is_string($formats)) {
+            $formats = array($formats);
+        }
+
+        if (!is_array($formats)) {
+            throw new \InvalidArgumentException('"Formats" argument should be string or array');
+        }
+
+        foreach ($formats as $format) {
             $path = $provider->generatePrivateUrl($media, $format);
             if ($path && $provider->getFilesystem()->has($path)) {
                 $provider->getFilesystem()->delete($path);

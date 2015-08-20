@@ -39,6 +39,7 @@ interface ThumbnailInterface
     /**
      * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
      * @param \Sonata\MediaBundle\Model\MediaInterface            $media
+     * @param string|array                                        $formats
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media);
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null);
 }

@@ -11,53 +11,34 @@ file that was distributed with this source code.
 
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 
+{% import _self as tree %}
+{% macro navigate_child(collection, admin, root, current_category, depth) %}
+    {% if root and collection|length == 0 %}
+        <div>
+            <p class="bg-warning">{{ admin.trans('warning_no_category', {}, admin.translationdomain) }}</p>
+        </div>
+    {% endif %}
+    <ul{% if root %} class="sonata-tree sonata-tree--small js-treeview sonata-tree--toggleable"{% endif %}>
+        {% for element in collection %}
+            <li>
+                <div class="sonata-tree__item{% if element.id == current_category %} is-active{% endif %}"{% if depth < 2 %} data-treeview-toggled{% endif %}>
+                    {% if element.parent or root %}<i class="fa fa-caret-right" data-treeview-toggler></i>{% endif %}
+                    <a class="sonata-tree__item__edit" href="{{ url(app.request.attributes.get('_route'), app.request.query.all|merge({category: element.id})) }}">{{ element.name }}</a>
+                </div>
+
+                {% if element.children|length %}
+                    {{ _self.navigate_child(element.children, admin, false, current_category, depth + 1) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
 
 {% block list_table %}
-    <div class="box box-primary">
-        <div class="box-body">
-            <ul class="nav nav-pills">
-                <li><a><strong>{{ "label.select_context"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
-                {% for name, context in media_pool.contexts %}
-                    {% if context.providers|length == 0 %}
-                        {% set urlParams = {'context' : name } %}
-                    {% else %}
-                        {% set urlParams = {'context' : name, 'provider' : context.providers[0] } %}
-                    {% endif %}
-
-                    {% if name == persistent_parameters.context %}
-                        <li class="active"><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
-                    {% else %}
-                        <li><a href="{{ admin.generateUrl('list', urlParams) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
-                    {% endif %}
-                {% endfor %}
-
-                {% set providers = media_pool.getProviderNamesByContext(persistent_parameters.context) %}
-
-                {% if providers|length > 1 %}
-                        </ul>
-                    </div>
-                    <div class="box-footer">
-                        <ul class="nav nav-pills">
-                            <li><a><strong>{{ "label.select_provider"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
-
-                            {% if not persistent_parameters.provider %}
-                                <li class="active"><a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': null}) }}">{{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}</a></li>
-                            {% else %}
-                                <li><a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': null}) }}">{{ "link.all_providers"|trans({}, 'SonataMediaBundle') }}</a></li>
-                            {% endif %}
-
-                            {% for provider_name in providers %}
-                                {% if persistent_parameters.provider == provider_name%}
-                                    <li class="active"><a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': provider_name}) }}">{{ provider_name|trans({}, 'SonataMediaBundle') }}</a></li>
-                                {% else %}
-                                    <li><a href="{{ admin.generateUrl('list', {'context': persistent_parameters.context, 'provider': provider_name}) }}">{{ provider_name|trans({}, 'SonataMediaBundle') }}</a></li>
-                                {% endif %}
-                            {% endfor %}
-                {% endif %}
-            </ul>
-        </div>
+    <div class="col-xs-6 col-md-3">
+        {{ tree.navigate_child([root_category], admin, true, datagrid.values['category']['value'], 1) }}
     </div>
-
-    {{ parent() }}
-
+    <div class="col-xs-12 col-md-9">
+        {{ parent() }}
+    </div>
 {% endblock %}

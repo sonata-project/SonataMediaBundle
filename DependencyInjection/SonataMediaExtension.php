@@ -253,6 +253,26 @@ class SonataMediaExtension extends Extension
                 'position'  => 'ASC',
             ),
         ));
+
+        if (interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface')) {
+            $collector->addAssociation($config['class']['media'], 'mapManyToOne', array(
+                'fieldName'     => 'category',
+                'targetEntity'  => $config['class']['category'],
+                'cascade'       => array(
+                    'persist',
+                ),
+                'mappedBy'      => null,
+                'inversedBy'    => null,
+                'joinColumns'   => array(
+                    array(
+                     'name'                 => 'category_id',
+                     'referencedColumnName' => 'id',
+                     'onDelete'             => 'SET NULL',
+                    ),
+                ),
+                'orphanRemoval' => false,
+            ));
+        }
     }
 
     /**
@@ -281,6 +301,17 @@ class SonataMediaExtension extends Extension
             ;
         } else {
             $container->removeDefinition('sonata.media.cdn.panther');
+        }
+
+        if ($container->hasDefinition('sonata.media.cdn.cloudfront') && isset($config['cdn']['cloudfront'])) {
+            $container->getDefinition('sonata.media.cdn.cloudfront')
+                ->replaceArgument(0, $config['cdn']['cloudfront']['path'])
+                ->replaceArgument(1, $config['cdn']['cloudfront']['key'])
+                ->replaceArgument(2, $config['cdn']['cloudfront']['secret'])
+                ->replaceArgument(3, $config['cdn']['cloudfront']['distribution_id'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.media.cdn.cloudfront');
         }
 
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
@@ -335,8 +366,8 @@ class SonataMediaExtension extends Extension
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
-                ->replaceArgument(2, array('create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region']))
-                ->addMethodCall('setDirectory', array($config['filesystem']['s3']['directory']));
+                ->replaceArgument(2, array('create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']))
+            ;
 
             $container->getDefinition('sonata.media.metadata.amazon')
                 ->addArgument(array(
@@ -428,6 +459,7 @@ class SonataMediaExtension extends Extension
     {
         $this->addClassesToCompile(array(
             'Sonata\\MediaBundle\\CDN\\CDNInterface',
+            'Sonata\\MediaBundle\\CDN\\CloudFront',
             'Sonata\\MediaBundle\\CDN\\Fallback',
             'Sonata\\MediaBundle\\CDN\\PantherPortal',
             'Sonata\\MediaBundle\\CDN\\Server',

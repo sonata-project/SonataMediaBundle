@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class BaseMediaEventSubscriber implements EventSubscriber
 {
-    private $container;
+    protected $container;
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container

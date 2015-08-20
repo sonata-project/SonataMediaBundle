@@ -27,6 +27,7 @@
             <argument>%sonata.media.admin.media.entity%</argument>
             <argument>%sonata.media.admin.media.controller%</argument>
             <argument type="service" id="sonata.media.pool" />
+            <argument type="service" id="sonata.classification.manager.category" />
 
             <call method="setModelManager">
                 <argument type="service" id="sonata.media.admin.media.manager" />
@@ -37,6 +38,7 @@
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key="inner_list_row">SonataMediaBundle:MediaAdmin:inner_row_media.html.twig</argument>
+                    <argument key="outer_list_rows_mosaic">SonataMediaBundle:MediaAdmin:list_outer_rows_mosaic.html.twig</argument>
                     <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_flat_field.html.twig</argument>
                     <argument key="list">SonataMediaBundle:MediaAdmin:list.html.twig</argument>
                     <argument key="edit">SonataMediaBundle:MediaAdmin:edit.html.twig</argument>

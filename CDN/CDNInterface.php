@@ -33,6 +33,8 @@ interface CDNInterface
      * Flush the resource.
      *
      * @param string $string
+     *
+     * @return void|string
      */
     public function flush($string);
 
@@ -40,6 +42,8 @@ interface CDNInterface
      * Flush a set of resources matching the provided string.
      *
      * @param string $string
+     *
+     * @return void|string
      */
     public function flushByString($string);
 
@@ -47,6 +51,17 @@ interface CDNInterface
      * Flush a set of resources matching the paths in provided array.
      *
      * @param array $paths
+     *
+     * @return void|string
      */
     public function flushPaths(array $paths);
+
+    /**
+     * Return the CDN status for given identifier.
+     *
+     * @param string $identifier
+     *
+     * @return string
+     */
+    public function getFlushStatus($identifier);
 }

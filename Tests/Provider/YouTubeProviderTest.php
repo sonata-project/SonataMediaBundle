@@ -122,7 +122,10 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function testTransformWithUrl()
+    /**
+     * @dataProvider getUrls
+     */
+    public function testTransformWithUrl($url)
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
@@ -135,7 +138,7 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
         $media = new Media();
-        $media->setBinaryContent('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=g-all-esi&context=asdasdas');
+        $media->setBinaryContent($url);
         $media->setId(1023456);
 
         // pre persist the media
@@ -143,6 +146,19 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('Nono le petit robot', $media->getName(), '::getName() return the file name');
         $this->assertEquals('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+    }
+
+    public static function getUrls()
+    {
+        return array(
+            array('BDYAbAtaDzA'),
+            array('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'),
+            array('http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'),
+            array('http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'),
+            array('http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'),
+            array('http://www.youtube.com/watch?v=BDYAbAtaDzA'),
+            array('http://youtu.be/BDYAbAtaDzA'),
+        );
     }
 
     public function testForm()

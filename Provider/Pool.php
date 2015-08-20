@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 
@@ -45,8 +45,14 @@ class Pool
      */
     public function getProvider($name)
     {
+        if (!$name) {
+            throw new \InvalidArgumentException('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
+        }
+        if (empty($this->providers)) {
+            throw new \RuntimeException(sprintf('Unable to retrieve provider named "%s" since there are no providers configured yet.', $name));
+        }
         if (!isset($this->providers[$name])) {
-            throw new \RuntimeException(sprintf('unable to retrieve the provider named : `%s`', $name));
+            throw new \InvalidArgumentException(sprintf('Unable to retrieve the provider named "%s". Available providers are %s.', $name, '"'.implode('", "', $this->getProviderList()).'"'));
         }
 
         return $this->providers[$name];
@@ -247,11 +253,15 @@ class Pool
     }
 
     /**
-     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\MediaInterface   $media
+     * @param \Sonata\CoreBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
+        if (!$media->getProviderName()) {
+            return;
+        }
+
         $provider = $this->getProvider($media->getProviderName());
 
         $provider->validate($errorElement, $media);

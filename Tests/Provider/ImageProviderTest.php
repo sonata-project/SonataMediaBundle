@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends \PHPUnit_Framework_TestCase
 {
-    public function getProvider()
+    public function getProvider($allowedExtensions = array(), $allowedMimeTypes = array())
     {
         $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
@@ -48,7 +48,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
-        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, array(), array(), $adapter, $metadata);
+        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -140,5 +140,18 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $provider->postPersist($media);
 
         $provider->postRemove($media);
+    }
+
+    public function testTransformFormatNotSupported()
+    {
+        $provider = $this->getProvider();
+
+        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $this->assertNull($provider->transform($media));
+        $this->assertNull($media->getWidth(), 'Width staid null');
     }
 }

@@ -14,6 +14,8 @@ namespace Sonata\MediaBundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
 
@@ -21,17 +23,22 @@ abstract class BaseMediaAdmin extends Admin
 {
     protected $pool;
 
+    protected $categoryManager;
+
     /**
-     * @param string                            $code
-     * @param string                            $class
-     * @param string                            $baseControllerName
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param string                   $code
+     * @param string                   $class
+     * @param string                   $baseControllerName
+     * @param Pool                     $pool
+     * @param CategoryManagerInterface $categoryManager
      */
-    public function __construct($code, $class, $baseControllerName, Pool $pool)
+    public function __construct($code, $class, $baseControllerName, Pool $pool, CategoryManagerInterface $categoryManager)
     {
         parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
+
+        $this->categoryManager = $categoryManager;
     }
 
     /**
@@ -62,6 +69,8 @@ abstract class BaseMediaAdmin extends Admin
             return;
         }
 
+        $formMapper->add('providerName', 'hidden');
+
         $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
 
         $provider = $this->pool->getProvider($media->getProviderName());
@@ -71,6 +80,14 @@ abstract class BaseMediaAdmin extends Admin
         } else {
             $provider->buildCreateForm($formMapper);
         }
+
+        $formMapper->add('category', 'sonata_type_model_list', array(), array(
+            'link_parameters' => array(
+                'context'      => $media->getContext(),
+                'hide_context' => true,
+                'mode'         => 'tree',
+            ),
+        ));
     }
 
     /**
@@ -87,11 +104,19 @@ abstract class BaseMediaAdmin extends Admin
      */
     public function getPersistentParameters()
     {
+        $parameters = parent::getPersistentParameters();
+
         if (!$this->hasRequest()) {
-            return array();
+            return $parameters;
         }
 
-        $context   = $this->getRequest()->get('context', $this->pool->getDefaultContext());
+        $filter = $this->getRequest()->get('filter');
+        if ($filter && array_key_exists('context', $this->getRequest()->get('filter'))) {
+            $context = $filter['context']['value'];
+        } else {
+            $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
+        }
+
         $providers = $this->pool->getProvidersByContext($context);
         $provider  = $this->getRequest()->get('provider');
 
@@ -102,10 +127,17 @@ abstract class BaseMediaAdmin extends Admin
             $this->getRequest()->query->set('provider', $provider);
         }
 
-        return array(
-            'provider' => $provider,
-            'context'  => $context,
-        );
+        $categoryId = $this->getRequest()->get('category');
+
+        if (!$categoryId) {
+            $categoryId = $this->categoryManager->getRootCategory($context)->getId();
+        }
+
+        return array_merge($parameters, array(
+            'context'      => $context,
+            'category'     => $categoryId,
+            'hide_context' => (bool) $this->getRequest()->get('hide_context'),
+        ));
     }
 
     /**
@@ -116,8 +148,21 @@ abstract class BaseMediaAdmin extends Admin
         $media = parent::getNewInstance();
 
         if ($this->hasRequest()) {
-            $media->setProviderName($this->getRequest()->get('provider'));
-            $media->setContext($this->getRequest()->get('context'));
+            if ($this->getRequest()->isMethod('POST')) {
+                $media->setProviderName($this->getRequest()->get(sprintf('%s[providerName]', $this->getUniqid()), null, true));
+            } else {
+                $media->setProviderName($this->getRequest()->get('provider'));
+            }
+
+            $media->setContext($context = $this->getRequest()->get('context'));
+
+            if ($categoryId = $this->getPersistentParameter('category')) {
+                $category = $this->categoryManager->find($categoryId);
+
+                if ($category && $category->getContext()->getId() == $context) {
+                    $media->setCategory($category);
+                }
+            }
         }
 
         return $media;
@@ -129,5 +174,17 @@ abstract class BaseMediaAdmin extends Admin
     public function getPool()
     {
         return $this->pool;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getObjectMetadata($object)
+    {
+        $provider = $this->pool->getProvider($object->getProviderName());
+
+        $url = $provider->generatePublicUrl($object, $provider->getFormatName($object, 'admin'));
+
+        return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 }

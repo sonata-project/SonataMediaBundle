@@ -9,6 +9,6 @@ class BaseGalleryRepository extends DocumentRepository implements RepositoryIdIn
 {
     public function generateId($document, $parent = null)
     {
-        return '/cms/gallery-has-media/'.uniqid();
+        return '/cms/gallery/'.uniqid();
     }
 }

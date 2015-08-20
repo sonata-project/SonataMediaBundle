@@ -17,6 +17,9 @@ use Sonata\MediaBundle\Validator\FormatValidator;
 
 class FormatValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testValidate()
     {
         $pool = new Pool('defaultContext');

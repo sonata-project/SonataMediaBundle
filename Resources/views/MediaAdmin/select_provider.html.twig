@@ -22,23 +22,26 @@ file that was distributed with this source code.
         </div>
         <div class="box-body">
             {% for code, provider in providers %}
-                <a href="{{ admin.generateUrl('create', {'provider': provider.name}) }}"
-                   class="btn btn-app"
-                   data-toggle="tooltip"
-                   data-placement="top"
-                   title="{{ provider.providerMetadata.description|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}"
-                        >
-                    {% if not provider.providerMetadata.image %}
-                        <i class="{{ provider.providerMetadata.option('class') }}"></i>
-                    {% else %}
-                        <img src="{{ asset(provider.providerMetadata.image) }}" style="max-height: 20px; max-width: 100px;"/>
-                        <br />
-                    {% endif %}
-                    {{ provider.providerMetadata.title|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}
-                </a>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                    <a href="{{ admin.generateUrl('create', {'provider': provider.name}) }}"
+                       class="btn btn-app btn-block"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="{{ provider.providerMetadata.description|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}"
+                            >
+                        {% if not provider.providerMetadata.image %}
+                            <i class="{{ provider.providerMetadata.option('class') }}"></i>
+                        {% else %}
+                            <img src="{{ asset(provider.providerMetadata.image) }}" style="max-height: 20px; max-width: 100px;"/>
+                            <br />
+                        {% endif %}
+                        {{ provider.providerMetadata.title|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}
+                    </a>
+                </div>
             {% else %}
                 <span class="alert alert-info">{{ 'no_provider_available'|trans({}, 'SonataMediaBundle') }}</span>
             {% endfor %}
+            <div class="clearfix"></div>
         </div>
     </div>
 {% endblock %}

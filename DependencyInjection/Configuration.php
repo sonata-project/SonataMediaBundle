@@ -117,6 +117,15 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
+                        ->arrayNode('cloudfront')
+                            ->children()
+                                ->scalarNode('path')->isRequired()->end() // http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                                ->scalarNode('distribution_id')->isRequired()->end()
+                                ->scalarNode('key')->isRequired()->end()
+                                ->scalarNode('secret')->isRequired()->end()
+                            ->end()
+                        ->end()
+
                         ->arrayNode('fallback')
                             ->children()
                                 ->scalarNode('master')->isRequired()->end()
@@ -391,6 +400,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Media')->end()
                         ->scalarNode('gallery')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Gallery')->end()
                         ->scalarNode('gallery_has_media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia')->end()
+                        ->scalarNode('category')->defaultValue('Application\\Sonata\\ClassificationBundle\\Entity\\Category')->end()
                     ->end()
                 ->end()
             ->end()
@@ -407,7 +417,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('buzz')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.file_get_contents')->end()
+                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.curl')->end()
                         ->arrayNode('client')
                         ->addDefaultsIfNotSet()
                         ->children()

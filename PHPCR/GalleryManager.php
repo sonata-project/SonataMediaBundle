@@ -13,8 +13,9 @@ namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\CoreBundle\Model\BaseDocumentManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
-class GalleryManager extends BaseDocumentManager
+class GalleryManager extends BaseDocumentManager implements GalleryManagerInterface
 {
     /**
      * BC Compatibility.
@@ -26,5 +27,13 @@ class GalleryManager extends BaseDocumentManager
     public function update(GalleryInterface $gallery)
     {
         parent::save($gallery);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
+    {
+        throw new \RuntimeException('Not Implemented yet');
     }
 }
