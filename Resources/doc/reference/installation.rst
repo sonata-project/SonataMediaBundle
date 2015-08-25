@@ -112,6 +112,7 @@ Doctrine PHPCR:
                     - sonata.media.provider.youtube
                     - sonata.media.provider.image
                     - sonata.media.provider.file
+                    - sonata.media.provider.vimeo
 
                 formats:
                     small: { width: 100 , quality: 70}
