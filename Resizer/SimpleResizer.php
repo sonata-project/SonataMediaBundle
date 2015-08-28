@@ -105,6 +105,9 @@ class SimpleResizer implements ResizerInterface
             $ratio = max($ratios);
         }
 
-        return $size->scale($ratio);
+        return new Box(
+            ceil($ratio * $settings['width']),
+            ceil($ratio * $settings['height'])
+        );
     }
 }
