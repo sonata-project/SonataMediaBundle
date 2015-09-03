@@ -12,7 +12,7 @@
                     <strong>{{ value.name }}</strong>
                 {% endif %}
                  <br />
-                <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span> ~ {{ value.context }}
+                <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span> ~ <span type="label">{{ value.context|trans({}, 'SonataMediaBundle') }}</span>
             {% else %}
                 <div class="pull-left" style="margin-right: 5px">
                     <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
