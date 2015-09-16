@@ -68,7 +68,7 @@
             </trans-unit>
             <trans-unit id="description.roles_download_strategy">
                 <source>description.roles_download_strategy</source>
-                <target>El archivo multimedia se puede descargar solamente por los usuarios con los siguientes roles : %roles%.</target>
+                <target>El archivo multimedia se puede descargar solamente por los usuarios con los siguientes roles: %roles%.</target>
             </trans-unit>
             <trans-unit id="description.public_download_strategy">
                 <source>description.public_download_strategy</source>

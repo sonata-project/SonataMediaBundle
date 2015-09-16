@@ -68,7 +68,7 @@
             </trans-unit>
             <trans-unit id="description.roles_download_strategy">
                 <source>description.roles_download_strategy</source>
-                <target>Le média peut être récupéré par les utilisateurs avec une des permissions suivantes : %roles%.</target>
+                <target>Le média peut être récupéré par les utilisateurs avec une des permissions suivantes: %roles%.</target>
             </trans-unit>
             <trans-unit id="description.public_download_strategy">
                 <source>description.public_download_strategy</source>
