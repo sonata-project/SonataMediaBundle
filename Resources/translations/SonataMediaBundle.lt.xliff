@@ -68,7 +68,7 @@
             </trans-unit>
             <trans-unit id="description.roles_download_strategy">
                 <source>description.roles_download_strategy</source>
-                <target>Media gali būti pasiekiamas turint šiuos vaidmenis: %roles%.</target>
+                <target>Media gali būti pasiekiamas turint šiuos vaidmenis : %roles%.</target>
             </trans-unit>
             <trans-unit id="description.public_download_strategy">
                 <source>description.public_download_strategy</source>
