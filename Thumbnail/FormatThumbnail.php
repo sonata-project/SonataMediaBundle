@@ -45,7 +45,12 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s.%s',
+        if ('reference' === $format) {
+            return $provider->getReferenceImage($media);
+        }
+
+        return sprintf(
+            '%s/thumb_%s_%s.%s',
             $provider->generatePath($media),
             $media->getId(),
             $format,
