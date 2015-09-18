@@ -117,10 +117,13 @@ class FileProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add('binaryContent', 'file');
-
         if ($formBuilder->getOption('context') == 'api') {
+            $formBuilder->add('binaryContent', 'file');
             $formBuilder->add('contentType');
+        } else {
+            $formBuilder->add('binaryContent', 'file', array(
+                'required' => false,
+            ));
         }
     }
 
