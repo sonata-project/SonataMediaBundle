@@ -401,6 +401,18 @@
                 <source>no_linked_media</source>
                 <target>No media linked to the object</target>
             </trans-unit>
+            <trans-unit id="widget.label_type">
+                <source>widget.label_type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="widget.label_context">
+                <source>widget.label_context</source>
+                <target>Context</target>
+            </trans-unit>
+            <trans-unit id="widget.headline_information">
+                <source>widget.headline_information</source>
+                <target>Information</target>
+            </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
                 <target>Gallery</target>
