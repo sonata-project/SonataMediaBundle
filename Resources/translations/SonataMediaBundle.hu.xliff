@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="en" target-language="hu" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
                 <source>default</source>
@@ -48,11 +48,11 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_create">
                 <source>breadcrumb.link_gallery_create</source>
-                <target>Létrehoz</target>
+                <target>Létrehozás</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_show">
                 <source>breadcrumb.link_media_show</source>
-                <target>Mutat</target>
+                <target>Megjelenítés</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
@@ -156,7 +156,7 @@
             </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
-                <target>CDN cache törlése</target>
+                <target>CDN gyorsítótár törlése</target>
             </trans-unit>
             <trans-unit id="form.label_description">
                 <source>form.label_description</source>
@@ -164,11 +164,11 @@
             </trans-unit>
             <trans-unit id="form.label_copyright">
                 <source>form.label_copyright</source>
-                <target>Copyright</target>
+                <target>Szerzői jog</target>
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
-                <target>File</target>
+                <target>Fájl</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
@@ -192,7 +192,7 @@
             </trans-unit>
             <trans-unit id="label.copyright">
                 <source>label.copyright</source>
-                <target>Copyright</target>
+                <target>Szerzői jog</target>
             </trans-unit>
             <trans-unit id="label.author_name">
                 <source>label.author_name</source>
@@ -204,11 +204,11 @@
             </trans-unit>
             <trans-unit id="label.to_be_flushed">
                 <source>label.to_be_flushed</source>
-                <target>Cache törlésre vár</target>
+                <target>Gyorsítótár törlésre vár</target>
             </trans-unit>
             <trans-unit id="label.flushed_at">
                 <source>label.flushed_at</source>
-                <target>Cache törölve</target>
+                <target>Gyorsítótár törölve</target>
             </trans-unit>
             <trans-unit id="label.public_url">
                 <source>label.public_url</source>
@@ -232,11 +232,11 @@
             </trans-unit>
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
-                <target>CDN cache törlése</target>
+                <target>CDN gyorsítótár törlése</target>
             </trans-unit>
             <trans-unit id="label.cdn_flush_identifier">
                 <source>label.cdn_flush_identifier</source>
-                <target>CDN flush identifier</target>
+                <target>CDN törlési azonosító</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
@@ -387,15 +387,15 @@
             </trans-unit>
             <trans-unit id="widget_label_type">
                 <source>widget_label_type</source>
-                <target>widget_label_type</target>
+                <target>Típus</target>
             </trans-unit>
             <trans-unit id="widget_label_context">
                 <source>widget_label_context</source>
-                <target>widget_label_context</target>
+                <target>Környezet</target>
             </trans-unit>
             <trans-unit id="widget_headline_information">
                 <source>widget_headline_information</source>
-                <target>widget_headline_information</target>
+                <target>Információ</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
