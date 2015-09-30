@@ -18,7 +18,7 @@
         </service>
 
         <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
-            <argument>%sonata.media.media.class%</argument>
+            <argument>%sonata.media.gallery.class%</argument>
             <argument type="service" id="doctrine_mongodb" />
         </service>
 
