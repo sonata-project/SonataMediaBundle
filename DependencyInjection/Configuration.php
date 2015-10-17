@@ -110,7 +110,10 @@ class Configuration implements ConfigurationInterface
 
                         ->arrayNode('panther')
                             ->children()
-                                ->scalarNode('path')->isRequired()->end() // http://domain.pantherportal.com/uploads/media
+                                ->scalarNode('path')
+                                    ->info('e.g. http://domain.pantherportal.com/uploads/media')
+                                    ->isRequired()
+                                ->end()
                                 ->scalarNode('site_id')->isRequired()->end()
                                 ->scalarNode('password')->isRequired()->end()
                                 ->scalarNode('username')->isRequired()->end()
@@ -119,7 +122,10 @@ class Configuration implements ConfigurationInterface
 
                         ->arrayNode('cloudfront')
                             ->children()
-                                ->scalarNode('path')->isRequired()->end() // http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                                ->scalarNode('path')
+                                    ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
+                                    ->isRequired()
+                                ->end()
                                 ->scalarNode('distribution_id')->isRequired()->end()
                                 ->scalarNode('key')->isRequired()->end()
                                 ->scalarNode('secret')->isRequired()->end()
@@ -376,6 +382,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('pixlr')
+                    ->info('More info at https://pixlr.com/')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('enabled')->defaultValue(false)->end()
