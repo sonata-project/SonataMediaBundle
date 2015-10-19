@@ -26,7 +26,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
          */
 
         // BC compatibility for $context parameter
-        if ($andFlush && is_string($andFlush)) {
+        if (is_string($andFlush)) {
             $media->setContext($andFlush);
         }
 
@@ -35,7 +35,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
             $media->setProviderName(func_get_arg(2));
         }
 
-        if ($andFlush && is_bool($andFlush)) {
+        if (is_bool($andFlush)) {
             parent::save($media, $andFlush);
         } else {
             // BC compatibility with previous signature
