@@ -64,6 +64,8 @@ class ConsumerThumbnail implements ThumbnailInterface
             // so we have a race condition
             'providerReference' => $media->getProviderReference(),
         ));
+
+        return array();
     }
 
     /**

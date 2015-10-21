@@ -67,7 +67,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
     public function generate(MediaProviderInterface $provider, MediaInterface $media)
     {
         // nothing to generate, as generated on demand
-        return;
+        return array();
     }
 
     /**

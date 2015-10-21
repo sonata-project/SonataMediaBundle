@@ -153,7 +153,16 @@ class SyncThumbsCommand extends BaseCommand
         }
 
         try {
-            $provider->generateThumbnails($media);
+            $thumbnailSet = $provider->generateThumbnails($media);
+
+            if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity() &&
+                !empty($thumbnailSet)
+            ) {
+                foreach ($thumbnailSet as $format => $thumbnail) {
+                    $this->log(sprintf('[%s] => %s', $format, $thumbnail->getName()));
+                }
+                $this->log('');
+            }
         } catch (\Exception $e) {
             $this->log(sprintf('<error>Unable to generate new thumbnails, media: %s - %s </error>',
                 $media->getId(), $e->getMessage()));
