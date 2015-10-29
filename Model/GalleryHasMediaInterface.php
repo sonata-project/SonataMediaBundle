@@ -19,6 +19,11 @@ interface GalleryHasMediaInterface
     public function __toString();
 
     /**
+     * @return int
+     */
+    public function getId();
+
+    /**
      * @param bool $enabled
      */
     public function setEnabled($enabled);
