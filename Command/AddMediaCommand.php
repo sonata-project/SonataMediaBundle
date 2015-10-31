@@ -19,6 +19,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 class AddMediaCommand extends BaseCommand
 {
     protected $quiet = false;
+
+    /**
+     * @deprecated This property is deprecated since version 2.4 and will be removed in 3.0.
+     */
     protected $output;
 
     /**

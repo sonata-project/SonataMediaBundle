@@ -19,7 +19,6 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
     private $container;
     private $map;
-    private $metadata;
 
     /**
      * @param ContainerInterface $metadata
