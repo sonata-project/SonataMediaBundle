@@ -16,7 +16,6 @@ use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
-use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -75,13 +74,6 @@ class GalleryBlockService extends BaseBlockService
         }
 
         return $this->galleryAdmin;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-    {
     }
 
     /**
