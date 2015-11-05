@@ -23,13 +23,19 @@ use Symfony\Component\Templating\Helper\Helper;
  */
 class MediaHelper extends Helper
 {
+    /**
+     * @var Pool|null
+     */
     protected $pool = null;
 
+    /**
+     * @var EngineInterface|null
+     */
     protected $templating = null;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool             $mediaService
-     * @param \Symfony\Component\Templating\EngineInterface $templating
+     * @param Pool            $pool
+     * @param EngineInterface $templating
      */
     public function __construct(Pool $pool, EngineInterface $templating)
     {
@@ -74,9 +80,9 @@ class MediaHelper extends Helper
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
-     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
+     * @return MediaProviderInterface
      */
     private function getProvider(MediaInterface $media)
     {

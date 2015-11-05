@@ -22,16 +22,12 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * MediaExtension.
  *
- *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class SonataMediaExtension extends Extension
 {
     /**
-     * Loads the url shortener configuration.
-     *
-     * @param array            $configs   An array of configuration settings
-     * @param ContainerBuilder $container A ContainerBuilder instance
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -133,8 +129,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureProviders(ContainerBuilder $container, $config)
     {
@@ -153,8 +149,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureBuzz(ContainerBuilder $container, array $config)
     {
@@ -175,8 +171,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureParameterClass(ContainerBuilder $container, array $config)
     {
@@ -278,8 +274,8 @@ class SonataMediaExtension extends Extension
     /**
      * Inject CDN dependency to default provider.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureCdnAdapter(ContainerBuilder $container, array $config)
     {
@@ -327,8 +323,8 @@ class SonataMediaExtension extends Extension
     /**
      * Inject filesystem dependency to default provider.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureFilesystemAdapter(ContainerBuilder $container, array $config)
     {
@@ -437,8 +433,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureExtra(ContainerBuilder $container, array $config)
     {

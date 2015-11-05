@@ -18,6 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AddMediaCommand extends BaseCommand
 {
+    /**
+     * @var bool
+     */
     protected $quiet = false;
 
     /**

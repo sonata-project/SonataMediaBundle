@@ -11,6 +11,8 @@
 
 namespace Sonata\MediaBundle\Block;
 
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -18,6 +20,7 @@ use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,8 +33,14 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class GalleryBlockService extends BaseBlockService
 {
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryAdmin;
 
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryManager;
 
     /**
@@ -57,7 +66,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @return \Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getMediaPool()
     {
@@ -65,7 +74,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @return \Sonata\AdminBundle\Admin\AdminInterface
+     * @return AdminInterface
      */
     public function getGalleryAdmin()
     {
@@ -122,7 +131,7 @@ class GalleryBlockService extends BaseBlockService
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE));
+        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE));
 
         $builder = $formMapper->create('galleryId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
@@ -189,7 +198,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\GalleryInterface $gallery
+     * @param GalleryInterface $gallery
      *
      * @return array
      */
@@ -219,7 +228,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return false|string
      */

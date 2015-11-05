@@ -94,7 +94,7 @@ class DailyMotionProvider extends BaseVideoProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
     {

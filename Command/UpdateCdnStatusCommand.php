@@ -24,7 +24,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class UpdateCdnStatusCommand extends BaseCommand
 {
+    /**
+     * @var bool
+     */
     protected $quiet = false;
+
+    /**
+     * @var OutputInterface
+     */
     protected $output;
 
     /**
@@ -118,7 +125,8 @@ class UpdateCdnStatusCommand extends BaseCommand
     /**
      * Write a message to the output.
      *
-     * @param string $message
+     * @param string    $message
+     * @param bool|true $newLine
      */
     protected function log($message, $newLine = true)
     {

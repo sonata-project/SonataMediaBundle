@@ -15,6 +15,9 @@ use Sonata\MediaBundle\Twig\Node\ThumbnailNode;
 
 class ThumbnailTokenParser extends \Twig_TokenParser
 {
+    /**
+     * @var string
+     */
     protected $extensionName;
 
     /**

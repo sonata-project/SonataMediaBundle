@@ -22,7 +22,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RefreshMetadataCommand extends BaseCommand
 {
+    /**
+     * @var bool
+     */
     protected $quiet = false;
+
+    /**
+     * @var OutputInterface
+     */
     protected $output;
 
     /**

@@ -19,13 +19,16 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdmin extends Admin
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
     /**
-     * @param string                            $code
-     * @param string                            $class
-     * @param string                            $baseControllerName
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     * @param Pool   $pool
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
     {

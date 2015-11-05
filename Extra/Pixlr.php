@@ -24,32 +24,59 @@ use Symfony\Component\Templating\EngineInterface;
 
 class Pixlr
 {
+    /**
+     * @var string
+     */
     protected $referrer;
 
+    /**
+     * @var string
+     */
     protected $secret;
 
+    /**
+     * @var MediaManagerInterface
+     */
     protected $mediaManager;
 
+    /**
+     * @var RouterInterface
+     */
     protected $router;
 
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var EngineInterface
+     */
     protected $templating;
 
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
+    /**
+     * @var string[]
+     */
     protected $validFormats;
 
+    /**
+     * @var string
+     */
     protected $allowEreg;
 
     /**
-     * @param string                                                    $referrer
-     * @param string                                                    $secret
-     * @param \Sonata\MediaBundle\Provider\Pool                         $pool
-     * @param \Sonata\MediaBundle\Model\MediaManagerInterface           $mediaManager
-     * @param \Symfony\Component\Routing\RouterInterface                $router
-     * @param \Symfony\Component\Templating\EngineInterface             $templating
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param string                $referrer
+     * @param string                $secret
+     * @param Pool                  $pool
+     * @param MediaManagerInterface $mediaManager
+     * @param RouterInterface       $router
+     * @param EngineInterface       $templating
+     * @param ContainerInterface    $container
      */
     public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, ContainerInterface $container)
     {
@@ -66,7 +93,7 @@ class Pixlr
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string
      */
@@ -76,11 +103,11 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      *
-     * @return \Sonata\MediaBundle\Model\MediaInterface
+     * @return MediaInterface
      */
     private function getMedia($id)
     {
@@ -94,10 +121,10 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
-     * @param string                                   $hash
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string         $hash
+     * @param MediaInterface $media
      */
     private function checkMedia($hash, MediaInterface $media)
     {
@@ -126,12 +153,12 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      * @param string $mode
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function editAction($id, $mode)
     {
@@ -165,7 +192,7 @@ class Pixlr
      * @param string $hash
      * @param string $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function exitAction($hash, $id)
     {
@@ -177,11 +204,11 @@ class Pixlr
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string                                    $hash
-     * @param string                                    $id
+     * @param Request $request
+     * @param string  $hash
+     * @param string  $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function targetAction(Request $request, $hash, $id)
     {
@@ -210,7 +237,7 @@ class Pixlr
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return bool
      */
@@ -224,11 +251,11 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function openEditorAction($id)
     {

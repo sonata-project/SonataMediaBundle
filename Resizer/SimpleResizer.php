@@ -21,15 +21,25 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class SimpleResizer implements ResizerInterface
 {
+    /**
+     * @var ImagineInterface
+     */
     protected $adapter;
 
+    /**
+     * @var string
+     */
     protected $mode;
 
+    /**
+     * @var MetadataBuilderInterface
+     */
     protected $metadata;
 
     /**
-     * @param ImagineInterface $adapter
-     * @param string           $mode
+     * @param ImagineInterface         $adapter
+     * @param string                   $mode
+     * @param MetadataBuilderInterface $metadata
      */
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {

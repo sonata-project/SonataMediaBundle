@@ -11,13 +11,17 @@
 
 namespace Sonata\MediaBundle\Block;
 
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
@@ -29,8 +33,14 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class MediaBlockService extends BaseBlockService
 {
+    /**
+     * @var BaseMediaAdmin
+     */
     protected $mediaAdmin;
 
+    /**
+     * @var ManagerInterface
+     */
     protected $mediaManager;
 
     /**
@@ -56,7 +66,7 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * @return mixed
+     * @return Pool
      */
     public function getMediaPool()
     {
@@ -64,7 +74,7 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * @return mixed
+     * @return BaseMediaAdmin
      */
     public function getMediaAdmin()
     {
@@ -111,7 +121,7 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * @param null|\Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface|null $media
      *
      * @return array
      */
@@ -133,9 +143,9 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @param FormMapper $formMapper
      *
-     * @return \Symfony\Component\Form\FormBuilder
+     * @return FormBuilder
      */
     protected function getMediaBuilder(FormMapper $formMapper)
     {
@@ -146,7 +156,7 @@ class MediaBlockService extends BaseBlockService
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(array(
             'fieldName' => 'media',
-            'type'      => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE,
+            'type'      => ClassMetadataInfo::MANY_TO_ONE,
         ));
 
         return $formMapper->create('mediaId', 'sonata_type_model_list', array(

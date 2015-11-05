@@ -13,8 +13,14 @@ namespace Sonata\MediaBundle\CDN;
 
 class Fallback implements CDNInterface
 {
+    /**
+     * @var CDNInterface
+     */
     protected $cdn;
 
+    /**
+     * @var CDNInterface
+     */
     protected $fallback;
 
     /**

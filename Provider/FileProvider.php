@@ -40,14 +40,14 @@ class FileProvider extends BaseProvider
     protected $metadata;
 
     /**
-     * @param string                                                $name
-     * @param \Gaufrette\Filesystem                                 $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface                  $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface      $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface      $thumbnail
-     * @param array                                                 $allowedExtensions
-     * @param array                                                 $allowedMimeTypes
-     * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
+     * @param string                   $name
+     * @param Filesystem               $filesystem
+     * @param CDNInterface             $cdn
+     * @param GeneratorInterface       $pathGenerator
+     * @param ThumbnailInterface       $thumbnail
+     * @param array                    $allowedExtensions
+     * @param array                    $allowedMimeTypes
+     * @param MetadataBuilderInterface $metadata
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata = null)
     {
@@ -176,7 +176,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -203,7 +203,7 @@ class FileProvider extends BaseProvider
     /**
      * @throws \RuntimeException
      *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      */
     protected function fixFilename(MediaInterface $media)
     {
@@ -303,8 +303,8 @@ class FileProvider extends BaseProvider
     /**
      * Set the file contents for an image.
      *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string                                   $contents path to contents, defaults to MediaInterface BinaryContent
+     * @param MediaInterface $media
+     * @param string         $contents path to contents, defaults to MediaInterface BinaryContent
      */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
@@ -325,7 +325,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string
      */
@@ -335,7 +335,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string
      */

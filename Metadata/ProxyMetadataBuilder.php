@@ -17,6 +17,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
@@ -54,10 +57,10 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * @param MediaInterface $metadata
+     * @param MediaInterface $media
      * @param string         $filename
      *
-     * @return array
+     * @return array|bool
      */
     protected function getAmazonBuilder(MediaInterface $media, $filename)
     {

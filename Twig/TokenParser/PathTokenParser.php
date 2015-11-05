@@ -15,6 +15,9 @@ use Sonata\MediaBundle\Twig\Node\PathNode;
 
 class PathTokenParser extends \Twig_TokenParser
 {
+    /**
+     * @var string
+     */
     protected $extensionName;
 
     /**

@@ -17,6 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AddMassMediaCommand extends BaseCommand
 {
+    /**
+     * @var string[]
+     */
     protected $setters;
 
     /**

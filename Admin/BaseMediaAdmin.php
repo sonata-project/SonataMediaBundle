@@ -21,8 +21,14 @@ use Sonata\MediaBundle\Provider\Pool;
 
 abstract class BaseMediaAdmin extends Admin
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var CategoryManagerInterface
+     */
     protected $categoryManager;
 
     /**
@@ -169,7 +175,7 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @return null|\Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getPool()
     {

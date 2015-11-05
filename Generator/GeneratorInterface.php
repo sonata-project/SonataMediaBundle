@@ -16,9 +16,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 interface GeneratorInterface
 {
     /**
-     * @abstract
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string
      */

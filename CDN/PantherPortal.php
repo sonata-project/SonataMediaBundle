@@ -30,16 +30,34 @@ namespace Sonata\MediaBundle\CDN;
  */
 class PantherPortal implements CDNInterface
 {
+    /**
+     * @var string
+     */
     protected $path;
 
+    /**
+     * @var string
+     */
     protected $username;
 
+    /**
+     * @var string
+     */
     protected $password;
 
+    /**
+     * @var string
+     */
     protected $siteId;
 
+    /**
+     * @var \SoapClient
+     */
     protected $client;
 
+    /**
+     * @var string
+     */
     protected $wsdl;
 
     /**

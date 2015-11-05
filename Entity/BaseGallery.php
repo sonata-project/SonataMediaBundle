@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
 
 /**
@@ -23,7 +24,7 @@ abstract class BaseGallery extends Gallery
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galleryHasMedias = new ArrayCollection();
     }
 
     /**

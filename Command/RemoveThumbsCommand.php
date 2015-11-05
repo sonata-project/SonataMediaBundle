@@ -175,7 +175,7 @@ class RemoveThumbsCommand extends BaseCommand
      * @param MediaProviderInterface $provider
      * @param string                 $context
      *
-     * @return mixed|string
+     * @return string
      */
     public function getFormat(MediaProviderInterface $provider, $context)
     {

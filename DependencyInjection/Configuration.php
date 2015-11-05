@@ -50,7 +50,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addContextsSection(ArrayNodeDefinition $node)
     {
@@ -93,7 +93,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addCdnSection(ArrayNodeDefinition $node)
     {
@@ -145,7 +145,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addFilesystemSection(ArrayNodeDefinition $node)
     {
@@ -264,7 +264,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addProvidersSection(ArrayNodeDefinition $node)
     {
@@ -375,7 +375,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addExtraSection(ArrayNodeDefinition $node)
     {
@@ -395,7 +395,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addModelSection(ArrayNodeDefinition $node)
     {
@@ -415,7 +415,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addBuzzSection(ArrayNodeDefinition $node)
     {
@@ -441,7 +441,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addResizerSection(ArrayNodeDefinition $node)
     {

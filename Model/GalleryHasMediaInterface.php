@@ -29,6 +29,7 @@ interface GalleryHasMediaInterface
     public function setGallery(GalleryInterface $gallery = null);
 
     /**
+     * @return GalleryInterface
      */
     public function getGallery();
 
@@ -70,10 +71,12 @@ interface GalleryHasMediaInterface
     public function setCreatedAt(\DateTime $createdAt = null);
 
     /**
+     * @return \DateTime
      */
     public function getCreatedAt();
 
     /**
+     * @return string
      */
     public function __toString();
 }

@@ -13,18 +13,39 @@ namespace Sonata\MediaBundle\Model;
 
 abstract class GalleryHasMedia implements GalleryHasMediaInterface
 {
+    /**
+     * @var MediaInterface
+     */
     protected $media;
 
+    /**
+     * @var GalleryInterface
+     */
     protected $gallery;
 
+    /**
+     * @var int
+     */
     protected $position;
 
+    /**
+     * @var \DateTime
+     */
     protected $updatedAt;
 
+    /**
+     * @var \DateTime
+     */
     protected $createdAt;
 
+    /**
+     * @var bool
+     */
     protected $enabled;
 
+    /**
+     * Construct.
+     */
     public function __construct()
     {
         $this->position = 0;

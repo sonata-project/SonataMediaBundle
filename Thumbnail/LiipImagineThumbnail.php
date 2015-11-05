@@ -18,12 +18,12 @@ use Symfony\Component\Routing\RouterInterface;
 class LiipImagineThumbnail implements ThumbnailInterface
 {
     /**
-     * @var \Symfony\Component\Routing\RouterInterface
+     * @var RouterInterface
      */
     protected $router;
 
     /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {

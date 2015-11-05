@@ -21,10 +21,19 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CreateThumbnailConsumer implements ConsumerInterface
 {
+    /**
+     * @var ManagerInterface
+     */
     protected $mediaManager;
 
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**

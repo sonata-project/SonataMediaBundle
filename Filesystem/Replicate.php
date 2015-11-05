@@ -18,10 +18,19 @@ use Psr\Log\LoggerInterface;
 
 class Replicate implements AdapterInterface, MetadataSupporter
 {
+    /**
+     * @var AdapterInterface
+     */
     protected $master;
 
+    /**
+     * @var AdapterInterface
+     */
     protected $slave;
 
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
 
     /**

@@ -18,7 +18,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 class GalleryHasMediaAdmin extends Admin
 {
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * {@inheritdoc}
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -46,7 +46,7 @@ class GalleryHasMediaAdmin extends Admin
     }
 
     /**
-     * @param \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
+     * {@inheritdoc}
      */
     protected function configureListFields(ListMapper $listMapper)
     {

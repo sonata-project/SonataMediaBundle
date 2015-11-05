@@ -15,8 +15,14 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class DefaultGenerator implements GeneratorInterface
 {
+    /**
+     * @var int
+     */
     protected $firstLevel;
 
+    /**
+     * @var int
+     */
     protected $secondLevel;
 
     /**

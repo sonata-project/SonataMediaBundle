@@ -18,18 +18,30 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class SessionDownloadStrategy implements DownloadStrategyInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
+    /**
+     * @var int
+     */
     protected $times;
 
+    /**
+     * @var string
+     */
     protected $sessionKey = 'sonata/media/session/times';
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface        $translator
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param int                                                       $times
+     * @param TranslatorInterface $translator
+     * @param ContainerInterface  $container
+     * @param int                 $times
      */
     public function __construct(TranslatorInterface $translator, ContainerInterface $container, $times)
     {
@@ -69,7 +81,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session
+     * @return Session
      */
     private function getSession()
     {

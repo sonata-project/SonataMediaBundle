@@ -13,6 +13,9 @@ namespace Sonata\MediaBundle\CDN;
 
 class Server implements CDNInterface
 {
+    /**
+     * @var string
+     */
     protected $path;
 
     /**
