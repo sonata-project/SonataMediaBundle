@@ -18,16 +18,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
     private $container;
-    private $map;
 
     /**
-     * @param ContainerInterface $metadata
+     * @param ContainerInterface $container
      * @param array              $map
      */
-    public function __construct(ContainerInterface $container, array $map)
+    public function __construct(ContainerInterface $container, array $map = null)
     {
         $this->container = $container;
-        $this->map = $map;
+
+        if ($map !== null) {
+            @trigger_error('The "map" parameter is deprecated since version 2.4 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
     }
 
     /**
