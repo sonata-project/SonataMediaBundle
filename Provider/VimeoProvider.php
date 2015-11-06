@@ -88,8 +88,8 @@ class VimeoProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/vimeo\.com\/(\d+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[1]);
+        if (preg_match("/vimeo\.com\/(video\/|)(\d+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[2]);
         }
     }
 
