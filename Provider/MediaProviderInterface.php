@@ -107,14 +107,14 @@ interface MediaProviderInterface
     /**
      * build the related create form.
      *
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @param FormMapper $formMapper
      */
     public function buildCreateForm(FormMapper $formMapper);
 
     /**
      * build the related create form.
      *
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @param FormMapper $formMapper
      */
     public function buildEditForm(FormMapper $formMapper);
 
@@ -208,7 +208,7 @@ interface MediaProviderInterface
      * @param string         $mode
      * @param array          $headers
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array());
 

@@ -18,6 +18,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class FormatValidator extends ConstraintValidator
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
     /**

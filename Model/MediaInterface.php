@@ -360,7 +360,7 @@ interface MediaInterface
     public function getCdnStatus();
 
     /**
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     public function getBox();
 

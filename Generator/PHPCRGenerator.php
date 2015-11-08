@@ -16,9 +16,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class PHPCRGenerator implements GeneratorInterface
 {
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePath(MediaInterface $media)
     {

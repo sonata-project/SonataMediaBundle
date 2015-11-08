@@ -16,6 +16,9 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 class FormatThumbnail implements ThumbnailInterface
 {
+    /**
+     * @var string
+     */
     private $defaultFormat;
 
     /**
@@ -105,7 +108,7 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string the file extension for the $media, or the $defaultExtension if not available
      */

@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
@@ -33,7 +33,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * {@inheritdoc}
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {

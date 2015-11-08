@@ -112,8 +112,14 @@ abstract class Media implements MediaInterface
      */
     protected $createdAt;
 
+    /**
+     * @var mixed
+     */
     protected $binaryContent;
 
+    /**
+     * @var string
+     */
     protected $previousProviderReference;
 
     /**
@@ -126,8 +132,14 @@ abstract class Media implements MediaInterface
      */
     protected $size;
 
+    /**
+     * @var GalleryHasMediaInterface[]
+     */
     protected $galleryHasMedias;
 
+    /**
+     * @var CategoryInterface
+     */
     protected $category;
 
     public function prePersist()
@@ -144,7 +156,7 @@ abstract class Media implements MediaInterface
     /**
      * @static
      *
-     * @return array
+     * @return string[]
      */
     public static function getStatusList()
     {
@@ -608,7 +620,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @return mixed
+     * @return CategoryInterface
      */
     public function getCategory()
     {
@@ -616,7 +628,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @param mixed $category
+     * @param CategoryInterface $category|null
      */
     public function setCategory(CategoryInterface $category = null)
     {

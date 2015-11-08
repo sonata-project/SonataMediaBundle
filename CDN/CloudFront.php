@@ -51,18 +51,22 @@ class CloudFront implements CDNInterface
      * @var string
      */
     protected $path;
+
     /**
      * @var string
      */
     protected $key;
+
     /**
      * @var string
      */
     protected $secret;
+
     /**
      * @var string
      */
     protected $distributionId;
+
     /**
      * @var CloudFrontClient
      */
@@ -162,7 +166,7 @@ class CloudFront implements CDNInterface
     /**
      * For testing only.
      *
-     * @param $client
+     * @param CloudFrontClient $client
      */
     public function setClient($client)
     {
@@ -185,8 +189,6 @@ class CloudFront implements CDNInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @throws \RuntimeException
      */
     public function getFlushStatus($identifier)
     {
@@ -205,7 +207,7 @@ class CloudFront implements CDNInterface
     /**
      * @static
      *
-     * @return array
+     * @return string[]
      */
     public static function getStatusList()
     {

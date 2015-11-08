@@ -17,8 +17,14 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var array
+     */
     protected $options;
 
     /**

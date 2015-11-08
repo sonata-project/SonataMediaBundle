@@ -17,6 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateToJsonTypeCommand extends BaseCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName('sonata:media:migrate-json');
@@ -26,6 +29,9 @@ class MigrateToJsonTypeCommand extends BaseCommand
         $this->setDescription('Migrate all media provider metadata to the doctrine JsonType');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $count = 0;

@@ -40,8 +40,14 @@ abstract class Gallery implements GalleryInterface
      */
     protected $createdAt;
 
+    /**
+     * @var string
+     */
     protected $defaultFormat;
 
+    /**
+     * @var GalleryHasMediaInterface[]
+     */
     protected $galleryHasMedias;
 
     /**
@@ -163,7 +169,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * @param string $context
+     * {@inheritdoc}
      */
     public function setContext($context)
     {
@@ -171,7 +177,7 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getContext()
     {

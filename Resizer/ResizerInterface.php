@@ -29,7 +29,7 @@ interface ResizerInterface
      * @param MediaInterface $media
      * @param array          $settings
      *
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     public function getBox(MediaInterface $media, array $settings);
 }

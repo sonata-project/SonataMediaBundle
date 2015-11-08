@@ -18,8 +18,14 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
+    /**
+     * @var array
+     */
     protected $settings;
 
+    /**
+     * @var string[]
+     */
     protected $acl = array(
         'private'            => CannedAcl::PRIVATE_ACCESS,
         'public'             => CannedAcl::PUBLIC_READ,

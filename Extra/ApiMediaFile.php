@@ -31,7 +31,7 @@ class ApiMediaFile extends File
     protected $resource;
 
     /**
-     * @param resource $handle
+     * {@inheritdoc}
      */
     public function __construct($handle)
     {
@@ -47,7 +47,7 @@ class ApiMediaFile extends File
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getExtension()
     {
@@ -63,7 +63,7 @@ class ApiMediaFile extends File
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getMimetype()
     {
@@ -79,7 +79,7 @@ class ApiMediaFile extends File
     }
 
     /**
-     * @return null|string
+     * {@inheritdoc}
      */
     public function guessExtension()
     {

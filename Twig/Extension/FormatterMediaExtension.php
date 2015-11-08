@@ -18,6 +18,9 @@ use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 
 class FormatterMediaExtension extends BaseProxyExtension
 {
+    /**
+     * @var \Twig_Extension
+     */
     protected $twigExtension;
 
     /**

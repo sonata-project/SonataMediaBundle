@@ -24,8 +24,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MediaType extends AbstractType
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var string
+     */
     protected $class;
 
     /**

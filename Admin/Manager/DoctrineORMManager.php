@@ -5,6 +5,7 @@ namespace Sonata\MediaBundle\Admin\Manager;
 use Doctrine\DBAL\DBALException;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Exception\ModelManagerException;
+use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -14,15 +15,18 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class DoctrineORMManager extends ModelManager
 {
+    /**
+     * @var ManagerInterface
+     */
     protected $manager;
 
     /**
-     * @param \Symfony\Bridge\Doctrine\RegistryInterface $doctrine
-     * @param mixed                                      $manager
+     * @param RegistryInterface $registry
+     * @param ManagerInterface  $manager
      */
-    public function __construct(RegistryInterface $doctrine, $manager)
+    public function __construct(RegistryInterface $registry, $manager)
     {
-        parent::__construct($doctrine);
+        parent::__construct($registry);
 
         $this->manager = $manager;
     }
@@ -70,10 +74,7 @@ class DoctrineORMManager extends ModelManager
     }
 
     /**
-     * Deletes a set of $class identified by the provided $idx array.
-     *
-     * @param string                                           $class
-     * @param \Sonata\AdminBundle\Datagrid\ProxyQueryInterface $queryProxy
+     * {@inheritdoc}
      */
     public function batchDelete($class, ProxyQueryInterface $queryProxy)
     {

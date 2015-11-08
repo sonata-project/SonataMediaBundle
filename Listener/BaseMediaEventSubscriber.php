@@ -19,10 +19,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class BaseMediaEventSubscriber implements EventSubscriber
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -30,7 +33,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @return \Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getPool()
     {
@@ -38,25 +41,21 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @abstract
-     *
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      */
     abstract protected function recomputeSingleEntityChangeSet(EventArgs $args);
 
     /**
-     * @abstract
-     *
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      *
      * @return \Sonata\MediaBundle\Model\MediaInterface
      */
     abstract protected function getMedia(EventArgs $args);
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      *
-     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
+     * @return MediaProviderInterface
      */
     protected function getProvider(EventArgs $args)
     {
@@ -70,7 +69,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      */
     public function postUpdate(EventArgs $args)
     {
@@ -82,7 +81,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      */
     public function postRemove(EventArgs $args)
     {
@@ -94,7 +93,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      */
     public function postPersist(EventArgs $args)
     {
@@ -106,7 +105,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      */
     public function preUpdate(EventArgs $args)
     {
@@ -121,7 +120,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      */
     public function preRemove(EventArgs $args)
     {
@@ -133,7 +132,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * @param EventArgs $args
      */
     public function prePersist(EventArgs $args)
     {
