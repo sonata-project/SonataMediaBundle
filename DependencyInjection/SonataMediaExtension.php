@@ -51,9 +51,12 @@ class SonataMediaExtension extends Extension
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
 
-        $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
 
         $bundles = $container->getParameter('kernel.bundles');
+
+        if (isset($bundles['JMSSerializerBundle'])) {
+            $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
+        }
 
         if ('doctrine_orm' == $config['db_driver'] && isset($bundles['FOSRestBundle']) && isset($bundles['NelmioApiDocBundle'])) {
             $loader->load('api_controllers.xml');
