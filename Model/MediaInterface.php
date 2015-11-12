@@ -11,6 +11,8 @@
 
 namespace Sonata\MediaBundle\Model;
 
+use Imagine\Image\Box;
+
 interface MediaInterface
 {
     const STATUS_OK          = 1;
