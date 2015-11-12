@@ -189,7 +189,7 @@ interface MediaProviderInterface
     public function setTemplates(array $templates);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTemplates();
 

@@ -207,7 +207,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * Gets the class names as an array for both adapters.
      *
-     * @return array
+     * @return string[]
      */
     public function getAdapterClassNames()
     {

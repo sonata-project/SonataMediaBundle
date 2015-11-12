@@ -245,7 +245,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getTemplates()
     {
