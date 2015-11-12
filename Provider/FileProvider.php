@@ -142,12 +142,17 @@ class FileProvider extends BaseProvider
 
         // Delete the current file from the FS
         $oldMedia = clone $media;
-        $oldMedia->setProviderReference($media->getPreviousProviderReference());
 
-        $path = $this->getReferenceImage($oldMedia);
+        // if no previous reference is provided, it prevents
+        // Filesystem from trying to remove a directory
+        if ($media->getPreviousProviderReference() !== null) {
+            $oldMedia->setProviderReference($media->getPreviousProviderReference());
 
-        if ($this->getFilesystem()->has($path)) {
-            $this->getFilesystem()->delete($path);
+            $path = $this->getReferenceImage($oldMedia);
+
+            if ($this->getFilesystem()->has($path)) {
+                $this->getFilesystem()->delete($path);
+            }
         }
 
         $this->fixBinaryContent($media);
