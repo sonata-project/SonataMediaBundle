@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -22,14 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FeatureMediaBlockService extends MediaBlockService
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'Feature Media';
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -78,5 +71,15 @@ class FeatureMediaBlockService extends MediaBlockService
         return array(
             '/bundles/sonatamedia/blocks/feature_media/theme.css',
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }

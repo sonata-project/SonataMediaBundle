@@ -441,6 +441,18 @@
                 <source>warning_no_category</source>
                 <target>Pas de catégories définies</target>
             </trans-unit>
+            <trans-unit id="sonata.media.block.media">
+                <source>sonata.media.block.media</source>
+                <target>Medium</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.feature_media">
+                <source>sonata.media.block.feature_media</source>
+                <target>Media + Texte</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery">
+                <source>sonata.media.block.gallery</source>
+                <target>Galerie</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -440,7 +440,19 @@
             <trans-unit id="form.label_provider_reference">
                 <source>form.label_provider_reference</source>
                 <target>Provider Referenz</target>
-            </trans-unit>            
+            </trans-unit>
+            <trans-unit id="sonata.media.block.media">
+                <source>sonata.media.block.media</source>
+                <target>Medium</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.feature_media">
+                <source>sonata.media.block.feature_media</source>
+                <target>Erweitertes Medium</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery">
+                <source>sonata.media.block.gallery</source>
+                <target>Mediengalerie</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
