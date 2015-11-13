@@ -389,6 +389,14 @@
                 <source>widget_headline_information</source>
                 <target>widget_headline_information</target>
             </trans-unit>
+            <trans-unit id="widget_label_unlink">
+                <source>widget_label_unlink</source>
+                <target>widget_label_unlink</target>
+            </trans-unit>
+            <trans-unit id="widget_label_binary_content">
+                <source>widget_label_binary_content</source>
+                <target>widget_label_binary_content</target>
+            </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
                 <target>sonata_media_gallery_index</target>

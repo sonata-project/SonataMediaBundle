@@ -413,6 +413,14 @@
                 <source>widget_headline_information</source>
                 <target>Informationen</target>
             </trans-unit>
+            <trans-unit id="widget_label_unlink">
+                <source>widget_label_unlink</source>
+                <target>Löschen</target>
+            </trans-unit>
+            <trans-unit id="widget_label_binary_content">
+                <source>widget_label_binary_content</source>
+                <target>Datei</target>
+            </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
                 <target>Galerie</target>

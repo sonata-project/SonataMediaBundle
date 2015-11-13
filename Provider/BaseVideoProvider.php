@@ -145,7 +145,9 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add('binaryContent', 'text');
+        $formBuilder->add('binaryContent', 'text', array(
+            'label' => 'widget_label_binary_content',
+        ));
     }
 
     /**
