@@ -97,7 +97,7 @@ interface GalleryInterface
     public function setGalleryHasMedias($galleryHasMedias);
 
     /**
-     * @return array
+     * @return GalleryHasMediaInterface[]
      */
     public function getGalleryHasMedias();
 
