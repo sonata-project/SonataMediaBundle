@@ -17,6 +17,7 @@ use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -55,14 +56,6 @@ class MediaBlockService extends BaseBlockService
 
         $this->mediaManager = $mediaManager;
         $this->container    = $container;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'Media';
     }
 
     /**
@@ -216,5 +209,15 @@ class MediaBlockService extends BaseBlockService
     public function preUpdate(BlockInterface $block)
     {
         $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }

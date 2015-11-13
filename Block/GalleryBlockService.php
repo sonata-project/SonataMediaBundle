@@ -18,6 +18,7 @@ use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -55,14 +56,6 @@ class GalleryBlockService extends BaseBlockService
 
         $this->galleryManager = $galleryManager;
         $this->container      = $container;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'Gallery';
     }
 
     /**
@@ -241,5 +234,15 @@ class GalleryBlockService extends BaseBlockService
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }
