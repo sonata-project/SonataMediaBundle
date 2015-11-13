@@ -69,6 +69,9 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default/0011/24', $provider->generatePath($media));
         $this->assertEquals('/uploads/media/default/0011/24/thumb_1023456_big.png', $provider->generatePublicUrl($media, 'big'));
         $this->assertEquals('/uploads/media/default/0011/24/ASDASDAS.png', $provider->generatePublicUrl($media, 'reference'));
+
+        $this->assertEquals('default/0011/24/ASDASDAS.png', $provider->generatePrivateUrl($media, 'reference'));
+        $this->assertEquals('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testHelperProperies()
