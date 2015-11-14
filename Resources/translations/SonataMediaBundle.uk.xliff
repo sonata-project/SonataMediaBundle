@@ -425,10 +425,6 @@
                 <source>form.label_start_paused</source>
                 <target>form.label_start_paused</target>
             </trans-unit>
-            <trans-unit id="form.label_wrap">
-                <source>form.label_wrap</source>
-                <target>form.label_wrap</target>
-            </trans-unit>
             <trans-unit id="form.label_orientation_left">
                 <source>form.label_orientation_left</source>
                 <target>form.label_orientation_left</target>

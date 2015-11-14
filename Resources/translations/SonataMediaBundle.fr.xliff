@@ -489,10 +489,6 @@
                 <source>form.label_start_paused</source>
                 <target>Démarrer en pause</target>
             </trans-unit>
-            <trans-unit id="form.label_wrap">
-                <source>form.label_wrap</source>
-                <target>Encapsuleur HTML</target>
-            </trans-unit>
             <trans-unit id="form.label_orientation_left">
                 <source>form.label_orientation_left</source>
                 <target>Gauche</target>
