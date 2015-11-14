@@ -120,7 +120,9 @@ class GalleryBlockService extends BaseBlockService
         }
 
         // simulate an association ...
-        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media');
+        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media', array(
+            'translation_domain' => 'SonataMediaBundle',
+        ));
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
@@ -130,18 +132,39 @@ class GalleryBlockService extends BaseBlockService
             'sonata_field_description' => $fieldDescription,
             'class'                    => $this->getGalleryAdmin()->getClass(),
             'model_manager'            => $this->getGalleryAdmin()->getModelManager(),
+            'label'                    => 'form.label_gallery',
         ));
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('title', 'text', array('required' => false)),
-                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array('title', 'text', array(
+                    'required' => false,
+                    'label'    => 'form.label_title',
+                )),
+                array('context', 'choice', array(
+                    'required' => true,
+                    'choices'  => $contextChoices,
+                    'label'    => 'form.label_context',
+                )),
+                array('format', 'choice', array(
+                    'required' => count($formatChoices) > 0,
+                    'choices'  => $formatChoices,
+                    'label'    => 'form.label_format',
+                )),
                 array($builder, null, array()),
-                array('pauseTime', 'number', array()),
-                array('startPaused', 'sonata_type_boolean', array()),
-                array('wrap', 'sonata_type_boolean', array()),
+                array('pauseTime', 'number', array(
+                    'label' => 'form.label_pause_time',
+                )),
+                array('startPaused', 'checkbox', array(
+                    'required' => false,
+                    'label'    => 'form.label_start_paused',
+                )),
+                array('wrap', 'checkbox', array(
+                    'required' => false,
+                    'label'    => 'form.label_wrap',
+                )),
             ),
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 

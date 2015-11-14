@@ -106,10 +106,18 @@ class MediaBlockService extends BaseBlockService
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('title', 'text', array('required' => false)),
+                array('title', 'text', array(
+                    'required' => false,
+                    'label'    => 'form.label_title',
+                )),
                 array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array('format', 'choice', array(
+                    'required' => count($formatChoices) > 0,
+                    'choices'  => $formatChoices,
+                    'label'    => 'form.label_format',
+                )),
             ),
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
@@ -143,7 +151,9 @@ class MediaBlockService extends BaseBlockService
     protected function getMediaBuilder(FormMapper $formMapper)
     {
         // simulate an association ...
-        $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media');
+        $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', array(
+            'translation_domain' => 'SonataMediaBundle',
+        ));
         $fieldDescription->setAssociationAdmin($this->getMediaAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
@@ -156,6 +166,7 @@ class MediaBlockService extends BaseBlockService
             'sonata_field_description' => $fieldDescription,
             'class'                    => $this->getMediaAdmin()->getClass(),
             'model_manager'            => $this->getMediaAdmin()->getModelManager(),
+            'label'                    => 'form.label_media',
         ));
     }
 
