@@ -61,11 +61,13 @@ class VimeoProvider extends BaseVideoProvider
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $params = array(
-            'src'         => http_build_query($player_parameters),
-            'id'          => $player_parameters['js_swf_id'],
-            'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
-            'width'       => $box->getWidth(),
-            'height'      => $box->getHeight(),
+            'src'               => http_build_query($player_parameters),
+            'id'                => $player_parameters['js_swf_id'],
+            'frameborder'       => isset($options['frameborder']) ? $options['frameborder'] : 0,
+            'width'             => $box->getWidth(),
+            'height'            => $box->getHeight(),
+            'class'             => isset($options['class']) ? $options['class'] : '',
+            'allow_fullscreen'  => isset($options['allowfullscreen']) ? true : false,
         );
 
         return $params;
