@@ -12,21 +12,23 @@
 namespace Sonata\MediaBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
-use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
-
-use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\MediaBundle\Provider\Pool;
 
 abstract class BaseMediaAdmin extends Admin
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var CategoryManagerInterface
+     */
     protected $categoryManager;
 
     /**
@@ -90,7 +92,7 @@ abstract class BaseMediaAdmin extends Admin
                 'context'      => $media->getContext(),
                 'hide_context' => true,
                 'mode'         => 'tree',
-            )
+            ),
         ));
     }
 
@@ -114,10 +116,11 @@ abstract class BaseMediaAdmin extends Admin
             return $parameters;
         }
 
-        if ($filter = $this->getRequest()->get('filter')) {
+        $filter = $this->getRequest()->get('filter');
+        if ($filter && array_key_exists('context', $this->getRequest()->get('filter'))) {
             $context = $filter['context']['value'];
         } else {
-            $context   = $this->getRequest()->get('context', $this->pool->getDefaultContext());
+            $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
         }
 
         $providers = $this->pool->getProvidersByContext($context);
@@ -136,10 +139,10 @@ abstract class BaseMediaAdmin extends Admin
             $categoryId = $this->categoryManager->getRootCategory($context)->getId();
         }
 
-        return array_merge($parameters,array(
+        return array_merge($parameters, array(
             'context'      => $context,
             'category'     => $categoryId,
-            'hide_context' => (bool)$this->getRequest()->get('hide_context')
+            'hide_context' => (bool) $this->getRequest()->get('hide_context'),
         ));
     }
 
@@ -172,7 +175,7 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @return null|\Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getPool()
     {

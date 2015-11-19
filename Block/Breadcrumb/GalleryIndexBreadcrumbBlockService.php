@@ -20,6 +20,9 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
  */
 class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'Breadcrumb Index: Media Gallery';

@@ -76,11 +76,11 @@ class VimeoProvider extends BaseVideoProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-vimeo-square'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-vimeo-square'));
     }
 
     /**
-     * {@inheritdoc}
+     * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -88,8 +88,8 @@ class VimeoProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/vimeo\.com\/(\d+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[1]);
+        if (preg_match("/vimeo\.com\/(video\/|)(\d+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[2]);
         }
     }
 

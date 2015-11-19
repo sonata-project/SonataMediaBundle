@@ -13,10 +13,13 @@ namespace Sonata\MediaBundle\Twig\Node;
 
 class ThumbnailNode extends \Twig_Node
 {
+    /**
+     * @var string
+     */
     protected $extensionName;
 
     /**
-     * @param array                 $extensionName
+     * @param string                $extensionName
      * @param \Twig_Node_Expression $media
      * @param \Twig_Node_Expression $format
      * @param \Twig_Node_Expression $attributes
@@ -27,7 +30,7 @@ class ThumbnailNode extends \Twig_Node
     {
         $this->extensionName = $extensionName;
 
-        parent::__construct(array('media' => $media, 'format' => $format,'attributes' => $attributes), array(), $lineno, $tag);
+        parent::__construct(array('media' => $media, 'format' => $format, 'attributes' => $attributes), array(), $lineno, $tag);
     }
 
     /**

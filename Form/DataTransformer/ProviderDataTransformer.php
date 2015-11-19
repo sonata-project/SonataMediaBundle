@@ -11,14 +11,20 @@
 
 namespace Sonata\MediaBundle\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var array
+     */
     protected $options;
 
     /**
@@ -31,18 +37,17 @@ class ProviderDataTransformer implements DataTransformerInterface
         $this->pool    = $pool;
         $this->options = $this->getOptions($options);
         $this->class   = $class;
-
     }
 
     /**
-     * Define the default options for the DataTransformer
+     * Define the default options for the DataTransformer.
      *
      * @param array $options
+     *
      * @return array
      */
     protected function getOptions(array $options)
     {
-
         return array_merge(array(
             'provider'      => false,
             'context'       => false,
@@ -57,7 +62,7 @@ class ProviderDataTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if ($value === null) {
-            return new $this->class;
+            return new $this->class();
         }
 
         return $value;
@@ -74,22 +79,23 @@ class ProviderDataTransformer implements DataTransformerInterface
 
         $binaryContent = $media->getBinaryContent();
 
-        // no binary content and no media id
-        if (empty($binaryContent) && $media->getId() === null) {
-            if ($this->options['empty_on_new']) {
-                return null;
+        // no binary
+        if (empty($binaryContent)) {
+            // and no media id
+            if ($media->getId() === null && $this->options['empty_on_new']) {
+                return;
+            } elseif ($media->getId()) {
+                return $media;
             }
 
-            return $media;
-        }
+            $media->setProviderStatus(MediaInterface::STATUS_PENDING);
+            $media->setProviderReference(MediaInterface::MISSING_BINARY_REFERENCE);
 
-        // no update, but the the media exists ...
-        if (empty($binaryContent) && $media->getId() !== null) {
             return $media;
         }
 
         // create a new media to avoid erasing other media or not ...
-        $newMedia = $this->options['new_on_update'] ? new $this->class : $media;
+        $newMedia = $this->options['new_on_update'] ? new $this->class() : $media;
 
         $newMedia->setProviderName($media->getProviderName());
         $newMedia->setContext($media->getContext());

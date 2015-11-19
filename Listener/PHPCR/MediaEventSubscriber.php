@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
@@ -33,11 +33,11 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
-        /** @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
+        /* @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
         /** @var $dm \Doctrine\ODM\PHPCR\DocumentManager */
         $dm = $args->getObjectManager();
 
@@ -47,7 +47,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getMedia(EventArgs $args)
     {

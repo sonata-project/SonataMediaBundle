@@ -13,13 +13,16 @@ namespace Sonata\MediaBundle\Twig\Node;
 
 class PathNode extends \Twig_Node
 {
+    /**
+     * @var string
+     */
     protected $extensionName;
 
     /**
-     * @param array                 $extensionName
+     * @param string                $extensionName
      * @param \Twig_Node_Expression $media
      * @param \Twig_Node_Expression $format
-     * @param integer               $lineno
+     * @param int                   $lineno
      * @param string                $tag
      */
     public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $format, $lineno, $tag = null)

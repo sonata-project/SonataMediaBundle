@@ -11,24 +11,24 @@
 
 namespace Sonata\MediaBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
 
 /**
- * Bundle\MediaBundle\Document\BaseGallery
+ * Bundle\MediaBundle\Document\BaseGallery.
  */
 abstract class BaseGallery extends Gallery
 {
-
     /**
-     * {@inheritdoc}
+     * Constructor.
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection;
+        $this->galleryHasMedias = new ArrayCollection();
     }
 
     /**
-     * Pre Persist method
+     * Pre Persist method.
      */
     public function prePersist()
     {
@@ -37,7 +37,7 @@ abstract class BaseGallery extends Gallery
     }
 
     /**
-     * Pre Update method
+     * Pre Update method.
      */
     public function preUpdate()
     {

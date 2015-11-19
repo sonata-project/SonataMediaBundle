@@ -11,14 +11,13 @@
 
 namespace Sonata\MediaBundle\Admin\ODM;
 
-use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 
 class MediaAdmin extends Admin
 {
     /**
-     * @param  \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {

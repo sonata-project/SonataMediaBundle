@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="en" target-language="hu" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
                 <source>default</source>
@@ -48,11 +48,11 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_create">
                 <source>breadcrumb.link_gallery_create</source>
-                <target>Létrehoz</target>
+                <target>Létrehozás</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_show">
                 <source>breadcrumb.link_media_show</source>
-                <target>Mutat</target>
+                <target>Megjelenítés</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
@@ -84,11 +84,11 @@
             </trans-unit>
             <trans-unit id="form.label_category">
                 <source>form.label_category</source>
-                <target>form.label_category</target>
+                <target>Kategória</target>
             </trans-unit>
             <trans-unit id="filter.label_provider_reference">
                 <source>filter.label_provider_reference</source>
-                <target>Provider Reference</target>
+                <target>Szolgáltató</target>
             </trans-unit>
             <trans-unit id="filter.label_enabled">
                 <source>filter.label_enabled</source>
@@ -104,23 +104,23 @@
             </trans-unit>
             <trans-unit id="filter.label_category">
                 <source>filter.label_category</source>
-                <target>filter.label_category</target>
+                <target>Kategória</target>
             </trans-unit>
             <trans-unit id="filter.label_author_name">
                 <source>filter.label_author_name</source>
-                <target>filter.label_author_name</target>
+                <target>Szerző neve</target>
             </trans-unit>
             <trans-unit id="filter.label_width">
                 <source>filter.label_width</source>
-                <target>filter.label_width</target>
+                <target>Szélesség</target>
             </trans-unit>
             <trans-unit id="filter.label_height">
                 <source>filter.label_height</source>
-                <target>filter.label_height</target>
+                <target>Magasság</target>
             </trans-unit>
             <trans-unit id="filter.label_content_type">
                 <source>filter.label_content_type</source>
-                <target>filter.label_content_type</target>
+                <target>Típus</target>
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
@@ -156,7 +156,7 @@
             </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
-                <target>CDN cache törlése</target>
+                <target>CDN gyorsítótár törlése</target>
             </trans-unit>
             <trans-unit id="form.label_description">
                 <source>form.label_description</source>
@@ -164,11 +164,11 @@
             </trans-unit>
             <trans-unit id="form.label_copyright">
                 <source>form.label_copyright</source>
-                <target>Copyright</target>
+                <target>Szerzői jog</target>
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
-                <target>File</target>
+                <target>Fájl</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
@@ -192,7 +192,7 @@
             </trans-unit>
             <trans-unit id="label.copyright">
                 <source>label.copyright</source>
-                <target>Copyright</target>
+                <target>Szerzői jog</target>
             </trans-unit>
             <trans-unit id="label.author_name">
                 <source>label.author_name</source>
@@ -204,11 +204,11 @@
             </trans-unit>
             <trans-unit id="label.to_be_flushed">
                 <source>label.to_be_flushed</source>
-                <target>Cache törlésre vár</target>
+                <target>Gyorsítótár törlésre vár</target>
             </trans-unit>
             <trans-unit id="label.flushed_at">
                 <source>label.flushed_at</source>
-                <target>Cache törölve</target>
+                <target>Gyorsítótár törölve</target>
             </trans-unit>
             <trans-unit id="label.public_url">
                 <source>label.public_url</source>
@@ -220,7 +220,7 @@
             </trans-unit>
             <trans-unit id="label.file">
                 <source>label.file</source>
-                <target>File</target>
+                <target>Fájl</target>
             </trans-unit>
             <trans-unit id="label.author">
                 <source>label.author</source>
@@ -232,7 +232,11 @@
             </trans-unit>
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
-                <target>CDN cache törlése</target>
+                <target>CDN gyorsítótár törlése</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN törlési azonosító</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
@@ -307,7 +311,7 @@
             </trans-unit>
             <trans-unit id="list.label_author_name">
                 <source>list.label_author_name</source>
-                <target>list.label_author_name</target>
+                <target>Szerző</target>
             </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
@@ -327,7 +331,7 @@
             </trans-unit>
             <trans-unit id="list.label_author">
                 <source>list.label_author</source>
-                <target>list.label_author</target>
+                <target>Szerző</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
@@ -355,7 +359,7 @@
             </trans-unit>
             <trans-unit id="sonata.media.provider.file">
                 <source>sonata.media.provider.file</source>
-                <target>File</target>
+                <target>Fájl</target>
             </trans-unit>
             <trans-unit id="title.media_preview">
                 <source>title.media_preview</source>
@@ -381,21 +385,73 @@
                 <source>no_linked_media</source>
                 <target>Nincs az objektumhoz média linkelve</target>
             </trans-unit>
+            <trans-unit id="widget_label_type">
+                <source>widget_label_type</source>
+                <target>Típus</target>
+            </trans-unit>
+            <trans-unit id="widget_label_context">
+                <source>widget_label_context</source>
+                <target>Környezet</target>
+            </trans-unit>
+            <trans-unit id="widget_headline_information">
+                <source>widget_headline_information</source>
+                <target>Információ</target>
+            </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
                 <target>Galéria</target>
             </trans-unit>
             <trans-unit id="sonata_template_box_media_gallery_block">
                 <source>sonata_template_box_media_gallery_block</source>
-                <target>This is the gallery media block. Feel free to override it.</target>
+                <target>Ez itt a galéria blokja. Bátran módosítsd.</target>
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
-                <target>list.label_description</target>
+                <target>Leírás</target>
             </trans-unit>
             <trans-unit id="list.label_size">
                 <source>list.label_size</source>
-                <target>list.label_size</target>
+                <target>Méret</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>DailyMotion videó hozzáadása</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>YouTube videó hozzáadása</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Vimeo videó hozzáadása</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Kép hozzáadása</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Fájl hozzáadása</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Nem lett kategória kiválasztva</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Szolgáltató</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.media">
+                <source>sonata.media.block.media</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.feature_media">
+                <source>sonata.media.block.feature_media</source>
+                <target>Kiemelt médie</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery">
+                <source>sonata.media.block.gallery</source>
+                <target>Galéria</target>
             </trans-unit>
         </body>
     </file>

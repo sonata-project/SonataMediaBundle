@@ -11,20 +11,12 @@
 
 namespace Sonata\MediaBundle\Document;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\DocumentRepository;
-
 use Sonata\CoreBundle\Model\BaseDocumentManager;
 
 class MediaManager extends BaseDocumentManager
 {
-
     /**
      * {@inheritdoc}
-     *
-     * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
-     *
-     * @throws \InvalidArgumentException When entity is an invalid object
      */
     public function save($entity, $andFlush = true)
     {
@@ -44,5 +36,13 @@ class MediaManager extends BaseDocumentManager
             // BC compatibility with previous signature
             parent::save($entity, true);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
+    {
+        throw new \RuntimeException('Not Implemented yet');
     }
 }

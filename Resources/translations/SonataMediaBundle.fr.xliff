@@ -238,6 +238,10 @@
                 <source>label.cdn_is_flushable</source>
                 <target>À rafraîchir sur le CDN</target>
             </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
+            </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
                 <target>Changer la video</target>
@@ -405,6 +409,18 @@
                 <source>no_linked_media</source>
                 <target>Aucun média lié</target>
             </trans-unit>
+            <trans-unit id="widget_label_type">
+                <source>widget_label_type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="widget_label_context">
+                <source>widget_label_context</source>
+                <target>Contexte</target>
+            </trans-unit>
+            <trans-unit id="widget_headline_information">
+                <source>widget_headline_information</source>
+                <target>Informations</target>
+            </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
                 <target>Galeries</target>
@@ -424,6 +440,18 @@
             <trans-unit id="warning_no_category">
                 <source>warning_no_category</source>
                 <target>Pas de catégories définies</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.media">
+                <source>sonata.media.block.media</source>
+                <target>Medium</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.feature_media">
+                <source>sonata.media.block.feature_media</source>
+                <target>Media + Texte</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery">
+                <source>sonata.media.block.gallery</source>
+                <target>Galerie</target>
             </trans-unit>
         </body>
     </file>

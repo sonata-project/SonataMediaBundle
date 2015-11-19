@@ -74,7 +74,6 @@
 
         <service id="sonata.media.metadata.proxy" class="%sonata.media.metadata.proxy.class%">
             <argument type="service" id="service_container" />
-            <argument type="collection" />
         </service>
 
         <service id="sonata.media.metadata.amazon" class="%sonata.media.metadata.amazon.class%">

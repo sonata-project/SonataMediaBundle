@@ -11,31 +11,40 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Buzz\Browser;
 use Gaufrette\Filesystem;
+use Imagine\Image\Box;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\Metadata;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Buzz\Browser;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
+    /**
+     * @var Browser
+     */
     protected $browser;
+
+    /**
+     * @var MetadataBuilderInterface
+     */
     protected $metadata;
 
     /**
-     * @param string                                           $name
-     * @param \Gaufrette\Filesystem                            $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface             $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
-     * @param \Buzz\Browser                                    $browser
+     * @param string                        $name
+     * @param Filesystem                    $filesystem
+     * @param CDNInterface                  $cdn
+     * @param GeneratorInterface            $pathGenerator
+     * @param ThumbnailInterface            $thumbnail
+     * @param Browser                       $browser
+     * @param MetadataBuilderInterface|null $metadata
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null)
     {
@@ -50,7 +59,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", null, "SonataMediaBundle", array('class' => 'fa fa-video-camera'));
+        return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', array('class' => 'fa fa-video-camera'));
     }
 
     /**
@@ -85,7 +94,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        return $this->getCdn()->getPath(sprintf('%s/thumb_%d_%s.jpg',
+        return $this->getCdn()->getPath(sprintf('%s/thumb_%s_%s.jpg',
             $this->generatePath($media),
             $media->getId(),
             $format
@@ -97,7 +106,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%d_%s.jpg',
+        return sprintf('%s/thumb_%s_%s.jpg',
             $this->generatePath($media),
             $media->getId(),
             $format
@@ -126,8 +135,8 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('binaryContent', 'text', array(
             'constraints' => array(
                 new NotBlank(),
-                new NotNull()
-            )
+                new NotNull(),
+            ),
         ));
     }
 
@@ -171,8 +180,8 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * @throws \RuntimeException
      *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string                                   $url
+     * @param MediaInterface $media
+     * @param string         $url
      *
      * @return mixed
      */
@@ -181,24 +190,24 @@ abstract class BaseVideoProvider extends BaseProvider
         try {
             $response = $this->browser->get($url);
         } catch (\RuntimeException $e) {
-            throw new \RuntimeException('Unable to retrieve the video information for :' . $url, null, $e);
+            throw new \RuntimeException('Unable to retrieve the video information for :'.$url, null, $e);
         }
 
         $metadata = json_decode($response->getContent(), true);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to decode the video information for :' . $url);
+            throw new \RuntimeException('Unable to decode the video information for :'.$url);
         }
 
         return $metadata;
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string                                   $format
-     * @param array                                    $options
+     * @param MediaInterface $media
+     * @param string         $format
+     * @param array          $options
      *
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
     {
@@ -211,7 +220,6 @@ abstract class BaseVideoProvider extends BaseProvider
                 'width'  => isset($options['width']) ? $options['width'] : null,
                 'height' => isset($options['height']) ? $options['height'] : null,
             );
-
         } else {
             $settings = $this->getFormat($format);
         }

@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Provider\DailyMotionProvider;
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Buzz\Browser;
 use Buzz\Message\Response;
 use Imagine\Image\Box;
+use Sonata\MediaBundle\Provider\DailyMotionProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +54,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('les tests fonctionnels - Symfony Live 2009');
         $media->setProviderName('dailymotion');
         $media->setProviderReference('x9wjql');
@@ -71,7 +71,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnail()
     {
-        $response = $this->getMock('Buzz\Message\MessageInterface');
+        $response = $this->getMock('Buzz\Message\AbstractMessage');
         $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
 
         $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
@@ -80,7 +80,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider = $this->getProvider($browser);
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('les tests fonctionnels - Symfony Live 2009');
         $media->setProviderName('dailymotion');
         $media->setProviderReference('x9wjql');
@@ -112,7 +112,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent('x9wjql');
         $media->setId(1023456);
 
@@ -135,7 +135,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent('http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds');
         $media->setId(1023456);
 
@@ -174,7 +174,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('admin', array('width' => 100));
-        $media = new Media;
+        $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);

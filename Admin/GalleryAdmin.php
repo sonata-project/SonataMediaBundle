@@ -12,20 +12,23 @@
 namespace Sonata\MediaBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdmin extends Admin
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
     /**
-     * @param string                            $code
-     * @param string                            $class
-     * @param string                            $baseControllerName
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     * @param Pool   $pool
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
     {
@@ -64,8 +67,8 @@ class GalleryAdmin extends Admin
         $formMapper
             ->with('Options')
                 ->add('context', 'sonata_type_translatable_choice', array(
-                    'choices' => $contexts,
-                    'catalogue' => 'SonataMediaBundle'
+                    'choices'   => $contexts,
+                    'catalogue' => 'SonataMediaBundle',
                 ))
                 ->add('enabled', null, array('required' => false))
                 ->add('name')
@@ -79,7 +82,7 @@ class GalleryAdmin extends Admin
                         'inline'            => 'table',
                         'sortable'          => 'position',
                         'link_parameters'   => array('context' => $context),
-                        'admin_code'        => 'sonata.media.admin.gallery_has_media'
+                        'admin_code'        => 'sonata.media.admin.gallery_has_media',
                     )
                 )
             ->end()

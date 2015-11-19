@@ -11,31 +11,32 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\CoreBundle\Model\Metadata;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Buzz\Browser;
 use Gaufrette\Filesystem;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Buzz\Browser;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class YouTubeProvider extends BaseVideoProvider
 {
-
-    /* @var boolean */
+    /**
+     * @var bool
+     */
     protected $html5;
 
     /**
-     * @param string                                                $name
-     * @param \Gaufrette\Filesystem                                 $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface                  $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface      $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface      $thumbnail
-     * @param \Buzz\Browser                                         $browser
-     * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
-     * @param boolean                                               $html5
+     * @param string                   $name
+     * @param Filesystem               $filesystem
+     * @param CDNInterface             $cdn
+     * @param GeneratorInterface       $pathGenerator
+     * @param ThumbnailInterface       $thumbnail
+     * @param Browser                  $browser
+     * @param MetadataBuilderInterface $metadata
+     * @param bool                     $html5
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null, $html5 = false)
     {
@@ -48,7 +49,7 @@ class YouTubeProvider extends BaseVideoProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().".description", false, "SonataMediaBundle", array('class' => 'fa fa-youtube'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-youtube'));
     }
 
     /**
@@ -155,7 +156,7 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=window, the Flash movie is not rendered in the page.
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
-            'wmode' => 'window'
+            'wmode' => 'window',
 
         );
 
@@ -179,7 +180,7 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=window, the Flash movie is not rendered in the page.
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
-            'wmode' => $default_player_url_parameters['wmode']
+            'wmode' => $default_player_url_parameters['wmode'],
 
         );
 
@@ -188,21 +189,21 @@ class YouTubeProvider extends BaseVideoProvider
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $player_parameters = array_merge($default_player_parameters, isset($options['player_parameters']) ? $options['player_parameters'] : array(), array(
-            'width' => $box->getWidth(),
-            'height' => $box->getHeight()
+            'width'  => $box->getWidth(),
+            'height' => $box->getHeight(),
         ));
 
         $params = array(
-            'html5' => $options['html5'],
+            'html5'                 => $options['html5'],
             'player_url_parameters' => http_build_query($player_url_parameters),
-            'player_parameters' => $player_parameters
+            'player_parameters'     => $player_parameters,
         );
 
         return $params;
     }
 
     /**
-     * {@inheritdoc}
+     * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -210,8 +211,12 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/(?<=v(\=|\/))([-a-zA-Z0-9_]+)|(?<=youtu\.be\/)([-a-zA-Z0-9_]+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[2]);
+        if (strlen($media->getBinaryContent()) === 11) {
+            return;
+        }
+
+        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\#\?&\"'>]+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[1]);
         }
     }
 

@@ -230,6 +230,10 @@
                 <source>label.cdn_is_flushable</source>
                 <target>Huuhdo CDN</target>
             </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
+            </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
                 <target>Vaihda video</target>
@@ -397,6 +401,18 @@
                 <source>no_linked_media</source>
                 <target>Objektiin ei ole linkitetty mitään mediaa</target>
             </trans-unit>
+            <trans-unit id="widget_label_type">
+                <source>widget_label_type</source>
+                <target>widget_label_type</target>
+            </trans-unit>
+            <trans-unit id="widget_label_context">
+                <source>widget_label_context</source>
+                <target>widget_label_context</target>
+            </trans-unit>
+            <trans-unit id="widget_headline_information">
+                <source>widget_headline_information</source>
+                <target>widget_headline_information</target>
+            </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
                 <target>Galleria</target>
@@ -424,6 +440,18 @@
             <trans-unit id="form.label_provider_reference">
                 <source>form.label_provider_reference</source>
                 <target>Viittaus mediatoimittajaan</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.media">
+                <source>sonata.media.block.media</source>
+                <target>sonata.media.block.media</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.feature_media">
+                <source>sonata.media.block.feature_media</source>
+                <target>sonata.media.block.feature_media</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery">
+                <source>sonata.media.block.gallery</source>
+                <target>sonata.media.block.gallery</target>
             </trans-unit>
         </body>
     </file>

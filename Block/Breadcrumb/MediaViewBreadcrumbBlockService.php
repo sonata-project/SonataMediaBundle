@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Block\Breadcrumb;
 
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * BlockService for view Media.
@@ -45,5 +46,17 @@ class MediaViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
         }
 
         return $menu;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureSettings(OptionsResolver $resolver)
+    {
+        parent::configureSettings($resolver);
+
+        $resolver->setDefaults(array(
+            'media'  => false,
+        ));
     }
 }

@@ -38,6 +38,13 @@
             <argument />
         </service>
 
+        <service id="sonata.media.cdn.cloudfront" class="Sonata\MediaBundle\CDN\CloudFront">
+            <argument />
+            <argument />
+            <argument />
+            <argument />
+        </service>
+
         <service id="sonata.media.cdn.fallback" class="Sonata\MediaBundle\CDN\Fallback">
             <argument />
             <argument />

@@ -17,18 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
 interface DownloadStrategyInterface
 {
     /**
-     * @abstract
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param MediaInterface $media
+     * @param Request        $request
      *
      * @return bool
      */
     public function isGranted(MediaInterface $media, Request $request);
 
     /**
-     * @abstract
-     *
      * @return string
      */
     public function getDescription();

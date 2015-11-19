@@ -15,6 +15,9 @@ use Sonata\MediaBundle\Twig\Node\MediaNode;
 
 class MediaTokenParser extends \Twig_TokenParser
 {
+    /**
+     * @var string
+     */
     protected $extensionName;
 
     /**

@@ -13,8 +13,14 @@ namespace Sonata\MediaBundle\CDN;
 
 class Fallback implements CDNInterface
 {
+    /**
+     * @var CDNInterface
+     */
     protected $cdn;
 
+    /**
+     * @var CDNInterface
+     */
     protected $fallback;
 
     /**
@@ -44,7 +50,7 @@ class Fallback implements CDNInterface
      */
     public function flushByString($string)
     {
-        $this->cdn->flushByString($string);
+        return $this->cdn->flushByString($string);
     }
 
     /**
@@ -52,7 +58,7 @@ class Fallback implements CDNInterface
      */
     public function flush($string)
     {
-        $this->cdn->flush($string);
+        return $this->cdn->flush($string);
     }
 
     /**
@@ -60,6 +66,14 @@ class Fallback implements CDNInterface
      */
     public function flushPaths(array $paths)
     {
-        $this->cdn->flushPaths($paths);
+        return $this->cdn->flushPaths($paths);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFlushStatus($identifier)
+    {
+        return $this->cdn->getFlushStatus($identifier);
     }
 }

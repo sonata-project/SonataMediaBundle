@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -10,31 +11,37 @@
 
 namespace Sonata\MediaBundle\Block;
 
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
-
+use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\BlockBundle\Block\BaseBlockService;
-
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
- * PageExtension
+ * PageExtension.
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class GalleryBlockService extends BaseBlockService
 {
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryAdmin;
 
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryManager;
 
     /**
@@ -52,15 +59,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'Gallery';
-    }
-
-    /**
-     * @return \Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getMediaPool()
     {
@@ -68,7 +67,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @return \Sonata\AdminBundle\Admin\AdminInterface
+     * @return AdminInterface
      */
     public function getGalleryAdmin()
     {
@@ -82,15 +81,7 @@ class GalleryBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-    {
-
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultSettings(OptionsResolverInterface $resolver)
+    public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'gallery'     => false,
@@ -101,7 +92,7 @@ class GalleryBlockService extends BaseBlockService
             'startPaused' => false,
             'wrap'        => true,
             'template'    => 'SonataMediaBundle:Block:block_gallery.html.twig',
-            'galleryId'   => null
+            'galleryId'   => null,
         ));
     }
 
@@ -121,7 +112,6 @@ class GalleryBlockService extends BaseBlockService
         $formatChoices = array();
 
         if ($gallery instanceof GalleryInterface) {
-
             $formats = $this->getMediaPool()->getFormatNamesByContext($gallery->getContext());
 
             foreach ($formats as $code => $format) {
@@ -130,16 +120,16 @@ class GalleryBlockService extends BaseBlockService
         }
 
         // simulate an association ...
-        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media' );
+        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media');
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE));
+        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE));
 
         $builder = $formMapper->create('galleryId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
-            'class'             => $this->getGalleryAdmin()->getClass(),
-            'model_manager'     => $this->getGalleryAdmin()->getModelManager()
+            'class'                    => $this->getGalleryAdmin()->getClass(),
+            'model_manager'            => $this->getGalleryAdmin()->getModelManager(),
         ));
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
@@ -151,7 +141,7 @@ class GalleryBlockService extends BaseBlockService
                 array('pauseTime', 'number', array()),
                 array('startPaused', 'sonata_type_boolean', array()),
                 array('wrap', 'sonata_type_boolean', array()),
-            )
+            ),
         ));
     }
 
@@ -201,7 +191,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\GalleryInterface $gallery
+     * @param GalleryInterface $gallery
      *
      * @return array
      */
@@ -231,7 +221,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return false|string
      */
@@ -244,5 +234,15 @@ class GalleryBlockService extends BaseBlockService
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }

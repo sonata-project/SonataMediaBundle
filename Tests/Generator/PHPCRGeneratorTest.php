@@ -16,13 +16,11 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 
 class PHPCRGeneratorTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testPHPCRGenerator()
     {
+        $generator = new PHPCRGenerator();
 
-        $generator = new PHPCRGenerator;
-
-        $media = new Media;
+        $media = new Media();
         $media->setContext('user');
 
         $media->setId('nodename');

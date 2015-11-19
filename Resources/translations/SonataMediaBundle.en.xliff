@@ -230,6 +230,10 @@
                 <source>label.cdn_is_flushable</source>
                 <target>Flush CDN</target>
             </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>CDN flush identifier</target>
+            </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
                 <target>Change video</target>
@@ -303,7 +307,7 @@
             </trans-unit>
             <trans-unit id="list.label_author_name">
                 <source>list.label_author_name</source>
-                <target>list.label_author_name</target>
+                <target>Author name</target>
             </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
@@ -397,6 +401,18 @@
                 <source>no_linked_media</source>
                 <target>No media linked to the object</target>
             </trans-unit>
+            <trans-unit id="widget_label_type">
+                <source>widget_label_type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="widget_label_context">
+                <source>widget_label_context</source>
+                <target>Context</target>
+            </trans-unit>
+            <trans-unit id="widget_headline_information">
+                <source>widget_headline_information</source>
+                <target>Information</target>
+            </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
                 <target>Gallery</target>
@@ -424,6 +440,18 @@
             <trans-unit id="form.label_provider_reference">
                 <source>form.label_provider_reference</source>
                 <target>Provider Reference</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.media">
+                <source>sonata.media.block.media</source>
+                <target>Media</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.feature_media">
+                <source>sonata.media.block.feature_media</source>
+                <target>Feature media</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery">
+                <source>sonata.media.block.gallery</source>
+                <target>Media gallery</target>
             </trans-unit>
         </body>
     </file>

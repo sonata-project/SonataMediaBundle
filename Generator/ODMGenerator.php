@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -15,11 +16,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class ODMGenerator implements GeneratorInterface
 {
     /**
-     * @abstract
-     *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePath(MediaInterface $media)
     {

@@ -17,16 +17,25 @@ use Sonata\NotificationBundle\Backend\BackendInterface;
 
 class ConsumerThumbnail implements ThumbnailInterface
 {
+    /**
+     * @var string
+     */
     protected $id;
 
+    /**
+     * @var ThumbnailInterface
+     */
     protected $thumbnail;
 
+    /**
+     * @var BackendInterface
+     */
     protected $backend;
 
     /**
-     * @param string                                              $id
-     * @param ThumbnailInterface                                  $thumbnail
-     * @param \Sonata\NotificationBundle\Backend\BackendInterface $backend
+     * @param string             $id
+     * @param ThumbnailInterface $thumbnail
+     * @param BackendInterface   $backend
      */
     public function __construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend)
     {
@@ -69,8 +78,8 @@ class ConsumerThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
-        return $this->thumbnail->delete($provider, $media);
+        return $this->thumbnail->delete($provider, $media, $formats);
     }
 }

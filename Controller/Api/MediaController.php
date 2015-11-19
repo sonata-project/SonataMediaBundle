@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -8,33 +9,33 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Sonata\MediaBundle\Controller\Api;
 
-use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Route;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\View\View as FOSRestView;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-use Sonata\MediaBundle\Model\Media;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * Class MediaController
+ * Class MediaController.
  *
  * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator)
  *
- * @package Sonata\MediaBundle\Controller\Api
  *
  * @author Hugo Briand <briand@ekino.com>
  */
@@ -56,7 +57,7 @@ class MediaController
     protected $formFactory;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param MediaManagerInterface $mediaManager
      * @param Pool                  $mediaPool
@@ -70,11 +71,11 @@ class MediaController
     }
 
     /**
-     * Retrieves the list of medias (paginated)
+     * Retrieves the list of medias (paginated).
      *
      * @ApiDoc(
      *  resource=true,
-     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"="sonata_api_read"}
+     *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"="sonata_api_read"}
      * )
      *
      * @QueryParam(name="page", requirements="\d+", default="1", description="Page for media list pagination")
@@ -86,29 +87,36 @@ class MediaController
      *
      * @param ParamFetcherInterface $paramFetcher
      *
-     * @return Media[]
+     * @return PagerInterface
      */
     public function getMediaAction(ParamFetcherInterface $paramFetcher)
     {
+        $supportedCriteria = array(
+            'enabled' => '',
+        );
+
         $page    = $paramFetcher->get('page');
-        $count   = $paramFetcher->get('count');
-        $orderBy = $paramFetcher->get('orderBy');
+        $limit   = $paramFetcher->get('count');
+        $sort    = $paramFetcher->get('orderBy');
+        $criteria = array_intersect_key($paramFetcher->all(), $supportedCriteria);
 
-        $criteria = $paramFetcher->all();
-
-        unset($criteria['page'], $criteria['count'], $criteria['orderBy']);
-
-        foreach ($criteria as $key => $crit) {
-            if (null === $crit) {
+        foreach ($criteria as $key => $value) {
+            if (null === $value) {
                 unset($criteria[$key]);
             }
         }
 
-        return $this->mediaManager->findBy($criteria, $orderBy, $count, $page);
+        if (!$sort) {
+            $sort = array();
+        } elseif (!is_array($sort)) {
+            $sort = array($sort => 'asc');
+        }
+
+        return $this->mediaManager->getPager($criteria, $page, $limit, $sort);
     }
 
     /**
-     * Retrieves a specific media
+     * Retrieves a specific media.
      *
      * @ApiDoc(
      *  requirements={
@@ -125,7 +133,7 @@ class MediaController
      *
      * @param $id
      *
-     * @return Media
+     * @return MediaInterface
      */
     public function getMediumAction($id)
     {
@@ -133,7 +141,7 @@ class MediaController
     }
 
     /**
-     * Returns media urls for each format
+     * Returns media urls for each format.
      *
      * @ApiDoc(
      *  requirements={
@@ -168,7 +176,7 @@ class MediaController
     }
 
     /**
-     * Returns media urls for each format
+     * Returns media binary content for each format.
      *
      * @ApiDoc(
      *  requirements={
@@ -181,11 +189,11 @@ class MediaController
      *  }
      * )
      *
-     * @param integer $id     The media id
-     * @param string  $format The format
+     * @param int     $id      The media id
+     * @param string  $format  The format
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getMediumBinaryAction($id, $format, Request $request)
     {
@@ -201,7 +209,7 @@ class MediaController
     }
 
     /**
-     * Deletes a medium
+     * Deletes a medium.
      *
      * @ApiDoc(
      *  requirements={
@@ -214,9 +222,9 @@ class MediaController
      *  }
      * )
      *
-     * @param integer $id A medium identifier
+     * @param int $id A medium identifier
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      *
      * @throws NotFoundHttpException
      */
@@ -232,7 +240,7 @@ class MediaController
     /**
      * Updates a medium
      * If you need to upload a file (depends on the provider) you will need to do so by sending content as a multipart/form-data HTTP Request
-     * See documentation for more details
+     * See documentation for more details.
      *
      * @ApiDoc(
      *  requirements={
@@ -247,10 +255,10 @@ class MediaController
      *  }
      * )
      *
-     * @param integer $id      A Medium identifier
+     * @param int     $id      A Medium identifier
      * @param Request $request A Symfony request
      *
-     * @return Media
+     * @return MediaInterface
      *
      * @throws NotFoundHttpException
      */
@@ -262,6 +270,8 @@ class MediaController
             $provider = $this->mediaPool->getProvider($medium->getProviderName());
         } catch (\RuntimeException $ex) {
             throw new NotFoundHttpException($ex->getMessage(), $ex);
+        } catch (\InvalidArgumentException $ex) {
+            throw new NotFoundHttpException($ex->getMessage(), $ex);
         }
 
         return $this->handleWriteMedium($request, $medium, $provider);
@@ -270,7 +280,7 @@ class MediaController
     /**
      * Adds a medium of given provider
      * If you need to upload a file (depends on the provider) you will need to do so by sending content as a multipart/form-data HTTP Request
-     * See documentation for more details
+     * See documentation for more details.
      *
      * @ApiDoc(
      *  resource=true,
@@ -286,9 +296,9 @@ class MediaController
      * @Route(requirements={"provider"="[A-Za-z0-9.]*"})
      *
      * @param string  $provider A media provider
-     * @param Request $request A Symfony request
+     * @param Request $request  A Symfony request
      *
-     * @return Media
+     * @return MediaInterface
      *
      * @throws NotFoundHttpException
      */
@@ -301,19 +311,54 @@ class MediaController
             $mediaProvider = $this->mediaPool->getProvider($provider);
         } catch (\RuntimeException $ex) {
             throw new NotFoundHttpException($ex->getMessage(), $ex);
+        } catch (\InvalidArgumentException $ex) {
+            throw new NotFoundHttpException($ex->getMessage(), $ex);
         }
 
         return $this->handleWriteMedium($request, $medium, $mediaProvider);
     }
 
     /**
-     * Retrieves media with id $id or throws an exception if not found
+     * Set Binary content for a specific media.
      *
-     * @param integer $id
+     * @ApiDoc(
+     *  input={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_write"}},
+     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"="sonata_api_read"},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when media is not found"
+     *  }
+     * )
      *
-     * @return Media
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
+     *
+     * @param $id
+     * @param Request $request A Symfony request
+     *
+     * @return MediaInterface
+     *
+     * @throws NotFoundHttpException
+     */
+    public function putMediumBinaryContentAction($id, Request $request)
+    {
+        $media = $this->getMedium($id);
+
+        $media->setBinaryContent($request);
+
+        $this->mediaManager->save($media);
+
+        return $media;
+    }
+
+    /**
+     * Retrieves media with id $id or throws an exception if not found.
+     *
+     * @param int $id
+     *
+     * @return MediaInterface
+     *
+     * @throws AccessDeniedException
+     * @throws NotFoundHttpException
      */
     protected function getMedium($id = null)
     {
@@ -327,28 +372,28 @@ class MediaController
     }
 
     /**
-     * Write a medium, this method is used by both POST and PUT action methods
+     * Write a medium, this method is used by both POST and PUT action methods.
      *
-     * @param                        $request
-     * @param MediaInterface         $medium
+     * @param Request                $request
+     * @param MediaInterface         $media
      * @param MediaProviderInterface $provider
      *
-     * @return \FOS\RestBundle\View\View|\Symfony\Component\Form\Form
+     * @return View|FormInterface
      */
-    protected function handleWriteMedium($request, MediaInterface $medium, MediaProviderInterface $provider)
+    protected function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
     {
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $medium, array(
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $media, array(
             'provider_name'   => $provider->getName(),
-            'csrf_protection' => false
+            'csrf_protection' => false,
         ));
 
         $form->bind($request);
 
         if ($form->isValid()) {
-            $medium = $form->getData();
-            $this->mediaManager->save($medium);
+            $media = $form->getData();
+            $this->mediaManager->save($media);
 
-            $view = \FOS\RestBundle\View\View::create($medium);
+            $view = FOSRestView::create($media);
             $serializationContext = SerializationContext::create();
             $serializationContext->setGroups(array('sonata_api_read'));
             $serializationContext->enableMaxDepthChecks();

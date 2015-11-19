@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -8,32 +9,30 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Sonata\MediaBundle\Form\Type;
 
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
 /**
- * Class ApiMediaType
+ * Class ApiMediaType.
  *
- * @package Sonata\MediaBundle\Form\Type
  *
  * @author Hugo Briand <briand@ekino.com>
  */
 class ApiMediaType extends AbstractType
 {
     /**
-     * @var Pool $mediaPool
+     * @var Pool
      */
     protected $mediaPool;
 
     /**
-     * @var string $class
+     * @var string
      */
     protected $class;
 
@@ -53,7 +52,7 @@ class ApiMediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer(new ProviderDataTransformer($this->mediaPool, $this->class, array(
-            'empty_on_new' => false
+            'empty_on_new' => false,
         )), true);
 
         $provider = $this->mediaPool->getProvider($options['provider_name']);
@@ -62,11 +61,22 @@ class ApiMediaType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Remove it when bumping requirements to Symfony >=2.7
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $this->configureOptions($resolver);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
         $resolver->setDefaults(array(
-            'provider_name'   => "sonata.media.provider.image",
+            'provider_name' => 'sonata.media.provider.image',
+            'context'       => 'api',
         ));
     }
 
@@ -75,7 +85,7 @@ class ApiMediaType extends AbstractType
      */
     public function getParent()
     {
-        return "sonata_media_api_form_doctrine_media";
+        return 'sonata_media_api_form_doctrine_media';
     }
 
     /**
@@ -83,8 +93,6 @@ class ApiMediaType extends AbstractType
      */
     public function getName()
     {
-        return "sonata_media_api_form_media";
+        return 'sonata_media_api_form_media';
     }
-
-
 }

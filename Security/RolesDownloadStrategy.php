@@ -18,16 +18,25 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class RolesDownloadStrategy implements DownloadStrategyInterface
 {
+    /**
+     * @var string[]
+     */
     protected $roles;
 
+    /**
+     * @var SecurityContextInterface
+     */
     protected $security;
 
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface        $translator
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $security
-     * @param array                                                     $roles
+     * @param TranslatorInterface      $translator
+     * @param SecurityContextInterface $security
+     * @param string[]                 $roles
      */
     public function __construct(TranslatorInterface $translator, SecurityContextInterface $security, array $roles = array())
     {
@@ -37,10 +46,7 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isGranted(MediaInterface $media, Request $request)
     {
@@ -48,8 +54,7 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription()
     {

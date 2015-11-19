@@ -13,11 +13,14 @@ namespace Sonata\MediaBundle\Twig\Extension;
 
 use Sonata\FormatterBundle\Extension\BaseProxyExtension;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
-use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
+use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 
 class FormatterMediaExtension extends BaseProxyExtension
 {
+    /**
+     * @var \Twig_Extension
+     */
     protected $twigExtension;
 
     /**
@@ -36,7 +39,7 @@ class FormatterMediaExtension extends BaseProxyExtension
         return array(
             'media',
             'path',
-            'thumbnail'
+            'thumbnail',
         );
     }
 
@@ -47,8 +50,8 @@ class FormatterMediaExtension extends BaseProxyExtension
     {
         return array(
             'Sonata\MediaBundle\Model\MediaInterface' => array(
-                'getproviderreference'
-            )
+                'getproviderreference',
+            ),
         );
     }
 
@@ -81,9 +84,9 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @param integer $media
-     * @param string  $format
-     * @param array   $options
+     * @param int    $media
+     * @param string $format
+     * @param array  $options
      *
      * @return string
      */
@@ -93,9 +96,9 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @param integer $media
-     * @param string  $format
-     * @param array   $options
+     * @param int    $media
+     * @param string $format
+     * @param array  $options
      *
      * @return string
      */
@@ -105,8 +108,8 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * @param integer $media
-     * @param string  $format
+     * @param int    $media
+     * @param string $format
      *
      * @return string
      */

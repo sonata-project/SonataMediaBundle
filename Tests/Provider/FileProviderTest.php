@@ -11,14 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Symfony\Component\HttpFoundation\File\File;
-use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function getProvider()
     {
         $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
@@ -49,7 +49,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.txt');
         $media->setProviderReference('ASDASD.txt');
         $media->setContext('default');
@@ -68,7 +68,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('admin', array('width' => 100));
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
@@ -106,7 +106,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.png');
         $media->setId(1023456);
 
@@ -121,7 +121,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $file = __DIR__.'/../fixtures/file.txt';
 
-        $media = new Media;
+        $media = new Media();
         $provider->preUpdate($media);
         $this->assertNull($media->getProviderReference());
 
@@ -135,7 +135,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent($file);
         $media->setId(1023456);
 
@@ -155,7 +155,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
         $file = new File(realpath(__DIR__.'/../fixtures/FileProviderTest/0011/24/file.txt'));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent($file);
         $media->setProviderReference('file.txt');
         $media->setContext('FileProviderTest');
@@ -164,5 +164,64 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $response = $provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\BinaryFileResponse', $response);
+    }
+
+    /**
+     * @dataProvider mediaProvider
+     */
+    public function testTransform($expected, $media, $overridePhpSapiName = true)
+    {
+        $self = $this;
+
+        $closure = function () use ($self, $expected, $media, $overridePhpSapiName) {
+            if ($overridePhpSapiName) {
+                require_once 'phpSapiNameOverride.php';
+            }
+
+            $provider = $self->getProvider();
+
+            try {
+                $provider->transform($media);
+
+                $self->assertInstanceOf($expected, $media->getBinaryContent());
+            } catch (\Exception $e) {
+                if ($overridePhpSapiName) {
+                    $self->assertInstanceOf('\RuntimeException', $e);
+                    $self->assertNull($media->getContentType());
+                } else {
+                    $self->assertEquals('The current process cannot be executed in cli environment', $e->getMessage());
+                }
+            }
+        };
+
+        $closure();
+    }
+
+    public function mediaProvider()
+    {
+        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
+        $content = file_get_contents(realpath(__DIR__.'/../fixtures/file.txt'));
+        $request = new Request(array(), array(), array(), array(), array(), array(), $content);
+
+        $media1 = new Media();
+        $media1->setBinaryContent($file);
+        $media1->setContentType('foo');
+        $media1->setId(1023456);
+
+        $media2 = new Media();
+        $media2->setBinaryContent($request);
+        $media2->setContentType('text/plain');
+        $media2->setId(1023456);
+
+        $media3 = new Media();
+        $media3->setBinaryContent($request);
+        $media3->setId(1023456);
+
+        return array(
+            array('\Symfony\Component\HttpFoundation\File\File', $media1, false),
+            array('\Symfony\Component\HttpFoundation\File\File', $media1),
+            array('\Symfony\Component\HttpFoundation\File\File', $media2),
+            array(null, $media3),
+        );
     }
 }

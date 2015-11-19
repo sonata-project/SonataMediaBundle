@@ -13,6 +13,9 @@ namespace Sonata\MediaBundle\CDN;
 
 class Server implements CDNInterface
 {
+    /**
+     * @var string
+     */
     protected $path;
 
     /**
@@ -24,7 +27,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPath($relativePath, $isFlushable)
     {
@@ -32,7 +35,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flushByString($string)
     {
@@ -40,7 +43,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flush($string)
     {
@@ -48,9 +51,17 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flushPaths(array $paths)
+    {
+        // nothing to do
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFlushStatus($identifier)
     {
         // nothing to do
     }

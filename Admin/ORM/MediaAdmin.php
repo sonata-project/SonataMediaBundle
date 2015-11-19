@@ -11,19 +11,18 @@
 
 namespace Sonata\MediaBundle\Admin\ORM;
 
-use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 
 class MediaAdmin extends Admin
 {
     /**
-     * @param  \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $options = array(
-            'choices' => array()
+            'choices' => array(),
         );
 
         foreach ($this->pool->getContexts() as $name => $context) {
@@ -35,7 +34,7 @@ class MediaAdmin extends Admin
             ->add('providerReference')
             ->add('enabled')
             ->add('context', null, array(
-                'show_filter' => $this->getPersistentParameter('hide_context') !== true
+                'show_filter' => $this->getPersistentParameter('hide_context') !== true,
             ), 'choice', $options)
             ->add('category', null, array(
                 'show_filter' => false,
@@ -53,13 +52,13 @@ class MediaAdmin extends Admin
         }
 
         $datagridMapper->add('providerName', 'doctrine_orm_choice', array(
-            'field_options'=> array(
-                'choices' => $providers,
+            'field_options' => array(
+                'choices'  => $providers,
                 'required' => false,
                 'multiple' => false,
                 'expanded' => false,
             ),
-            'field_type'=> 'choice',
+            'field_type' => 'choice',
         ));
     }
 }

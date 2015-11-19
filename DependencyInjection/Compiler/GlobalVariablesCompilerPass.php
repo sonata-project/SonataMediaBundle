@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -15,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * GlobalVariablesCompilerPass
+ * GlobalVariablesCompilerPass.
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */

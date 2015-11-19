@@ -11,17 +11,16 @@
 
 namespace Sonata\MediaBundle\Tests\Metadata;
 
+use Aws\S3\Enum\CannedAcl;
+use Aws\S3\Enum\Storage;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
-use Sonata\MediaBundle\Model\MediaInterface;
-use \AmazonS3 as AmazonS3;
 
 class AmazonMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
-        if (!class_exists('AmazonS3', true)) {
-            $this->markTestSkipped('The class AmazonS3 does not exist');
+        if (!class_exists('Aws\S3\Enum\CannedAcl')) {
+            $this->markTestSkipped('Missing Aws\\S3\\Enum\\CannedAcl');
         }
     }
 
@@ -43,18 +42,18 @@ class AmazonMetadataBuilderTest extends \PHPUnit_Framework_TestCase
     public function provider()
     {
         return array(
-            array(array('acl'=>'private'), array('acl' => AmazonS3::ACL_PRIVATE, 'contentType'=>'image/png')),
-            array(array('acl'=>'public'), array('acl' => AmazonS3::ACL_PUBLIC, 'contentType'=>'image/png')),
-            array(array('acl'=>'open'), array('acl' => AmazonS3::ACL_OPEN, 'contentType'=>'image/png')),
-            array(array('acl'=>'auth_read'), array('acl' => AmazonS3::ACL_AUTH_READ, 'contentType'=>'image/png')),
-            array(array('acl'=>'owner_read'), array('acl' => AmazonS3::ACL_OWNER_READ, 'contentType'=>'image/png')),
-            array(array('acl'=>'owner_full_control'), array('acl' => AmazonS3::ACL_OWNER_FULL_CONTROL, 'contentType'=>'image/png')),
-            array(array('storage'=>'standard'), array('storage' => AmazonS3::STORAGE_STANDARD, 'contentType'=>'image/png')),
-            array(array('storage'=>'reduced'), array('storage' => AmazonS3::STORAGE_REDUCED, 'contentType'=>'image/png')),
-            array(array('cache_control'=>'max-age=86400'), array('headers'=>array('Cache-Control' => 'max-age=86400'), 'contentType'=>'image/png')),
-            array(array('encryption'=>'aes256'), array('encryption' => 'AES256', 'contentType'=>'image/png')),
-            array(array('meta'=>array('key'=>'value')), array('meta'=>array('key'=>'value'), 'contentType'=>'image/png')),
-            array(array('acl'=>'public','storage'=>'standard','cache_control'=>'max-age=86400','encryption'=>'aes256','meta'=>array('key'=>'value')), array('acl' => AmazonS3::ACL_PUBLIC, 'contentType'=>'image/png','storage' => AmazonS3::STORAGE_STANDARD,'headers'=>array('Cache-Control' => 'max-age=86400'),'encryption' => 'AES256','meta'=>array('key'=>'value')))
+            array(array('acl'           => 'private'), array('ACL' => CannedAcl::PRIVATE_ACCESS, 'contentType' => 'image/png')),
+            array(array('acl'           => 'public'), array('ACL' => CannedAcl::PUBLIC_READ, 'contentType' => 'image/png')),
+            array(array('acl'           => 'open'), array('ACL' => CannedAcl::PUBLIC_READ_WRITE, 'contentType' => 'image/png')),
+            array(array('acl'           => 'auth_read'), array('ACL' => CannedAcl::AUTHENTICATED_READ, 'contentType' => 'image/png')),
+            array(array('acl'           => 'owner_read'), array('ACL' => CannedAcl::BUCKET_OWNER_READ, 'contentType' => 'image/png')),
+            array(array('acl'           => 'owner_full_control'), array('ACL' => CannedAcl::BUCKET_OWNER_FULL_CONTROL, 'contentType' => 'image/png')),
+            array(array('storage'       => 'standard'), array('storage' => Storage::STANDARD, 'contentType' => 'image/png')),
+            array(array('storage'       => 'reduced'), array('storage' => Storage::REDUCED, 'contentType' => 'image/png')),
+            array(array('cache_control' => 'max-age=86400'), array('CacheControl' => 'max-age=86400', 'contentType' => 'image/png')),
+            array(array('encryption'    => 'aes256'), array('encryption' => 'AES256', 'contentType' => 'image/png')),
+            array(array('meta'          => array('key' => 'value')), array('meta' => array('key' => 'value'), 'contentType' => 'image/png')),
+            array(array('acl'           => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => array('key' => 'value')), array('ACL' => CannedAcl::PUBLIC_READ, 'contentType' => 'image/png', 'storage' => Storage::STANDARD, 'CacheControl' => 'max-age=86400', 'encryption' => 'AES256', 'meta' => array('key' => 'value'))),
         );
     }
 }

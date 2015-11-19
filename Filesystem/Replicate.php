@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -17,10 +18,19 @@ use Psr\Log\LoggerInterface;
 
 class Replicate implements AdapterInterface, MetadataSupporter
 {
+    /**
+     * @var AdapterInterface
+     */
     protected $master;
 
+    /**
+     * @var AdapterInterface
+     */
     protected $slave;
 
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
 
     /**
@@ -44,9 +54,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
         try {
             $this->slave->delete($key);
         } catch (\Exception $e) {
-
             if ($this->logger) {
-                $this->logger->critical(sprintf("Unable to delete %s, error: %s", $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
             }
 
             $ok = false;
@@ -55,9 +64,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
         try {
             $this->master->delete($key);
         } catch (\Exception $e) {
-
             if ($this->logger) {
-                $this->logger->critical(sprintf("Unable to delete %s, error: %s", $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
             }
 
             $ok = false;
@@ -101,9 +109,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
         try {
             $return = $this->master->write($key, $content, $metadata);
         } catch (\Exception $e) {
-
             if ($this->logger) {
-                $this->logger->critical(sprintf("Unable to write %s, error: %s", $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
             }
 
             $ok = false;
@@ -112,9 +119,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
         try {
             $return = $this->slave->write($key, $content, $metadata);
         } catch (\Exception $e) {
-
             if ($this->logger) {
-                $this->logger->critical(sprintf("Unable to write %s, error: %s", $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
             }
 
             $ok = false;
@@ -141,9 +147,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
         try {
             $this->master->rename($key, $new);
         } catch (\Exception $e) {
-
             if ($this->logger) {
-                $this->logger->critical(sprintf("Unable to rename %s, error: %s", $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $key, $e->getMessage()));
             }
 
             $ok = false;
@@ -152,9 +157,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
         try {
             $this->slave->rename($key, $new);
         } catch (\Exception $e) {
-
             if ($this->logger) {
-                $this->logger->critical(sprintf("Unable to rename %s, error: %s", $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $key, $e->getMessage()));
             }
 
             $ok = false;
@@ -164,7 +168,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * If one of the adapters can allow inserting metadata
+     * If one of the adapters can allow inserting metadata.
      *
      * @return bool true if supports metadata, false if not
      */
@@ -201,10 +205,9 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * Gets the class names as an array for both adapters
+     * Gets the class names as an array for both adapters.
      *
-     * @return array
-     *
+     * @return string[]
      */
     public function getAdapterClassNames()
     {
@@ -215,7 +218,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createFile($key, Filesystem $filesystem)
     {
@@ -223,7 +226,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createFileStream($key, Filesystem $filesystem)
     {
@@ -231,7 +234,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function listDirectory($directory = '')
     {
@@ -239,7 +242,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isDirectory($key)
     {

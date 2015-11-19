@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -14,6 +15,9 @@ use Gaufrette\Adapter\Local as BaseLocal;
 
 class Local extends BaseLocal
 {
+    /**
+     * @return string
+     */
     public function getDirectory()
     {
         return $this->directory;

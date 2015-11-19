@@ -19,6 +19,9 @@ class LocalTest extends \PHPUnit_Framework_TestCase
     {
         $local = new Local('/tmp');
 
-        $this->assertEquals('/tmp', $local->getDirectory());
+        // check if OS is Mac OS X where /tmp is a symlink to /private/tmp
+        $result = php_uname('s') == 'Darwin' ? '/private/tmp' : '/tmp';
+
+        $this->assertEquals($result, $local->getDirectory());
     }
 }

@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -38,7 +39,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
-            'new_on_update' => false
+            'new_on_update' => false,
         ));
         $transformer->reverseTransform($media);
     }
@@ -57,7 +58,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
-            'new_on_update' => false
+            'new_on_update' => false,
         ));
         $transformer->reverseTransform($media);
     }
@@ -73,10 +74,12 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())->method('getId')->will($this->returnValue(null));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(null));
         $media->expects($this->any())->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->once())->method('setProviderReference')->with(MediaInterface::MISSING_BINARY_REFERENCE);
+        $media->expects($this->once())->method('setProviderStatus')->with(MediaInterface::STATUS_PENDING);
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
             'new_on_update' => false,
-            'empty_on_new' => false
+            'empty_on_new'  => false,
         ));
         $this->assertEquals($media, $transformer->reverseTransform($media));
     }
@@ -108,9 +111,8 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
-            'new_on_update' => false
+            'new_on_update' => false,
         ));
         $transformer->reverseTransform($media);
-
     }
 }

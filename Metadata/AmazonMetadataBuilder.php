@@ -11,18 +11,21 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
-
 use Aws\S3\Enum\CannedAcl;
 use Aws\S3\Enum\Storage;
 use Guzzle\Http\Mimetypes;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
-
+    /**
+     * @var array
+     */
     protected $settings;
 
+    /**
+     * @var string[]
+     */
     protected $acl = array(
         'private'            => CannedAcl::PRIVATE_ACCESS,
         'public'             => CannedAcl::PUBLIC_READ,
@@ -41,7 +44,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Get data passed from the config
+     * Get data passed from the config.
      *
      * @return array
      */
@@ -69,7 +72,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
 
         //merge cache control header
         if (isset($this->settings['cache_control']) && !empty($this->settings['cache_control'])) {
-            $output['headers']['Cache-Control'] = $this->settings['cache_control'];
+            $output['CacheControl'] = $this->settings['cache_control'];
         }
 
         //merge encryption
@@ -83,7 +86,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Gets the correct content-type
+     * Gets the correct content-type.
      *
      * @param string $filename
      *
@@ -94,7 +97,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         $extension   = pathinfo($filename, PATHINFO_EXTENSION);
         $contentType = Mimetypes::getInstance()->fromExtension($extension);
 
-        return array('contentType'=> $contentType);
+        return array('contentType' => $contentType);
     }
 
     /**

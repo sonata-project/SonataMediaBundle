@@ -11,16 +11,19 @@
 
 namespace Sonata\MediaBundle\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class ServiceProviderDataTransformer implements DataTransformerInterface
 {
+    /**
+     * @var MediaProviderInterface
+     */
     protected $provider;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
+     * @param MediaProviderInterface $provider
      */
     public function __construct(MediaProviderInterface $provider)
     {

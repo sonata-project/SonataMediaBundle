@@ -11,15 +11,13 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Provider\ImageProvider;
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Imagine\Image\Box;
+use Sonata\MediaBundle\Provider\ImageProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function getProvider($allowedExtensions = array(), $allowedMimeTypes = array())
     {
         $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
@@ -60,7 +58,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
@@ -78,7 +76,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('admin', array('width' => 100));
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
@@ -92,7 +90,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(100, $properties['width']);
 
         $properties = $provider->getHelperProperties($media, 'admin', array(
-            'width' => 150
+            'width' => 150,
         ));
 
         $this->assertEquals(150, $properties['width']);
@@ -102,7 +100,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
@@ -110,7 +108,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100,'constraint' => true));
+        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -127,7 +125,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent($file);
         $media->setId(1023456);
 
@@ -154,6 +152,6 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setBinaryContent($file);
 
         $this->assertNull($provider->transform($media));
-        $this->assertNull($media->getWidth(), "Width staid null");
+        $this->assertNull($media->getWidth(), 'Width staid null');
     }
 }

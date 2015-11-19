@@ -21,7 +21,7 @@ abstract class BaseMedia extends Media
     private $uuid;
 
     /**
-     * Get universal unique id
+     * Get universal unique id.
      *
      * @return string
      */
@@ -30,12 +30,18 @@ abstract class BaseMedia extends Media
         return $this->uuid;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
