@@ -123,6 +123,7 @@ class FileProvider extends BaseProvider
         } else {
             $formBuilder->add('binaryContent', 'file', array(
                 'required' => false,
+                'label'    => 'widget_label_binary_content',
             ));
         }
     }

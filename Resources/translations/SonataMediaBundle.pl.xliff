@@ -393,6 +393,14 @@
                 <source>widget_label_context</source>
                 <target>widget_label_context</target>
             </trans-unit>
+            <trans-unit id="widget_label_unlink">
+                <source>widget_label_unlink</source>
+                <target>widget_label_unlink</target>
+            </trans-unit>
+            <trans-unit id="widget_label_binary_content">
+                <source>widget_label_binary_content</source>
+                <target>widget_label_binary_content</target>
+            </trans-unit>
             <trans-unit id="widget_headline_information">
                 <source>widget_headline_information</source>
                 <target>widget_headline_information</target>

@@ -65,6 +65,7 @@ class MediaType extends AbstractType
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 
         $builder->add('unlink', 'checkbox', array(
+            'label'    => 'widget_label_unlink',
             'mapped'   => false,
             'data'     => false,
             'required' => false,
@@ -96,11 +97,12 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'    => $this->class,
-            'provider'      => null,
-            'context'       => null,
-            'empty_on_new'  => true,
-            'new_on_update' => true,
+            'data_class'         => $this->class,
+            'provider'           => null,
+            'context'            => null,
+            'empty_on_new'       => true,
+            'new_on_update'      => true,
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
