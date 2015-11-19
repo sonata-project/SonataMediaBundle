@@ -11,13 +11,10 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use AmazonS3 as AmazonS3;
-use CFMimeTypes;
-use Sonata\MediaBundle\Model\MediaInterface;
-
 use Aws\S3\Enum\CannedAcl;
 use Aws\S3\Enum\Storage;
 use Guzzle\Http\Mimetypes;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
