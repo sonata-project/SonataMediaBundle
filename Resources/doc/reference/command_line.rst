@@ -93,3 +93,12 @@ The medias.csv file contains the following lines::
    sonata.media.provider.dailymotion,default,http://www.dailymotion.com/video/xqziut_tutoriel-video-symfony-2-twig_lifestyle
    sonata.media.provider.dailymotion,default,http://www.dailymotion.com/video/x9bgxs_php-tv-4-magento-mysql-symfony-zend_tech
    sonata.media.provider.dailymotion,default,http://www.dailymotion.com/video/xhq4c5_slyblog-tutoriel-video-symfony-1-4-partie-2-2_tech
+
+Fix missing root categories
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creates default root categories for the ``SonataClassificationBundle`` if they don't exist. This command should be executed when creating a new context under the ``contexts`` config tree.
+
+.. code-block:: bash
+
+   php app/console sonata:media:fix-media-context
