@@ -35,6 +35,7 @@ Reference Guide
    reference/security
    reference/command_line
    reference/advanced_configuration
+   reference/amazon_s3
    reference/extra
    reference/api
    reference/troubleshooting
