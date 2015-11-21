@@ -461,6 +461,46 @@
                 <source>sonata.media.block.gallery</source>
                 <target>sonata.media.block.gallery</target>
             </trans-unit>
+            <trans-unit id="form.label_title">
+                <source>form.label_title</source>
+                <target>form.label_title</target>
+            </trans-unit>
+            <trans-unit id="form.label_content">
+                <source>form.label_content</source>
+                <target>form.label_content</target>
+            </trans-unit>
+            <trans-unit id="form.label_orientation">
+                <source>form.label_orientation</source>
+                <target>form.label_orientation</target>
+            </trans-unit>
+            <trans-unit id="form.label_format">
+                <source>form.label_format</source>
+                <target>form.label_format</target>
+            </trans-unit>
+            <trans-unit id="form.label_gallery">
+                <source>form.label_gallery</source>
+                <target>form.label_gallery</target>
+            </trans-unit>
+            <trans-unit id="form.label_pause_time">
+                <source>form.label_pause_time</source>
+                <target>form.label_pause_time</target>
+            </trans-unit>
+            <trans-unit id="form.label_start_paused">
+                <source>form.label_start_paused</source>
+                <target>form.label_start_paused</target>
+            </trans-unit>
+            <trans-unit id="form.label_wrap">
+                <source>form.label_wrap</source>
+                <target>form.label_wrap</target>
+            </trans-unit>
+            <trans-unit id="form.label_orientation_left">
+                <source>form.label_orientation_left</source>
+                <target>form.label_orientation_left</target>
+            </trans-unit>
+            <trans-unit id="form.label_orientation_right">
+                <source>form.label_orientation_right</source>
+                <target>form.label_orientation_right</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -47,19 +47,31 @@ class FeatureMediaBlockService extends MediaBlockService
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $translator = $this->container->get('translator');
-
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('title', 'text', array('required' => false)),
-                array('content', 'textarea', array('required' => false)),
-                array('orientation', 'choice', array('choices' => array(
-                    'left'  => $translator->trans('feature_left_choice', array(), 'SonataMediaBundle'),
-                    'right' => $translator->trans('feature_right_choice', array(), 'SonataMediaBundle'),
-                ))),
+                array('title', 'text', array(
+                    'required' => false,
+                    'label'    => 'form.label_title',
+                )),
+                array('content', 'textarea', array(
+                    'required' => false,
+                    'label'    => 'form.label_content',
+                )),
+                array('orientation', 'choice', array(
+                    'choices' => array(
+                        'left'  => 'form.label_orientation_left',
+                        'right' => 'form.label_orientation_right',
+                    ),
+                    'label' => 'form.label_orientation',
+                )),
                 array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array('format', 'choice', array(
+                    'required' => count($formatChoices) > 0,
+                    'choices'  => $formatChoices,
+                    'label'    => 'form.label_format',
+                )),
             ),
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
