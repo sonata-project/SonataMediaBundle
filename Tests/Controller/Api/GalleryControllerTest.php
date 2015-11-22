@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -42,7 +42,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => 'ASC'))));
         $params->expects($this->exactly(3))->method('get');
 
-        $this->assertEquals(array(), $gController->getGalleriesAction($params));
+        $this->assertSame(array(), $gController->getGalleriesAction($params));
     }
 
     public function testGetGalleryAction()
@@ -56,7 +56,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertEquals($gallery, $gController->getGalleryAction(1));
+        $this->assertSame($gallery, $gController->getGalleryAction(1));
     }
 
     /**
@@ -92,7 +92,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertEquals(array($galleryHasMedia), $gController->getGalleryGalleryhasmediasAction(1));
+        $this->assertSame(array($galleryHasMedia), $gController->getGalleryGalleryhasmediasAction(1));
     }
 
     public function testGetGalleryMediaAction()
@@ -113,7 +113,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertEquals(array($media), $gController->getGalleryMediasAction(1));
+        $this->assertSame(array($media), $gController->getGalleryMediasAction(1));
     }
 
     public function testPostGalleryMediaGalleryhasmediaAction()
@@ -147,7 +147,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->postGalleryMediaGalleryhasmediaAction(1, 2, new Request());
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertEquals(200, $view->getStatusCode(), 'Should return 200');
+        $this->assertSame(200, $view->getStatusCode(), 'Should return 200');
     }
 
     public function testPostGalleryMediaGalleryhasmediaInvalidAction()
@@ -173,7 +173,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->postGalleryMediaGalleryhasmediaAction(1, 1, new Request());
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertEquals(400, $view->getStatusCode(), 'Should return 400');
+        $this->assertSame(400, $view->getStatusCode(), 'Should return 400');
     }
 
     public function testPutGalleryMediaGalleryhasmediaAction()
@@ -205,7 +205,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->putGalleryMediaGalleryhasmediaAction(1, 1, new Request());
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertEquals(200, $view->getStatusCode(), 'Should return 200');
+        $this->assertSame(200, $view->getStatusCode(), 'Should return 200');
     }
 
     public function testPutGalleryMediaGalleryhasmediaInvalidAction()
@@ -260,7 +260,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'Sonata\MediaBundle\Tests\Controller\Api\GalleryTest');
         $view = $galleryController->deleteGalleryMediaGalleryhasmediaAction(1, 1);
 
-        $this->assertEquals(array('deleted' => true), $view);
+        $this->assertSame(array('deleted' => true), $view);
     }
 
     public function testDeleteGalleryMediaGalleryhasmediaInvalidAction()
@@ -288,6 +288,6 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->deleteGalleryMediaGalleryhasmediaAction(1, 1);
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertEquals(400, $view->getStatusCode(), 'Should return 400');
+        $this->assertSame(400, $view->getStatusCode(), 'Should return 400');
     }
 }

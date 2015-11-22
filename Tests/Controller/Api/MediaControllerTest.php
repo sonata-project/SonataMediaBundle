@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -35,7 +35,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
         $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => 'ASC'))));
         $params->expects($this->exactly(3))->method('get');
 
-        $this->assertEquals(array($media), $mController->getMediaAction($params));
+        $this->assertSame(array($media), $mController->getMediaAction($params));
     }
 
     public function testGetMediumAction()
@@ -47,7 +47,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $controller = $this->createMediaController($manager);
 
-        $this->assertEquals($media, $controller->getMediumAction(1));
+        $this->assertSame($media, $controller->getMediumAction(1));
     }
 
     /**
@@ -77,19 +77,19 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $expected = array(
             'reference' => array(
+                'url'        => null,
                 'properties' => array(
                     'foo' => 'bar',
                 ),
-                'url' => null,
             ),
             'format_name1' => array(
+                'url'        => null,
                 'properties' => array(
                     'foo' => 'bar',
                 ),
-                'url' => null,
             ),
         );
-        $this->assertEquals($expected, $controller->getMediumFormatsAction(1));
+        $this->assertSame($expected, $controller->getMediumFormatsAction(1));
     }
 
     public function testGetMediumBinariesAction()
@@ -109,7 +109,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $controller = $this->createMediaController($manager, $pool);
 
-        $this->assertEquals($binaryResponse, $controller->getMediumBinaryAction(1, 'format', new Request()));
+        $this->assertSame($binaryResponse, $controller->getMediumBinaryAction(1, 'format', new Request()));
     }
 
     public function testDeleteMediumAction()
@@ -122,7 +122,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $expected = array('deleted' => true);
 
-        $this->assertEquals($expected, $controller->deleteMediumAction(1));
+        $this->assertSame($expected, $controller->deleteMediumAction(1));
     }
 
     public function testPutMediumAction()
@@ -233,7 +233,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $controller = $this->createMediaController($manager, $pool);
 
-        $this->assertEquals($media, $controller->putMediumBinaryContentAction(1, new Request()));
+        $this->assertSame($media, $controller->putMediumBinaryContentAction(1, new Request()));
     }
 
     protected function createMediaController($manager = null, $pool = null, $factory = null)

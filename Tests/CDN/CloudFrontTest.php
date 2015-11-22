@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -27,7 +27,7 @@ class CloudFrontTest extends \PHPUnit_Framework_TestCase
                     ->getMock();
         $cloudFront->setClient($client);
 
-        $this->assertEquals('/foo/bar.jpg', $cloudFront->getPath('bar.jpg', true));
+        $this->assertSame('/foo/bar.jpg', $cloudFront->getPath('bar.jpg', true));
 
         $path = '/mypath/file.jpg';
 

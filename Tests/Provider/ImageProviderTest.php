@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -64,11 +64,11 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $media->setId(1023456);
         $media->setContext('default');
 
-        $this->assertEquals('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
+        $this->assertSame('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
-        $this->assertEquals('default/0011/24', $provider->generatePath($media));
-        $this->assertEquals('/uploads/media/default/0011/24/thumb_1023456_big.png', $provider->generatePublicUrl($media, 'big'));
-        $this->assertEquals('/uploads/media/default/0011/24/ASDASDAS.png', $provider->generatePublicUrl($media, 'reference'));
+        $this->assertSame('default/0011/24', $provider->generatePath($media));
+        $this->assertSame('/uploads/media/default/0011/24/thumb_1023456_big.png', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('/uploads/media/default/0011/24/ASDASDAS.png', $provider->generatePublicUrl($media, 'reference'));
     }
 
     public function testHelperProperies()
@@ -86,14 +86,14 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $properties = $provider->getHelperProperties($media, 'admin');
 
         $this->assertInternalType('array', $properties);
-        $this->assertEquals('test.png', $properties['title']);
-        $this->assertEquals(100, $properties['width']);
+        $this->assertSame('test.png', $properties['title']);
+        $this->assertSame(100, $properties['width']);
 
         $properties = $provider->getHelperProperties($media, 'admin', array(
             'width' => 150,
         ));
 
-        $this->assertEquals(150, $properties['width']);
+        $this->assertSame(150, $properties['width']);
     }
 
     public function testThumbnail()
@@ -114,7 +114,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent()
@@ -133,7 +133,7 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $provider->transform($media);
         $provider->prePersist($media);
 
-        $this->assertEquals('logo.png', $media->getName(), '::getName() return the file name');
+        $this->assertSame('logo.png', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
         // post persit the media
