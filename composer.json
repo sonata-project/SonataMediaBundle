@@ -26,9 +26,7 @@
         "knplabs/gaufrette": "^0.1.6",
         "imagine/imagine": "~0.3",
         "kriswallsmith/buzz": "~0.6",
-        "friendsofsymfony/rest-bundle": "~1.1",
         "jms/serializer-bundle": "~0.11|~1.0",
-        "nelmio/api-doc-bundle": "~2.4",
         "sonata-project/intl-bundle": "~2.2"
     },
     "require-dev": {
@@ -40,7 +38,9 @@
         "aws/aws-sdk-php": "~2.7",
         "doctrine/mongodb-odm": "~1.0",
         "jackalope/jackalope-doctrine-dbal": "~1.1",
-        "symfony/phpunit-bridge": "~2.7|~3.0"
+        "symfony/phpunit-bridge": "~2.7|~3.0",
+        "friendsofsymfony/rest-bundle": "~1.1",
+        "nelmio/api-doc-bundle": "~2.4"
     },
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
