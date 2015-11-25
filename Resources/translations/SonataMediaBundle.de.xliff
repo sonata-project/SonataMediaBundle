@@ -501,6 +501,74 @@
                 <source>form.label_orientation_right</source>
                 <target>Rechtsbündig</target>
             </trans-unit>
+            <trans-unit id="sonata.media.block.gallery_list">
+                <source>sonata.media.block.gallery_list</source>
+                <target>Galerienliste</target>
+            </trans-unit>
+            <trans-unit id="label_gallery_enabled">
+                <source>label_gallery_enabled</source>
+                <target>Sichtbar</target>
+            </trans-unit>
+            <trans-unit id="label_gallery_disabled">
+                <source>label_gallery_disabled</source>
+                <target>Gesperrt</target>
+            </trans-unit>
+            <trans-unit id="no_galleries_found">
+                <source>no_galleries_found</source>
+                <target>Keine Galerien vorhanden.</target>
+            </trans-unit>
+            <trans-unit id="view_all_galleries">
+                <source>view_all_galleries</source>
+                <target>Alle Galerien anzeigen</target>
+            </trans-unit>
+            <trans-unit id="form.label_mode">
+                <source>form.label_mode</source>
+                <target>Modus</target>
+            </trans-unit>
+            <trans-unit id="form.label_number">
+                <source>form.label_number</source>
+                <target>Anzahl</target>
+            </trans-unit>
+            <trans-unit id="form.label_order">
+                <source>form.label_order</source>
+                <target>Sortierung</target>
+            </trans-unit>
+            <trans-unit id="form.label_order_name">
+                <source>form.label_order_name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="form.label_order_created_at">
+                <source>form.label_order_created_at</source>
+                <target>Erstellt</target>
+            </trans-unit>
+            <trans-unit id="form.label_order_updated_at">
+                <source>form.label_order_updated_at</source>
+                <target>Aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="form.label_sort">
+                <source>form.label_sort</source>
+                <target>Sortierrichtung</target>
+            </trans-unit>
+            <trans-unit id="form.label_sort_asc">
+                <source>form.label_sort_asc</source>
+                <target>Aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="form.label_sort_desc">
+                <source>form.label_sort_desc</source>
+                <target>Absteigend</target>
+            </trans-unit>
+            <trans-unit id="form.label_mode_public">
+                <source>form.label_mode_public</source>
+                <target>Öffentlich</target>
+            </trans-unit>
+            <trans-unit id="form.label_mode_admin">
+                <source>form.label_mode_admin</source>
+                <target>Administrativ</target>
+            </trans-unit>
+            <trans-unit id="form.label_class">
+                <source>form.label_class</source>
+                <target>CSS Klasse</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
