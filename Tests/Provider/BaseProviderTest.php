@@ -91,7 +91,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format)
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
         // TODO: Implement getHelperProperties() method.
     }
