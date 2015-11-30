@@ -169,7 +169,7 @@ class MediaExtension extends \Twig_Extension
 
         $options = array_merge($defaultOptions, $options);
 
-        $options['src'] = $provider->generatePublicUrl($media, $format);
+        $options = $provider->getHelperProperties($media, $format, $options);
 
         return $this->render($provider->getTemplate('helper_thumbnail'), array(
             'media'    => $media,

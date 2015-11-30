@@ -131,8 +131,9 @@ interface MediaProviderInterface
     /**
      * @param MediaInterface $media
      * @param string         $format
+     * @param array          $options
      */
-    public function getHelperProperties(MediaInterface $media, $format);
+    public function getHelperProperties(MediaInterface $media, $format, $options = array());
 
     /**
      * Generate the media path.
