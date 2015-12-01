@@ -91,8 +91,16 @@ class ApiMediaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'sonata_media_api_form_media';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }
