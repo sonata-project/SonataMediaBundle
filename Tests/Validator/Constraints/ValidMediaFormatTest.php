@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -19,7 +19,7 @@ class ValidMediaFormatTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new ValidMediaFormat();
 
-        $this->assertEquals('class', $constraint->getTargets());
-        $this->assertEquals('sonata.media.validator.format', $constraint->validatedBy());
+        $this->assertSame('class', $constraint->getTargets());
+        $this->assertSame('sonata.media.validator.format', $constraint->validatedBy());
     }
 }

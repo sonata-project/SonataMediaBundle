@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -63,7 +63,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyLocal()
@@ -102,7 +102,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyNoProvider()
@@ -141,7 +141,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array(), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array(), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithAmazon()
@@ -183,7 +183,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithoutAmazon()
@@ -224,7 +224,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }
 
     /**

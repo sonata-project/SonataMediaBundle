@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sonata\MediaBundle\Tests\PHPCR;
 
 use Sonata\MediaBundle\PHPCR\MediaManager;
@@ -18,8 +27,8 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $media = new Media();
         $this->manager->save($media, 'default', 'media.test');
 
-        $this->assertEquals('default', $media->getContext());
-        $this->assertEquals('media.test', $media->getProviderName());
+        $this->assertSame('default', $media->getContext());
+        $this->assertSame('media.test', $media->getProviderName());
 
         $media = new Media();
         $this->manager->save($media, true);

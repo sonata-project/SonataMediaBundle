@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -24,15 +24,15 @@ class DefaultGeneratorTest extends \PHPUnit_Framework_TestCase
         $media->setContext('user');
 
         $media->setId(10);
-        $this->assertEquals('user/0001/01', $generator->generatePath($media));
+        $this->assertSame('user/0001/01', $generator->generatePath($media));
 
         $media->setId(10000);
-        $this->assertEquals('user/0001/11', $generator->generatePath($media));
+        $this->assertSame('user/0001/11', $generator->generatePath($media));
 
         $media->setId(12341230);
-        $this->assertEquals('user/0124/42', $generator->generatePath($media));
+        $this->assertSame('user/0124/42', $generator->generatePath($media));
 
         $media->setId(999999999);
-        $this->assertEquals('user/10000/100', $generator->generatePath($media));
+        $this->assertSame('user/10000/100', $generator->generatePath($media));
     }
 }

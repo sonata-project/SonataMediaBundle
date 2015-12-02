@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -22,6 +22,6 @@ class LocalTest extends \PHPUnit_Framework_TestCase
         // check if OS is Mac OS X where /tmp is a symlink to /private/tmp
         $result = php_uname('s') == 'Darwin' ? '/private/tmp' : '/tmp';
 
-        $this->assertEquals($result, $local->getDirectory());
+        $this->assertSame($result, $local->getDirectory());
     }
 }
