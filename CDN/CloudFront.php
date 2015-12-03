@@ -171,7 +171,7 @@ class CloudFront implements CDNInterface
     public function setClient($client)
     {
         if (!$client instanceof CloudFrontClient) {
-            trigger_error('The '.__METHOD__.' expects a CloudFrontClient as parameter.', E_USER_DEPRECATED);
+            @trigger_error('The '.__METHOD__.' expects a CloudFrontClient as parameter.', E_USER_DEPRECATED);
         }
 
         $this->client = $client;
