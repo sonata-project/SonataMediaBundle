@@ -110,6 +110,8 @@ class SonataMediaExtension extends Extension
             $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats, $settings['download']));
         }
 
+        $container->setParameter('sonata.media.admin_format', $config['admin_format']);
+
         $strategies = array_unique($strategies);
 
         foreach ($strategies as $strategyId) {
