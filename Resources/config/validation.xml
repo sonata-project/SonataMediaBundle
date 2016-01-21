@@ -10,7 +10,7 @@
                 <value>isStatusErroneous</value>
             </option>
         </constraint>
-        <constraint name="Sonata\AdminBundle\Validator\Constraints\InlineConstraint">
+        <constraint name="Sonata\CoreBundle\Validator\Constraints\InlineConstraint">
             <option name="service">sonata.media.pool</option>
             <option name="method">validate</option>
         </constraint>
