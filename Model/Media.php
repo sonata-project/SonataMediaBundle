@@ -12,7 +12,6 @@
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
-use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 abstract class Media implements MediaInterface
@@ -630,7 +629,7 @@ abstract class Media implements MediaInterface
     /**
      * @param CategoryInterface $category|null
      */
-    public function setCategory(CategoryInterface $category = null)
+    public function setCategory($category = null)
     {
         $this->category = $category;
     }

@@ -15,6 +15,13 @@ use Sonata\MediaBundle\Security\RolesDownloadStrategy;
 
 class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (false === interface_exists('Symfony\Component\Security\Core\SecurityContextInterface')) {
+            $this->markTestSkipped('Test only available for < SF3.0');
+        }
+    }
+
     /**
      * @group legacy
      */
