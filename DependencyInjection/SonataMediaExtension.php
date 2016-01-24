@@ -99,6 +99,10 @@ class SonataMediaExtension extends Extension
             $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
         }
 
+        if ($this->isClassificationEnabled($config)) {
+            $loader->load('category.xml');
+        }
+
         if (!array_key_exists($config['default_context'], $config['contexts'])) {
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid default context : %s, available : %s', $config['default_context'], json_encode(array_keys($config['contexts']))));
         }
@@ -109,6 +113,7 @@ class SonataMediaExtension extends Extension
             $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
         }
 
+        $this->configureCategoryInMedia($container, $config);
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
 
@@ -276,7 +281,7 @@ class SonataMediaExtension extends Extension
             ),
         ));
 
-        if (interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface')) {
+        if ($this->isClassificationEnabled($config)) {
             $collector->addAssociation($config['class']['media'], 'mapManyToOne', array(
                 'fieldName' => 'category',
                 'targetEntity' => $config['class']['category'],
@@ -532,5 +537,37 @@ class SonataMediaExtension extends Extension
             'Sonata\\MediaBundle\\Twig\\Node\\PathNode',
             'Sonata\\MediaBundle\\Twig\\Node\\ThumbnailNode',
         ));
+    }
+
+    /**
+     * Sets category and category manager in media bundle.
+     *
+     * @param ContainerBuilder $container
+     * @param array            $config
+     */
+    private function configureCategoryInMedia(ContainerBuilder $container, array $config)
+    {
+        if (!$this->isClassificationEnabled($config)) {
+            return;
+        }
+
+        $container->setAlias('sonata.media.manager.category', $config['category_manager'] ?: 'sonata.media.manager.category.default');
+
+        if (null === $config['class']['category']) {
+            $config['class']['category'] = 'Application\\Sonata\\ClassificationBundle\\Entity\\Category';
+        }
+    }
+
+    /**
+     * Checks if the classification of media is enabled.
+     *
+     * @param array $config
+     *
+     * @return bool
+     */
+    private function isClassificationEnabled(array $config)
+    {
+        return !$config['force_disable_category'] &&
+            (null !== $config['category_manager'] || interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface'));
     }
 }

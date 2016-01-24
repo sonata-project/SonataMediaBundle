@@ -37,7 +37,6 @@
         "sonata-project/notification-bundle": "^3.0",
         "sonata-project/easy-extends-bundle": "^2.1",
         "sonata-project/doctrine-extensions": "^1.0",
-        "sonata-project/classification-bundle": "^3.0 || ^4.0@dev",
         "knplabs/gaufrette": "^0.1.6",
         "imagine/imagine": "^0.6",
         "kriswallsmith/buzz": "^0.15",
@@ -59,6 +58,7 @@
         "sllh/php-cs-fixer-styleci-bridge": "^2.0"
     },
     "suggest": {
+        "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "^3.0",
         "liip/imagine-bundle": "^0.9",
         "rackspace/php-opencloud": "^1.6",
@@ -69,6 +69,7 @@
         "friendsofsymfony/rest-bundle": "<1.7.4 || >=3.0",
         "jms/serializer": "<0.13",
         "sonata-project/seo-bundle": "<2.0 || >=3.0",
+        "sonata-project/classification-bundle": "<3.0 || >=5.0",
         "sonata-project/block-bundle": "<3.1.1 || >=4.0"
     },
     "autoload": {
@@ -78,7 +79,10 @@
         ]
     },
     "autoload-dev": {
-        "psr-4": { "Sonata\\MediaBundle\\Tests\\": "Tests/" }
+        "psr-4": {
+            "Sonata\\MediaBundle\\Tests\\": "Tests/",
+            "Sonata\\ClassificationBundle\\": "Tests/fixtures/SonataClassificationBundle"
+        }
     },
     "extra": {
         "branch-alias": {

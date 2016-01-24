@@ -77,13 +77,16 @@ class MediaAdminController extends Controller
         $datagrid->setValue('context', null, $context);
 
         // retrieve the main category for the tree view
-        $category = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
+        $category = null;
+        if ($this->container->has('sonata.media.manager.category')) {
+            $category = $this->container->get('sonata.media.manager.category')->getRootCategory($context);
+        }
 
-        if (!$filters) {
+        if (null !== $category && !$filters) {
             $datagrid->setValue('category', null, $category);
         }
-        if ($request->get('category')) {
-            $categoryByContext = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
+        if ($this->container->has('sonata.media.manager.category') && $request->get('category')) {
+            $categoryByContext = $this->container->get('sonata.media.manager.category')->findOneBy(array(
                 'id' => (int) $request->get('category'),
                 'context' => $context,
             ));

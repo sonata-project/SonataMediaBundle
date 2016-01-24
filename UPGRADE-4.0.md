@@ -21,3 +21,8 @@ If you have implemented a custom model, you must adapt the signature of the foll
 ## Renamed GalleryHasMedia to GalleryItem
 
 All Actions, Controllers, Interfaces and anything related to this is renamed accordingly.
+
+## Removed classification dependency
+
+The category feature is now optional and can be disabled in the configuration. 
+If you need this feature you have to require `sonata-project/classifcation-bundle` via composer.

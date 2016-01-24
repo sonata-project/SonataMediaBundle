@@ -98,7 +98,6 @@ abstract class AbstractProviderTest extends \PHPUnit_Framework_TestCase
                 }
             }));
 
-
         $this->formBuilder->expects($this->any())->method('getOption')->willReturn('api');
 
         $this->provider = $this->getProvider();
