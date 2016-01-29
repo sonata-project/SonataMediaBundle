@@ -71,22 +71,22 @@ class FixMediaContextCommandTest extends CommandTest
 
         $this->tester = new CommandTester($this->application->find('sonata:media:fix-media-context'));
 
-        $this->pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->pool = $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
 
-        $this->contextManger = $this->getMock('Sonata\ClassificationBundle\Model\ContextManagerInterface');
+        $this->contextManger = $contextManger = $this->getMock('Sonata\ClassificationBundle\Model\ContextManagerInterface');
 
-        $this->categoryManger = $this->getMockBuilder('Sonata\ClassificationBundle\Entity\CategoryManager')->disableOriginalConstructor()->getMock();
+        $this->categoryManger = $categoryManger = $this->getMockBuilder('Sonata\ClassificationBundle\Entity\CategoryManager')->disableOriginalConstructor()->getMock();
 
         $this->container->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function ($id) {
+            ->will($this->returnCallback(function ($id) use ($pool, $contextManger, $categoryManger) {
                 switch ($id) {
                     case 'sonata.media.pool':
-                        return $this->pool;
+                        return $pool;
                     case 'sonata.classification.manager.context':
-                        return $this->contextManger;
+                        return $contextManger;
                     case 'sonata.classification.manager.category':
-                        return $this->categoryManger;
+                        return $categoryManger;
                 }
 
                 return;
