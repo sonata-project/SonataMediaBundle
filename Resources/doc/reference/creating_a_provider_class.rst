@@ -310,7 +310,7 @@ The thumbnail template is common to all media and it is quite simple:
 
 .. code-block:: html+jinja
 
-    <img {% for name, value in options %}{{name}}="{{value}}" {% endfor %} />
+    <img {% for name, value in options %}{{ name ~ '="' ~ value ~ '"' }} {% endfor %} />
 
 The media template and media helper are a bit more tricky. Each provider might
 provide a rich set of options to embed the media. The
