@@ -70,7 +70,7 @@ This would look like this for the cURL call:
 
 And like this for the request body:
 
-.. code-block:: http
+::
 
     ------WebKitFormBoundaryFhX9k2FPT3sQos00
     Content-Disposition: form-data; name="name"
