@@ -343,7 +343,7 @@ class GalleryController
             'csrf_protection' => false,
         ));
 
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $galleryHasMedia = $form->getData();

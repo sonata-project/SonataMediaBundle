@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Listener\ORM;
 
 use Doctrine\Common\EventArgs;
 use Doctrine\ORM\Events;
-use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
 
@@ -63,7 +62,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
             return $media;
         }
 
-        if (!$media->getCategory()) {
+        if ($this->container->has('sonata.media.manager.category') && !$media->getCategory()) {
             $media->setCategory($this->getRootCategory($media));
         }
 
@@ -80,7 +79,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     protected function getRootCategory(MediaInterface $media)
     {
         if (!$this->rootCategories) {
-            $this->rootCategories = $this->container->get('sonata.classification.manager.category')->getRootCategories(false);
+            $this->rootCategories = $this->container->get('sonata.media.manager.category')->getRootCategories(false);
         }
 
         if (!array_key_exists($media->getContext(), $this->rootCategories)) {

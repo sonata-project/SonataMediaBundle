@@ -17,6 +17,13 @@ use Sonata\MediaBundle\Validator\FormatValidator;
 
 class FormatValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (false === interface_exists('Symfony\Component\Validator\ExecutionContextInterface')) {
+            $this->markTestSkipped('Test only available for < SF3.0');
+        }
+    }
+
     /**
      * @group legacy
      */

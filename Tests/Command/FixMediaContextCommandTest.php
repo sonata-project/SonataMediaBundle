@@ -11,8 +11,6 @@
 
 namespace Sonata\MediaBundle\Tests\Command;
 
-use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
-use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Application;
@@ -47,20 +45,29 @@ class FixMediaContextCommandTest extends CommandTest
     private $pool;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ContextManagerInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Sonata\ClassificationBundle\Model\ContextManagerInterface
      */
     private $contextManger;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|CategoryManagerInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Sonata\ClassificationBundle\Model\CategoryManagerInterface
      */
     private $categoryManger;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    public function setUp()
     {
+        if (
+            false === interface_exists('Sonata\ClassificationBundle\Model\ContextManagerInterface')
+            || false === interface_exists('Sonata\ClassificationBundle\Entity\CategoryManager')
+        ) {
+            $this->markTestSkipped(
+                'Sonata Classification is now optional. This test should be done by the developer in the application.'
+            );
+        }
+
         $this->container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
 
         $this->command = new FixMediaContextCommand();
