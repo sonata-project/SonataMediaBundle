@@ -194,7 +194,11 @@ class FileProvider extends BaseProvider
 
         // is_file will cause a fatal error if binary content is not a string
         if (!is_string($media->getBinaryContent())) {
-            throw new \RuntimeException(sprintf('Invalid data provided for binary content, choose among: string, %s, %s', File::class, Request::class));
+            throw new \RuntimeException(sprintf(
+                'Invalid data provided for binary content, choose among: string, %s, %s',
+                'Symfony\Component\HttpFoundation\File\File',
+                'Symfony\Component\HttpFoundation\Request'
+            ));
         }
 
         // if the binary content is a filename => convert to a valid File
