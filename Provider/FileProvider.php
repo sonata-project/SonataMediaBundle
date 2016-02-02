@@ -192,6 +192,11 @@ class FileProvider extends BaseProvider
             return;
         }
 
+        // is_file will cause a fatal error if binary content is not a string
+        if (!is_string($media->getBinaryContent())) {
+            throw new \RuntimeException(sprintf('Invalid data provided for binary content, choose among: string, %s, %s', File::class, Request::class));
+        }
+
         // if the binary content is a filename => convert to a valid File
         if (!is_file($media->getBinaryContent())) {
             throw new \RuntimeException('The file does not exist : '.$media->getBinaryContent());
