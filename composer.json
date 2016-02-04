@@ -39,6 +39,7 @@
         "doctrine/mongodb-odm": "~1.0",
         "jackalope/jackalope-doctrine-dbal": "~1.1",
         "symfony/phpunit-bridge": "~2.7|~3.0",
+        "symfony/security-acl": "~2.3|~3.0",
         "friendsofsymfony/rest-bundle": "~1.1",
         "nelmio/api-doc-bundle": "~2.4"
     },
