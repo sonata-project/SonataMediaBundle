@@ -387,7 +387,7 @@ class MediaController
             'csrf_protection' => false,
         ));
 
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $media = $form->getData();

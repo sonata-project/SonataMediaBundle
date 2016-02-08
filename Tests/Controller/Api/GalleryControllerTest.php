@@ -136,7 +136,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
         $form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
-        $form->expects($this->once())->method('bind');
+        $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
         $form->expects($this->once())->method('getData')->will($this->returnValue($galleryHasMedia));
 
@@ -194,7 +194,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
         $form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
-        $form->expects($this->once())->method('bind');
+        $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
         $form->expects($this->once())->method('getData')->will($this->returnValue($galleryHasMedia));
 
@@ -226,7 +226,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
         $form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
-        $form->expects($this->once())->method('bind');
+        $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(false));
 
         $formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
