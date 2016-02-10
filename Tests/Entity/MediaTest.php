@@ -64,4 +64,18 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($media->getMetadataValue('foo'));
     }
+
+    public function testGetMediaFileExtension()
+    {
+        $media = new Media();
+
+        $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1');
+        $this->assertSame('png', $media->getExtension(), 'extension should not contain query strings');
+
+        $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png#some-hash');
+        $this->assertSame('png', $media->getExtension(), 'extension should not contain hashes');
+
+        $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1#with-some-hash');
+        $this->assertSame('png', $media->getExtension(), 'extension should not contain query strings or hashes');
+    }
 }
