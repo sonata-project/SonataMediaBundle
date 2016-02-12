@@ -49,11 +49,6 @@
         "sonata-project/seo-bundle": "^1.1.5",
         "tilleuls/ckeditor-sonata-mediabundle": "~1.0"
     },
-    "conflict": {
-        "jms/serializer": "<0.13",
-        "sonata-project/seo-bundle": "<1.1.5",
-        "sonata-project/block-bundle": "<2.2.8"
-    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
