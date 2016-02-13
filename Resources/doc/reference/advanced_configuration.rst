@@ -170,4 +170,20 @@ Full configuration options:
 
         buzz:
             connector:  sonata.media.buzz.connector.file_get_contents # sonata.media.buzz.connector.curl
+        admin:
+            media:
+                class: Sonata\MediaBundle\Admin\ORM\MediaAdmin  #If not specified, the default may change according to the selected db_driver 
+                controller: SonataMediaBundle:MediaAdmin
+                translation: SonataMediaBundle
+                show_in_dashboard: true
+            gallery:
+                class: Sonata\MediaBundle\Admin\GalleryAdmin  #If not specified, the default may change according to the selected db_driver
+                controller: SonataMediaBundle:GalleryAdmin
+                translation: SonataMediaBundle
+                show_in_dashboard: true
+            gallery_has_media:
+                class: Sonata\MediaBundle\Admin\GalleryHasMediaAdmin  #If not specified, the default may change according to the selected db_driver
+                controller: SonataAdminBundle:CRUD
+                translation: SonataMediaBundle
+                show_in_dashboard: false
 

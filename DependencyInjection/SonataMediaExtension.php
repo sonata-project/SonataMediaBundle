@@ -127,6 +127,7 @@ class SonataMediaExtension extends Extension
         $this->configureExtra($container, $config);
         $this->configureBuzz($container, $config);
         $this->configureProviders($container, $config);
+        $this->configureAdmin($container, $config);
         $this->configureClassesToCompile();
     }
 
@@ -448,6 +449,35 @@ class SonataMediaExtension extends Extension
         } else {
             $container->removeDefinition('sonata.media.extra.pixlr');
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array            $config
+     */
+    public function configureAdmin(ContainerBuilder $container, array $config)
+    {
+        if (array_key_exists('class', $config['admin']['media'])) {
+            $container->setParameter('sonata.media.admin.media.class', $config['admin']['media']['class']);
+        }
+        if (array_key_exists('class', $config['admin']['gallery'])) {
+            $container->setParameter('sonata.media.admin.gallery.class', $config['admin']['gallery']['class']);
+        }
+        if (array_key_exists('class', $config['admin']['gallery_has_media'])) {
+            $container->setParameter('sonata.media.admin.gallery_has_media.class', $config['admin']['gallery_has_media']['class']);
+        }
+
+        $container->setParameter('sonata.media.admin.media.controller', $config['admin']['media']['controller']);
+        $container->setParameter('sonata.media.admin.gallery.controller', $config['admin']['gallery']['controller']);
+        $container->setParameter('sonata.media.admin.gallery_has_media.controller', $config['admin']['gallery_has_media']['controller']);
+
+        $container->setParameter('sonata.media.admin.media.translation_domain', $config['admin']['media']['translation']);
+        $container->setParameter('sonata.media.admin.gallery.translation_domain', $config['admin']['gallery']['translation']);
+        $container->setParameter('sonata.media.admin.gallery_has_media.translation_domain', $config['admin']['gallery_has_media']['translation']);
+
+        $container->setParameter('sonata.media.admin.media.show_in_dashboard', $config['admin']['media']['show_in_dashboard']);
+        $container->setParameter('sonata.media.admin.gallery.show_in_dashboard', $config['admin']['gallery']['show_in_dashboard']);
+        $container->setParameter('sonata.media.admin.gallery_has_media.show_in_dashboard', $config['admin']['gallery_has_media']['show_in_dashboard']);
     }
 
     /**
