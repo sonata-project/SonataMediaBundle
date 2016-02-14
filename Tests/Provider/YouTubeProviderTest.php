@@ -151,17 +151,17 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
     public static function getUrls()
     {
         return array(
-	    array('BDYAbAtaDzA'),
-	    array('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'),
-	    array('http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'),
-	    array('http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'),
-	    array('http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'),
-	    array('http://www.youtube.com/watch?v=BDYAbAtaDzA'),
-	    array('http://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
-	    array('http://m.youtube.com/watch?v=BDYAbAtaDzA'),
-	    array('https://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
-	    array('https://m.youtube.com/watch?v=BDYAbAtaDzA'),
-	    array('http://youtu.be/BDYAbAtaDzA'),
+        array('BDYAbAtaDzA'),
+        array('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'),
+        array('http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'),
+        array('http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'),
+        array('http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'),
+        array('http://www.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('http://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('http://m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('https://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('https://m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('http://youtu.be/BDYAbAtaDzA'),
         );
     }
 
