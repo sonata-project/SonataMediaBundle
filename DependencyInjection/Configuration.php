@@ -45,6 +45,7 @@ class Configuration implements ConfigurationInterface
         $this->addModelSection($node);
         $this->addBuzzSection($node);
         $this->addResizerSection($node);
+        $this->addAdapterSection($node);
 
         return $treeBuilder;
     }
@@ -310,12 +311,12 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('service')->defaultValue('sonata.media.provider.image')->end()
-                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.simple')->end()
+                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.default')->end()
                                 ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
-                                ->scalarNode('adapter')->defaultValue('sonata.media.adapter.image.gd')->end()
+                                ->scalarNode('adapter')->defaultValue('sonata.media.adapter.image.default')->end()
                                 ->arrayNode('allowed_extensions')
                                     ->prototype('scalar')->end()
                                     ->defaultValue(array('jpg', 'png', 'jpeg'))
@@ -336,7 +337,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('service')->defaultValue('sonata.media.provider.youtube')->end()
-                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.simple')->end()
+                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.default')->end()
                                 ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
@@ -349,7 +350,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('service')->defaultValue('sonata.media.provider.dailymotion')->end()
-                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.simple')->end()
+                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.default')->end()
                                 ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
@@ -361,7 +362,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('service')->defaultValue('sonata.media.provider.vimeo')->end()
-                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.simple')->end()
+                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.default')->end()
                                 ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
@@ -462,6 +463,29 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('mode')->defaultValue('inset')->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('resizers')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('default')->defaultValue('sonata.media.resizer.simple')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addAdapterSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('adapters')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('default')->defaultValue('sonata.media.adapter.image.gd')->end()
                     ->end()
                 ->end()
             ->end()
