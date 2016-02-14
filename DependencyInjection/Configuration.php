@@ -417,7 +417,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Media')->end()
                         ->scalarNode('gallery')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\Gallery')->end()
-                        ->scalarNode('gallery_has_media')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\GalleryHasMedia')->end()
+                        ->scalarNode('gallery_item')->defaultValue('Application\\Sonata\\MediaBundle\\Entity\\GalleryItem')->end()
                         ->scalarNode('category')->defaultValue('Application\\Sonata\\ClassificationBundle\\Entity\\Category')->end()
                     ->end()
                 ->end()

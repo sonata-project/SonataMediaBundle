@@ -47,7 +47,7 @@ class GalleryAdmin extends AbstractAdmin
         $gallery->setContext($parameters['context']);
 
         // fix weird bug with setter object not being call
-        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
+        $gallery->setGalleryItems($gallery->getGalleryItems());
     }
 
     /**
@@ -56,7 +56,7 @@ class GalleryAdmin extends AbstractAdmin
     public function preUpdate($gallery)
     {
         // fix weird bug with setter object not being call
-        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
+        $gallery->setGalleryItems($gallery->getGalleryItems());
     }
 
     /**
@@ -127,14 +127,14 @@ class GalleryAdmin extends AbstractAdmin
                 ->add('defaultFormat', 'choice', array('choices' => $formats))
             ->end()
             ->with('Gallery')
-                ->add('galleryHasMedias', 'sonata_type_collection', array(
+                ->add('galleryItems', 'sonata_type_collection', array(
                         'cascade_validation' => true,
                     ), array(
                         'edit' => 'inline',
                         'inline' => 'table',
                         'sortable' => 'position',
                         'link_parameters' => array('context' => $context),
-                        'admin_code' => 'sonata.media.admin.gallery_has_media',
+                        'admin_code' => 'sonata.media.admin.gallery_item',
                     )
                 )
             ->end()

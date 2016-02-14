@@ -10,7 +10,7 @@ Full configuration options:
         class:
             media:              Application\Sonata\MediaBundle\Entity\Media
             gallery:            Application\Sonata\MediaBundle\Entity\Gallery
-            gallery_has_media:  Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+            gallery_item:       Application\Sonata\MediaBundle\Entity\GalleryItem
             category:           Application\Sonata\ClassificationBundle\Entity\Category
 
         default_context: default

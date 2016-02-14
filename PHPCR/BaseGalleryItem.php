@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\PHPCR;
 
-use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\MediaBundle\Model\GalleryItem;
 
-abstract class BaseGalleryHasMedia extends GalleryHasMedia
+abstract class BaseGalleryItem extends GalleryItem
 {
     /**
      * @var string

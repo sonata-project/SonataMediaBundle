@@ -201,7 +201,7 @@ class SonataMediaExtension extends Extension
     {
         $container->setParameter('sonata.media.admin.media.entity', $config['class']['media']);
         $container->setParameter('sonata.media.admin.gallery.entity', $config['class']['gallery']);
-        $container->setParameter('sonata.media.admin.gallery_has_media.entity', $config['class']['gallery_has_media']);
+        $container->setParameter('sonata.media.admin.gallery_item.entity', $config['class']['gallery_item']);
 
         $container->setParameter('sonata.media.media.class', $config['class']['media']);
         $container->setParameter('sonata.media.gallery.class', $config['class']['gallery']);
@@ -217,8 +217,8 @@ class SonataMediaExtension extends Extension
         $collector = DoctrineCollector::getInstance();
 
         $collector->addAssociation($config['class']['media'], 'mapOneToMany', array(
-            'fieldName' => 'galleryHasMedias',
-            'targetEntity' => $config['class']['gallery_has_media'],
+            'fieldName' => 'galleryItems',
+            'targetEntity' => $config['class']['gallery_item'],
             'cascade' => array(
                 'persist',
             ),
@@ -226,14 +226,14 @@ class SonataMediaExtension extends Extension
             'orphanRemoval' => false,
         ));
 
-        $collector->addAssociation($config['class']['gallery_has_media'], 'mapManyToOne', array(
+        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', array(
             'fieldName' => 'gallery',
             'targetEntity' => $config['class']['gallery'],
             'cascade' => array(
                 'persist',
             ),
             'mappedBy' => null,
-            'inversedBy' => 'galleryHasMedias',
+            'inversedBy' => 'galleryItems',
             'joinColumns' => array(
                 array(
                     'name' => 'gallery_id',
@@ -243,14 +243,14 @@ class SonataMediaExtension extends Extension
             'orphanRemoval' => false,
         ));
 
-        $collector->addAssociation($config['class']['gallery_has_media'], 'mapManyToOne', array(
+        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', array(
             'fieldName' => 'media',
             'targetEntity' => $config['class']['media'],
             'cascade' => array(
                  'persist',
             ),
             'mappedBy' => null,
-            'inversedBy' => 'galleryHasMedias',
+            'inversedBy' => 'galleryItems',
             'joinColumns' => array(
                 array(
                     'name' => 'media_id',
@@ -261,8 +261,8 @@ class SonataMediaExtension extends Extension
         ));
 
         $collector->addAssociation($config['class']['gallery'], 'mapOneToMany', array(
-            'fieldName' => 'galleryHasMedias',
-            'targetEntity' => $config['class']['gallery_has_media'],
+            'fieldName' => 'galleryItems',
+            'targetEntity' => $config['class']['gallery_item'],
             'cascade' => array(
                 'persist',
             ),
@@ -495,8 +495,8 @@ class SonataMediaExtension extends Extension
             'Sonata\\MediaBundle\\Metadata\\NoopMetadataBuilder',
             'Sonata\\MediaBundle\\Metadata\\ProxyMetadataBuilder',
             'Sonata\\MediaBundle\\Model\\Gallery',
-            'Sonata\\MediaBundle\\Model\\GalleryHasMedia',
-            'Sonata\\MediaBundle\\Model\\GalleryHasMediaInterface',
+            'Sonata\\MediaBundle\\Model\\GalleryItem',
+            'Sonata\\MediaBundle\\Model\\GalleryItemInterface',
             'Sonata\\MediaBundle\\Model\\GalleryInterface',
             'Sonata\\MediaBundle\\Model\\GalleryManager',
             'Sonata\\MediaBundle\\Model\\GalleryManagerInterface',

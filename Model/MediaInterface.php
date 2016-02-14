@@ -367,14 +367,14 @@ interface MediaInterface
     public function getBox();
 
     /**
-     * @param GalleryHasMediaInterface[] $galleryHasMedias
+     * @param GalleryItemInterface[] $galleryItems
      */
-    public function setGalleryHasMedias($galleryHasMedias);
+    public function setGalleryItems($galleryItems);
 
     /**
-     * @return GalleryHasMediaInterface[]
+     * @return GalleryItemInterface[]
      */
-    public function getGalleryHasMedias();
+    public function getGalleryItems();
 
     /**
      * @return string

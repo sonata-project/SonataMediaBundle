@@ -55,7 +55,7 @@ class SonataMediaBundle extends Bundle
             'sonata_media_api_form_media' => 'Sonata\MediaBundle\Form\Type\ApiMediaType',
             'sonata_media_api_form_doctrine_media' => 'Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType',
             'sonata_media_api_form_gallery' => 'Sonata\MediaBundle\Form\Type\ApiGalleryType',
-            'sonata_media_api_form_gallery_has_media' => 'Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType',
+            'sonata_media_api_form_gallery_item' => 'Sonata\MediaBundle\Form\Type\ApiGalleryItemType',
         ));
     }
 }

@@ -108,9 +108,9 @@ Doctrine PHPCR:
         sonata_media:
             # if you don't use default namespace configuration
             #class:
-            #    media: MyVendor\MediaBundle\Entity\Media
-            #    gallery: MyVendor\MediaBundle\Entity\Gallery
-            #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+            #    media:        MyVendor\MediaBundle\Entity\Media
+            #    gallery:      MyVendor\MediaBundle\Entity\Gallery
+            #    gallery_item: MyVendor\MediaBundle\Entity\GalleryItem
             db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
             default_context: default # you need to set a context
             contexts:
