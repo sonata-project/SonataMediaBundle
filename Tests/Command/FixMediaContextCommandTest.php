@@ -111,7 +111,7 @@ class FixMediaContextCommandTest extends CommandTest
 
         $this->categoryManger->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue($category));
 
-        $output = $this->tester->execute(array());
+        $output = $this->tester->execute(array('command' => $this->command->getName()));
 
         $this->assertRegExp('@Done!@', $this->tester->getDisplay());
 
@@ -138,7 +138,7 @@ class FixMediaContextCommandTest extends CommandTest
         $this->categoryManger->expects($this->once())->method('create')->will($this->returnValue($category));
         $this->categoryManger->expects($this->once())->method('save')->with($this->equalTo($category));
 
-        $output = $this->tester->execute(array());
+        $output = $this->tester->execute(array('command' => $this->command->getName()));
 
         $this->assertRegExp('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
@@ -167,7 +167,7 @@ class FixMediaContextCommandTest extends CommandTest
         $this->categoryManger->expects($this->once())->method('create')->will($this->returnValue($category));
         $this->categoryManger->expects($this->once())->method('save')->with($this->equalTo($category));
 
-        $output = $this->tester->execute(array());
+        $output = $this->tester->execute(array('command' => $this->command->getName()));
 
         $this->assertRegExp('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
