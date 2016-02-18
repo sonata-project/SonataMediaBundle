@@ -52,7 +52,7 @@ class AmazonMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             array(array('cache_control' => 'max-age=86400'), array('headers' => array('Cache-Control' => 'max-age=86400'), 'contentType' => 'image/png')),
             array(array('encryption' => 'aes256'), array('encryption' => 'AES256', 'contentType' => 'image/png')),
             array(array('meta' => array('key' => 'value')), array('meta' => array('key' => 'value'), 'contentType' => 'image/png')),
-            array(array('acl' => 'public','storage' => 'standard','cache_control' => 'max-age=86400','encryption' => 'aes256','meta' => array('key' => 'value')), array('acl' => AmazonS3::ACL_PUBLIC, 'contentType' => 'image/png','storage' => AmazonS3::STORAGE_STANDARD,'headers' => array('Cache-Control' => 'max-age=86400'),'encryption' => 'AES256','meta' => array('key' => 'value'))),
+            array(array('acl' => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => array('key' => 'value')), array('acl' => AmazonS3::ACL_PUBLIC, 'contentType' => 'image/png', 'storage' => AmazonS3::STORAGE_STANDARD, 'headers' => array('Cache-Control' => 'max-age=86400'), 'encryption' => 'AES256', 'meta' => array('key' => 'value'))),
         );
     }
 }

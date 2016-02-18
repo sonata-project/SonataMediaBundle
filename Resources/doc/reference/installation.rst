@@ -113,7 +113,7 @@ Doctrine PHPCR:
 
         filesystem:
             local:
-                directory:  %kernel.root_dir%/../web/uploads/media
+                directory:  "%kernel.root_dir%/../web/uploads/media"
                 create:     false
 
 .. note::
