@@ -21,7 +21,7 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
-        // Prefer the Syfmony 2.6+ API if available
+        // Prefer the Symfony 2.6+ API if available
         if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
             $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         } else {
@@ -44,7 +44,7 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
-        // Prefer the Syfmony 2.6+ API if available
+        // Prefer the Symfony 2.6+ API if available
         if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
             $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         } else {
