@@ -26,7 +26,14 @@ class FormatValidatorTest extends \PHPUnit_Framework_TestCase
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
-        $context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        // Prefer the Symfony 2.5+ API if available
+        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
+            $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
+        } else {
+            $contextClass = 'Symfony\Component\Validator\ExecutionContext';
+        }
+
+        $context = $this->getMock($contextClass, array(), array(), '', false);
         $context->expects($this->never())->method('addViolation');
 
         $validator = new FormatValidator($pool);
@@ -44,7 +51,14 @@ class FormatValidatorTest extends \PHPUnit_Framework_TestCase
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
-        $context = $this->getMock('Symfony\Component\Validator\ExecutionContext', array(), array(), '', false);
+        // Prefer the Symfony 2.5+ API if available
+        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
+            $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
+        } else {
+            $contextClass = 'Symfony\Component\Validator\ExecutionContext';
+        }
+
+        $context = $this->getMock($contextClass, array(), array(), '', false);
         $context->expects($this->once())->method('addViolation');
 
         $validator = new FormatValidator($pool);
