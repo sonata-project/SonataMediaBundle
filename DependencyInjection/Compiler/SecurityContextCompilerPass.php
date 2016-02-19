@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * SecurityContextCompilerPass.
  *
- * This compiler pass provides compatibility with Syfmony < 2.6 security.context service
+ * This compiler pass provides compatibility with Symfony < 2.6 security.context service
  * and 2.6+ security.authorization_checker service. This pass may be removed when support
  * for Symfony < 2.6 is dropped.
  */

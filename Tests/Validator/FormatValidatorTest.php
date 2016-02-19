@@ -26,7 +26,7 @@ class FormatValidatorTest extends \PHPUnit_Framework_TestCase
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
-        // Prefer the Syfmony 2.5+ API if available
+        // Prefer the Symfony 2.5+ API if available
         if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
             $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
         } else {
@@ -51,7 +51,7 @@ class FormatValidatorTest extends \PHPUnit_Framework_TestCase
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
-        // Prefer the Syfmony 2.5+ API if available
+        // Prefer the Symfony 2.5+ API if available
         if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
             $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
         } else {
