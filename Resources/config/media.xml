@@ -15,12 +15,14 @@
         <service id="sonata.media.adapter.image.gmagick" class="Imagine\Gmagick\Imagine" />
 
         <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
+            <tag name="sonata.media.resizer" />
             <argument type="service" id="sonata.media.adapter.image.gd" />
             <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
             <argument type="service" id="sonata.media.metadata.proxy" />
         </service>
 
         <service id="sonata.media.resizer.square" class="%sonata.media.resizer.square.class%">
+            <tag name="sonata.media.resizer" />
             <argument type="service" id="sonata.media.adapter.image.gd" />
             <argument>%sonata.media.resizer.square.adapter.mode%</argument>
             <argument type="service" id="sonata.media.metadata.proxy" />
