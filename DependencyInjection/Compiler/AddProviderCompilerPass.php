@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class AddProviderCompilerPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
@@ -32,19 +32,15 @@ class AddProviderCompilerPass implements CompilerPassInterface
         $this->attachArguments($container, $settings);
         $this->attachProviders($container);
 
+        $format = $container->getParameter('sonata.media.admin_format');
+
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
-            $container->getDefinition($id)->addMethodCall('addFormat', array('admin', array(
-                'quality'       => 90,
-                'width'         => 200,
-                'format'        => 'jpg',
-                'height'        => false,
-                'constraint'    => true,
-            )));
+            $container->getDefinition($id)->addMethodCall('addFormat', array('admin', $format));
         }
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param ContainerBuilder $container
      *
      * @return array
      */
@@ -72,7 +68,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param ContainerBuilder $container
      */
     public function attachProviders(ContainerBuilder $container)
     {
@@ -83,8 +79,8 @@ class AddProviderCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $settings
+     * @param ContainerBuilder $container
+     * @param array            $settings
      */
     public function attachArguments(ContainerBuilder $container, array $settings)
     {
@@ -111,8 +107,8 @@ class AddProviderCompilerPass implements CompilerPassInterface
     /**
      * Define the default settings to the config array.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $settings
+     * @param ContainerBuilder $container
+     * @param array            $settings
      */
     public function applyFormats(ContainerBuilder $container, array $settings)
     {

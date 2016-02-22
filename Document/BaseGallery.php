@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
 
 /**
@@ -19,11 +20,11 @@ use Sonata\MediaBundle\Model\Gallery;
 abstract class BaseGallery extends Gallery
 {
     /**
-     * {@inheritdoc}
+     * Constructor.
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galleryHasMedias = new ArrayCollection();
     }
 
     /**

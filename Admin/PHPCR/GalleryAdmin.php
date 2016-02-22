@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -24,6 +24,9 @@ class GalleryAdmin extends BaseGalleryAdmin
      */
     protected $root;
 
+    /**
+     * @param string $root
+     */
     public function setRoot($root)
     {
         $this->root = $root;
@@ -43,6 +46,9 @@ class GalleryAdmin extends BaseGalleryAdmin
         return $query;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function id($object)
     {
         return $this->getUrlsafeIdentifier($object);

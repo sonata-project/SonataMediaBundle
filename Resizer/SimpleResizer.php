@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -21,15 +21,25 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class SimpleResizer implements ResizerInterface
 {
+    /**
+     * @var ImagineInterface
+     */
     protected $adapter;
 
+    /**
+     * @var string
+     */
     protected $mode;
 
+    /**
+     * @var MetadataBuilderInterface
+     */
     protected $metadata;
 
     /**
-     * @param ImagineInterface $adapter
-     * @param string           $mode
+     * @param ImagineInterface         $adapter
+     * @param string                   $mode
+     * @param MetadataBuilderInterface $metadata
      */
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
@@ -86,7 +96,7 @@ class SimpleResizer implements ResizerInterface
      *
      * @return Box
      */
-    private function computeBox(MediaInterface $media, array $settings)
+    protected function computeBox(MediaInterface $media, array $settings)
     {
         if ($this->mode !== ImageInterface::THUMBNAIL_INSET && $this->mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');

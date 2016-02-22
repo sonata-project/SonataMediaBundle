@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -51,7 +51,7 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
         ));
 
         $this->assertInternalType('array', $provider->getTemplates());
-        $this->assertEquals('edit.twig', $provider->getTemplate('edit'));
+        $this->assertSame('edit.twig', $provider->getTemplate('edit'));
 
         $this->assertInstanceOf('\Sonata\MediaBundle\CDN\CDNInterface', $provider->getCdn());
 
@@ -62,27 +62,27 @@ class BaseProviderTest extends \PHPUnit_Framework_TestCase
         $media = new \Sonata\MediaBundle\Tests\Entity\Media();
         $media->setContext('test');
 
-        $this->assertEquals('admin', $provider->getFormatName($media, 'admin'));
-        $this->assertEquals('reference', $provider->getFormatName($media, 'reference'));
-        $this->assertEquals('test_small', $provider->getFormatName($media, 'small'));
-        $this->assertEquals('test_small', $provider->getFormatName($media, 'test_small'));
+        $this->assertSame('admin', $provider->getFormatName($media, 'admin'));
+        $this->assertSame('reference', $provider->getFormatName($media, 'reference'));
+        $this->assertSame('test_small', $provider->getFormatName($media, 'small'));
+        $this->assertSame('test_small', $provider->getFormatName($media, 'test_small'));
     }
 
     public function testGetCdnPath()
     {
         $provider = $this->getProvider();
-        $this->assertEquals('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
+        $this->assertSame('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
     }
 
     public function testMetadata()
     {
         $provider = $this->getProvider();
 
-        $this->assertEquals('test', $provider->getProviderMetadata()->getTitle());
-        $this->assertEquals('test.description', $provider->getProviderMetadata()->getDescription());
+        $this->assertSame('test', $provider->getProviderMetadata()->getTitle());
+        $this->assertSame('test.description', $provider->getProviderMetadata()->getDescription());
         $this->assertFalse($provider->getProviderMetadata()->getImage());
-        $this->assertEquals('fa fa-file', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertEquals('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        $this->assertSame('fa fa-file', $provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 }
 
@@ -91,7 +91,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format)
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
         // TODO: Implement getHelperProperties() method.
     }

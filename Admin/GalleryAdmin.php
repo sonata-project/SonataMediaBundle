@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -19,13 +19,16 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdmin extends Admin
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
     /**
-     * @param string                            $code
-     * @param string                            $class
-     * @param string                            $baseControllerName
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     * @param Pool   $pool
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
     {
@@ -63,9 +66,9 @@ class GalleryAdmin extends Admin
 
         $formMapper
             ->with('Options')
-                ->add('context', 'sonata_type_translatable_choice', array(
-                    'choices'   => $contexts,
-                    'catalogue' => 'SonataMediaBundle',
+                ->add('context', 'choice', array(
+                    'choices'            => $contexts,
+                    'translation_domain' => 'SonataMediaBundle',
                 ))
                 ->add('enabled', null, array('required' => false))
                 ->add('name')
@@ -107,7 +110,9 @@ class GalleryAdmin extends Admin
         $datagridMapper
             ->add('name')
             ->add('enabled')
-            ->add('context')
+            ->add('context', null, array(
+                'show_filter' => false,
+            ))
         ;
     }
 

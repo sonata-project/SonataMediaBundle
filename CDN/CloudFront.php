@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -51,18 +51,22 @@ class CloudFront implements CDNInterface
      * @var string
      */
     protected $path;
+
     /**
      * @var string
      */
     protected $key;
+
     /**
      * @var string
      */
     protected $secret;
+
     /**
      * @var string
      */
     protected $distributionId;
+
     /**
      * @var CloudFrontClient
      */
@@ -162,10 +166,14 @@ class CloudFront implements CDNInterface
     /**
      * For testing only.
      *
-     * @param $client
+     * @param CloudFrontClient $client
      */
     public function setClient($client)
     {
+        if (!$client instanceof CloudFrontClient) {
+            @trigger_error('The '.__METHOD__.' expects a CloudFrontClient as parameter.', E_USER_DEPRECATED);
+        }
+
         $this->client = $client;
     }
 
@@ -185,8 +193,6 @@ class CloudFront implements CDNInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @throws \RuntimeException
      */
     public function getFlushStatus($identifier)
     {
@@ -205,7 +211,7 @@ class CloudFront implements CDNInterface
     /**
      * @static
      *
-     * @return array
+     * @return string[]
      */
     public static function getStatusList()
     {

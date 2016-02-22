@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -29,7 +29,7 @@ interface ResizerInterface
      * @param MediaInterface $media
      * @param array          $settings
      *
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     public function getBox(MediaInterface $media, array $settings);
 }

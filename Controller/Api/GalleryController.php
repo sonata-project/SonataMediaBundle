@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -17,8 +17,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sonata\MediaBundle\Model\Gallery;
-use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
@@ -89,7 +88,7 @@ class GalleryController
      *
      * @param ParamFetcherInterface $paramFetcher
      *
-     * @return Sonata\DatagridBundle\Pager\PagerInterface
+     * @return PagerInterface
      */
     public function getGalleriesAction(ParamFetcherInterface $paramFetcher)
     {
@@ -135,7 +134,7 @@ class GalleryController
      *
      * @param $id
      *
-     * @return Gallery
+     * @return GalleryInterface
      */
     public function getGalleryAction($id)
     {
@@ -160,7 +159,7 @@ class GalleryController
      *
      * @param $id
      *
-     * @return Media[]
+     * @return MediaInterface[]
      */
     public function getGalleryMediasAction($id)
     {
@@ -192,7 +191,7 @@ class GalleryController
      *
      * @param $id
      *
-     * @return GalleryHasMedia[]
+     * @return GalleryHasMediaInterface[]
      */
     public function getGalleryGalleryhasmediasAction($id)
     {
@@ -336,7 +335,7 @@ class GalleryController
      * @param GalleryHasMediaInterface $galleryHasMedia
      * @param Request                  $request
      *
-     * @return FOSRestView|\Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     protected function handleWriteGalleryhasmedia(GalleryInterface $gallery, MediaInterface $media, GalleryHasMediaInterface $galleryHasMedia = null, Request $request)
     {
@@ -344,7 +343,7 @@ class GalleryController
             'csrf_protection' => false,
         ));
 
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $galleryHasMedia = $form->getData();
@@ -383,7 +382,7 @@ class GalleryController
      * @param int $galleryId A gallery identifier
      * @param int $mediaId   A media identifier
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      *
      * @throws NotFoundHttpException
      */
@@ -422,7 +421,7 @@ class GalleryController
      *
      * @param int $id A Gallery identifier
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      *
      * @throws NotFoundHttpException
      */
@@ -440,9 +439,9 @@ class GalleryController
      *
      * @param $id
      *
-     * @return Gallery
+     * @return GalleryInterface
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     protected function getGallery($id)
     {
@@ -460,9 +459,9 @@ class GalleryController
      *
      * @param $id
      *
-     * @return Media
+     * @return MediaInterface
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     protected function getMedia($id)
     {
@@ -497,7 +496,7 @@ class GalleryController
      * @param Request  $request Symfony request
      * @param int|null $id      A Gallery identifier
      *
-     * @return \FOS\RestBundle\View\View|FormInterface
+     * @return View|FormInterface
      */
     protected function handleWriteGallery($request, $id = null)
     {
@@ -507,7 +506,7 @@ class GalleryController
             'csrf_protection' => false,
         ));
 
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $gallery = $form->getData();

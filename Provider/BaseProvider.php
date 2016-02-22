@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -27,24 +27,42 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     protected $formats = array();
 
+    /**
+     * @var string[]
+     */
     protected $templates = array();
 
+    /**
+     * @var ResizerInterface
+     */
     protected $resizer;
 
+    /**
+     * @var Filesystem
+     */
     protected $filesystem;
 
+    /**
+     * @var GeneratorInterface
+     */
     protected $pathGenerator;
 
+    /**
+     * @var CDNInterface
+     */
     protected $cdn;
 
+    /**
+     * @var ThumbnailInterface
+     */
     protected $thumbnail;
 
     /**
-     * @param string                                           $name
-     * @param \Gaufrette\Filesystem                            $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface             $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
+     * @param string             $name
+     * @param Filesystem         $filesystem
+     * @param CDNInterface       $cdn
+     * @param GeneratorInterface $pathGenerator
+     * @param ThumbnailInterface $thumbnail
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
     {
@@ -56,7 +74,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      */
     abstract protected function doTransform(MediaInterface $media);
 
@@ -74,7 +92,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      */
     public function flushCdn(MediaInterface $media)
     {
@@ -227,7 +245,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getTemplates()
     {

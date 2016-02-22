@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -18,10 +18,19 @@ use Psr\Log\LoggerInterface;
 
 class Replicate implements AdapterInterface, MetadataSupporter
 {
+    /**
+     * @var AdapterInterface
+     */
     protected $master;
 
+    /**
+     * @var AdapterInterface
+     */
     protected $slave;
 
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
 
     /**
@@ -198,7 +207,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * Gets the class names as an array for both adapters.
      *
-     * @return array
+     * @return string[]
      */
     public function getAdapterClassNames()
     {
@@ -209,7 +218,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createFile($key, Filesystem $filesystem)
     {
@@ -217,7 +226,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createFileStream($key, Filesystem $filesystem)
     {
@@ -225,7 +234,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function listDirectory($directory = '')
     {
@@ -233,7 +242,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isDirectory($key)
     {

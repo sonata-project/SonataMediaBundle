@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -21,8 +21,14 @@ use Sonata\MediaBundle\Provider\Pool;
 
 abstract class BaseMediaAdmin extends Admin
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var CategoryManagerInterface
+     */
     protected $categoryManager;
 
     /**
@@ -169,7 +175,7 @@ abstract class BaseMediaAdmin extends Admin
     }
 
     /**
-     * @return null|\Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getPool()
     {

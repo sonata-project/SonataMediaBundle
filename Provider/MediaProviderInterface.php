@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -107,14 +107,14 @@ interface MediaProviderInterface
     /**
      * build the related create form.
      *
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @param FormMapper $formMapper
      */
     public function buildCreateForm(FormMapper $formMapper);
 
     /**
      * build the related create form.
      *
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @param FormMapper $formMapper
      */
     public function buildEditForm(FormMapper $formMapper);
 
@@ -131,8 +131,9 @@ interface MediaProviderInterface
     /**
      * @param MediaInterface $media
      * @param string         $format
+     * @param array          $options
      */
-    public function getHelperProperties(MediaInterface $media, $format);
+    public function getHelperProperties(MediaInterface $media, $format, $options = array());
 
     /**
      * Generate the media path.
@@ -189,7 +190,7 @@ interface MediaProviderInterface
     public function setTemplates(array $templates);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTemplates();
 
@@ -208,7 +209,7 @@ interface MediaProviderInterface
      * @param string         $mode
      * @param array          $headers
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array());
 

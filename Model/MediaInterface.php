@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -10,6 +10,8 @@
  */
 
 namespace Sonata\MediaBundle\Model;
+
+use Imagine\Image\Box;
 
 interface MediaInterface
 {
@@ -360,17 +362,17 @@ interface MediaInterface
     public function getCdnStatus();
 
     /**
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     public function getBox();
 
     /**
-     * @param array $galleryHasMedias
+     * @param GalleryHasMediaInterface[] $galleryHasMedias
      */
     public function setGalleryHasMedias($galleryHasMedias);
 
     /**
-     * @return array
+     * @return GalleryHasMediaInterface[]
      */
     public function getGalleryHasMedias();
 

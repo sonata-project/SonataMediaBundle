@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -23,18 +23,20 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class YouTubeProvider extends BaseVideoProvider
 {
-    /* @var boolean */
+    /**
+     * @var bool
+     */
     protected $html5;
 
     /**
-     * @param string                                                $name
-     * @param \Gaufrette\Filesystem                                 $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface                  $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface      $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface      $thumbnail
-     * @param \Buzz\Browser                                         $browser
-     * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
-     * @param bool                                                  $html5
+     * @param string                   $name
+     * @param Filesystem               $filesystem
+     * @param CDNInterface             $cdn
+     * @param GeneratorInterface       $pathGenerator
+     * @param ThumbnailInterface       $thumbnail
+     * @param Browser                  $browser
+     * @param MetadataBuilderInterface $metadata
+     * @param bool                     $html5
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null, $html5 = false)
     {
@@ -201,7 +203,7 @@ class YouTubeProvider extends BaseVideoProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -213,7 +215,7 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\#\?&\"'>]+)/", $media->getBinaryContent(), $matches)) {
+        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\#\?&\"'>]+)/", $media->getBinaryContent(), $matches)) {
             $media->setBinaryContent($matches[1]);
         }
     }

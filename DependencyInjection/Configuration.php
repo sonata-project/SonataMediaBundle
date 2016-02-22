@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -23,7 +23,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -34,6 +34,17 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('db_driver')->isRequired()->end()
                 ->scalarNode('default_context')->isRequired()->end()
+                ->arrayNode('admin_format')
+                    ->info('Configures the thumbnail preview for the admin')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('width')->defaultValue(200)->end()
+                        ->scalarNode('height')->defaultValue(false)->end()
+                        ->scalarNode('quality')->defaultValue(90)->end()
+                        ->scalarNode('format')->defaultValue('jpg')->end()
+                        ->scalarNode('constraint')->defaultValue(true)->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
@@ -50,7 +61,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addContextsSection(ArrayNodeDefinition $node)
     {
@@ -93,7 +104,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addCdnSection(ArrayNodeDefinition $node)
     {
@@ -110,7 +121,10 @@ class Configuration implements ConfigurationInterface
 
                         ->arrayNode('panther')
                             ->children()
-                                ->scalarNode('path')->isRequired()->end() // http://domain.pantherportal.com/uploads/media
+                                ->scalarNode('path')
+                                    ->info('e.g. http://domain.pantherportal.com/uploads/media')
+                                    ->isRequired()
+                                ->end()
                                 ->scalarNode('site_id')->isRequired()->end()
                                 ->scalarNode('password')->isRequired()->end()
                                 ->scalarNode('username')->isRequired()->end()
@@ -119,7 +133,10 @@ class Configuration implements ConfigurationInterface
 
                         ->arrayNode('cloudfront')
                             ->children()
-                                ->scalarNode('path')->isRequired()->end() // http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                                ->scalarNode('path')
+                                    ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
+                                    ->isRequired()
+                                ->end()
                                 ->scalarNode('distribution_id')->isRequired()->end()
                                 ->scalarNode('key')->isRequired()->end()
                                 ->scalarNode('secret')->isRequired()->end()
@@ -139,7 +156,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addFilesystemSection(ArrayNodeDefinition $node)
     {
@@ -258,7 +275,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addProvidersSection(ArrayNodeDefinition $node)
     {
@@ -369,13 +386,14 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addExtraSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
                 ->arrayNode('pixlr')
+                    ->info('More info at https://pixlr.com/')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('enabled')->defaultValue(false)->end()
@@ -388,7 +406,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addModelSection(ArrayNodeDefinition $node)
     {
@@ -408,7 +426,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addBuzzSection(ArrayNodeDefinition $node)
     {
@@ -434,7 +452,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @param ArrayNodeDefinition $node
      */
     private function addResizerSection(ArrayNodeDefinition $node)
     {

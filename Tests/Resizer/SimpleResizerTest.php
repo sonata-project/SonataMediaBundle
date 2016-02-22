@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -76,8 +76,8 @@ class SimpleResizerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Imagine\Image\Box', $box);
 
-        $this->assertEquals($result->getWidth(), $box->getWidth());
-        $this->assertEquals($result->getHeight(), $box->getHeight());
+        $this->assertSame($result->getWidth(), $box->getWidth());
+        $this->assertSame($result->getHeight(), $box->getHeight());
     }
 
     public static function getBoxSettings()

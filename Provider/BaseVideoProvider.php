@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Provider;
 
 use Buzz\Browser;
 use Gaufrette\Filesystem;
+use Imagine\Image\Box;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -26,16 +27,24 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
+    /**
+     * @var Browser
+     */
     protected $browser;
+
+    /**
+     * @var MetadataBuilderInterface
+     */
     protected $metadata;
 
     /**
-     * @param string                                           $name
-     * @param \Gaufrette\Filesystem                            $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface             $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface $thumbnail
-     * @param \Buzz\Browser                                    $browser
+     * @param string                        $name
+     * @param Filesystem                    $filesystem
+     * @param CDNInterface                  $cdn
+     * @param GeneratorInterface            $pathGenerator
+     * @param ThumbnailInterface            $thumbnail
+     * @param Browser                       $browser
+     * @param MetadataBuilderInterface|null $metadata
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null)
     {
@@ -136,7 +145,9 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add('binaryContent', 'text');
+        $formBuilder->add('binaryContent', 'text', array(
+            'label' => 'widget_label_binary_content',
+        ));
     }
 
     /**
@@ -171,8 +182,8 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * @throws \RuntimeException
      *
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string                                   $url
+     * @param MediaInterface $media
+     * @param string         $url
      *
      * @return mixed
      */
@@ -194,11 +205,11 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param string                                   $format
-     * @param array                                    $options
+     * @param MediaInterface $media
+     * @param string         $format
+     * @param array          $options
      *
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
     {

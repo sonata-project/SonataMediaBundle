@@ -7,7 +7,8 @@
 
     <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseGalleryHasMedia" referenceable="true" >
 
-        <parentdocument name="gallery" />
+        <parent-document name="gallery" />
+        <nodename name="nodename"/>
 
         <field name="enabled"        type="boolean" />
 

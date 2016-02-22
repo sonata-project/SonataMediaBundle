@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,17 +11,20 @@
 
 namespace Sonata\MediaBundle\Block;
 
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
@@ -31,8 +34,14 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class GalleryBlockService extends BaseBlockService
 {
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryAdmin;
 
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryManager;
 
     /**
@@ -50,15 +59,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'Gallery';
-    }
-
-    /**
-     * @return \Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getMediaPool()
     {
@@ -66,7 +67,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @return \Sonata\AdminBundle\Admin\AdminInterface
+     * @return AdminInterface
      */
     public function getGalleryAdmin()
     {
@@ -80,14 +81,7 @@ class GalleryBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultSettings(OptionsResolverInterface $resolver)
+    public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'gallery'     => false,
@@ -126,28 +120,51 @@ class GalleryBlockService extends BaseBlockService
         }
 
         // simulate an association ...
-        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media');
+        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media', array(
+            'translation_domain' => 'SonataMediaBundle',
+        ));
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE));
+        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE));
 
         $builder = $formMapper->create('galleryId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
             'class'                    => $this->getGalleryAdmin()->getClass(),
             'model_manager'            => $this->getGalleryAdmin()->getModelManager(),
+            'label'                    => 'form.label_gallery',
         ));
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('title', 'text', array('required' => false)),
-                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array('title', 'text', array(
+                    'required' => false,
+                    'label'    => 'form.label_title',
+                )),
+                array('context', 'choice', array(
+                    'required' => true,
+                    'choices'  => $contextChoices,
+                    'label'    => 'form.label_context',
+                )),
+                array('format', 'choice', array(
+                    'required' => count($formatChoices) > 0,
+                    'choices'  => $formatChoices,
+                    'label'    => 'form.label_format',
+                )),
                 array($builder, null, array()),
-                array('pauseTime', 'number', array()),
-                array('startPaused', 'sonata_type_boolean', array()),
-                array('wrap', 'sonata_type_boolean', array()),
+                array('pauseTime', 'number', array(
+                    'label' => 'form.label_pause_time',
+                )),
+                array('startPaused', 'checkbox', array(
+                    'required' => false,
+                    'label'    => 'form.label_start_paused',
+                )),
+                array('wrap', 'checkbox', array(
+                    'required' => false,
+                    'label'    => 'form.label_wrap',
+                )),
             ),
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
@@ -197,7 +214,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\GalleryInterface $gallery
+     * @param GalleryInterface $gallery
      *
      * @return array
      */
@@ -227,7 +244,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return false|string
      */
@@ -240,5 +257,15 @@ class GalleryBlockService extends BaseBlockService
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }

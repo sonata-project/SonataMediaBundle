@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -16,6 +16,9 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 class FormatThumbnail implements ThumbnailInterface
 {
+    /**
+     * @var string
+     */
     private $defaultFormat;
 
     /**
@@ -45,7 +48,12 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s.%s',
+        if ('reference' === $format) {
+            return $provider->getReferenceImage($media);
+        }
+
+        return sprintf(
+            '%s/thumb_%s_%s.%s',
             $provider->generatePath($media),
             $media->getId(),
             $format,
@@ -105,7 +113,7 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string the file extension for the $media, or the $defaultExtension if not available
      */

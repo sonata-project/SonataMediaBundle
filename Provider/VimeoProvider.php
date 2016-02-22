@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -80,7 +80,7 @@ class VimeoProvider extends BaseVideoProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -88,8 +88,8 @@ class VimeoProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/vimeo\.com\/(\d+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[1]);
+        if (preg_match("/vimeo\.com\/(video\/|)(\d+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[2]);
         }
     }
 

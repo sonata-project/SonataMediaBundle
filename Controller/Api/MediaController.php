@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -15,17 +15,21 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\View\View as FOSRestView;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sonata\MediaBundle\Model\Media;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class MediaController.
@@ -83,7 +87,7 @@ class MediaController
      *
      * @param ParamFetcherInterface $paramFetcher
      *
-     * @return Sonata\DatagridBundle\Pager\PagerInterface
+     * @return PagerInterface
      */
     public function getMediaAction(ParamFetcherInterface $paramFetcher)
     {
@@ -129,7 +133,7 @@ class MediaController
      *
      * @param $id
      *
-     * @return Media
+     * @return MediaInterface
      */
     public function getMediumAction($id)
     {
@@ -189,7 +193,7 @@ class MediaController
      * @param string  $format  The format
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getMediumBinaryAction($id, $format, Request $request)
     {
@@ -220,7 +224,7 @@ class MediaController
      *
      * @param int $id A medium identifier
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      *
      * @throws NotFoundHttpException
      */
@@ -254,7 +258,7 @@ class MediaController
      * @param int     $id      A Medium identifier
      * @param Request $request A Symfony request
      *
-     * @return Media
+     * @return MediaInterface
      *
      * @throws NotFoundHttpException
      */
@@ -265,6 +269,8 @@ class MediaController
         try {
             $provider = $this->mediaPool->getProvider($medium->getProviderName());
         } catch (\RuntimeException $ex) {
+            throw new NotFoundHttpException($ex->getMessage(), $ex);
+        } catch (\InvalidArgumentException $ex) {
             throw new NotFoundHttpException($ex->getMessage(), $ex);
         }
 
@@ -292,7 +298,7 @@ class MediaController
      * @param string  $provider A media provider
      * @param Request $request  A Symfony request
      *
-     * @return Media
+     * @return MediaInterface
      *
      * @throws NotFoundHttpException
      */
@@ -304,6 +310,8 @@ class MediaController
         try {
             $mediaProvider = $this->mediaPool->getProvider($provider);
         } catch (\RuntimeException $ex) {
+            throw new NotFoundHttpException($ex->getMessage(), $ex);
+        } catch (\InvalidArgumentException $ex) {
             throw new NotFoundHttpException($ex->getMessage(), $ex);
         }
 
@@ -327,7 +335,7 @@ class MediaController
      * @param $id
      * @param Request $request A Symfony request
      *
-     * @return Media
+     * @return MediaInterface
      *
      * @throws NotFoundHttpException
      */
@@ -347,10 +355,10 @@ class MediaController
      *
      * @param int $id
      *
-     * @return Media
+     * @return MediaInterface
      *
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws AccessDeniedException
+     * @throws NotFoundHttpException
      */
     protected function getMedium($id = null)
     {
@@ -367,25 +375,25 @@ class MediaController
      * Write a medium, this method is used by both POST and PUT action methods.
      *
      * @param Request                $request
-     * @param MediaInterface         $medium
+     * @param MediaInterface         $media
      * @param MediaProviderInterface $provider
      *
-     * @return \FOS\RestBundle\View\View|\Symfony\Component\Form\Form
+     * @return View|FormInterface
      */
-    protected function handleWriteMedium(Request $request, MediaInterface $medium, MediaProviderInterface $provider)
+    protected function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
     {
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $medium, array(
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $media, array(
             'provider_name'   => $provider->getName(),
             'csrf_protection' => false,
         ));
 
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $medium = $form->getData();
-            $this->mediaManager->save($medium);
+            $media = $form->getData();
+            $this->mediaManager->save($media);
 
-            $view = \FOS\RestBundle\View\View::create($medium);
+            $view = FOSRestView::create($media);
             $serializationContext = SerializationContext::create();
             $serializationContext->setGroups(array('sonata_api_read'));
             $serializationContext->enableMaxDepthChecks();

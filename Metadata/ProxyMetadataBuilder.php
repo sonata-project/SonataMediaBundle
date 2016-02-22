@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -17,18 +17,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     private $container;
-    private $map;
-    private $metadata;
 
     /**
-     * @param ContainerInterface $metadata
+     * @param ContainerInterface $container
      * @param array              $map
      */
-    public function __construct(ContainerInterface $container, array $map)
+    public function __construct(ContainerInterface $container, array $map = null)
     {
         $this->container = $container;
-        $this->map = $map;
+
+        if ($map !== null) {
+            @trigger_error('The "map" parameter is deprecated since version 2.4 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
     }
 
     /**
@@ -53,10 +57,10 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * @param MediaInterface $metadata
+     * @param MediaInterface $media
      * @param string         $filename
      *
-     * @return array
+     * @return array|bool
      */
     protected function getAmazonBuilder(MediaInterface $media, $filename)
     {

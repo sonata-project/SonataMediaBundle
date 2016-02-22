@@ -12,16 +12,30 @@ file that was distributed with this source code.
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 
 {% block preview %}
-
-    <ul class="nav nav-pills">
-        <li><a><strong>{{ "label.select_context"|trans({}, 'SonataMediaBundle') }}</strong></a></li>
-        {% for name, context in media_pool.contexts %}
-            {% if name == persistent_parameters.context %}
-                <li class="active"><a href="{{ admin.generateUrl('list', {'context' : name }) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
-            {% else %}
-                <li><a href="{{ admin.generateUrl('list', {'context' : name }) }}">{{ name|trans({}, 'SonataMediaBundle') }}</a></li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
+    <div class="box box-primary">
+        <div class="box-header">
+            <h1 class="box-title">
+                {{ "label.select_context"|trans({}, 'SonataMediaBundle') }}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <strong class="text-info">{{ persistent_parameters.context }}</strong> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for name, context in media_pool.contexts %}
+                            <li>
+                                <a href="{{ admin.generateUrl('list', {'context' : name }) }}">
+                                    {% if name == persistent_parameters.context %}
+                                        <span class="pull-right">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                    {% endif %}
+                                    {{ name|trans({}, 'SonataMediaBundle') }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </h1>
+        </div>
+    </div>
 {% endblock %}

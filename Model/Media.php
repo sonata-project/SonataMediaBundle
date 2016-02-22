@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,7 +13,8 @@ namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
-use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 
 abstract class Media implements MediaInterface
 {
@@ -23,7 +24,7 @@ abstract class Media implements MediaInterface
     protected $name;
 
     /**
-     * @var text
+     * @var string
      */
     protected $description;
 
@@ -63,7 +64,7 @@ abstract class Media implements MediaInterface
     protected $height;
 
     /**
-     * @var decimal
+     * @var float
      */
     protected $length;
 
@@ -93,7 +94,7 @@ abstract class Media implements MediaInterface
     protected $cdnFlushIdentifier;
 
     /**
-     * @var datetime
+     * @var \DateTime
      */
     protected $cdnFlushAt;
 
@@ -103,21 +104,27 @@ abstract class Media implements MediaInterface
     protected $cdnStatus;
 
     /**
-     * @var datetime
+     * @var \DateTime
      */
     protected $updatedAt;
 
     /**
-     * @var datetime
+     * @var \DateTime
      */
     protected $createdAt;
 
+    /**
+     * @var mixed
+     */
     protected $binaryContent;
 
+    /**
+     * @var string
+     */
     protected $previousProviderReference;
 
     /**
-     * @var varchar
+     * @var string
      */
     protected $contentType;
 
@@ -126,8 +133,14 @@ abstract class Media implements MediaInterface
      */
     protected $size;
 
+    /**
+     * @var GalleryHasMediaInterface[]
+     */
     protected $galleryHasMedias;
 
+    /**
+     * @var CategoryInterface
+     */
     protected $category;
 
     public function prePersist()
@@ -144,7 +157,7 @@ abstract class Media implements MediaInterface
     /**
      * @static
      *
-     * @return array
+     * @return string[]
      */
     public static function getStatusList()
     {
@@ -522,7 +535,8 @@ abstract class Media implements MediaInterface
      */
     public function getExtension()
     {
-        return pathinfo($this->getProviderReference(), PATHINFO_EXTENSION);
+        // strips off query strings or hashes, which are common in URIs remote references
+        return preg_replace('{(\?|#).*}', '', pathinfo($this->getProviderReference(), PATHINFO_EXTENSION));
     }
 
     /**
@@ -598,17 +612,28 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @param ExecutionContextInterface $context
+     * @param ExecutionContextInterface|LegacyExecutionContextInterface $context
      */
-    public function isStatusErroneous(ExecutionContextInterface $context)
+    public function isStatusErroneous($context)
     {
         if ($this->getBinaryContent() && $this->getProviderStatus() == self::STATUS_ERROR) {
-            $context->addViolationAt('binaryContent', 'invalid', array(), null);
+            // Interface compatibility, the new ExecutionContextInterface should be typehinted when support for Symfony <2.5 is dropped
+            if (!$context instanceof ExecutionContextInterface && !$context instanceof LegacyExecutionContextInterface) {
+                throw new \InvalidArgumentException('Argument 1 should be an instance of Symfony\Component\Validator\ExecutionContextInterface or Symfony\Component\Validator\Context\ExecutionContextInterface');
+            }
+
+            if ($context instanceof LegacyExecutionContextInterface) {
+                $context->addViolationAt('binaryContent', 'invalid', array(), null);
+            } else {
+                $context->buildViolation('invalid')
+                   ->atPath('binaryContent')
+                   ->addViolation();
+            }
         }
     }
 
     /**
-     * @return mixed
+     * @return CategoryInterface
      */
     public function getCategory()
     {
@@ -616,7 +641,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @param mixed $category
+     * @param CategoryInterface $category|null
      */
     public function setCategory(CategoryInterface $category = null)
     {

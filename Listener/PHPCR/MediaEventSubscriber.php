@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
@@ -33,7 +33,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
@@ -47,7 +47,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getMedia(EventArgs $args)
     {

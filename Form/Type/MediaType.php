@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -24,8 +24,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MediaType extends AbstractType
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var string
+     */
     protected $class;
 
     /**
@@ -50,7 +56,7 @@ class MediaType extends AbstractType
             'new_on_update' => $options['new_on_update'],
         )));
 
-        $builder->addEventListener(FormEvents::BIND, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             if ($event->getForm()->has('unlink') && $event->getForm()->get('unlink')->getData()) {
                 $event->setData(null);
             }
@@ -59,6 +65,7 @@ class MediaType extends AbstractType
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 
         $builder->add('unlink', 'checkbox', array(
+            'label'    => 'widget_label_unlink',
             'mapped'   => false,
             'data'     => false,
             'required' => false,
@@ -90,11 +97,12 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'    => $this->class,
-            'provider'      => null,
-            'context'       => null,
-            'empty_on_new'  => true,
-            'new_on_update' => true,
+            'data_class'         => $this->class,
+            'provider'           => null,
+            'context'            => null,
+            'empty_on_new'       => true,
+            'new_on_update'      => true,
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
@@ -109,8 +117,16 @@ class MediaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'sonata_media_type';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

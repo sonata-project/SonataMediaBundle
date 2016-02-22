@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -18,8 +18,14 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
+    /**
+     * @var array
+     */
     protected $settings;
 
+    /**
+     * @var string[]
+     */
     protected $acl = array(
         'private'            => CannedAcl::PRIVATE_ACCESS,
         'public'             => CannedAcl::PUBLIC_READ,

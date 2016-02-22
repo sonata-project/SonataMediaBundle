@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 class MediaAdmin extends Admin
 {
     /**
-     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {

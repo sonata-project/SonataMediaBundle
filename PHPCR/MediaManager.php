@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -17,10 +17,6 @@ class MediaManager extends BasePHPCRManager
 {
     /**
      * {@inheritdoc}
-     *
-     * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
-     *
-     * @throws \InvalidArgumentException When entity is an invalid object
      */
     public function save($entity, $andFlush = true)
     {

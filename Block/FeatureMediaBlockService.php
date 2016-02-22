@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,7 +13,8 @@ namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Sonata\CoreBundle\Model\Metadata;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * PageExtension.
@@ -25,15 +26,7 @@ class FeatureMediaBlockService extends MediaBlockService
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'Feature Media';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultSettings(OptionsResolverInterface $resolver)
+    public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'media'       => false,
@@ -54,19 +47,32 @@ class FeatureMediaBlockService extends MediaBlockService
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $translator = $this->container->get('translator');
-
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('title', 'text', array('required' => false)),
-                array('content', 'textarea', array('required' => false)),
-                array('orientation', 'choice', array('choices' => array(
-                    'left'  => $translator->trans('feature_left_choice', array(), 'SonataMediaBundle'),
-                    'right' => $translator->trans('feature_right_choice', array(), 'SonataMediaBundle'),
-                ))),
+                array('title', 'text', array(
+                    'required' => false,
+                    'label'    => 'form.label_title',
+                )),
+                array('content', 'textarea', array(
+                    'required' => false,
+                    'label'    => 'form.label_content',
+                )),
+                array('orientation', 'choice', array(
+                    'required' => false,
+                    'choices'  => array(
+                        'left'  => 'form.label_orientation_left',
+                        'right' => 'form.label_orientation_right',
+                    ),
+                    'label' => 'form.label_orientation',
+                )),
                 array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array('format', 'choice', array(
+                    'required' => count($formatChoices) > 0,
+                    'choices'  => $formatChoices,
+                    'label'    => 'form.label_format',
+                )),
             ),
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
@@ -78,5 +84,15 @@ class FeatureMediaBlockService extends MediaBlockService
         return array(
             '/bundles/sonatamedia/blocks/feature_media/theme.css',
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }

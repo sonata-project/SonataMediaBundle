@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -22,16 +22,12 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * MediaExtension.
  *
- *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class SonataMediaExtension extends Extension
 {
     /**
-     * Loads the url shortener configuration.
-     *
-     * @param array            $configs   An array of configuration settings
-     * @param ContainerBuilder $container A ContainerBuilder instance
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -55,12 +51,14 @@ class SonataMediaExtension extends Extension
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
 
-        $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
-
         $bundles = $container->getParameter('kernel.bundles');
 
-        if ('doctrine_orm' == $config['db_driver'] && isset($bundles['FOSRestBundle']) && isset($bundles['NelmioApiDocBundle'])) {
-            $loader->load('api_controllers.xml');
+        if (isset($bundles['FOSRestBundle']) && isset($bundles['NelmioApiDocBundle'])) {
+            $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
+
+            if ('doctrine_orm' == $config['db_driver']) {
+                $loader->load('api_controllers.xml');
+            }
         }
 
         if (isset($bundles['SonataNotificationBundle'])) {
@@ -112,6 +110,8 @@ class SonataMediaExtension extends Extension
             $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats, $settings['download']));
         }
 
+        $container->setParameter('sonata.media.admin_format', $config['admin_format']);
+
         $strategies = array_unique($strategies);
 
         foreach ($strategies as $strategyId) {
@@ -133,8 +133,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureProviders(ContainerBuilder $container, $config)
     {
@@ -153,8 +153,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureBuzz(ContainerBuilder $container, array $config)
     {
@@ -175,8 +175,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureParameterClass(ContainerBuilder $container, array $config)
     {
@@ -278,8 +278,8 @@ class SonataMediaExtension extends Extension
     /**
      * Inject CDN dependency to default provider.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureCdnAdapter(ContainerBuilder $container, array $config)
     {
@@ -327,8 +327,8 @@ class SonataMediaExtension extends Extension
     /**
      * Inject filesystem dependency to default provider.
      *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureFilesystemAdapter(ContainerBuilder $container, array $config)
     {
@@ -437,8 +437,8 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param array                                                   $config
+     * @param ContainerBuilder $container
+     * @param array            $config
      */
     public function configureExtra(ContainerBuilder $container, array $config)
     {

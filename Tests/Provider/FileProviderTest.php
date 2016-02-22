@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -55,12 +55,12 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $media->setContext('default');
 
         $media->setId(1023456);
-        $this->assertEquals('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
+        $this->assertSame('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
 
-        $this->assertEquals('default/0011/24', $provider->generatePath($media));
+        $this->assertSame('default/0011/24', $provider->generatePath($media));
 
         // default icon image
-        $this->assertEquals('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testHelperProperies()
@@ -77,7 +77,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $properties = $provider->getHelperProperties($media, 'admin');
 
         $this->assertInternalType('array', $properties);
-        $this->assertEquals('test.png', $properties['title']);
+        $this->assertSame('test.png', $properties['title']);
     }
 
     public function testForm()
@@ -142,7 +142,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         // pre persist the media
         $provider->transform($media);
 
-        $this->assertEquals('file.txt', $media->getName(), '::getName() return the file name');
+        $this->assertSame('file.txt', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
         $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false on non reference formate');

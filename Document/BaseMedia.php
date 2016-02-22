@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -15,12 +15,18 @@ use Sonata\MediaBundle\Model\Media;
 
 abstract class BaseMedia extends Media
 {
+    /**
+     * {@inheritdoc}
+     */
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();

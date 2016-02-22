@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,15 +11,20 @@
 
 namespace Sonata\MediaBundle\Block;
 
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\CoreBundle\Model\Metadata;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
@@ -29,8 +34,14 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class MediaBlockService extends BaseBlockService
 {
+    /**
+     * @var BaseMediaAdmin
+     */
     protected $mediaAdmin;
 
+    /**
+     * @var ManagerInterface
+     */
     protected $mediaManager;
 
     /**
@@ -48,15 +59,7 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'Media';
-    }
-
-    /**
-     * @return mixed
+     * @return Pool
      */
     public function getMediaPool()
     {
@@ -64,7 +67,7 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * @return mixed
+     * @return BaseMediaAdmin
      */
     public function getMediaAdmin()
     {
@@ -78,7 +81,7 @@ class MediaBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function setDefaultSettings(OptionsResolverInterface $resolver)
+    public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'media'    => false,
@@ -103,15 +106,23 @@ class MediaBlockService extends BaseBlockService
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('title', 'text', array('required' => false)),
+                array('title', 'text', array(
+                    'required' => false,
+                    'label'    => 'form.label_title',
+                )),
                 array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array('format', 'choice', array(
+                    'required' => count($formatChoices) > 0,
+                    'choices'  => $formatChoices,
+                    'label'    => 'form.label_format',
+                )),
             ),
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
     /**
-     * @param null|\Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface|null $media
      *
      * @return array
      */
@@ -133,26 +144,29 @@ class MediaBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
+     * @param FormMapper $formMapper
      *
-     * @return \Symfony\Component\Form\FormBuilder
+     * @return FormBuilder
      */
     protected function getMediaBuilder(FormMapper $formMapper)
     {
         // simulate an association ...
-        $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media');
+        $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', array(
+            'translation_domain' => 'SonataMediaBundle',
+        ));
         $fieldDescription->setAssociationAdmin($this->getMediaAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(array(
             'fieldName' => 'media',
-            'type'      => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE,
+            'type'      => ClassMetadataInfo::MANY_TO_ONE,
         ));
 
         return $formMapper->create('mediaId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
             'class'                    => $this->getMediaAdmin()->getClass(),
             'model_manager'            => $this->getMediaAdmin()->getModelManager(),
+            'label'                    => 'form.label_media',
         ));
     }
 
@@ -206,5 +220,15 @@ class MediaBlockService extends BaseBlockService
     public function preUpdate(BlockInterface $block)
     {
         $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -19,37 +19,65 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 class Pixlr
 {
+    /**
+     * @var string
+     */
     protected $referrer;
 
+    /**
+     * @var string
+     */
     protected $secret;
 
+    /**
+     * @var MediaManagerInterface
+     */
     protected $mediaManager;
 
+    /**
+     * @var RouterInterface
+     */
     protected $router;
 
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var EngineInterface
+     */
     protected $templating;
 
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
+    /**
+     * @var string[]
+     */
     protected $validFormats;
 
+    /**
+     * @var string
+     */
     protected $allowEreg;
 
     /**
-     * @param string                                                    $referrer
-     * @param string                                                    $secret
-     * @param \Sonata\MediaBundle\Provider\Pool                         $pool
-     * @param \Sonata\MediaBundle\Model\MediaManagerInterface           $mediaManager
-     * @param \Symfony\Component\Routing\RouterInterface                $router
-     * @param \Symfony\Component\Templating\EngineInterface             $templating
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param string                $referrer
+     * @param string                $secret
+     * @param Pool                  $pool
+     * @param MediaManagerInterface $mediaManager
+     * @param RouterInterface       $router
+     * @param EngineInterface       $templating
+     * @param ContainerInterface    $container
      */
     public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, ContainerInterface $container)
     {
@@ -66,7 +94,7 @@ class Pixlr
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string
      */
@@ -76,11 +104,11 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      *
-     * @return \Sonata\MediaBundle\Model\MediaInterface
+     * @return MediaInterface
      */
     private function getMedia($id)
     {
@@ -94,10 +122,10 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
-     * @param string                                   $hash
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string         $hash
+     * @param MediaInterface $media
      */
     private function checkMedia($hash, MediaInterface $media)
     {
@@ -126,12 +154,12 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      * @param string $mode
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function editAction($id, $mode)
     {
@@ -148,10 +176,10 @@ class Pixlr
         $parameters = array(
             's'          => 'c', // ??
             'referrer'   => $this->referrer,
-            'exit'       => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), true),
+            'exit'       => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
             'image'      => $provider->generatePublicUrl($media, 'reference'),
             'title'      => $media->getName(),
-            'target'     => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), true),
+            'target'     => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
             'locktitle'  => true,
             'locktarget' => true,
         );
@@ -165,7 +193,7 @@ class Pixlr
      * @param string $hash
      * @param string $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function exitAction($hash, $id)
     {
@@ -177,11 +205,11 @@ class Pixlr
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string                                    $hash
-     * @param string                                    $id
+     * @param Request $request
+     * @param string  $hash
+     * @param string  $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function targetAction(Request $request, $hash, $id)
     {
@@ -210,7 +238,7 @@ class Pixlr
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return bool
      */
@@ -224,11 +252,11 @@ class Pixlr
     }
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      *
      * @param string $id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function openEditorAction($id)
     {

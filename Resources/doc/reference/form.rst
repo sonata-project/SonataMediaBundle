@@ -46,8 +46,8 @@ You also need to add a new template for the form component:
 .. code-block:: yaml
 
     twig:
-        debug:            %kernel.debug%
-        strict_variables: %kernel.debug%
+        debug:            "%kernel.debug%"
+        strict_variables: "%kernel.debug%"
 
         form:
             resources:

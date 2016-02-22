@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
- * (c); Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,6 +29,7 @@ interface GalleryHasMediaInterface
     public function setGallery(GalleryInterface $gallery = null);
 
     /**
+     * @return GalleryInterface
      */
     public function getGallery();
 
@@ -70,10 +71,12 @@ interface GalleryHasMediaInterface
     public function setCreatedAt(\DateTime $createdAt = null);
 
     /**
+     * @return \DateTime
      */
     public function getCreatedAt();
 
     /**
+     * @return string
      */
     public function __toString();
 }

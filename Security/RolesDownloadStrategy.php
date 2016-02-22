@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,42 +13,59 @@ namespace Sonata\MediaBundle\Security;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class RolesDownloadStrategy implements DownloadStrategyInterface
 {
+    /**
+     * @var string[]
+     */
     protected $roles;
 
+    /**
+     * @var AuthorizationCheckerInterface|SecurityContextInterface
+     */
     protected $security;
 
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface        $translator
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $security
-     * @param array                                                     $roles
+     * @param TranslatorInterface                                    $translator
+     * @param AuthorizationCheckerInterface|SecurityContextInterface $security
+     * @param string[]                                               $roles
      */
-    public function __construct(TranslatorInterface $translator, SecurityContextInterface $security, array $roles = array())
+    public function __construct(TranslatorInterface $translator, $security, array $roles = array())
     {
+        if (!$security instanceof AuthorizationCheckerInterface && !$security instanceof SecurityContextInterface) {
+            throw new \InvalidArgumentException('Argument 2 should be an instance of Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface or Symfony\Component\Security\Core\SecurityContextInterface');
+        }
+
         $this->roles      = $roles;
         $this->security   = $security;
         $this->translator = $translator;
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isGranted(MediaInterface $media, Request $request)
     {
-        return $this->security->getToken() && $this->security->isGranted($this->roles);
+        try {
+            return $this->security->isGranted($this->roles);
+        } catch (AuthenticationCredentialsNotFoundException $e) {
+            // The token is not set in an AuthorizationCheckerInterface object
+            return false;
+        }
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription()
     {

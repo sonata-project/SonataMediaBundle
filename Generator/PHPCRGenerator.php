@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -16,9 +16,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class PHPCRGenerator implements GeneratorInterface
 {
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePath(MediaInterface $media)
     {

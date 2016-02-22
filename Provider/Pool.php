@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -22,10 +22,19 @@ class Pool
      */
     protected $providers = array();
 
+    /**
+     * @var array
+     */
     protected $contexts = array();
 
+    /**
+     * @var DownloadStrategyInterface[]
+     */
     protected $downloadSecurities = array();
 
+    /**
+     * @var string
+     */
     protected $defaultContext;
 
     /**
@@ -41,7 +50,7 @@ class Pool
      *
      * @param string $name
      *
-     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface
+     * @return MediaProviderInterface
      */
     public function getProvider($name)
     {
@@ -68,8 +77,8 @@ class Pool
     }
 
     /**
-     * @param string                                                 $name
-     * @param \Sonata\MediaBundle\Security\DownloadStrategyInterface $security
+     * @param string                    $name
+     * @param DownloadStrategyInterface $security
      */
     public function addDownloadSecurity($name, DownloadStrategyInterface $security)
     {
@@ -85,7 +94,7 @@ class Pool
     }
 
     /**
-     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface[]
+     * @return MediaProviderInterface[]
      */
     public function getProviders()
     {
@@ -213,9 +222,9 @@ class Pool
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
-     * @return \Sonata\MediaBundle\Security\DownloadStrategyInterface
+     * @return DownloadStrategyInterface
      *
      * @throws \RuntimeException
      */
@@ -233,7 +242,7 @@ class Pool
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string
      */
@@ -253,8 +262,8 @@ class Pool
     }
 
     /**
-     * @param \Sonata\CoreBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
+     * @param ErrorElement   $errorElement
+     * @param MediaInterface $media
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,6 +13,9 @@ namespace Sonata\MediaBundle\CDN;
 
 class Server implements CDNInterface
 {
+    /**
+     * @var string
+     */
     protected $path;
 
     /**
@@ -24,7 +27,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPath($relativePath, $isFlushable)
     {
@@ -32,7 +35,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flushByString($string)
     {
@@ -40,7 +43,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flush($string)
     {
@@ -48,7 +51,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flushPaths(array $paths)
     {

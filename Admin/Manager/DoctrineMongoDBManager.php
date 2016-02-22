@@ -1,9 +1,20 @@
 <?php
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sonata\MediaBundle\Admin\Manager;
 
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 
 /**
  * this method overwrite the default AdminModelManager to call
@@ -11,15 +22,18 @@ use Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager;
  */
 class DoctrineMongoDBManager extends ModelManager
 {
+    /**
+     * @var ManagerInterfacece
+     */
     protected $manager;
 
     /**
-     * @param mixed $entityManager
-     * @param mixed $manager
+     * @param ManagerRegistry  $managerRegistry
+     * @param ManagerInterface $manager
      */
-    public function __construct($entityManager, $manager)
+    public function __construct($managerRegistry, $manager)
     {
-        parent::__construct($entityManager);
+        parent::__construct($managerRegistry);
 
         $this->manager = $manager;
     }

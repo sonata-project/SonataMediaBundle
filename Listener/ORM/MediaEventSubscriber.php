@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,15 +13,19 @@ namespace Sonata\MediaBundle\Listener\ORM;
 
 use Doctrine\Common\EventArgs;
 use Doctrine\ORM\Events;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
+    /**
+     * @var CategoryInterface[]
+     */
     protected $rootCategories;
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
@@ -36,7 +40,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @param \Doctrine\Common\EventArgs $args
+     * {@inheritdoc}
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
@@ -49,7 +53,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getMedia(EventArgs $args)
     {
@@ -69,7 +73,9 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     /**
      * @param MediaInterface $media
      *
-     * @return mixed
+     * @return CategoryInterface
+     *
+     * @throws \RuntimeException
      */
     protected function getRootCategory(MediaInterface $media)
     {

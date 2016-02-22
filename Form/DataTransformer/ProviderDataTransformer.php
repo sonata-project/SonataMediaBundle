@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -17,8 +17,14 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var array
+     */
     protected $options;
 
     /**

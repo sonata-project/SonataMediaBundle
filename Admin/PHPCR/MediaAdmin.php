@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -24,6 +24,9 @@ class MediaAdmin extends Admin
      */
     protected $root;
 
+    /**
+     * @param string $root
+     */
     public function setRoot($root)
     {
         $this->root = $root;
@@ -43,13 +46,16 @@ class MediaAdmin extends Admin
         return $query;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function id($object)
     {
         return $this->getUrlsafeIdentifier($object);
     }
 
     /**
-     * @param \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
