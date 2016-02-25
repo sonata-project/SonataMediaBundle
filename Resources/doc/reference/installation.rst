@@ -25,7 +25,7 @@ Retrieve the bundle with composer:
 
 .. code-block:: bash
 
-    $ php composer.phar require sonata-project/media-bundle --no-update
+    $ php composer.phar require sonata-project/media-bundle
 
 Register these bundles in your AppKernel:
 
