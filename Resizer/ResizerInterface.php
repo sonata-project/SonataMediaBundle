@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Resizer;
 
 use Gaufrette\File;
+use Imagine\Image\Box;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 interface ResizerInterface
