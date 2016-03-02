@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 
@@ -247,8 +247,8 @@ class Pool
     }
 
     /**
-     * @param \Sonata\AdminBundle\Validator\ErrorElement $errorElement
-     * @param \Sonata\MediaBundle\Model\MediaInterface   $media
+     * @param \Sonata\CoreBundle\Validator\ErrorElement $errorElement
+     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
      */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
