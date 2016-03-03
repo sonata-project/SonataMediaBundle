@@ -180,4 +180,27 @@ class ImageProvider extends FileProvider
     {
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function preRemove(MediaInterface $media)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postRemove(MediaInterface $media)
+    {
+        $path = $this->getReferenceImage($media);
+
+        if ($this->getFilesystem()->has($path)) {
+            $this->getFilesystem()->delete($path);
+        }
+
+        if ($this->requireThumbnails()) {
+            $this->thumbnail->delete($this, $media);
+        }
+    }
 }
