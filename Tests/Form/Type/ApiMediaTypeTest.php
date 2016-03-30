@@ -33,6 +33,6 @@ class ApiMediaTypeTest extends \PHPUnit_Framework_TestCase
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')->disableOriginalConstructor()->getMock();
         $builder->expects($this->once())->method('addModelTransformer');
 
-        $type->buildForm($builder, array('provider_name' => 'sonata.media.provider.image'));
+        $type->buildForm($builder, array('provider_name' => 'sonata.media.provider.image', 'context' => 'default'));
     }
 }
