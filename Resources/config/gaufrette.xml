@@ -13,7 +13,8 @@
     <services>
         <service id="sonata.media.adapter.filesystem.local" class="Sonata\MediaBundle\Filesystem\Local" />
         <service id="sonata.media.adapter.filesystem.ftp"   class="Gaufrette\Adapter\Ftp" />
-        <service id="sonata.media.adapter.service.s3"       class="Aws\S3\S3Client" factory-class="Aws\S3\S3Client" factory-method="factory">
+        <service id="sonata.media.adapter.service.s3"       class="Aws\S3\S3Client">
+            <factory class="Aws\S3\S3Client" method="factory" />
             <argument type="collection" />
         </service>
 
@@ -45,9 +46,8 @@
             <argument/>
         </service>
 
-        <service id="sonata.media.adapter.filesystem.opencloud.objectstore" class="OpenCloud\ObjectSource\Service"
-                 factory-service="sonata.media.adapter.filesystem.opencloud.connection"
-                 factory-method="ObjectStore">
+        <service id="sonata.media.adapter.filesystem.opencloud.objectstore" class="OpenCloud\ObjectSource\Service">
+            <factory service="sonata.media.adapter.filesystem.opencloud.connection" method="ObjectStore" />
             <argument/>
             <argument/>
         </service>
