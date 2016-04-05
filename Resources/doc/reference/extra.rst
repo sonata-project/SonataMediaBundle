@@ -137,18 +137,19 @@ Now, just create a field with ckeditor as type and your done:
                 'mytext',
                 'ckeditor',
                 array(
-                'config' => array(
-                    'toolbar' => array(
-                        array(
-                            'name' => 'links',
-                            'items' => array('Link','Unlink'),
-                        ),
-                        array(
-                            'name' => 'insert',
-                            'items' => array('Image'),
-                        ),
+                    'config' => array(
+                        'toolbar' => array(
+                            array(
+                                'name' => 'links',
+                                'items' => array('Link', 'Unlink'),
+                            ),
+                            array(
+                                'name' => 'insert',
+                                'items' => array('Image'),
+                            ),
+                        )
                     )
-                );
+                )
             );
     }
 
