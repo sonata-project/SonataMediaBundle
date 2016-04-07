@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -109,6 +109,8 @@ class SonataMediaExtension extends Extension
             $strategies[] = $settings['download']['strategy'];
             $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats, $settings['download']));
         }
+
+        $container->setParameter('sonata.media.admin_format', $config['admin_format']);
 
         $strategies = array_unique($strategies);
 

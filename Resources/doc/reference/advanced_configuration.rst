@@ -14,6 +14,7 @@ Full configuration options:
             category:           Application\Sonata\ClassificationBundle\Entity\Category
 
         default_context: default
+        admin_format:   { width: 200 , quality: 90, format: 'jpg'}
         contexts:
             default:  # the default context is mandatory
                 download:
@@ -78,7 +79,7 @@ Full configuration options:
 
         filesystem:
             local:
-                directory:  %kernel.root_dir%/../web/uploads/media
+                directory:  "%kernel.root_dir%/../web/uploads/media"
                 create:     false
 
             ftp:

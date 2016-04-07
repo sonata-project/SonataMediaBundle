@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -58,7 +58,8 @@ class FeatureMediaBlockService extends MediaBlockService
                     'label'    => 'form.label_content',
                 )),
                 array('orientation', 'choice', array(
-                    'choices' => array(
+                    'required' => false,
+                    'choices'  => array(
                         'left'  => 'form.label_orientation_left',
                         'right' => 'form.label_orientation_right',
                     ),

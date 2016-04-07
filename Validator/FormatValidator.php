@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of sonata-project.
+ * This file is part of the Sonata Project package.
  *
- * (c) 2010 Thomas Rabaix
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,6 +15,7 @@ use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 
 class FormatValidator extends ConstraintValidator
 {
@@ -39,7 +40,14 @@ class FormatValidator extends ConstraintValidator
         $formats = $this->pool->getFormatNamesByContext($value->getContext());
 
         if (!$value instanceof GalleryInterface) {
-            $this->context->addViolationAtPath('defaultFormat', 'Invalid instance, expected GalleryInterface');
+            // Interface compatibility, support for LegacyExecutionContextInterface can be removed when support for Symfony <2.5 is dropped
+            if ($this->context instanceof LegacyExecutionContextInterface) {
+                $this->context->addViolationAt('defaultFormat', 'Invalid instance, expected GalleryInterface');
+            } else {
+                $this->context->buildViolation('Invalid instance, expected GalleryInterface')
+                   ->atPath('defaultFormat')
+                   ->addViolation();
+            }
         }
 
         if (!array_key_exists($value->getDefaultFormat(), $formats)) {

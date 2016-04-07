@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -23,7 +23,7 @@ class PantherPortalTest extends \PHPUnit_Framework_TestCase
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);
 
-        $this->assertEquals('/foo/bar.jpg', $panther->getPath('bar.jpg', true));
+        $this->assertSame('/foo/bar.jpg', $panther->getPath('bar.jpg', true));
 
         $path = '/mypath/file.jpg';
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -16,7 +16,10 @@ namespace Sonata\MediaBundle\Tests\CDN;
  */
 class CloudFrontTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCloudFront()
+    /**
+     * @group legacy
+     */
+    public function testLegacyCloudFront()
     {
         $client = $this->getMock('CloudFrontClientSpy', array('createInvalidation'), array(), '', false);
         $client->expects($this->exactly(3))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy()));
@@ -27,7 +30,7 @@ class CloudFrontTest extends \PHPUnit_Framework_TestCase
                     ->getMock();
         $cloudFront->setClient($client);
 
-        $this->assertEquals('/foo/bar.jpg', $cloudFront->getPath('bar.jpg', true));
+        $this->assertSame('/foo/bar.jpg', $cloudFront->getPath('bar.jpg', true));
 
         $path = '/mypath/file.jpg';
 
@@ -36,7 +39,10 @@ class CloudFrontTest extends \PHPUnit_Framework_TestCase
         $cloudFront->flushPaths(array($path));
     }
 
-    public function testException()
+    /**
+     * @group legacy
+     */
+    public function testLegacyException()
     {
         $this->setExpectedException('\RuntimeException', 'Unable to flush : ');
         $client = $this->getMock('CloudFrontClientSpy', array('createInvalidation'), array(), '', false);

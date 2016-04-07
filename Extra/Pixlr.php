@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -175,10 +176,10 @@ class Pixlr
         $parameters = array(
             's'          => 'c', // ??
             'referrer'   => $this->referrer,
-            'exit'       => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), true),
+            'exit'       => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
             'image'      => $provider->generatePublicUrl($media, 'reference'),
             'title'      => $media->getName(),
-            'target'     => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), true),
+            'target'     => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
             'locktitle'  => true,
             'locktarget' => true,
         );

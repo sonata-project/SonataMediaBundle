@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -32,14 +32,10 @@ class AddProviderCompilerPass implements CompilerPassInterface
         $this->attachArguments($container, $settings);
         $this->attachProviders($container);
 
+        $format = $container->getParameter('sonata.media.admin_format');
+
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
-            $container->getDefinition($id)->addMethodCall('addFormat', array('admin', array(
-                'quality'       => 90,
-                'width'         => 200,
-                'format'        => 'jpg',
-                'height'        => false,
-                'constraint'    => true,
-            )));
+            $container->getDefinition($id)->addMethodCall('addFormat', array('admin', $format));
         }
     }
 

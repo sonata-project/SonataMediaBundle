@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -63,10 +63,10 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $media->setId(1023457);
 
-        $this->assertEquals('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
+        $this->assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
 
-        $this->assertEquals('default/0011/24', $provider->generatePath($media));
-        $this->assertEquals('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('default/0011/24', $provider->generatePath($media));
+        $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail()
@@ -96,7 +96,7 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertSame('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testTransformWithSig()
@@ -118,8 +118,8 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
         // pre persist the media
         $provider->transform($media);
 
-        $this->assertEquals('Nono le petit robot', $media->getName(), '::getName() return the file name');
-        $this->assertEquals('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+        $this->assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
+        $this->assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     /**
@@ -144,20 +144,24 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
         // pre persist the media
         $provider->transform($media);
 
-        $this->assertEquals('Nono le petit robot', $media->getName(), '::getName() return the file name');
-        $this->assertEquals('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+        $this->assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
+        $this->assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     public static function getUrls()
     {
         return array(
-            array('BDYAbAtaDzA'),
-            array('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'),
-            array('http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'),
-            array('http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'),
-            array('http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'),
-            array('http://www.youtube.com/watch?v=BDYAbAtaDzA'),
-            array('http://youtu.be/BDYAbAtaDzA'),
+        array('BDYAbAtaDzA'),
+        array('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'),
+        array('http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'),
+        array('http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'),
+        array('http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'),
+        array('http://www.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('http://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('http://m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('https://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('https://m.youtube.com/watch?v=BDYAbAtaDzA'),
+        array('http://youtu.be/BDYAbAtaDzA'),
         );
     }
 
@@ -199,7 +203,7 @@ class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
         $properties = $provider->getHelperProperties($media, 'admin');
 
         $this->assertInternalType('array', $properties);
-        $this->assertEquals(100, $properties['player_parameters']['height']);
-        $this->assertEquals(100, $properties['player_parameters']['width']);
+        $this->assertSame(100, $properties['player_parameters']['height']);
+        $this->assertSame(100, $properties['player_parameters']['width']);
     }
 }

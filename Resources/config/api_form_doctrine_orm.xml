@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="sonata.media.api.form.type.doctrine.media" class="Sonata\CoreBundle\Form\Type\DoctrineORMSerializationType">
+        <service id="sonata.media.api.form.type.doctrine.media" class="Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType">
             <tag name="form.type" alias="sonata_media_api_form_doctrine_media" />
 
             <argument type="service" id="jms_serializer.metadata_factory" />
@@ -22,7 +22,7 @@
             <argument>%sonata.media.admin.media.entity%</argument>
         </service>
 
-        <service id="sonata.media.api.form.type.gallery" class="Sonata\CoreBundle\Form\Type\DoctrineORMSerializationType">
+        <service id="sonata.media.api.form.type.gallery" class="Sonata\MediaBundle\Form\Type\ApiGalleryType">
             <tag name="form.type" alias="sonata_media_api_form_gallery" />
 
             <argument type="service" id="jms_serializer.metadata_factory" />
@@ -32,7 +32,7 @@
             <argument>sonata_api_write</argument>
         </service>
 
-        <service id="sonata.media.api.form.type.gallery_has_media" class="Sonata\CoreBundle\Form\Type\DoctrineORMSerializationType">
+        <service id="sonata.media.api.form.type.gallery_has_media" class="Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType">
             <tag name="form.type" alias="sonata_media_api_form_gallery_has_media" />
 
             <argument type="service" id="jms_serializer.metadata_factory" />

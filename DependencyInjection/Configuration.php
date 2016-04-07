@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -34,6 +34,17 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('db_driver')->isRequired()->end()
                 ->scalarNode('default_context')->isRequired()->end()
+                ->arrayNode('admin_format')
+                    ->info('Configures the thumbnail preview for the admin')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('width')->defaultValue(200)->end()
+                        ->scalarNode('height')->defaultValue(false)->end()
+                        ->scalarNode('quality')->defaultValue(90)->end()
+                        ->scalarNode('format')->defaultValue('jpg')->end()
+                        ->scalarNode('constraint')->defaultValue(true)->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
