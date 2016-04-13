@@ -15,5 +15,7 @@ file that was distributed with this source code.
     src="//player.vimeo.com/video/{{ media.providerreference }}?{{ options.src }}"
     width="{{ options.width }}"
     height="{{ options.height }}"
-    frameborder="{{ options.frameborder }}">
+    frameborder="{{ options.frameborder }}"
+    {% if options.class is not empty %}class="{{ options.class }}"{% endif %}
+    {% if options.allow_fullscreen %}allowfullscreen mozallowfullscreen webkitallowfullscreen{% endif %}>
 </iframe>
