@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serializer>
+    <class name="Sonata\MediaBundle\Model\GalleryHasMedia" exclusion-policy="all" xml-root-name="gallery_has_media">
+
+        <property name="position" type="integer" expose="true" groups="sonata_api_read,sonata_api_write,sonata_search" since-version="1.0" xml-attribute="true" />
+
+        <property name="enabled" type="boolean" expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write" />
+
+        <property name="createdAt" type="DateTime" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="updatedAt" type="DateTime" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+
+        <property name="gallery" serialized-name="gallery_id" type="sonata_media_gallery_id" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="media"   serialized-name="media_id"   type="sonata_media_media_id"   expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+
+    </class>
+</serializer>

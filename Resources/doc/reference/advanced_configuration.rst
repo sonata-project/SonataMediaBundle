@@ -11,8 +11,10 @@ Full configuration options:
             media:              Application\Sonata\MediaBundle\Entity\Media
             gallery:            Application\Sonata\MediaBundle\Entity\Gallery
             gallery_has_media:  Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+            category:           Application\Sonata\ClassificationBundle\Entity\Category
 
         default_context: default
+        admin_format:   { width: 200 , quality: 90, format: 'jpg'}
         contexts:
             default:  # the default context is mandatory
                 download:
@@ -65,13 +67,19 @@ Full configuration options:
                 password:
                 username:
 
+            cloudfront:
+                path:       http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                distribution_id:
+                key:
+                secret:
+
             fallback:
                 master:     sonata.media.cdn.panther
                 fallback:   sonata.media.cdn.server
 
         filesystem:
             local:
-                directory:  %kernel.root_dir%/../web/uploads/media
+                directory:  "%kernel.root_dir%/../web/uploads/media"
                 create:     false
 
             ftp:
@@ -89,7 +97,7 @@ Full configuration options:
                 accessKey:
                 secretKey:
                 create:         false
-                region:         # this settings does not seems to be implemented with Zend Framework
+                region:         s3.amazonaws.com # change if not using US Standard region
                 storage:        standard # can be one of: standard or reduced
                 acl:            public # can be one of: public, private, open, auth_read, owner_read, owner_full_control
                 encryption:     aes256 # can be aes256 or not set
@@ -105,29 +113,56 @@ Full configuration options:
                 master: sonata.media.adapter.filesystem.s3
                 slave: sonata.media.adapter.filesystem.local
 
+            rackspace:
+               url:
+               secret:
+                 username:
+                 apiKey:
+               region:
+               containerName: media
+               create_container: false
+
+            openstack:
+               url:
+               secret:
+                 username:
+                 password:
+               region:
+               containerName: media
+               create_container: false
+
         providers:
             file:
+                service:    sonata.media.provider.file
                 resizer:    false
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
+                allowed_extensions: ['pdf', 'txt', 'rtf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pttx', 'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb', 'csv', 'xml']
+                allowed_mime_types: ['application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain']
 
             image:
+                service:    sonata.media.provider.image
                 resizer:    sonata.media.resizer.simple # sonata.media.resizer.square
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
+                allowed_extensions: ['jpg', 'png', 'jpeg']
+                allowed_mime_types: ['image/pjpeg', 'image/jpeg', 'image/png', 'image/x-png']
 
             youtube:
+                service:    sonata.media.provider.youtube
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
+                html5: false
 
             dailymotion:
+                service:    sonata.media.provider.dailymotion
                 resizer:    sonata.media.resizer.simple
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server

@@ -7,6 +7,7 @@
         <parameter key="sonata.media.block.media.class">Sonata\MediaBundle\Block\MediaBlockService</parameter>
         <parameter key="sonata.media.block.feature_media.class">Sonata\MediaBundle\Block\FeatureMediaBlockService</parameter>
         <parameter key="sonata.media.block.gallery.class">Sonata\MediaBundle\Block\GalleryBlockService</parameter>
+        <parameter key="sonata.media.block.gallery_list.class">Sonata\MediaBundle\Block\GalleryListBlockService</parameter>
     </parameters>
 
     <services>
@@ -32,6 +33,14 @@
             <argument type="service" id="templating" />
             <argument type="service" id="service_container" />
             <argument type="service" id="sonata.media.manager.gallery" />
+        </service>
+
+        <service id="sonata.media.block.gallery_list" class="%sonata.media.block.gallery_list.class%">
+            <tag name="sonata.block" />
+            <argument>sonata.media.block.gallery_list</argument>
+            <argument type="service" id="templating" />
+            <argument type="service" id="sonata.media.manager.gallery" />
+            <argument type="service" id="sonata.media.pool" />
         </service>
     </services>
 </container>

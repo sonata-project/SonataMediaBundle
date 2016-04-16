@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,24 +11,49 @@
 
 namespace Sonata\MediaBundle\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
+    /**
+     * @var array
+     */
     protected $options;
 
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
-     * @param array                             $options
+     * @param Pool   $pool
+     * @param string $class
+     * @param array  $options
      */
-    public function __construct(Pool $pool, array $options = array())
+    public function __construct(Pool $pool, $class, array $options = array())
     {
         $this->pool    = $pool;
-        $this->options = $options;
+        $this->options = $this->getOptions($options);
+        $this->class   = $class;
+    }
+
+    /**
+     * Define the default options for the DataTransformer.
+     *
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getOptions(array $options)
+    {
+        return array_merge(array(
+            'provider'      => false,
+            'context'       => false,
+            'empty_on_new'  => true,
+            'new_on_update' => true,
+        ), $options);
     }
 
     /**
@@ -36,6 +61,10 @@ class ProviderDataTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+        if ($value === null) {
+            return new $this->class();
+        }
+
         return $value;
     }
 
@@ -48,18 +77,42 @@ class ProviderDataTransformer implements DataTransformerInterface
             return $media;
         }
 
-        if (!$media->getProviderName() && isset($this->options['provider'])) {
-            $media->setProviderName($this->options['provider']);
+        $binaryContent = $media->getBinaryContent();
+
+        // no binary
+        if (empty($binaryContent)) {
+            // and no media id
+            if ($media->getId() === null && $this->options['empty_on_new']) {
+                return;
+            } elseif ($media->getId()) {
+                return $media;
+            }
+
+            $media->setProviderStatus(MediaInterface::STATUS_PENDING);
+            $media->setProviderReference(MediaInterface::MISSING_BINARY_REFERENCE);
+
+            return $media;
         }
 
-        if (!$media->getContext() && isset($this->options['context'])) {
-            $media->setContext($this->options['context']);
+        // create a new media to avoid erasing other media or not ...
+        $newMedia = $this->options['new_on_update'] ? new $this->class() : $media;
+
+        $newMedia->setProviderName($media->getProviderName());
+        $newMedia->setContext($media->getContext());
+        $newMedia->setBinaryContent($binaryContent);
+
+        if (!$newMedia->getProviderName() && $this->options['provider']) {
+            $newMedia->setProviderName($this->options['provider']);
         }
 
-        $provider = $this->pool->getProvider($media->getProviderName());
+        if (!$newMedia->getContext() && $this->options['context']) {
+            $newMedia->setContext($this->options['context']);
+        }
 
-        $provider->transform($media);
+        $provider = $this->pool->getProvider($newMedia->getProviderName());
 
-        return $media;
+        $provider->transform($newMedia);
+
+        return $newMedia;
     }
 }

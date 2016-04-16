@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -16,6 +16,9 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 class FormatThumbnail implements ThumbnailInterface
 {
+    /**
+     * @var string
+     */
     private $defaultFormat;
 
     /**
@@ -34,7 +37,7 @@ class FormatThumbnail implements ThumbnailInterface
         if ($format == 'reference') {
             $path = $provider->getReferenceImage($media);
         } else {
-            $path = sprintf('%s/thumb_%s_%s.%s',  $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
+            $path = sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
         }
 
         return $path;
@@ -45,7 +48,12 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        return sprintf('%s/thumb_%s_%s.%s',
+        if ('reference' === $format) {
+            return $provider->getReferenceImage($media);
+        }
+
+        return sprintf(
+            '%s/thumb_%s_%s.%s',
             $provider->generatePath($media),
             $media->getId(),
             $format,
@@ -64,6 +72,10 @@ class FormatThumbnail implements ThumbnailInterface
 
         $referenceFile = $provider->getReferenceFile($media);
 
+        if (!$referenceFile->exists()) {
+            return;
+        }
+
         foreach ($provider->getFormats() as $format => $settings) {
             if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
                 $provider->getResizer()->resize(
@@ -80,10 +92,19 @@ class FormatThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
-        // delete the differents formats
-        foreach ($provider->getFormats() as $format => $definition) {
+        if (is_null($formats)) {
+            $formats = array_keys($provider->getFormats());
+        } elseif (is_string($formats)) {
+            $formats = array($formats);
+        }
+
+        if (!is_array($formats)) {
+            throw new \InvalidArgumentException('"Formats" argument should be string or array');
+        }
+
+        foreach ($formats as $format) {
             $path = $provider->generatePrivateUrl($media, $format);
             if ($path && $provider->getFilesystem()->has($path)) {
                 $provider->getFilesystem()->delete($path);
@@ -92,7 +113,7 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return string the file extension for the $media, or the $defaultExtension if not available
      */

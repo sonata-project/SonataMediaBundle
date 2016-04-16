@@ -1,24 +1,31 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
-*
-* (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Sonata\MediaBundle\Command;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class AddMediaCommand extends BaseCommand
 {
+    /**
+     * @var bool
+     */
     protected $quiet = false;
+
+    /**
+     * @deprecated This property is deprecated since version 2.4 and will be removed in 3.0.
+     */
     protected $output;
 
     /**
@@ -49,7 +56,7 @@ class AddMediaCommand extends BaseCommand
         $context  = $input->getArgument('context');
         $binaryContent = $input->getArgument('binaryContent');
 
-        $output->writeln(sprintf("Add a new media - context: %s, provider: %s, content: %s", $context, $provider, $binaryContent));
+        $output->writeln(sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));
 
         $media = $this->getMediaManager()->create();
         $media->setBinaryContent($binaryContent);
@@ -74,6 +81,6 @@ class AddMediaCommand extends BaseCommand
 
         $this->getMediaManager()->save($media, $context, $provider);
 
-        $output->writeln("done!");
+        $output->writeln('done!');
     }
 }

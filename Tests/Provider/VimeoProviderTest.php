@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Provider\VimeoProvider;
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Buzz\Browser;
 use Buzz\Message\Response;
 use Imagine\Image\Box;
+use Sonata\MediaBundle\Provider\VimeoProvider;
+use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +36,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/updoads/media');
+        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
@@ -54,7 +54,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = $this->getProvider();
 
-        $media = new Media;
+        $media = new Media();
         $media->setName('Blinky™');
         $media->setProviderName('vimeo');
         $media->setProviderReference('21216091');
@@ -62,17 +62,24 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Vimeo","provider_url":"http:\/\/vimeo.com\/","title":"Blinky\u2122","author_name":"Ruairi Robinson","author_url":"http:\/\/vimeo.com\/ruairirobinson","is_plus":"1","html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>","width":"1920","height":"1080","duration":"771","description":"","thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg","thumbnail_width":1280,"thumbnail_height":720,"video_id":"21216091"}', true));
 
         $media->setId(1023457);
-        $this->assertEquals('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $provider->getReferenceImage($media));
+        $this->assertSame('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $provider->getReferenceImage($media));
 
-        $this->assertEquals('default/0011/24', $provider->generatePath($media));
-        $this->assertEquals('/updoads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('default/0011/24', $provider->generatePath($media));
+        $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail()
     {
-        $provider = $this->getProvider();
+        $response = $this->getMock('Buzz\Message\AbstractMessage');
+        $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
 
-        $media = new Media;
+        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+
+        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+
+        $provider = $this->getProvider($browser);
+
+        $media = new Media();
         $media->setName('Blinky™');
         $media->setProviderName('vimeo');
         $media->setProviderReference('21216091');
@@ -89,7 +96,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->generateThumbnails($media);
 
-        $this->assertEquals('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertSame('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testTransformWithSig()
@@ -104,7 +111,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
-        $media = new Media;
+        $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1023456);
 
@@ -112,11 +119,14 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $provider->transform($media);
         $provider->prePersist($media);
 
-        $this->assertEquals('Blinky™', $media->getName(), '::getName() return the file name');
-        $this->assertEquals('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+        $this->assertSame('Blinky™', $media->getName(), '::getName() return the file name');
+        $this->assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function testTransformWithUrl()
+    /**
+     * @dataProvider getTransformWithUrlMedia
+     */
+    public function testTransformWithUrl($media)
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
@@ -128,16 +138,28 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
 
         $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
 
-        $media = new Media;
-        $media->setBinaryContent('http://vimeo.com/012341231');
-        $media->setId(1023456);
-
         // pre persist the media
         $provider->transform($media);
         $provider->prePersist($media);
 
-        $this->assertEquals('Blinky™', $media->getName(), '::getName() return the file name');
-        $this->assertEquals('012341231', $media->getProviderReference(), '::getProviderReference() is set');
+        $this->assertSame('Blinky™', $media->getName(), '::getName() return the file name');
+        $this->assertSame('012341231', $media->getProviderReference(), '::getProviderReference() is set');
+    }
+
+    public function getTransformWithUrlMedia()
+    {
+        $mediaWebsite = new Media();
+        $mediaWebsite->setBinaryContent('http://vimeo.com/012341231');
+        $mediaWebsite->setId(1023456);
+
+        $mediaPlayer = new Media();
+        $mediaPlayer->setBinaryContent('http://player.vimeo.com/video/012341231');
+        $mediaPlayer->setId(1023456);
+
+        return array(
+            'transform with website url'   => array($mediaWebsite),
+            'transform with player url'    => array($mediaPlayer),
+        );
     }
 
     public function testForm()
@@ -168,7 +190,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $provider = $this->getProvider();
 
         $provider->addFormat('admin', array('width' => 100));
-        $media = new Media;
+        $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
@@ -178,8 +200,7 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $properties = $provider->getHelperProperties($media, 'admin');
 
         $this->assertInternalType('array', $properties);
-        $this->assertEquals(100, $properties['height']);
-        $this->assertEquals(100, $properties['width']);
-
+        $this->assertSame(100, $properties['height']);
+        $this->assertSame(100, $properties['width']);
     }
 }

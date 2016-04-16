@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,13 +11,15 @@
 
 namespace Sonata\MediaBundle\Command;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
 
 class MigrateToJsonTypeCommand extends BaseCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName('sonata:media:migrate-json');
@@ -27,6 +29,9 @@ class MigrateToJsonTypeCommand extends BaseCommand
         $this->setDescription('Migrate all media provider metadata to the doctrine JsonType');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $count = 0;
@@ -41,7 +46,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
             if (0 !== strpos($media[$column], '{') && $media[$column] !== '[]') {
                 $media[$column] = json_encode(unserialize($media[$column]));
                 $connection->update($table, array($column => $media[$column]), array($columnId => $media[$columnId]));
-                $count++;
+                ++$count;
             }
         }
 

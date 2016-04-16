@@ -35,31 +35,34 @@ Reference Guide
    reference/security
    reference/command_line
    reference/advanced_configuration
+   reference/amazon_s3
    reference/extra
+   reference/api
+   reference/troubleshooting
 
 Available services
 ------------------
 
  - Providers
 
-    - sonata.media.provider.image         : Image
-    - sonata.media.provider.file          : File
-    - sonata.media.provider.dailymotion   : Dailymotion
-    - sonata.media.provider.vimeo         : Vimeo
-    - sonata.media.provider.youtube       : Youtube
+    - ``sonata.media.provider.image``         : Image
+    - ``sonata.media.provider.file``          : File
+    - ``sonata.media.provider.dailymotion``   : Dailymotion
+    - ``sonata.media.provider.vimeo``         : Vimeo
+    - ``sonata.media.provider.youtube``       : Youtube
 
  -  Filesystem
 
-    - sonata.media.filesystem.local       : The local filesystem (default)
-    - sonata.media.filesystem.ftp         : FTP
-    - sonata.media.filesystem.s3          : Amazon S3
-    - sonata.media.filesystem.replicate   : Replicate file to a master and to a slave
+    - ``sonata.media.filesystem.local``       : The local filesystem (default)
+    - ``sonata.media.filesystem.ftp``         : FTP
+    - ``sonata.media.filesystem.s3``          : Amazon S3
+    - ``sonata.media.filesystem.replicate``   : Replicate file to a master and to a slave
 
  - CDN
 
-    - sonata.media.cdn.server             : The local http server (default)
-    - sonata.media.cdn.panther            : Panther Portal
-    - sonata.media.cdn.fallback           : Fallback, use the fallback (the http server) if the Media is not yet flushed on the CDN
+    - ``sonata.media.cdn.server``             : The local http server (default)
+    - ``sonata.media.cdn.panther``            : Panther Portal
+    - ``sonata.media.cdn.fallback``           : Fallback, use the fallback (the http server) if the Media is not yet flushed on the CDN
 
 More services will be available in the future depending on your contributions! :)
 

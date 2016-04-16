@@ -4,13 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="sonata_media_view" pattern="/view/{id}/{format}">
+    <route id="sonata_media_view" path="/view/{id}/{format}">
         <default key="_controller">SonataMediaBundle:Media:view</default>
         <default key="format">reference</default>
     </route>
 
-    <route id="sonata_media_download" pattern="/download/{id}/{format}">
+    <route id="sonata_media_download" path="/download/{id}/{format}">
         <default key="_controller">SonataMediaBundle:Media:download</default>
         <default key="format">reference</default>
+        <requirement key="id">.*</requirement>
     </route>
 </routes>

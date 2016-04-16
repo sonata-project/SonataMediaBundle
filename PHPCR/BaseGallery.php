@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -15,7 +15,7 @@ use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 
 /**
- * Bundle\MediaBundle\Document\BaseGallery
+ * Bundle\MediaBundle\Document\BaseGallery.
  */
 abstract class BaseGallery extends Gallery
 {
@@ -29,11 +29,11 @@ abstract class BaseGallery extends Gallery
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection;
+        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get universal unique id
+     * Get universal unique id.
      *
      * @return string
      */
@@ -60,7 +60,7 @@ abstract class BaseGallery extends Gallery
     }
 
     /**
-     * Pre persist method
+     * Pre persist method.
      */
     public function prePersist()
     {
@@ -71,7 +71,7 @@ abstract class BaseGallery extends Gallery
     }
 
     /**
-     * Pre Update method
+     * Pre Update method.
      */
     public function preUpdate()
     {
@@ -81,7 +81,7 @@ abstract class BaseGallery extends Gallery
     }
 
     /**
-     * Reorders $galleryHasMedia items based on their position
+     * Reorders $galleryHasMedia items based on their position.
      */
     public function reorderGalleryHasMedia()
     {

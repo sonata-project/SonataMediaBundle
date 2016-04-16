@@ -1,22 +1,25 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
-*
-* (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Sonata\MediaBundle\Command;
 
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
 
 class AddMassMediaCommand extends BaseCommand
 {
+    /**
+     * @var string[]
+     */
     protected $setters;
 
     /**
@@ -28,7 +31,7 @@ class AddMassMediaCommand extends BaseCommand
             ->setDescription('Add medias in mass into the database')
             ->setDefinition(array(
                 new InputOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse'),
-                new InputOption('delimeter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ','),
+                new InputOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ','),
                 new InputOption('enclosure', null, InputOption::VALUE_OPTIONAL, 'Set the field enclosure character (one character only).', '"'),
                 new InputOption('escape', null, InputOption::VALUE_OPTIONAL, 'Set the escape character (one character only). Defaults as a backslash', '\\'),
             ));
@@ -43,12 +46,12 @@ class AddMassMediaCommand extends BaseCommand
         $imported = -1;
 
         while (!feof($fp)) {
-            $data = fgetcsv($fp, null, $input->getOption('delimeter'), $input->getOption('enclosure'), $input->getOption('escape'));
+            $data = fgetcsv($fp, null, $input->getOption('delimiter'), $input->getOption('enclosure'), $input->getOption('escape'));
 
             if ($imported === -1) {
                 $this->setters = $data;
 
-                $imported++;
+                ++$imported;
                 continue;
             }
 
@@ -56,13 +59,13 @@ class AddMassMediaCommand extends BaseCommand
                 continue;
             }
 
-            $imported++;
+            ++$imported;
 
             $this->insertMedia($data, $output);
             $this->optimize();
         }
 
-        $output->writeln("Done!");
+        $output->writeln('Done!');
     }
 
     /**
@@ -107,7 +110,7 @@ class AddMassMediaCommand extends BaseCommand
     protected function optimize()
     {
         if ($this->getContainer()->has('doctrine')) {
-            $this->getContainer()->get('doctrine')->getEntityManager()->getUnitOfWork()->clear();
+            $this->getContainer()->get('doctrine')->getManager()->getUnitOfWork()->clear();
         }
     }
 }

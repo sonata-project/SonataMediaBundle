@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="sonata.media.controller.api.gallery" class="Sonata\MediaBundle\Controller\Api\GalleryController" >
+            <argument type="service" id="sonata.media.manager.gallery" />
+            <argument type="service" id="sonata.media.manager.media" />
+            <argument type="service" id="form.factory" />
+            <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
+        </service>
+
+        <service id="sonata.media.controller.api.media" class="Sonata\MediaBundle\Controller\Api\MediaController" >
+            <argument type="service" id="sonata.media.manager.media" />
+            <argument type="service" id="sonata.media.pool" />
+            <argument type="service" id="form.factory" />
+        </service>
+    </services>
+</container>

@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -10,39 +11,46 @@
 
 namespace Sonata\MediaBundle\Block;
 
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Validator\ErrorElement;
-
-use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
-
-use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-
-use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
- * PageExtension
+ * PageExtension.
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class GalleryBlockService extends BaseBlockService
 {
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryAdmin;
 
+    /**
+     * @var ManagerInterface
+     */
     protected $galleryManager;
 
     /**
-     * @param string                                                    $name
-     * @param \Symfony\Component\Templating\EngineInterface             $templating
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Sonata\MediaBundle\Model\GalleryManagerInterface         $galleryManager
+     * @param string             $name
+     * @param EngineInterface    $templating
+     * @param ContainerInterface $container
+     * @param ManagerInterface   $galleryManager
      */
-    public function __construct($name, EngineInterface $templating, ContainerInterface $container, GalleryManagerInterface $galleryManager)
+    public function __construct($name, EngineInterface $templating, ContainerInterface $container, ManagerInterface $galleryManager)
     {
         parent::__construct($name, $templating);
 
@@ -51,15 +59,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'Gallery';
-    }
-
-    /**
-     * @return \Sonata\MediaBundle\Provider\Pool
+     * @return Pool
      */
     public function getMediaPool()
     {
@@ -67,7 +67,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @return \Sonata\AdminBundle\Admin\AdminInterface
+     * @return AdminInterface
      */
     public function getGalleryAdmin()
     {
@@ -81,27 +81,19 @@ class GalleryBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    public function configureSettings(OptionsResolver $resolver)
     {
-
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultSettings()
-    {
-        return array(
-            'gallery'  => false,
-            'title'    => false,
-            'context'  => false,
-            'format'   => false,
-            'pauseTime' => 3000,
-            'animSpeed' => 300,
+        $resolver->setDefaults(array(
+            'gallery'     => false,
+            'title'       => false,
+            'context'     => false,
+            'format'      => false,
+            'pauseTime'   => 3000,
             'startPaused' => false,
-            'directionNav' => true,
-            'progressBar' => true,
-        );
+            'wrap'        => true,
+            'template'    => 'SonataMediaBundle:Block:block_gallery.html.twig',
+            'galleryId'   => null,
+        ));
     }
 
     /**
@@ -120,7 +112,6 @@ class GalleryBlockService extends BaseBlockService
         $formatChoices = array();
 
         if ($gallery instanceof GalleryInterface) {
-
             $formats = $this->getMediaPool()->getFormatNamesByContext($gallery->getContext());
 
             foreach ($formats as $code => $format) {
@@ -129,47 +120,65 @@ class GalleryBlockService extends BaseBlockService
         }
 
         // simulate an association ...
-        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media' );
+        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media', array(
+            'translation_domain' => 'SonataMediaBundle',
+        ));
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_ONE));
+        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE));
 
-        $builder = $formMapper->create('galleryId', 'sonata_type_model', array(
+        $builder = $formMapper->create('galleryId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
-            'class'             => $this->getGalleryAdmin()->getClass(),
-            'model_manager'     => $this->getGalleryAdmin()->getModelManager()
+            'class'                    => $this->getGalleryAdmin()->getClass(),
+            'model_manager'            => $this->getGalleryAdmin()->getModelManager(),
+            'label'                    => 'form.label_gallery',
         ));
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
-                array('title', 'text', array('required' => false)),
-                array('context', 'choice', array('required' => true, 'choices' => $contextChoices)),
-                array('format', 'choice', array('required' => count($formatChoices) > 0, 'choices' => $formatChoices)),
+                array('title', 'text', array(
+                    'required' => false,
+                    'label'    => 'form.label_title',
+                )),
+                array('context', 'choice', array(
+                    'required' => true,
+                    'choices'  => $contextChoices,
+                    'label'    => 'form.label_context',
+                )),
+                array('format', 'choice', array(
+                    'required' => count($formatChoices) > 0,
+                    'choices'  => $formatChoices,
+                    'label'    => 'form.label_format',
+                )),
                 array($builder, null, array()),
-                array('pauseTime', 'number', array()),
-                array('animSpeed', 'number', array()),
-                array('startPaused', 'sonata_type_boolean', array()),
-                array('directionNav', 'sonata_type_boolean', array()),
-                array('progressBar', 'sonata_type_boolean', array()),
-            )
+                array('pauseTime', 'number', array(
+                    'label' => 'form.label_pause_time',
+                )),
+                array('startPaused', 'checkbox', array(
+                    'required' => false,
+                    'label'    => 'form.label_start_paused',
+                )),
+                array('wrap', 'checkbox', array(
+                    'required' => false,
+                    'label'    => 'form.label_wrap',
+                )),
+            ),
+            'translation_domain' => 'SonataMediaBundle',
         ));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockInterface $block, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
-        // merge settings
-        $settings = array_merge($this->getDefaultSettings(), $block->getSettings());
+        $gallery = $blockContext->getBlock()->getSetting('galleryId');
 
-        $gallery = $settings['galleryId'];
-
-        return $this->renderResponse('SonataMediaBundle:Block:block_gallery.html.twig', array(
+        return $this->renderResponse($blockContext->getTemplate(), array(
             'gallery'   => $gallery,
-            'block'     => $block,
-            'settings'  => $settings,
+            'block'     => $blockContext->getBlock(),
+            'settings'  => $blockContext->getSettings(),
             'elements'  => $gallery ? $this->buildElements($gallery) : array(),
         ), $response);
     }
@@ -179,13 +188,13 @@ class GalleryBlockService extends BaseBlockService
      */
     public function load(BlockInterface $block)
     {
-        $media = $block->getSetting('galleryId', null);
+        $gallery = $block->getSetting('galleryId');
 
-        if ($media) {
-            $media = $this->galleryManager->findOneBy(array('id' => $media));
+        if ($gallery) {
+            $gallery = $this->galleryManager->findOneBy(array('id' => $gallery));
         }
 
-        $block->setSetting('galleryId', $media);
+        $block->setSetting('galleryId', $gallery);
     }
 
     /**
@@ -205,27 +214,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getStylesheets($media)
-    {
-        return array(
-            '/bundles/sonatamedia/nivo-gallery/nivo-gallery.css'
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getJavacripts($media)
-    {
-        return array(
-            '/bundles/sonatamedia/nivo-gallery/jquery.nivo.gallery.js'
-        );
-    }
-
-    /**
-     * @param \Sonata\MediaBundle\Model\GalleryInterface $gallery
+     * @param GalleryInterface $gallery
      *
      * @return array
      */
@@ -255,7 +244,7 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param MediaInterface $media
      *
      * @return false|string
      */
@@ -268,5 +257,15 @@ class GalleryBlockService extends BaseBlockService
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
     }
 }

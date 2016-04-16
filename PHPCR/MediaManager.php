@@ -1,140 +1,48 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Sonata\MediaBundle\PHPCR;
 
-use Sonata\MediaBundle\Model\MediaManager as AbstractMediaManager;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Provider\Pool;
-use Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager;
+use Sonata\CoreBundle\Model\BasePHPCRManager;
 
-class MediaManager extends AbstractMediaManager
+class MediaManager extends BasePHPCRManager
 {
-    protected $modelManager;
-    protected $repository;
-    protected $class;
-
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool               $pool
-     * @param \Sonata\AdminBundle\Model\ModelManagerInterface $modelManager
-     * @param $class
+     * {@inheritdoc}
      */
-    public function __construct(Pool $pool, ModelManager $modelManager, $class)
+    public function save($entity, $andFlush = true)
     {
-        $this->modelManager = $modelManager;
-
-        parent::__construct($pool, $class);
-    }
-
-    /**
-     * Filter criteria for an identifier, phpcr-odm uses absolute paths and needs an identifier starting with a forward slash
-     *
-     * @param  array $criteria
-     * @return array
-     */
-    protected function filterCriteria(array $criteria)
-    {
-        $identifier = $this->modelManager->getModelIdentifier($this->class);
-
-        if (isset($criteria[$identifier])) {
-            $criteria[$identifier] = $this->modelManager->getBackendId($criteria[$identifier]);
+        // BC compatibility for $context parameter
+        if ($andFlush && is_string($andFlush)) {
+            $entity->setContext($andFlush);
         }
 
-        return $criteria;
-    }
-
-    /**
-     * Finds one media by the given criteria
-     *
-     * @param array $criteria
-     *
-     * @return Media
-     */
-    public function findOneBy(array $criteria)
-    {
-        $identifier = $this->modelManager->getModelIdentifier($this->class);
-
-        if (count($criteria) === 1 && isset($criteria[$identifier])) {
-            return $this->modelManager->find($this->class, $criteria[$identifier]);
+        // BC compatibility for $providerName parameter
+        if (3 == func_num_args()) {
+            $entity->setProviderName(func_get_arg(2));
         }
 
-        return $this->modelManager->findOneBy($this->class, $this->filterCriteria($criteria));
-    }
-
-    /**
-     * Finds one media by the given criteria
-     *
-     * @param array $criteria
-     *
-     * @return Media
-     */
-    public function findBy(array $criteria)
-    {
-        $identifier = $this->modelManager->getModelIdentifier($this->class);
-
-        if (count($criteria) === 1 && isset($criteria[$identifier])) {
-            return $this->modelManager->find($this->class, $criteria[$identifier]);
-        }
-
-        return $this->modelManager->findBy($this->class, $this->filterCriteria($criteria));
-    }
-
-    /**
-     * Updates a media
-     *
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @param  string                                   $context
-     * @param  string                                   $providerName
-     * @return void
-     */
-    public function save(MediaInterface $media, $context = null, $providerName = null)
-    {
-        if ($context) {
-            $media->setContext($context);
-        }
-
-        if ($providerName) {
-            $media->setProviderName($providerName);
-        }
-
-        $isNew = $media->getId() != null;
-
-        if ($isNew) {
-            $this->pool->getProvider($media->getProviderName())->prePersist($media);
-            $this->modelManager->create($media);
+        if ($andFlush && is_bool($andFlush)) {
+            parent::save($entity, $andFlush);
         } else {
-            $this->pool->getProvider($media->getProviderName())->preUpdate($media);
+            // BC compatibility with previous signature
+            parent::save($entity, true);
         }
-
-        if ($isNew) {
-            $this->pool->getProvider($media->getProviderName())->postPersist($media);
-        } else {
-            $this->pool->getProvider($media->getProviderName())->postUpdate($media);
-        }
-
-        // just in case the pool alter the media
-        $this->modelManager->update($media);
     }
 
     /**
-     * Deletes a media
-     *
-     * @param  \Sonata\MediaBundle\Model\MediaInterface $media
-     * @return void
+     * {@inheritdoc}
      */
-    public function delete(MediaInterface $media)
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
     {
-        $this->pool->preRemove($media);
-        $this->modelManager->delete($media);
-
-        $this->pool->postRemove($media);
-        $this->modelManager->getDocumentManager()->flush();
+        throw new \RuntimeException('Not Implemented yet');
     }
 }

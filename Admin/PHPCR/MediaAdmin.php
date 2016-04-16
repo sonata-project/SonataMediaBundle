@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,8 +11,9 @@
 
 namespace Sonata\MediaBundle\Admin\PHPCR;
 
-use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 
 class MediaAdmin extends Admin
 {
@@ -23,6 +24,9 @@ class MediaAdmin extends Admin
      */
     protected $root;
 
+    /**
+     * @param string $root
+     */
     public function setRoot($root)
     {
         $this->root = $root;
@@ -33,7 +37,7 @@ class MediaAdmin extends Admin
      */
     public function createQuery($context = 'list')
     {
-        $query = $this->getModelManager()->createQuery($this->getClass(), '', $this->root);
+        $query = $this->getModelManager()->createQuery($this->getClass(), 'a', $this->root);
 
         foreach ($this->extensions as $extension) {
             $extension->configureQuery($this, $query, $context);
@@ -42,14 +46,16 @@ class MediaAdmin extends Admin
         return $query;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function id($object)
     {
         return $this->getUrlsafeIdentifier($object);
     }
 
     /**
-     * @param  \Sonata\AdminBundle\Datagrid\DatagridMapper $datagridMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -60,5 +66,19 @@ class MediaAdmin extends Admin
 //            ->add('enabled')
 //            ->add('context')
 //        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        // Allow path in id parameter
+        $collection->add('view', $this->getRouterIdParameter().'/view', array(), array('id' => '.+', '_method' => 'GET'));
+        $collection->add('show', $this->getRouterIdParameter().'/show', array(
+                '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view'),
+            ),
+            array('id' => '.+', '_method' => 'GET')
+        );
     }
 }

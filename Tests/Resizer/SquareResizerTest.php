@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,11 +11,11 @@
 
 namespace Sonata\MediaBundle\Tests\Resizer;
 
-use Sonata\MediaBundle\Resizer\SquareResizer;
-use Imagine\Image\Box;
-use Gaufrette\File;
 use Gaufrette\Adapter\InMemory;
+use Gaufrette\File;
 use Gaufrette\Filesystem;
+use Imagine\Image\Box;
+use Sonata\MediaBundle\Resizer\SquareResizer;
 
 class SquareResizerTest extends \PHPUnit_Framework_TestCase
 {
@@ -74,17 +74,17 @@ class SquareResizerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Imagine\Image\Box', $box);
 
-        $this->assertEquals($expected->getWidth(), $box->getWidth());
-        $this->assertEquals($expected->getHeight(), $box->getHeight());
+        $this->assertSame($expected->getWidth(), $box->getWidth());
+        $this->assertSame($expected->getHeight(), $box->getHeight());
     }
 
     public static function getBoxSettings()
     {
         return array(
-            array(array( 'width' => 90, 'height' => 90 ), new Box(100, 120), new Box(100, 100)),
-            array(array( 'width' => 90, 'height' => 90 ), new Box(50, 50), new Box(50, 50)),
-            array(array( 'width' => 90, 'height' => null ), new Box(50, 50), new Box(50, 50)),
-            array(array( 'width' => 90, 'height' => null ), new Box(567, 50), new Box(90, 7)),
+            array(array('width' => 90, 'height' => 90), new Box(100, 120), new Box(100, 100)),
+            array(array('width' => 90, 'height' => 90), new Box(50, 50), new Box(50, 50)),
+            array(array('width' => 90, 'height' => null), new Box(50, 50), new Box(50, 50)),
+            array(array('width' => 90, 'height' => null), new Box(567, 50), new Box(90, 7)),
         );
     }
 }

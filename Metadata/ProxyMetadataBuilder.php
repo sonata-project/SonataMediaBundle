@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,30 +11,33 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Filesystem\Replicate;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     private $container;
-    private $map;
-    private $metadata;
 
     /**
-     * @param ContainerInterface $metadata
+     * @param ContainerInterface $container
      * @param array              $map
      */
-    public function __construct(ContainerInterface $container, array $map)
+    public function __construct(ContainerInterface $container, array $map = null)
     {
         $this->container = $container;
-        $this->map = $map;
+
+        if ($map !== null) {
+            @trigger_error('The "map" parameter is deprecated since version 2.4 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function get(MediaInterface $media, $filename)
     {
         //get adapter for current media
@@ -54,10 +57,10 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * @param MediaInterface $metadata
+     * @param MediaInterface $media
      * @param string         $filename
      *
-     * @return array
+     * @return array|bool
      */
     protected function getAmazonBuilder(MediaInterface $media, $filename)
     {
@@ -71,10 +74,10 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         }
 
         //for amazon s3
-        if (!in_array('Gaufrette\Adapter\AmazonS3', $adapterClassNames) || !$this->container->has('sonata.media.metadata.amazon')) {
+        if ((!in_array('Gaufrette\Adapter\AmazonS3', $adapterClassNames) && !in_array('Gaufrette\Adapter\AwsS3', $adapterClassNames)) || !$this->container->has('sonata.media.metadata.amazon')) {
             return false;
         }
 
-        return $this->container->get('sonata.media.metadata.amazon')->get($media, $filename);;
+        return $this->container->get('sonata.media.metadata.amazon')->get($media, $filename);
     }
 }

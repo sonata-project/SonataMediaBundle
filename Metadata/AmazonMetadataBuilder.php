@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,23 +11,28 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Aws\S3\Enum\CannedAcl;
+use Aws\S3\Enum\Storage;
+use Guzzle\Http\Mimetypes;
 use Sonata\MediaBundle\Model\MediaInterface;
-use \AmazonS3 as AmazonS3;
-use \CFMimeTypes;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
-
+    /**
+     * @var array
+     */
     protected $settings;
 
+    /**
+     * @var string[]
+     */
     protected $acl = array(
-        'private' => AmazonS3::ACL_PRIVATE,
-        'public' => AmazonS3::ACL_PUBLIC,
-        'open' => AmazonS3::ACL_OPEN,
-        'auth_read' => AmazonS3::ACL_AUTH_READ,
-        'owner_read' => AmazonS3::ACL_OWNER_READ,
-        'owner_full_control' => AmazonS3::ACL_OWNER_FULL_CONTROL,
+        'private'            => CannedAcl::PRIVATE_ACCESS,
+        'public'             => CannedAcl::PUBLIC_READ,
+        'open'               => CannedAcl::PUBLIC_READ_WRITE,
+        'auth_read'          => CannedAcl::AUTHENTICATED_READ,
+        'owner_read'         => CannedAcl::BUCKET_OWNER_READ,
+        'owner_full_control' => CannedAcl::BUCKET_OWNER_FULL_CONTROL,
     );
 
     /**
@@ -39,7 +44,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Get data passed from the config
+     * Get data passed from the config.
      *
      * @return array
      */
@@ -48,15 +53,15 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         //merge acl
         $output = array();
         if (isset($this->settings['acl']) && !empty($this->settings['acl'])) {
-            $output['acl'] = $this->acl[$this->settings['acl']];
+            $output['ACL'] = $this->acl[$this->settings['acl']];
         }
 
         //merge storage
         if (isset($this->settings['storage'])) {
             if ($this->settings['storage'] == 'standard') {
-                $output['storage'] = AmazonS3::STORAGE_STANDARD;
+                $output['storage'] = Storage::STANDARD;
             } elseif ($this->settings['storage'] == 'reduced') {
-                $output['storage'] = AmazonS3::STORAGE_REDUCED;
+                $output['storage'] = Storage::REDUCED;
             }
         }
 
@@ -67,7 +72,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
 
         //merge cache control header
         if (isset($this->settings['cache_control']) && !empty($this->settings['cache_control'])) {
-            $output['headers']['Cache-Control'] = $this->settings['cache_control'];
+            $output['CacheControl'] = $this->settings['cache_control'];
         }
 
         //merge encryption
@@ -81,7 +86,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * Gets the correct content-type
+     * Gets the correct content-type.
      *
      * @param string $filename
      *
@@ -89,10 +94,10 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = CFMimeTypes::get_mimetype($extension);
+        $extension   = pathinfo($filename, PATHINFO_EXTENSION);
+        $contentType = Mimetypes::getInstance()->fromExtension($extension);
 
-        return array('contentType'=> $contentType);
+        return array('contentType' => $contentType);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,30 +11,32 @@
 
 namespace Sonata\MediaBundle\Tests\Metadata;
 
+use AmazonS3 as AmazonClient;
+use Gaufrette\Adapter\AmazonS3;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
-use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
-use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
-use Gaufrette\Adapter\AmazonS3;
-use \AmazonS3 as AmazonClient;
-use Gaufrette\Filesystem;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (!class_exists('AmazonS3', true)) {
+            $this->markTestSkipped('The class AmazonS3 does not exist');
+        }
+    }
+
     public function testProxyAmazon()
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'amazon')));
+            ->will($this->returnValue(array('key' => 'amazon')));
 
         $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'noop')));
+            ->will($this->returnValue(array('key' => 'noop')));
 
         //adapter cannot be mocked
         $amazonclient = new AmazonClient(array('key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
@@ -54,14 +56,14 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop' => $noop,
+            'sonata.media.metadata.noop'   => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image' => $provider
+            'sonata.media.provider.image'  => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key'=>'amazon'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyLocal()
@@ -69,12 +71,12 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'amazon')));
+            ->will($this->returnValue(array('key' => 'amazon')));
 
         $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'noop')));
+            ->will($this->returnValue(array('key' => 'noop')));
 
         //adapter cannot be mocked
         $adapter = new Local('');
@@ -93,14 +95,14 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop' => $noop,
+            'sonata.media.metadata.noop'   => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image' => $provider
+            'sonata.media.provider.image'  => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key'=>'noop'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyNoProvider()
@@ -108,12 +110,12 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'amazon')));
+            ->will($this->returnValue(array('key' => 'amazon')));
 
         $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'noop')));
+            ->will($this->returnValue(array('key' => 'noop')));
 
         //adapter cannot be mocked
         $adapter = new Local('');
@@ -132,14 +134,14 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop' => $noop,
+            'sonata.media.metadata.noop'   => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image' => $provider
+            'sonata.media.provider.image'  => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array(), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array(), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithAmazon()
@@ -147,12 +149,12 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'amazon')));
+            ->will($this->returnValue(array('key' => 'amazon')));
 
         $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'noop')));
+            ->will($this->returnValue(array('key' => 'noop')));
 
         //adapter cannot be mocked
         $amazonclient = new AmazonClient(array('key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
@@ -174,14 +176,14 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop' => $noop,
+            'sonata.media.metadata.noop'   => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image' => $provider
+            'sonata.media.provider.image'  => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key'=>'amazon'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithoutAmazon()
@@ -189,12 +191,12 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'amazon')));
+            ->will($this->returnValue(array('key' => 'amazon')));
 
         $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key'=>'noop')));
+            ->will($this->returnValue(array('key' => 'noop')));
 
         //adapter cannot be mocked
         $adapter1 = new Local('');
@@ -215,37 +217,37 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop' => $noop,
+            'sonata.media.metadata.noop'   => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image' => $provider
+            'sonata.media.provider.image'  => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
 
-        $this->assertEquals(array('key'=>'noop'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }
 
     /**
-    * Return a mock object for the DI ContainerInterface.
-    *
-    * @param array $services A key-value list of services the container contains.
-    *
-    * @return \PHPUnit_Framework_MockObject_MockObject
-    */
+     * Return a mock object for the DI ContainerInterface.
+     *
+     * @param array $services A key-value list of services the container contains.
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getContainerMock(array $services)
     {
         $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $container
             ->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function($service) use ($services) {
+            ->will($this->returnCallback(function ($service) use ($services) {
                 return $services[$service];
             }))
         ;
         $container
             ->expects($this->any())
             ->method('has')
-            ->will($this->returnCallback(function($service) use ($services) {
+            ->will($this->returnCallback(function ($service) use ($services) {
                 if (isset($services[$service])) {
                     return true;
                 }

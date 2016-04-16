@@ -8,17 +8,17 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
-{% extends 'SonataBlockBundle:Block:block_base.html.twig' %}
+{% extends sonata_block.templates.block_base %}
 
 {% block block %}
 
     <div class="sonata-media-block-feature-media-container">
 
         <div class="sonata-media-block-feature-media-container-{{ settings.orientation }}">
-            {% if media %}
+            {% if media and settings.format%}
                 {% media media, settings.format %}
             {% else %}
-                {# no media selected ... #}
+                {# no media selected or format defined... #}
             {% endif %}
         </div>
 

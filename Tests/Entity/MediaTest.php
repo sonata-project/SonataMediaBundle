@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -15,14 +15,13 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 {
     public function testMetadata()
     {
-
-        $media = new Media;
+        $media = new Media();
 
         $media->setProviderMetadata(array('thumbnail_url' => 'http://pasloin.com/thumb.png'));
 
-        $this->assertEquals($media->getMetadataValue('thumbnail_url'), 'http://pasloin.com/thumb.png', '::getMetadataValue() return the good value');
-        $this->assertEquals($media->getMetadataValue('thumbnail_url1', 'default'), 'default', '::getMetadataValue() return the default');
-        $this->assertEquals($media->getMetadataValue('thumbnail_url1'), null, '::getMetadataValue() return the null value');
+        $this->assertSame($media->getMetadataValue('thumbnail_url'), 'http://pasloin.com/thumb.png', '::getMetadataValue() return the good value');
+        $this->assertSame($media->getMetadataValue('thumbnail_url1', 'default'), 'default', '::getMetadataValue() return the default');
+        $this->assertSame($media->getMetadataValue('thumbnail_url1'), null, '::getMetadataValue() return the null value');
     }
 
     public function testStatusList()
@@ -34,7 +33,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGet()
     {
-        $media = new Media;
+        $media = new Media();
         $media->setName('MediaBundle');
         $media->setSize(12);
         $media->setDescription('description');
@@ -44,25 +43,39 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $media->setCopyright('copyleft');
         $media->setAuthorName('Thomas');
         $media->setCdnIsFlushable(true);
-        $media->setCdnFlushAt(new \DateTime);
+        $media->setCdnFlushIdentifier('identifier_123');
+        $media->setCdnFlushAt(new \DateTime());
         $media->setContentType('sonata/media');
-        $media->setCreatedAt(new \DateTime);
+        $media->setCreatedAt(new \DateTime());
 
-        $this->assertEquals(12, $media->getSize());
-        $this->assertEquals('description', $media->getDescription());
+        $this->assertSame(12, $media->getSize());
+        $this->assertSame('description', $media->getDescription());
         $this->assertTrue($media->getEnabled());
-        $this->assertEquals('name', $media->getProviderName());
-        $this->assertEquals(2, $media->getLength());
-        $this->assertEquals('copyleft', $media->getCopyright());
-        $this->assertEquals('Thomas', $media->getAuthorName());
+        $this->assertSame('name', $media->getProviderName());
+        $this->assertSame(2, $media->getLength());
+        $this->assertSame('copyleft', $media->getCopyright());
+        $this->assertSame('Thomas', $media->getAuthorName());
         $this->assertTrue($media->getCdnIsFlushable());
+        $this->assertSame('identifier_123', $media->getCdnFlushIdentifier());
         $this->assertInstanceOf('DateTime', $media->getCdnFlushAt());
         $this->assertInstanceOf('DateTime', $media->getCreatedAt());
-        $this->assertEquals('sonata/media', $media->getContentType());
-        $this->assertEquals('MediaBundle', (string) $media);
+        $this->assertSame('sonata/media', $media->getContentType());
+        $this->assertSame('MediaBundle', (string) $media);
 
         $this->assertNull($media->getMetadataValue('foo'));
-
     }
 
+    public function testGetMediaFileExtension()
+    {
+        $media = new Media();
+
+        $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1');
+        $this->assertSame('png', $media->getExtension(), 'extension should not contain query strings');
+
+        $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png#some-hash');
+        $this->assertSame('png', $media->getExtension(), 'extension should not contain hashes');
+
+        $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1#with-some-hash');
+        $this->assertSame('png', $media->getExtension(), 'extension should not contain query strings or hashes');
+    }
 }

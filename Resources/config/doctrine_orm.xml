@@ -10,17 +10,14 @@
     </parameters>
 
     <services>
-        <service id="sonata.media.entity_manager" alias="doctrine.orm.default_entity_manager" />
-
         <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
-            <argument type="service" id="sonata.media.pool" />
-            <argument type="service" id="sonata.media.entity_manager" />
             <argument>%sonata.media.media.class%</argument>
+            <argument type="service" id="doctrine" />
         </service>
 
         <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
-            <argument type="service" id="sonata.media.entity_manager" />
             <argument>%sonata.media.gallery.class%</argument>
+            <argument type="service" id="doctrine" />
         </service>
 
         <!-- Path generator servive -->

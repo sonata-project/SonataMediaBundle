@@ -1,86 +1,73 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Sonata\MediaBundle\Entity;
 
-use Sonata\MediaBundle\Model\GalleryManager as AbstractGalleryManager;
+use Sonata\CoreBundle\Model\BaseEntityManager;
+use Sonata\DatagridBundle\Pager\Doctrine\Pager;
+use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\MediaBundle\Model\GalleryInterface;
-use Doctrine\ORM\EntityManager;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
-class GalleryManager extends AbstractGalleryManager
+class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {
-    protected $em;
-    protected $repository;
-    protected $class;
-
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     * @param string                      $class
-     */
-    public function __construct(EntityManager $em, $class)
-    {
-        $this->em    = $em;
-        $this->class = $class;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getRepository()
-    {
-        if (!$this->repository) {
-            $this->repository = $this->em->getRepository($this->class);
-        }
-
-        return $this->repository;
-    }
-
-    /**
-     * {@inheritdoc}
+     * BC Compatibility.
+     *
+     * @deprecated Please use save() from now
+     *
+     * @param GalleryInterface $gallery
      */
     public function update(GalleryInterface $gallery)
     {
-        $this->em->persist($gallery);
-        $this->em->flush();
+        parent::save($gallery);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getClass()
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
     {
-        return $this->class;
-    }
+        $query = $this->getRepository()
+            ->createQueryBuilder('g')
+            ->select('g');
 
-    /**
-     * {@inheritdoc}
-     */
-    public function findOneBy(array $criteria)
-    {
-        return $this->getRepository()->findOneBy($criteria);
-    }
+        $fields = $this->getEntityManager()->getClassMetadata($this->class)->getFieldNames();
+        foreach ($sort as $field => $direction) {
+            if (!in_array($field, $fields)) {
+                throw new \RuntimeException(sprintf("Invalid sort field '%s' in '%s' class", $field, $this->class));
+            }
+        }
+        if (count($sort) == 0) {
+            $sort = array('name' => 'ASC');
+        }
+        foreach ($sort as $field => $direction) {
+            $query->orderBy(sprintf('g.%s', $field), strtoupper($direction));
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function findBy(array $criteria)
-    {
-        return $this->getRepository()->findBy($criteria);
-    }
+        $parameters = array();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(GalleryInterface $gallery)
-    {
-        $this->em->remove($gallery);
-        $this->em->flush();
+        if (isset($criteria['enabled'])) {
+            $query->andWhere('g.enabled = :enabled');
+            $parameters['enabled'] = $criteria['enabled'];
+        }
+
+        $query->setParameters($parameters);
+
+        $pager = new Pager();
+        $pager->setMaxPerPage($limit);
+        $pager->setQuery(new ProxyQuery($query));
+        $pager->setPage($page);
+        $pager->init();
+
+        return $pager;
     }
 }

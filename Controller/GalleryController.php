@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -12,17 +12,18 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GalleryController extends Controller
 {
     /**
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @return Response
      */
     public function indexAction()
     {
         $galleries = $this->get('sonata.media.manager.gallery')->findBy(array(
-            'enabled' => true
+            'enabled' => true,
         ));
 
         return $this->render('SonataMediaBundle:Gallery:index.html.twig', array(
@@ -33,14 +34,15 @@ class GalleryController extends Controller
     /**
      * @param string $id
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return Response
+     *
+     * @throws NotFoundHttpException
      */
     public function viewAction($id)
     {
         $gallery = $this->get('sonata.media.manager.gallery')->findOneBy(array(
             'id'      => $id,
-            'enabled' => true
+            'enabled' => true,
         ));
 
         if (!$gallery) {

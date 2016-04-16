@@ -9,6 +9,8 @@ file that was distributed with this source code.
 
 #}
 
+{% sonata_template_box 'This is the gallery index template. Feel free to override it.' %}
+
 <ul>
     {% for gallery in galleries %}
         <li><a href="{{ url('sonata_media_gallery_view', {'id' : gallery|sonata_urlsafeid }) }}">{{ gallery.name }}</a></li>

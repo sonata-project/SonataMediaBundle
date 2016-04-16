@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,12 +13,19 @@ namespace Sonata\MediaBundle\Listener\ORM;
 
 use Doctrine\Common\EventArgs;
 use Doctrine\ORM\Events;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**
-     * @return array
+     * @var CategoryInterface[]
+     */
+    protected $rootCategories;
+
+    /**
+     * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
@@ -33,8 +40,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @param  \Doctrine\Common\EventArgs $args
-     * @return void
+     * {@inheritdoc}
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
@@ -47,10 +53,40 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getMedia(EventArgs $args)
     {
-        return $args->getEntity();
+        $media = $args->getEntity();
+
+        if (!$media instanceof MediaInterface) {
+            return $media;
+        }
+
+        if (!$media->getCategory()) {
+            $media->setCategory($this->getRootCategory($media));
+        }
+
+        return $media;
+    }
+
+    /**
+     * @param MediaInterface $media
+     *
+     * @return CategoryInterface
+     *
+     * @throws \RuntimeException
+     */
+    protected function getRootCategory(MediaInterface $media)
+    {
+        if (!$this->rootCategories) {
+            $this->rootCategories = $this->container->get('sonata.classification.manager.category')->getRootCategories(false);
+        }
+
+        if (!array_key_exists($media->getContext(), $this->rootCategories)) {
+            throw new \RuntimeException(sprintf('There is no main category related to context: %s', $media->getContext()));
+        }
+
+        return $this->rootCategories[$media->getContext()];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -12,20 +12,23 @@
 namespace Sonata\MediaBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdmin extends Admin
 {
+    /**
+     * @var Pool
+     */
     protected $pool;
 
     /**
-     * @param string                            $code
-     * @param string                            $class
-     * @param string                            $baseControllerName
-     * @param \Sonata\MediaBundle\Provider\Pool $pool
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     * @param Pool   $pool
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
     {
@@ -39,6 +42,12 @@ class GalleryAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        // define group zoning
+        $formMapper
+            ->with($this->trans('Gallery'), array('class' => 'col-md-9'))->end()
+            ->with($this->trans('Options'), array('class' => 'col-md-3'))->end()
+        ;
+
         $context = $this->getPersistentParameter('context');
 
         if (!$context) {
@@ -56,23 +65,27 @@ class GalleryAdmin extends Admin
         }
 
         $formMapper
-            ->add('context', 'sonata_type_translatable_choice', array(
-                'choices' => $contexts,
-                'catalogue' => 'SonataMediaBundle'
-            ))
-            ->add('enabled', null, array('required' => false))
-            ->add('name')
-            ->add('defaultFormat', 'choice', array('choices' => $formats))
-            ->add('galleryHasMedias', 'sonata_type_collection', array(
-                    'cascade_validation' => true,
-                ), array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                    'sortable'  => 'position',
-                    'link_parameters' => array('context' => $context),
-                    'admin_code' => 'sonata.media.admin.gallery_has_media'
+            ->with('Options')
+                ->add('context', 'choice', array(
+                    'choices'            => $contexts,
+                    'translation_domain' => 'SonataMediaBundle',
+                ))
+                ->add('enabled', null, array('required' => false))
+                ->add('name')
+                ->add('defaultFormat', 'choice', array('choices' => $formats))
+            ->end()
+            ->with('Gallery')
+                ->add('galleryHasMedias', 'sonata_type_collection', array(
+                        'cascade_validation' => true,
+                    ), array(
+                        'edit'              => 'inline',
+                        'inline'            => 'table',
+                        'sortable'          => 'position',
+                        'link_parameters'   => array('context' => $context),
+                        'admin_code'        => 'sonata.media.admin.gallery_has_media',
+                    )
                 )
-            )
+            ->end()
         ;
     }
 
@@ -97,7 +110,9 @@ class GalleryAdmin extends Admin
         $datagridMapper
             ->add('name')
             ->add('enabled')
-            ->add('context')
+            ->add('context', null, array(
+                'show_filter' => false,
+            ))
         ;
     }
 
@@ -128,13 +143,15 @@ class GalleryAdmin extends Admin
      */
     public function getPersistentParameters()
     {
+        $parameters = parent::getPersistentParameters();
+
         if (!$this->hasRequest()) {
-            return array();
+            return $parameters;
         }
 
-        return array(
+        return array_merge($parameters, array(
             'context'  => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
-        );
+        ));
     }
 
     /**

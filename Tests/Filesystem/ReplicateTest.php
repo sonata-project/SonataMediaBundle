@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Tests\Filesystem;
 
 use Sonata\MediaBundle\Filesystem\Replicate;
 
-class MediaTest extends \PHPUnit_Framework_TestCase
+class ReplicateTest extends \PHPUnit_Framework_TestCase
 {
     public function testReplicate()
     {
@@ -23,7 +23,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
         $master->expects($this->once())->method('mtime')->will($this->returnValue('master'));
         $slave->expects($this->never())->method('mtime');
-        $this->assertEquals('master', $replicate->mtime('foo'));
+        $this->assertSame('master', $replicate->mtime('foo'));
 
         $master->expects($this->once())->method('delete')->will($this->returnValue('master'));
         $slave->expects($this->once())->method('delete')->will($this->returnValue('master'));
@@ -39,11 +39,11 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
         $master->expects($this->once())->method('write')->will($this->returnValue(123));
         $slave->expects($this->once())->method('write')->will($this->returnValue(123));
-        $this->assertEquals(123, $replicate->write('foo', 'contents'));
+        $this->assertSame(true, $replicate->write('foo', 'contents'));
 
         $master->expects($this->once())->method('read')->will($this->returnValue('master content'));
         $slave->expects($this->never())->method('read');
-        $this->assertEquals('master content', $replicate->read('foo'));
+        $this->assertSame('master content', $replicate->read('foo'));
 
         $master->expects($this->once())->method('rename');
         $slave->expects($this->once())->method('rename');

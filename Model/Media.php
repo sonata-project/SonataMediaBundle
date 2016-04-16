@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,129 +12,152 @@
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 
 abstract class Media implements MediaInterface
 {
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var text $description
+     * @var string
      */
     protected $description;
 
     /**
-     * @var boolean $enabled
+     * @var bool
      */
     protected $enabled = false;
 
     /**
-     * @var string $provider_name
+     * @var string
      */
     protected $providerName;
 
     /**
-     * @var integer $provider_status
+     * @var int
      */
     protected $providerStatus;
 
     /**
-     * @var string $provider_reference
+     * @var string
      */
     protected $providerReference;
 
     /**
-     * @var array $provider_metadata
+     * @var array
      */
     protected $providerMetadata = array();
 
     /**
-     * @var integer $width
+     * @var int
      */
     protected $width;
 
     /**
-     * @var integer $height
+     * @var int
      */
     protected $height;
 
     /**
-     * @var decimal $length
+     * @var float
      */
     protected $length;
 
     /**
-     * @var string $copyright
+     * @var string
      */
     protected $copyright;
 
     /**
-     * @var string $author_name
+     * @var string
      */
     protected $authorName;
 
     /**
-     * @var string $context
+     * @var string
      */
     protected $context;
 
     /**
-     * @var boolean $cdn_is_flushable
+     * @var bool
      */
     protected $cdnIsFlushable;
 
     /**
-     * @var datetime $cdn_flush_at
+     * @var string
+     */
+    protected $cdnFlushIdentifier;
+
+    /**
+     * @var \DateTime
      */
     protected $cdnFlushAt;
 
     /**
-     * @var integer $cdn_status
+     * @var int
      */
     protected $cdnStatus;
 
     /**
-     * @var datetime $updated_at
+     * @var \DateTime
      */
     protected $updatedAt;
 
     /**
-     * @var datetime $created_at
+     * @var \DateTime
      */
     protected $createdAt;
 
+    /**
+     * @var mixed
+     */
     protected $binaryContent;
 
+    /**
+     * @var string
+     */
     protected $previousProviderReference;
 
     /**
-     * @var varchar $content_type
+     * @var string
      */
     protected $contentType;
 
     /**
-     * @var integer $size
+     * @var int
      */
     protected $size;
 
+    /**
+     * @var GalleryHasMediaInterface[]
+     */
     protected $galleryHasMedias;
+
+    /**
+     * @var CategoryInterface
+     */
+    protected $category;
 
     public function prePersist()
     {
-        $this->setCreatedAt(new \DateTime);
-        $this->setUpdatedAt(new \DateTime);
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
     }
 
     public function preUpdate()
     {
-        $this->setUpdatedAt(new \DateTime);
+        $this->setUpdatedAt(new \DateTime());
     }
 
     /**
      * @static
-     * @return array
+     *
+     * @return string[]
      */
     public static function getStatusList()
     {
@@ -154,6 +178,14 @@ abstract class Media implements MediaInterface
         $this->previousProviderReference = $this->providerReference;
         $this->providerReference = null;
         $this->binaryContent = $binaryContent;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resetBinaryContent()
+    {
+        $this->binaryContent = null;
     }
 
     /**
@@ -421,6 +453,22 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
+    public function setCdnFlushIdentifier($cdnFlushIdentifier)
+    {
+        $this->cdnFlushIdentifier = $cdnFlushIdentifier;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCdnFlushIdentifier()
+    {
+        return $this->cdnFlushIdentifier;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setCdnFlushAt(\DateTime $cdnFlushAt = null)
     {
         $this->cdnFlushAt = $cdnFlushAt;
@@ -487,7 +535,8 @@ abstract class Media implements MediaInterface
      */
     public function getExtension()
     {
-        return pathinfo($this->getProviderReference(), PATHINFO_EXTENSION);
+        // strips off query strings or hashes, which are common in URIs remote references
+        return preg_replace('{(\?|#).*}', '', pathinfo($this->getProviderReference(), PATHINFO_EXTENSION));
     }
 
     /**
@@ -560,5 +609,42 @@ abstract class Media implements MediaInterface
     public function getPreviousProviderReference()
     {
         return $this->previousProviderReference;
+    }
+
+    /**
+     * @param ExecutionContextInterface|LegacyExecutionContextInterface $context
+     */
+    public function isStatusErroneous($context)
+    {
+        if ($this->getBinaryContent() && $this->getProviderStatus() == self::STATUS_ERROR) {
+            // Interface compatibility, the new ExecutionContextInterface should be typehinted when support for Symfony <2.5 is dropped
+            if (!$context instanceof ExecutionContextInterface && !$context instanceof LegacyExecutionContextInterface) {
+                throw new \InvalidArgumentException('Argument 1 should be an instance of Symfony\Component\Validator\ExecutionContextInterface or Symfony\Component\Validator\Context\ExecutionContextInterface');
+            }
+
+            if ($context instanceof LegacyExecutionContextInterface) {
+                $context->addViolationAt('binaryContent', 'invalid', array(), null);
+            } else {
+                $context->buildViolation('invalid')
+                   ->atPath('binaryContent')
+                   ->addViolation();
+            }
+        }
+    }
+
+    /**
+     * @return CategoryInterface
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param CategoryInterface $category|null
+     */
+    public function setCategory(CategoryInterface $category = null)
+    {
+        $this->category = $category;
     }
 }

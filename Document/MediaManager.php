@@ -1,74 +1,48 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Sonata\MediaBundle\Document;
 
-use Sonata\MediaBundle\Model\MediaManager as AbstractMediaManager;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Sonata\MediaBundle\Provider\Pool;
+use Sonata\CoreBundle\Model\BaseDocumentManager;
 
-class MediaManager extends AbstractMediaManager
+class MediaManager extends BaseDocumentManager
 {
-    protected $dm;
-    protected $repository;
-    protected $class;
-
     /**
-     * @param \Sonata\MediaBundle\Provider\Pool     $pool
-     * @param \Doctrine\ODM\MongoDB\DocumentManager $dm
-     * @param string                                $class
+     * {@inheritdoc}
      */
-    public function __construct(Pool $pool, DocumentManager $dm, $class)
+    public function save($entity, $andFlush = true)
     {
-        $this->dm = $dm;
-
-        parent::__construct($pool, $class);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getRepository()
-    {
-        if (!$this->repository) {
-            $this->repository = $this->dm->getRepository($this->class);
+        // BC compatibility for $context parameter
+        if ($andFlush && is_string($andFlush)) {
+            $entity->setContext($andFlush);
         }
 
-        return $this->repository;
+        // BC compatibility for $providerName parameter
+        if (3 == func_num_args()) {
+            $entity->setProviderName(func_get_arg(2));
+        }
+
+        if ($andFlush && is_bool($andFlush)) {
+            parent::save($entity, $andFlush);
+        } else {
+            // BC compatibility with previous signature
+            parent::save($entity, true);
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(MediaInterface $media, $context = null, $providerName = null)
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
     {
-        if ($context) {
-            $media->setContext($context);
-        }
-
-        if ($providerName) {
-            $media->setProviderName($providerName);
-        }
-
-        // just in case the pool alter the media
-        $this->dm->persist($media);
-        $this->dm->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(MediaInterface $media)
-    {
-        $this->dm->remove($media);
-        $this->dm->flush();
+        throw new \RuntimeException('Not Implemented yet');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -19,17 +19,20 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+
+        // Prefer the Symfony 2.6+ API if available
+        if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
+            $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        } else {
+            $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        }
 
         $security->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnCallback(function(array $roles) {
+            ->will($this->returnCallback(function (array $roles) {
                 return in_array('ROLE_ADMIN', $roles);
             }));
-        $security->expects($this->once())
-            ->method('getToken')
-            ->will(($this->returnValue(true)));
 
         $strategy = new RolesDownloadStrategy($translator, $security, array('ROLE_ADMIN'));
         $this->assertTrue($strategy->isGranted($media, $request));
@@ -41,17 +44,18 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
 
-        $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        // Prefer the Symfony 2.6+ API if available
+        if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
+            $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        } else {
+            $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        }
 
         $security->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnCallback(function(array $roles) {
+            ->will($this->returnCallback(function (array $roles) {
                 return in_array('FOO', $roles);
             }));
-
-        $security->expects($this->once())
-            ->method('getToken')
-            ->will(($this->returnValue(true)));
 
         $strategy = new RolesDownloadStrategy($translator, $security, array('ROLE_ADMIN'));
         $this->assertFalse($strategy->isGranted($media, $request));

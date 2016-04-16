@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -17,10 +17,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class PublicDownloadStrategy implements DownloadStrategyInterface
 {
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {
@@ -28,10 +31,7 @@ class PublicDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface  $media
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isGranted(MediaInterface $media, Request $request)
     {
@@ -39,8 +39,7 @@ class PublicDownloadStrategy implements DownloadStrategyInterface
     }
 
     /**
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getDescription()
     {

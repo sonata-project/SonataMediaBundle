@@ -4,12 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="sonata_media_gallery_index" pattern="/">
+    <route id="sonata_media_gallery_index" path="/">
         <default key="_controller">SonataMediaBundle:Gallery:index</default>
     </route>
 
-    <route id="sonata_media_gallery_view" pattern="/view/{id}">
+    <route id="sonata_media_gallery_view" path="/view/{id}">
         <default key="_controller">SonataMediaBundle:Gallery:view</default>
+        <requirement key="id">.*</requirement>
     </route>
 
 </routes>

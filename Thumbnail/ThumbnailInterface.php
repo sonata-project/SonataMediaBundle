@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -17,28 +17,29 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 interface ThumbnailInterface
 {
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface            $media
-     * @param string                                              $format
+     * @param MediaProviderInterface $provider
+     * @param MediaInterface         $media
+     * @param string                 $format
      */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface            $media
-     * @param string                                              $format
+     * @param MediaProviderInterface $provider
+     * @param MediaInterface         $media
+     * @param string                 $format
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface            $media
+     * @param MediaProviderInterface $provider
+     * @param MediaInterface         $media
      */
     public function generate(MediaProviderInterface $provider, MediaInterface $media);
 
     /**
-     * @param \Sonata\MediaBundle\Provider\MediaProviderInterface $provider
-     * @param \Sonata\MediaBundle\Model\MediaInterface            $media
+     * @param MediaProviderInterface $provider
+     * @param MediaInterface         $media
+     * @param string|array           $formats
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media);
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null);
 }

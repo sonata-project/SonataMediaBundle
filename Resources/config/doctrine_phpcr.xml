@@ -11,15 +11,13 @@
 
     <services>
         <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
-            <argument type="service" id="sonata.media.pool" />
-            <argument type="service" id="sonata.admin.manager.doctrine_phpcr" />
             <argument>%sonata.media.media.class%</argument>
+            <argument type="service" id="doctrine_phpcr" />
         </service>
 
         <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
-            <argument type="service" id="sonata.admin.manager.doctrine_phpcr" />
-            <argument>%sonata.media.manager.gallery.class%</argument>
-            <argument type="service" id="sonata.media.manager.media" />
+            <argument>%sonata.media.gallery.class%</argument>
+            <argument type="service" id="doctrine_phpcr" />
         </service>
 
         <!-- Path generator servive -->

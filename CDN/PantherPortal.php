@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,8 +12,7 @@
 namespace Sonata\MediaBundle\CDN;
 
 /**
- *
- *  From https://pantherportal.cdnetworks.com/wsdl/flush.wsdl
+ *  From https://pantherportal.cdnetworks.com/wsdl/flush.wsdl.
  *
  *  flushRequest:
  *     username, password: credentials of a user that has web service access.
@@ -30,16 +30,34 @@ namespace Sonata\MediaBundle\CDN;
  */
 class PantherPortal implements CDNInterface
 {
+    /**
+     * @var string
+     */
     protected $path;
 
+    /**
+     * @var string
+     */
     protected $username;
 
+    /**
+     * @var string
+     */
     protected $password;
 
+    /**
+     * @var string
+     */
     protected $siteId;
 
+    /**
+     * @var \SoapClient
+     */
     protected $client;
 
+    /**
+     * @var string
+     */
     protected $wsdl;
 
     /**
@@ -49,7 +67,7 @@ class PantherPortal implements CDNInterface
      * @param string $siteId
      * @param string $wsdl
      */
-    public function __construct($path, $username, $password, $siteId, $wsdl = "https://pantherportal.cdnetworks.com/wsdl/flush.wsdl")
+    public function __construct($path, $username, $password, $siteId, $wsdl = 'https://pantherportal.cdnetworks.com/wsdl/flush.wsdl')
     {
         $this->path     = $path;
         $this->username = $username;
@@ -87,15 +105,15 @@ class PantherPortal implements CDNInterface
      */
     public function flushPaths(array $paths)
     {
-        $result = $this->getClient()->flush($this->username, $this->password, "paths", $this->siteId, implode("\n", $paths), true, false);
+        $result = $this->getClient()->flush($this->username, $this->password, 'paths', $this->siteId, implode("\n", $paths), true, false);
 
-        if ($result != "Flush successfully submitted.") {
-            throw new \RuntimeException('Unable to flush : ' . $result);
+        if ($result != 'Flush successfully submitted.') {
+            throw new \RuntimeException('Unable to flush : '.$result);
         }
     }
 
     /**
-     * Return a SoapClient
+     * Return a SoapClient.
      *
      * @return \SoapClient
      */
@@ -109,14 +127,20 @@ class PantherPortal implements CDNInterface
     }
 
     /**
-     * For testing only
+     * For testing only.
      *
      * @param $client
-     *
-     * @return void
      */
     public function setClient($client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFlushStatus($identifier)
+    {
+        // nothing to do
     }
 }

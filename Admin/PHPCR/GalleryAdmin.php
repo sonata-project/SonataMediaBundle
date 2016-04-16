@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Admin\PHPCR;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Admin\GalleryAdmin as BaseGalleryAdmin;
 
 class GalleryAdmin extends BaseGalleryAdmin
@@ -23,6 +24,9 @@ class GalleryAdmin extends BaseGalleryAdmin
      */
     protected $root;
 
+    /**
+     * @param string $root
+     */
     public function setRoot($root)
     {
         $this->root = $root;
@@ -33,7 +37,7 @@ class GalleryAdmin extends BaseGalleryAdmin
      */
     public function createQuery($context = 'list')
     {
-        $query = $this->getModelManager()->createQuery($this->getClass(), '', $this->root);
+        $query = $this->getModelManager()->createQuery($this->getClass(), 'a', $this->root);
 
         foreach ($this->extensions as $extension) {
             $extension->configureQuery($this, $query, $context);
@@ -42,6 +46,9 @@ class GalleryAdmin extends BaseGalleryAdmin
         return $query;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function id($object)
     {
         return $this->getUrlsafeIdentifier($object);
@@ -58,5 +65,19 @@ class GalleryAdmin extends BaseGalleryAdmin
 //            ->add('enabled')
 //            ->add('context')
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        // Allow path in id parameter
+        $collection->add('view', $this->getRouterIdParameter().'/view', array(), array('id' => '.+', '_method' => 'GET'));
+        $collection->add('show', $this->getRouterIdParameter().'/show', array(
+                '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view'),
+            ),
+            array('id' => '.+', '_method' => 'GET')
+        );
     }
 }

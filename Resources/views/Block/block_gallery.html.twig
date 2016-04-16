@@ -11,38 +11,53 @@ file that was distributed with this source code.
 {% extends 'SonataBlockBundle:Block:block_base.html.twig' %}
 
 {% block block %}
-    {% if settings.title %}
-        <h3 class="sonata-media-block-media-title">{{ settings.title }}</h3>
-    {% endif %}
+    {% if settings.format %}
+        {% if settings.title %}
+            <h3 class="sonata-media-block-media-title">{{ settings.title }}</h3>
+        {% endif %}
 
-    <div class="sonata-media-block-gallery-container">
-        <div id="sonata-media-block-gallery-{{ block.id }}" class="nivoGallery">
-            <ul>
+        {% sonata_template_box 'sonata_template_box_media_gallery_block' 'SonataMediaBundle' %}
+
+        <div id="carousel-{{ block.id }}" class="carousel slide sonata-media-block-gallery-container"
+             data-interval="{{ settings.pauseTime }}"
+             {% if settings.startPaused != 1 %}data-ride="carousel"{% endif %}
+                >
+
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
                 {% for element in elements %}
-                    <li data-type="{{ element.type }}" data-title="{{ element.title }}" data-caption="{{ element.caption }}">
-                        {% if element.type == 'image' %}
-                            {% media element.media, settings.format %}
-                        {% elseif element.type == 'video' %}
-                            {% media element.media, settings.format %}
-                        {% endif %}
-                    </li>
-                {% else %}
-                    {# no elements #}
+                    {{ block('element_indicator') }}
                 {% endfor %}
-            </ul>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                {% for element in elements %}
+                    {{ block('element_display') }}
+                {% endfor %}
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-{{ block.id }}" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-{{ block.id }}" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block element_indicator %}
+    <li data-target="#carousel-{{ block.id }}" data-slide-to="{{ loop.index0 }}"{% if loop.first %} class="active"{% endif %}></li>
+{% endblock element_indicator %}
+
+{% block element_display %}
+    <div class="item{% if loop.first %} active{% endif %}">
+        {% media element.media, settings.format %}
+        <div class="carousel-caption">
+            <h4>{{ element.title }}</h4>
+            <p>{{ element.caption }}</p>
         </div>
     </div>
-
-    <script type="text/javascript">
-        jQuery(document).ready(function() {
-            jQuery('#sonata-media-block-gallery-{{ block.id }}').nivoGallery({
-                 pauseTime:     {{ settings.pauseTime }},
-                 animSpeed:     {{ settings.animSpeed }},
-                 effect:        'fade',
-                 startPaused:   {% if settings.startPaused == 1 %}true{% else %}false{% endif %},
-                 directionNav:  {% if settings.directionNav == 1 %}true{% else %}false{% endif %},
-                 progressBar:   {% if settings.progressBar == 1 %}true{% else %}false{% endif %},
-            });
-        });
-    </script>
-{% endblock %}
+{% endblock element_display %}

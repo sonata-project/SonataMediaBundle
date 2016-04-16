@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -14,14 +14,12 @@ namespace Sonata\MediaBundle\Model;
 abstract class GalleryManager implements GalleryManagerInterface
 {
     /**
-     * Creates an empty gallery instance
-     *
-     * @return Gallery
+     * {@inheritdoc}
      */
     public function create()
     {
         $class = $this->getClass();
 
-        return new $class;
+        return new $class();
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -60,11 +61,13 @@ class VimeoProvider extends BaseVideoProvider
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $params = array(
-            'src'         => http_build_query($player_parameters),
-            'id'          => $player_parameters['js_swf_id'],
-            'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
-            'width'       => $box->getWidth(),
-            'height'      => $box->getHeight(),
+            'src'               => http_build_query($player_parameters),
+            'id'                => $player_parameters['js_swf_id'],
+            'frameborder'       => isset($options['frameborder']) ? $options['frameborder'] : 0,
+            'width'             => $box->getWidth(),
+            'height'            => $box->getHeight(),
+            'class'             => isset($options['class']) ? $options['class'] : '',
+            'allow_fullscreen'  => isset($options['allowfullscreen']) ? true : false,
         );
 
         return $params;
@@ -73,14 +76,22 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
+    public function getProviderMetadata()
+    {
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-vimeo-square'));
+    }
+
+    /**
+     * @param MediaInterface $media
+     */
     protected function fixBinaryContent(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
         }
 
-        if (preg_match("/vimeo\.com\/(\d+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[1]);
+        if (preg_match("/vimeo\.com\/(video\/|)(\d+)/", $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches[2]);
         }
     }
 

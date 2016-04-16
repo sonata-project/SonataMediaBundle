@@ -32,9 +32,9 @@ Media Entity
 
 The ``Media`` entity comes with common media fields: ``size``, ``length``,
 ``width`` and ``height``. However the provider might require you to add more
-information. As it not possible to store all of the possible information
+information. As it is not possible to store all of the possible information
 into database columns, the provider class can use the ``provider_metadata``
-field to store metadata as a serialize array.
+field to store metadata as a serialized array.
 
 The ``Media`` entity has 3 other provider fields:
 
@@ -51,6 +51,8 @@ Take this video, for example:
 * video identifier format : 21216091
 * video player documentation : http://vimeo.com/api/docs/moogaloop
 * metadata : http://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
+
+.. code-block:: json
 
    {
      "type":"video",
@@ -86,7 +88,7 @@ Let's initialize the ``VimeoProvider`` class.
 
     use Sonata\MediaBundle\Provider\BaseProvider;
     use Sonata\AdminBundle\Form\FormMapper;
-    use Sonata\MediaBundle\Entity\BaseMedia as Media;
+    use Sonata\MediaBundle\Model\MediaInterface;
     use Symfony\Component\Form\Form;
 
     class VimeoProvider extends BaseProvider
@@ -131,7 +133,7 @@ is going to be used to store ``Media`` information :
 .. code-block:: php
 
     <?php
-    public function getMetadata(Media $media)
+    public function getMetadata(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -166,7 +168,7 @@ The ``MediaAdmin`` delegates this management to the media provider.
 .. code-block:: php
 
     <?php
-    public function prePersist(Media $media)
+    public function prePersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -200,7 +202,7 @@ The update method should only update data that cannot be managed by the user.
 .. code-block:: php
 
     <?php
-    public function preUpdate(Media $media)
+    public function preUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -228,12 +230,12 @@ thumbnails.
 .. code-block:: php
 
     <?php
-    public function postUpdate(Media $media)
+    public function postUpdate(MediaInterface $media)
     {
         $this->postPersist($media);
     }
 
-    public function postPersist(Media $media)
+    public function postPersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -251,7 +253,7 @@ image.
 .. code-block:: php
 
     <?php
-    public function getReferenceImage(Media $media)
+    public function getReferenceImage(MediaInterface $media)
     {
         return $media->getMetadataValue('thumbnail_url');
     }
@@ -271,14 +273,20 @@ added to the provider pool.
     <service id="sonata.media.provider.vimeo" class="Sonata\MediaBundle\Provider\VimeoProvider">
         <tag name="sonata.media.provider" />
         <argument>sonata.media.provider.vimeo</argument>
-        <argument type="service" id="sonata.media.entity_manager" />
-        <argument />
-        <argument />
+        <argument type="service" id="sonata.media.filesystem.local" />
+        <argument type="service" id="sonata.media.cdn.server" />
+        <argument type="service" id="sonata.media.generator.default" />
+        <argument type="service" id="sonata.media.thumbnail.format" />
+        <argument type="service" id="sonata.media.buzz.browser" />
+        <argument type="service" id="sonata.media.metadata.proxy" />
         <call method="setTemplates">
             <argument type="collection">
                 <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
                 <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
             </argument>
+        </call>
+        <call method="setResizer">
+            <argument type="service" id="sonata.media.resizer.simple" />
         </call>
     </service>
 
@@ -302,7 +310,7 @@ The thumbnail template is common to all media and it is quite simple:
 
 .. code-block:: html+jinja
 
-    <img {% for name, value in options %}{{name}}="{{value}}" {% endfor %} />
+    <img {% for name, value in options %}{{ name ~ '="' ~ value ~ '"' }} {% endfor %} />
 
 The media template and media helper are a bit more tricky. Each provider might
 provide a rich set of options to embed the media. The

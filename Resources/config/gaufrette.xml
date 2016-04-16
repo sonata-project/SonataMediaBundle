@@ -7,16 +7,17 @@
         <parameter key="sonata.media.metadata.proxy.class">Sonata\MediaBundle\Metadata\ProxyMetadataBuilder</parameter>
         <parameter key="sonata.media.metadata.amazon.class">Sonata\MediaBundle\Metadata\AmazonMetadataBuilder</parameter>
         <parameter key="sonata.media.metadata.noop.class">Sonata\MediaBundle\Metadata\NoopMetadataBuilder</parameter>
+        <parameter key="sonata.media.adapater.filesystem.opencloud.class"/>
     </parameters>
 
     <services>
         <service id="sonata.media.adapter.filesystem.local" class="Sonata\MediaBundle\Filesystem\Local" />
         <service id="sonata.media.adapter.filesystem.ftp"   class="Gaufrette\Adapter\Ftp" />
-        <service id="sonata.media.adapter.service.s3"       class="AmazonS3" >
+        <service id="sonata.media.adapter.service.s3"       class="Aws\S3\S3Client" factory-class="Aws\S3\S3Client" factory-method="factory">
             <argument type="collection" />
         </service>
 
-        <service id="sonata.media.adapter.filesystem.s3"    class="Gaufrette\Adapter\AmazonS3" >
+        <service id="sonata.media.adapter.filesystem.s3"    class="Gaufrette\Adapter\AwsS3" >
             <argument />
             <argument />
             <argument />
@@ -25,11 +26,30 @@
         <service id="sonata.media.adapter.filesystem.replicate"  class="Sonata\MediaBundle\Filesystem\Replicate" >
             <argument />
             <argument />
+            <argument type="service" id="logger"/>
         </service>
 
         <service id="sonata.media.adapter.filesystem.mogilefs"  class="Gaufrette\Adapter\MogileFS" >
             <argument />
             <argument />
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.opencloud" class="Gaufrette\Adapter\OpenCloud">
+            <argument type="service" id="sonata.media.adapter.filesystem.opencloud.objectstore"/>
+            <argument/>
+            <argument/>
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.opencloud.connection" class="%sonata.media.adapter.filesystem.opencloud.class%">
+            <argument/>
+            <argument/>
+        </service>
+
+        <service id="sonata.media.adapter.filesystem.opencloud.objectstore" class="OpenCloud\ObjectSource\Service"
+                 factory-service="sonata.media.adapter.filesystem.opencloud.connection"
+                 factory-method="ObjectStore">
+            <argument/>
+            <argument/>
         </service>
 
         <service id="sonata.media.filesystem.mogilefs" class="Gaufrette\Filesystem" >
@@ -54,7 +74,6 @@
 
         <service id="sonata.media.metadata.proxy" class="%sonata.media.metadata.proxy.class%">
             <argument type="service" id="service_container" />
-            <argument type="collection" />
         </service>
 
         <service id="sonata.media.metadata.amazon" class="%sonata.media.metadata.amazon.class%">

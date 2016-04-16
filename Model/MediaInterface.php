@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,6 +11,8 @@
 
 namespace Sonata\MediaBundle\Model;
 
+use Imagine\Image\Box;
+
 interface MediaInterface
 {
     const STATUS_OK          = 1;
@@ -18,6 +20,8 @@ interface MediaInterface
     const STATUS_PENDING     = 3;
     const STATUS_ERROR       = 4;
     const STATUS_ENCODING    = 5;
+
+    const MISSING_BINARY_REFERENCE = 'missing_binary_content';
 
     /**
      * @param mixed $binaryContent
@@ -28,6 +32,11 @@ interface MediaInterface
      * @return mixed
      */
     public function getBinaryContent();
+
+    /**
+     * Reset the binary content.
+     */
+    public function resetBinaryContent();
 
     /**
      * @param string $name
@@ -42,7 +51,7 @@ interface MediaInterface
     public function setMetadataValue($name, $value);
 
     /**
-     * Remove a named data from the metadata
+     * Remove a named data from the metadata.
      *
      * @param string $name
      */
@@ -54,245 +63,259 @@ interface MediaInterface
     public function getId();
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
     public function setName($name);
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string $name
      */
     public function getName();
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      */
     public function setDescription($description);
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string $description
      */
     public function getDescription();
 
     /**
-     * Set enabled
+     * Set enabled.
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      */
     public function setEnabled($enabled);
 
     /**
-     * Get enabled
+     * Get enabled.
      *
-     * @return boolean $enabled
+     * @return bool $enabled
      */
     public function getEnabled();
 
     /**
-     * Set provider_name
+     * Set provider_name.
      *
      * @param string $providerName
      */
     public function setProviderName($providerName);
 
     /**
-     * Get provider_name
+     * Get provider_name.
      *
      * @return string $providerName
      */
     public function getProviderName();
 
     /**
-     * Set provider_status
+     * Set provider_status.
      *
-     * @param integer $providerStatus
+     * @param int $providerStatus
      */
     public function setProviderStatus($providerStatus);
 
     /**
-     * Get provider_status
+     * Get provider_status.
      *
-     * @return integer $providerStatus
+     * @return int $providerStatus
      */
     public function getProviderStatus();
 
     /**
-     * Set provider_reference
+     * Set provider_reference.
      *
      * @param string $providerReference
      */
     public function setProviderReference($providerReference);
 
     /**
-     * Get provider_reference
+     * Get provider_reference.
      *
      * @return string $providerReference
      */
     public function getProviderReference();
 
     /**
-     * Set provider_metadata
+     * Set provider_metadata.
      *
      * @param array $providerMetadata
      */
     public function setProviderMetadata(array $providerMetadata = array());
 
     /**
-     * Get provider_metadata
+     * Get provider_metadata.
      *
      * @return array $providerMetadata
      */
     public function getProviderMetadata();
 
     /**
-     * Set width
+     * Set width.
      *
-     * @param integer $width
+     * @param int $width
      */
     public function setWidth($width);
 
     /**
-     * Get width
+     * Get width.
      *
-     * @return integer $width
+     * @return int $width
      */
     public function getWidth();
 
     /**
-     * Set height
+     * Set height.
      *
-     * @param integer $height
+     * @param int $height
      */
     public function setHeight($height);
 
     /**
-     * Get height
+     * Get height.
      *
-     * @return integer $height
+     * @return int $height
      */
     public function getHeight();
 
     /**
-     * Set length
+     * Set length.
      *
      * @param float $length
      */
     public function setLength($length);
 
     /**
-     * Get length
+     * Get length.
      *
      * @return float $length
      */
     public function getLength();
 
     /**
-     * Set copyright
+     * Set copyright.
      *
      * @param string $copyright
      */
     public function setCopyright($copyright);
 
     /**
-     * Get copyright
+     * Get copyright.
      *
      * @return string $copyright
      */
     public function getCopyright();
 
     /**
-     * Set authorName
+     * Set authorName.
      *
      * @param string $authorName
      */
     public function setAuthorName($authorName);
 
     /**
-     * Get authorName
+     * Get authorName.
      *
      * @return string $authorName
      */
     public function getAuthorName();
 
     /**
-     * Set context
+     * Set context.
      *
      * @param string $context
      */
     public function setContext($context);
 
     /**
-     * Get context
+     * Get context.
      *
      * @return string $context
      */
     public function getContext();
 
     /**
-     * Set cdnIsFlushable
+     * Set cdnIsFlushable.
      *
-     * @param boolean $cdnIsFlushable
+     * @param bool $cdnIsFlushable
      */
     public function setCdnIsFlushable($cdnIsFlushable);
 
     /**
-     * Get cdn_is_flushable
+     * Get cdn_is_flushable.
      *
-     * @return boolean $cdnIsFlushable
+     * @return bool $cdnIsFlushable
      */
     public function getCdnIsFlushable();
 
     /**
-     * Set cdn_flush_at
+     * Set cdn_flush_identifier.
+     *
+     * @param bool $cdnFlushIdentifier
+     */
+    public function setCdnFlushIdentifier($cdnFlushIdentifier);
+
+    /**
+     * Get cdn_flush_identifier.
+     *
+     * @return string $cdnFlushIdentifier
+     */
+    public function getCdnFlushIdentifier();
+
+    /**
+     * Set cdn_flush_at.
      *
      * @param \Datetime $cdnFlushAt
      */
     public function setCdnFlushAt(\Datetime $cdnFlushAt = null);
 
     /**
-     * Get cdn_flush_at
+     * Get cdn_flush_at.
      *
      * @return \Datetime $cdnFlushAt
      */
     public function getCdnFlushAt();
 
     /**
-     * Set updated_at
+     * Set updated_at.
      *
      * @param \Datetime $updatedAt
      */
     public function setUpdatedAt(\Datetime $updatedAt = null);
 
     /**
-     * Get updated_at
+     * Get updated_at.
      *
      * @return \Datetime $updatedAt
      */
     public function getUpdatedAt();
 
     /**
-     * Set created_at
+     * Set created_at.
      *
      * @param \Datetime $createdAt
      */
     public function setCreatedAt(\Datetime $createdAt = null);
 
     /**
-     * Get created_at
+     * Get created_at.
      *
      * @return \Datetime $createdAt
      */
     public function getCreatedAt();
 
     /**
-     * Set content_type
+     * Set content_type.
      *
      * @param string $contentType
      */
@@ -304,60 +327,52 @@ interface MediaInterface
     public function getExtension();
 
     /**
-     * Get content_type
+     * Get content_type.
      *
      * @return string $contentType
      */
     public function getContentType();
 
     /**
-     * Set size
+     * Set size.
      *
-     * @param integer $size
+     * @param int $size
      */
     public function setSize($size);
 
     /**
-     * Get size
+     * Get size.
      *
-     * @return integer $size
+     * @return int $size
      */
     public function getSize();
 
     /**
-     * Set cdn_status
+     * Set cdn_status.
      *
-     * @param integer $cdnStatus
+     * @param int $cdnStatus
      */
     public function setCdnStatus($cdnStatus);
 
     /**
+     * Get cdn_status.
      *
-     * Get cdn_status
-     *
-     * @return integer $cdnStatus
+     * @return int $cdnStatus
      */
     public function getCdnStatus();
 
     /**
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     public function getBox();
 
     /**
-     * @return mixed
-     */
-    public function __toString();
-
-    /**
-     * @param array $galleryHasMedias
-     *
-     * @return void
+     * @param GalleryHasMediaInterface[] $galleryHasMedias
      */
     public function setGalleryHasMedias($galleryHasMedias);
 
     /**
-     * @return array
+     * @return GalleryHasMediaInterface[]
      */
     public function getGalleryHasMedias();
 

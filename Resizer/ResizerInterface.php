@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Resizer;
 
 use Gaufrette\File;
+use Imagine\Image\Box;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 interface ResizerInterface
@@ -22,8 +23,6 @@ interface ResizerInterface
      * @param File           $out
      * @param string         $format
      * @param array          $settings
-     *
-     * @return void
      */
     public function resize(MediaInterface $media, File $in, File $out, $format, array $settings);
 
@@ -31,7 +30,7 @@ interface ResizerInterface
      * @param MediaInterface $media
      * @param array          $settings
      *
-     * @return \Imagine\Image\Box
+     * @return Box
      */
     public function getBox(MediaInterface $media, array $settings);
 }

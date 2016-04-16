@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -15,9 +16,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class PHPCRGenerator implements GeneratorInterface
 {
     /**
-     * @param \Sonata\MediaBundle\Model\MediaInterface $media
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function generatePath(MediaInterface $media)
     {
@@ -26,7 +25,7 @@ class PHPCRGenerator implements GeneratorInterface
         if (count($segments) > 1) {
             // remove last part from id
             array_pop($segments);
-            $path = join($segments, '/');
+            $path = implode($segments, '/');
         } else {
             $path = '';
         }

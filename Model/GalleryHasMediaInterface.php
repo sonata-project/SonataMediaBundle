@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
- * (c); Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,33 +14,27 @@ namespace Sonata\MediaBundle\Model;
 interface GalleryHasMediaInterface
 {
     /**
-     * @param boolean $enabled
-     *
-     * @return void
+     * @param bool $enabled
      */
     public function setEnabled($enabled);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getEnabled();
 
     /**
      * @param GalleryInterface $gallery
-     *
-     * @return void
      */
     public function setGallery(GalleryInterface $gallery = null);
 
     /**
-     * @return void
+     * @return GalleryInterface
      */
     public function getGallery();
 
     /**
      * @param MediaInterface $media
-     *
-     * @return void
      */
     public function setMedia(MediaInterface $media = null);
 
@@ -63,8 +57,6 @@ interface GalleryHasMediaInterface
 
     /**
      * @param \DateTime|null $updatedAt
-     *
-     * @return void
      */
     public function setUpdatedAt(\DateTime $updatedAt = null);
 
@@ -75,18 +67,16 @@ interface GalleryHasMediaInterface
 
     /**
      * @param \DateTime|null $createdAt
-     *
-     * @return void
      */
     public function setCreatedAt(\DateTime $createdAt = null);
 
     /**
-     * @return void
+     * @return \DateTime
      */
     public function getCreatedAt();
 
     /**
-     * @return void
+     * @return string
      */
     public function __toString();
 }

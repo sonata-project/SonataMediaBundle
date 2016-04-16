@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -11,25 +11,35 @@
 
 namespace Sonata\MediaBundle\Resizer;
 
-use Imagine\Image\ImagineInterface;
-use Imagine\Image\Box;
 use Gaufrette\File;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Imagine\Image\ImageInterface;
 use Imagine\Exception\InvalidArgumentException;
+use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class SimpleResizer implements ResizerInterface
 {
+    /**
+     * @var ImagineInterface
+     */
     protected $adapter;
 
+    /**
+     * @var string
+     */
     protected $mode;
 
+    /**
+     * @var MetadataBuilderInterface
+     */
     protected $metadata;
 
     /**
-     * @param ImagineInterface $adapter
-     * @param string           $mode
+     * @param ImagineInterface         $adapter
+     * @param string                   $mode
+     * @param MetadataBuilderInterface $metadata
      */
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
@@ -86,7 +96,7 @@ class SimpleResizer implements ResizerInterface
      *
      * @return Box
      */
-    private function computeBox(MediaInterface $media, array $settings)
+    protected function computeBox(MediaInterface $media, array $settings)
     {
         if ($this->mode !== ImageInterface::THUMBNAIL_INSET && $this->mode !== ImageInterface::THUMBNAIL_OUTBOUND) {
             throw new InvalidArgumentException('Invalid mode specified');
@@ -96,7 +106,7 @@ class SimpleResizer implements ResizerInterface
 
         $ratios = array(
             $settings['width'] / $size->getWidth(),
-            $settings['height'] / $size->getHeight()
+            $settings['height'] / $size->getHeight(),
         );
 
         if ($this->mode === ImageInterface::THUMBNAIL_INSET) {

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -15,9 +15,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 interface MetadataBuilderInterface
 {
-
     /**
-     * Get metadata for media object
+     * Get metadata for media object.
      *
      * @param MediaInterface $media
      * @param string         $filename

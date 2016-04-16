@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serializer>
+    <class name="Sonata\MediaBundle\Model\Media" exclusion-policy="all" xml-root-name="media">
+
+        <property name="name"        type="string" expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write,sonata_search" />
+        <property name="description" type="string" expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write,sonata_search" />
+
+        <property name="enabled" type="boolean" expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write" />
+
+        <property         name="providerName"      type="string"  expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property         name="providerStatus"    type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property         name="providerReference" type="string"  expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <virtual-property name="providerMetadata"  type="array"   expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" method="getProviderMetadata" />
+
+        <property name="width"       type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="height"      type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="length"      type="double" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="contentType" type="string"  expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="size"        type="integer" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+
+        <property name="copyright"  type="string" expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write,sonata_search" />
+        <property name="authorName" type="string" expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write,sonata_search" />
+
+        <property name="context" type="string" expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write,sonata_search" />
+
+        <property name="cdnIsFlushable" type="boolean"  expose="true" since-version="1.0" groups="sonata_api_read,sonata_api_write,sonata_search" />
+        <property name="cdnFlushAt"     type="DateTime" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="cdnStatus"      type="integer"  expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+
+        <property name="createdAt" type="DateTime" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+        <property name="updatedAt" type="DateTime" expose="true" since-version="1.0" groups="sonata_api_read,sonata_search" />
+
+    </class>
+</serializer>
+

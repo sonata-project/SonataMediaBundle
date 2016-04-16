@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -12,7 +12,6 @@
 namespace Sonata\MediaBundle\Tests\Metadata;
 
 use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
-use Sonata\MediaBundle\Model\MediaInterface;
 
 class NoopMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +22,6 @@ class NoopMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 
         $noopmetadatabuilder = new NoopMetadataBuilder();
 
-        $this->assertEquals(array(), $noopmetadatabuilder->get($media, $filename));
+        $this->assertSame(array(), $noopmetadatabuilder->get($media, $filename));
     }
-
 }

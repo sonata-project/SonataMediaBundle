@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
- * (c) Sonata Project
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Resizer;
 
-use Imagine\Image\ImagineInterface;
-use Imagine\Image\Box;
-use Imagine\Image\Point;
 use Gaufrette\File;
-use Sonata\MediaBundle\Model\MediaInterface;
+use Imagine\Image\Box;
+use Imagine\Image\ImagineInterface;
+use Imagine\Image\Point;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * This reziser crop the image when the width and height are specified.
@@ -29,18 +29,19 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 class SquareResizer implements ResizerInterface
 {
     /**
-     * ImagineInterface
+     * ImagineInterface.
      */
     protected $adapter;
 
     /**
-     * string
+     * string.
      */
     protected $mode;
 
     /**
-     * @param ImagineInterface $adapter
-     * @param string           $mode
+     * @param ImagineInterface         $adapter
+     * @param string                   $mode
+     * @param MetadataBuilderInterface $metadata
      */
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
@@ -100,7 +101,6 @@ class SquareResizer implements ResizerInterface
         $size = $media->getBox();
 
         if (null != $settings['height']) {
-
             if ($size->getHeight() > $size->getWidth()) {
                 $higher = $size->getHeight();
                 $lower  = $size->getWidth();

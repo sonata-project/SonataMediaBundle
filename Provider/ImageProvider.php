@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -10,35 +11,48 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\MediaBundle\Model\MediaInterface;
+use Gaufrette\Filesystem;
+use Imagine\Image\ImagineInterface;
+use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-
-use Imagine\Image\ImagineInterface;
-use Gaufrette\Filesystem;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageProvider extends FileProvider
 {
+    /**
+     * @var ImagineInterface
+     */
     protected $imagineAdapter;
 
     /**
-     * @param string                                                $name
-     * @param \Gaufrette\Filesystem                                 $filesystem
-     * @param \Sonata\MediaBundle\CDN\CDNInterface                  $cdn
-     * @param \Sonata\MediaBundle\Generator\GeneratorInterface      $pathGenerator
-     * @param \Sonata\MediaBundle\Thumbnail\ThumbnailInterface      $thumbnail
-     * @param array                                                 $allowedExtensions
-     * @param array                                                 $allowedMimeTypes
-     * @param \Imagine\Image\ImagineInterface                       $adapter
-     * @param \Sonata\MediaBundle\Metadata\MetadataBuilderInterface $metadata
+     * @param string                   $name
+     * @param Filesystem               $filesystem
+     * @param CDNInterface             $cdn
+     * @param GeneratorInterface       $pathGenerator
+     * @param ThumbnailInterface       $thumbnail
+     * @param array                    $allowedExtensions
+     * @param array                    $allowedMimeTypes
+     * @param ImagineInterface         $adapter
+     * @param MetadataBuilderInterface $metadata
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ImagineInterface $adapter, MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
 
         $this->imagineAdapter = $adapter;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviderMetadata()
+    {
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-picture-o'));
     }
 
     /**
@@ -52,17 +66,18 @@ class ImageProvider extends FileProvider
             $resizerFormat = $this->getFormat($format);
             if ($resizerFormat === false) {
                 throw new \RuntimeException(sprintf('The image format "%s" is not defined.
-                        Is the format registered in your sonata-media configuration?', $format));
+                        Is the format registered in your ``sonata_media`` configuration?', $format));
             }
 
             $box = $this->resizer->getBox($media, $resizerFormat);
         }
 
         return array_merge(array(
+            'alt'      => $media->getName(),
             'title'    => $media->getName(),
             'src'      => $this->generatePublicUrl($media, $format),
             'width'    => $box->getWidth(),
-            'height'   => $box->getHeight()
+            'height'   => $box->getHeight(),
         ), $options);
     }
 
@@ -84,15 +99,34 @@ class ImageProvider extends FileProvider
     {
         parent::doTransform($media);
 
-        if ($media->getBinaryContent()) {
-            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
-            $size  = $image->getSize();
-
-            $media->setWidth($size->getWidth());
-            $media->setHeight($size->getHeight());
-
-            $media->setProviderStatus(MediaInterface::STATUS_OK);
+        if ($media->getBinaryContent() instanceof UploadedFile) {
+            $fileName = $media->getBinaryContent()->getClientOriginalName();
+        } elseif ($media->getBinaryContent() instanceof File) {
+            $fileName = $media->getBinaryContent()->getFilename();
+        } else {
+            // Should not happen, FileProvider should throw an exception in that case
+            return;
         }
+
+        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
+            || !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+            return;
+        }
+
+        try {
+            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
+        } catch (\RuntimeException $e) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            return;
+        }
+
+        $size  = $image->getSize();
+
+        $media->setWidth($size->getWidth());
+        $media->setHeight($size->getHeight());
+
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
 
     /**
@@ -101,10 +135,14 @@ class ImageProvider extends FileProvider
     public function updateMetadata(MediaInterface $media, $force = true)
     {
         try {
-            // this is now optimized at all!!!
-            $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
-            $fileObject = new \SplFileObject($path, 'w');
-            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+                // this is now optimized at all!!!
+                $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+                $fileObject = new \SplFileObject($path, 'w');
+                $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            } else {
+                $fileObject = $media->getBinaryContent();
+            }
 
             $image = $this->imagineAdapter->open($fileObject->getPathname());
             $size  = $image->getSize();
@@ -141,19 +179,5 @@ class ImageProvider extends FileProvider
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function preRemove(MediaInterface $media)
-    {
-        $path = $this->getReferenceImage($media);
-
-        if ($this->getFilesystem()->has($path)) {
-            $this->getFilesystem()->delete($path);
-        }
-
-        $this->thumbnail->delete($this, $media);
     }
 }

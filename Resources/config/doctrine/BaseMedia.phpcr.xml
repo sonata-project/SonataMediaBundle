@@ -1,39 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<doctrine-phpcr-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
-                        http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/phpcr-odm/phpcr-mapping
+    https://github.com/doctrine/phpcr-odm/raw/master/doctrine-phpcr-odm-mapping.xsd"
+    >
 
     <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseMedia" referenceable="true" >
 
-        <uuid fieldName="uuid" />
+        <uuid name="uuid" />
 
-        <field name="name"              fieldName="name"                type="string" />
-        <field name="description"       fieldName="description"         type="string" />
-        <field name="enabled"           fieldName="enabled"             type="boolean" />
+        <field name="name"               type="string" />
+        <field name="description"        type="string" nullable="true"/>
+        <field name="enabled"            type="boolean" />
 
-        <field name="providerName"      fieldName="providerName"        type="string" />
-        <field name="providerStatus"    fieldName="providerStatus"      type="long" />
-        <field name="providerReference" fieldName="providerReference"   type="string" />
-        <field name="providerMetadata"  fieldName="providerMetadata"    type="string" multivalue="true" />
+        <field name="providerName"       type="string" />
+        <field name="providerStatus"     type="long" />
+        <field name="providerReference"  type="string" />
+        <field name="providerMetadata"   type="string" multivalue="true" />
 
-        <field name="width"             fieldName="width"               type="long" />
-        <field name="height"            fieldName="height"              type="long" />
-        <field name="length"            fieldName="length"              type="double" />
-        <field name="contentType"       fieldName="contentType"         type="string" />
-        <field name="size"              fieldName="size"                type="long" />
+        <field name="width"              type="long" />
+        <field name="height"             type="long" />
+        <field name="length"             type="double" nullable="true" />
+        <field name="contentType"        type="string" />
+        <field name="size"               type="long" nullable="true"/>
 
-        <field name="copyright"         fieldName="copyright"           type="string" />
-        <field name="authorName"        fieldName="authorName"          type="string" />
-        <field name="context"           fieldName="context"             type="string" />
+        <field name="copyright"          type="string" nullable="true" />
+        <field name="authorName"         type="string" nullable="true" />
+        <field name="context"            type="string" />
 
-        <field name="cdnIsFlushable"    fieldName="cdnIsFlushable"      type="boolean" />
-        <field name="cdnFlushAt"        fieldName="cdnFlushAt"          type="date" />
-        <field name="cdnStatus"         fieldName="cdnStatus"           type="long" />
+        <field name="cdnIsFlushable"     type="boolean" nullable="true" />
+        <field name="cdnFlushIdentifier" type="string"  nullable="true" />
+        <field name="cdnFlushAt"         type="date" nullable="true" />
+        <field name="cdnStatus"          type="long" nullable="true" />
 
-        <field name="updatedAt"         fieldName="updatedAt"           type="date" />
-        <field name="createdAt"         fieldName="createdAt"           type="date" />
+        <field name="updatedAt"          type="date" />
+        <field name="createdAt"          type="date" />
 
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist" />
@@ -42,4 +43,4 @@
 
     </mapped-superclass>
 
-</doctrine-phpcr-mapping>
+</doctrine-mapping>

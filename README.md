@@ -5,7 +5,7 @@ SonataMediaBundle - Media management on steroids
 
 The ``SonataMediaBundle`` is a media library based on a dedicated ``provider`` which handles different ``type`` of media: files, videos or images.
 
-Check out the documentation on [http://sonata-project.org/bundles/media/master/doc/index.html](http://sonata-project.org/bundles/media/master/doc/index.html)
+Check out the documentation on [https://sonata-project.org/bundles/media/master/doc/index.html](https://sonata-project.org/bundles/media/master/doc/index.html)
 
 **Google Groups**: For questions and proposals you can post on this google groups
 

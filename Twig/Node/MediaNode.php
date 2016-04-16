@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of sonata-project.
+ * This file is part of the Sonata Project package.
  *
- * (c) 2010 Thomas Rabaix
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,10 +13,13 @@ namespace Sonata\MediaBundle\Twig\Node;
 
 class MediaNode extends \Twig_Node
 {
+    /**
+     * @var string
+     */
     protected $extensionName;
 
     /**
-     * @param array                 $extensionName
+     * @param string                $extensionName
      * @param \Twig_Node_Expression $media
      * @param \Twig_Node_Expression $format
      * @param \Twig_Node_Expression $attributes
@@ -27,7 +30,7 @@ class MediaNode extends \Twig_Node
     {
         $this->extensionName = $extensionName;
 
-        parent::__construct(array('media' => $media, 'format' => $format,'attributes' => $attributes), array(), $lineno, $tag);
+        parent::__construct(array('media' => $media, 'format' => $format, 'attributes' => $attributes), array(), $lineno, $tag);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -12,27 +12,33 @@
 namespace Sonata\MediaBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\FormMapper;
 
 class GalleryHasMediaAdmin extends Admin
 {
     /**
-     * @param \Sonata\AdminBundle\Form\FormMapper $formMapper
-     *
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $link_parameters = array();
+
+        if ($this->hasParentFieldDescription()) {
+            $link_parameters = $this->getParentFieldDescription()->getOption('link_parameters', array());
+        }
+
         if ($this->hasRequest()) {
-            $link_parameters = array('context' => $this->getRequest()->get('context'));
-        } else {
-            $link_parameters = array();
+            $context = $this->getRequest()->get('context', null);
+
+            if (null !== $context) {
+                $link_parameters['context'] = $context;
+            }
         }
 
         $formMapper
             ->add('media', 'sonata_type_model_list', array('required' => false), array(
-                'link_parameters' => $link_parameters
+                'link_parameters' => $link_parameters,
             ))
             ->add('enabled', null, array('required' => false))
             ->add('position', 'hidden')
@@ -40,8 +46,7 @@ class GalleryHasMediaAdmin extends Admin
     }
 
     /**
-     * @param  \Sonata\AdminBundle\Datagrid\ListMapper $listMapper
-     * @return void
+     * {@inheritdoc}
      */
     protected function configureListFields(ListMapper $listMapper)
     {

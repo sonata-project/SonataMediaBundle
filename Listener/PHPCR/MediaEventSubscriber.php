@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getSubscribedEvents()
     {
@@ -33,19 +33,24 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
-//        $dm = $args->getDocumentManager();
-        // TODO: is this needed for PHPCR?
+        /* @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
+        /** @var $dm \Doctrine\ODM\PHPCR\DocumentManager */
+        $dm = $args->getObjectManager();
+
+        $dm->getUnitOfWork()->computeSingleDocumentChangeSet(
+            $this->getMedia($args)
+        );
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getMedia(EventArgs $args)
     {
-        return $args->getDocument();
+        return $args->getObject();
     }
 }
