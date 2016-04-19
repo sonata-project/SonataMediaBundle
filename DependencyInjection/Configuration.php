@@ -215,6 +215,7 @@ class Configuration implements ConfigurationInterface
                                     ->end()
                                 ->end()
                                 ->scalarNode('region')->defaultValue('s3.amazonaws.com')->end()
+                                ->scalarNode('version')->defaultValue('latest')->end()
                                 ->arrayNode('meta')
                                     ->useAttributeAsKey('name')
                                     ->prototype('scalar')
