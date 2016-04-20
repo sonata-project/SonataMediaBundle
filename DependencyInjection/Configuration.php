@@ -216,7 +216,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                                 ->scalarNode('region')->defaultValue('s3.amazonaws.com')->end()
                                 ->scalarNode('version')->defaultValue('latest')->end()
-                                ->scalarNode('aws_sdk_version')->defaultValue(2)->end()
+                                ->scalarNode('sdk_version')->defaultValue(2)->end()
                                 ->arrayNode('meta')
                                     ->useAttributeAsKey('name')
                                     ->prototype('scalar')

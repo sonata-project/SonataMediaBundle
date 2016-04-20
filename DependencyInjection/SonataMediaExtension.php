@@ -379,21 +379,23 @@ class SonataMediaExtension extends Extension
                 ))
             ;
 
-            if($config['aws_sdk_version'] == 3){
+            if($config['filesystem']['s3']['sdk_version'] === 3){
             $container->getDefinition('sonata.media.adapter.service.s3')
                 ->replaceArgument(0, array(
                     'credentials' => array(
                         'secret' => $config['filesystem']['s3']['secretKey'],
                         'key'    => $config['filesystem']['s3']['accessKey'],
                     ),
+                    'region' => $config['filesystem']['s3']['region'],
+                    'version' => $config['filesystem']['s3']['version'],
                 ))
             ;
             }
             else{
                 $container->getDefinition('sonata.media.adapter.service.s3')
                     ->replaceArgument(0, array(
-                        'region'  => $config['filesystem']['s3']['region'],
-                        'version' => $config['filesystem']['s3']['version'],
+                        'secret' => $config['filesystem']['s3']['secretKey'],
+                        'key'    => $config['filesystem']['s3']['accessKey'],
                     ))
                 ;
             }
