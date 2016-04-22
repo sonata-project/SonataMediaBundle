@@ -398,7 +398,6 @@ class SonataMediaExtension extends Extension
                     ))
                 ;
             }
-
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.s3');
             $container->removeDefinition('sonata.media.filesystem.s3');
