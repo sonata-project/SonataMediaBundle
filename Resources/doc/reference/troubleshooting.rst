@@ -106,3 +106,27 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
             local:
                 directory:  "%kernel.root_dir%/../web/uploads/media"
                 create:     false
+
+ 
+Error on cache:warmup
+---------------------
+
+You may encounter the following error when warming up the cache if you don't have the admin bundle installed:
+
+.. code-block:: text
+
+    Fatal error: Class 'Sonata\AdminBundle\Controller\CRUDController'
+    not found in .....\vendor\sonata-project\media-bundle\Controller\GalleryAdminController.php on line 19
+    
+This problem is most likely caused by the JMSDiExtraBundle's cache warmer (https://github.com/schmittjoh/JMSDiExtraBundle/blob/master/HttpKernel/ControllerInjectorsWarmer.php).
+
+To fix the problem, you will have to add the Sonata Media controllers to the blacklist.
+
+.. code-block:: yaml
+
+    jms_di_extra:
+        cache_warmer:
+            controller_file_blacklist:
+                - %kernel.root_dir%/../vendor/sonata-project/media-bundle/Controller/GalleryAdminController.php
+                - %kernel.root_dir%/../vendor/sonata-project/media-bundle/Controller/MediaAdminController.php
+
