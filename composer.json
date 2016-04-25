@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.3|~3.0",
+        "symfony/framework-bundle": "~2.6|~3.0",
         "sonata-project/core-bundle": "^2.3.10",
         "sonata-project/notification-bundle": "~2.2",
         "sonata-project/easy-extends-bundle": "~2.1",
