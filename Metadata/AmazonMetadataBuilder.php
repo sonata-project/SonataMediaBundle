@@ -11,7 +11,6 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Aws\S3\Enum\CannedAcl;
 use Aws\S3\Enum\Storage;
 use Guzzle\Http\Mimetypes;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -38,11 +37,11 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      * @var string[]
      */
     protected $acl = array(
-        'private' => 'private',
-        'public' => 'public-read',
-        'open' => 'public-read-write',
-        'auth_read' => 'authenticated-read',
-        'owner_read' => 'bucket-owner-read',
+        'private'            => 'private',
+        'public'             => 'public-read',
+        'open'               => 'public-read-write',
+        'auth_read'          => 'authenticated-read',
+        'owner_read'         => 'bucket-owner-read',
         'owner_full_control' => 'bucket-owner-full-control',
     );
 
