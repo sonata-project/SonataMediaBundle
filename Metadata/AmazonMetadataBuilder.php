@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
+use Guzzle\Http\Mimetypes;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
