@@ -80,19 +80,18 @@ class MediaAdminController extends Controller
         $category = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
 
         if (!$filters) {
-            $datagrid->setValue('category', null, $category->getId());
+            $datagrid->setValue('category', null, $category);
         }
-
         if ($request->get('category')) {
-            $contextInCategory = $this->container->get('sonata.classification.manager.category')->findBy(array(
+            $contextInCategory = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
                 'id'      => (int) $request->get('category'),
                 'context' => $context,
             ));
 
             if (!empty($contextInCategory)) {
-                $datagrid->setValue('category', null, $request->get('category'));
+                $datagrid->setValue('category', null, $contextInCategory);
             } else {
-                $datagrid->setValue('category', null, $category->getId());
+                $datagrid->setValue('category', null, $category);
             }
         }
 
