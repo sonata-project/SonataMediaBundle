@@ -11,8 +11,6 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Aws\S3\Enum\Storage;
-use Guzzle\Http\Mimetypes;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
