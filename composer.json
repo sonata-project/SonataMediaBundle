@@ -55,8 +55,6 @@
         "sonata-project/seo-bundle": "<1.1.5",
         "sonata-project/block-bundle": "<2.2.8"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": { "Sonata\\MediaBundle\\": "" }
     },
