@@ -423,11 +423,11 @@
             </trans-unit>
             <trans-unit id="widget_label_unlink">
                 <source>widget_label_unlink</source>
-                <target>widget_label_unlink</target>
+                <target>Supprimer</target>
             </trans-unit>
             <trans-unit id="widget_label_binary_content">
                 <source>widget_label_binary_content</source>
-                <target>widget_label_binary_content</target>
+                <target>Fichier/Référence</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
@@ -463,111 +463,111 @@
             </trans-unit>
             <trans-unit id="form.label_title">
                 <source>form.label_title</source>
-                <target>form.label_title</target>
+                <target>Titre</target>
             </trans-unit>
             <trans-unit id="form.label_content">
                 <source>form.label_content</source>
-                <target>form.label_content</target>
+                <target>Contenu</target>
             </trans-unit>
             <trans-unit id="form.label_orientation">
                 <source>form.label_orientation</source>
-                <target>form.label_orientation</target>
+                <target>Orientation</target>
             </trans-unit>
             <trans-unit id="form.label_gallery">
                 <source>form.label_gallery</source>
-                <target>form.label_gallery</target>
+                <target>Galerie</target>
             </trans-unit>
             <trans-unit id="form.label_format">
                 <source>form.label_format</source>
-                <target>form.label_format</target>
+                <target>Format</target>
             </trans-unit>
             <trans-unit id="form.label_pause_time">
                 <source>form.label_pause_time</source>
-                <target>form.label_pause_time</target>
+                <target>Durée de pause</target>
             </trans-unit>
             <trans-unit id="form.label_start_paused">
                 <source>form.label_start_paused</source>
-                <target>form.label_start_paused</target>
+                <target>Démarrer en pause</target>
             </trans-unit>
             <trans-unit id="form.label_wrap">
                 <source>form.label_wrap</source>
-                <target>form.label_wrap</target>
+                <target>Encapsuleur HTML</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_left">
                 <source>form.label_orientation_left</source>
-                <target>form.label_orientation_left</target>
+                <target>Gauche</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_right">
                 <source>form.label_orientation_right</source>
-                <target>form.label_orientation_right</target>
+                <target>Droite</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery_list">
                 <source>sonata.media.block.gallery_list</source>
-                <target>sonata.media.block.gallery_list</target>
+                <target>Liste des galeries</target>
             </trans-unit>
             <trans-unit id="label_gallery_enabled">
                 <source>label_gallery_enabled</source>
-                <target>label_gallery_enabled</target>
+                <target>Activée</target>
             </trans-unit>
             <trans-unit id="label_gallery_disabled">
                 <source>label_gallery_disabled</source>
-                <target>label_gallery_disabled</target>
+                <target>Désactivée</target>
             </trans-unit>
             <trans-unit id="no_galleries_found">
                 <source>no_galleries_found</source>
-                <target>no_galleries_found</target>
+                <target>Aucune galerie trouvée</target>
             </trans-unit>
             <trans-unit id="view_all_galleries">
                 <source>view_all_galleries</source>
-                <target>view_all_galleries</target>
+                <target>Voir toutes les galeries</target>
             </trans-unit>
             <trans-unit id="form.label_mode">
                 <source>form.label_mode</source>
-                <target>form.label_mode</target>
+                <target>Mode</target>
             </trans-unit>
             <trans-unit id="form.label_number">
                 <source>form.label_number</source>
-                <target>form.label_number</target>
+                <target>Nombre</target>
             </trans-unit>
             <trans-unit id="form.label_order">
                 <source>form.label_order</source>
-                <target>form.label_order</target>
+                <target>Ordre</target>
             </trans-unit>
             <trans-unit id="form.label_order_name">
                 <source>form.label_order_name</source>
-                <target>form.label_order_name</target>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit id="form.label_order_created_at">
                 <source>form.label_order_created_at</source>
-                <target>form.label_order_created_at</target>
+                <target>Créé à</target>
             </trans-unit>
             <trans-unit id="form.label_order_updated_at">
                 <source>form.label_order_updated_at</source>
-                <target>form.label_order_updated_at</target>
+                <target>Mis à jour à</target>
             </trans-unit>
             <trans-unit id="form.label_sort">
                 <source>form.label_sort</source>
-                <target>form.label_sort</target>
+                <target>Tri</target>
             </trans-unit>
             <trans-unit id="form.label_sort_asc">
                 <source>form.label_sort_asc</source>
-                <target>form.label_sort_asc</target>
+                <target>Ascendant</target>
             </trans-unit>
             <trans-unit id="form.label_sort_desc">
                 <source>form.label_sort_desc</source>
-                <target>form.label_sort_desc</target>
+                <target>Descendant</target>
             </trans-unit>
             <trans-unit id="form.label_mode_public">
                 <source>form.label_mode_public</source>
-                <target>form.label_mode_public</target>
+                <target>Public</target>
             </trans-unit>
             <trans-unit id="form.label_mode_admin">
                 <source>form.label_mode_admin</source>
-                <target>form.label_mode_admin</target>
+                <target>Admin</target>
             </trans-unit>
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
-                <target>form.label_class</target>
+                <target>Classes CSS</target>
             </trans-unit>
         </body>
     </file>
