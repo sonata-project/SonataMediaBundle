@@ -224,4 +224,85 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
             array(null, $media3),
         );
     }
+
+    public function testBinaryContentWithRealPath()
+    {
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+
+        $media->expects($this->any())
+            ->method('getProviderReference')
+            ->willReturn('provider');
+
+        $media->expects($this->any())
+            ->method('getId')
+            ->willReturn(10000);
+
+        $media->expects($this->any())
+            ->method('getContext')
+            ->willReturn('context');
+
+        $binaryContent = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\File')
+            ->setMethods(array('getRealPath', 'getPathname'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $binaryContent->expects($this->atLeastOnce())
+            ->method('getRealPath')
+            ->willReturn(__DIR__.'/../fixtures/file.txt');
+
+        $binaryContent->expects($this->never())
+            ->method('getPathname');
+
+        $media->expects($this->any())
+            ->method('getBinaryContent')
+            ->willReturn($binaryContent);
+
+        $provider = $this->getProvider();
+
+        $setFileContents = new \ReflectionMethod('Sonata\MediaBundle\Provider\FileProvider', 'setFileContents');
+        $setFileContents->setAccessible(true);
+
+        $setFileContents->invoke($provider, $media);
+    }
+
+    public function testBinaryContentStreamWrapped()
+    {
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+
+        $media->expects($this->any())
+            ->method('getProviderReference')
+            ->willReturn('provider');
+
+        $media->expects($this->any())
+            ->method('getId')
+            ->willReturn(10000);
+
+        $media->expects($this->any())
+            ->method('getContext')
+            ->willReturn('context');
+
+        $binaryContent = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\File')
+            ->setMethods(array('getRealPath', 'getPathname'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $binaryContent->expects($this->atLeastOnce())
+            ->method('getRealPath')
+            ->willReturn(false);
+
+        $binaryContent->expects($this->atLeastOnce())
+            ->method('getPathname')
+            ->willReturn(__DIR__.'/../fixtures/file.txt');
+
+        $media->expects($this->any())
+            ->method('getBinaryContent')
+            ->willReturn($binaryContent);
+
+        $provider = $this->getProvider();
+
+        $setFileContents = new \ReflectionMethod('Sonata\MediaBundle\Provider\FileProvider', 'setFileContents');
+        $setFileContents->setAccessible(true);
+
+        $setFileContents->invoke($provider, $media);
+    }
 }
