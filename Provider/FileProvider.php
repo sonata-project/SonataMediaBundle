@@ -318,8 +318,10 @@ class FileProvider extends BaseProvider
             return;
         }
 
-        if ($media->getBinaryContent() instanceof File) {
-            $file->setContent(file_get_contents($media->getBinaryContent()->getRealPath()), $metadata);
+        $binaryContent = $media->getBinaryContent();
+        if ($binaryContent instanceof File) {
+            $path = $binaryContent->getRealPath() ?: $binaryContent->getPathname();
+            $file->setContent(file_get_contents($path), $metadata);
 
             return;
         }
