@@ -62,38 +62,38 @@ class GalleryListBlockService extends BaseBlockService
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
                 array('title', 'text', array(
-                    'label'    => 'form.label_title',
+                    'label' => 'form.label_title',
                     'required' => false,
                 )),
                 array('number', 'integer', array(
-                    'label'    => 'form.label_number',
+                    'label' => 'form.label_number',
                     'required' => true,
                 )),
                 array('context', 'choice', array(
                     'required' => true,
-                    'label'    => 'form.label_context',
-                    'choices'  => $contextChoices,
+                    'label' => 'form.label_context',
+                    'choices' => $contextChoices,
                 )),
                 array('mode', 'choice', array(
-                    'label'   => 'form.label_mode',
+                    'label' => 'form.label_mode',
                     'choices' => array(
                         'public' => 'form.label_mode_public',
-                        'admin'  => 'form.label_mode_admin',
+                        'admin' => 'form.label_mode_admin',
                     ),
                 )),
                 array('order', 'choice',  array(
-                    'label'   => 'form.label_order',
+                    'label' => 'form.label_order',
                     'choices' => array(
-                        'name'        => 'form.label_order_name',
-                        'createdAt'   => 'form.label_order_created_at',
-                        'updatedAt'   => 'form.label_order_updated_at',
+                        'name' => 'form.label_order_name',
+                        'createdAt' => 'form.label_order_created_at',
+                        'updatedAt' => 'form.label_order_updated_at',
                     ),
                 )),
                 array('sort', 'choice', array(
-                    'label'   => 'form.label_sort',
+                    'label' => 'form.label_sort',
                     'choices' => array(
                         'desc' => 'form.label_sort_desc',
-                        'asc'  => 'form.label_sort_asc',
+                        'asc' => 'form.label_sort_asc',
                     ),
                 )),
             ),
@@ -109,8 +109,8 @@ class GalleryListBlockService extends BaseBlockService
         $context = $blockContext->getBlock()->getSetting('context');
 
         $criteria = array(
-            'mode'       => $blockContext->getSetting('mode'),
-            'context'    => $context,
+            'mode' => $blockContext->getSetting('mode'),
+            'context' => $context,
         );
 
         $order = array(
@@ -118,10 +118,10 @@ class GalleryListBlockService extends BaseBlockService
         );
 
         return $this->renderResponse($blockContext->getTemplate(), array(
-            'context'    => $blockContext,
-            'settings'   => $blockContext->getSettings(),
-            'block'      => $blockContext->getBlock(),
-            'pager'      => $this->galleryManager->getPager(
+            'context' => $blockContext,
+            'settings' => $blockContext->getSettings(),
+            'block' => $blockContext->getBlock(),
+            'pager' => $this->galleryManager->getPager(
                 $criteria,
                 1,
                 $blockContext->getSetting('number'),
@@ -136,12 +136,12 @@ class GalleryListBlockService extends BaseBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'number'   => 15,
-            'mode'     => 'public',
-            'order'    => 'createdAt',
-            'sort'     => 'desc',
-            'context'  => false,
-            'title'    => 'Gallery List',
+            'number' => 15,
+            'mode' => 'public',
+            'order' => 'createdAt',
+            'sort' => 'desc',
+            'context' => false,
+            'title' => 'Gallery List',
             'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
         ));
     }

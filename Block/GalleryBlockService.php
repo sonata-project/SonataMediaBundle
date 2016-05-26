@@ -55,7 +55,7 @@ class GalleryBlockService extends BaseBlockService
         parent::__construct($name, $templating);
 
         $this->galleryManager = $galleryManager;
-        $this->container      = $container;
+        $this->container = $container;
     }
 
     /**
@@ -84,15 +84,15 @@ class GalleryBlockService extends BaseBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'gallery'     => false,
-            'title'       => false,
-            'context'     => false,
-            'format'      => false,
-            'pauseTime'   => 3000,
+            'gallery' => false,
+            'title' => false,
+            'context' => false,
+            'format' => false,
+            'pauseTime' => 3000,
             'startPaused' => false,
-            'wrap'        => true,
-            'template'    => 'SonataMediaBundle:Block:block_gallery.html.twig',
-            'galleryId'   => null,
+            'wrap' => true,
+            'template' => 'SonataMediaBundle:Block:block_gallery.html.twig',
+            'galleryId' => null,
         ));
     }
 
@@ -130,26 +130,26 @@ class GalleryBlockService extends BaseBlockService
 
         $builder = $formMapper->create('galleryId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
-            'class'                    => $this->getGalleryAdmin()->getClass(),
-            'model_manager'            => $this->getGalleryAdmin()->getModelManager(),
-            'label'                    => 'form.label_gallery',
+            'class' => $this->getGalleryAdmin()->getClass(),
+            'model_manager' => $this->getGalleryAdmin()->getModelManager(),
+            'label' => 'form.label_gallery',
         ));
 
         $formMapper->add('settings', 'sonata_type_immutable_array', array(
             'keys' => array(
                 array('title', 'text', array(
                     'required' => false,
-                    'label'    => 'form.label_title',
+                    'label' => 'form.label_title',
                 )),
                 array('context', 'choice', array(
                     'required' => true,
-                    'choices'  => $contextChoices,
-                    'label'    => 'form.label_context',
+                    'choices' => $contextChoices,
+                    'label' => 'form.label_context',
                 )),
                 array('format', 'choice', array(
                     'required' => count($formatChoices) > 0,
-                    'choices'  => $formatChoices,
-                    'label'    => 'form.label_format',
+                    'choices' => $formatChoices,
+                    'label' => 'form.label_format',
                 )),
                 array($builder, null, array()),
                 array('pauseTime', 'number', array(
@@ -157,11 +157,11 @@ class GalleryBlockService extends BaseBlockService
                 )),
                 array('startPaused', 'checkbox', array(
                     'required' => false,
-                    'label'    => 'form.label_start_paused',
+                    'label' => 'form.label_start_paused',
                 )),
                 array('wrap', 'checkbox', array(
                     'required' => false,
-                    'label'    => 'form.label_wrap',
+                    'label' => 'form.label_wrap',
                 )),
             ),
             'translation_domain' => 'SonataMediaBundle',
@@ -176,10 +176,10 @@ class GalleryBlockService extends BaseBlockService
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
 
         return $this->renderResponse($blockContext->getTemplate(), array(
-            'gallery'   => $gallery,
-            'block'     => $blockContext->getBlock(),
-            'settings'  => $blockContext->getSettings(),
-            'elements'  => $gallery ? $this->buildElements($gallery) : array(),
+            'gallery' => $gallery,
+            'block' => $blockContext->getBlock(),
+            'settings' => $blockContext->getSettings(),
+            'elements' => $gallery ? $this->buildElements($gallery) : array(),
         ), $response);
     }
 
@@ -214,6 +214,16 @@ class GalleryBlockService extends BaseBlockService
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
+        ));
+    }
+
+    /**
      * @param GalleryInterface $gallery
      *
      * @return array
@@ -233,10 +243,10 @@ class GalleryBlockService extends BaseBlockService
             }
 
             $elements[] = array(
-                'title'     => $galleryHasMedia->getMedia()->getName(),
-                'caption'   => $galleryHasMedia->getMedia()->getDescription(),
-                'type'      => $type,
-                'media'     => $galleryHasMedia->getMedia(),
+                'title' => $galleryHasMedia->getMedia()->getName(),
+                'caption' => $galleryHasMedia->getMedia()->getDescription(),
+                'type' => $type,
+                'media' => $galleryHasMedia->getMedia(),
             );
         }
 
@@ -257,15 +267,5 @@ class GalleryBlockService extends BaseBlockService
         }
 
         return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockMetadata($code = null)
-    {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
-            'class' => 'fa fa-picture-o',
-        ));
     }
 }

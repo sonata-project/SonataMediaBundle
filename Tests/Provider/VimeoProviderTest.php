@@ -157,8 +157,8 @@ class VimeoProviderTest extends \PHPUnit_Framework_TestCase
         $mediaPlayer->setId(1023456);
 
         return array(
-            'transform with website url'   => array($mediaWebsite),
-            'transform with player url'    => array($mediaPlayer),
+            'transform with website url' => array($mediaWebsite),
+            'transform with player url' => array($mediaPlayer),
         );
     }
 

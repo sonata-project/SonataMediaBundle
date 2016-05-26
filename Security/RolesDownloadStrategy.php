@@ -46,8 +46,8 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
             throw new \InvalidArgumentException('Argument 2 should be an instance of Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface or Symfony\Component\Security\Core\SecurityContextInterface');
         }
 
-        $this->roles      = $roles;
-        $this->security   = $security;
+        $this->roles = $roles;
+        $this->security = $security;
         $this->translator = $translator;
     }
 

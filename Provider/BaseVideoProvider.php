@@ -219,7 +219,7 @@ abstract class BaseVideoProvider extends BaseProvider
 
         if (isset($options['width']) || isset($options['height'])) {
             $settings = array(
-                'width'  => isset($options['width']) ? $options['width'] : null,
+                'width' => isset($options['width']) ? $options['width'] : null,
                 'height' => isset($options['height']) ? $options['height'] : null,
             );
         } else {

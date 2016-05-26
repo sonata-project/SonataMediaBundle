@@ -27,7 +27,7 @@ class GalleryController extends Controller
         ));
 
         return $this->render('SonataMediaBundle:Gallery:index.html.twig', array(
-            'galleries'   => $galleries,
+            'galleries' => $galleries,
         ));
     }
 
@@ -41,7 +41,7 @@ class GalleryController extends Controller
     public function viewAction($id)
     {
         $gallery = $this->get('sonata.media.manager.gallery')->findOneBy(array(
-            'id'      => $id,
+            'id' => $id,
             'enabled' => true,
         ));
 
@@ -50,7 +50,7 @@ class GalleryController extends Controller
         }
 
         return $this->render('SonataMediaBundle:Gallery:view.html.twig', array(
-            'gallery'   => $gallery,
+            'gallery' => $gallery,
         ));
     }
 }

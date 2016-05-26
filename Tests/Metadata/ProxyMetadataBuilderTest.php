@@ -56,9 +56,9 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop'   => $noop,
+            'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image'  => $provider,
+            'sonata.media.provider.image' => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
@@ -95,9 +95,9 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop'   => $noop,
+            'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image'  => $provider,
+            'sonata.media.provider.image' => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
@@ -134,9 +134,9 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop'   => $noop,
+            'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image'  => $provider,
+            'sonata.media.provider.image' => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
@@ -176,9 +176,9 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop'   => $noop,
+            'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image'  => $provider,
+            'sonata.media.provider.image' => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
@@ -217,9 +217,9 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainerMock(array(
-            'sonata.media.metadata.noop'   => $noop,
+            'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
-            'sonata.media.provider.image'  => $provider,
+            'sonata.media.provider.image' => $provider,
         ));
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());

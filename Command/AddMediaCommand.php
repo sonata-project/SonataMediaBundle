@@ -53,7 +53,7 @@ class AddMediaCommand extends BaseCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $provider = $input->getArgument('providerName');
-        $context  = $input->getArgument('context');
+        $context = $input->getArgument('context');
         $binaryContent = $input->getArgument('binaryContent');
 
         $output->writeln(sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));

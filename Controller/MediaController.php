@@ -91,9 +91,9 @@ class MediaController extends Controller
         }
 
         return $this->render('SonataMediaBundle:Media:view.html.twig', array(
-                'media'     => $media,
-                'formats'   => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
-                'format'    => $format,
+                'media' => $media,
+                'formats' => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
+                'format' => $format,
             ));
     }
 
@@ -126,7 +126,7 @@ class MediaController extends Controller
         }
 
         $provider = $this->getProvider($media);
-        $file     = $provider->getReferenceFile($media);
+        $file = $provider->getReferenceFile($media);
 
         // load the file content from the abstracted file system
         $tmpFile = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'sonata_media_liip_imagine'), $media->getExtension());

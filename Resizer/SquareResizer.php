@@ -46,7 +46,7 @@ class SquareResizer implements ResizerInterface
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
-        $this->mode    = $mode;
+        $this->mode = $mode;
         $this->metadata = $metadata;
     }
 
@@ -60,15 +60,15 @@ class SquareResizer implements ResizerInterface
         }
 
         $image = $this->adapter->load($in->getContent());
-        $size  = $media->getBox();
+        $size = $media->getBox();
 
         if (null != $settings['height']) {
             if ($size->getHeight() > $size->getWidth()) {
                 $higher = $size->getHeight();
-                $lower  = $size->getWidth();
+                $lower = $size->getWidth();
             } else {
                 $higher = $size->getWidth();
-                $lower  = $size->getHeight();
+                $lower = $size->getHeight();
             }
 
             $crop = $higher - $lower;
@@ -103,10 +103,10 @@ class SquareResizer implements ResizerInterface
         if (null != $settings['height']) {
             if ($size->getHeight() > $size->getWidth()) {
                 $higher = $size->getHeight();
-                $lower  = $size->getWidth();
+                $lower = $size->getWidth();
             } else {
                 $higher = $size->getWidth();
-                $lower  = $size->getHeight();
+                $lower = $size->getHeight();
             }
 
             if ($higher - $lower > 0) {

@@ -54,7 +54,7 @@ class FileProvider extends BaseProvider
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
         $this->allowedExtensions = $allowedExtensions;
-        $this->allowedMimeTypes  = $allowedMimeTypes;
+        $this->allowedMimeTypes = $allowedMimeTypes;
         $this->metadata = $metadata;
     }
 
@@ -123,7 +123,7 @@ class FileProvider extends BaseProvider
         } else {
             $formBuilder->add('binaryContent', 'file', array(
                 'required' => false,
-                'label'    => 'widget_label_binary_content',
+                'label' => 'widget_label_binary_content',
             ));
         }
     }
@@ -174,6 +174,133 @@ class FileProvider extends BaseProvider
         $this->generateThumbnails($media);
 
         $media->resetBinaryContent();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateMetadata(MediaInterface $media, $force = true)
+    {
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+            // this is now optimized at all!!!
+            $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
+            $fileObject = new \SplFileObject($path, 'w');
+            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+        } else {
+            $fileObject = $media->getBinaryContent();
+        }
+
+        $media->setSize($fileObject->getSize());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generatePublicUrl(MediaInterface $media, $format)
+    {
+        if ($format == 'reference') {
+            $path = $this->getReferenceImage($media);
+        } else {
+            // @todo: fix the asset path
+            $path = sprintf('sonatamedia/files/%s/file.png', $format);
+        }
+
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
+    {
+        return array_merge(array(
+            'title' => $media->getName(),
+            'thumbnail' => $this->getReferenceImage($media),
+            'file' => $this->getReferenceImage($media),
+        ), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generatePrivateUrl(MediaInterface $media, $format)
+    {
+        if ($format == 'reference') {
+            return $this->getReferenceImage($media);
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
+    {
+        // build the default headers
+        $headers = array_merge(array(
+            'Content-Type' => $media->getContentType(),
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
+        ), $headers);
+
+        if (!in_array($mode, array('http', 'X-Sendfile', 'X-Accel-Redirect'))) {
+            throw new \RuntimeException('Invalid mode provided');
+        }
+
+        if ($mode == 'http') {
+            if ($format == 'reference') {
+                $file = $this->getReferenceFile($media);
+            } else {
+                $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
+            }
+
+            return new StreamedResponse(function () use ($file) {
+                echo $file->getContent();
+            }, 200, $headers);
+        }
+
+        if (!$this->getFilesystem()->getAdapter() instanceof \Sonata\MediaBundle\Filesystem\Local) {
+            throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
+        }
+
+        $filename = sprintf('%s/%s',
+            $this->getFilesystem()->getAdapter()->getDirectory(),
+            $this->generatePrivateUrl($media, $format)
+        );
+
+        return new BinaryFileResponse($filename, 200, $headers);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
+        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+            return;
+        }
+
+        if ($media->getBinaryContent() instanceof UploadedFile) {
+            $fileName = $media->getBinaryContent()->getClientOriginalName();
+        } elseif ($media->getBinaryContent() instanceof File) {
+            $fileName = $media->getBinaryContent()->getFilename();
+        } else {
+            throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));
+        }
+
+        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
+            $errorElement
+                ->with('binaryContent')
+                ->addViolation('Invalid extensions')
+                ->end();
+        }
+
+        if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+            $errorElement
+                ->with('binaryContent')
+                    ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
+                ->end();
+        }
     }
 
     /**
@@ -246,62 +373,6 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function updateMetadata(MediaInterface $media, $force = true)
-    {
-        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
-            // this is now optimized at all!!!
-            $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
-            $fileObject = new \SplFileObject($path, 'w');
-            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
-        } else {
-            $fileObject = $media->getBinaryContent();
-        }
-
-        $media->setSize($fileObject->getSize());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generatePublicUrl(MediaInterface $media, $format)
-    {
-        if ($format == 'reference') {
-            $path = $this->getReferenceImage($media);
-        } else {
-            // @todo: fix the asset path
-            $path = sprintf('sonatamedia/files/%s/file.png', $format);
-        }
-
-        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array())
-    {
-        return array_merge(array(
-            'title'       => $media->getName(),
-            'thumbnail'   => $this->getReferenceImage($media),
-            'file'        => $this->getReferenceImage($media),
-        ), $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generatePrivateUrl(MediaInterface $media, $format)
-    {
-        if ($format == 'reference') {
-            return $this->getReferenceImage($media);
-        }
-
-        return false;
-    }
-
-    /**
      * Set the file contents for an image.
      *
      * @param MediaInterface $media
@@ -345,77 +416,6 @@ class FileProvider extends BaseProvider
     protected function generateMediaUniqId(MediaInterface $media)
     {
         return sha1($media->getName().uniqid().rand(11111, 99999));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
-    {
-        // build the default headers
-        $headers = array_merge(array(
-            'Content-Type'          => $media->getContentType(),
-            'Content-Disposition'   => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
-        ), $headers);
-
-        if (!in_array($mode, array('http', 'X-Sendfile', 'X-Accel-Redirect'))) {
-            throw new \RuntimeException('Invalid mode provided');
-        }
-
-        if ($mode == 'http') {
-            if ($format == 'reference') {
-                $file = $this->getReferenceFile($media);
-            } else {
-                $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
-            }
-
-            return new StreamedResponse(function () use ($file) {
-                echo $file->getContent();
-            }, 200, $headers);
-        }
-
-        if (!$this->getFilesystem()->getAdapter() instanceof \Sonata\MediaBundle\Filesystem\Local) {
-            throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
-        }
-
-        $filename = sprintf('%s/%s',
-            $this->getFilesystem()->getAdapter()->getDirectory(),
-            $this->generatePrivateUrl($media, $format)
-        );
-
-        return new BinaryFileResponse($filename, 200, $headers);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validate(ErrorElement $errorElement, MediaInterface $media)
-    {
-        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
-            return;
-        }
-
-        if ($media->getBinaryContent() instanceof UploadedFile) {
-            $fileName = $media->getBinaryContent()->getClientOriginalName();
-        } elseif ($media->getBinaryContent() instanceof File) {
-            $fileName = $media->getBinaryContent()->getFilename();
-        } else {
-            throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));
-        }
-
-        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
-            $errorElement
-                ->with('binaryContent')
-                ->addViolation('Invalid extensions')
-                ->end();
-        }
-
-        if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
-            $errorElement
-                ->with('binaryContent')
-                    ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
-                ->end();
-        }
     }
 
     /**

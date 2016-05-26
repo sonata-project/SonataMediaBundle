@@ -28,7 +28,7 @@ class GalleryAdminController extends Controller
      */
     public function render($view, array $parameters = array(), Response $response = null, Request $request = null)
     {
-        $parameters['media_pool']            = $this->container->get('sonata.media.pool');
+        $parameters['media_pool'] = $this->container->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
         return parent::render($view, $parameters, $response, $request);
@@ -60,9 +60,9 @@ class GalleryAdminController extends Controller
         $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
 
         return $this->render($this->admin->getTemplate('list'), array(
-            'action'     => 'list',
-            'form'       => $formView,
-            'datagrid'   => $datagrid,
+            'action' => 'list',
+            'form' => $formView,
+            'datagrid' => $datagrid,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ));
     }

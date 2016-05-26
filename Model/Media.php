@@ -143,6 +143,14 @@ abstract class Media implements MediaInterface
      */
     protected $category;
 
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getName() ?: 'n/a';
+    }
+
     public function prePersist()
     {
         $this->setCreatedAt(new \DateTime());
@@ -162,11 +170,11 @@ abstract class Media implements MediaInterface
     public static function getStatusList()
     {
         return array(
-            self::STATUS_OK          => 'ok',
-            self::STATUS_SENDING     => 'sending',
-            self::STATUS_PENDING     => 'pending',
-            self::STATUS_ERROR       => 'error',
-            self::STATUS_ENCODING    => 'encoding',
+            self::STATUS_OK => 'ok',
+            self::STATUS_SENDING => 'sending',
+            self::STATUS_PENDING => 'pending',
+            self::STATUS_ERROR => 'error',
+            self::STATUS_ENCODING => 'encoding',
         );
     }
 
@@ -577,14 +585,6 @@ abstract class Media implements MediaInterface
     public function getBox()
     {
         return new Box($this->width, $this->height);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
-    {
-        return $this->getName() ?: 'n/a';
     }
 
     /**

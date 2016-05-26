@@ -22,7 +22,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $config = $processor->processConfiguration(new Configuration(), array(
             array(
-                'db_driver'       => 'foo',
+                'db_driver' => 'foo',
                 'default_context' => 'default',
             ),
         ));

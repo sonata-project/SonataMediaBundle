@@ -58,7 +58,7 @@ class RefreshMetadataCommand extends BaseCommand
             $provider = $providers[$providerKey];
         }
 
-        $context  = $input->getArgument('context');
+        $context = $input->getArgument('context');
         if (null === $context) {
             $contexts = array_keys($this->getMediaPool()->getContexts());
             $contextKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the context', $contexts);
@@ -70,7 +70,7 @@ class RefreshMetadataCommand extends BaseCommand
 
         $medias = $this->getMediaManager()->findBy(array(
             'providerName' => $provider,
-            'context'      => $context,
+            'context' => $context,
         ));
 
         $this->log(sprintf('Loaded %s medias for generating thumbs (provider: %s, context: %s)', count($medias), $provider, $context));

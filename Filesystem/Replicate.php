@@ -41,7 +41,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     public function __construct(AdapterInterface $master, AdapterInterface $slave, LoggerInterface $logger = null)
     {
         $this->master = $master;
-        $this->slave  = $slave;
+        $this->slave = $slave;
         $this->logger = $logger;
     }
 
