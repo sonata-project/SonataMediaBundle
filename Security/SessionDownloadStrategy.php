@@ -45,8 +45,8 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
      */
     public function __construct(TranslatorInterface $translator, ContainerInterface $container, $times)
     {
-        $this->times      = $times;
-        $this->container  = $container;
+        $this->times = $times;
+        $this->container = $container;
         $this->translator = $translator;
     }
 

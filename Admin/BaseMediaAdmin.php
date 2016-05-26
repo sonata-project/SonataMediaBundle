@@ -50,55 +50,6 @@ abstract class BaseMediaAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureListFields(ListMapper $listMapper)
-    {
-        $listMapper
-            ->addIdentifier('name')
-            ->add('description')
-            ->add('enabled')
-            ->add('size')
-        ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $media = $this->getSubject();
-
-        if (!$media) {
-            $media = $this->getNewInstance();
-        }
-
-        if (!$media || !$media->getProviderName()) {
-            return;
-        }
-
-        $formMapper->add('providerName', 'hidden');
-
-        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
-
-        $provider = $this->pool->getProvider($media->getProviderName());
-
-        if ($media->getId()) {
-            $provider->buildEditForm($formMapper);
-        } else {
-            $provider->buildCreateForm($formMapper);
-        }
-
-        $formMapper->add('category', 'sonata_type_model_list', array(), array(
-            'link_parameters' => array(
-                'context'      => $media->getContext(),
-                'hide_context' => true,
-                'mode'         => 'tree',
-            ),
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function prePersist($media)
     {
         $parameters = $this->getPersistentParameters();
@@ -124,7 +75,7 @@ abstract class BaseMediaAdmin extends Admin
         }
 
         $providers = $this->pool->getProvidersByContext($context);
-        $provider  = $this->getRequest()->get('provider');
+        $provider = $this->getRequest()->get('provider');
 
         // if the context has only one provider, set it into the request
         // so the intermediate provider selection is skipped
@@ -140,8 +91,8 @@ abstract class BaseMediaAdmin extends Admin
         }
 
         return array_merge($parameters, array(
-            'context'      => $context,
-            'category'     => $categoryId,
+            'context' => $context,
+            'category' => $categoryId,
             'hide_context' => (bool) $this->getRequest()->get('hide_context'),
         ));
     }
@@ -192,5 +143,54 @@ abstract class BaseMediaAdmin extends Admin
         $url = $provider->generatePublicUrl($object, $provider->getFormatName($object, 'admin'));
 
         return new Metadata($object->getName(), $object->getDescription(), $url);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureListFields(ListMapper $listMapper)
+    {
+        $listMapper
+            ->addIdentifier('name')
+            ->add('description')
+            ->add('enabled')
+            ->add('size')
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $media = $this->getSubject();
+
+        if (!$media) {
+            $media = $this->getNewInstance();
+        }
+
+        if (!$media || !$media->getProviderName()) {
+            return;
+        }
+
+        $formMapper->add('providerName', 'hidden');
+
+        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
+
+        $provider = $this->pool->getProvider($media->getProviderName());
+
+        if ($media->getId()) {
+            $provider->buildEditForm($formMapper);
+        } else {
+            $provider->buildCreateForm($formMapper);
+        }
+
+        $formMapper->add('category', 'sonata_type_model_list', array(), array(
+            'link_parameters' => array(
+                'context' => $media->getContext(),
+                'hide_context' => true,
+                'mode' => 'tree',
+            ),
+        ));
     }
 }

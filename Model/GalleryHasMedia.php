@@ -49,7 +49,15 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function __construct()
     {
         $this->position = 0;
-        $this->enabled  = false;
+        $this->enabled = false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getGallery().' | '.$this->getMedia();
     }
 
     /**
@@ -146,13 +154,5 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
-    {
-        return $this->getGallery().' | '.$this->getMedia();
     }
 }

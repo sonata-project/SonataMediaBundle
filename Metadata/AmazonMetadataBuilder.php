@@ -27,11 +27,11 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      * @var string[]
      */
     protected $acl = array(
-        'private'            => CannedAcl::PRIVATE_ACCESS,
-        'public'             => CannedAcl::PUBLIC_READ,
-        'open'               => CannedAcl::PUBLIC_READ_WRITE,
-        'auth_read'          => CannedAcl::AUTHENTICATED_READ,
-        'owner_read'         => CannedAcl::BUCKET_OWNER_READ,
+        'private' => CannedAcl::PRIVATE_ACCESS,
+        'public' => CannedAcl::PUBLIC_READ,
+        'open' => CannedAcl::PUBLIC_READ_WRITE,
+        'auth_read' => CannedAcl::AUTHENTICATED_READ,
+        'owner_read' => CannedAcl::BUCKET_OWNER_READ,
         'owner_full_control' => CannedAcl::BUCKET_OWNER_FULL_CONTROL,
     );
 
@@ -41,6 +41,17 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     public function __construct(array $settings)
     {
         $this->settings = $settings;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get(MediaInterface $media, $filename)
+    {
+        return array_replace_recursive(
+            $this->getDefaultMetadata(),
+            $this->getContentType($filename)
+        );
     }
 
     /**
@@ -94,20 +105,9 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        $extension   = pathinfo($filename, PATHINFO_EXTENSION);
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $contentType = Mimetypes::getInstance()->fromExtension($extension);
 
         return array('contentType' => $contentType);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get(MediaInterface $media, $filename)
-    {
-        return array_replace_recursive(
-            $this->getDefaultMetadata(),
-            $this->getContentType($filename)
-        );
     }
 }

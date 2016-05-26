@@ -43,7 +43,7 @@ class ApiMediaType extends AbstractType
     public function __construct(Pool $mediaPool, $class)
     {
         $this->mediaPool = $mediaPool;
-        $this->class     = $class;
+        $this->class = $class;
     }
 
     /**
@@ -76,7 +76,7 @@ class ApiMediaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'provider_name' => 'sonata.media.provider.image',
-            'context'       => 'api',
+            'context' => 'api',
         ));
     }
 

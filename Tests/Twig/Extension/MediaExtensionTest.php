@@ -60,7 +60,7 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->equalTo(
                     array(
-                        'media'   => $media,
+                        'media' => $media,
                         'options' => array('title' => 'Test title', 'data-custom' => 'foo'),
                     )
                 )

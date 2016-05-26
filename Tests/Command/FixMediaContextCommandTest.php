@@ -97,8 +97,8 @@ class FixMediaContextCommandTest extends CommandTest
     {
         $context = array(
             'providers' => array(),
-            'formats'   => array(),
-            'download'  => array(),
+            'formats' => array(),
+            'download' => array(),
         );
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
@@ -122,8 +122,8 @@ class FixMediaContextCommandTest extends CommandTest
     {
         $context = array(
             'providers' => array(),
-            'formats'   => array(),
-            'download'  => array(),
+            'formats' => array(),
+            'download' => array(),
         );
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
@@ -149,8 +149,8 @@ class FixMediaContextCommandTest extends CommandTest
     {
         $context = array(
             'providers' => array(),
-            'formats'   => array(),
-            'download'  => array(),
+            'formats' => array(),
+            'download' => array(),
         );
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));

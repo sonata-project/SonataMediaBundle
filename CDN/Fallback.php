@@ -29,7 +29,7 @@ class Fallback implements CDNInterface
      */
     public function __construct(CDNInterface $cdn, CDNInterface $fallback)
     {
-        $this->cdn      = $cdn;
+        $this->cdn = $cdn;
         $this->fallback = $fallback;
     }
 

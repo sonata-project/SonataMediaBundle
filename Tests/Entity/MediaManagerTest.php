@@ -22,20 +22,6 @@ use Sonata\MediaBundle\Entity\MediaManager;
  */
 class MediaManagerTest extends \PHPUnit_Framework_TestCase
 {
-    protected function getMediaManager($qbCallback)
-    {
-        $em = EntityManagerMockFactory::create($this, $qbCallback, array(
-            'name',
-            'description',
-            'enabled',
-        ));
-
-        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
-        $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
-
-        return new MediaManager('Sonata\MediaBundle\Entity\BaseMedia', $registry);
-    }
-
     public function testGetPager()
     {
         $self = $this;
@@ -78,8 +64,8 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array()));
             })
             ->getPager(array(), 1, 10, array(
-                'name'         => 'ASC',
-                'description'  => 'DESC',
+                'name' => 'ASC',
+                'description' => 'DESC',
             ));
     }
 
@@ -103,5 +89,19 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => false)));
             })
             ->getPager(array('enabled' => false), 1);
+    }
+
+    protected function getMediaManager($qbCallback)
+    {
+        $em = EntityManagerMockFactory::create($this, $qbCallback, array(
+            'name',
+            'description',
+            'enabled',
+        ));
+
+        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
+
+        return new MediaManager('Sonata\MediaBundle\Entity\BaseMedia', $registry);
     }
 }

@@ -45,11 +45,11 @@ class CleanMediaCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dryRun = (bool) $input->getOption('dry-run');
-        $verbose  = (bool) $input->getOption('verbose');
+        $verbose = (bool) $input->getOption('verbose');
 
         $pool = $this->getContainer()->get('sonata.media.pool');
         $finder = Finder::create();
-        $filesystem    = new Filesystem();
+        $filesystem = new Filesystem();
         $baseDirectory = $this->getContainer()->get('sonata.media.adapter.filesystem.local')->getDirectory();
 
         $output->writeln(sprintf('<info>Scanning upload directory: %s</info>', $baseDirectory));
@@ -121,14 +121,14 @@ class CleanMediaCommand extends ContainerAwareCommand
 
         if (count($fileParts) > 1 && $fileParts[0] == 'thumb') {
             return $mediaManager->findOneBy(array(
-                    'id'      => $fileParts[1],
+                    'id' => $fileParts[1],
                     'context' => $context,
                 )) != null;
         }
 
         return count($mediaManager->findBy(array(
                 'providerReference' => $filename,
-                'providers'         => $this->getProviders(),
+                'providers' => $this->getProviders(),
             ))) > 0;
     }
 }

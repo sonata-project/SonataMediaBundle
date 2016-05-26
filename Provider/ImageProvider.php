@@ -40,7 +40,7 @@ class ImageProvider extends FileProvider
      * @param ImagineInterface         $adapter
      * @param MetadataBuilderInterface $metadata
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ImagineInterface $adapter, MetadataBuilderInterface $metadata = null)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions, array $allowedMimeTypes, ImagineInterface $adapter, MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
 
@@ -73,11 +73,11 @@ class ImageProvider extends FileProvider
         }
 
         return array_merge(array(
-            'alt'      => $media->getName(),
-            'title'    => $media->getName(),
-            'src'      => $this->generatePublicUrl($media, $format),
-            'width'    => $box->getWidth(),
-            'height'   => $box->getHeight(),
+            'alt' => $media->getName(),
+            'title' => $media->getName(),
+            'src' => $this->generatePublicUrl($media, $format),
+            'width' => $box->getWidth(),
+            'height' => $box->getHeight(),
         ), $options);
     }
 
@@ -95,49 +95,12 @@ class ImageProvider extends FileProvider
     /**
      * {@inheritdoc}
      */
-    protected function doTransform(MediaInterface $media)
-    {
-        parent::doTransform($media);
-
-        if ($media->getBinaryContent() instanceof UploadedFile) {
-            $fileName = $media->getBinaryContent()->getClientOriginalName();
-        } elseif ($media->getBinaryContent() instanceof File) {
-            $fileName = $media->getBinaryContent()->getFilename();
-        } else {
-            // Should not happen, FileProvider should throw an exception in that case
-            return;
-        }
-
-        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
-            || !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
-            return;
-        }
-
-        try {
-            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
-        } catch (\RuntimeException $e) {
-            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
-
-            return;
-        }
-
-        $size  = $image->getSize();
-
-        $media->setWidth($size->getWidth());
-        $media->setHeight($size->getHeight());
-
-        $media->setProviderStatus(MediaInterface::STATUS_OK);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = true)
     {
         try {
             if (!$media->getBinaryContent() instanceof \SplFileInfo) {
                 // this is now optimized at all!!!
-                $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+                $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
                 $fileObject = new \SplFileObject($path, 'w');
                 $fileObject->fwrite($this->getReferenceFile($media)->getContent());
             } else {
@@ -145,7 +108,7 @@ class ImageProvider extends FileProvider
             }
 
             $image = $this->imagineAdapter->open($fileObject->getPathname());
-            $size  = $image->getSize();
+            $size = $image->getSize();
 
             $media->setSize($fileObject->getSize());
             $media->setWidth($size->getWidth());
@@ -179,5 +142,42 @@ class ImageProvider extends FileProvider
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doTransform(MediaInterface $media)
+    {
+        parent::doTransform($media);
+
+        if ($media->getBinaryContent() instanceof UploadedFile) {
+            $fileName = $media->getBinaryContent()->getClientOriginalName();
+        } elseif ($media->getBinaryContent() instanceof File) {
+            $fileName = $media->getBinaryContent()->getFilename();
+        } else {
+            // Should not happen, FileProvider should throw an exception in that case
+            return;
+        }
+
+        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
+            || !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+            return;
+        }
+
+        try {
+            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
+        } catch (\RuntimeException $e) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            return;
+        }
+
+        $size = $image->getSize();
+
+        $media->setWidth($size->getWidth());
+        $media->setHeight($size->getHeight());
+
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
 }

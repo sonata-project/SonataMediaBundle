@@ -46,10 +46,10 @@ class ConsumerThumbnail implements ThumbnailInterface
      */
     public function __construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher = null)
     {
-        $this->id           = $id;
-        $this->thumbnail    = $thumbnail;
-        $this->backend      = $backend;
-        $this->dispatcher   = $dispatcher;
+        $this->id = $id;
+        $this->thumbnail = $thumbnail;
+        $this->backend = $backend;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -74,12 +74,12 @@ class ConsumerThumbnail implements ThumbnailInterface
     public function generate(MediaProviderInterface $provider, MediaInterface $media)
     {
         $backend = $this->backend;
-        $id      = $this->id;
+        $id = $this->id;
 
         $publish = function () use ($backend, $media, $id) {
             $backend->createAndPublish('sonata.media.create_thumbnail', array(
-                'thumbnailId'       => $id,
-                'mediaId'           => $media->getId(),
+                'thumbnailId' => $id,
+                'mediaId' => $media->getId(),
 
                 // force this value as the message is sent inside a transaction,
                 // so we have a race condition

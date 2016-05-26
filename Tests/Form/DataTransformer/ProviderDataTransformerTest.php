@@ -79,7 +79,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
             'new_on_update' => false,
-            'empty_on_new'  => false,
+            'empty_on_new' => false,
         ));
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
