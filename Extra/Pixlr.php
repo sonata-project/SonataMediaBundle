@@ -81,76 +81,16 @@ class Pixlr
      */
     public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, ContainerInterface $container)
     {
-        $this->referrer     = $referrer;
-        $this->secret       = $secret;
+        $this->referrer = $referrer;
+        $this->secret = $secret;
         $this->mediaManager = $mediaManager;
-        $this->router       = $router;
-        $this->pool         = $pool;
-        $this->templating   = $templating;
-        $this->container    = $container;
+        $this->router = $router;
+        $this->pool = $pool;
+        $this->templating = $templating;
+        $this->container = $container;
 
         $this->validFormats = array('jpg', 'jpeg', 'png');
-        $this->allowEreg    = '@http://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
-    }
-
-    /**
-     * @param MediaInterface $media
-     *
-     * @return string
-     */
-    private function generateHash(MediaInterface $media)
-    {
-        return sha1($media->getId().$media->getCreatedAt()->format('u').$this->secret);
-    }
-
-    /**
-     * @throws NotFoundHttpException
-     *
-     * @param string $id
-     *
-     * @return MediaInterface
-     */
-    private function getMedia($id)
-    {
-        $media = $this->mediaManager->findOneBy(array('id' => $id));
-
-        if (!$media) {
-            throw new NotFoundHttpException('Media not found');
-        }
-
-        return $media;
-    }
-
-    /**
-     * @throws NotFoundHttpException
-     *
-     * @param string         $hash
-     * @param MediaInterface $media
-     */
-    private function checkMedia($hash, MediaInterface $media)
-    {
-        if ($hash != $this->generateHash($media)) {
-            throw new NotFoundHttpException('Invalid hash');
-        }
-
-        if (!$this->isEditable($media)) {
-            throw new NotFoundHttpException('Media is not editable');
-        }
-    }
-
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
-    private function buildQuery(array $parameters = array())
-    {
-        $query = array();
-        foreach ($parameters as $name => $value) {
-            $query[] = sprintf('%s=%s', $name, $value);
-        }
-
-        return implode('&', $query);
+        $this->allowEreg = '@http://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
     }
 
     /**
@@ -174,13 +114,13 @@ class Pixlr
         $hash = $this->generateHash($media);
 
         $parameters = array(
-            's'          => 'c', // ??
-            'referrer'   => $this->referrer,
-            'exit'       => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
-            'image'      => $provider->generatePublicUrl($media, 'reference'),
-            'title'      => $media->getName(),
-            'target'     => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
-            'locktitle'  => true,
+            's' => 'c', // ??
+            'referrer' => $this->referrer,
+            'exit' => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
+            'image' => $provider->generatePublicUrl($media, 'reference'),
+            'title' => $media->getName(),
+            'target' => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
+            'locktitle' => true,
             'locktarget' => true,
         );
 
@@ -267,8 +207,68 @@ class Pixlr
         }
 
         return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_editor.html.twig', array(
-            'media'      => $media,
+            'media' => $media,
             'admin_pool' => $this->container->get('sonata.admin.pool'),
         )));
+    }
+
+    /**
+     * @param MediaInterface $media
+     *
+     * @return string
+     */
+    private function generateHash(MediaInterface $media)
+    {
+        return sha1($media->getId().$media->getCreatedAt()->format('u').$this->secret);
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     *
+     * @param string $id
+     *
+     * @return MediaInterface
+     */
+    private function getMedia($id)
+    {
+        $media = $this->mediaManager->findOneBy(array('id' => $id));
+
+        if (!$media) {
+            throw new NotFoundHttpException('Media not found');
+        }
+
+        return $media;
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     *
+     * @param string         $hash
+     * @param MediaInterface $media
+     */
+    private function checkMedia($hash, MediaInterface $media)
+    {
+        if ($hash != $this->generateHash($media)) {
+            throw new NotFoundHttpException('Invalid hash');
+        }
+
+        if (!$this->isEditable($media)) {
+            throw new NotFoundHttpException('Media is not editable');
+        }
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return string
+     */
+    private function buildQuery(array $parameters = array())
+    {
+        $query = array();
+        foreach ($parameters as $name => $value) {
+            $query[] = sprintf('%s=%s', $name, $value);
+        }
+
+        return implode('&', $query);
     }
 }

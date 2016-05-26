@@ -39,7 +39,7 @@ class MediaHelper extends Helper
      */
     public function __construct(Pool $pool, EngineInterface $templating)
     {
-        $this->pool       = $pool;
+        $this->pool = $pool;
         $this->templating = $templating;
     }
 
@@ -73,20 +73,10 @@ class MediaHelper extends Helper
         $options = $provider->getHelperProperties($media, $format, $options);
 
         return $this->templating->render($provider->getTemplate('helper_view'), array(
-             'media'    => $media,
-             'format'   => $format,
-             'options'  => $options,
+             'media' => $media,
+             'format' => $format,
+             'options' => $options,
         ));
-    }
-
-    /**
-     * @param MediaInterface $media
-     *
-     * @return MediaProviderInterface
-     */
-    private function getProvider(MediaInterface $media)
-    {
-        return $this->pool->getProvider($media->getProviderName());
     }
 
     /**
@@ -118,8 +108,8 @@ class MediaHelper extends Helper
         $options['src'] = $provider->generatePublicUrl($media, $format);
 
         return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), array(
-            'media'    => $media,
-            'options'  => $options,
+            'media' => $media,
+            'options' => $options,
         ));
     }
 
@@ -140,5 +130,15 @@ class MediaHelper extends Helper
         $format = $provider->getFormatName($media, $format);
 
         return $provider->generatePublicUrl($media, $format);
+    }
+
+    /**
+     * @param MediaInterface $media
+     *
+     * @return MediaProviderInterface
+     */
+    private function getProvider(MediaInterface $media)
+    {
+        return $this->pool->getProvider($media->getProviderName());
     }
 }

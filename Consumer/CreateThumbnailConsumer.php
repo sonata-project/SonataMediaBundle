@@ -44,8 +44,8 @@ class CreateThumbnailConsumer implements ConsumerInterface
     public function __construct(ManagerInterface $mediaManager, Pool $pool, ContainerInterface $container)
     {
         $this->mediaManager = $mediaManager;
-        $this->pool         = $pool;
-        $this->container    = $container;
+        $this->pool = $pool;
+        $this->container = $container;
     }
 
     /**

@@ -90,7 +90,7 @@ class RemoveThumbsCommand extends BaseCommand
                 $medias = $this->getMediaManager()->findBy(
                     array(
                         'providerName' => $provider->getName(),
-                        'context'      => $context,
+                        'context' => $context,
                     ),
                     array(
                         'id' => 'ASC',

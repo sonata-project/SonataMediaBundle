@@ -26,8 +26,8 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
         $referenceFile = new File('myfile', $filesystem);
 
         $formats = array(
-           'admin'                => array('height' => 50, 'width' => 50, 'quality' => 100),
-           'mycontext_medium'     => array('height' => 500, 'width' => 500, 'quality' => 100),
+           'admin' => array('height' => 50, 'width' => 50, 'quality' => 100),
+           'mycontext_medium' => array('height' => 500, 'width' => 500, 'quality' => 100),
            'anothercontext_large' => array('height' => 500, 'width' => 500, 'quality' => 100),
         );
 

@@ -14,6 +14,11 @@ namespace Sonata\MediaBundle\Model;
 interface GalleryInterface
 {
     /**
+     * @return string
+     */
+    public function __toString();
+
+    /**
      * Set name.
      *
      * @param string $name
@@ -105,9 +110,4 @@ interface GalleryInterface
      * @param GalleryHasMediaInterface $galleryHasMedia
      */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
-
-    /**
-     * @return string
-     */
-    public function __toString();
 }

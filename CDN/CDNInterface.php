@@ -13,11 +13,11 @@ namespace Sonata\MediaBundle\CDN;
 
 interface CDNInterface
 {
-    const STATUS_OK       = 1;
-    const STATUS_TO_SEND  = 2;
+    const STATUS_OK = 1;
+    const STATUS_TO_SEND = 2;
     const STATUS_TO_FLUSH = 3;
-    const STATUS_ERROR    = 4;
-    const STATUS_WAITING  = 5;
+    const STATUS_ERROR = 4;
+    const STATUS_WAITING = 5;
 
     /**
      * Return the base path.

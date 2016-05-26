@@ -32,7 +32,7 @@ class FixMediaContextCommand extends ContainerAwareCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $pool           = $this->getContainer()->get('sonata.media.pool');
+        $pool = $this->getContainer()->get('sonata.media.pool');
         $contextManager = $this->getContainer()->get('sonata.classification.manager.context');
         $cateoryManager = $this->getContainer()->get('sonata.classification.manager.category');
 

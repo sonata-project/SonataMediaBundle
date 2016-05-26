@@ -41,8 +41,8 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTest
         parent::setUp();
 
         $this->galleryManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
-        $this->pool           = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
-        $this->templating     = new FakeTemplating();
+        $this->pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->templating = new FakeTemplating();
     }
 
     public function testExecute()
@@ -53,12 +53,12 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTest
         $block = new Block();
 
         $blockContext = new BlockContext($block, array(
-            'number'   => 15,
-            'mode'     => 'public',
-            'order'    => 'createdAt',
-            'sort'     => 'desc',
-            'context'  => false,
-            'title'    => 'Gallery List',
+            'number' => 15,
+            'mode' => 'public',
+            'order' => 'createdAt',
+            'sort' => 'desc',
+            'context' => false,
+            'title' => 'Gallery List',
             'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
         ));
 
@@ -79,12 +79,12 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTest
         $blockContext = $this->getBlockContext($blockService);
 
         $this->assertSettings(array(
-            'number'   => 15,
-            'mode'     => 'public',
-            'order'    => 'createdAt',
-            'sort'     => 'desc',
-            'context'  => false,
-            'title'    => 'Gallery List',
+            'number' => 15,
+            'mode' => 'public',
+            'order' => 'createdAt',
+            'sort' => 'desc',
+            'context' => false,
+            'title' => 'Gallery List',
             'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
         ), $blockContext);
     }

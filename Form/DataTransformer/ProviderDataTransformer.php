@@ -34,26 +34,9 @@ class ProviderDataTransformer implements DataTransformerInterface
      */
     public function __construct(Pool $pool, $class, array $options = array())
     {
-        $this->pool    = $pool;
+        $this->pool = $pool;
         $this->options = $this->getOptions($options);
-        $this->class   = $class;
-    }
-
-    /**
-     * Define the default options for the DataTransformer.
-     *
-     * @param array $options
-     *
-     * @return array
-     */
-    protected function getOptions(array $options)
-    {
-        return array_merge(array(
-            'provider'      => false,
-            'context'       => false,
-            'empty_on_new'  => true,
-            'new_on_update' => true,
-        ), $options);
+        $this->class = $class;
     }
 
     /**
@@ -114,5 +97,22 @@ class ProviderDataTransformer implements DataTransformerInterface
         $provider->transform($newMedia);
 
         return $newMedia;
+    }
+
+    /**
+     * Define the default options for the DataTransformer.
+     *
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getOptions(array $options)
+    {
+        return array_merge(array(
+            'provider' => false,
+            'context' => false,
+            'empty_on_new' => true,
+            'new_on_update' => true,
+        ), $options);
     }
 }

@@ -85,7 +85,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      *
      * @return string
      */
-    public function media($media = null, $format, $options = array())
+    public function media($media, $format, $options = array())
     {
         $media = $this->getMedia($media);
 
@@ -102,34 +102,10 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
         $options = $provider->getHelperProperties($media, $format, $options);
 
         return $this->render($provider->getTemplate('helper_view'), array(
-            'media'    => $media,
-            'format'   => $format,
-            'options'  => $options,
+            'media' => $media,
+            'format' => $format,
+            'options' => $options,
         ));
-    }
-
-    /**
-     * @param mixed $media
-     *
-     * @return MediaInterface|null|bool
-     */
-    private function getMedia($media)
-    {
-        if (!$media instanceof MediaInterface && strlen($media) > 0) {
-            $media = $this->mediaManager->findOneBy(array(
-                'id' => $media,
-            ));
-        }
-
-        if (!$media instanceof MediaInterface) {
-            return false;
-        }
-
-        if ($media->getProviderStatus() !== MediaInterface::STATUS_OK) {
-            return false;
-        }
-
-        return $media;
     }
 
     /**
@@ -141,7 +117,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      *
      * @return string
      */
-    public function thumbnail($media = null, $format, $options = array())
+    public function thumbnail($media, $format, $options = array())
     {
         $media = $this->getMedia($media);
 
@@ -172,8 +148,8 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
         $options = $provider->getHelperProperties($media, $format, $options);
 
         return $this->render($provider->getTemplate('helper_thumbnail'), array(
-            'media'    => $media,
-            'options'  => $options,
+            'media' => $media,
+            'options' => $options,
         ));
     }
 
@@ -198,7 +174,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      *
      * @return string
      */
-    public function path($media = null, $format)
+    public function path($media, $format)
     {
         $media = $this->getMedia($media);
 
@@ -220,5 +196,29 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     public function getMediaService()
     {
         return $this->mediaService;
+    }
+
+    /**
+     * @param mixed $media
+     *
+     * @return MediaInterface|null|bool
+     */
+    private function getMedia($media)
+    {
+        if (!$media instanceof MediaInterface && strlen($media) > 0) {
+            $media = $this->mediaManager->findOneBy(array(
+                'id' => $media,
+            ));
+        }
+
+        if (!$media instanceof MediaInterface) {
+            return false;
+        }
+
+        if ($media->getProviderStatus() !== MediaInterface::STATUS_OK) {
+            return false;
+        }
+
+        return $media;
     }
 }

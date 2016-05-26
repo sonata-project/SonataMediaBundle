@@ -53,7 +53,7 @@ class MediaAdmin extends Admin
 
         $datagridMapper->add('providerName', 'doctrine_orm_choice', array(
             'field_options' => array(
-                'choices'  => $providers,
+                'choices' => $providers,
                 'required' => false,
                 'multiple' => false,
                 'expanded' => false,

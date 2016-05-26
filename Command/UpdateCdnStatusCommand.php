@@ -60,7 +60,7 @@ class UpdateCdnStatusCommand extends BaseCommand
             $provider = $providers[$providerKey];
         }
 
-        $context  = $input->getArgument('context');
+        $context = $input->getArgument('context');
         if (null === $context) {
             $contexts = array_keys($this->getMediaPool()->getContexts());
             $contextKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the context', $contexts);
@@ -71,8 +71,8 @@ class UpdateCdnStatusCommand extends BaseCommand
         $this->output = $output;
 
         $medias = $this->getMediaManager()->findBy(array(
-            'providerName'   => $provider,
-            'context'        => $context,
+            'providerName' => $provider,
+            'context' => $context,
             'cdnIsFlushable' => true,
         ));
 

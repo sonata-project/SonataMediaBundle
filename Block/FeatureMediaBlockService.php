@@ -29,14 +29,14 @@ class FeatureMediaBlockService extends MediaBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'media'       => false,
+            'media' => false,
             'orientation' => 'left',
-            'title'       => false,
-            'content'     => false,
-            'context'     => false,
-            'mediaId'     => null,
-            'format'      => false,
-            'template'    => 'SonataMediaBundle:Block:block_feature_media.html.twig',
+            'title' => false,
+            'content' => false,
+            'context' => false,
+            'mediaId' => null,
+            'format' => false,
+            'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig',
         ));
     }
 
@@ -51,16 +51,16 @@ class FeatureMediaBlockService extends MediaBlockService
             'keys' => array(
                 array('title', 'text', array(
                     'required' => false,
-                    'label'    => 'form.label_title',
+                    'label' => 'form.label_title',
                 )),
                 array('content', 'textarea', array(
                     'required' => false,
-                    'label'    => 'form.label_content',
+                    'label' => 'form.label_content',
                 )),
                 array('orientation', 'choice', array(
                     'required' => false,
-                    'choices'  => array(
-                        'left'  => 'form.label_orientation_left',
+                    'choices' => array(
+                        'left' => 'form.label_orientation_left',
                         'right' => 'form.label_orientation_right',
                     ),
                     'label' => 'form.label_orientation',
@@ -68,8 +68,8 @@ class FeatureMediaBlockService extends MediaBlockService
                 array($this->getMediaBuilder($formMapper), null, array()),
                 array('format', 'choice', array(
                     'required' => count($formatChoices) > 0,
-                    'choices'  => $formatChoices,
-                    'label'    => 'form.label_format',
+                    'choices' => $formatChoices,
+                    'label' => 'form.label_format',
                 )),
             ),
             'translation_domain' => 'SonataMediaBundle',

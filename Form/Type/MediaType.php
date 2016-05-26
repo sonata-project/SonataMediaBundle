@@ -40,7 +40,7 @@ class MediaType extends AbstractType
      */
     public function __construct(Pool $pool, $class)
     {
-        $this->pool  = $pool;
+        $this->pool = $pool;
         $this->class = $class;
     }
 
@@ -50,9 +50,9 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer(new ProviderDataTransformer($this->pool, $this->class, array(
-            'provider'      => $options['provider'],
-            'context'       => $options['context'],
-            'empty_on_new'  => $options['empty_on_new'],
+            'provider' => $options['provider'],
+            'context' => $options['context'],
+            'empty_on_new' => $options['empty_on_new'],
             'new_on_update' => $options['new_on_update'],
         )));
 
@@ -65,9 +65,9 @@ class MediaType extends AbstractType
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 
         $builder->add('unlink', 'checkbox', array(
-            'label'    => 'widget_label_unlink',
-            'mapped'   => false,
-            'data'     => false,
+            'label' => 'widget_label_unlink',
+            'mapped' => false,
+            'data' => false,
             'required' => false,
         ));
     }
@@ -97,11 +97,11 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => $this->class,
-            'provider'           => null,
-            'context'            => null,
-            'empty_on_new'       => true,
-            'new_on_update'      => true,
+            'data_class' => $this->class,
+            'provider' => null,
+            'context' => null,
+            'empty_on_new' => true,
+            'new_on_update' => true,
             'translation_domain' => 'SonataMediaBundle',
         ));
     }

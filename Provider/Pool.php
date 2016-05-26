@@ -112,14 +112,14 @@ class Pool
         if (!$this->hasContext($name)) {
             $this->contexts[$name] = array(
                 'providers' => array(),
-                'formats'   => array(),
-                'download'  => array(),
+                'formats' => array(),
+                'download' => array(),
             );
         }
 
         $this->contexts[$name]['providers'] = $providers;
-        $this->contexts[$name]['formats']   = $formats;
-        $this->contexts[$name]['download']  = $download;
+        $this->contexts[$name]['formats'] = $formats;
+        $this->contexts[$name]['download'] = $download;
     }
 
     /**

@@ -64,7 +64,7 @@ class SyncThumbsCommand extends BaseCommand
             $providerName = $providers[$providerKey];
         }
 
-        $context  = $input->getArgument('context');
+        $context = $input->getArgument('context');
         if (null === $context) {
             $contexts = array_keys($this->getMediaPool()->getContexts());
             $contextKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the context', $contexts);
@@ -93,7 +93,7 @@ class SyncThumbsCommand extends BaseCommand
                 $medias = $this->getMediaManager()->findBy(
                     array(
                         'providerName' => $providerName,
-                        'context'      => $context,
+                        'context' => $context,
                     ),
                     array(
                         'id' => 'ASC',
