@@ -29,6 +29,7 @@
             <argument>%sonata.media.admin.media.entity%</argument>
             <argument>%sonata.media.admin.media.controller%</argument>
             <argument type="service" id="sonata.media.pool" />
+            <argument type="service" id="sonata.classification.manager.category" />
 
             <call method="setTranslationDomain">
                 <argument>%sonata.media.admin.media.translation_domain%</argument>
