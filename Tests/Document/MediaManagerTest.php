@@ -37,6 +37,15 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($media->getProviderName());
     }
 
+    public function testSaveFlushesProperlyUsingNewInterface()
+    {
+        $this->manager->getObjectManager()->expects($this->once())->method('flush');
+        $this->manager->save(new Media());
+
+        $this->manager->getObjectManager()->expects($this->never())->method('flush');
+        $this->manager->save(new Media(), false);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */
