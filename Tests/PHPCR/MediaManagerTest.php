@@ -22,6 +22,15 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
     /** @var MediaManager */
     private $manager;
 
+    protected function setUp()
+    {
+        if (!class_exists('Doctrine\\ODM\\PHPCR\\DocumentManager', true)) {
+            $this->markTestSkipped('Sonata\\MediaBundle\\PHPCR\\MediaManager requires "Doctrine\\ODM\\PHPCR" lib.');
+        }
+
+        $this->manager = new MediaManager('Sonata\MediaBundle\Model\MediaInterface', $this->createRegistryMock());
+    }
+
     public function testSave()
     {
         $media = new Media();
@@ -51,15 +60,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
     public function testDeleteException()
     {
         $this->manager->delete(null);
-    }
-
-    protected function setUp()
-    {
-        if (!class_exists('Doctrine\\ODM\\PHPCR\\DocumentManager', true)) {
-            $this->markTestSkipped('Sonata\\MediaBundle\\PHPCR\\MediaManager requires "Doctrine\\ODM\\PHPCR" lib.');
-        }
-
-        $this->manager = new MediaManager('Sonata\MediaBundle\Model\MediaInterface', $this->createRegistryMock());
     }
 
     /**

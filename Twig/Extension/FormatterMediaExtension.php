@@ -90,7 +90,7 @@ class FormatterMediaExtension extends BaseProxyExtension
      *
      * @return string
      */
-    public function media($media = null, $format, $options = array())
+    public function media($media, $format, $options = array())
     {
         return $this->getTwigExtension()->media($media, $format, $options);
     }
@@ -102,7 +102,7 @@ class FormatterMediaExtension extends BaseProxyExtension
      *
      * @return string
      */
-    public function thumbnail($media = null, $format, $options = array())
+    public function thumbnail($media, $format, $options = array())
     {
         return $this->getTwigExtension()->thumbnail($media, $format, $options);
     }
@@ -113,7 +113,7 @@ class FormatterMediaExtension extends BaseProxyExtension
      *
      * @return string
      */
-    public function path($media = null, $format)
+    public function path($media, $format)
     {
         return $this->getTwigExtension()->path($media, $format);
     }

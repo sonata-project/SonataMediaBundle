@@ -29,7 +29,7 @@ abstract class BaseGalleryBreadcrumbBlockService extends BaseBreadcrumbMenuBlock
         $menu = parent::getRootMenu($blockContext);
 
         $menu->addChild('sonata_media_gallery_index', array(
-            'route'  => 'sonata_media_gallery_index',
+            'route' => 'sonata_media_gallery_index',
             'extras' => array('translation_domain' => 'SonataMediaBundle'),
         ));
 

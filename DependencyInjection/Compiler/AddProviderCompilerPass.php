@@ -50,7 +50,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
 
         // not very clean but don't know how to do that for now
         $settings = false;
-        $methods  = $pool->getMethodCalls();
+        $methods = $pool->getMethodCalls();
         foreach ($methods as $pos => $calls) {
             if ($calls[0] == '__hack__') {
                 $settings = $calls[1];
@@ -118,10 +118,10 @@ class AddProviderCompilerPass implements CompilerPassInterface
                 $definition = $container->getDefinition($id);
 
                 foreach ($context['formats'] as $format => $config) {
-                    $config['quality']      = isset($config['quality']) ? $config['quality'] : 80;
-                    $config['format']       = isset($config['format'])  ? $config['format'] : 'jpg';
-                    $config['height']       = isset($config['height'])  ? $config['height'] : false;
-                    $config['constraint']   = isset($config['constraint'])  ? $config['constraint'] : true;
+                    $config['quality'] = isset($config['quality']) ? $config['quality'] : 80;
+                    $config['format'] = isset($config['format'])  ? $config['format'] : 'jpg';
+                    $config['height'] = isset($config['height'])  ? $config['height'] : false;
+                    $config['constraint'] = isset($config['constraint'])  ? $config['constraint'] : true;
 
                     $formatName = sprintf('%s_%s', $name, $format);
                     $definition->addMethodCall('addFormat', array($formatName, $config));

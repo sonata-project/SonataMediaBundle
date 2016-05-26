@@ -25,7 +25,7 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
     public function testGetMediaAction()
     {
         $mManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
-        $media    = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
 
         $mManager->expects($this->once())->method('getPager')->will($this->returnValue(array($media)));
 
@@ -77,13 +77,13 @@ class MediaControllerTest extends \PHPUnit_Framework_TestCase
 
         $expected = array(
             'reference' => array(
-                'url'        => null,
+                'url' => null,
                 'properties' => array(
                     'foo' => 'bar',
                 ),
             ),
             'format_name1' => array(
-                'url'        => null,
+                'url' => null,
                 'properties' => array(
                     'foo' => 'bar',
                 ),

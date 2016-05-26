@@ -43,8 +43,8 @@ class SimpleResizer implements ResizerInterface
      */
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
-        $this->adapter  = $adapter;
-        $this->mode     = $mode;
+        $this->adapter = $adapter;
+        $this->mode = $mode;
         $this->metadata = $metadata;
     }
 

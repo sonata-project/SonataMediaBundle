@@ -55,7 +55,7 @@ class MediaBlockService extends BaseBlockService
         parent::__construct($name, $templating);
 
         $this->mediaManager = $mediaManager;
-        $this->container    = $container;
+        $this->container = $container;
     }
 
     /**
@@ -84,11 +84,11 @@ class MediaBlockService extends BaseBlockService
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'media'    => false,
-            'title'    => false,
-            'context'  => false,
-            'mediaId'  => null,
-            'format'   => false,
+            'media' => false,
+            'title' => false,
+            'context' => false,
+            'mediaId' => null,
+            'format' => false,
             'template' => 'SonataMediaBundle:Block:block_media.html.twig',
         ));
     }
@@ -108,16 +108,78 @@ class MediaBlockService extends BaseBlockService
             'keys' => array(
                 array('title', 'text', array(
                     'required' => false,
-                    'label'    => 'form.label_title',
+                    'label' => 'form.label_title',
                 )),
                 array($this->getMediaBuilder($formMapper), null, array()),
                 array('format', 'choice', array(
                     'required' => count($formatChoices) > 0,
-                    'choices'  => $formatChoices,
-                    'label'    => 'form.label_format',
+                    'choices' => $formatChoices,
+                    'label' => 'form.label_format',
                 )),
             ),
             'translation_domain' => 'SonataMediaBundle',
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    {
+        // make sure we have a valid format
+        $media = $blockContext->getBlock()->getSetting('mediaId');
+        if ($media instanceof MediaInterface) {
+            $choices = $this->getFormatChoices($media);
+
+            if (!array_key_exists($blockContext->getSetting('format'), $choices)) {
+                $blockContext->setSetting('format', key($choices));
+            }
+        }
+
+        return $this->renderResponse($blockContext->getTemplate(), array(
+            'media' => $blockContext->getSetting('mediaId'),
+            'block' => $blockContext->getBlock(),
+            'settings' => $blockContext->getSettings(),
+        ), $response);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function load(BlockInterface $block)
+    {
+        $media = $block->getSetting('mediaId', null);
+
+        if (is_int($media)) {
+            $media = $this->mediaManager->findOneBy(array('id' => $media));
+        }
+
+        $block->setSetting('mediaId', $media);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist(BlockInterface $block)
+    {
+        $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate(BlockInterface $block)
+    {
+        $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockMetadata($code = null)
+    {
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+            'class' => 'fa fa-picture-o',
         ));
     }
 
@@ -159,76 +221,14 @@ class MediaBlockService extends BaseBlockService
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(array(
             'fieldName' => 'media',
-            'type'      => ClassMetadataInfo::MANY_TO_ONE,
+            'type' => ClassMetadataInfo::MANY_TO_ONE,
         ));
 
         return $formMapper->create('mediaId', 'sonata_type_model_list', array(
             'sonata_field_description' => $fieldDescription,
-            'class'                    => $this->getMediaAdmin()->getClass(),
-            'model_manager'            => $this->getMediaAdmin()->getModelManager(),
-            'label'                    => 'form.label_media',
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
-    {
-        // make sure we have a valid format
-        $media = $blockContext->getBlock()->getSetting('mediaId');
-        if ($media instanceof MediaInterface) {
-            $choices = $this->getFormatChoices($media);
-
-            if (!array_key_exists($blockContext->getSetting('format'), $choices)) {
-                $blockContext->setSetting('format', key($choices));
-            }
-        }
-
-        return $this->renderResponse($blockContext->getTemplate(), array(
-            'media'     => $blockContext->getSetting('mediaId'),
-            'block'     => $blockContext->getBlock(),
-            'settings'  => $blockContext->getSettings(),
-        ), $response);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function load(BlockInterface $block)
-    {
-        $media = $block->getSetting('mediaId', null);
-
-        if (is_int($media)) {
-            $media = $this->mediaManager->findOneBy(array('id' => $media));
-        }
-
-        $block->setSetting('mediaId', $media);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function prePersist(BlockInterface $block)
-    {
-        $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function preUpdate(BlockInterface $block)
-    {
-        $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockMetadata($code = null)
-    {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
-            'class' => 'fa fa-picture-o',
+            'class' => $this->getMediaAdmin()->getClass(),
+            'model_manager' => $this->getMediaAdmin()->getModelManager(),
+            'label' => 'form.label_media',
         ));
     }
 }

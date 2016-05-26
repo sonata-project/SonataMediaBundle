@@ -31,9 +31,9 @@ class SonataMediaExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $processor     = new Processor();
+        $processor = new Processor();
         $configuration = new Configuration();
-        $config        = $processor->processConfiguration($configuration, $configs);
+        $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('provider.xml');
@@ -168,9 +168,9 @@ class SonataMediaExtension extends Extension
             $container->getDefinition($connector)
                 ->addMethodCall('setIgnoreErrors', array($config['buzz']['client']['ignore_errors']))
                 ->addMethodCall('setMaxRedirects', array($config['buzz']['client']['max_redirects']))
-                ->addMethodCall('setTimeout',      array($config['buzz']['client']['timeout']))
-                ->addMethodCall('setVerifyPeer',   array($config['buzz']['client']['verify_peer']))
-                ->addMethodCall('setProxy',        array($config['buzz']['client']['proxy']));
+                ->addMethodCall('setTimeout', array($config['buzz']['client']['timeout']))
+                ->addMethodCall('setVerifyPeer', array($config['buzz']['client']['verify_peer']))
+                ->addMethodCall('setProxy', array($config['buzz']['client']['proxy']));
         }
     }
 
@@ -198,26 +198,26 @@ class SonataMediaExtension extends Extension
         $collector = DoctrineCollector::getInstance();
 
         $collector->addAssociation($config['class']['media'], 'mapOneToMany', array(
-            'fieldName'     => 'galleryHasMedias',
-            'targetEntity'  => $config['class']['gallery_has_media'],
-            'cascade'       => array(
+            'fieldName' => 'galleryHasMedias',
+            'targetEntity' => $config['class']['gallery_has_media'],
+            'cascade' => array(
                 'persist',
             ),
-            'mappedBy'      => 'media',
+            'mappedBy' => 'media',
             'orphanRemoval' => false,
         ));
 
         $collector->addAssociation($config['class']['gallery_has_media'], 'mapManyToOne', array(
-            'fieldName'     => 'gallery',
-            'targetEntity'  => $config['class']['gallery'],
-            'cascade'       => array(
+            'fieldName' => 'gallery',
+            'targetEntity' => $config['class']['gallery'],
+            'cascade' => array(
                 'persist',
             ),
-            'mappedBy'      => null,
-            'inversedBy'    => 'galleryHasMedias',
-            'joinColumns'   => array(
+            'mappedBy' => null,
+            'inversedBy' => 'galleryHasMedias',
+            'joinColumns' => array(
                 array(
-                    'name'                 => 'gallery_id',
+                    'name' => 'gallery_id',
                     'referencedColumnName' => 'id',
                 ),
             ),
@@ -225,16 +225,16 @@ class SonataMediaExtension extends Extension
         ));
 
         $collector->addAssociation($config['class']['gallery_has_media'], 'mapManyToOne', array(
-            'fieldName'     => 'media',
-            'targetEntity'  => $config['class']['media'],
-            'cascade'       => array(
+            'fieldName' => 'media',
+            'targetEntity' => $config['class']['media'],
+            'cascade' => array(
                  'persist',
             ),
-            'mappedBy'      => null,
-            'inversedBy'    => 'galleryHasMedias',
-            'joinColumns'   => array(
+            'mappedBy' => null,
+            'inversedBy' => 'galleryHasMedias',
+            'joinColumns' => array(
                 array(
-                    'name'                 => 'media_id',
+                    'name' => 'media_id',
                     'referencedColumnName' => 'id',
                 ),
             ),
@@ -242,32 +242,32 @@ class SonataMediaExtension extends Extension
         ));
 
         $collector->addAssociation($config['class']['gallery'], 'mapOneToMany', array(
-            'fieldName'     => 'galleryHasMedias',
-            'targetEntity'  => $config['class']['gallery_has_media'],
-            'cascade'       => array(
+            'fieldName' => 'galleryHasMedias',
+            'targetEntity' => $config['class']['gallery_has_media'],
+            'cascade' => array(
                 'persist',
             ),
-            'mappedBy'      => 'gallery',
+            'mappedBy' => 'gallery',
             'orphanRemoval' => true,
-            'orderBy'       => array(
-                'position'  => 'ASC',
+            'orderBy' => array(
+                'position' => 'ASC',
             ),
         ));
 
         if (interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface')) {
             $collector->addAssociation($config['class']['media'], 'mapManyToOne', array(
-                'fieldName'     => 'category',
-                'targetEntity'  => $config['class']['category'],
-                'cascade'       => array(
+                'fieldName' => 'category',
+                'targetEntity' => $config['class']['category'],
+                'cascade' => array(
                     'persist',
                 ),
-                'mappedBy'      => null,
-                'inversedBy'    => null,
-                'joinColumns'   => array(
+                'mappedBy' => null,
+                'inversedBy' => null,
+                'joinColumns' => array(
                     array(
-                     'name'                 => 'category_id',
+                     'name' => 'category_id',
                      'referencedColumnName' => 'id',
-                     'onDelete'             => 'SET NULL',
+                     'onDelete' => 'SET NULL',
                     ),
                 ),
                 'orphanRemoval' => false,
@@ -348,12 +348,12 @@ class SonataMediaExtension extends Extension
                 ->addArgument($config['filesystem']['ftp']['directory'])
                 ->addArgument($config['filesystem']['ftp']['host'])
                 ->addArgument(array(
-                    'port'     => $config['filesystem']['ftp']['port'],
+                    'port' => $config['filesystem']['ftp']['port'],
                     'username' => $config['filesystem']['ftp']['username'],
                     'password' => $config['filesystem']['ftp']['password'],
-                    'passive'  => $config['filesystem']['ftp']['passive'],
-                    'create'   => $config['filesystem']['ftp']['create'],
-                    'mode'     => $config['filesystem']['ftp']['mode'],
+                    'passive' => $config['filesystem']['ftp']['passive'],
+                    'create' => $config['filesystem']['ftp']['create'],
+                    'mode' => $config['filesystem']['ftp']['mode'],
                 ))
             ;
         } else {
@@ -371,10 +371,10 @@ class SonataMediaExtension extends Extension
 
             $container->getDefinition('sonata.media.metadata.amazon')
                 ->addArgument(array(
-                        'acl'           => $config['filesystem']['s3']['acl'],
-                        'storage'       => $config['filesystem']['s3']['storage'],
-                        'encryption'    => $config['filesystem']['s3']['encryption'],
-                        'meta'          => $config['filesystem']['s3']['meta'],
+                        'acl' => $config['filesystem']['s3']['acl'],
+                        'storage' => $config['filesystem']['s3']['storage'],
+                        'encryption' => $config['filesystem']['s3']['encryption'],
+                        'meta' => $config['filesystem']['s3']['meta'],
                         'cache_control' => $config['filesystem']['s3']['cache_control'],
                 ))
             ;
@@ -382,7 +382,7 @@ class SonataMediaExtension extends Extension
             $container->getDefinition('sonata.media.adapter.service.s3')
                 ->replaceArgument(0, array(
                     'secret' => $config['filesystem']['s3']['secretKey'],
-                    'key'    => $config['filesystem']['s3']['accessKey'],
+                    'key' => $config['filesystem']['s3']['accessKey'],
                 ))
             ;
         } else {
