@@ -53,6 +53,7 @@ class ApiMediaType extends AbstractType
     {
         $builder->addModelTransformer(new ProviderDataTransformer($this->mediaPool, $this->class, array(
             'empty_on_new' => false,
+            'context'      => $options['context'],
         )), true);
 
         $provider = $this->mediaPool->getProvider($options['provider_name']);
@@ -76,7 +77,7 @@ class ApiMediaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'provider_name' => 'sonata.media.provider.image',
-            'context'       => 'api',
+            'context'       => $this->mediaPool->getDefaultContext(),
         ));
     }
 
