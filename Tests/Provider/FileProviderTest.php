@@ -225,6 +225,11 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @requires PHP 5.6
+     *
+     * @see https://github.com/sebastianbergmann/phpunit/issues/1409
+     */
     public function testBinaryContentWithRealPath()
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
@@ -265,6 +270,11 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $setFileContents->invoke($provider, $media);
     }
 
+    /**
+     * @requires PHP 5.6
+     *
+     * @see https://github.com/sebastianbergmann/phpunit/issues/1409
+     */
     public function testBinaryContentStreamWrapped()
     {
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
