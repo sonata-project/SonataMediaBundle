@@ -117,7 +117,7 @@ Let's create the following strategy : a media can be downloaded only once per se
                 return false;
             }
 
-            $this->getSession()->set($this->sessionKey, $times++);
+            $this->getSession()->set($this->sessionKey, $times + 1);
 
             return true;
         }
