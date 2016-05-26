@@ -118,6 +118,17 @@ class ImageProviderTest extends \PHPUnit_Framework_TestCase
         $provider->generateThumbnails($media);
 
         $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
+
+        $provider->preRemove($media);
+        $this->assertSame(
+            array(
+                'default/0011/24/ASDASDAS.png',
+                'default/0011/24/thumb_1023456_big.png',
+            ),
+            $media->getAssetPaths(),
+            'Media::getAssetPaths() return the correct paths to delete'
+        );
+        $provider->postRemove($media);
     }
 
     public function testEvent()
