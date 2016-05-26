@@ -19,21 +19,24 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Filesystem\Tests\FilesystemTest as LegacyTestCase;
-use Symfony\Component\Filesystem\Tests\FilesystemTestCase as BaseTestCase;
+use Symfony\Component\Filesystem\Tests\FilesystemTestCase;
 
-// Polyfill for old symfony 2.3 TestCase class
 if (class_exists('Symfony\Component\Filesystem\Tests\FilesystemTestCase')) {
-    class FilesystemTestCase extends BaseTestCase
+    class TestCase extends FilesystemTestCase
     {
     }
 } else {
-    class FilesystemTestCase extends LegacyTestCase
+    class TestCase extends \PHPUnit_Framework_TestCase
     {
     }
 }
 
-class CleanMediaCommandTest extends FilesystemTestCase
+/**
+ * @author Sullivan Senechal <soullivaneuh@gmail.com>
+ *
+ * @requires function Symfony\Component\Filesystem\Tests\FilesystemTestCase::setUpBeforeClass
+ */
+class CleanMediaCommandTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
