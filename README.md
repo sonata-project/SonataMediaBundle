@@ -10,7 +10,9 @@ Symfony SonataMediaBundle
 [![Monthly Downloads](https://poser.pugx.org/sonata-project/media-bundle/d/monthly)](https://packagist.org/packages/sonata-project/media-bundle)
 [![Daily Downloads](https://poser.pugx.org/sonata-project/media-bundle/d/daily)](https://packagist.org/packages/sonata-project/media-bundle)
 
-[![Build Status](https://travis-ci.org/sonata-project/SonataMediaBundle.svg?branch=master)](https://travis-ci.org/sonata-project/SonataMediaBundle)
+3.x status: [![Build Status](https://travis-ci.org/sonata-project/SonataMediaBundle.svg?branch=3.x)](https://travis-ci.org/sonata-project/SonataMediaBundle)
+
+master status: [![Build Status](https://travis-ci.org/sonata-project/SonataMediaBundle.svg?branch=master)](https://travis-ci.org/sonata-project/SonataMediaBundle)
 
 ## Documentation
 
