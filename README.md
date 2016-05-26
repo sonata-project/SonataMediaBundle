@@ -1,13 +1,28 @@
-SonataMediaBundle - Media management on steroids
-================================================
+# Sonata Media Bundle
 
-[![Build Status](https://secure.travis-ci.org/sonata-project/SonataMediaBundle.png)](https://secure.travis-ci.org/#!/sonata-project/SonataMediaBundle)
+Symfony SonataMediaBundle
 
-The ``SonataMediaBundle`` is a media library based on a dedicated ``provider`` which handles different ``type`` of media: files, videos or images.
+[![Latest Stable Version](https://poser.pugx.org/sonata-project/media-bundle/v/stable)](https://packagist.org/packages/sonata-project/media-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/sonata-project/media-bundle/v/unstable)](https://packagist.org/packages/sonata-project/media-bundle)
+[![License](https://poser.pugx.org/sonata-project/media-bundle/license)](https://packagist.org/packages/sonata-project/media-bundle)
 
-Check out the documentation on [https://sonata-project.org/bundles/media/master/doc/index.html](https://sonata-project.org/bundles/media/master/doc/index.html)
+[![Total Downloads](https://poser.pugx.org/sonata-project/media-bundle/downloads)](https://packagist.org/packages/sonata-project/media-bundle)
+[![Monthly Downloads](https://poser.pugx.org/sonata-project/media-bundle/d/monthly)](https://packagist.org/packages/sonata-project/media-bundle)
+[![Daily Downloads](https://poser.pugx.org/sonata-project/media-bundle/d/daily)](https://packagist.org/packages/sonata-project/media-bundle)
 
-**Google Groups**: For questions and proposals you can post on this google groups
+[![Build Status](https://travis-ci.org/sonata-project/SonataMediaBundle.svg?branch=master)](https://travis-ci.org/sonata-project/SonataMediaBundle)
 
-* [Sonata Users](https://groups.google.com/group/sonata-users): Only for user questions
-* [Sonata Devs](https://groups.google.com/group/sonata-devs): Only for devs
+## Documentation
+
+Check out the documentation on the [official website](https://sonata-project.org/bundles/media).
+
+## Support
+
+For general support and questions, please use [StackOverflow](http://stackoverflow.com/questions/tagged/sonata).
+
+If you think you find a bug or you have a feature idea to propose, feel free to open a issue
+**after looking** at the [contributing guide](CONTRIBUTING.md).
+
+## License
+
+This package is available under the [MIT license](LICENSE).
