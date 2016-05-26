@@ -22,9 +22,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Tests\FilesystemTestCase;
 
 if (class_exists('Symfony\Component\Filesystem\Tests\FilesystemTestCase')) {
-    class TestCase extends FilesystemTestCase {}
+    class TestCase extends FilesystemTestCase
+    {
+    }
 } else {
-    class TestCase extends \PHPUnit_Framework_TestCase {}
+    class TestCase extends \PHPUnit_Framework_TestCase
+    {
+    }
 }
 
 /**
