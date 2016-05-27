@@ -48,11 +48,18 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
 
         $media = $this->getMedia();
         $format = 'png';
-        $options = array('title' => 'Test title');
+        $options = array(
+            'title' => 'Test title',
+            'alt' => 'Test title',
+        );
 
         $provider = $this->getProvider();
         $provider->expects($this->once())->method('getHelperProperties')->with($media, $format, $options)
-            ->willReturn(array('title' => 'Test title', 'data-custom' => 'foo'));
+            ->willReturn(array(
+                'title' => 'Test title',
+                'alt' => 'Test title',
+                'data-custom' => 'foo',
+            ));
 
         $template = $this->getTemplate();
         $template->expects($this->once())
@@ -61,7 +68,11 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo(
                     array(
                         'media' => $media,
-                        'options' => array('title' => 'Test title', 'data-custom' => 'foo'),
+                        'options' => array(
+                            'title' => 'Test title',
+                            'alt' => 'Test title',
+                            'data-custom' => 'foo',
+                        ),
                     )
                 )
             );
