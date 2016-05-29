@@ -45,7 +45,8 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
     {
         $self = $this;
         $this
-            ->getGalleryManager(function ($qb) use ($self) {})
+            ->getGalleryManager(function ($qb) use ($self) {
+            })
             ->getPager(array(), 1, 10, array('invalid' => 'ASC'));
     }
 
