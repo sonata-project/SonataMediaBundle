@@ -58,6 +58,11 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $thumbnail;
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * @param string             $name
      * @param Filesystem         $filesystem
      * @param CDNInterface       $cdn
