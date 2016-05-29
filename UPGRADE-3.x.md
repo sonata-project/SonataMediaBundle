@@ -1,6 +1,11 @@
 UPGRADE 3.x
 ===========
 
+### Custom video provider
+
+When creating a custom video provider, you have to implement the ``getReferenceUrl`` method to establish
+the media url.
+
 UPGRADE FROM 3.0 to 3.1
 =======================
 
