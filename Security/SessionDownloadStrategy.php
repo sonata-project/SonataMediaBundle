@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Security;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class SessionDownloadStrategy implements DownloadStrategyInterface
