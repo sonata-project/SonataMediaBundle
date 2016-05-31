@@ -128,15 +128,12 @@ To use this feature, follow `CoopTilleulsCKEditorSonataMediaBundle installation 
 
 Now, just create a field with ckeditor as type and your done:
 
-.. code-block:: yaml
+.. code-block:: php
 
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add(
-                'mytext',
-                'ckeditor',
-                array(
+            ->add('mytext', 'ckeditor', array(
                 'config' => array(
                     'toolbar' => array(
                         array(
@@ -147,9 +144,9 @@ Now, just create a field with ckeditor as type and your done:
                             'name' => 'insert',
                             'items' => array('Image'),
                         ),
-                    )
-                );
-            );
+                    ),
+                ),
+            ));
     }
 
 Medias in CKEditor with SonataFormatterBundle
