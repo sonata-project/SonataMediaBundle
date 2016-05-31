@@ -212,8 +212,14 @@ class CleanMediaCommandTest extends TestCase
 
         $output = $this->tester->execute(array('command' => $this->command->getName(), '--verbose' => true));
 
-        $this->assertRegExp('@Context: foo\s+\'qwertz.ext\' found\s+\'thumb_1_bar.ext\' found\s+done!@', $this->tester->getDisplay());
-
+        $this->assertOutputFoundInContext(
+            '/Context: foo\s+(.+)\s+done!/ms',
+            array(
+                '\'qwertz.ext\' found',
+                '\'thumb_1_bar.ext\' found',
+            ),
+            $this->tester->getDisplay()
+        );
         $this->assertSame(0, $output);
     }
 
@@ -244,8 +250,14 @@ class CleanMediaCommandTest extends TestCase
 
         $output = $this->tester->execute(array('command' => $this->command->getName(), '--dry-run' => true));
 
-        $this->assertRegExp('@Context: foo\s+\'qwertz.ext\' is orphanend\s+\'thumb_1_bar.ext\' is orphanend\s+done!@', $this->tester->getDisplay());
-
+        $this->assertOutputFoundInContext(
+            '/Context: foo\s+(.+)\s+done!/ms',
+            array(
+                '\'qwertz.ext\' is orphanend',
+                '\'thumb_1_bar.ext\' is orphanend',
+            ),
+            $this->tester->getDisplay()
+        );
         $this->assertSame(0, $output);
     }
 
@@ -276,8 +288,58 @@ class CleanMediaCommandTest extends TestCase
 
         $output = $this->tester->execute(array('command' => $this->command->getName()));
 
-        $this->assertRegExp('@Context: foo\s+\'qwertz.ext\' was successfully removed\s+\'thumb_1_bar.ext\' was successfully removed\s+done!@', $this->tester->getDisplay());
-
+        $this->assertOutputFoundInContext(
+            '/Context: foo\s+(.+)\s+done!/ms',
+            array(
+                '\'qwertz.ext\' was successfully removed',
+                '\'thumb_1_bar.ext\' was successfully removed',
+            ),
+            $this->tester->getDisplay()
+        );
         $this->assertSame(0, $output);
+    }
+
+    /**
+     * Asserts whether all expected texts can be found in the output within a given context.
+     *
+     * @param string $extract  PCRE regex expected to have a single matching group, extracting the content of a context
+     * @param array  $expected Excerpts of text expected to be found in the output
+     * @param string $output   Searched output
+     */
+    private function assertOutputFoundInContext($extractor, $expected, $output)
+    {
+        preg_match_all($extractor, $output, $matches);
+
+        $found = false;
+        foreach ($matches[1] as $match) {
+            if ($this->containsAll($match, $expected)) {
+                $found = true;
+                break;
+            }
+        }
+
+        $this->assertTrue($found, sprintf(
+            'Unable to find "%s" in "%s" with extractor "%s"',
+            implode('", "', $expected),
+            $output,
+            $extractor
+        ));
+    }
+
+    /**
+     * Returns whether every needle can be found as a substring of the haystack.
+     *
+     * @param string $haystack
+     * @param array  $needles  Array of (potential) substrings of the haystack
+     */
+    private function containsAll($haystack, $needles)
+    {
+        foreach ($needles as $needle) {
+            if (false === strpos($haystack, $needle)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
