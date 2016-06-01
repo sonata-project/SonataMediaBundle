@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
 
 class Server implements CDNInterface
 {
-
     protected $path;
 
     /**
@@ -44,7 +43,7 @@ class Server implements CDNInterface
     public function getPath($relativePath, $isFlushable)
     {
         $path = sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
-        
+
         return $this->assetsHelper->getUrl($path);
     }
 
