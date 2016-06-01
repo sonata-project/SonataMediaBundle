@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -18,7 +18,6 @@ class Server implements CDNInterface
     protected $path;
 
     /**
-     *
      * @var AssetsHelper
      */
     private $assetsHelper;
@@ -40,16 +39,17 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPath($relativePath, $isFlushable)
     {
         $path = sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
+        
         return $this->assetsHelper->getUrl($path);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flushByString($string)
     {
@@ -57,7 +57,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flush($string)
     {
@@ -65,7 +65,7 @@ class Server implements CDNInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flushPaths(array $paths)
     {
