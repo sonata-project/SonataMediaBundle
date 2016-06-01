@@ -134,6 +134,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
         // build option
         $defaultOptions = array(
             'title' => $media->getName(),
+            'alt' => $media->getName(),
         );
 
         if ($format_definition['width']) {
