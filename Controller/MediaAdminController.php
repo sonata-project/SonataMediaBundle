@@ -83,13 +83,13 @@ class MediaAdminController extends Controller
             $datagrid->setValue('category', null, $category);
         }
         if ($request->get('category')) {
-            $contextInCategory = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
+            $categoryByContext = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
                 'id' => (int) $request->get('category'),
                 'context' => $context,
             ));
 
-            if (!empty($contextInCategory)) {
-                $datagrid->setValue('category', null, $contextInCategory);
+            if (!empty($categoryByContext)) {
+                $datagrid->setValue('category', null, $categoryByContext);
             } else {
                 $datagrid->setValue('category', null, $category);
             }
