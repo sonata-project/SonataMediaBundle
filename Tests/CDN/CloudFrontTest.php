@@ -21,7 +21,7 @@ class CloudFrontTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyCloudFront()
     {
-        $client = $this->getMock('CloudFrontClientSpy', array('createInvalidation'), array(), '', false);
+        $client = $this->getMock('\Aws\CloudFront\CloudFrontClient', array('createInvalidation'), array(), '', false);
         $client->expects($this->exactly(3))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy()));
 
         $cloudFront = $this->getMockBuilder('Sonata\MediaBundle\CDN\CloudFront')
@@ -45,7 +45,7 @@ class CloudFrontTest extends \PHPUnit_Framework_TestCase
     public function testLegacyException()
     {
         $this->setExpectedException('\RuntimeException', 'Unable to flush : ');
-        $client = $this->getMock('CloudFrontClientSpy', array('createInvalidation'), array(), '', false);
+        $client = $this->getMock('\Aws\CloudFront\CloudFrontClient', array('createInvalidation'), array(), '', false);
         $client->expects($this->exactly(1))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy(true)));
         $cloudFront = $this->getMockBuilder('Sonata\MediaBundle\CDN\CloudFront')
                     ->setConstructorArgs(array('/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'))
@@ -53,14 +53,6 @@ class CloudFrontTest extends \PHPUnit_Framework_TestCase
                     ->getMock();
         $cloudFront->setClient($client);
         $cloudFront->flushPaths(array('boom'));
-    }
-}
-
-class CloudFrontClientSpy
-{
-    public function createInvalidation()
-    {
-        return new CloudFrontResultSpy();
     }
 }
 
