@@ -90,7 +90,6 @@ class GalleryBlockService extends BaseBlockService
             'format' => false,
             'pauseTime' => 3000,
             'startPaused' => false,
-            'wrap' => true,
             'template' => 'SonataMediaBundle:Block:block_gallery.html.twig',
             'galleryId' => null,
         ));
@@ -158,10 +157,6 @@ class GalleryBlockService extends BaseBlockService
                 array('startPaused', 'checkbox', array(
                     'required' => false,
                     'label' => 'form.label_start_paused',
-                )),
-                array('wrap', 'checkbox', array(
-                    'required' => false,
-                    'label' => 'form.label_wrap',
                 )),
             ),
             'translation_domain' => 'SonataMediaBundle',
