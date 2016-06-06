@@ -10,7 +10,7 @@
         <uuid name="uuid" />
 
         <field name="name"               type="string" />
-        <field name="description"        type="string" nullable="true"/>
+        <field name="description"        type="string" nullable="true" />
         <field name="enabled"            type="boolean" />
 
         <field name="providerName"       type="string" />
@@ -22,7 +22,7 @@
         <field name="height"             type="long" />
         <field name="length"             type="double" nullable="true" />
         <field name="contentType"        type="string" />
-        <field name="size"               type="long" nullable="true"/>
+        <field name="size"               type="long" nullable="true" />
 
         <field name="copyright"          type="string" nullable="true" />
         <field name="authorName"         type="string" nullable="true" />

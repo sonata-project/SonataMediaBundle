@@ -14,7 +14,7 @@
         >
 
         <id name="id" type="integer" column="id">
-            <generator strategy="AUTO"/>
+            <generator strategy="AUTO" />
         </id>
 
     </entity>
