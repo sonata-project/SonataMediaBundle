@@ -62,7 +62,7 @@
         "liip/imagine-bundle": "^0.9",
         "rackspace/php-opencloud": "^1.6",
         "sonata-project/seo-bundle": "^2.0",
-        "tilleuls/ckeditor-sonata-mediabundle": "^1.0"
+        "tilleuls/ckeditor-sonata-media-bundle": "^1.0"
     },
     "conflict": {
         "jms/serializer": "<0.13",
