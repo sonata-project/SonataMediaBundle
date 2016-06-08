@@ -6,8 +6,8 @@
 
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseGallery">
 
-        <field name="name"          fieldName="name"            type="string"/>
-        <field name="context"       fieldName="context"         type="string"/>
+        <field name="name"          fieldName="name"            type="string" />
+        <field name="context"       fieldName="context"         type="string" />
         <field name="defaultFormat" fieldName="defaultFormat"   type="string" />
         <field name="enabled"       fieldName="enabled"         type="boolean" />
 
@@ -15,8 +15,8 @@
         <field name="createdAt"     fieldName="createdAt"       type="date" />
 
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="prePersist"/>
-            <lifecycle-callback type="preUpdate" method="preUpdate"/>
+            <lifecycle-callback type="prePersist" method="prePersist" />
+            <lifecycle-callback type="preUpdate" method="preUpdate" />
         </lifecycle-callbacks>
 
     </mapped-superclass>

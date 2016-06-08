@@ -8,7 +8,7 @@
     <mapped-superclass name="Sonata\MediaBundle\PHPCR\BaseGalleryHasMedia" referenceable="true" >
 
         <parent-document name="gallery" />
-        <nodename name="nodename"/>
+        <nodename name="nodename" />
 
         <field name="enabled"        type="boolean" />
 
@@ -16,8 +16,8 @@
         <field name="createdAt"      type="date" />
 
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="prePersist"/>
-            <lifecycle-callback type="preUpdate" method="preUpdate"/>
+            <lifecycle-callback type="prePersist" method="prePersist" />
+            <lifecycle-callback type="preUpdate" method="preUpdate" />
         </lifecycle-callbacks>
 
     </mapped-superclass>

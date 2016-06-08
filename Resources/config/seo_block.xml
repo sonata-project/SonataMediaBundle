@@ -11,8 +11,8 @@
 
     <services>
         <service id="sonata.media.block.breadcrumb_view" class="%sonata.media.block.breadcrumb_view.class%">
-            <tag name="sonata.block"/>
-            <tag name="sonata.breadcrumb"/>
+            <tag name="sonata.block" />
+            <tag name="sonata.breadcrumb" />
 
             <argument>gallery_view</argument>
             <argument>sonata.media.block.breadcrumb_view</argument>
@@ -22,8 +22,8 @@
         </service>
 
         <service id="sonata.media.block.breadcrumb_index" class="%sonata.media.block.breadcrumb_index.class%">
-            <tag name="sonata.block"/>
-            <tag name="sonata.breadcrumb"/>
+            <tag name="sonata.block" />
+            <tag name="sonata.breadcrumb" />
 
             <argument>gallery_index</argument>
             <argument>sonata.media.block.breadcrumb_view</argument>
@@ -33,8 +33,8 @@
         </service>
 
         <service id="sonata.media.block.breadcrumb_view_media" class="%sonata.media.block.breadcrumb_media.class%">
-            <tag name="sonata.block"/>
-            <tag name="sonata.breadcrumb"/>
+            <tag name="sonata.block" />
+            <tag name="sonata.breadcrumb" />
 
             <argument>media_view</argument>
             <argument>sonata.media.block.breadcrumb_view_media</argument>

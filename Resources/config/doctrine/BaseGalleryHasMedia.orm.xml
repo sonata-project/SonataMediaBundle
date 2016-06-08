@@ -9,8 +9,8 @@
         <field name="createdAt"          column="created_at"     type="datetime" />
 
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="prePersist"/>
-            <lifecycle-callback type="preUpdate" method="preUpdate"/>
+            <lifecycle-callback type="prePersist" method="prePersist" />
+            <lifecycle-callback type="preUpdate" method="preUpdate" />
         </lifecycle-callbacks>
 
     </mapped-superclass>

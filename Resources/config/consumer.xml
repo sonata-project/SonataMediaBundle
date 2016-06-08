@@ -15,7 +15,7 @@
 
         <service id="sonata.media.thumbnail.consumer.format" class="Sonata\MediaBundle\Thumbnail\ConsumerThumbnail" >
             <argument>sonata.media.thumbnail.format</argument>
-            <argument type="service" id="sonata.media.thumbnail.format"/>
+            <argument type="service" id="sonata.media.thumbnail.format" />
             <argument type="service" id="sonata.notification.backend" />
             <argument type="service" id="event_dispatcher" />
         </service>

@@ -9,7 +9,7 @@
             <tag name="twig.extension" />
 
             <argument type="service" id="sonata.media.pool" />
-            <argument type="service" id="sonata.media.manager.media"/>
+            <argument type="service" id="sonata.media.manager.media" />
         </service>
 
         <service id="sonata.media.twig.global" class="Sonata\MediaBundle\Twig\GlobalVariables" >
