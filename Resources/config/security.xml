@@ -22,6 +22,12 @@
             </argument>
         </service>
 
+        <service id="sonata.media.security.session_strategy" class="Sonata\MediaBundle\Security\SessionDownloadStrategy">
+            <argument type="service" id="translator" />
+            <argument type="service" id="session" />
+            <argument>1</argument>
+        </service>
+
         <service id="sonata.media.security.connected_strategy" class="Sonata\MediaBundle\Security\RolesDownloadStrategy" >
             <argument type="service" id="translator" />
             <argument /> <!-- Either security.context or security.authorization_checker -->

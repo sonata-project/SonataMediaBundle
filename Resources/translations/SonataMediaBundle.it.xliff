@@ -78,6 +78,10 @@
                 <source>description.forbidden_download_strategy</source>
                 <target>The media can be retrieved by nobody.</target>
             </trans-unit>
+            <trans-unit id="description.session_download_strategy">
+                <source>description.session_download_strategy</source>
+                <target>description.session_download_strategy</target>
+            </trans-unit>
             <trans-unit id="filter.label_name">
                 <source>filter.label_name</source>
                 <target>Nome</target>
