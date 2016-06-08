@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="fr" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
@@ -276,30 +276,24 @@
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <span class="label label-warning">Important</span> vous allez envoyer le média sur un <strong>service externe</strong>. <br />
                         Si vous travaillez sur des éléments confidentiels, il ne faut pas utiliser ce service.
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong style="color: white">Editeur rapide</strong> <br />
                         Interface simple pour l'edition rapide
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong style="color: white">Editeur avancé</strong> <br />
                         Pour utilisateurs expérimentés
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>

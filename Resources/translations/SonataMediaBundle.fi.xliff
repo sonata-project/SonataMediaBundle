@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="fi" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
@@ -268,30 +268,24 @@
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <span class="label label-warning">Tärkeää</span> olet paljastamassa median <strong>ulkopuoliselle palvelulle</strong>. <br />
                         Jos työskentelet luottamuksellisten materiaalinen kanssa, älä käytä tätä palvelua.
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong>Pixlr Express Editor</strong> <br />
                         Yksinkertainen liittymä nopeaan muokkaukseen
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong>Pixlr Advanced Editor</strong> <br />
                         Vain kokeneille käyttäjille
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>

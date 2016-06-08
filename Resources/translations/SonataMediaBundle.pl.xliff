@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="pl" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
@@ -272,30 +272,24 @@
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <span class="label label-warning">Ważne</span> jeśli masz zamiar wystawiać media na <strong> zewnętrzną usługę </ strong>. <br />
                          Jeśli pracujesz nad poufnymi materiałami, proszę nie używać tej usługi.
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong style="color: white">Ekspresowy edytor</strong> <br />
                         Prosty interfejs do szybkiej edycji
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong style="color: white">Zaawansowany edytor</strong> <br />
                         Tylko dla doświadczonych użytkowników
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>
