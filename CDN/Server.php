@@ -11,12 +11,16 @@
 
 namespace Sonata\MediaBundle\CDN;
 
+use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
+
 class Server implements CDNInterface
 {
-    /**
-     * @var string
-     */
     protected $path;
+
+    /**
+     * @var AssetsHelper
+     */
+    private $assetsHelper;
 
     /**
      * @param string $path
@@ -27,11 +31,21 @@ class Server implements CDNInterface
     }
 
     /**
+     * @param AssetsHelper $assetsHelper
+     */
+    public function setAssetsHelper(AssetsHelper $assetsHelper)
+    {
+        $this->assetsHelper = $assetsHelper;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getPath($relativePath, $isFlushable)
     {
-        return sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
+        $path = sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
+
+        return $this->assetsHelper->getUrl($path);
     }
 
     /**
@@ -54,14 +68,6 @@ class Server implements CDNInterface
      * {@inheritdoc}
      */
     public function flushPaths(array $paths)
-    {
-        // nothing to do
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFlushStatus($identifier)
     {
         // nothing to do
     }

@@ -29,6 +29,9 @@
         <!-- CDN abstraction service -->
         <service id="sonata.media.cdn.server" class="Sonata\MediaBundle\CDN\Server">
             <argument />
+			<call method="setAssetsHelper">
+                <argument type="service" id="templating.helper.assets" />
+            </call>
         </service>
 
         <service id="sonata.media.cdn.panther" class="Sonata\MediaBundle\CDN\PantherPortal">
