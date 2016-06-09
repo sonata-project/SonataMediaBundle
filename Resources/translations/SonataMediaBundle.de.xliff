@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="de" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
@@ -268,30 +268,24 @@
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <span class="label label-warning">Achtung</span> Sie bearbeiten das Medium auf einen <strong>externen Server</strong>. <br />
                         Verwenden Sie diesen Service nicht, wenn Sie mit geschützten Medien arbeiten.
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong style="color: white">Express Editor</strong> <br />
                         Einfacher Editor zur schnellen Bearbeitung
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong>Pixlr Erweiterter Editor</strong> <br />
                         Nur für erfahrende Anwender
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>
@@ -380,7 +374,7 @@
             <trans-unit id="sonata.media.provider.file.description">
                 <source>sonata.media.provider.file.description</source>
                 <target>Datei hinzufügen</target>
-            </trans-unit>            
+            </trans-unit>
             <trans-unit id="title.media_preview">
                 <source>title.media_preview</source>
                 <target>Vorschau</target>

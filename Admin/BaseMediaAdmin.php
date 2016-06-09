@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
@@ -19,7 +19,7 @@ use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
 
-abstract class BaseMediaAdmin extends Admin
+abstract class BaseMediaAdmin extends AbstractAdmin
 {
     /**
      * @var Pool

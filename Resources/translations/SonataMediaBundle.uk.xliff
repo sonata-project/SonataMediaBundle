@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="uk" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
@@ -244,30 +244,24 @@
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
 <span class="label label-warning">Важливо</span> ви збираєтесь відправити медіа на <strong>сторонній сервіс</strong>. <br />
 Якщо ви працюєте з конфіденційними матеріалами, будь ласка не використовуйте цю функцію.
-]]>
-                </target>
+]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
 <strong style="color: white">Експрес редактор</strong> <br />
 Простий інтерфейс для швидкого редагування
-]]>
-                </target>
+]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
 <strong style="color: white">Розширений редактор</strong> <br />
 Тільки для досвідчених користувачів
-]]>
-                </target>
+]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>
