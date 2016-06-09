@@ -89,9 +89,9 @@ class MediaAdminController extends Controller
             ));
 
             if (!empty($categoryByContext)) {
-                $datagrid->setValue('category', null, $categoryByContext);
+                $datagrid->setValue('category', null, $categoryByContext->getId());
             } else {
-                $datagrid->setValue('category', null, $category);
+                $datagrid->setValue('category', null, $category->getId());
             }
         }
 
