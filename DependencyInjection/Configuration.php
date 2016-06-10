@@ -54,7 +54,7 @@ class Configuration implements ConfigurationInterface
         $this->addProvidersSection($node);
         $this->addExtraSection($node);
         $this->addModelSection($node);
-        $this->addBuzzSection($node);
+        $this->addGuzzleSection($node);
         $this->addResizerSection($node);
 
         return $treeBuilder;
@@ -428,22 +428,31 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addBuzzSection(ArrayNodeDefinition $node)
+    private function addGuzzleSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
-                ->arrayNode('buzz')
+                ->arrayNode('guzzle')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.curl')->end()
                         ->arrayNode('client')
                         ->addDefaultsIfNotSet()
                         ->children()
-                            ->booleanNode('ignore_errors')->defaultValue(true)->end()
-                            ->scalarNode('max_redirects')->defaultValue(5)->end()
+                            ->booleanNode('http_errors')->defaultValue(false)->end()
+                            ->arrayNode('allow_redirects')
+                                ->addDefaultsIfNotSet()
+                                ->children()
+                                    ->integerNode('max')->defaultValue(5)->end()
+                                    ->booleanNode('strict')->defaultValue(false)->end()
+                                    ->booleanNode('referer')->defaultValue(true)->end()
+                                ->end()
+                            ->end()
                             ->scalarNode('timeout')->defaultValue(5)->end()
-                            ->booleanNode('verify_peer')->defaultValue(true)->end()
-                            ->scalarNode('proxy')->defaultNull()->end()
+                            ->booleanNode('verify')->defaultValue(true)->end()
+                            ->arrayNode('proxy')
+                                ->useAttributeAsKey('id')
+                                ->prototype('scalar')->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()

@@ -127,7 +127,7 @@ class SonataMediaExtension extends Extension
 
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
-        $this->configureBuzz($container, $config);
+        $this->configureGuzzle($container, $config);
         $this->configureProviders($container, $config);
         $this->configureClassesToCompile();
     }
@@ -156,22 +156,9 @@ class SonataMediaExtension extends Extension
      * @param ContainerBuilder $container
      * @param array            $config
      */
-    public function configureBuzz(ContainerBuilder $container, array $config)
+    public function configureGuzzle(ContainerBuilder $container, array $config)
     {
-        $container->getDefinition('sonata.media.buzz.browser')
-            ->replaceArgument(0, new Reference($config['buzz']['connector']));
-
-        foreach (array(
-            'sonata.media.buzz.connector.curl',
-            'sonata.media.buzz.connector.file_get_contents',
-        ) as $connector) {
-            $container->getDefinition($connector)
-                ->addMethodCall('setIgnoreErrors', array($config['buzz']['client']['ignore_errors']))
-                ->addMethodCall('setMaxRedirects', array($config['buzz']['client']['max_redirects']))
-                ->addMethodCall('setTimeout', array($config['buzz']['client']['timeout']))
-                ->addMethodCall('setVerifyPeer', array($config['buzz']['client']['verify_peer']))
-                ->addMethodCall('setProxy', array($config['buzz']['client']['proxy']));
-        }
+        $container->setParameter('sonata.media.guzzle.client.options', $config['guzzle']['client']);
     }
 
     /**

@@ -11,8 +11,7 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Buzz\Browser;
-use Buzz\Message\Response;
+use GuzzleHttp\ClientInterface;
 use Imagine\Image\Box;
 use Sonata\MediaBundle\Provider\DailyMotionProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
@@ -20,10 +19,10 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 {
-    public function getProvider(Browser $browser = null)
+    public function getProvider(ClientInterface $client = null)
     {
-        if (!$browser) {
-            $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        if (!$client) {
+            $client = $this->getMock('GuzzleHttp\ClientInterface');
         }
 
         $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
@@ -44,7 +43,7 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
         $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
-        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
+        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $client, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -71,14 +70,14 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testThumbnail()
     {
-        $response = $this->getMock('Buzz\Message\AbstractMessage');
-        $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $response->expects($this->once())->method('getBody')->will($this->returnValue('content'));
 
-        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $client = $this->getMock('GuzzleHttp\ClientInterface');
 
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $client->expects($this->once())->method('request')->will($this->returnValue($response));
 
-        $provider = $this->getProvider($browser);
+        $provider = $this->getProvider($client);
 
         $media = new Media();
         $media->setName('les tests fonctionnels - Symfony Live 2009');
@@ -102,13 +101,15 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testTransformWithSig()
     {
-        $response = new Response();
-        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $response->expects($this->once())->method('getBody')->will($this->returnValue(
+            file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt')
+        ));
 
-        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $client = $this->getMock('GuzzleHttp\ClientInterface');
+        $client->expects($this->once())->method('request')->will($this->returnValue($response));
 
-        $provider = $this->getProvider($browser);
+        $provider = $this->getProvider($client);
 
         $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
 
@@ -125,13 +126,15 @@ class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testTransformWithUrl()
     {
-        $response = new Response();
-        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $response->expects($this->once())->method('getBody')->will($this->returnValue(
+            file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt')
+        ));
 
-        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $client = $this->getMock('GuzzleHttp\ClientInterface');
+        $client->expects($this->once())->method('request')->will($this->returnValue($response));
 
-        $provider = $this->getProvider($browser);
+        $provider = $this->getProvider($client);
 
         $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
 

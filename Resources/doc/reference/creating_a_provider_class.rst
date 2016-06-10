@@ -277,7 +277,7 @@ added to the provider pool.
         <argument type="service" id="sonata.media.cdn.server" />
         <argument type="service" id="sonata.media.generator.default" />
         <argument type="service" id="sonata.media.thumbnail.format" />
-        <argument type="service" id="sonata.media.buzz.browser" />
+        <argument type="service" id="sonata.media.guzzle.client" />
         <argument type="service" id="sonata.media.metadata.proxy" />
         <call method="setTemplates">
             <argument type="collection">

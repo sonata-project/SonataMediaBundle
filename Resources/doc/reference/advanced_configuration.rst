@@ -168,7 +168,3 @@ Full configuration options:
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
-
-        buzz:
-            connector:  sonata.media.buzz.connector.file_get_contents # sonata.media.buzz.connector.curl
-

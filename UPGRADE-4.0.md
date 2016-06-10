@@ -12,3 +12,7 @@ See also the [diff code](https://github.com/sonata-project/SonataMediaBundle/com
 ## Blocks
 
 The property `wrap` in `GalleryBlockService` was removed. You must create a custom block, if you still want to use ist.
+
+## BaseVideoProvider
+
+The `Buzz` dependency was removed and replaced with `GuzzleHttp`. You must adapt the new `BaseVideoProvider::__construct` signature.
