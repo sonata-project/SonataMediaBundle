@@ -25,6 +25,8 @@ Retrieve the bundle with composer:
 .. code-block:: bash
 
     $ composer require sonata-project/media-bundle
+    $ composer require php-http/guzzle6-adapter # recommended HTTP client
+    $ composer require sonata-project/classification-bundle # (optional: if you need media classification)
 
 Register these bundles in your ``bundles.php`` file:
 
@@ -59,7 +61,8 @@ Register these bundles in your ``bundles.php`` file:
           new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
 
-          // You need to add this dependency to make media functional
+          // You need to add these dependencies to make media functional
+          new Http\HttplugBundle\HttplugBundle(),
           new JMS\SerializerBundle\JMSSerializerBundle(),
           // ...
       );

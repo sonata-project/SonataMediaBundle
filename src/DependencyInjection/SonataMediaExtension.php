@@ -204,6 +204,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
         $this->configureBuzz($container, $config);
+        $this->configureHttpClient($container, $config);
         $this->configureProviders($container, $config);
         $this->configureAdapters($container, $config);
         $this->configureResizers($container, $config);
@@ -680,5 +681,11 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         $container->setAlias('sonata.media.resizer.default', $config['resizers']['default']);
+    }
+
+    private function configureHttpClient(ContainerBuilder $container, array $config)
+    {
+        $container->setAlias('sonata.media.http.client', $config['http']['client']);
+        $container->setAlias('sonata.media.http.message_factory', $config['http']['message_factory']);
     }
 }

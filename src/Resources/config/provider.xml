@@ -64,7 +64,7 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.http.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
             <argument/>
             <call method="setTemplates">
@@ -81,7 +81,7 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.http.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">
@@ -97,7 +97,7 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.http.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">

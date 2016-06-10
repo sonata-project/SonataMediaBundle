@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Buzz\Browser;
-use Buzz\Message\AbstractMessage;
-use Buzz\Message\Response;
 use Gaufrette\Adapter;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
+use Http\Client\HttpClient;
+use Http\Message\MessageFactory;
 use Imagine\Image\Box;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -32,10 +31,14 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends AbstractProviderTest
 {
-    public function getProvider(Browser $browser = null)
+    public function getProvider(HttpClient $client = null, MessageFactory $messageFactory = null)
     {
-        if (!$browser) {
-            $browser = $this->createMock(Browser::class);
+        if (null === $client) {
+            $client = $this->createMock('Http\Client\HttpClient');
+        }
+
+        if (null === $messageFactory) {
+            $messageFactory = $this->createMock('Http\Message\MessageFactory');
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
@@ -61,7 +64,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new VimeoProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
+        $provider = new VimeoProvider('file', $filesystem, $cdn, $generator, $thumbnail, $client, $messageFactory, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -87,14 +90,18 @@ class VimeoProviderTest extends AbstractProviderTest
 
     public function testThumbnail()
     {
-        $response = $this->createMock(AbstractMessage::class);
-        $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
+        $request = $this->createMock('Psr\Http\Message\RequestInterface');
 
-        $browser = $this->createMock(Browser::class);
+        $messageFactory = $this->createMock('Http\Message\MessageFactory');
+        $messageFactory->expects($this->once())->method('createRequest')->will($this->returnValue($request));
 
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $response = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $response->expects($this->once())->method('getBody')->will($this->returnValue('content'));
 
-        $provider = $this->getProvider($browser);
+        $client = $this->createMock('Http\Client\HttpClient');
+        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))->will($this->returnValue($response));
+
+        $provider = $this->getProvider($client, $messageFactory);
 
         $media = new Media();
         $media->setName('Blinky™');
@@ -118,13 +125,20 @@ class VimeoProviderTest extends AbstractProviderTest
 
     public function testTransformWithSig()
     {
-        $response = new Response();
-        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
+        $request = $this->createMock('Psr\Http\Message\RequestInterface');
 
-        $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $messageFactory = $this->createMock('Http\Message\MessageFactory');
+        $messageFactory->expects($this->once())->method('createRequest')->will($this->returnValue($request));
 
-        $provider = $this->getProvider($browser);
+        $response = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $response->expects($this->once())->method('getBody')->will($this->returnValue(
+            file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt')
+        ));
+
+        $client = $this->createMock('Http\Client\HttpClient');
+        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))->will($this->returnValue($response));
+
+        $provider = $this->getProvider($client, $messageFactory);
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
@@ -145,13 +159,20 @@ class VimeoProviderTest extends AbstractProviderTest
      */
     public function testTransformWithUrl($media)
     {
-        $response = new Response();
-        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
+        $request = $this->createMock('Psr\Http\Message\RequestInterface');
 
-        $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $messageFactory = $this->createMock('Http\Message\MessageFactory');
+        $messageFactory->expects($this->once())->method('createRequest')->will($this->returnValue($request));
 
-        $provider = $this->getProvider($browser);
+        $response = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $response->expects($this->once())->method('getBody')->will($this->returnValue(
+            file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt')
+        ));
+
+        $client = $this->createMock('Http\Client\HttpClient');
+        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))->will($this->returnValue($response));
+
+        $provider = $this->getProvider($client, $messageFactory);
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 

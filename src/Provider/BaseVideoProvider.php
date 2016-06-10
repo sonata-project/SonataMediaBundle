@@ -16,8 +16,10 @@ namespace Sonata\MediaBundle\Provider;
 use Buzz\Browser;
 use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use InvalidArgumentException;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\Client\ClientInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -30,7 +32,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 abstract class BaseVideoProvider extends BaseProvider
 {
     /**
-     * @var Browser
+     * @var Browser|null
      */
     protected $browser;
 
@@ -40,15 +42,20 @@ abstract class BaseVideoProvider extends BaseProvider
     protected $metadata;
 
     /**
+     * @var ClientInterface|null
+     */
+    private $client;
+
+    /**
      * @param string                        $name
      * @param Filesystem                    $filesystem
      * @param CDNInterface                  $cdn
      * @param GeneratorInterface            $pathGenerator
      * @param ThumbnailInterface            $thumbnail
-     * @param Browser                       $browser
+     * @param Browser|ClientInterface       $client
      * @param MetadataBuilderInterface|null $metadata
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, $client, MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
@@ -57,7 +64,14 @@ abstract class BaseVideoProvider extends BaseProvider
             @trigger_error('The method "getReferenceUrl" is required with the next major release.', E_USER_DEPRECATED);
         }
 
-        $this->browser = $browser;
+        if ($client instanceof Browser) {
+            $this->browser = $client;
+        } elseif ($client instanceof ClientInterface) {
+            $this->client = $client;
+        } else {
+            throw new InvalidArgumentException('Client must be an instance of Browser or ClientInterface');
+        }
+
         $this->metadata = $metadata;
     }
 
@@ -90,7 +104,10 @@ abstract class BaseVideoProvider extends BaseProvider
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
             $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
-            $referenceFile->setContent($this->browser->get($this->getReferenceImage($media))->getContent(), $metadata);
+
+            $response = $this->sendRequest('GET', $this->getReferenceImage($media));
+
+            $referenceFile->setContent($response, $metadata);
         }
 
         return $referenceFile;
@@ -207,12 +224,12 @@ abstract class BaseVideoProvider extends BaseProvider
     protected function getMetadata(MediaInterface $media, $url)
     {
         try {
-            $response = $this->browser->get($url);
+            $response = $this->sendRequest('GET', $url);
         } catch (\RuntimeException $e) {
             throw new \RuntimeException('Unable to retrieve the video information for :'.$url, null, $e);
         }
 
-        $metadata = json_decode($response->getContent(), true);
+        $metadata = json_decode($response, true);
 
         if (!$metadata) {
             throw new \RuntimeException('Unable to decode the video information for :'.$url);
@@ -244,5 +261,19 @@ abstract class BaseVideoProvider extends BaseProvider
         }
 
         return $this->resizer->getBox($media, $settings);
+    }
+
+    /**
+     * Creates a http request and sends it to the server.
+     */
+    final protected function sendRequest(string $method, string $url): string
+    {
+        if (null !== $this->browser) {
+            return $this->browser->call($url, $method)->getContent();
+        }
+
+        return $this->client->sendRequest(
+            $this->messageFactory->createRequest($method, $url)
+        )->getBody();
     }
 }

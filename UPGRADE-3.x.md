@@ -9,6 +9,10 @@ Doctrine ORM join columns from GalleryHasMedia entity towards both Gallery and M
 they include the `onDelete="CASCADE"` option: this allows to delete a media if included in a gallery (and vice-versa).
 You should upgrade your database in a safe way after upgrading your vendors.
 
+## BaseVideoProvider uses HTTPlug
+
+The `Guzzle` and `Buzz` dependency are deprecated and will be replaced with the abstract `HTTPlug` client, so you can choose your prefered client implementation. You should adapt the new `BaseVideoProvider::__construct` signature.
+
 UPGRADE FROM 3.4 to 3.5
 =======================
 

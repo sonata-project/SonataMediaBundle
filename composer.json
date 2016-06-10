@@ -61,6 +61,7 @@
         "friendsofsymfony/rest-bundle": "<2.1 || >=3.0",
         "jms/serializer": "<0.13",
         "liip/imagine-bundle": "<1.9",
+        "php-http/httplug-bundle": "<1.1",
         "sonata-project/block-bundle": "<3.14 || >=4.0",
         "sonata-project/classification-bundle": "<3.0 || >= 5.0",
         "sonata-project/formatter-bundle": "<3.4",
@@ -70,6 +71,7 @@
     },
     "require-dev": {
         "aws/aws-sdk-php": "^2.8",
+        "core23/mime-util": "^0.1 || ^0.2",
         "friendsofsymfony/rest-bundle": "^2.1",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
         "liip/imagine-bundle": "^1.9",
@@ -86,7 +88,11 @@
         "symfony/security-csrf": "^2.8 || ^3.2 || ^4.0"
     },
     "suggest": {
+        "core23/mime-util": "For using abstract HTTPlug client",
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...)",
+        "php-http/buzz-adapter": "Buzz HTTP client implementation",
+        "php-http/guzzle6-adapter": "Guzzle HTTP client implementation",
+        "php-http/httplug-bundle": "For using abstract HTTPlug client",
         "rackspace/php-opencloud": "^1.6",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "^3.0",

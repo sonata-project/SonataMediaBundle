@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Metadata;
 
+use Core23\MimeUtil\MimeUtil;
 use GuzzleHttp\Psr7;
 use Sonata\MediaBundle\Model\MediaInterface;
 
@@ -116,6 +117,18 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
+        // NEXT_MAJOR: Remove this BC hack
+        if (class_exists(MimeUtil::class)) {
+            return [
+                'contentType' => MimeUtil::getInstance()->getTypeFromFilename($filename),
+            ];
+        }
+
+        @trigger_error(
+            'Using the native Guzzle dependency is deprecated since 3.x and will be removed in 4.0',
+            E_USER_DEPRECATED
+        );
+
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $contentType = Psr7\mimetype_from_extension($extension);
 

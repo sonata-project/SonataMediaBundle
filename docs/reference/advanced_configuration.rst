@@ -172,5 +172,11 @@ Full configuration options:
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
 
+        # The buzz implementation is deprecated, use HTTPlug instead
         buzz:
             connector:  sonata.media.buzz.connector.file_get_contents # sonata.media.buzz.connector.curl
+
+        http:
+            # If you want to use a custom client, have a look at http://docs.php-http.org
+            client:             httplug.client.default
+            message_factory:    httplug.message_factory.default

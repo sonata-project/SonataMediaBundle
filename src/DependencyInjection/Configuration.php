@@ -82,6 +82,7 @@ class Configuration implements ConfigurationInterface
         $this->addExtraSection($node);
         $this->addModelSection($node);
         $this->addBuzzSection($node);
+        $this->addHttpClientSection($node);
         $this->addResizerSection($node);
         $this->addAdapterSection($node);
 
@@ -183,9 +184,6 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
     private function addFilesystemSection(ArrayNodeDefinition $node)
     {
         $node
@@ -478,6 +476,27 @@ class Configuration implements ConfigurationInterface
                             ->booleanNode('verify_peer')->defaultValue(true)->end()
                             ->scalarNode('proxy')->defaultNull()->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addHttpClientSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('http')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('client')
+                            ->info('any service implementing Sonata\MediaBundle\Client\ClientInterface')
+                            ->defaultValue('httplug.client.default')
+                        ->end()
+                        ->scalarNode('message_factory')->defaultValue('httplug.message_factory.default')->end()
                     ->end()
                 ->end()
             ->end()
