@@ -64,9 +64,10 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.http.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
             <argument/>
+            <argument type="service" id="sonata.media.http.message_factory" on-invalid="null"/>
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key="helper_thumbnail">@SonataMedia/Provider/thumbnail.html.twig</argument>
@@ -81,8 +82,9 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.http.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
+            <argument type="service" id="sonata.media.http.message_factory" on-invalid="null"/>
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key="helper_thumbnail">@SonataMedia/Provider/thumbnail.html.twig</argument>
@@ -97,8 +99,9 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.http.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
+            <argument type="service" id="sonata.media.http.message_factory" on-invalid="null"/>
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key="helper_thumbnail">@SonataMedia/Provider/thumbnail.html.twig</argument>
@@ -110,6 +113,9 @@
         <service id="sonata.media.buzz.connector.curl" class="Buzz\Client\Curl"/>
         <service id="sonata.media.buzz.browser" class="Buzz\Browser">
             <argument/>
+        </service>
+        <service id="sonata.media.http.buzz_client" class="Sonata\MediaBundle\Client\BuzzClient">
+            <argument type="service" id="sonata.media.buzz.browser"/>
         </service>
         <service id="%sonata.media.provider.image.class%" alias="sonata.media.provider.image"/>
         <service id="%sonata.media.provider.file.class%" alias="sonata.media.provider.file"/>

@@ -79,6 +79,7 @@ class Configuration implements ConfigurationInterface
         $this->addExtraSection($node);
         $this->addModelSection($node);
         $this->addBuzzSection($node);
+        $this->addHttpClientSection($node);
         $this->addResizerSection($node);
         $this->addAdapterSection($node);
 
@@ -522,6 +523,27 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('timeout')->defaultValue(5)->end()
                             ->booleanNode('verify_peer')->defaultValue(true)->end()
                             ->scalarNode('proxy')->defaultNull()->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addHttpClientSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('http')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('client')
+                            ->defaultValue('sonata.media.http.buzz_client')
+                            ->info('Alias of the http client.')
+                        ->end()
+                        ->scalarNode('message_factory')
+                            ->defaultNull()
+                            ->info('Alias of the message factory.')
                         ->end()
                     ->end()
                 ->end()

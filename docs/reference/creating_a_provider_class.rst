@@ -265,7 +265,7 @@ added to the provider pool.
             - '@sonata.media.cdn.server'
             - '@sonata.media.generator.default'
             - '@sonata.media.thumbnail.format'
-            - '@sonata.media.buzz.browser'
+            - '@sonata.media.http.client'
             - '@sonata.media.metadata.proxy'
         calls:
             -

@@ -14,6 +14,10 @@ version of aws/aws-sdk-php is automatically inferred from the installed package.
 The configuration nodes "sonata_media.cdn.cloudfront.region" and "sonata_media.cdn.cloudfront.version"
 are required when aws/aws-sdk-php 3.x is installed.
 
+## BaseVideoProvider uses `psr/http-client`
+
+The `Guzzle` and `Buzz` dependencies are deprecated and will be replaced with the abstract `http-client` interface, so you can choose your preferred client implementation. You should adapt to the new `BaseVideoProvider::__construct()` signature.
+
 UPGRADE FROM 3.25 to 3.26
 =========================
 

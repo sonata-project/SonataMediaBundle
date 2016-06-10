@@ -17,6 +17,7 @@ use Aws\S3\Enum\Storage;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\Mime\MimeTypesInterface;
 
 final class AmazonMetadataBuilderTest extends TestCase
 {
@@ -25,10 +26,13 @@ final class AmazonMetadataBuilderTest extends TestCase
      */
     public function testAmazon(array $settings, array $expected): void
     {
+        $mimeTypes = $this->createMock(MimeTypesInterface::class);
+        $mimeTypes->method('guessMimeType')->willReturn($expected['contentType']);
+
         $media = $this->createStub(MediaInterface::class);
         $filename = '/test/folder/testfile.png';
 
-        $amazonmetadatabuilder = new AmazonMetadataBuilder($settings);
+        $amazonmetadatabuilder = new AmazonMetadataBuilder($settings, $mimeTypes);
         $this->assertSame($expected, $amazonmetadatabuilder->get($media, $filename));
     }
 

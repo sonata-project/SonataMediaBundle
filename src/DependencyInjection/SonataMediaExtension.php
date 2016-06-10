@@ -162,6 +162,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
         $this->configureBuzz($container, $config);
+        $this->configureHttpClient($container, $config);
         $this->configureProviders($container, $config);
         $this->configureAdapters($container, $config);
         $this->configureResizers($container, $config);
@@ -668,5 +669,18 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                     ])
             );
         }
+    }
+
+    private function configureHttpClient(ContainerBuilder $container, array $config): void
+    {
+        if (null === $config['http']['client'] || null === $config['http']['message_factory']) {
+            // NEXT_MAJOR: Remove this fallback service
+            $container->setAlias('sonata.media.http.client', 'sonata.media.buzz.browser');
+
+            return;
+        }
+
+        $container->setAlias('sonata.media.http.client', $config['http']['client']);
+        $container->setAlias('sonata.media.http.message_factory', $config['http']['message_factory']);
     }
 }

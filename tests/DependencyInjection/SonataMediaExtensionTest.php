@@ -136,6 +136,27 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         }
     }
 
+    public function testDefaultHasDefaultHttp(): void
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasAlias('sonata.media.http.client', 'sonata.media.buzz.browser');
+        $this->assertContainerBuilderNotHasService('sonata.media.http.message_factory');
+    }
+
+    public function testWithHttpClient(): void
+    {
+        $this->load([
+            'http' => [
+                'client' => 'acme_client',
+                'message_factory' => 'acme_factory',
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasAlias('sonata.media.http.client', 'acme_client');
+        $this->assertContainerBuilderHasAlias('sonata.media.http.message_factory', 'acme_factory');
+    }
+
     /**
      * @dataProvider dataResizer
      */
