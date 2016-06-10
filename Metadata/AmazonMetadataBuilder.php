@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Metadata;
 
 use Aws\S3\Enum\CannedAcl;
 use Aws\S3\Enum\Storage;
-use Guzzle\Http\Mimetypes;
+use Core23\MimeUtil\MimeUtil;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
@@ -105,9 +105,8 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = Mimetypes::getInstance()->fromExtension($extension);
-
-        return array('contentType' => $contentType);
+        return array(
+            'contentType' => MimeUtil::getInstance()->getTypeFromFilename($filename),
+        );
     }
 }

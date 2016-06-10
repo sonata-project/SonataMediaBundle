@@ -146,7 +146,7 @@ class SonataMediaExtension extends Extension
 
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
-        $this->configureBuzz($container, $config);
+        $this->configureHttpClient($container, $config);
         $this->configureProviders($container, $config);
         $this->configureClassesToCompile();
     }
@@ -169,28 +169,6 @@ class SonataMediaExtension extends Extension
         ;
 
         $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(7, $config['providers']['youtube']['html5']);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
-    public function configureBuzz(ContainerBuilder $container, array $config)
-    {
-        $container->getDefinition('sonata.media.buzz.browser')
-            ->replaceArgument(0, new Reference($config['buzz']['connector']));
-
-        foreach (array(
-            'sonata.media.buzz.connector.curl',
-            'sonata.media.buzz.connector.file_get_contents',
-        ) as $connector) {
-            $container->getDefinition($connector)
-                ->addMethodCall('setIgnoreErrors', array($config['buzz']['client']['ignore_errors']))
-                ->addMethodCall('setMaxRedirects', array($config['buzz']['client']['max_redirects']))
-                ->addMethodCall('setTimeout', array($config['buzz']['client']['timeout']))
-                ->addMethodCall('setVerifyPeer', array($config['buzz']['client']['verify_peer']))
-                ->addMethodCall('setProxy', array($config['buzz']['client']['proxy']));
-        }
     }
 
     /**
@@ -529,5 +507,15 @@ class SonataMediaExtension extends Extension
             'Sonata\\MediaBundle\\Twig\\Node\\PathNode',
             'Sonata\\MediaBundle\\Twig\\Node\\ThumbnailNode',
         ));
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array            $config
+     */
+    private function configureHttpClient(ContainerBuilder $container, array $config)
+    {
+        $container->setAlias('sonata.media.http.client', $config['http']['client']);
+        $container->setAlias('sonata.media.http.message_factory', $config['http']['message_factory']);
     }
 }

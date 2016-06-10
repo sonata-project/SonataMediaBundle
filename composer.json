@@ -17,7 +17,9 @@
         }
     ],
     "require": {
+        "core23/mime-util": "^0.1",
         "php": "^5.3 || ^7.0",
+        "php-http/httplug-bundle": "^1.1",
         "symfony/config": "^2.3.9 || ^3.0",
         "symfony/console": "^2.3 || ^3.0",
         "symfony/dependency-injection": "^2.3.3 || ^3.0",
@@ -40,7 +42,6 @@
         "sonata-project/classification-bundle": "^3.0 || ^4.0@dev",
         "knplabs/gaufrette": "^0.1.6",
         "imagine/imagine": "^0.6",
-        "kriswallsmith/buzz": "^0.15",
         "jms/serializer-bundle": "^0.13 || ^1.0",
         "sonata-project/intl-bundle": "^2.2"
     },
@@ -50,6 +51,7 @@
         "sonata-project/formatter-bundle": "^3.0",
         "sonata-project/datagrid-bundle": "^2.2",
         "sonata-project/seo-bundle": "^2.0",
+        "php-http/mock-client": "^0.3",
         "aws/aws-sdk-php": "^2.7",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
         "symfony/phpunit-bridge": "^2.7 || ^3.0",
@@ -60,6 +62,8 @@
     "suggest": {
         "sonata-project/doctrine-orm-admin-bundle": "^3.0",
         "liip/imagine-bundle": "^0.9",
+        "php-http/buzz-adapter": "Buzz HTTP client implementation",
+        "php-http/guzzle6-adapter": "Guzzle HTTP client implementation",
         "rackspace/php-opencloud": "^1.6",
         "sonata-project/seo-bundle": "^2.0",
         "tilleuls/ckeditor-sonata-media-bundle": "^1.0"

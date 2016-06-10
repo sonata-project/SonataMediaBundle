@@ -21,3 +21,7 @@ If you have implemented a custom model, you must adapt the signature of the foll
 ## Renamed GalleryHasMedia to GalleryItem
 
 All Actions, Controllers, Interfaces and anything related to this is renamed accordingly.
+
+## BaseVideoProvider uses HTTPlug
+
+The `Guzzle` and `Buzz` dependency were removed and replaced the abstract `HTTPlug` client, so you can choose your prefered client implementation. You must adapt the new `BaseVideoProvider::__construct` signature.
