@@ -16,6 +16,8 @@ namespace Sonata\MediaBundle\Provider;
 use Buzz\Browser;
 use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -30,7 +32,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 abstract class BaseVideoProvider extends BaseProvider
 {
     /**
-     * @var Browser
+     * @var Browser|null
      */
     protected $browser;
 
@@ -40,19 +42,54 @@ abstract class BaseVideoProvider extends BaseProvider
     protected $metadata;
 
     /**
-     * @param string $name
+     * @var ClientInterface|null
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, ?MetadataBuilderInterface $metadata = null)
-    {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
+    private $client;
 
+    /**
+     * @var RequestFactoryInterface|null
+     */
+    private $requestFactory;
+
+    /**
+     * @param string                  $name
+     * @param ClientInterface|Browser $client
+     */
+    public function __construct(
+        $name,
+        Filesystem $filesystem,
+        CDNInterface $cdn,
+        GeneratorInterface $pathGenerator,
+        ThumbnailInterface $thumbnail,
+        object $client,
+        ?MetadataBuilderInterface $metadata = null,
+        ?RequestFactoryInterface $requestFactory = null
+    ) {
         // NEXT_MAJOR: remove this check!
         if (!method_exists($this, 'getReferenceUrl')) {
-            @trigger_error('The method "getReferenceUrl" is required with the next major release.', E_USER_DEPRECATED);
+            @trigger_error('The method "getReferenceUrl" is required since sonata-project/media-bundle 3.27.0 with the next major release.', E_USER_DEPRECATED);
         }
 
-        $this->browser = $browser;
+        if (!$client instanceof Browser && !$client instanceof ClientInterface) {
+            throw new \TypeError('Client must be an instance of Browser or ClientInterface.');
+        }
+
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
+
         $this->metadata = $metadata;
+        $this->requestFactory = $requestFactory;
+
+        if ($client instanceof Browser) {
+            $this->browser = $client;
+
+            return;
+        }
+
+        $this->client = $client;
+
+        if (null === $requestFactory) {
+            throw new \TypeError('When using PSR client, you must define a request factory.');
+        }
     }
 
     public function getProviderMetadata()
@@ -75,7 +112,10 @@ abstract class BaseVideoProvider extends BaseProvider
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
             $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
-            $referenceFile->setContent($this->browser->get($this->getReferenceImage($media))->getContent(), $metadata);
+
+            $response = $this->sendRequest('GET', $this->getReferenceImage($media));
+
+            $referenceFile->setContent($response, $metadata);
         }
 
         return $referenceFile;
@@ -169,12 +209,12 @@ abstract class BaseVideoProvider extends BaseProvider
     protected function getMetadata(MediaInterface $media, $url)
     {
         try {
-            $response = $this->browser->get($url);
+            $response = $this->sendRequest('GET', $url);
         } catch (\RuntimeException $e) {
             throw new \RuntimeException('Unable to retrieve the video information for :'.$url, $e->getCode(), $e);
         }
 
-        $metadata = json_decode($response->getContent(), true);
+        $metadata = json_decode($response, true);
 
         if (!$metadata) {
             throw new \RuntimeException('Unable to decode the video information for :'.$url);
@@ -205,5 +245,19 @@ abstract class BaseVideoProvider extends BaseProvider
         }
 
         return $this->resizer->getBox($media, $settings);
+    }
+
+    /**
+     * Creates an http request and sends it to the server.
+     */
+    final protected function sendRequest(string $method, string $url): string
+    {
+        if (null !== $this->browser) {
+            return $this->browser->call($url, $method)->getContent();
+        }
+
+        return $this->client->sendRequest(
+            $this->requestFactory->createRequest($method, $url)
+        )->getBody()->getContents();
     }
 }

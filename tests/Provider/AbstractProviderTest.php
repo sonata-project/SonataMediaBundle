@@ -15,6 +15,8 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Form\FormBuilder;
@@ -85,5 +87,16 @@ abstract class AbstractProviderTest extends TestCase
             ->method('add');
 
         $this->provider->buildMediaType($this->formBuilder);
+    }
+
+    final protected function createResponse(string $content): ResponseInterface
+    {
+        $stream = $this->createStub(StreamInterface::class);
+        $stream->method('getContents')->willReturn($content);
+
+        $response = $this->createMock(ResponseInterface::class);
+        $response->expects($this->once())->method('getBody')->willReturn($stream);
+
+        return $response;
     }
 }
