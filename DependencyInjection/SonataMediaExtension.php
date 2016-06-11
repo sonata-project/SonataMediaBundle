@@ -44,6 +44,25 @@ class SonataMediaExtension extends Extension
         $loader->load('extra.xml');
         $loader->load('form.xml');
         $loader->load('gaufrette.xml');
+
+        // NEXT_MAJOR: Remove Following lines
+        $amazonS3Definition = $container->getDefinition('sonata.media.adapter.service.s3');
+        if (method_exists($amazonS3Definition, 'setFactory')) {
+            $amazonS3Definition->setFactory(array('Aws\S3\S3Client', 'factory'));
+        } else {
+            $amazonS3Definition->setFactoryClass('Aws\S3\S3Client');
+            $amazonS3Definition->setFactoryMethod('factory');
+        }
+
+        // NEXT_MAJOR: Remove Following lines
+        $openCloudDefinition = $container->getDefinition('sonata.media.adapter.filesystem.opencloud.objectstore');
+        if (method_exists($openCloudDefinition, 'setFactory')) {
+            $openCloudDefinition->setFactory(array(new Reference('sonata.media.adapter.filesystem.opencloud.connection'), 'ObjectStore'));
+        } else {
+            $openCloudDefinition->setFactoryService('sonata.media.adapter.filesystem.opencloud.connection');
+            $openCloudDefinition->setFactoryMethod('ObjectStore');
+        }
+
         $loader->load('validators.xml');
         $loader->load('serializer.xml');
 
