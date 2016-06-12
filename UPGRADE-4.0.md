@@ -12,3 +12,9 @@ See also the [diff code](https://github.com/sonata-project/SonataMediaBundle/com
 ## Blocks
 
 The property `wrap` in `GalleryBlockService` was removed. You must create a custom block, if you still want to use ist.
+
+## Models
+If you have implemented a custom model, you must adapt the signature of the following new methods:
+ * `GalleryHasMediaInterface::getId`
+ * `GalleryInterface::getId`
+ 

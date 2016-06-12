@@ -19,6 +19,11 @@ interface GalleryInterface
     public function __toString();
 
     /**
+     * @return int
+     */
+    public function getId();
+
+    /**
      * Set name.
      *
      * @param string $name

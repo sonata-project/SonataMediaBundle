@@ -18,6 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GalleryTest extends GalleryHasMedia
 {
+    private $id;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->id = rand();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }
 
 /**
