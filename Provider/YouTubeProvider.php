@@ -11,8 +11,8 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Buzz\Browser;
 use Gaufrette\Filesystem;
+use GuzzleHttp\ClientInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -34,13 +34,13 @@ class YouTubeProvider extends BaseVideoProvider
      * @param CDNInterface             $cdn
      * @param GeneratorInterface       $pathGenerator
      * @param ThumbnailInterface       $thumbnail
-     * @param Browser                  $browser
+     * @param ClientInterface          $client
      * @param MetadataBuilderInterface $metadata
      * @param bool                     $html5
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null, $html5 = false)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, ClientInterface $client, MetadataBuilderInterface $metadata = null, $html5 = false)
     {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $browser, $metadata);
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $metadata);
         $this->html5 = $html5;
     }
 

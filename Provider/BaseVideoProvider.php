@@ -11,8 +11,8 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Buzz\Browser;
 use Gaufrette\Filesystem;
+use GuzzleHttp\ClientInterface;
 use Imagine\Image\Box;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\Metadata;
@@ -28,9 +28,9 @@ use Symfony\Component\Validator\Constraints\NotNull;
 abstract class BaseVideoProvider extends BaseProvider
 {
     /**
-     * @var Browser
+     * @var ClientInterface
      */
-    protected $browser;
+    protected $client;
 
     /**
      * @var MetadataBuilderInterface
@@ -43,14 +43,14 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param CDNInterface                  $cdn
      * @param GeneratorInterface            $pathGenerator
      * @param ThumbnailInterface            $thumbnail
-     * @param Browser                       $browser
+     * @param ClientInterface               $client
      * @param MetadataBuilderInterface|null $metadata
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, ClientInterface $client, MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
-        $this->browser = $browser;
+        $this->client = $client;
         $this->metadata = $metadata;
     }
 
@@ -83,7 +83,10 @@ abstract class BaseVideoProvider extends BaseProvider
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
             $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : array();
-            $referenceFile->setContent($this->browser->get($this->getReferenceImage($media))->getContent(), $metadata);
+
+            $response = $this->client->request('GET', $this->getReferenceImage($media));
+
+            $referenceFile->setContent($response->getBody(), $metadata);
         }
 
         return $referenceFile;
@@ -190,12 +193,12 @@ abstract class BaseVideoProvider extends BaseProvider
     protected function getMetadata(MediaInterface $media, $url)
     {
         try {
-            $response = $this->browser->get($url);
+            $response = $this->client->request('GET', $url);
         } catch (\RuntimeException $e) {
             throw new \RuntimeException('Unable to retrieve the video information for :'.$url, null, $e);
         }
 
-        $metadata = json_decode($response->getContent(), true);
+        $metadata = json_decode($response->getBody(), true);
 
         if (!$metadata) {
             throw new \RuntimeException('Unable to decode the video information for :'.$url);

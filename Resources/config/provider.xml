@@ -63,7 +63,7 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.guzzle.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
             <argument/>
             <call method="setTemplates">
@@ -80,7 +80,7 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.guzzle.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">
@@ -96,7 +96,7 @@
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.thumbnail.format"/>
-            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.guzzle.client"/>
             <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">
@@ -105,10 +105,8 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.buzz.connector.file_get_contents" class="Buzz\Client\FileGetContents"/>
-        <service id="sonata.media.buzz.connector.curl" class="Buzz\Client\Curl"/>
-        <service id="sonata.media.buzz.browser" class="Buzz\Browser">
-            <argument/>
+        <service id="sonata.media.guzzle.client" class="GuzzleHttp\Client">
+            <argument>%sonata.media.guzzle.client.options%</argument>
         </service>
     </services>
 </container>
