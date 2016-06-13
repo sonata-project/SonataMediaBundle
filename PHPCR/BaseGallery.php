@@ -12,7 +12,7 @@
 namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\MediaBundle\Model\Gallery;
-use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 
 /**
  * Bundle\MediaBundle\Document\BaseGallery.
@@ -29,7 +29,7 @@ abstract class BaseGallery extends Gallery
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galleryItems = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -45,18 +45,18 @@ abstract class BaseGallery extends Gallery
     /**
      * {@inheritdoc}
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    public function addGalleryItem(GalleryItemInterface $galleryItem)
     {
-        $galleryHasMedia->setGallery($this);
+        $galleryItem->setGallery($this);
 
-        // set nodename of GalleryHasMedia
-        if (!$galleryHasMedia->getNodename()) {
-            $galleryHasMedia->setNodename(
-                'media'.($this->galleryHasMedias->count() + 1)
+        // set nodename of GalleryItem
+        if (!$galleryItem->getNodename()) {
+            $galleryItem->setNodename(
+                'media'.($this->galleryItems->count() + 1)
             );
         }
 
-        $this->galleryHasMedias->set($galleryHasMedia->getNodename(), $galleryHasMedia);
+        $this->galleryItems->set($galleryItem->getNodename(), $galleryItem);
     }
 
     /**
@@ -67,7 +67,7 @@ abstract class BaseGallery extends Gallery
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
 
-        $this->reorderGalleryHasMedia();
+        $this->reorderGalleryItems();
     }
 
     /**
@@ -77,18 +77,18 @@ abstract class BaseGallery extends Gallery
     {
         $this->updatedAt = new \DateTime();
 
-        $this->reorderGalleryHasMedia();
+        $this->reorderGalleryItems();
     }
 
     /**
-     * Reorders $galleryHasMedia items based on their position.
+     * Reorders gallery items based on their position.
      */
-    public function reorderGalleryHasMedia()
+    public function reorderGalleryItems()
     {
-        if ($this->getGalleryHasMedias() && $this->getGalleryHasMedias() instanceof \IteratorAggregate) {
+        if ($this->getGalleryItems() && $this->getGalleryItems() instanceof \IteratorAggregate) {
 
             // reorder
-            $iterator = $this->getGalleryHasMedias()->getIterator();
+            $iterator = $this->getGalleryItems()->getIterator();
 
             $iterator->uasort(function ($a, $b) {
                 if ($a->getPosition() === $b->getPosition()) {
@@ -98,7 +98,7 @@ abstract class BaseGallery extends Gallery
                 return $a->getPosition() > $b->getPosition() ? 1 : -1;
             });
 
-            $this->setGalleryHasMedias($iterator);
+            $this->setGalleryItems($iterator);
         }
     }
 }

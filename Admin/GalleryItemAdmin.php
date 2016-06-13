@@ -15,7 +15,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class GalleryHasMediaAdmin extends AbstractAdmin
+class GalleryItemAdmin extends AbstractAdmin
 {
     /**
      * {@inheritdoc}

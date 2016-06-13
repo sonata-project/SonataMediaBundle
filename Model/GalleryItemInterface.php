@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Model;
 
-interface GalleryHasMediaInterface
+interface GalleryItemInterface
 {
     /**
      * @return string

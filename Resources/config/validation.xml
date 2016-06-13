@@ -25,7 +25,7 @@
     </class>
     <class name="Sonata\MediaBundle\Model\Gallery">
         <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat"/>
-        <property name="galleryHasMedias">
+        <property name="galleryItems">
             <constraint name="Valid"/>
         </property>
         <property name="context">

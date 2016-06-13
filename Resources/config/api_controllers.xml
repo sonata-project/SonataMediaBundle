@@ -5,7 +5,7 @@
             <argument type="service" id="sonata.media.manager.gallery"/>
             <argument type="service" id="sonata.media.manager.media"/>
             <argument type="service" id="form.factory"/>
-            <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
+            <argument>%sonata.media.admin.gallery_item.entity%</argument>
         </service>
         <service id="sonata.media.controller.api.media" class="Sonata\MediaBundle\Controller\Api\MediaController">
             <argument type="service" id="sonata.media.manager.media"/>

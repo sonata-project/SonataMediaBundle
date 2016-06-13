@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Model;
 
-abstract class GalleryHasMedia implements GalleryHasMediaInterface
+abstract class GalleryItem implements GalleryItemInterface
 {
     /**
      * @var MediaInterface

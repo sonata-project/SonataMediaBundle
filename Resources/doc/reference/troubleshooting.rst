@@ -80,9 +80,9 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
     sonata_media:
         # if you don't use default namespace configuration
         #class:
-        #    media: MyVendor\MediaBundle\Entity\Media
-        #    gallery: MyVendor\MediaBundle\Entity\Gallery
-        #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+        #    media:        MyVendor\MediaBundle\Entity\Media
+        #    gallery:      MyVendor\MediaBundle\Entity\Gallery
+        #    gallery_item: MyVendor\MediaBundle\Entity\GalleryItem
         default_context: default
         db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
         contexts:

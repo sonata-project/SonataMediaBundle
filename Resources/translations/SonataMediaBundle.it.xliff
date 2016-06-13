@@ -146,8 +146,8 @@
                 <source>form.label_default_format</source>
                 <target>Formato</target>
             </trans-unit>
-            <trans-unit id="form.label_gallery_has_medias">
-                <source>form.label_gallery_has_medias</source>
+            <trans-unit id="form.label_gallery_items">
+                <source>form.label_gallery_items</source>
                 <target>Media</target>
             </trans-unit>
             <trans-unit id="form.label_author_name">

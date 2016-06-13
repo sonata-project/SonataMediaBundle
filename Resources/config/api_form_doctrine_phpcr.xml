@@ -22,12 +22,12 @@
             <argument>%sonata.media.admin.gallery.entity%</argument>
             <argument>sonata_api_write</argument>
         </service>
-        <service id="sonata.media.api.form.type.gallery_has_media" class="Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType">
-            <tag name="form.type" alias="sonata_media_api_form_gallery_has_media"/>
+        <service id="sonata.media.api.form.type.gallery_item" class="Sonata\MediaBundle\Form\Type\ApiGalleryItemType">
+            <tag name="form.type" alias="sonata_media_api_form_gallery_item"/>
             <argument type="service" id="jms_serializer.metadata_factory"/>
             <argument type="service" id="doctrine_phpcr"/>
-            <argument>sonata_media_api_form_gallery_has_media</argument>
-            <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
+            <argument>sonata_media_api_form_gallery_item</argument>
+            <argument>%sonata.media.admin.gallery_item.entity%</argument>
             <argument>sonata_api_write</argument>
         </service>
     </services>
