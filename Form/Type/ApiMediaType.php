@@ -85,7 +85,11 @@ class ApiMediaType extends AbstractType
      */
     public function getParent()
     {
-        return 'sonata_media_api_form_doctrine_media';
+        // NEXT_MAJOR: Return 'Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType'
+        // (when requirement of Symfony is >= 2.8)
+        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType'
+            : 'sonata_media_api_form_doctrine_media';
     }
 
     /**
