@@ -16,7 +16,7 @@ use Sonata\MediaBundle\Provider\ImageProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class ImageProviderTest extends \PHPUnit_Framework_TestCase
+class ImageProviderTest extends AbstractProviderTest
 {
     public function getProvider($allowedExtensions = array(), $allowedMimeTypes = array())
     {

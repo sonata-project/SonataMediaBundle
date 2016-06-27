@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
-class FileProviderTest extends \PHPUnit_Framework_TestCase
+class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider()
     {

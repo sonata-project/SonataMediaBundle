@@ -118,8 +118,6 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildEditForm(FormMapper $formMapper)
     {
-        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
-        // (when requirement of Symfony is >= 2.8)
         $formMapper->add('name');
         $formMapper->add('enabled', null, array('required' => false));
         $formMapper->add('authorName');
@@ -128,6 +126,8 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('copyright');
         $formMapper->add(
             'binaryContent',
+            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
+            // (when requirement of Symfony is >= 2.8)
             method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
                 ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
                 : 'text',
@@ -139,10 +139,10 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
-        // (when requirement of Symfony is >= 2.8)
         $formMapper->add(
             'binaryContent',
+            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
+            // (when requirement of Symfony is >= 2.8)
             method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
                 ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
                 : 'text',
