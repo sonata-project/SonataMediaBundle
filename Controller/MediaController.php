@@ -144,15 +144,19 @@ class MediaController extends Controller
     }
     
     
-        /**
+    /**
+     * 
      * @return Request
+     * 
+     * NEXT_MAJOR : Return $this->get('request_stack') only
+     * 
      */
     public function getRequest()
     {
-        if ($this->container->has('request_stack')) {
-            return $this->container->get('request_stack')->getCurrentRequest();
+        if ($this->has('request_stack')) {
+            return $this->get('request_stack')->getCurrentRequest();
         }
 
-        return $this->container->get('request');
+        return $this->get('request');
     }
 }
