@@ -38,7 +38,7 @@
         "sonata-project/easy-extends-bundle": "^2.1",
         "sonata-project/doctrine-extensions": "^1.0",
         "sonata-project/classification-bundle": "^3.0",
-        "knplabs/gaufrette": "^0.1.6",
+        "knplabs/gaufrette": "~0.2",
         "imagine/imagine": "^0.6",
         "kriswallsmith/buzz": "^0.15",
         "jms/serializer-bundle": "^0.13 || ^1.0",
