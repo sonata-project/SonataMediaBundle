@@ -143,9 +143,8 @@ class MediaController extends Controller
         return $response;
     }
     
-    
     /**
-     * NEXT_MAJOR : Remove this method when bumping Symfony requirement to 2.8+
+     * NEXT_MAJOR : Remove this method when bumping Symfony requirement to 2.8+.
      * 
      * @return Request
      */
