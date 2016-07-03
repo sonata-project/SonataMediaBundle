@@ -11,12 +11,11 @@
 
 namespace Sonata\MediaBundle\Controller\Api;
 
-use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use JMS\Serializer\SerializationContext;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
@@ -423,10 +422,19 @@ class GalleryController
             $this->galleryManager->save($gallery);
 
             $view = FOSRestView::create($galleryHasMedia);
-            $serializationContext = SerializationContext::create();
-            $serializationContext->setGroups(array('sonata_api_read'));
-            $serializationContext->enableMaxDepthChecks();
-            $view->setSerializationContext($serializationContext);
+
+            // BC for FOSRestBundle < 2.0
+            if (method_exists($view, 'setSerializationContext')) {
+                $serializationContext = SerializationContext::create();
+                $serializationContext->setGroups(array('sonata_api_read'));
+                $serializationContext->enableMaxDepthChecks();
+                $view->setSerializationContext($serializationContext);
+            } else {
+                $context = new Context();
+                $context->setGroups(array('sonata_api_read'));
+                $context->setMaxDepth(0);
+                $view->setContext($context);
+            }
 
             return $view;
         }
@@ -513,10 +521,19 @@ class GalleryController
             $this->galleryManager->save($gallery);
 
             $view = FOSRestView::create($gallery);
-            $serializationContext = SerializationContext::create();
-            $serializationContext->setGroups(array('sonata_api_read'));
-            $serializationContext->enableMaxDepthChecks();
-            $view->setSerializationContext($serializationContext);
+
+            // BC for FOSRestBundle < 2.0
+            if (method_exists($view, 'setSerializationContext')) {
+                $serializationContext = SerializationContext::create();
+                $serializationContext->setGroups(array('sonata_api_read'));
+                $serializationContext->enableMaxDepthChecks();
+                $view->setSerializationContext($serializationContext);
+            } else {
+                $context = new Context();
+                $context->setGroups(array('sonata_api_read'));
+                $context->setMaxDepth(0);
+                $view->setContext($context);
+            }
 
             return $view;
         }

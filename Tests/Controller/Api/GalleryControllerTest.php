@@ -147,7 +147,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->postGalleryMediaGalleryhasmediaAction(1, 2, new Request());
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertSame(200, $view->getStatusCode(), 'Should return 200');
+        $this->assertSame(200, $view->getResponse()->getStatusCode(), 'Should return 200');
     }
 
     public function testPostGalleryMediaGalleryhasmediaInvalidAction()
@@ -173,7 +173,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->postGalleryMediaGalleryhasmediaAction(1, 1, new Request());
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertSame(400, $view->getStatusCode(), 'Should return 400');
+        $this->assertSame(400, $view->getResponse()->getStatusCode(), 'Should return 400');
     }
 
     public function testPutGalleryMediaGalleryhasmediaAction()
@@ -205,7 +205,7 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->putGalleryMediaGalleryhasmediaAction(1, 1, new Request());
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertSame(200, $view->getStatusCode(), 'Should return 200');
+        $this->assertSame(200, $view->getResponse()->getStatusCode(), 'Should return 200');
     }
 
     public function testPutGalleryMediaGalleryhasmediaInvalidAction()
@@ -288,6 +288,6 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
         $view = $galleryController->deleteGalleryMediaGalleryhasmediaAction(1, 1);
 
         $this->assertInstanceOf('FOS\RestBundle\View\View', $view);
-        $this->assertSame(400, $view->getStatusCode(), 'Should return 400');
+        $this->assertSame(400, $view->getResponse()->getStatusCode(), 'Should return 400');
     }
 }
