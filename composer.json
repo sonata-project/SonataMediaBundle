@@ -65,6 +65,7 @@
         "tilleuls/ckeditor-sonata-media-bundle": "^1.0"
     },
     "conflict": {
+        "friendsofsymfony/rest-bundle": "<1.7.4 || >=3.0",
         "jms/serializer": "<0.13",
         "sonata-project/seo-bundle": "<2.0 || >=3.0",
         "sonata-project/block-bundle": "<3.0 || >=4.0"
