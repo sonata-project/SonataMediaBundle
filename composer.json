@@ -71,7 +71,13 @@
         "sonata-project/block-bundle": "<3.0 || >=4.0"
     },
     "autoload": {
-        "psr-4": { "Sonata\\MediaBundle\\": "" }
+        "psr-4": { "Sonata\\MediaBundle\\": "" },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": { "Sonata\\MediaBundle\\Tests\\": "Tests/" }
     },
     "extra": {
         "branch-alias": {
