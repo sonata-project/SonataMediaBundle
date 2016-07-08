@@ -144,7 +144,7 @@ class MediaController extends Controller
     }
 
     /**
-     * NEXT_MAJOR : Remove this method when bumping Symfony requirement to 2.8+.
+     * NEXT_MAJOR: Remove this method when bumping Symfony requirement to 2.8+.
      *
      * @return Request
      */
