@@ -13,13 +13,12 @@ namespace Sonata\MediaBundle\Tests\Block\Service;
 
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
-use Sonata\BlockBundle\Tests\Block\AbstractBlockServiceTest;
-use Sonata\BlockBundle\Tests\Block\Service\FakeTemplating;
+use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
 use Sonata\MediaBundle\Block\GalleryListBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
-class GalleryListBlockServiceTest extends AbstractBlockServiceTest
+class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|GalleryManagerInterface
@@ -31,18 +30,12 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTest
      */
     protected $pool;
 
-    /**
-     * @var FakeTemplating
-     */
-    protected $templating;
-
     protected function setUp()
     {
         parent::setUp();
 
         $this->galleryManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $this->pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
-        $this->templating = new FakeTemplating();
     }
 
     public function testExecute()
