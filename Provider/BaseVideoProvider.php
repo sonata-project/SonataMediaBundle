@@ -124,7 +124,14 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add('binaryContent', 'text', array('required' => false));
+        $formMapper->add(
+            'binaryContent',
+            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
+            // (when requirement of Symfony is >= 2.8)
+            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
+                : 'text',
+            array('required' => false));
     }
 
     /**
@@ -132,12 +139,20 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'text', array(
-            'constraints' => array(
-                new NotBlank(),
-                new NotNull(),
-            ),
-        ));
+        $formMapper->add(
+            'binaryContent',
+            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
+            // (when requirement of Symfony is >= 2.8)
+            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
+                : 'text',
+            array(
+                'constraints' => array(
+                    new NotBlank(),
+                    new NotNull(),
+                ),
+            )
+        );
     }
 
     /**
@@ -145,9 +160,17 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add('binaryContent', 'text', array(
-            'label' => 'widget_label_binary_content',
-        ));
+        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType'
+        // (when requirement of Symfony is >= 2.8)
+        $formBuilder->add(
+            'binaryContent',
+            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
+                : 'text',
+            array(
+                'label' => 'widget_label_binary_content',
+            )
+        );
     }
 
     /**

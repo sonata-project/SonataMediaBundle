@@ -19,10 +19,11 @@ use Sonata\MediaBundle\Form\Type\ApiMediaType;
  *
  * @author Hugo Briand <briand@ekino.com>
  */
-class ApiMediaTypeTest extends \PHPUnit_Framework_TestCase
+class ApiMediaTypeTest extends AbstractTypeTest
 {
     public function testBuildForm()
     {
+        parent::testBuildForm();
         $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
 
         $mediaPool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
@@ -34,5 +35,10 @@ class ApiMediaTypeTest extends \PHPUnit_Framework_TestCase
         $builder->expects($this->once())->method('addModelTransformer');
 
         $type->buildForm($builder, array('provider_name' => 'sonata.media.provider.image'));
+    }
+
+    protected function getTestedInstance()
+    {
+        return new ApiMediaType($this->mediaPool, 'testclass');
     }
 }

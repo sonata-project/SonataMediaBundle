@@ -96,7 +96,15 @@ class FileProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add('binaryContent', 'file', array('required' => false));
+        $formMapper->add(
+            'binaryContent',
+            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
+            // (when requirement of Symfony is >= 2.8)
+            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+                ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
+                : 'file',
+            array('required' => false)
+        );
     }
 
     /**
@@ -104,12 +112,20 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'file', array(
-            'constraints' => array(
-                new NotBlank(),
-                new NotNull(),
-            ),
-        ));
+        $formMapper->add(
+            'binaryContent',
+            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
+            // (when requirement of Symfony is >= 2.8)
+            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+                ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
+                : 'file',
+            array(
+                'constraints' => array(
+                    new NotBlank(),
+                    new NotNull(),
+                ),
+            )
+        );
     }
 
     /**
@@ -117,11 +133,17 @@ class FileProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
+        // NEXT_MAJOR: Remove $fileType variable and inline 'Symfony\Component\Form\Extension\Core\Type\FileType'
+        // (when requirement of Symfony is >= 2.8)
+        $fileType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
+            : 'file';
+
         if ($formBuilder->getOption('context') == 'api') {
-            $formBuilder->add('binaryContent', 'file');
+            $formBuilder->add('binaryContent', $fileType);
             $formBuilder->add('contentType');
         } else {
-            $formBuilder->add('binaryContent', 'file', array(
+            $formBuilder->add('binaryContent', $fileType, array(
                 'required' => false,
                 'label' => 'widget_label_binary_content',
             ));
