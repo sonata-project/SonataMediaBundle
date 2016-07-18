@@ -28,7 +28,7 @@ class Pool
     protected $contexts = array();
 
     /**
-     * @deprecated Deprecated since version 3.x and will be removed in 4.0. Use $downloadStrategies instead.
+     * @deprecated Deprecated since version 3.x and will be removed in 4.0. Use $downloadStrategies instead
      *
      * @var DownloadStrategyInterface[]
      */
@@ -84,7 +84,7 @@ class Pool
     }
 
     /**
-     * @deprecated Deprecated since version 3.x, to be removed in 4.0.
+     * @deprecated Deprecated since version 3.x, to be removed in 4.0
      *
      * @param string                    $name
      * @param DownloadStrategyInterface $security
@@ -244,7 +244,7 @@ class Pool
     }
 
     /**
-     * @deprecated Deprecated since version 3.x, to be removed in 4.0.
+     * @deprecated Deprecated since version 3.x, to be removed in 4.0
      *
      * @param MediaInterface $media
      *
