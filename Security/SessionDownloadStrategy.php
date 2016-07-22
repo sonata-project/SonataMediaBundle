@@ -27,7 +27,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     /**
      * @var ContainerInterface
      *
-     * @deprecated Since version 3.x, will be removed in 4.0.
+     * @deprecated Since version 3.1, will be removed in 4.0.
      * NEXT_MAJOR : remove this property
      */
     protected $container;
@@ -63,7 +63,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
         if ($session instanceof ContainerInterface) {
             @trigger_error(
                 'Using an instance of Symfony\Component\DependencyInjection\ContainerInterface is deprecated since 
-                version 3.x and will be removed in 4.0. 
+                version 3.1 and will be removed in 4.0. 
                 Use Symfony\Component\HttpFoundation\Session\SessionInterface instead.',
                 E_USER_DEPRECATED
             );
