@@ -28,9 +28,16 @@ class Pool
     protected $contexts = array();
 
     /**
+     * @deprecated Deprecated since version 3.1 and will be removed in 4.0. Use $downloadStrategies instead
+     *
      * @var DownloadStrategyInterface[]
      */
     protected $downloadSecurities = array();
+
+    /**
+     * @var DownloadStrategyInterface[]
+     */
+    protected $downloadStrategies = array();
 
     /**
      * @var string
@@ -77,12 +84,27 @@ class Pool
     }
 
     /**
+     * @deprecated Deprecated since version 3.1, to be removed in 4.0
+     *
      * @param string                    $name
      * @param DownloadStrategyInterface $security
      */
     public function addDownloadSecurity($name, DownloadStrategyInterface $security)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.', E_USER_DEPRECATED);
+
         $this->downloadSecurities[$name] = $security;
+
+        $this->addDownloadStrategy($name, $security);
+    }
+
+    /**
+     * @param string                    $name
+     * @param DownloadStrategyInterface $security
+     */
+    public function addDownloadStrategy($name, DownloadStrategyInterface $security)
+    {
+        $this->downloadStrategies[$name] = $security;
     }
 
     /**
@@ -222,6 +244,8 @@ class Pool
     }
 
     /**
+     * @deprecated Deprecated since version 3.1, to be removed in 4.0
+     *
      * @param MediaInterface $media
      *
      * @return DownloadStrategyInterface
@@ -230,15 +254,34 @@ class Pool
      */
     public function getDownloadSecurity(MediaInterface $media)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.', E_USER_DEPRECATED);
+
+        return array_merge($this->getDownloadSecurity($media), $this->getDownloadStrategy($media));
+    }
+
+    /**
+     * @param MediaInterface $media
+     *
+     * @return DownloadStrategyInterface
+     *
+     * @throws \RuntimeException
+     */
+    public function getDownloadStrategy(MediaInterface $media)
+    {
         $context = $this->getContext($media->getContext());
 
         $id = $context['download']['strategy'];
 
-        if (!isset($this->downloadSecurities[$id])) {
+        // NEXT_MAJOR: remove this line with the next major release.
+        if (isset($this->downloadSecurities[$id])) {
+            return $this->downloadSecurities[$id];
+        }
+
+        if (!isset($this->downloadStrategies[$id])) {
             throw new \RuntimeException('Unable to retrieve the download security : '.$id);
         }
 
-        return $this->downloadSecurities[$id];
+        return $this->downloadStrategies[$id];
     }
 
     /**

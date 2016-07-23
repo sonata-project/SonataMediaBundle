@@ -64,12 +64,20 @@ class MediaType extends AbstractType
 
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 
-        $builder->add('unlink', 'checkbox', array(
-            'label' => 'widget_label_unlink',
-            'mapped' => false,
-            'data' => false,
-            'required' => false,
-        ));
+        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\CheckboxType' value.
+        // (when requirement of Symfony is >= 2.8)
+        $builder->add(
+            'unlink',
+            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+                ? 'Symfony\Component\Form\Extension\Core\Type\CheckboxType'
+                : 'checkbox',
+            array(
+                'label' => 'widget_label_unlink',
+                'mapped' => false,
+                'data' => false,
+                'required' => false,
+            )
+        );
     }
 
     /**
@@ -111,7 +119,11 @@ class MediaType extends AbstractType
      */
     public function getParent()
     {
-        return 'form';
+        // NEXT_MAJOR: Return 'Symfony\Component\Form\Extension\Core\Type\FormType'
+        // (when requirement of Symfony is >= 2.8)
+        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\FormType'
+            : 'form';
     }
 
     /**

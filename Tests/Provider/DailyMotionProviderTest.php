@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Provider\DailyMotionProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class DailyMotionProviderTest extends \PHPUnit_Framework_TestCase
+class DailyMotionProviderTest extends AbstractProviderTest
 {
     public function getProvider(Browser $browser = null)
     {

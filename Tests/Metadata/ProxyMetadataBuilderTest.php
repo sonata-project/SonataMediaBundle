@@ -230,7 +230,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Return a mock object for the DI ContainerInterface.
      *
-     * @param array $services A key-value list of services the container contains.
+     * @param array $services A key-value list of services the container contains
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
