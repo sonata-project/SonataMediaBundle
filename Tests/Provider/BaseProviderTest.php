@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Symfony\Component\Form\FormBuilder;
 
-class BaseProviderTest extends \PHPUnit_Framework_TestCase
+class BaseProviderTest extends AbstractProviderTest
 {
     public function getProvider()
     {

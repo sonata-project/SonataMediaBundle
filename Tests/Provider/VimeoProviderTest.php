@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class VimeoProviderTest extends \PHPUnit_Framework_TestCase
+class VimeoProviderTest extends AbstractProviderTest
 {
     public function getProvider(Browser $browser = null)
     {

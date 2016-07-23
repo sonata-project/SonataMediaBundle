@@ -49,6 +49,7 @@
         "sonata-project/admin-bundle": "^3.1",
         "sonata-project/formatter-bundle": "^3.0",
         "sonata-project/datagrid-bundle": "^2.2",
+        "sonata-project/block-bundle": "^3.1.1",
         "sonata-project/seo-bundle": "^2.0",
         "aws/aws-sdk-php": "^2.7",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
@@ -65,12 +66,19 @@
         "tilleuls/ckeditor-sonata-media-bundle": "^1.0"
     },
     "conflict": {
+        "friendsofsymfony/rest-bundle": "<1.7.4 || >=3.0",
         "jms/serializer": "<0.13",
         "sonata-project/seo-bundle": "<2.0 || >=3.0",
-        "sonata-project/block-bundle": "<3.0 || >=4.0"
+        "sonata-project/block-bundle": "<3.1.1 || >=4.0"
     },
     "autoload": {
-        "psr-4": { "Sonata\\MediaBundle\\": "" }
+        "psr-4": { "Sonata\\MediaBundle\\": "" },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": { "Sonata\\MediaBundle\\Tests\\": "Tests/" }
     },
     "extra": {
         "branch-alias": {
