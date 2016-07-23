@@ -11,7 +11,6 @@
 
 namespace Sonata\MediaBundle\Tests\Metadata;
 
-use Aws\S3\Enum\CannedAcl;
 use Aws\S3\Enum\Storage;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 
@@ -42,18 +41,18 @@ class AmazonMetadataBuilderTest extends \PHPUnit_Framework_TestCase
     public function provider()
     {
         return array(
-            array(array('acl' => 'private'), array('ACL' => CannedAcl::PRIVATE_ACCESS, 'contentType' => 'image/png')),
-            array(array('acl' => 'public'), array('ACL' => CannedAcl::PUBLIC_READ, 'contentType' => 'image/png')),
-            array(array('acl' => 'open'), array('ACL' => CannedAcl::PUBLIC_READ_WRITE, 'contentType' => 'image/png')),
-            array(array('acl' => 'auth_read'), array('ACL' => CannedAcl::AUTHENTICATED_READ, 'contentType' => 'image/png')),
-            array(array('acl' => 'owner_read'), array('ACL' => CannedAcl::BUCKET_OWNER_READ, 'contentType' => 'image/png')),
-            array(array('acl' => 'owner_full_control'), array('ACL' => CannedAcl::BUCKET_OWNER_FULL_CONTROL, 'contentType' => 'image/png')),
-            array(array('storage' => 'standard'), array('storage' => Storage::STANDARD, 'contentType' => 'image/png')),
-            array(array('storage' => 'reduced'), array('storage' => Storage::REDUCED, 'contentType' => 'image/png')),
+            array(array('acl' => 'private'), array('ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png')),
+            array(array('acl' => 'public'), array('ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'contentType' => 'image/png')),
+            array(array('acl' => 'open'), array('ACL' => AmazonMetadataBuilder::PUBLIC_READ_WRITE, 'contentType' => 'image/png')),
+            array(array('acl' => 'auth_read'), array('ACL' => AmazonMetadataBuilder::AUTHENTICATED_READ, 'contentType' => 'image/png')),
+            array(array('acl' => 'owner_read'), array('ACL' => AmazonMetadataBuilder::BUCKET_OWNER_READ, 'contentType' => 'image/png')),
+            array(array('acl' => 'owner_full_control'), array('ACL' => AmazonMetadataBuilder::BUCKET_OWNER_FULL_CONTROL, 'contentType' => 'image/png')),
+            array(array('storage' => 'standard'), array('storage' => AmazonMetadataBuilder::STORAGE_STANDARD, 'contentType' => 'image/png')),
+            array(array('storage' => 'reduced'), array('storage' => AmazonMetadataBuilder::STORAGE_REDUCED, 'contentType' => 'image/png')),
             array(array('cache_control' => 'max-age=86400'), array('CacheControl' => 'max-age=86400', 'contentType' => 'image/png')),
             array(array('encryption' => 'aes256'), array('encryption' => 'AES256', 'contentType' => 'image/png')),
             array(array('meta' => array('key' => 'value')), array('meta' => array('key' => 'value'), 'contentType' => 'image/png')),
-            array(array('acl' => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => array('key' => 'value')), array('ACL' => CannedAcl::PUBLIC_READ, 'storage' => Storage::STANDARD, 'meta' => array('key' => 'value'), 'CacheControl' => 'max-age=86400', 'encryption' => 'AES256', 'contentType' => 'image/png')),
+            array(array('acl' => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => array('key' => 'value')), array('ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'storage' => Storage::STANDARD, 'meta' => array('key' => 'value'), 'CacheControl' => 'max-age=86400', 'encryption' => 'AES256', 'contentType' => 'image/png')),
         );
     }
 }
