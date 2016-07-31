@@ -256,7 +256,7 @@ class Pool
     {
         @trigger_error('The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.', E_USER_DEPRECATED);
 
-        return array_merge($this->getDownloadSecurity($media), $this->getDownloadStrategy($media));
+        return $this->getDownloadStrategy($media);
     }
 
     /**
