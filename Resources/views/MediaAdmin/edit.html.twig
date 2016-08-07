@@ -20,8 +20,7 @@ file that was distributed with this source code.
     </style>
 {% endblock %}
 
-{% block sonata_admin_content %}
-
+{% block form %}
     <div class="row">
         {% if object.id %}
             <div class="col-md-6">
@@ -137,6 +136,4 @@ file that was distributed with this source code.
             Admin.setup_list_modal(jQuery('#pixlr-modal'));
         </script>
     {% endif %}
-
-
-{% endblock sonata_admin_content %}
+{% endblock form %}
