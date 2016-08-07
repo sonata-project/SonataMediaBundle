@@ -11,9 +11,11 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Buzz\Browser;
 use Gaufrette\Filesystem;
+use Http\Client\HttpClient;
+use Http\Message\MessageFactory;
 use Imagine\Image\Box;
+use Psr\Http\Message\ResponseInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -28,9 +30,14 @@ use Symfony\Component\Validator\Constraints\NotNull;
 abstract class BaseVideoProvider extends BaseProvider
 {
     /**
-     * @var Browser
+     * @var HttpClient
      */
-    protected $browser;
+    protected $client;
+
+    /**
+     * @var MessageFactory
+     */
+    protected $messageFactory;
 
     /**
      * @var MetadataBuilderInterface
@@ -43,14 +50,16 @@ abstract class BaseVideoProvider extends BaseProvider
      * @param CDNInterface                  $cdn
      * @param GeneratorInterface            $pathGenerator
      * @param ThumbnailInterface            $thumbnail
-     * @param Browser                       $browser
+     * @param HttpClient                    $client
+     * @param MessageFactory                $messageFactory
      * @param MetadataBuilderInterface|null $metadata
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, HttpClient $client, MessageFactory $messageFactory, MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
-        $this->browser = $browser;
+        $this->client = $client;
+        $this->messageFactory = $messageFactory;
         $this->metadata = $metadata;
     }
 
@@ -83,7 +92,10 @@ abstract class BaseVideoProvider extends BaseProvider
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
             $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : array();
-            $referenceFile->setContent($this->browser->get($this->getReferenceImage($media))->getContent(), $metadata);
+
+            $response = $this->sendRequest('GET', $this->getReferenceImage($media));
+
+            $referenceFile->setContent($response->getBody(), $metadata);
         }
 
         return $referenceFile;
@@ -213,12 +225,12 @@ abstract class BaseVideoProvider extends BaseProvider
     protected function getMetadata(MediaInterface $media, $url)
     {
         try {
-            $response = $this->browser->get($url);
+            $response = $this->sendRequest('GET', $url);
         } catch (\RuntimeException $e) {
             throw new \RuntimeException('Unable to retrieve the video information for :'.$url, null, $e);
         }
 
-        $metadata = json_decode($response->getContent(), true);
+        $metadata = json_decode($response->getBody(), true);
 
         if (!$metadata) {
             throw new \RuntimeException('Unable to decode the video information for :'.$url);
@@ -250,5 +262,20 @@ abstract class BaseVideoProvider extends BaseProvider
         }
 
         return $this->resizer->getBox($media, $settings);
+    }
+
+    /**
+     * Create a http request and sends it to the server.
+     *
+     * @param string $method
+     * @param string $url
+     *
+     * @return ResponseInterface
+     */
+    final protected function sendRequest($method, $url)
+    {
+        return $this->client->sendRequest(
+            $this->messageFactory->createRequest($method, $url)
+        );
     }
 }

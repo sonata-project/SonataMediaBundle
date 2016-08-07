@@ -54,7 +54,7 @@ class Configuration implements ConfigurationInterface
         $this->addProvidersSection($node);
         $this->addExtraSection($node);
         $this->addModelSection($node);
-        $this->addBuzzSection($node);
+        $this->addHttpClientSection($node);
         $this->addResizerSection($node);
 
         return $treeBuilder;
@@ -428,23 +428,15 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addBuzzSection(ArrayNodeDefinition $node)
+    private function addHttpClientSection(ArrayNodeDefinition $node)
     {
         $node
             ->children()
-                ->arrayNode('buzz')
+                ->arrayNode('http')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.curl')->end()
-                        ->arrayNode('client')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->booleanNode('ignore_errors')->defaultValue(true)->end()
-                            ->scalarNode('max_redirects')->defaultValue(5)->end()
-                            ->scalarNode('timeout')->defaultValue(5)->end()
-                            ->booleanNode('verify_peer')->defaultValue(true)->end()
-                            ->scalarNode('proxy')->defaultNull()->end()
-                        ->end()
+                        ->scalarNode('client')->defaultValue('httplug.client.default')->end()
+                        ->scalarNode('message_factory')->defaultValue('httplug.message_factory.default')->end()
                     ->end()
                 ->end()
             ->end()
