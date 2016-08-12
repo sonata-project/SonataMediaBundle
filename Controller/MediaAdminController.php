@@ -232,23 +232,4 @@ class MediaAdminController extends Controller
             )
         );
     }
-
-    protected function getUploadedFiles(array $dataArray, &$files = array(), $currentPath = array())
-    {
-        foreach ($dataArray as $key => $value) {
-            array_push($currentPath, $key);
-
-            if ($value instanceof UploadedFile) {
-                $files[] = array(
-                    $currentPath,
-                    $value,
-                );
-            } elseif (is_array($value)) {
-                $this->getUploadedFiles($value, $files, $currentPath);
-            }
-            array_pop($currentPath);
-        }
-
-        return $files;
-    }
 }
