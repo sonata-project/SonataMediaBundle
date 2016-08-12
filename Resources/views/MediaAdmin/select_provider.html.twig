@@ -23,7 +23,8 @@ file that was distributed with this source code.
         <div class="box-body">
             {% for code, provider in providers %}
                 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                    <a href="{{ admin.generateUrl('create', {'provider': provider.name}) }}"
+                    {% set action = action is defined ? action : 'create' %}
+                    <a href="{{ admin.generateUrl(action, {'provider': provider.name}) }}"
                        class="btn btn-app btn-block"
                        data-toggle="tooltip"
                        data-placement="top"

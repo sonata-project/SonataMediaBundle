@@ -11,10 +11,18 @@
 
 namespace Sonata\MediaBundle\Controller;
 
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sonata\MediaBundle\Form\Type\MultiUploadType;
+use Sonata\MediaBundle\Provider\FileProvider;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 class MediaAdminController extends Controller
 {
@@ -126,5 +134,121 @@ class MediaAdminController extends Controller
             return;
         }
         $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->setTheme($formView, $theme);
+    }
+
+    /**
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     *
+     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
+     */
+    public function multiUploadAction()
+    {
+        if (false === $this->admin->isGranted('CREATE')) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $parameters = $this->admin->getPersistentParameters();
+
+        $provider = $this->getRequest()->get('provider');
+
+
+        if(!$provider) {
+            $providers = $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', $this->get('sonata.media.pool')->getDefaultContext()));
+
+            $filteredProviders = array();
+            foreach ($providers as $key => $provider) {
+                if ($provider instanceof FileProvider) {
+                    $filteredProviders[] = $provider;
+                }
+            }
+
+            return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
+                'providers'     => $filteredProviders,
+                'base_template' => $this->getBaseTemplate(),
+                'admin'         => $this->admin,
+                'action'        => 'multi_upload',
+            ));
+
+        }
+
+        $form = $this->createForm(new MultiUploadType(), null , array('provider' => $provider, 'context' => $parameters['context']));
+
+        return $this->render('SonataMediaBundle:MediaAdmin:multi_upload.html.twig', array(
+            'action' => 'multi_upload',
+            'multi_form' => $form->createView()
+        ));
+    }
+
+    public function multiUploadAjaxAction(Request $request)
+    {
+        if (false === $this->admin->isGranted('CREATE')) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $form = $this->createForm(new MultiUploadType());
+        $form->handleRequest($request);
+
+        $logger = $this->get('logger');
+
+        $files = array();
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $uploadedFiles = $data['files'];
+            $mediaPool = $this->get('sonata.media.pool');
+            /** @var $uploadedFile UploadedFile */
+            foreach ($uploadedFiles as $uploadedFile) {
+                if ($uploadedFile->isValid()) {
+                    $this->admin->setRequest($request);
+                    /** @var $media MediaInterface */
+                    $media = $this->admin->getNewInstance();
+                    $media->setProviderName($data['provider']);
+                    $media->setContext($data['context']);
+                    $media->setBinaryContent($uploadedFile);
+
+                    try {
+                        $media = $this->admin->update($media);
+                        $provider = $mediaPool->getProvider($data['provider']);
+
+                        $files[] = array(
+                            'name' => $media->getName(),
+                            'editUrl' => $this->admin->generateUrl('edit', array('id' => $media->getId())),
+                            'thumbnailUrl' => $provider->getCdnPath($provider->getReferenceImage($media), true)
+                        );
+                    } catch(\Exception $e) {
+                        $logger->error("Fehler beim MultiUpload", array($e));
+                        $files[] = array(
+                            'name' => $uploadedFile->getClientOriginalName(),
+                            'error' => $e->getMessage()
+                        );
+                    }
+                }
+            }
+        }
+
+        return new JsonResponse(
+            array(
+                'files' => $files
+            )
+        );
+    }
+
+    protected function getUploadedFiles(array $dataArray, &$files = array(), $currentPath = array())
+    {
+        foreach ($dataArray as $key => $value) {
+            array_push($currentPath, $key);
+
+            if ($value instanceof UploadedFile) {
+                $files[] = array(
+                    $currentPath,
+                    $value,
+                );
+            } elseif (is_array($value)) {
+                $this->getUploadedFiles($value, $files, $currentPath);
+            }
+            array_pop($currentPath);
+        }
+
+        return $files;
     }
 }

@@ -1,0 +1,137 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/sonatamedia/multi_upload/css/jquery.fileupload.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/sonatamedia/multi_upload/css/jquery.fileupload-ui.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/load-image.all.min.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/tmpl.min.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.iframe-transport.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload-process.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload-image.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload-ui.js') }}"></script>
+{% endblock %}
+
+{% block title %}
+    {{ "title_multi_upload"|trans({}, 'SonataMediaBundle') }}
+{% endblock %}
+
+{% block sonata_admin_content %}
+    <div class="container">
+    {{ form_start(multi_form, {attr: {id: multi_form.vars.id }}) }}
+        <div class="row fileupload-buttonbar">
+            <div class="col-lg-7">
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                    {{ form_widget(multi_form.files) }}
+                </span>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+                <span class="fileupload-process"></span>
+            </div>
+            <div class="col-lg-5 fileupload-progress fade">
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+        </div>
+        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+    {{ form_end(multi_form) }}
+    </div>
+{% verbatim %}
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview" >
+                <!--{% if (file.thumbnailUrl) { %}-->
+                    <!--<img height="70" src="{%=file.thumbnailUrl%}">-->
+                <!--{% } %}-->
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                    <span>{%=file.name%}</span>
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.editUrl) { %}
+                <a class="btn btn-primary" target="_blank" href="{%=file.editUrl%}">
+                    <span>Edit</span>
+                </a>
+            {% }  %}
+        </td>
+    </tr>
+{% } %}
+</script>
+    <script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+
+{% endverbatim %}
+    <script>
+        $(function () {
+            'use strict';
+
+            $('#{{ multi_form.vars.id }}').fileupload({
+                url: '{{ admin.generateUrl('multi_upload_ajax', {}) }}',
+                autoUpload: true,
+                uploadTemplateId: 'template-upload',
+                disableImageResize: true,
+                previewCanvas: false
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block form %}
+{% endblock %}
+
+
+{% block actions %}
+    <li>{% include 'SonataAdminBundle:Button:list_button.html.twig' %}</li>
+    <li>{% include 'SonataAdminBundle:Button:create_button.html.twig' %}</li>
+{% endblock %}

@@ -18,6 +18,9 @@ use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Admin\AdminInterface;
 
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
@@ -45,6 +48,18 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $this->pool = $pool;
 
         $this->categoryManager = $categoryManager;
+    }
+
+
+    public function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('multi_upload', 'upload/multi');
+        $collection->add('multi_upload_ajax', 'upload/multi/ajax');
+    }
+
+    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    {
+        $menu->addChild('MultiUpload', ['route' => 'admin_sonata_media_media_multi_upload']);
     }
 
     /**
