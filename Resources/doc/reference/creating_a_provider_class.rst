@@ -262,6 +262,20 @@ At this point, the provider class is almost finish: we can add and remove
 a vimeo video : thanks to the ``AdminBundle`` integration and the ``VimeoProvider``
 service.
 
+Video Provider
+^^^^^^^^^^^^^^
+
+When creating a video provider by extending the  ``BaseVideoProvider`` class, you have to implement the
+``getReferenceUrl`` method. This method contains the external url to the video media.
+
+.. code-block:: php
+
+    <?php
+    public function getReferenceUrl(MediaInterface $media)
+    {
+        return sprintf('http://foobar.com/%s', $media->getProviderReference());
+    }
+
 Register the Class with the Service Container
 ---------------------------------------------
 

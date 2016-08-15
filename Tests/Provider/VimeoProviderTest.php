@@ -203,4 +203,11 @@ class VimeoProviderTest extends AbstractProviderTest
         $this->assertSame(100, $properties['height']);
         $this->assertSame(100, $properties['width']);
     }
+
+    public function testGetReferenceUrl()
+    {
+        $media = new Media();
+        $media->setProviderReference('123456');
+        $this->assertEquals('http://vimeo.com/123456', $this->getProvider()->getReferenceUrl($media));
+    }
 }
