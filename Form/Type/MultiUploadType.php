@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class MultiUploadType
+ * Class MultiUploadType.
  *
  * @author Maximilian Behrsing <m.behrsing@gmail.com>
  */
