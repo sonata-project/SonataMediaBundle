@@ -11,18 +11,17 @@
 
 namespace Sonata\MediaBundle\Controller;
 
-use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sonata\MediaBundle\Form\Type\MultiUploadType;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Sonata\MediaBundle\Model\MediaInterface;
 
 class MediaAdminController extends Controller
 {
@@ -152,7 +151,7 @@ class MediaAdminController extends Controller
         $provider = $this->getRequest()->get('provider');
 
 
-        if(!$provider) {
+        if (!$provider) {
             $providers = $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', $this->get('sonata.media.pool')->getDefaultContext()));
 
             $filteredProviders = array();
@@ -163,19 +162,18 @@ class MediaAdminController extends Controller
             }
 
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
-                'providers'     => $filteredProviders,
+                'providers' => $filteredProviders,
                 'base_template' => $this->getBaseTemplate(),
-                'admin'         => $this->admin,
-                'action'        => 'multi_upload',
+                'admin' => $this->admin,
+                'action' => 'multi_upload',
             ));
-
         }
 
-        $form = $this->createForm(new MultiUploadType(), null , array('provider' => $provider, 'context' => $parameters['context']));
+        $form = $this->createForm(new MultiUploadType(), null, array('provider' => $provider, 'context' => $parameters['context']));
 
         return $this->render('SonataMediaBundle:MediaAdmin:multi_upload.html.twig', array(
             'action' => 'multi_upload',
-            'multi_form' => $form->createView()
+            'multi_form' => $form->createView(),
         ));
     }
 
@@ -213,13 +211,13 @@ class MediaAdminController extends Controller
                         $files[] = array(
                             'name' => $media->getName(),
                             'editUrl' => $this->admin->generateUrl('edit', array('id' => $media->getId())),
-                            'thumbnailUrl' => $provider->getCdnPath($provider->getReferenceImage($media), true)
+                            'thumbnailUrl' => $provider->getCdnPath($provider->getReferenceImage($media), true),
                         );
-                    } catch(\Exception $e) {
-                        $logger->error("Fehler beim MultiUpload", array($e));
+                    } catch (\Exception $e) {
+                        $logger->error('Fehler beim MultiUpload', array($e));
                         $files[] = array(
                             'name' => $uploadedFile->getClientOriginalName(),
-                            'error' => $e->getMessage()
+                            'error' => $e->getMessage(),
                         );
                     }
                 }
@@ -228,7 +226,7 @@ class MediaAdminController extends Controller
 
         return new JsonResponse(
             array(
-                'files' => $files
+                'files' => $files,
             )
         );
     }

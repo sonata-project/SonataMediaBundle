@@ -1,7 +1,15 @@
 <?php
 
-namespace Sonata\MediaBundle\Form\Type;
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Sonata\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,19 +23,19 @@ class MultiUploadType extends AbstractType
             ->add('context', 'hidden', array('data' => $options['context']))
             ->add('provider', 'hidden', array('data' => $options['provider']))
             ->add('files', 'file', array(
-                'multiple' => true
+                'multiple' => true,
             ))
         ;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'context' => 'default',
-            'provider' => null
+            'provider' => null,
         ));
     }
 

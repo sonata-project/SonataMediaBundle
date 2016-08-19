@@ -11,16 +11,16 @@
 
 namespace Sonata\MediaBundle\Admin;
 
+use Knp\Menu\ItemInterface as MenuItemInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Knp\Menu\ItemInterface as MenuItemInterface;
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\AdminBundle\Admin\AdminInterface;
 
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
@@ -50,16 +50,10 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $this->categoryManager = $categoryManager;
     }
 
-
     public function configureRoutes(RouteCollection $collection)
     {
         $collection->add('multi_upload', 'upload/multi');
         $collection->add('multi_upload_ajax', 'upload/multi/ajax');
-    }
-
-    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
-    {
-        $menu->addChild('MultiUpload', ['route' => 'admin_sonata_media_media_multi_upload']);
     }
 
     /**
@@ -168,6 +162,11 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $url = $provider->generatePublicUrl($object, $provider->getFormatName($object, 'admin'));
 
         return new Metadata($object->getName(), $object->getDescription(), $url);
+    }
+
+    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    {
+        $menu->addChild('MultiUpload', array('route' => 'admin_sonata_media_media_multi_upload'));
     }
 
     /**
