@@ -104,14 +104,37 @@ class MediaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => $this->class,
-            'provider' => null,
-            'context' => null,
-            'empty_on_new' => true,
-            'new_on_update' => true,
-            'translation_domain' => 'SonataMediaBundle',
-        ));
+        $resolver
+            ->setDefaults(array(
+                'data_class' => $this->class,
+                'empty_on_new' => true,
+                'new_on_update' => true,
+                'translation_domain' => 'SonataMediaBundle',
+            ))
+            ->setRequired(array(
+                'provider',
+                'context',
+            ));
+
+        // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $resolver
+                ->setAllowedTypes('provider', 'string')
+                ->setAllowedTypes('context', 'string')
+                ->setAllowedValues('provider', $this->pool->getProviderList())
+                ->setAllowedValues('context', array_keys($this->pool->getContexts()))
+            ;
+        } else {
+            $resolver
+                ->setAllowedTypes(array(
+                    'provider' => 'string',
+                    'context' => 'string',
+                ))
+                ->setAllowedValues(array(
+                    'provider' => $this->pool->getProviderList(),
+                    'context' => array_keys($this->pool->getContexts()),
+                ));
+        }
     }
 
     /**
