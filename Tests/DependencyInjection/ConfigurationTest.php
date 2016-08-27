@@ -9,29 +9,39 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Tests;
+namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
 use Sonata\MediaBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAdminFormat()
-    {
-        $processor = new Processor();
+    /**
+     * @var array
+     */
+    protected $config;
 
-        $config = $processor->processConfiguration(new Configuration(), array(
-            array(
-                'db_driver' => 'foo',
+    public function setUp()
+    {
+        $configs = array(
+            'sonata_media' => array(
+                'db_driver' => 'doctrine_orm',
                 'default_context' => 'default',
             ),
-        ));
+        );
+        $processor = new Processor();
+        $configuration = new Configuration();
+        $this->config = $processor->processConfiguration($configuration, $configs);
+    }
 
-        $this->assertNotNull($config['admin_format']);
-        $this->assertSame(200, $config['admin_format']['width']);
-        $this->assertSame(false, $config['admin_format']['height']);
-        $this->assertSame(90, $config['admin_format']['quality']);
-        $this->assertSame('jpg', $config['admin_format']['format']);
-        $this->assertSame(true, $config['admin_format']['constraint']);
+    public function testProcess()
+    {
+        $this->assertArrayHasKey('resizers', $this->config);
+        $this->assertArrayHasKey('default', $this->config['resizers']);
+        $this->assertEquals('sonata.media.resizer.simple', $this->config['resizers']['default']);
+
+        $this->assertArrayHasKey('adapters', $this->config);
+        $this->assertArrayHasKey('default', $this->config['adapters']);
+        $this->assertEquals('sonata.media.adapter.image.gd', $this->config['adapters']['default']);
     }
 }
