@@ -41,7 +41,7 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private $media;
 
-    public function testThumbnailCanRenderHtmlAttributesGivenByTheProvider()
+    public function testThumbnailHasAllNecessaryAttributes()
     {
         $mediaExtension = new MediaExtension($this->getMediaService(), $this->getMediaManager());
         $mediaExtension->initRuntime($this->getEnvironment());
@@ -54,12 +54,8 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
         );
 
         $provider = $this->getProvider();
-        $provider->expects($this->once())->method('getHelperProperties')->with($media, $format, $options)
-            ->willReturn(array(
-                'title' => 'Test title',
-                'alt' => 'Test title',
-                'data-custom' => 'foo',
-            ));
+        $provider->expects($this->once())->method('generatePublicUrl')->with($media, $format)
+            ->willReturn('http://some.url.com');
 
         $template = $this->getTemplate();
         $template->expects($this->once())
@@ -71,7 +67,7 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
                         'options' => array(
                             'title' => 'Test title',
                             'alt' => 'Test title',
-                            'data-custom' => 'foo',
+                            'src' => 'http://some.url.com',
                         ),
                     )
                 )
