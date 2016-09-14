@@ -106,7 +106,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
-                $media->setProviderName($this->getRequest()->get(sprintf('%s[providerName]', $this->getUniqid()), null, true));
+                $media->setProviderName($this->getRequest()->get(sprintf('%s', $this->getUniqid()), null, true)['providerName']);
             } else {
                 $media->setProviderName($this->getRequest()->get('provider'));
             }
@@ -154,8 +154,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             ->addIdentifier('name')
             ->add('description')
             ->add('enabled')
-            ->add('size')
-        ;
+            ->add('size');
     }
 
     /**
