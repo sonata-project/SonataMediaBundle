@@ -174,7 +174,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
      */
     public function supportsMetadata()
     {
-        return $this->master instanceof MetadataSupporter ||  $this->slave instanceof MetadataSupporter;
+        return $this->master instanceof MetadataSupporter || $this->slave instanceof MetadataSupporter;
     }
 
     /**
