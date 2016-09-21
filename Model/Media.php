@@ -641,7 +641,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @param CategoryInterface $category|null
+     * @param CategoryInterface|null $category
      */
     public function setCategory(CategoryInterface $category = null)
     {

@@ -36,16 +36,18 @@ class MediaEventSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $category = $this->getMock('Sonata\\ClassificationBundle\\Model\\CategoryInterface');
 
-        $catManager = $this->getMockBuilder('Sonata\\ClassificationBundle\\Entity\\CategoryManager', array('getRootCategories'))
-                           ->disableOriginalConstructor()
-                           ->getMock();
+        $catManager = $this->getMock('Sonata\\MediaBundle\\Model\\CategoryManagerInterface');
 
         $container = $this->getMock('Symfony\\Component\\DependencyInjection\\ContainerInterface');
 
         $container->method('get')->will($this->returnValueMap(array(
             array('sonata.media.pool', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool),
-            array('sonata.classification.manager.category', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $catManager),
+            array('sonata.media.manager.category', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $catManager),
         )));
+
+        $container->method('has')
+            ->with($this->equalTo('sonata.media.manager.category'))
+            ->will($this->returnValue(true));
 
         $catManager->expects($this->exactly(2))
                    ->method('getRootCategories')

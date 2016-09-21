@@ -14,9 +14,9 @@ namespace Sonata\MediaBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
 abstract class BaseMediaAdmin extends AbstractAdmin
@@ -38,7 +38,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
      * @param Pool                     $pool
      * @param CategoryManagerInterface $categoryManager
      */
-    public function __construct($code, $class, $baseControllerName, Pool $pool, CategoryManagerInterface $categoryManager)
+    public function __construct($code, $class, $baseControllerName, Pool $pool, CategoryManagerInterface $categoryManager = null)
     {
         parent::__construct($code, $class, $baseControllerName);
 
@@ -86,7 +86,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $categoryId = $this->getRequest()->get('category');
 
-        if (!$categoryId) {
+        if (null !== $this->categoryManager && !$categoryId) {
             $categoryId = $this->categoryManager->getRootCategory($context)->getId();
         }
 
@@ -113,7 +113,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
             $media->setContext($context = $this->getRequest()->get('context'));
 
-            if ($categoryId = $this->getPersistentParameter('category')) {
+            if (null !== $this->categoryManager && $categoryId = $this->getPersistentParameter('category')) {
                 $category = $this->categoryManager->find($categoryId);
 
                 if ($category && $category->getContext()->getId() == $context) {
@@ -185,12 +185,14 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $provider->buildCreateForm($formMapper);
         }
 
-        $formMapper->add('category', 'sonata_type_model_list', array(), array(
-            'link_parameters' => array(
-                'context' => $media->getContext(),
-                'hide_context' => true,
-                'mode' => 'tree',
-            ),
-        ));
+        if (null !== $this->categoryManager) {
+            $formMapper->add('category', 'sonata_type_model_list', array(), array(
+                'link_parameters' => array(
+                    'context' => $media->getContext(),
+                    'hide_context' => true,
+                    'mode' => 'tree',
+                ),
+            ));
+        }
     }
 }

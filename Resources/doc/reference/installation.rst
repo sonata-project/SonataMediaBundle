@@ -26,6 +26,7 @@ Retrieve the bundle with composer:
 .. code-block:: bash
 
     $ composer require sonata-project/media-bundle
+    $ composer require sonata-project/classification-bundle # (optional: if you need media classification)
 
 Register these bundles in your AppKernel:
 
