@@ -89,7 +89,7 @@ class ConsumerThumbnail implements ThumbnailInterface
 
         // BC compatibility for missing EventDispatcher
         if (null === $this->dispatcher) {
-            trigger_error('Since version 2.3.3, passing an empty parameter in argument 4 for __construct() in '.__CLASS__.' is deprecated and the workaround for it will be removed in 3.0.', E_USER_DEPRECATED);
+            @trigger_error('Since version 2.3.3, passing an empty parameter in argument 4 for __construct() in '.__CLASS__.' is deprecated and the workaround for it will be removed in 3.0.', E_USER_DEPRECATED);
             $publish();
         } else {
             $this->dispatcher->addListener('kernel.finish_request', $publish);
