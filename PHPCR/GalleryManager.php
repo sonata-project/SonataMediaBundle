@@ -20,6 +20,8 @@ class GalleryManager extends BaseDocumentManager implements GalleryManagerInterf
     /**
      * BC Compatibility.
      *
+     * NEXT_MAJOR: remove this method.
+     *
      * @deprecated Please use save() from now
      *
      * @param GalleryInterface $gallery

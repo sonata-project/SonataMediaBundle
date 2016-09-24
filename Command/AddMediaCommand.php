@@ -24,6 +24,8 @@ class AddMediaCommand extends BaseCommand
     protected $quiet = false;
 
     /**
+     * NEXT_MAJOR: remove this property.
+     *
      * @deprecated This property is deprecated since version 2.4 and will be removed in 3.0
      */
     protected $output;
