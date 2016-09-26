@@ -27,11 +27,11 @@ interface CategoryManagerInterface
     public function getRootCategory($context);
 
     /**
-     * @param bool|true $loadChildren
+     * @param bool $loadChildren
      *
      * @return CategoryInterface[]
      */
-    public function getRootCategories($loadChildren);
+    public function getRootCategories($loadChildren = true);
 
     /**
      * @param int $categoryId
