@@ -93,6 +93,7 @@ class ConsumerThumbnail implements ThumbnailInterface
             $publish();
         } else {
             $this->dispatcher->addListener('kernel.finish_request', $publish);
+            $this->dispatcher->addListener('console.terminate', $publish);
         }
     }
 
