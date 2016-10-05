@@ -1,134 +1,114 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<container xmlns="http://symfony.com/schema/dic/services"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <parameter key="sonata.media.provider.image.class">Sonata\MediaBundle\Provider\ImageProvider</parameter>
         <parameter key="sonata.media.provider.file.class">Sonata\MediaBundle\Provider\FileProvider</parameter>
         <parameter key="sonata.media.provider.youtube.class">Sonata\MediaBundle\Provider\YouTubeProvider</parameter>
         <parameter key="sonata.media.provider.dailymotion.class">Sonata\MediaBundle\Provider\DailyMotionProvider</parameter>
         <parameter key="sonata.media.provider.vimeo.class">Sonata\MediaBundle\Provider\VimeoProvider</parameter>
-
         <parameter key="sonata.media.thumbnail.format">Sonata\MediaBundle\Thumbnail\FormatThumbnail</parameter>
         <parameter key="sonata.media.thumbnail.format.default">jpg</parameter>
         <parameter key="sonata.media.thumbnail.liip_imagine">Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail</parameter>
-
         <parameter key="sonata.media.pool.class">Sonata\MediaBundle\Provider\Pool</parameter>
     </parameters>
-
     <services>
         <service id="sonata.media.pool" class="%sonata.media.pool.class%">
-            <argument />
+            <argument/>
         </service>
-
         <service id="sonata.media.thumbnail.format" class="%sonata.media.thumbnail.format%">
             <argument type="string">%sonata.media.thumbnail.format.default%</argument>
         </service>
-
-        <service id="sonata.media.thumbnail.liip_imagine" class="%sonata.media.thumbnail.liip_imagine%" >
-            <argument type="service" id="router" />
+        <service id="sonata.media.thumbnail.liip_imagine" class="%sonata.media.thumbnail.liip_imagine%">
+            <argument type="service" id="router"/>
         </service>
-
         <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
-            <tag name="sonata.media.provider" />
+            <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.image</argument>
-            <argument />
-            <argument />
-            <argument />
-            <argument type="service" id="sonata.media.thumbnail.format" />
-            <argument />
-            <argument />
-            <argument />
-            <argument type="service" id="sonata.media.metadata.proxy" />
-
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument type="service" id="sonata.media.thumbnail.format"/>
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_image.html.twig</argument>
+                    <argument key="helper_thumbnail">SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key="helper_view">SonataMediaBundle:Provider:view_image.html.twig</argument>
                 </argument>
             </call>
         </service>
-
         <service id="sonata.media.provider.file" class="%sonata.media.provider.file.class%">
-            <tag name="sonata.media.provider" />
+            <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.file</argument>
-            <argument />
-            <argument />
-            <argument />
-            <argument type="service" id="sonata.media.thumbnail.format" />
-            <argument />
-            <argument />
-            <argument type="service" id="sonata.media.metadata.proxy" />
-
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument type="service" id="sonata.media.thumbnail.format"/>
+            <argument/>
+            <argument/>
+            <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_file.html.twig</argument>
+                    <argument key="helper_thumbnail">SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key="helper_view">SonataMediaBundle:Provider:view_file.html.twig</argument>
                 </argument>
             </call>
         </service>
-
         <service id="sonata.media.provider.youtube" class="%sonata.media.provider.youtube.class%">
-            <tag name="sonata.media.provider" />
+            <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.youtube</argument>
-            <argument />
-            <argument />
-            <argument />
-            <argument type="service" id="sonata.media.thumbnail.format" />
-            <argument type="service" id="sonata.media.buzz.browser" />
-            <argument type="service" id="sonata.media.metadata.proxy" />
-            <argument />
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument type="service" id="sonata.media.thumbnail.format"/>
+            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.metadata.proxy"/>
+            <argument/>
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_youtube.html.twig</argument>
+                    <argument key="helper_thumbnail">SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key="helper_view">SonataMediaBundle:Provider:view_youtube.html.twig</argument>
                 </argument>
             </call>
         </service>
-
         <service id="sonata.media.provider.dailymotion" class="%sonata.media.provider.dailymotion.class%">
-            <tag name="sonata.media.provider" />
+            <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.dailymotion</argument>
-            <argument />
-            <argument />
-            <argument />
-            <argument type="service" id="sonata.media.thumbnail.format" />
-            <argument type="service" id="sonata.media.buzz.browser" />
-            <argument type="service" id="sonata.media.metadata.proxy" />
-
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument type="service" id="sonata.media.thumbnail.format"/>
+            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_dailymotion.html.twig</argument>
+                    <argument key="helper_thumbnail">SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key="helper_view">SonataMediaBundle:Provider:view_dailymotion.html.twig</argument>
                 </argument>
             </call>
         </service>
-
         <service id="sonata.media.provider.vimeo" class="%sonata.media.provider.vimeo.class%">
-            <tag name="sonata.media.provider" />
+            <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.vimeo</argument>
-            <argument />
-            <argument />
-            <argument />
-            <argument type="service" id="sonata.media.thumbnail.format" />
-            <argument type="service" id="sonata.media.buzz.browser" />
-            <argument type="service" id="sonata.media.metadata.proxy" />
-
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument type="service" id="sonata.media.thumbnail.format"/>
+            <argument type="service" id="sonata.media.buzz.browser"/>
+            <argument type="service" id="sonata.media.metadata.proxy"/>
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
+                    <argument key="helper_thumbnail">SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key="helper_view">SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
                 </argument>
             </call>
         </service>
-
-        <service id="sonata.media.buzz.connector.file_get_contents" class="Buzz\Client\FileGetContents" />
-        <service id="sonata.media.buzz.connector.curl" class="Buzz\Client\Curl" />
-
+        <service id="sonata.media.buzz.connector.file_get_contents" class="Buzz\Client\FileGetContents"/>
+        <service id="sonata.media.buzz.connector.curl" class="Buzz\Client\Curl"/>
         <service id="sonata.media.buzz.browser" class="Buzz\Browser">
-            <argument />
+            <argument/>
         </service>
-
     </services>
 </container>

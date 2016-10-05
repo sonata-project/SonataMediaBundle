@@ -11,13 +11,13 @@
 
 namespace Sonata\MediaBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Provider\Pool;
 
-class GalleryAdmin extends Admin
+class GalleryAdmin extends AbstractAdmin
 {
     /**
      * @var Pool
@@ -47,7 +47,7 @@ class GalleryAdmin extends Admin
         $gallery->setContext($parameters['context']);
 
         // fix weird bug with setter object not being call
-        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
+        $gallery->setGalleryItems($gallery->getGalleryItems());
     }
 
     /**
@@ -56,7 +56,7 @@ class GalleryAdmin extends Admin
     public function preUpdate($gallery)
     {
         // fix weird bug with setter object not being call
-        $gallery->setGalleryHasMedias($gallery->getGalleryHasMedias());
+        $gallery->setGalleryItems($gallery->getGalleryItems());
     }
 
     /**
@@ -127,14 +127,14 @@ class GalleryAdmin extends Admin
                 ->add('defaultFormat', 'choice', array('choices' => $formats))
             ->end()
             ->with('Gallery')
-                ->add('galleryHasMedias', 'sonata_type_collection', array(
+                ->add('galleryItems', 'sonata_type_collection', array(
                         'cascade_validation' => true,
                     ), array(
                         'edit' => 'inline',
                         'inline' => 'table',
                         'sortable' => 'position',
                         'link_parameters' => array('context' => $context),
-                        'admin_code' => 'sonata.media.admin.gallery_has_media',
+                        'admin_code' => 'sonata.media.admin.gallery_item',
                     )
                 )
             ->end()

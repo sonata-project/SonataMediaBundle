@@ -1,11 +1,7 @@
-<?xml version="1.0" ?>
-<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
-        http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping         http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
     <class name="Sonata\MediaBundle\Model\Media">
-        <constraint name="Callback" >
+        <constraint name="Callback">
             <option name="methods">
                 <value>isStatusErroneous</value>
             </option>
@@ -15,35 +11,34 @@
             <option name="method">validate</option>
         </constraint>
         <property name="name">
-            <constraint name="NotNull" />
-            <constraint name="NotBlank" />
+            <constraint name="NotNull"/>
+            <constraint name="NotBlank"/>
         </property>
         <property name="providerReference">
-            <constraint name="NotNull" />
-            <constraint name="NotBlank" />
+            <constraint name="NotNull"/>
+            <constraint name="NotBlank"/>
         </property>
         <property name="providerStatus">
-            <constraint name="NotNull" />
-            <constraint name="NotBlank" />
+            <constraint name="NotNull"/>
+            <constraint name="NotBlank"/>
         </property>
     </class>
-
     <class name="Sonata\MediaBundle\Model\Gallery">
-        <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat" />
-        <property name="galleryHasMedias">
-            <constraint name="Valid" />
+        <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat"/>
+        <property name="galleryItems">
+            <constraint name="Valid"/>
         </property>
         <property name="context">
-            <constraint name="NotNull" />
-            <constraint name="NotBlank" />
+            <constraint name="NotNull"/>
+            <constraint name="NotBlank"/>
         </property>
         <property name="name">
-            <constraint name="NotNull" />
-            <constraint name="NotBlank" />
+            <constraint name="NotNull"/>
+            <constraint name="NotBlank"/>
         </property>
         <property name="defaultFormat">
-            <constraint name="NotNull" />
-            <constraint name="NotBlank" />
+            <constraint name="NotNull"/>
+            <constraint name="NotBlank"/>
         </property>
     </class>
 </constraint-mapping>

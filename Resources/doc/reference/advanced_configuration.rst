@@ -10,8 +10,11 @@ Full configuration options:
         class:
             media:              Application\Sonata\MediaBundle\Entity\Media
             gallery:            Application\Sonata\MediaBundle\Entity\Gallery
-            gallery_has_media:  Application\Sonata\MediaBundle\Entity\GalleryHasMedia
-            category:           Application\Sonata\ClassificationBundle\Entity\Category
+            gallery_item:       Application\Sonata\MediaBundle\Entity\GalleryItem
+            category:           null # Application\Sonata\ClassificationBundle\Entity\Category if exists
+
+        force_disable_category: false # true, if you really want to disable the relation with category
+        category_manager:       null  # null or "sonata.media.manager.category.default" if classification bundle exists
 
         default_context: default
         admin_format:   { width: 200 , quality: 90, format: 'jpg'}

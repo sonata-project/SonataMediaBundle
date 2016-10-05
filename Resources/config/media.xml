@@ -1,54 +1,43 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<container xmlns="http://symfony.com/schema/dic/services"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <parameter key="sonata.media.resizer.simple.class">Sonata\MediaBundle\Resizer\SimpleResizer</parameter>
         <parameter key="sonata.media.resizer.square.class">Sonata\MediaBundle\Resizer\SquareResizer</parameter>
     </parameters>
-
     <services>
         <!-- image manipulation service -->
-        <service id="sonata.media.adapter.image.gd" class="Imagine\Gd\Imagine" />
-        <service id="sonata.media.adapter.image.imagick" class="Imagine\Imagick\Imagine" />
-        <service id="sonata.media.adapter.image.gmagick" class="Imagine\Gmagick\Imagine" />
-
+        <service id="sonata.media.adapter.image.gd" class="Imagine\Gd\Imagine"/>
+        <service id="sonata.media.adapter.image.imagick" class="Imagine\Imagick\Imagine"/>
+        <service id="sonata.media.adapter.image.gmagick" class="Imagine\Gmagick\Imagine"/>
         <service id="sonata.media.resizer.simple" class="%sonata.media.resizer.simple.class%">
-            <argument type="service" id="sonata.media.adapter.image.gd" />
+            <argument type="service" id="sonata.media.adapter.image.gd"/>
             <argument>%sonata.media.resizer.simple.adapter.mode%</argument>
-            <argument type="service" id="sonata.media.metadata.proxy" />
+            <argument type="service" id="sonata.media.metadata.proxy"/>
         </service>
-
         <service id="sonata.media.resizer.square" class="%sonata.media.resizer.square.class%">
-            <argument type="service" id="sonata.media.adapter.image.gd" />
+            <argument type="service" id="sonata.media.adapter.image.gd"/>
             <argument>%sonata.media.resizer.square.adapter.mode%</argument>
-            <argument type="service" id="sonata.media.metadata.proxy" />
+            <argument type="service" id="sonata.media.metadata.proxy"/>
         </service>
-
         <!-- CDN abstraction service -->
         <service id="sonata.media.cdn.server" class="Sonata\MediaBundle\CDN\Server">
-            <argument />
+            <argument/>
         </service>
-
         <service id="sonata.media.cdn.panther" class="Sonata\MediaBundle\CDN\PantherPortal">
-            <argument />
-            <argument />
-            <argument />
-            <argument />
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument/>
         </service>
-
         <service id="sonata.media.cdn.cloudfront" class="Sonata\MediaBundle\CDN\CloudFront">
-            <argument />
-            <argument />
-            <argument />
-            <argument />
+            <argument/>
+            <argument/>
+            <argument/>
+            <argument/>
         </service>
-
         <service id="sonata.media.cdn.fallback" class="Sonata\MediaBundle\CDN\Fallback">
-            <argument />
-            <argument />
+            <argument/>
+            <argument/>
         </service>
     </services>
-
 </container>

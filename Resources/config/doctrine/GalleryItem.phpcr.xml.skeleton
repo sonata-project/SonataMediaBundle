@@ -14,8 +14,8 @@
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
 
-    <document name="Application\Sonata\MediaBundle\PHPCR\GalleryHasMedia"
-              repository-class="Application\Sonata\MediaBundle\PHPCR\GalleryHasMediaRepository">
+    <document name="Application\Sonata\MediaBundle\PHPCR\GalleryItem"
+              repository-class="Application\Sonata\MediaBundle\PHPCR\GalleryItemRepository">
 
         <id name="id">
             <generator strategy="REPOSITORY" />

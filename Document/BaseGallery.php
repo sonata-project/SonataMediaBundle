@@ -24,7 +24,7 @@ abstract class BaseGallery extends Gallery
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new ArrayCollection();
+        $this->galleryItems = new ArrayCollection();
     }
 
     /**

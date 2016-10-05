@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="ja" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="default">
@@ -78,6 +78,10 @@
                 <source>description.forbidden_download_strategy</source>
                 <target>このメディアは誰でも取得することができません。</target>
             </trans-unit>
+            <trans-unit id="description.session_download_strategy">
+                <source>description.session_download_strategy</source>
+                <target>description.session_download_strategy</target>
+            </trans-unit>
             <trans-unit id="filter.label_name">
                 <source>filter.label_name</source>
                 <target>名前</target>
@@ -122,8 +126,8 @@
                 <source>form.label_default_format</source>
                 <target>フォーマット</target>
             </trans-unit>
-            <trans-unit id="form.label_gallery_has_medias">
-                <source>form.label_gallery_has_medias</source>
+            <trans-unit id="form.label_gallery_items">
+                <source>form.label_gallery_items</source>
                 <target>メディア</target>
             </trans-unit>
             <trans-unit id="form.label_author_name">
@@ -240,30 +244,24 @@
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <span class="label label-warning">重要</span> <strong>外部サービス</strong>にメディアを公開しようとしています。<br />
                         もし機密性のある素材ならば、このサービスを使用しないでください。
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong>Pixlr Express Editor</strong> <br />
                         Simple interface for quick editing
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
-                <target>
-                    <![CDATA[
+                <target><![CDATA[
                         <strong>Pixlrアドバンスド エディター</strong> <br />
                         Experimented users only
-                    ]]>
-                </target>
+                    ]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>

@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Controller\Api;
 
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -18,8 +19,8 @@ use FOS\RestBundle\View\View as FOSRestView;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\DatagridBundle\Pager\PagerInterface;
-use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
@@ -53,7 +54,7 @@ class GalleryController
     /**
      * @var string
      */
-    protected $galleryHasMediaClass;
+    protected $galleryItemClass;
 
     /**
      * Constructor.
@@ -61,14 +62,14 @@ class GalleryController
      * @param GalleryManagerInterface $galleryManager
      * @param MediaManagerInterface   $mediaManager
      * @param FormFactoryInterface    $formFactory
-     * @param string                  $galleryHasMediaClass
+     * @param string                  $galleryItemClass
      */
-    public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryHasMediaClass)
+    public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryItemClass)
     {
         $this->galleryManager = $galleryManager;
         $this->mediaManager = $mediaManager;
         $this->formFactory = $formFactory;
-        $this->galleryHasMediaClass = $galleryHasMediaClass;
+        $this->galleryItemClass = $galleryItemClass;
     }
 
     /**
@@ -79,10 +80,33 @@ class GalleryController
      *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"="sonata_api_read"}
      * )
      *
-     * @QueryParam(name="page", requirements="\d+", default="1", description="Page for gallery list pagination")
-     * @QueryParam(name="count", requirements="\d+", default="10", description="Number of galleries by page")
-     * @QueryParam(name="enabled", requirements="0|1", nullable=true, strict=true, description="Enabled/Disabled galleries filter")
-     * @QueryParam(name="orderBy", array=true, requirements="ASC|DESC", nullable=true, strict=true, description="Order by array (key is field, value is direction)")
+     * @QueryParam(
+     *     name="page",
+     *     requirements="\d+",
+     *     default="1",
+     *     description="Page for gallery list pagination"
+     * )
+     * @QueryParam(
+     *     name="count",
+     *     requirements="\d+",
+     *     default="10",
+     *     description="Number of galleries by page"
+     * )
+     * @QueryParam(
+     *     name="enabled",
+     *     requirements="0|1",
+     *     nullable=true,
+     *     strict=true,
+     *     description="Enabled/Disabled galleries filter"
+     * )
+     * @QueryParam(
+     *     name="orderBy",
+     *     array=true,
+     *     requirements="ASC|DESC",
+     *     nullable=true,
+     *     strict=true,
+     *     description="Order by array (key is field, value is direction)"
+     * )
      *
      * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
      *
@@ -163,24 +187,24 @@ class GalleryController
      */
     public function getGalleryMediasAction($id)
     {
-        $ghms = $this->getGallery($id)->getGalleryHasMedias();
+        $galleryItems = $this->getGallery($id)->getGalleryItems();
 
         $media = array();
-        foreach ($ghms as $ghm) {
-            $media[] = $ghm->getMedia();
+        foreach ($galleryItems as $galleryItem) {
+            $media[] = $galleryItem->getMedia();
         }
 
         return $media;
     }
 
     /**
-     * Retrieves the galleryhasmedias of specified gallery.
+     * Retrieves the gallery items of specified gallery.
      *
      * @ApiDoc(
      *  requirements={
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
      *  },
-     *  output={"class"="Sonata\MediaBundle\Model\GalleryHasMedia", "groups"="sonata_api_read"},
+     *  output={"class"="Sonata\MediaBundle\Model\GalleryItem", "groups"="sonata_api_read"},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when gallery is not found"
@@ -191,11 +215,11 @@ class GalleryController
      *
      * @param $id
      *
-     * @return GalleryHasMediaInterface[]
+     * @return GalleryItemInterface[]
      */
-    public function getGalleryGalleryhasmediasAction($id)
+    public function getGalleryGalleryItemAction($id)
     {
-        return $this->getGallery($id)->getGalleryHasMedias();
+        return $this->getGallery($id)->getGalleryItems();
     }
 
     /**
@@ -257,7 +281,7 @@ class GalleryController
      *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"},
      *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
      *  },
-     *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
+     *  input={"class"="sonata_media_api_form_gallery_item", "name"="", "groups"={"sonata_api_write"}},
      *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
@@ -273,20 +297,20 @@ class GalleryController
      *
      * @throws NotFoundHttpException
      */
-    public function postGalleryMediaGalleryhasmediaAction($galleryId, $mediaId, Request $request)
+    public function postGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
 
-        foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
-            if ($galleryHasMedia->getMedia()->getId() == $media->getId()) {
+        foreach ($gallery->getGalleryItems() as $galleryItem) {
+            if ($galleryItem->getMedia()->getId() == $media->getId()) {
                 return FOSRestView::create(array(
                     'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
                 ), 400);
             }
         }
 
-        return $this->handleWriteGalleryhasmedia($gallery, $media, null, $request);
+        return $this->handleWriteGalleryItem($gallery, $media, null, $request);
     }
 
     /**
@@ -297,7 +321,7 @@ class GalleryController
      *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"},
      *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
      *  },
-     *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
+     *  input={"class"="sonata_media_api_form_gallery_item", "name"="", "groups"={"sonata_api_write"}},
      *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
@@ -313,14 +337,14 @@ class GalleryController
      *
      * @throws NotFoundHttpException
      */
-    public function putGalleryMediaGalleryhasmediaAction($galleryId, $mediaId, Request $request)
+    public function putGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
 
-        foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
-            if ($galleryHasMedia->getMedia()->getId() == $media->getId()) {
-                return $this->handleWriteGalleryhasmedia($gallery, $media, $galleryHasMedia, $request);
+        foreach ($gallery->getGalleryItems() as $galleryItem) {
+            if ($galleryItem->getMedia()->getId() == $media->getId()) {
+                return $this->handleWriteGalleryItem($gallery, $media, $galleryItem, $request);
             }
         }
 
@@ -349,14 +373,14 @@ class GalleryController
      *
      * @throws NotFoundHttpException
      */
-    public function deleteGalleryMediaGalleryhasmediaAction($galleryId, $mediaId)
+    public function deleteGalleryMediaGalleryItemAction($galleryId, $mediaId)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
 
-        foreach ($gallery->getGalleryHasMedias() as $key => $galleryHasMedia) {
-            if ($galleryHasMedia->getMedia()->getId() == $media->getId()) {
-                $gallery->getGalleryHasMedias()->remove($key);
+        foreach ($gallery->getGalleryItems() as $key => $galleryItem) {
+            if ($galleryItem->getMedia()->getId() == $media->getId()) {
+                $gallery->getGalleryItems()->remove($key);
                 $this->getGalleryManager()->save($gallery);
 
                 return array('deleted' => true);
@@ -398,35 +422,44 @@ class GalleryController
     }
 
     /**
-     * Write a GalleryHasMedia, this method is used by both POST and PUT action methods.
+     * Write a GalleryItem, this method is used by both POST and PUT action methods.
      *
-     * @param GalleryInterface         $gallery
-     * @param MediaInterface           $media
-     * @param GalleryHasMediaInterface $galleryHasMedia
-     * @param Request                  $request
+     * @param GalleryInterface     $gallery
+     * @param MediaInterface       $media
+     * @param GalleryItemInterface $galleryItem
+     * @param Request              $request
      *
      * @return FormInterface
      */
-    protected function handleWriteGalleryhasmedia(GalleryInterface $gallery, MediaInterface $media, GalleryHasMediaInterface $galleryHasMedia = null, Request $request)
+    protected function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, GalleryItemInterface $galleryItem = null, Request $request)
     {
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery_has_media', $galleryHasMedia, array(
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery_item', $galleryItem, array(
             'csrf_protection' => false,
         ));
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $galleryHasMedia = $form->getData();
-            $galleryHasMedia->setMedia($media);
+            $galleryItem = $form->getData();
+            $galleryItem->setMedia($media);
 
-            $gallery->addGalleryHasMedias($galleryHasMedia);
+            $gallery->addGalleryItem($galleryItem);
             $this->galleryManager->save($gallery);
 
-            $view = FOSRestView::create($galleryHasMedia);
-            $serializationContext = SerializationContext::create();
-            $serializationContext->setGroups(array('sonata_api_read'));
-            $serializationContext->enableMaxDepthChecks();
-            $view->setSerializationContext($serializationContext);
+            $view = FOSRestView::create($galleryItem);
+
+            // BC for FOSRestBundle < 2.0
+            if (method_exists($view, 'setSerializationContext')) {
+                $serializationContext = SerializationContext::create();
+                $serializationContext->setGroups(array('sonata_api_read'));
+                $serializationContext->enableMaxDepthChecks();
+                $view->setSerializationContext($serializationContext);
+            } else {
+                $context = new Context();
+                $context->setGroups(array('sonata_api_read'));
+                $context->setMaxDepth(0);
+                $view->setContext($context);
+            }
 
             return $view;
         }
@@ -513,10 +546,19 @@ class GalleryController
             $this->galleryManager->save($gallery);
 
             $view = FOSRestView::create($gallery);
-            $serializationContext = SerializationContext::create();
-            $serializationContext->setGroups(array('sonata_api_read'));
-            $serializationContext->enableMaxDepthChecks();
-            $view->setSerializationContext($serializationContext);
+
+            // BC for FOSRestBundle < 2.0
+            if (method_exists($view, 'setSerializationContext')) {
+                $serializationContext = SerializationContext::create();
+                $serializationContext->setGroups(array('sonata_api_read'));
+                $serializationContext->enableMaxDepthChecks();
+                $view->setSerializationContext($serializationContext);
+            } else {
+                $context = new Context();
+                $context->setGroups(array('sonata_api_read'));
+                $context->setMaxDepth(0);
+                $view->setContext($context);
+            }
 
             return $view;
         }

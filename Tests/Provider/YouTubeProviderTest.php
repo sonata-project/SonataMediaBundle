@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Provider\YouTubeProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class YouTubeProviderTest extends \PHPUnit_Framework_TestCase
+class YouTubeProviderTest extends AbstractProviderTest
 {
     public function getProvider(Browser $browser = null)
     {

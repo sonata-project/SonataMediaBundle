@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\Document;
 
-use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\MediaBundle\Model\GalleryItem;
 
-abstract class BaseGalleryHasMedia extends GalleryHasMedia
+abstract class BaseGalleryItem extends GalleryItem
 {
     public function prePersist()
     {

@@ -9,10 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Form\Type;
+namespace Sonata\ClassificationBundle\Model;
 
-use Sonata\CoreBundle\Form\Type\BaseDoctrineORMSerializationType;
-
-class ApiGalleryHasMediaType extends BaseDoctrineORMSerializationType
+interface CategoryInterface
 {
+    public function setContext($context);
+
+    public function setName($name);
+
+    public function setEnabled($enabled);
+
+    public function setPosition($position);
 }

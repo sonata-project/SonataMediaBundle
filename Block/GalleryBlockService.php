@@ -226,22 +226,22 @@ class GalleryBlockService extends BaseBlockService
     private function buildElements(GalleryInterface $gallery)
     {
         $elements = array();
-        foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
-            if (!$galleryHasMedia->getEnabled()) {
+        foreach ($gallery->getGalleryItems() as $galleryItem) {
+            if (!$galleryItem->getEnabled()) {
                 continue;
             }
 
-            $type = $this->getMediaType($galleryHasMedia->getMedia());
+            $type = $this->getMediaType($galleryItem->getMedia());
 
             if (!$type) {
                 continue;
             }
 
             $elements[] = array(
-                'title' => $galleryHasMedia->getMedia()->getName(),
-                'caption' => $galleryHasMedia->getMedia()->getDescription(),
+                'title' => $galleryItem->getMedia()->getName(),
+                'caption' => $galleryItem->getMedia()->getDescription(),
                 'type' => $type,
-                'media' => $galleryHasMedia->getMedia(),
+                'media' => $galleryItem->getMedia(),
             );
         }
 

@@ -46,9 +46,9 @@ abstract class Gallery implements GalleryInterface
     protected $defaultFormat;
 
     /**
-     * @var GalleryHasMediaInterface[]
+     * @var GalleryItemInterface[]
      */
-    protected $galleryHasMedias;
+    protected $galleryItems;
 
     /**
      * {@inheritdoc}
@@ -141,31 +141,31 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setGalleryHasMedias($galleryHasMedias)
+    public function setGalleryItems($galleryItems)
     {
-        $this->galleryHasMedias = new ArrayCollection();
+        $this->galleryItems = new ArrayCollection();
 
-        foreach ($galleryHasMedias as $galleryHasMedia) {
-            $this->addGalleryHasMedias($galleryHasMedia);
+        foreach ($galleryItems as $galleryItem) {
+            $this->addGalleryItem($galleryItem);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getGalleryHasMedias()
+    public function getGalleryItems()
     {
-        return $this->galleryHasMedias;
+        return $this->galleryItems;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    public function addGalleryItem(GalleryItemInterface $galleryItem)
     {
-        $galleryHasMedia->setGallery($this);
+        $galleryItem->setGallery($this);
 
-        $this->galleryHasMedias[] = $galleryHasMedia;
+        $this->galleryItems[] = $galleryItem;
     }
 
     /**

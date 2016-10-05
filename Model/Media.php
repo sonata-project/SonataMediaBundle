@@ -134,9 +134,9 @@ abstract class Media implements MediaInterface
     protected $size;
 
     /**
-     * @var GalleryHasMediaInterface[]
+     * @var GalleryItemInterface[]
      */
-    protected $galleryHasMedias;
+    protected $galleryItems;
 
     /**
      * @var CategoryInterface
@@ -590,17 +590,17 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setGalleryHasMedias($galleryHasMedias)
+    public function setGalleryItems($galleryItems)
     {
-        $this->galleryHasMedias = $galleryHasMedias;
+        $this->galleryItems = $galleryItems;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getGalleryHasMedias()
+    public function getGalleryItems()
     {
-        return $this->galleryHasMedias;
+        return $this->galleryItems;
     }
 
     /**
@@ -641,7 +641,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @param CategoryInterface $category|null
+     * @param CategoryInterface|null $category
      */
     public function setCategory(CategoryInterface $category = null)
     {

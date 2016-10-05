@@ -9,7 +9,7 @@
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
     <entity
-        name="Application\Sonata\MediaBundle\Entity\GalleryHasMedia"
+        name="Application\Sonata\MediaBundle\Entity\GalleryItem"
         table="media__gallery_media"
         >
 
