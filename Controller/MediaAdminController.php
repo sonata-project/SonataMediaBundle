@@ -83,7 +83,7 @@ class MediaAdminController extends Controller
         }
 
         if (null !== $category && !$filters) {
-            $datagrid->setValue('category', null, $category);
+            $datagrid->setValue('category', null, $category->getId());
         }
         if ($this->container->has('sonata.media.manager.category') && $request->get('category')) {
             $categoryByContext = $this->container->get('sonata.media.manager.category')->findOneBy(array(
@@ -92,9 +92,9 @@ class MediaAdminController extends Controller
             ));
 
             if (!empty($categoryByContext)) {
-                $datagrid->setValue('category', null, $categoryByContext);
+                $datagrid->setValue('category', null, $categoryByContext->getId());
             } else {
-                $datagrid->setValue('category', null, $category);
+                $datagrid->setValue('category', null, $category->getId());
             }
         }
 
