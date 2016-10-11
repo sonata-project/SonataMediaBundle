@@ -565,7 +565,7 @@
             </trans-unit>
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
-                <target>CSS razred<target>
+                <target>CSS razred</target>
             </trans-unit>
         </body>
     </file>
