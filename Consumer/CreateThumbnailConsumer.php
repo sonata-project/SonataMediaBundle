@@ -67,7 +67,11 @@ class CreateThumbnailConsumer implements ConsumerInterface
         try {
             $this->getThumbnail($event)->generate($this->pool->getProvider($media->getProviderName()), $media);
         } catch (\LogicException $e) {
-            throw new HandlingException(sprintf('Error while generating exception for media.id: %s', $event->getMessage()->getValue('mediaId')), 0, $e);
+            throw new HandlingException(
+                sprintf('Error while generating exception for media.id: %s', $event->getMessage()->getValue('mediaId')),
+                0,
+                $e
+            );
         }
     }
 
@@ -81,7 +85,10 @@ class CreateThumbnailConsumer implements ConsumerInterface
         $thumbnail = $this->container->get($event->getMessage()->getValue('thumbnailId'));
 
         if (!$thumbnail instanceof ThumbnailInterface) {
-            throw new HandlingException(sprintf('Invalid thumbnail instance requested - id: %s', $event->getMessage()->getValue('thumbnailId')));
+            throw new HandlingException(sprintf(
+                'Invalid thumbnail instance requested - id: %s',
+                $event->getMessage()->getValue('thumbnailId')
+            ));
         }
 
         return $thumbnail;
