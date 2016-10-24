@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 
 abstract class Media implements MediaInterface
@@ -644,8 +645,9 @@ abstract class Media implements MediaInterface
      */
     public function setCategory($category = null)
     {
-        if($category instanceof CategoryInterface) {
-            $this->category = $category;
+        if (null !== $category && $category instanceof CategoryInterface) {
+            throw new UnexpectedTypeException();
         }
+        $this->category = $category;
     }
 }
