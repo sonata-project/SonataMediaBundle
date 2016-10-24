@@ -6,5 +6,5 @@ Resources/doc/_build/*
 nbproject
 coverage
 composer.lock
-vendor
+/vendor
 .php_cs.cache
