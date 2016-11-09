@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 
