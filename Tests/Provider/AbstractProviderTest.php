@@ -47,7 +47,7 @@ abstract class AbstractProviderTest extends \PHPUnit_Framework_TestCase
         $this->formMapper
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($this) {
+            ->will($this->returnCallback(function ($name, $type = null) {
                 // NEXT_MAJOR: Remove this "if" (when requirement of Symfony is >= 2.8)
                 if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
                     if (null !== $type) {
@@ -73,7 +73,7 @@ abstract class AbstractProviderTest extends \PHPUnit_Framework_TestCase
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($this) {
+            ->will($this->returnCallback(function ($name, $type = null) {
                 // NEXT_MAJOR: Remove this "if" (when requirement of Symfony is >= 2.8)
                 if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
                     if (null !== $type) {
