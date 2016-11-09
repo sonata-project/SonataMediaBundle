@@ -38,8 +38,6 @@ matrix:
     - php: '7.0'
       env: TARGET=lint
     - php: '5.6'
-      env: SYMFONY=2.3.*
-    - php: '5.6'
       env: SYMFONY=2.7.*
     - php: '5.6'
       env: SYMFONY=2.8.*
