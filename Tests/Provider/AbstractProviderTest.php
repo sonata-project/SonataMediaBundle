@@ -43,9 +43,6 @@ abstract class AbstractProviderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        // NEXT_MAJOR: Hack for php 5.3 only, remove it when requirement of PHP is >= 5.4
-        $that = $this;
-
         $this->formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')->disableOriginalConstructor()->getMock();
         $this->formMapper
             ->expects($this->any())
