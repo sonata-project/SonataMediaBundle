@@ -46,7 +46,7 @@ abstract class AbstractTypeTest extends \PHPUnit_Framework_TestCase
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($that) {
+            ->will($this->returnCallback(function ($name, $type = null) use ($this) {
                 // NEXT_MAJOR: Remove this "if" (when requirement of Symfony is >= 2.8)
                 if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
                     if (null !== $type) {
@@ -63,7 +63,7 @@ abstract class AbstractTypeTest extends \PHPUnit_Framework_TestCase
                             ;
                         }
 
-                        $that->assertTrue($isFQCN, sprintf('Unable to ensure %s is a FQCN', $type));
+                        $this->assertTrue($isFQCN, sprintf('Unable to ensure %s is a FQCN', $type));
                     }
                 }
             }));
