@@ -42,14 +42,11 @@ abstract class AbstractTypeTest extends \PHPUnit_Framework_TestCase
         $this->mediaPool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
         $this->mediaPool->expects($this->any())->method('getProvider')->willReturn($provider);
 
-        // NEXT_MAJOR: Hack for php 5.3 only, remove it when requirement of PHP is >= 5.4
-        $that = $this;
-
         $this->formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')->disableOriginalConstructor()->getMock();
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($that) {
+            ->will($this->returnCallback(function ($name, $type = null) {
                 // NEXT_MAJOR: Remove this "if" (when requirement of Symfony is >= 2.8)
                 if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
                     if (null !== $type) {
@@ -66,7 +63,7 @@ abstract class AbstractTypeTest extends \PHPUnit_Framework_TestCase
                             ;
                         }
 
-                        $that->assertTrue($isFQCN, sprintf('Unable to ensure %s is a FQCN', $type));
+                        $this->assertTrue($isFQCN, sprintf('Unable to ensure %s is a FQCN', $type));
                     }
                 }
             }));
