@@ -138,7 +138,7 @@ class SonataMediaExtension extends Extension
         $strategies = array_unique($strategies);
 
         foreach ($strategies as $strategyId) {
-            $pool->addMethodCall('addDownloadSecurity', array($strategyId, new Reference($strategyId)));
+            $pool->addMethodCall('addDownloadStrategy', array($strategyId, new Reference($strategyId)));
         }
 
         if ('doctrine_orm' == $config['db_driver']) {
