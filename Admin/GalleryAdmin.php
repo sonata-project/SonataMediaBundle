@@ -128,7 +128,6 @@ class GalleryAdmin extends AbstractAdmin
             ->end()
             ->with('Gallery')
                 ->add('galleryHasMedias', 'sonata_type_collection', array(
-                        'cascade_validation' => true,
                     ), array(
                         'edit' => 'inline',
                         'inline' => 'table',
