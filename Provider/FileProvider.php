@@ -311,7 +311,7 @@ class FileProvider extends BaseProvider
             throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile && $media->getBinaryContent()->getClientSize() == 0) {
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
             $errorElement
                ->with('binaryContent')
                    ->addViolation('The file is too big, max size: '.ini_get('upload_max_filesize'))
@@ -325,7 +325,7 @@ class FileProvider extends BaseProvider
                 ->end();
         }
 
-        if ($media->getBinaryContent()->getFilename() != '' && !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+        if ('' != $media->getBinaryContent()->getFilename() && !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
@@ -387,8 +387,8 @@ class FileProvider extends BaseProvider
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
 
-        if ($media->getBinaryContent() instanceof UploadedFile && $media->getBinaryContent()->getClientSize() == 0) {
-            $media->setProviderReference(sha1($media->getName().rand(11111, 99999)));
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
+            $media->setProviderReference(uniqid($media->getName(), true));
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
             throw new UploadException('The uploaded file is not found');
         }

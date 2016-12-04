@@ -342,7 +342,7 @@ class FileProviderTest extends AbstractProviderTest
             ->will($this->returnSelf());
 
         $upload = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
-            ->disableOriginalConstructor()
+            ->setConstructorArgs(array(tempnam(sys_get_temp_dir(), ''), 'dummy'))
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')
             ->will($this->returnValue(0));
@@ -374,7 +374,7 @@ class FileProviderTest extends AbstractProviderTest
             ->will($this->returnSelf());
 
         $upload = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
-            ->disableOriginalConstructor()
+            ->setConstructorArgs(array(tempnam(sys_get_temp_dir(), ''), 'dummy'))
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')
             ->will($this->returnValue(23));
