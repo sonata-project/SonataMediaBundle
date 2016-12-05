@@ -45,13 +45,40 @@ class FormatValidatorTest extends PHPUnit_Framework_TestCase
         $validator->validate($gallery, new ValidMediaFormat());
     }
 
-    public function testValidateWithValidContext()
+    public function testValidateNotValidDefaultFormat()
+    {
+        $pool = new Pool('defaultContext');
+        $pool->addContext('test', array(), array('format1' => array()));
+
+        $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('non_existing_format'));
+        $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
+
+        // Prefer the Symfony 2.5+ API if available
+        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
+            $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
+        } else {
+            $contextClass = 'Symfony\Component\Validator\ExecutionContext';
+        }
+
+        $context = $this->getMockBuilder($contextClass)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $context->expects($this->once())->method('addViolation');
+
+        $validator = new FormatValidator($pool);
+        $validator->initialize($context);
+
+        $validator->validate($gallery, new ValidMediaFormat());
+    }
+
+    public function testValidateOnlyReferenceIsAllowedIfNotFormats()
     {
         $pool = new Pool('defaultContext');
         $pool->addContext('test');
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
+        $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format_that_is_not_reference'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
         // Prefer the Symfony 2.5+ API if available

@@ -134,8 +134,9 @@ class GalleryAdmin extends AbstractAdmin
                 ))
                 ->add('enabled', null, array('required' => false))
                 ->add('name')
-                ->add('defaultFormat', $choiceType, array('choices' => $formats))
-            ->end()
+                ->ifTrue($formats)
+                    ->add('defaultFormat', $choiceType, array('choices' => $formats))
+                ->ifEnd()
             ->with('Gallery')
                 ->add('galleryHasMedias', $collectionType, array(), array(
                     'edit' => 'inline',
