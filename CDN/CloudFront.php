@@ -39,9 +39,9 @@ use Aws\CloudFront\Exception\CloudFrontException;
  * to the new distribution. For more information about the charges for
  * invalidation, see Paying for Object Invalidation.
  *
- * @uses CloudFrontClient for stablish connection with CloudFront service
+ * @uses \CloudFrontClient for stablish connection with CloudFront service
  *
- * @link http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.htmlInvalidating Objects (Web Distributions Only)
+ * @see http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.htmlInvalidating Objects (Web Distributions Only)
  *
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
@@ -113,7 +113,7 @@ class CloudFront implements CDNInterface
     /**
      * {@inheritdoc}
      *
-     * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFront.CloudFrontClient.html#_createInvalidation
+     * @see http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFront.CloudFrontClient.html#_createInvalidation
      */
     public function flushPaths(array $paths)
     {

@@ -86,7 +86,6 @@ abstract class BaseGallery extends Gallery
     public function reorderGalleryHasMedia()
     {
         if ($this->getGalleryHasMedias() && $this->getGalleryHasMedias() instanceof \IteratorAggregate) {
-
             // reorder
             $iterator = $this->getGalleryHasMedias()->getIterator();
 
