@@ -14,9 +14,7 @@ namespace Sonata\MediaBundle\Thumbnail;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\NotificationBundle\Backend\BackendInterface;
-use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 class ConsumerThumbnail implements ThumbnailInterface
 {
@@ -94,8 +92,8 @@ class ConsumerThumbnail implements ThumbnailInterface
             @trigger_error('Since version 2.3.3, passing an empty parameter in argument 4 for __construct() in '.__CLASS__.' is deprecated and the workaround for it will be removed in 3.0.', E_USER_DEPRECATED);
             $publish();
         } else {
-            $this->dispatcher->addListener(KernelEvents::FINISH_REQUEST, $publish);
-            $this->dispatcher->addListener(ConsoleEvents::TERMINATE, $publish);
+            $this->dispatcher->addListener('kernel.finish_request', $publish);
+            $this->dispatcher->addListener('console.terminate', $publish);
         }
     }
 

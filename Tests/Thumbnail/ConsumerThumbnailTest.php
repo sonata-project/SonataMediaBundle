@@ -12,8 +12,6 @@
 namespace Sonata\MediaBundle\Tests\Thumbnail;
 
 use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
-use Symfony\Component\Console\ConsoleEvents;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 class ConsumerThumbnailTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,11 +25,11 @@ class ConsumerThumbnailTest extends \PHPUnit_Framework_TestCase
         $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $dispatcher->expects($this->at(0))
             ->method('addListener')
-            ->with($this->equalTo(KernelEvents::FINISH_REQUEST), $this->anything());
+            ->with($this->equalTo('kernel.finish_request'), $this->anything());
 
         $dispatcher->expects($this->at(1))
             ->method('addListener')
-            ->with($this->equalTo(ConsoleEvents::TERMINATE), $this->anything());
+            ->with($this->equalTo('console.terminate'), $this->anything());
 
         $consumer = new ConsumerThumbnail('foo', $thumbnail, $backend, $dispatcher);
         $consumer->generate($provider, $media);
