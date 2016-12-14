@@ -54,7 +54,7 @@
         "aws/aws-sdk-php": "^2.7",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
         "symfony/phpunit-bridge": "^2.7 || ^3.0",
-        "friendsofsymfony/rest-bundle": "^1.7.4 || ^2.0",
+        "friendsofsymfony/rest-bundle": "^2.0",
         "nelmio/api-doc-bundle": "^2.11",
         "sllh/php-cs-fixer-styleci-bridge": "^2.0"
     },
