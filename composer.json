@@ -1,5 +1,5 @@
 {
-    "name": "sonata-project/media-bundle",
+    "name": "elmpp/media-bundle",
     "type": "symfony-bundle",
     "description": "Symfony SonataMediaBundle",
     "keywords": ["media", "sonata", "youtube", "dailymotion", "vimeo", "pdf", "file", "upload"],
