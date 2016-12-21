@@ -38,11 +38,13 @@ class GalleryControllerTest extends \PHPUnit_Framework_TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $params = $this->getMock('FOS\RestBundle\Request\ParamFetcherInterface');
-        $params->expects($this->once())->method('all')->will($this->returnValue(array('page' => 1, 'count' => 10, 'orderBy' => array('id' => 'ASC'))));
-        $params->expects($this->exactly(3))->method('get');
+        $paramFetcher = $this->getMockBuilder('FOS\RestBundle\Request\ParamFetcher')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $paramFetcher->expects($this->exactly(3))->method('get');
+        $paramFetcher->expects($this->once())->method('all')->will($this->returnValue(array()));
 
-        $this->assertSame(array(), $gController->getGalleriesAction($params));
+        $this->assertSame(array(), $gController->getGalleriesAction($paramFetcher));
     }
 
     public function testGetGalleryAction()
