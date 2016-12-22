@@ -83,6 +83,8 @@ class MediaController
      * @QueryParam(name="count", requirements="\d+", default="10", description="Number of medias by page")
      * @QueryParam(name="enabled", requirements="0|1", nullable=true, strict=true, description="Enabled/Disabled medias filter")
      * @QueryParam(name="orderBy", array=true, requirements="ASC|DESC", nullable=true, strict=true, description="Order by array (key is field, value is direction)")
+     * @QueryParam(name="providerName", nullable=true, strict=true, description="Filter by provider")
+     * @QueryParam(name="context", nullable=true, strict=true, description="Filter by context")
      *
      * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
      *
