@@ -77,10 +77,12 @@ class MediaAdminController extends Controller
         $datagrid->setValue('context', null, $context);
 
         // retrieve the main category for the tree view
-        $category = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
+        $rootCategory = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
+        // This should be safe as the root category has to exist for a given context but I do not like fatal errors
+        $rootCategoryId = !empty($rootCategory) ? $rootCategory->getId() : null;
 
         if (!$filters) {
-            $datagrid->setValue('category', null, $category);
+            $datagrid->setValue('category', null, $rootCategoryId);
         }
         if ($request->get('category')) {
             $categoryByContext = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
@@ -89,9 +91,9 @@ class MediaAdminController extends Controller
             ));
 
             if (!empty($categoryByContext)) {
-                $datagrid->setValue('category', null, $categoryByContext);
+                $datagrid->setValue('category', null, $categoryByContext->getId());
             } else {
-                $datagrid->setValue('category', null, $category);
+                $datagrid->setValue('category', null, $rootCategoryId);
             }
         }
 
@@ -104,7 +106,7 @@ class MediaAdminController extends Controller
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
-            'root_category' => $category,
+            'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ));
     }
