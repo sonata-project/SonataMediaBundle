@@ -77,9 +77,8 @@ class MediaAdminController extends Controller
         $datagrid->setValue('context', null, $context);
 
         // retrieve the main category for the tree view
-        $rootCategory = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
-        // This should be safe as the root category has to exist for a given context but I do not like fatal errors
-        $rootCategoryId = !empty($rootCategory) ? $rootCategory->getId() : null;
+        $rootCategory = $this->container->get('sonata.classification.manager.category')->getRootCategory($context); 
+        $rootCategoryId = $rootCategory->getId(); // This is safe
 
         if (!$filters) {
             $datagrid->setValue('category', null, $rootCategoryId);
