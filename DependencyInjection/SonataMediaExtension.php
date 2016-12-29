@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\DependencyInjection;
 
 use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
+use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -387,33 +388,58 @@ class SonataMediaExtension extends Extension
 
         // add the default configuration for the S3 filesystem
         if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['s3'])) {
+            $acl = str_replace(
+                array(
+                    'private',
+                    'public',
+                    'open',
+                    'auth_read',
+                    'owner_read',
+                    'owner_full_control',
+                ),
+                array(
+                    AmazonMetadataBuilder::PRIVATE_ACCESS,
+                    AmazonMetadataBuilder::PUBLIC_READ,
+                    AmazonMetadataBuilder::PUBLIC_READ_WRITE,
+                    AmazonMetadataBuilder::AUTHENTICATED_READ,
+                    AmazonMetadataBuilder::BUCKET_OWNER_READ,
+                    AmazonMetadataBuilder::BUCKET_OWNER_FULL_CONTROL,
+                ),
+                $config['filesystem']['s3']['acl']
+            );
+
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
-                ->replaceArgument(2, array('create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']))
+                ->replaceArgument(2, array(
+                    'create' => $config['filesystem']['s3']['create'],
+                    'region' => $config['filesystem']['s3']['region'],
+                    'directory' => $config['filesystem']['s3']['directory'],
+                    'acl' => $acl,
+                ))
             ;
 
             $container->getDefinition('sonata.media.metadata.amazon')
                 ->addArgument(array(
-                        'acl' => $config['filesystem']['s3']['acl'],
-                        'storage' => $config['filesystem']['s3']['storage'],
-                        'encryption' => $config['filesystem']['s3']['encryption'],
-                        'meta' => $config['filesystem']['s3']['meta'],
-                        'cache_control' => $config['filesystem']['s3']['cache_control'],
+                    'acl' => $acl,
+                    'storage' => $config['filesystem']['s3']['storage'],
+                    'encryption' => $config['filesystem']['s3']['encryption'],
+                    'meta' => $config['filesystem']['s3']['meta'],
+                    'cache_control' => $config['filesystem']['s3']['cache_control'],
                 ))
             ;
 
             if (3 === $config['filesystem']['s3']['sdk_version']) {
                 $container->getDefinition('sonata.media.adapter.service.s3')
-                ->replaceArgument(0, array(
-                    'credentials' => array(
-                        'secret' => $config['filesystem']['s3']['secretKey'],
-                        'key' => $config['filesystem']['s3']['accessKey'],
-                    ),
-                    'region' => $config['filesystem']['s3']['region'],
-                    'version' => $config['filesystem']['s3']['version'],
-                ))
-            ;
+                    ->replaceArgument(0, array(
+                        'credentials' => array(
+                            'secret' => $config['filesystem']['s3']['secretKey'],
+                            'key' => $config['filesystem']['s3']['accessKey'],
+                        ),
+                        'region' => $config['filesystem']['s3']['region'],
+                        'version' => $config['filesystem']['s3']['version'],
+                    ))
+                ;
             } else {
                 $container->getDefinition('sonata.media.adapter.service.s3')
                     ->replaceArgument(0, array(
