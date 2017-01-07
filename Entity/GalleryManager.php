@@ -22,6 +22,8 @@ class GalleryManager extends BaseEntityManager implements GalleryManagerInterfac
     /**
      * BC Compatibility.
      *
+     * NEXT_MAJOR: remove this method.
+     *
      * @deprecated Please use save() from now
      *
      * @param GalleryInterface $gallery

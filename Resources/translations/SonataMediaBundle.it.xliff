@@ -12,7 +12,11 @@
             </trans-unit>
             <trans-unit id="gallery">
                 <source>gallery</source>
-                <target>Galleria</target>
+                <target>Gallerie</target>
+            </trans-unit>
+            <trans-unit id="options">
+                <source>Options</source>
+                <target>Opzioni</target>
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
@@ -68,19 +72,19 @@
             </trans-unit>
             <trans-unit id="description.roles_download_strategy">
                 <source>description.roles_download_strategy</source>
-                <target>The media can be retrieved by users with the following roles : %roles%.</target>
+                <target>Questo media può essere scaricato dagli utenti con ruoli: %roles%.</target>
             </trans-unit>
             <trans-unit id="description.public_download_strategy">
                 <source>description.public_download_strategy</source>
-                <target>The media can be retrieved by anyone.</target>
+                <target>Questo media può essere scaricato da chiunque.</target>
             </trans-unit>
             <trans-unit id="description.forbidden_download_strategy">
                 <source>description.forbidden_download_strategy</source>
-                <target>The media can be retrieved by nobody.</target>
+                <target>Questo media non può essere scaricato da nessuno.</target>
             </trans-unit>
             <trans-unit id="description.session_download_strategy">
                 <source>description.session_download_strategy</source>
-                <target>description.session_download_strategy</target>
+                <target>Questo media può essere scaricato una volta per sessione.|Questo media può essere scaricato %times% volte per sessione.</target>
             </trans-unit>
             <trans-unit id="filter.label_name">
                 <source>filter.label_name</source>
@@ -88,7 +92,7 @@
             </trans-unit>
             <trans-unit id="filter.label_provider_reference">
                 <source>filter.label_provider_reference</source>
-                <target>Provider Reference</target>
+                <target>Riferimento provider</target>
             </trans-unit>
             <trans-unit id="filter.label_enabled">
                 <source>filter.label_enabled</source>
@@ -100,7 +104,7 @@
             </trans-unit>
             <trans-unit id="filter.label_provider_name">
                 <source>filter.label_provider_name</source>
-                <target>Nome Provider</target>
+                <target>Nome provider</target>
             </trans-unit>
             <trans-unit id="filter.label_category">
                 <source>filter.label_category</source>
@@ -120,7 +124,7 @@
             </trans-unit>
             <trans-unit id="filter.label_content_type">
                 <source>filter.label_content_type</source>
-                <target>Content Type</target>
+                <target>Tipo di contenuto</target>
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
@@ -156,7 +160,7 @@
             </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
-                <target>Flush CDN</target>
+                <target>Cache CDN svuotabile</target>
             </trans-unit>
             <trans-unit id="form.label_description">
                 <source>form.label_description</source>
@@ -204,11 +208,11 @@
             </trans-unit>
             <trans-unit id="label.to_be_flushed">
                 <source>label.to_be_flushed</source>
-                <target>Flushable</target>
+                <target>Svuotabile</target>
             </trans-unit>
             <trans-unit id="label.flushed_at">
                 <source>label.flushed_at</source>
-                <target>Flushed at</target>
+                <target>Cache svuotata il</target>
             </trans-unit>
             <trans-unit id="label.public_url">
                 <source>label.public_url</source>
@@ -232,11 +236,11 @@
             </trans-unit>
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
-                <target>Flush CDN</target>
+                <target>Cache CDN svuotabile</target>
             </trans-unit>
             <trans-unit id="label.cdn_flush_identifier">
                 <source>label.cdn_flush_identifier</source>
-                <target>Identificatore CDN flush</target>
+                <target>Id cache CDN</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
@@ -393,7 +397,7 @@
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>Collega l'oggetto ad un nuovo media</target>
+                <target>Aggiungi</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
@@ -401,23 +405,23 @@
             </trans-unit>
             <trans-unit id="widget_label_type">
                 <source>widget_label_type</source>
-                <target>widget_label_type</target>
+                <target>Tipo</target>
             </trans-unit>
             <trans-unit id="widget_label_context">
                 <source>widget_label_context</source>
-                <target>widget_label_context</target>
+                <target>Contesto</target>
             </trans-unit>
             <trans-unit id="widget_headline_information">
                 <source>widget_headline_information</source>
-                <target>widget_headline_information</target>
+                <target>Informazioni</target>
             </trans-unit>
             <trans-unit id="widget_label_unlink">
                 <source>widget_label_unlink</source>
-                <target>widget_label_unlink</target>
+                <target>Elimina</target>
             </trans-unit>
             <trans-unit id="widget_label_binary_content">
                 <source>widget_label_binary_content</source>
-                <target>widget_label_binary_content</target>
+                <target>Sorgente</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
@@ -425,7 +429,7 @@
             </trans-unit>
             <trans-unit id="sonata_template_box_media_gallery_block">
                 <source>sonata_template_box_media_gallery_block</source>
-                <target>This is the gallery media block. Feel free to override it.</target>
+                <target>Questo è il blocco galleria. Il blocco può essere sovrascritto a piacimento.</target>
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
@@ -449,119 +453,123 @@
             </trans-unit>
             <trans-unit id="sonata.media.block.media">
                 <source>sonata.media.block.media</source>
-                <target>sonata.media.block.media</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.feature_media">
                 <source>sonata.media.block.feature_media</source>
-                <target>sonata.media.block.feature_media</target>
+                <target>Media avanzato</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery">
                 <source>sonata.media.block.gallery</source>
-                <target>sonata.media.block.gallery</target>
+                <target>Galleria</target>
             </trans-unit>
             <trans-unit id="form.label_title">
                 <source>form.label_title</source>
-                <target>form.label_title</target>
+                <target>Titolo</target>
             </trans-unit>
             <trans-unit id="form.label_content">
                 <source>form.label_content</source>
-                <target>form.label_content</target>
+                <target>Contenuto</target>
             </trans-unit>
             <trans-unit id="form.label_orientation">
                 <source>form.label_orientation</source>
-                <target>form.label_orientation</target>
+                <target>Orientazione</target>
             </trans-unit>
             <trans-unit id="form.label_format">
                 <source>form.label_format</source>
-                <target>form.label_format</target>
+                <target>Formato</target>
             </trans-unit>
             <trans-unit id="form.label_gallery">
                 <source>form.label_gallery</source>
-                <target>form.label_gallery</target>
+                <target>Galleria</target>
             </trans-unit>
             <trans-unit id="form.label_pause_time">
                 <source>form.label_pause_time</source>
-                <target>form.label_pause_time</target>
+                <target>Intervallo</target>
             </trans-unit>
             <trans-unit id="form.label_start_paused">
                 <source>form.label_start_paused</source>
-                <target>form.label_start_paused</target>
+                <target>Avvio in pausa</target>
+            </trans-unit>
+            <trans-unit id="form.label_wrap">
+                <source>form.label_wrap</source>
+                <target>Decorazione</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_left">
                 <source>form.label_orientation_left</source>
-                <target>form.label_orientation_left</target>
+                <target>Sinistra</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_right">
                 <source>form.label_orientation_right</source>
-                <target>form.label_orientation_right</target>
+                <target>Destra</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery_list">
                 <source>sonata.media.block.gallery_list</source>
-                <target>sonata.media.block.gallery_list</target>
+                <target>Lista gallerie</target>
             </trans-unit>
             <trans-unit id="label_gallery_enabled">
                 <source>label_gallery_enabled</source>
-                <target>label_gallery_enabled</target>
+                <target>Galleria abilitata</target>
             </trans-unit>
             <trans-unit id="label_gallery_disabled">
                 <source>label_gallery_disabled</source>
-                <target>label_gallery_disabled</target>
+                <target>Galleria disabilitata</target>
             </trans-unit>
             <trans-unit id="no_galleries_found">
                 <source>no_galleries_found</source>
-                <target>no_galleries_found</target>
+                <target>Nessuna galleria definita.</target>
             </trans-unit>
             <trans-unit id="view_all_galleries">
                 <source>view_all_galleries</source>
-                <target>view_all_galleries</target>
+                <target>Visualizza tutte le gallerie</target>
             </trans-unit>
             <trans-unit id="form.label_mode">
                 <source>form.label_mode</source>
-                <target>form.label_mode</target>
+                <target>Modalità</target>
             </trans-unit>
             <trans-unit id="form.label_number">
                 <source>form.label_number</source>
-                <target>form.label_number</target>
+                <target>Posizione</target>
             </trans-unit>
             <trans-unit id="form.label_order">
                 <source>form.label_order</source>
-                <target>form.label_order</target>
+                <target>Campo ordinamento</target>
             </trans-unit>
             <trans-unit id="form.label_order_name">
                 <source>form.label_order_name</source>
-                <target>form.label_order_name</target>
+                <target>Nome</target>
             </trans-unit>
             <trans-unit id="form.label_order_created_at">
                 <source>form.label_order_created_at</source>
-                <target>form.label_order_created_at</target>
+                <target>Creato il</target>
             </trans-unit>
             <trans-unit id="form.label_order_updated_at">
                 <source>form.label_order_updated_at</source>
-                <target>form.label_order_updated_at</target>
+                <target>Modificato il</target>
             </trans-unit>
             <trans-unit id="form.label_sort">
                 <source>form.label_sort</source>
-                <target>form.label_sort</target>
+                <target>Ordinamento</target>
             </trans-unit>
             <trans-unit id="form.label_sort_asc">
                 <source>form.label_sort_asc</source>
-                <target>form.label_sort_asc</target>
+                <target>Ascendente</target>
             </trans-unit>
             <trans-unit id="form.label_sort_desc">
                 <source>form.label_sort_desc</source>
-                <target>form.label_sort_desc</target>
+                <target>Discendente</target>
             </trans-unit>
             <trans-unit id="form.label_mode_public">
                 <source>form.label_mode_public</source>
-                <target>form.label_mode_public</target>
+                <target>Pubblico</target>
             </trans-unit>
             <trans-unit id="form.label_mode_admin">
                 <source>form.label_mode_admin</source>
-                <target>form.label_mode_admin</target>
+                <target>Admin</target>
             </trans-unit>
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
-                <target>form.label_class</target>
+                <target>Classe CSS</target>
             </trans-unit>
         </body>
     </file>
