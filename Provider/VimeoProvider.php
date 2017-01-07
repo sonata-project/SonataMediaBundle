@@ -86,7 +86,7 @@ class VimeoProvider extends BaseVideoProvider
      */
     public function updateMetadata(MediaInterface $media, $force = false)
     {
-        $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getProviderReference());
+        $url = sprintf('http://vimeo.com/api/oembed.json?url=%s', $this->getReferenceUrl($media));
 
         try {
             $metadata = $this->getMetadata($media, $url);
@@ -118,7 +118,19 @@ class VimeoProvider extends BaseVideoProvider
      */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
     {
-        return new RedirectResponse(sprintf('http://vimeo.com/%s', $media->getProviderReference()), 302, $headers);
+        return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
+    }
+
+    /**
+     * Get provider reference url.
+     *
+     * @param MediaInterface $media
+     *
+     * @return string
+     */
+    public function getReferenceUrl(MediaInterface $media)
+    {
+        return sprintf('http://vimeo.com/%s', $media->getProviderReference());
     }
 
     /**

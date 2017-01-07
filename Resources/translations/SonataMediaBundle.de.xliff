@@ -563,6 +563,18 @@
                 <source>form.label_class</source>
                 <target>CSS Klasse</target>
             </trans-unit>
+            <trans-unit id="media_">
+                <source>Media</source>
+                <target>Medien</target>
+            </trans-unit>
+            <trans-unit id="gallery_">
+                <source>Gallery</source>
+                <target>Galerie</target>
+            </trans-unit>
+            <trans-unit id="options">
+                <source>Options</source>
+                <target>Einstellungen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

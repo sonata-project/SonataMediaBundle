@@ -14,11 +14,12 @@ namespace Sonata\MediaBundle\Tests\Form\Type;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
  */
-abstract class AbstractTypeTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTypeTest extends TypeTestCase
 {
     /**
      * @var FormBuilder
@@ -35,7 +36,7 @@ abstract class AbstractTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $mediaPool;
 
-    public function setUp()
+    protected function setUp()
     {
         $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
 

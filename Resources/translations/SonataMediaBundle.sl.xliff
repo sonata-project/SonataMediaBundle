@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="default">
                 <source>default</source>
-                <target>default</target>
+                <target>Privzeto</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
@@ -52,7 +52,7 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_show">
                 <source>breadcrumb.link_media_show</source>
-                <target>breadcrumb.link_media_show</target>
+                <target>Prikaži</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
@@ -80,7 +80,7 @@
             </trans-unit>
             <trans-unit id="description.session_download_strategy">
                 <source>description.session_download_strategy</source>
-                <target>description.session_download_strategy</target>
+                <target>Mediji so lahko prenešeni enkrat na sejo.|Mediji so lahko prenešeni %times% krat na sejo.</target>
             </trans-unit>
             <trans-unit id="filter.label_name">
                 <source>filter.label_name</source>
@@ -98,33 +98,29 @@
                 <source>filter.label_context</source>
                 <target>Kontekst</target>
             </trans-unit>
-            <trans-unit id="form.label_category">
-                <source>form.label_category</source>
-                <target>form.label_category</target>
-            </trans-unit>
             <trans-unit id="filter.label_provider_name">
                 <source>filter.label_provider_name</source>
                 <target>Ime ponudnika</target>
             </trans-unit>
             <trans-unit id="filter.label_category">
                 <source>filter.label_category</source>
-                <target>filter.label_category</target>
+                <target>Kategorija</target>
             </trans-unit>
             <trans-unit id="filter.label_author_name">
                 <source>filter.label_author_name</source>
-                <target>filter.label_author_name</target>
+                <target>Ime avtorja</target>
             </trans-unit>
             <trans-unit id="filter.label_width">
                 <source>filter.label_width</source>
-                <target>filter.label_width</target>
+                <target>Širina</target>
             </trans-unit>
             <trans-unit id="filter.label_height">
                 <source>filter.label_height</source>
-                <target>filter.label_height</target>
+                <target>Višina</target>
             </trans-unit>
             <trans-unit id="filter.label_content_type">
                 <source>filter.label_content_type</source>
-                <target>filter.label_content_type</target>
+                <target>Vrsta vsebine</target>
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
@@ -140,7 +136,7 @@
             </trans-unit>
             <trans-unit id="form.label_context">
                 <source>form.label_context</source>
-                <target>Vsebina</target>
+                <target>Kontekst</target>
             </trans-unit>
             <trans-unit id="form.label_name">
                 <source>form.label_name</source>
@@ -172,7 +168,7 @@
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
-                <target>Datoteka</target>
+                <target>Datoteka/referenca</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
@@ -180,7 +176,7 @@
             </trans-unit>
             <trans-unit id="label.length">
                 <source>label.length</source>
-                <target>label.length</target>
+                <target>Dolžina</target>
             </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
@@ -240,7 +236,7 @@
             </trans-unit>
             <trans-unit id="label.cdn_flush_identifier">
                 <source>label.cdn_flush_identifier</source>
-                <target>CDN flush identifier</target>
+                <target>Identifikator izpraznitve CDN</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
@@ -280,14 +276,14 @@
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
                 <target><![CDATA[
-                        <strong style="color: white">Express Editor</strong> <br />
+                        <strong>Express Editor</strong> <br />
                         Enostaven vmesnik za hitro urejanje
                     ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
                 <target><![CDATA[
-                        <strong style="color: white">Napredni urejevalnik</strong> <br />
+                        <strong>Napredni urejevalnik Pixlr</strong> <br />
                         Napredno
                     ]]></target>
             </trans-unit>
@@ -309,7 +305,7 @@
             </trans-unit>
             <trans-unit id="list.label_author_name">
                 <source>list.label_author_name</source>
-                <target>list.label_author_name</target>
+                <target>Ime avtorja</target>
             </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
@@ -329,7 +325,7 @@
             </trans-unit>
             <trans-unit id="list.label_author">
                 <source>list.label_author</source>
-                <target>list.label_author</target>
+                <target>Avtor</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
@@ -359,6 +355,26 @@
                 <source>sonata.media.provider.file</source>
                 <target>Datoteka</target>
             </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>Dodaj video gostovan na DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>Dodaj video gostovan na YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Dodaj video gostovan na Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Dodaj sliko</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Dodaj kakršno koli vrsto datoteke</target>
+            </trans-unit>
             <trans-unit id="title.media_preview">
                 <source>title.media_preview</source>
                 <target>Predogled</target>
@@ -377,163 +393,179 @@
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>link_media</target>
+                <target>Poveži objekt z novim medijem</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>no_linked_media</target>
+                <target>Ni medija povezanega z objektom</target>
             </trans-unit>
             <trans-unit id="widget_label_type">
                 <source>widget_label_type</source>
-                <target>widget_label_type</target>
+                <target>Vrsta</target>
             </trans-unit>
             <trans-unit id="widget_label_context">
                 <source>widget_label_context</source>
-                <target>widget_label_context</target>
+                <target>Kontekst</target>
             </trans-unit>
             <trans-unit id="widget_headline_information">
                 <source>widget_headline_information</source>
-                <target>widget_headline_information</target>
+                <target>Informacije</target>
             </trans-unit>
             <trans-unit id="widget_label_unlink">
                 <source>widget_label_unlink</source>
-                <target>widget_label_unlink</target>
+                <target>Odstrani</target>
             </trans-unit>
             <trans-unit id="widget_label_binary_content">
                 <source>widget_label_binary_content</source>
-                <target>widget_label_binary_content</target>
+                <target>Datoteka</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
-                <target>sonata_media_gallery_index</target>
+                <target>Galerija</target>
             </trans-unit>
             <trans-unit id="sonata_template_box_media_gallery_block">
                 <source>sonata_template_box_media_gallery_block</source>
-                <target>This is the gallery media block. Feel free to override it.</target>
+                <target>To je blok medijske galerije. Lahko ga prepišete.</target>
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
-                <target>list.label_description</target>
+                <target>Opis</target>
             </trans-unit>
             <trans-unit id="list.label_size">
                 <source>list.label_size</source>
-                <target>list.label_size</target>
+                <target>Velikost</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Kategorija ni definirana</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Kategorija</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Referenca ponudnika</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.media">
                 <source>sonata.media.block.media</source>
-                <target>sonata.media.block.media</target>
+                <target>Mediji</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.feature_media">
                 <source>sonata.media.block.feature_media</source>
-                <target>sonata.media.block.feature_media</target>
+                <target>Mediji lastnosti</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery">
                 <source>sonata.media.block.gallery</source>
-                <target>sonata.media.block.gallery</target>
+                <target>Medijska galerija</target>
             </trans-unit>
             <trans-unit id="form.label_title">
                 <source>form.label_title</source>
-                <target>form.label_title</target>
+                <target>Naslov</target>
             </trans-unit>
             <trans-unit id="form.label_content">
                 <source>form.label_content</source>
-                <target>form.label_content</target>
+                <target>Vsebina</target>
             </trans-unit>
             <trans-unit id="form.label_orientation">
                 <source>form.label_orientation</source>
-                <target>form.label_orientation</target>
+                <target>Usmerjenost</target>
             </trans-unit>
             <trans-unit id="form.label_gallery">
                 <source>form.label_gallery</source>
-                <target>form.label_gallery</target>
+                <target>Galerija</target>
             </trans-unit>
             <trans-unit id="form.label_format">
                 <source>form.label_format</source>
-                <target>form.label_format</target>
+                <target>Oblika</target>
             </trans-unit>
             <trans-unit id="form.label_pause_time">
                 <source>form.label_pause_time</source>
-                <target>form.label_pause_time</target>
+                <target>Čas pavze</target>
             </trans-unit>
             <trans-unit id="form.label_start_paused">
                 <source>form.label_start_paused</source>
-                <target>form.label_start_paused</target>
+                <target>Začetek pavze</target>
+            </trans-unit>
+            <trans-unit id="form.label_wrap">
+                <source>form.label_wrap</source>
+                <target>Ovitek</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_left">
                 <source>form.label_orientation_left</source>
-                <target>form.label_orientation_left</target>
+                <target>Levo</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_right">
                 <source>form.label_orientation_right</source>
-                <target>form.label_orientation_right</target>
+                <target>Desno</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery_list">
                 <source>sonata.media.block.gallery_list</source>
-                <target>sonata.media.block.gallery_list</target>
+                <target>Seznam galerije</target>
             </trans-unit>
             <trans-unit id="label_gallery_enabled">
                 <source>label_gallery_enabled</source>
-                <target>label_gallery_enabled</target>
+                <target>Omogočeno</target>
             </trans-unit>
             <trans-unit id="label_gallery_disabled">
                 <source>label_gallery_disabled</source>
-                <target>label_gallery_disabled</target>
+                <target>Onemogočeno</target>
             </trans-unit>
             <trans-unit id="no_galleries_found">
                 <source>no_galleries_found</source>
-                <target>no_galleries_found</target>
+                <target>Galerije niso najdene</target>
             </trans-unit>
             <trans-unit id="view_all_galleries">
                 <source>view_all_galleries</source>
-                <target>view_all_galleries</target>
+                <target>Ogled vseh galerij</target>
             </trans-unit>
             <trans-unit id="form.label_mode">
                 <source>form.label_mode</source>
-                <target>form.label_mode</target>
+                <target>Način</target>
             </trans-unit>
             <trans-unit id="form.label_number">
                 <source>form.label_number</source>
-                <target>form.label_number</target>
+                <target>Številka</target>
             </trans-unit>
             <trans-unit id="form.label_order">
                 <source>form.label_order</source>
-                <target>form.label_order</target>
+                <target>Vrstni red</target>
             </trans-unit>
             <trans-unit id="form.label_order_name">
                 <source>form.label_order_name</source>
-                <target>form.label_order_name</target>
+                <target>Ime</target>
             </trans-unit>
             <trans-unit id="form.label_order_created_at">
                 <source>form.label_order_created_at</source>
-                <target>form.label_order_created_at</target>
+                <target>Ustvarjeno ob</target>
             </trans-unit>
             <trans-unit id="form.label_order_updated_at">
                 <source>form.label_order_updated_at</source>
-                <target>form.label_order_updated_at</target>
+                <target>Posodobljeno ob</target>
             </trans-unit>
             <trans-unit id="form.label_sort">
                 <source>form.label_sort</source>
-                <target>form.label_sort</target>
+                <target>Vrstni red</target>
             </trans-unit>
             <trans-unit id="form.label_sort_asc">
                 <source>form.label_sort_asc</source>
-                <target>form.label_sort_asc</target>
+                <target>Naraščajoče</target>
             </trans-unit>
             <trans-unit id="form.label_sort_desc">
                 <source>form.label_sort_desc</source>
-                <target>form.label_sort_desc</target>
+                <target>Padajoče</target>
             </trans-unit>
             <trans-unit id="form.label_mode_public">
                 <source>form.label_mode_public</source>
-                <target>form.label_mode_public</target>
+                <target>Javno</target>
             </trans-unit>
             <trans-unit id="form.label_mode_admin">
                 <source>form.label_mode_admin</source>
-                <target>form.label_mode_admin</target>
+                <target>Admin</target>
             </trans-unit>
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
-                <target>form.label_class</target>
+                <target>CSS razred</target>
             </trans-unit>
         </body>
     </file>

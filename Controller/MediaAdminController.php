@@ -29,7 +29,7 @@ class MediaAdminController extends Controller
 
         if (!$request->get('provider') && $request->isMethod('get')) {
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
-                'providers' => $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', $this->get('sonata.media.pool')->getDefaultContext())),
+                'providers' => $this->get('sonata.media.pool')->getProvidersByContext($request->get('context', $this->get('sonata.media.pool')->getDefaultContext())),
                 'base_template' => $this->getBaseTemplate(),
                 'admin' => $this->admin,
                 'action' => 'create',
