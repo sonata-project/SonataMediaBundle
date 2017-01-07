@@ -446,7 +446,7 @@ class GalleryController
             $gallery->addGalleryItem($galleryItem);
             $this->galleryManager->save($gallery);
 
-            $view = FOSRestView::create($galleryItem);
+            $view = FOSRestView::create($galleryHasMedia);
 
             // BC for FOSRestBundle < 2.0
             if (method_exists($view, 'setSerializationContext')) {
