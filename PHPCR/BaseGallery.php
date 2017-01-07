@@ -86,7 +86,6 @@ abstract class BaseGallery extends Gallery
     public function reorderGalleryItems()
     {
         if ($this->getGalleryItems() && $this->getGalleryItems() instanceof \IteratorAggregate) {
-
             // reorder
             $iterator = $this->getGalleryItems()->getIterator();
 
