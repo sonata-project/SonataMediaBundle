@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.2.0...3.3.0) - 2016-09-08
+### Added
+- Added config key to define default resizer
+- Added config key to define default resizer adapter
+
+### Fixed
+- The `provider` and `context` options are now required
+- Use `$request` instead of  `$this->get('request')`
+
+### Removed
+- Ability to provide custom attributes for a thumbnail
+
 ## [3.2.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.1.0...3.2.0) - 2016-08-18
 ### Added
 - Created `getReferenceUrl` method for all video providers

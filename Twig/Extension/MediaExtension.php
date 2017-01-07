@@ -146,7 +146,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
 
         $options = array_merge($defaultOptions, $options);
 
-        $options = $provider->getHelperProperties($media, $format, $options);
+        $options['src'] = $provider->generatePublicUrl($media, $format);
 
         return $this->render($provider->getTemplate('helper_thumbnail'), array(
             'media' => $media,

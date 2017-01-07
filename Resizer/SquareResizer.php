@@ -29,12 +29,12 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class SquareResizer implements ResizerInterface
 {
     /**
-     * ImagineInterface.
+     * @var ImagineInterface
      */
     protected $adapter;
 
     /**
-     * string.
+     * @var string
      */
     protected $mode;
 
@@ -48,6 +48,22 @@ class SquareResizer implements ResizerInterface
         $this->adapter = $adapter;
         $this->mode = $mode;
         $this->metadata = $metadata;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAdapter(ImagineInterface $adapter)
+    {
+        $this->adapter = $adapter;
     }
 
     /**
