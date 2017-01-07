@@ -25,6 +25,7 @@ class SonataMediaBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+        $pwet = 42;
         $container->addCompilerPass(new AddProviderCompilerPass());
         $container->addCompilerPass(new GlobalVariablesCompilerPass());
         $container->addCompilerPass(new SecurityContextCompilerPass());
