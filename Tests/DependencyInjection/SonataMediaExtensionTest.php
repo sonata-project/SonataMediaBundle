@@ -93,36 +93,6 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($container->getAlias('sonata.media.manager.category')->__toString(), 'dummy.service.name');
     }
 
-    private function getContainer(array $config = array())
-    {
-        $defaults = array(array(
-            'default_context' => 'default',
-            'db_driver' => 'doctrine_orm',
-            'contexts' => array('default' => array('formats' => array('small' => array('width' => 100, 'quality' => 50)))),
-            'filesystem' => array('local' => array('directory' => '/tmp/')),
-        ));
-
-        $container = new ContainerBuilder();
-        $container->setParameter('kernel.bundles', array('SonataAdminBundle' => true));
-        $container->setDefinition('translator', new Definition('\stdClass'));
-        $container->setDefinition('security.context', new Definition('\stdClass'));
-        $container->setDefinition('doctrine', new Definition('\stdClass'));
-        $container->setDefinition('session', new Definition('\stdClass'));
-
-        if (isset($config[0]['category_manager'])) {
-            $container->setDefinition($config[0]['category_manager'], new Definition('\stdClass'));
-        }
-
-        $container->setDefinition('sonata.classification.manager.category', new Definition('Sonata\ClassificationBundle\Model\CategoryManager'));
-
-        $loader = new SonataMediaExtension();
-        $loader->load(array_merge($defaults, $config), $container);
-        $container->compile();
-
-        return $container;
-    }
-
-
     public function testDefaultAdapter()
     {
         $this->assertTrue($this->container->hasAlias('sonata.media.adapter.image.default'));
@@ -229,5 +199,34 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
         );
 
         return $configs;
+    }
+
+    private function getContainer(array $config = array())
+    {
+        $defaults = array(array(
+            'default_context' => 'default',
+            'db_driver' => 'doctrine_orm',
+            'contexts' => array('default' => array('formats' => array('small' => array('width' => 100, 'quality' => 50)))),
+            'filesystem' => array('local' => array('directory' => '/tmp/')),
+        ));
+
+        $container = new ContainerBuilder();
+        $container->setParameter('kernel.bundles', array('SonataAdminBundle' => true));
+        $container->setDefinition('translator', new Definition('\stdClass'));
+        $container->setDefinition('security.context', new Definition('\stdClass'));
+        $container->setDefinition('doctrine', new Definition('\stdClass'));
+        $container->setDefinition('session', new Definition('\stdClass'));
+
+        if (isset($config[0]['category_manager'])) {
+            $container->setDefinition($config[0]['category_manager'], new Definition('\stdClass'));
+        }
+
+        $container->setDefinition('sonata.classification.manager.category', new Definition('Sonata\ClassificationBundle\Model\CategoryManager'));
+
+        $loader = new SonataMediaExtension();
+        $loader->load(array_merge($defaults, $config), $container);
+        $container->compile();
+
+        return $container;
     }
 }
