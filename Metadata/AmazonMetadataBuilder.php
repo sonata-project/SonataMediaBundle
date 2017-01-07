@@ -11,13 +11,22 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Aws\S3\Enum\CannedAcl;
-use Aws\S3\Enum\Storage;
 use Guzzle\Http\Mimetypes;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
+    const PRIVATE_ACCESS = 'private';
+    const PUBLIC_READ = 'public-read';
+    const PUBLIC_READ_WRITE = 'public-read-write';
+    const AUTHENTICATED_READ = 'authenticated-read';
+    const BUCKET_OWNER_READ = 'bucket-owner-read';
+    const BUCKET_OWNER_FULL_CONTROL = 'bucket-owner-full-control';
+
+    const STORAGE_STANDARD = 'STANDARD';
+    const STORAGE_REDUCED = 'REDUCED_REDUNDANCY';
+    const STORAGE_GLACIER = 'GLACIER';
+
     /**
      * @var array
      */
@@ -27,12 +36,12 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      * @var string[]
      */
     protected $acl = array(
-        'private' => CannedAcl::PRIVATE_ACCESS,
-        'public' => CannedAcl::PUBLIC_READ,
-        'open' => CannedAcl::PUBLIC_READ_WRITE,
-        'auth_read' => CannedAcl::AUTHENTICATED_READ,
-        'owner_read' => CannedAcl::BUCKET_OWNER_READ,
-        'owner_full_control' => CannedAcl::BUCKET_OWNER_FULL_CONTROL,
+        'private' => self::PRIVATE_ACCESS,
+        'public' => self::PUBLIC_READ,
+        'open' => self::PUBLIC_READ_WRITE,
+        'auth_read' => self::AUTHENTICATED_READ,
+        'owner_read' => self::BUCKET_OWNER_READ,
+        'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
     );
 
     /**
@@ -70,9 +79,9 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         //merge storage
         if (isset($this->settings['storage'])) {
             if ($this->settings['storage'] == 'standard') {
-                $output['storage'] = Storage::STANDARD;
+                $output['storage'] = static::STORAGE_STANDARD;
             } elseif ($this->settings['storage'] == 'reduced') {
-                $output['storage'] = Storage::REDUCED;
+                $output['storage'] = static::STORAGE_REDUCED;
             }
         }
 
