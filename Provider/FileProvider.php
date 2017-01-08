@@ -98,11 +98,7 @@ class FileProvider extends BaseProvider
         $formMapper->add('copyright');
         $formMapper->add(
             'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
-                : 'file',
+            'Symfony\Component\Form\Extension\Core\Type\FileType',
             array('required' => false)
         );
     }
@@ -114,11 +110,7 @@ class FileProvider extends BaseProvider
     {
         $formMapper->add(
             'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
-                : 'file',
+            'Symfony\Component\Form\Extension\Core\Type\FileType',
             array(
                 'constraints' => array(
                     new NotBlank(),
@@ -133,11 +125,7 @@ class FileProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        // NEXT_MAJOR: Remove $fileType variable and inline 'Symfony\Component\Form\Extension\Core\Type\FileType'
-        // (when requirement of Symfony is >= 2.8)
-        $fileType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
-            : 'file';
+        $fileType = 'Symfony\Component\Form\Extension\Core\Type\FileType';
 
         if ($formBuilder->getOption('context') == 'api') {
             $formBuilder->add('binaryContent', $fileType);

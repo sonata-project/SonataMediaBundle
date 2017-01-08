@@ -131,12 +131,9 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('copyright');
         $formMapper->add(
             'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
-                : 'text',
-            array('required' => false));
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array('required' => false)
+        );
     }
 
     /**
@@ -146,11 +143,7 @@ abstract class BaseVideoProvider extends BaseProvider
     {
         $formMapper->add(
             'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
-                : 'text',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
             array(
                 'constraints' => array(
                     new NotBlank(),
@@ -165,13 +158,9 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType'
-        // (when requirement of Symfony is >= 2.8)
         $formBuilder->add(
             'binaryContent',
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
-                : 'text',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
             array(
                 'label' => 'widget_label_binary_content',
             )
