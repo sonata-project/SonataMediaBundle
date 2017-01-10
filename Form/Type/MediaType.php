@@ -20,7 +20,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MediaType extends AbstractType
 {
@@ -64,13 +63,9 @@ class MediaType extends AbstractType
 
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 
-        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\CheckboxType' value.
-        // (when requirement of Symfony is >= 2.8)
         $builder->add(
             'unlink',
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\CheckboxType'
-                : 'checkbox',
+            'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
             array(
                 'label' => 'widget_label_unlink',
                 'mapped' => false,
@@ -91,18 +86,6 @@ class MediaType extends AbstractType
 
     /**
      * {@inheritdoc}
-     *
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated Remove it when bumping requirements to Symfony >=2.7
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -118,25 +101,11 @@ class MediaType extends AbstractType
                 'context',
             ));
 
-        // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $resolver
-                ->setAllowedTypes('provider', 'string')
-                ->setAllowedTypes('context', 'string')
-                ->setAllowedValues('provider', $this->pool->getProviderList())
-                ->setAllowedValues('context', array_keys($this->pool->getContexts()))
-            ;
-        } else {
-            $resolver
-                ->setAllowedTypes(array(
-                    'provider' => 'string',
-                    'context' => 'string',
-                ))
-                ->setAllowedValues(array(
-                    'provider' => $this->pool->getProviderList(),
-                    'context' => array_keys($this->pool->getContexts()),
-                ));
-        }
+        $resolver
+            ->setAllowedTypes('provider', 'string')
+            ->setAllowedTypes('context', 'string')
+            ->setAllowedValues('provider', $this->pool->getProviderList())
+            ->setAllowedValues('context', array_keys($this->pool->getContexts()));
     }
 
     /**
@@ -144,11 +113,7 @@ class MediaType extends AbstractType
      */
     public function getParent()
     {
-        // NEXT_MAJOR: Return 'Symfony\Component\Form\Extension\Core\Type\FormType'
-        // (when requirement of Symfony is >= 2.8)
-        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\FormType'
-            : 'form';
+        return 'Symfony\Component\Form\Extension\Core\Type\FormType';
     }
 
     /**

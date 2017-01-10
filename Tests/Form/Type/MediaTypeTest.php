@@ -106,18 +106,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => array(),
         )));
 
-        // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
-        if (class_exists('Symfony\Component\Validator\Validator\RecursiveValidator')) {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
-            );
-        } else {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "provider" has the value "provider_c", but is expected to be one of "provider_a", "provider_b"'
-            );
-        }
+        $this->setExpectedException(
+            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+            'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
+        );
 
         $this->factory->create($this->getFormType(), null, array(
             'provider' => 'provider_c',
@@ -136,18 +128,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => array(),
         )));
 
-        // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
-        if (class_exists('Symfony\Component\Validator\Validator\RecursiveValidator')) {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
-            );
-        } else {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "context" has the value "photo", but is expected to be one of "video", "pic"'
-            );
-        }
+        $this->setExpectedException(
+            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+            'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
+        );
 
         $this->factory->create($this->getFormType(), null, array(
             'provider' => 'provider_b',
