@@ -20,13 +20,7 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-
-        // Prefer the Symfony 2.6+ API if available
-        if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        } else {
-            $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        }
+        $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $security->expects($this->any())
             ->method('isGranted')
@@ -43,13 +37,7 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
         $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-
-        // Prefer the Symfony 2.6+ API if available
-        if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        } else {
-            $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        }
+        $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $security->expects($this->any())
             ->method('isGranted')
