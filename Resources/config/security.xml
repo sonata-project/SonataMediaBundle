@@ -9,8 +9,7 @@
         </service>
         <service id="sonata.media.security.superadmin_strategy" class="Sonata\MediaBundle\Security\RolesDownloadStrategy">
             <argument type="service" id="translator"/>
-            <argument/>
-            <!-- Either security.context or security.authorization_checker -->
+            <argument type="service" id="security.authorization_checker"/>
             <argument type="collection">
                 <argument>ROLE_SUPER_ADMIN</argument>
                 <argument>ROLE_ADMIN</argument>
@@ -23,8 +22,7 @@
         </service>
         <service id="sonata.media.security.connected_strategy" class="Sonata\MediaBundle\Security\RolesDownloadStrategy">
             <argument type="service" id="translator"/>
-            <argument/>
-            <!-- Either security.context or security.authorization_checker -->
+            <argument type="service" id="security.authorization_checker"/>
             <argument type="collection">
                 <argument>IS_AUTHENTICATED_FULLY</argument>
                 <argument>IS_AUTHENTICATED_REMEMBERED</argument>

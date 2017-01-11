@@ -213,7 +213,7 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder();
         $container->setParameter('kernel.bundles', array('SonataAdminBundle' => true));
         $container->setDefinition('translator', new Definition('\stdClass'));
-        $container->setDefinition('security.context', new Definition('\stdClass'));
+        $container->setDefinition('security.authorization_checker', new Definition('\stdClass'));
         $container->setDefinition('doctrine', new Definition('\stdClass'));
         $container->setDefinition('session', new Definition('\stdClass'));
 
