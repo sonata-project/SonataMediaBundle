@@ -15,9 +15,6 @@ use Sonata\MediaBundle\Controller\Api\MediaController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class MediaControllerTest.
- *
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class MediaControllerTest extends \PHPUnit_Framework_TestCase

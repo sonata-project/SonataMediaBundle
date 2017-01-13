@@ -30,8 +30,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class GalleryController.
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class GalleryController

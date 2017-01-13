@@ -14,9 +14,6 @@ namespace Sonata\MediaBundle\Tests\Form\Type;
 use Sonata\MediaBundle\Form\Type\ApiMediaType;
 
 /**
- * Class ApiMediaTypeTest.
- *
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class ApiMediaTypeTest extends AbstractTypeTest

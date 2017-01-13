@@ -19,9 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class ApiMediaType.
- *
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class ApiMediaType extends AbstractType

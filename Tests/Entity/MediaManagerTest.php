@@ -15,9 +15,6 @@ use Sonata\CoreBundle\Test\EntityManagerMockFactory;
 use Sonata\MediaBundle\Entity\MediaManager;
 
 /**
- * Class MediaManagerTest.
- *
- *
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
  */
 class MediaManagerTest extends \PHPUnit_Framework_TestCase

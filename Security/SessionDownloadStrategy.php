@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class SessionDownloadStrategy.
- *
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
  */
 class SessionDownloadStrategy implements DownloadStrategyInterface
