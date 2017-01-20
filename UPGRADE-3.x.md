@@ -1,6 +1,38 @@
 UPGRADE 3.x
 ===========
 
+### Providing a 2nd parameter for Sonata\MediaBundle\Metadata\ProxyMetadataBuilder::__construct() is deprecated
+
+Before:
+
+```php
+public function __construct(ContainerInterface $container, array $map = null)
+```
+
+After:
+
+```php
+public function __construct(ContainerInterface $container)
+```
+
+### Sonata\MediaBundle\Command\AddMediaCommand::$output is depredated
+
+Please avoid using this property!
+
+### Not providing the 4th argument for Sonata\MediaBundle\Thumbnail\ConsumerThumbail::__construct() is deprecated
+
+Before:
+
+```php
+__construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher = null)
+```
+
+After:
+
+```php
+__construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher)
+```
+
 ### Custom video provider
 
 When creating a custom video provider, you have to implement the ``getReferenceUrl`` method to establish

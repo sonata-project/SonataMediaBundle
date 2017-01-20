@@ -53,8 +53,8 @@ class ConsumerThumbnail implements ThumbnailInterface
          */
         if (null === $dispatcher) {
             @trigger_error(
-                'Since version 2.3.3, passing an empty parameter in argument 4 for __construct() in '.__CLASS__.' is
-                 deprecated and the workaround for it will be removed in 3.0.',
+                'Since version 3.0, passing an empty parameter in argument 4 for __construct() in '.__CLASS__.' is
+                 deprecated and the workaround for it will be removed in 4.0.',
                 E_USER_DEPRECATED
             );
         }
