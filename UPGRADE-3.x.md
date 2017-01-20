@@ -1,6 +1,10 @@
 UPGRADE 3.x
 ===========
 
+### Sonata\MediaBundle\Command\AddMediaCommand::$output is depredated
+
+Please avoid using this property!
+
 ### Not providing the 4th argument for Sonata\MediaBundle\Thumbnail\ConsumerThumbail::__construct() is deprecated
 
 Before:
