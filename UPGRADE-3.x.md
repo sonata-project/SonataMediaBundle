@@ -1,6 +1,20 @@
 UPGRADE 3.x
 ===========
 
+### Not providing the 4th argument for Sonata\MediaBundle\Thumbnail\ConsumerThumbail::__construct() is deprecated
+
+Before:
+
+```php
+__construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher = null)
+```
+
+After:
+
+```php
+__construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher)
+```
+
 ### Custom video provider
 
 When creating a custom video provider, you have to implement the ``getReferenceUrl`` method to establish
