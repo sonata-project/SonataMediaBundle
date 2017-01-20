@@ -33,10 +33,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * Class MediaController.
- *
- * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator)
- *
+ * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator).
  *
  * @author Hugo Briand <briand@ekino.com>
  */

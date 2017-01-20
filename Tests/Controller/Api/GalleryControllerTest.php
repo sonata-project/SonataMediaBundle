@@ -21,9 +21,6 @@ class GalleryTest extends GalleryHasMedia
 }
 
 /**
- * Class GalleryControllerTest.
- *
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class GalleryControllerTest extends \PHPUnit_Framework_TestCase

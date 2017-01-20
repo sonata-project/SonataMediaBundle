@@ -13,10 +13,6 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 
 /**
- * Class MediaExtensionTest.
- *
- * Unit test of MediaExtension class.
- *
  * @author Geza Buza <bghome@gmail.com>
  */
 class MediaExtensionTest extends \PHPUnit_Framework_TestCase

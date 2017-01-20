@@ -14,8 +14,6 @@ namespace Sonata\MediaBundle\Tests\Security;
 use Sonata\MediaBundle\Security\SessionDownloadStrategy;
 
 /**
- * Class SessionDownloadStrategyTest.
- *
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
  */
 final class SessionDownloadStrategyTest extends \PHPUnit_Framework_TestCase
