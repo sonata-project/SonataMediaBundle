@@ -20,20 +20,6 @@ use Sonata\MediaBundle\Model\GalleryManagerInterface;
 class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {
     /**
-     * BC Compatibility.
-     *
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated Please use save() from now
-     *
-     * @param GalleryInterface $gallery
-     */
-    public function update(GalleryInterface $gallery)
-    {
-        parent::save($gallery);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
