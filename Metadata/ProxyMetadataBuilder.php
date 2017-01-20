@@ -23,6 +23,8 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     private $container;
 
     /**
+     * NEXT_MAJOR: remove the second parameter $map.
+     *
      * @param ContainerInterface $container
      * @param array              $map
      */
@@ -31,7 +33,10 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         $this->container = $container;
 
         if ($map !== null) {
-            @trigger_error('The "map" parameter is deprecated since version 2.4 and will be removed in 3.0.', E_USER_DEPRECATED);
+            @trigger_error(
+                'The "map" parameter is deprecated since version 2.4 and will be removed in 4.0.',
+                E_USER_DEPRECATED
+            );
         }
     }
 

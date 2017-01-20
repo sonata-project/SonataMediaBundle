@@ -1,6 +1,20 @@
 UPGRADE 3.x
 ===========
 
+### Providing a 2nd parameter for Sonata\MediaBundle\Metadata\ProxyMetadataBuilder::__construct() is deprecated
+
+Before:
+
+```php
+public function __construct(ContainerInterface $container, array $map = null)
+```
+
+After:
+
+```php
+public function __construct(ContainerInterface $container)
+```
+
 ### Sonata\MediaBundle\Command\AddMediaCommand::$output is depredated
 
 Please avoid using this property!
