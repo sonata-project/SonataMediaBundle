@@ -17,9 +17,7 @@ use Sonata\CoreBundle\Model\Metadata;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * PageExtension.
- *
- * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class FeatureMediaBlockService extends MediaBlockService
 {

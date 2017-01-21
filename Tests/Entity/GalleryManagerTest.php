@@ -15,9 +15,6 @@ use Sonata\CoreBundle\Test\EntityManagerMockFactory;
 use Sonata\MediaBundle\Entity\GalleryManager;
 
 /**
- * Class GalleryManagerTest.
- *
- *
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
  */
 class GalleryManagerTest extends \PHPUnit_Framework_TestCase
