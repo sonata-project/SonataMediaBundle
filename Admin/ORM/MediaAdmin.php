@@ -36,7 +36,7 @@ class MediaAdmin extends Admin
             ->add('context', null, array(
                 'show_filter' => $this->getPersistentParameter('hide_context') !== true,
             ), 'choice', $options)
-            ->add('category', null, array(
+            ->add('category', 'doctrine_orm_choice', array(
                 'show_filter' => false,
             ))
             ->add('width')
