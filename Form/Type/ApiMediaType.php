@@ -18,9 +18,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ApiMediaType.
- *
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class ApiMediaType extends AbstractType

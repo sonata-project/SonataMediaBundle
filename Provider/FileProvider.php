@@ -23,6 +23,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -298,6 +299,13 @@ class FileProvider extends BaseProvider
             throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));
         }
 
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
+            $errorElement
+               ->with('binaryContent')
+                   ->addViolation('The file is too big, max size: '.ini_get('upload_max_filesize'))
+               ->end();
+        }
+
         if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
             $errorElement
                 ->with('binaryContent')
@@ -305,7 +313,7 @@ class FileProvider extends BaseProvider
                 ->end();
         }
 
-        if (!in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+        if ('' != $media->getBinaryContent()->getFilename() && !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
@@ -366,6 +374,12 @@ class FileProvider extends BaseProvider
     {
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
+
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
+            $media->setProviderReference(uniqid($media->getName(), true));
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+            throw new UploadException('The uploaded file is not found');
+        }
 
         // this is the name used to store the file
         if (!$media->getProviderReference() ||

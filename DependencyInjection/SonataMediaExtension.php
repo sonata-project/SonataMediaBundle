@@ -21,9 +21,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * MediaExtension.
- *
- * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class SonataMediaExtension extends Extension
 {
@@ -143,7 +141,7 @@ class SonataMediaExtension extends Extension
         $strategies = array_unique($strategies);
 
         foreach ($strategies as $strategyId) {
-            $pool->addMethodCall('addDownloadSecurity', array($strategyId, new Reference($strategyId)));
+            $pool->addMethodCall('addDownloadStrategy', array($strategyId, new Reference($strategyId)));
         }
 
         if ('doctrine_orm' == $config['db_driver']) {

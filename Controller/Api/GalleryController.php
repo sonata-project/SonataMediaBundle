@@ -30,8 +30,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class GalleryController.
- *
  * @author Hugo Briand <briand@ekino.com>
  */
 class GalleryController
@@ -77,7 +75,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  resource=true,
-     *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"="sonata_api_read"}
+     *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"={"sonata_api_read"}}
      * )
      *
      * @QueryParam(
@@ -99,16 +97,8 @@ class GalleryController
      *     strict=true,
      *     description="Enabled/Disabled galleries filter"
      * )
-     * @QueryParam(
-     *     name="orderBy",
-     *     array=true,
-     *     requirements="ASC|DESC",
-     *     nullable=true,
-     *     strict=true,
-     *     description="Order by array (key is field, value is direction)"
-     * )
      *
-     * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
+     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
      * @param ParamFetcherInterface $paramFetcher
      *
@@ -116,6 +106,20 @@ class GalleryController
      */
     public function getGalleriesAction(ParamFetcherInterface $paramFetcher)
     {
+        $orderByQueryParam = new QueryParam();
+        $orderByQueryParam->name = 'orderBy';
+        $orderByQueryParam->requirements = 'ASC|DESC';
+        $orderByQueryParam->nullable = true;
+        $orderByQueryParam->strict = true;
+        $orderByQueryParam->description = 'Query groups order by clause (key is field, value is direction)';
+        if (property_exists($orderByQueryParam, 'map')) {
+            $orderByQueryParam->map = true;
+        } else {
+            $orderByQueryParam->array = true;
+        }
+
+        $paramFetcher->addParam($orderByQueryParam);
+
         $supportedCriteria = array(
             'enabled' => '',
         );
@@ -147,14 +151,14 @@ class GalleryController
      *  requirements={
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
      *  },
-     *  output={"class"="sonata_media_api_form_gallery", "groups"="sonata_api_read"},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when gallery is not found"
      *  }
      * )
      *
-     * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
+     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
      * @param $id
      *
@@ -172,14 +176,14 @@ class GalleryController
      *  requirements={
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
      *  },
-     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"="sonata_api_read"},
+     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when gallery is not found"
      *  }
      * )
      *
-     * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
+     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
      * @param $id
      *
@@ -204,14 +208,14 @@ class GalleryController
      *  requirements={
      *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
      *  },
-     *  output={"class"="Sonata\MediaBundle\Model\GalleryItem", "groups"="sonata_api_read"},
+     *  output={"class"="Sonata\MediaBundle\Model\GalleryItem", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when gallery is not found"
      *  }
      * )
      *
-     * @View(serializerGroups="sonata_api_read", serializerEnableMaxDepthChecks=true)
+     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
      * @param $id
      *
