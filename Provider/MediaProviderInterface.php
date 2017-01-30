@@ -18,6 +18,7 @@ use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 interface MediaProviderInterface
 {
