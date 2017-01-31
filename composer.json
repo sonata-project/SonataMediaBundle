@@ -41,7 +41,8 @@
         "symfony/security":"^2.3 || ^3.0",
         "symfony/templating":"^2.3 || ^3.0",
         "symfony/translation": "^2.3 || ^3.0",
-        "symfony/validator": "^2.3 || ^3.0"
+        "symfony/validator": "^2.3 || ^3.0",
+        "twig/twig": "^1.28 || ^2.0"
     },
     "require-dev": {
         "aws/aws-sdk-php": "^2.7",

@@ -56,9 +56,9 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     public function getTokenParsers()
     {
         return array(
-            new MediaTokenParser($this->getName()),
-            new ThumbnailTokenParser($this->getName()),
-            new PathTokenParser($this->getName()),
+            new MediaTokenParser(get_class()),
+            new ThumbnailTokenParser(get_class()),
+            new PathTokenParser(get_class()),
         );
     }
 
@@ -68,14 +68,6 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'sonata_media';
     }
 
     /**
