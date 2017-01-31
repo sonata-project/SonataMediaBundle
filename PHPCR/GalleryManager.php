@@ -12,7 +12,6 @@
 namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\CoreBundle\Model\BaseDocumentManager;
-use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 class GalleryManager extends BaseDocumentManager implements GalleryManagerInterface
