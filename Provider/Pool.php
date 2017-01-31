@@ -95,7 +95,10 @@ class Pool
      */
     public function addDownloadSecurity($name, DownloadStrategyInterface $security)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.', E_USER_DEPRECATED);
+        @trigger_error(
+            'The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.',
+            E_USER_DEPRECATED
+        );
 
         $this->downloadSecurities[$name] = $security;
 
