@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.3.0...3.3.1) - 2017-02-02
+### Added
+- Added filesize check to upload
+- Added empty filename check to upload
+- Generate thumbnails asynchronously if creating Media on console commands.
+
+### Changed
+- translation in twig templates now uses the twig translation filter
+- Moved ApiDoc groups from string to array.
+
+### Fixed
+- Deprecation warning for `addDownloadSecurity`
+- Moved FosRest groups from string to array and reimplemented the orderBy parameter enabling support for FosRestBundle>=2.0.
+- Missing italian translations
+
 ## [3.3.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.2.0...3.3.0) - 2016-09-08
 ### Added
 - Added config key to define default resizer
