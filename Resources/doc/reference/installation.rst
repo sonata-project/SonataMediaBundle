@@ -8,7 +8,6 @@ This bundle is mainly dependant of:
 
 * Classification: https://sonata-project.org/bundles/classification
 * Core: https://sonata-project.org/bundles/core
-* Intl: https://sonata-project.org/bundles/intl
 
 This bundle has optional dependancies of:
 
@@ -40,7 +39,6 @@ Register these bundles in your AppKernel:
           // ...
           new Sonata\MediaBundle\SonataMediaBundle(),
           new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-          new Sonata\IntlBundle\SonataIntlBundle(),
 
           // You need to add this dependency to make media functional
           new JMS\SerializerBundle\JMSSerializerBundle(),
