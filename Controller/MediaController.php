@@ -57,14 +57,14 @@ class MediaController extends Controller
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
-        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())) {
+        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getCurrentRequest())) {
             throw new AccessDeniedException();
         }
 
         $response = $this->getProvider($media)->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
 
         if ($response instanceof BinaryFileResponse) {
-            $response->prepare($this->get('request'));
+            $response->prepare($this->getCurrentRequest());
         }
 
         return $response;
@@ -86,15 +86,15 @@ class MediaController extends Controller
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
-        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getRequest())) {
+        if (!$this->get('sonata.media.pool')->getDownloadSecurity($media)->isGranted($media, $this->getCurrentRequest())) {
             throw new AccessDeniedException();
         }
 
         return $this->render('SonataMediaBundle:Media:view.html.twig', array(
-                'media' => $media,
-                'formats' => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
-                'format' => $format,
-            ));
+            'media' => $media,
+            'formats' => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
+            'format' => $format,
+        ));
     }
 
     /**
@@ -113,7 +113,7 @@ class MediaController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $targetPath = $this->get('liip_imagine.cache.manager')->resolve($this->get('request'), $path, $filter);
+        $targetPath = $this->get('liip_imagine.cache.manager')->resolve($this->getCurrentRequest(), $path, $filter);
 
         if ($targetPath instanceof Response) {
             return $targetPath;
@@ -134,12 +134,27 @@ class MediaController extends Controller
 
         $image = $this->get('liip_imagine')->open($tmpFile);
 
-        $response = $this->get('liip_imagine.filter.manager')->get($this->get('request'), $filter, $image, $path);
+        $response = $this->get('liip_imagine.filter.manager')->get($this->getCurrentRequest(), $filter, $image, $path);
 
         if ($targetPath) {
             $response = $this->get('liip_imagine.cache.manager')->store($response, $targetPath, $filter);
         }
 
         return $response;
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method when bumping Symfony requirement to 2.8+.
+     * Inject the Symfony\Component\HttpFoundation\Request into the actions instead.
+     *
+     * @return Request
+     */
+    private function getCurrentRequest()
+    {
+        if ($this->has('request_stack')) {
+            return $this->get('request_stack')->getCurrentRequest();
+        }
+
+        return $this->get('request');
     }
 }
