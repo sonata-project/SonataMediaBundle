@@ -11,8 +11,8 @@
 
 namespace Sonata\MediaBundle\Tests\Block\Breadcrumb;
 
+use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
 use Sonata\MediaBundle\Block\Breadcrumb\BaseGalleryBreadcrumbBlockService;
-use Sonata\SeoBundle\Tests\Block\BaseBlockTest;
 
 class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockService
 {
@@ -21,7 +21,7 @@ class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockServi
 /**
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
-class BreadcrumbTest extends BaseBlockTest
+class BreadcrumbTest extends AbstractBlockServiceTestCase
 {
     public function testBlockService()
     {
