@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping         http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
     <class name="Sonata\MediaBundle\Model\Media">
-        <constraint name="Callback">
-            <option name="methods">
-                <value>isStatusErroneous</value>
-            </option>
-        </constraint>
+        <constraint name="Callback">isStatusErroneous</constraint>
         <constraint name="Sonata\CoreBundle\Validator\Constraints\InlineConstraint">
             <option name="service">sonata.media.pool</option>
             <option name="method">validate</option>
