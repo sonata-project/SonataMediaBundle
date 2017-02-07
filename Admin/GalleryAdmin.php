@@ -127,16 +127,13 @@ class GalleryAdmin extends AbstractAdmin
                 ->add('defaultFormat', 'choice', array('choices' => $formats))
             ->end()
             ->with('Gallery')
-                ->add('galleryHasMedias', 'sonata_type_collection', array(
-                        'cascade_validation' => true,
-                    ), array(
-                        'edit' => 'inline',
-                        'inline' => 'table',
-                        'sortable' => 'position',
-                        'link_parameters' => array('context' => $context),
-                        'admin_code' => 'sonata.media.admin.gallery_has_media',
-                    )
-                )
+                ->add('galleryHasMedias', 'sonata_type_collection', array(), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable' => 'position',
+                    'link_parameters' => array('context' => $context),
+                    'admin_code' => 'sonata.media.admin.gallery_has_media',
+                ))
             ->end()
         ;
     }
