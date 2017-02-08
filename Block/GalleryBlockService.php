@@ -126,38 +126,55 @@ class GalleryBlockService extends AbstractBlockService
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE));
 
-        $builder = $formMapper->create('galleryId', 'sonata_type_model_list', array(
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $modelListType = 'Sonata\AdminBundle\Form\Type\ModelListType';
+            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
+            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
+            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
+            $numberType = 'Symfony\Component\Form\Extension\Core\Type\NumberType';
+            $checkboxType = 'Symfony\Component\Form\Extension\Core\Type\CheckboxType';
+        } else {
+            $modelListType = 'sonata_type_model_list';
+            $immutableArrayType = 'sonata_type_immutable_array';
+            $textType = 'text';
+            $choiceType = 'choice';
+            $numberType = 'number';
+            $checkboxType = 'checkbox';
+        }
+
+        $builder = $formMapper->create('galleryId', $modelListType, array(
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getGalleryAdmin()->getClass(),
             'model_manager' => $this->getGalleryAdmin()->getModelManager(),
             'label' => 'form.label_gallery',
         ));
 
-        $formMapper->add('settings', 'sonata_type_immutable_array', array(
+        $formMapper->add('settings', $immutableArrayType, array(
             'keys' => array(
-                array('title', 'text', array(
+                array('title', $textType, array(
                     'required' => false,
                     'label' => 'form.label_title',
                 )),
-                array('context', 'choice', array(
+                array('context', $choiceType, array(
                     'required' => true,
                     'choices' => $contextChoices,
                     'label' => 'form.label_context',
                 )),
-                array('format', 'choice', array(
+                array('format', $choiceType, array(
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 )),
                 array($builder, null, array()),
-                array('pauseTime', 'number', array(
+                array('pauseTime', $numberType, array(
                     'label' => 'form.label_pause_time',
                 )),
-                array('startPaused', 'checkbox', array(
+                array('startPaused', $checkboxType, array(
                     'required' => false,
                     'label' => 'form.label_start_paused',
                 )),
-                array('wrap', 'checkbox', array(
+                array('wrap', $checkboxType, array(
                     'required' => false,
                     'label' => 'form.label_wrap',
                 )),

@@ -51,7 +51,12 @@ class MediaAdmin extends Admin
             $providers[$name] = $name;
         }
 
-        $datagridMapper->add('providerName', 'doctrine_orm_choice', array(
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        $ormChoiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter'
+            : 'doctrine_orm_choice';
+
+        $datagridMapper->add('providerName', $ormChoiceType, array(
             'field_options' => array(
                 'choices' => $providers,
                 'required' => false,
