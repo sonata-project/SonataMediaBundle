@@ -19,9 +19,9 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -40,7 +40,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MediaController
 {
     /**
-     * @var MediaManagerInterface
+     * @var ManagerInterface
      */
     protected $mediaManager;
 
@@ -57,11 +57,11 @@ class MediaController
     /**
      * Constructor.
      *
-     * @param MediaManagerInterface $mediaManager
-     * @param Pool                  $mediaPool
-     * @param FormFactoryInterface  $formFactory
+     * @param ManagerInterface     $mediaManager
+     * @param Pool                 $mediaPool
+     * @param FormFactoryInterface $formFactory
      */
-    public function __construct(MediaManagerInterface $mediaManager, Pool $mediaPool, FormFactoryInterface $formFactory)
+    public function __construct(ManagerInterface $mediaManager, Pool $mediaPool, FormFactoryInterface $formFactory)
     {
         $this->mediaManager = $mediaManager;
         $this->mediaPool = $mediaPool;

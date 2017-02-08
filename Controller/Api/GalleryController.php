@@ -18,12 +18,12 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +40,7 @@ class GalleryController
     protected $galleryManager;
 
     /**
-     * @var MediaManagerInterface
+     * @var ManagerInterface
      */
     protected $mediaManager;
 
@@ -58,11 +58,11 @@ class GalleryController
      * Constructor.
      *
      * @param GalleryManagerInterface $galleryManager
-     * @param MediaManagerInterface   $mediaManager
+     * @param ManagerInterface        $mediaManager
      * @param FormFactoryInterface    $formFactory
      * @param string                  $galleryItemClass
      */
-    public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryItemClass)
+    public function __construct(GalleryManagerInterface $galleryManager, ManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryItemClass)
     {
         $this->galleryManager = $galleryManager;
         $this->mediaManager = $mediaManager;
