@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
 
 class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('AmazonS3', true)) {
             $this->markTestSkipped('The class AmazonS3 does not exist');
