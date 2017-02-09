@@ -106,14 +106,16 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
+                $uniqid = $this->getUniqid();
+
                 if (method_exists('Symfony\Component\HttpFoundation\JsonResponse', 'transformJsonError')) {
                     // NEXT_MAJOR remove this block when dropping sf < 2.8 compatibility
                     $media->setProviderName(
-                        $this->getRequest()->get(sprintf('%s[providerName]', $this->getUniqid()), null, true)
+                        $this->getRequest()->get(sprintf('%s[providerName]', $uniqid), null, true)
                     );
                 } else {
                     $media->setProviderName(
-                        $this->getRequest()->get($this->getUniqid()['providerName'])
+                        $this->getRequest()->get($uniqid['providerName'])
                     );
                 }
             } else {
