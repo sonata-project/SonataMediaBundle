@@ -13,8 +13,8 @@ namespace Sonata\MediaBundle\Block;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
@@ -30,7 +30,7 @@ use Symfony\Component\Templating\EngineInterface;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaBlockService extends BaseBlockService
+class MediaBlockService extends AbstractBlockService
 {
     /**
      * @var BaseMediaAdmin

@@ -12,8 +12,8 @@
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GalleryListBlockService extends BaseBlockService
+class GalleryListBlockService extends AbstractBlockService
 {
     /**
      * @var GalleryManagerInterface
