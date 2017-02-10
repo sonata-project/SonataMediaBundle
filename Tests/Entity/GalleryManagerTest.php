@@ -24,6 +24,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->once())->method('orderBy')->with(
                     $self->equalTo('g.name'),
@@ -52,6 +53,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->exactly(2))->method('orderBy')->with(
                     $self->logicalOr(
@@ -76,6 +78,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('g.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => true)));
             })
@@ -87,6 +90,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('g.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => false)));
             })
