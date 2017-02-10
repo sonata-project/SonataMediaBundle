@@ -24,6 +24,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getMediaManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array()));
             })
@@ -48,6 +49,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getMediaManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->exactly(2))->method('orderBy')->with(
                     $self->logicalOr(
@@ -72,6 +74,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getMediaManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => true)));
             })
@@ -83,6 +86,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getMediaManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => false)));
             })
