@@ -12,20 +12,21 @@
 namespace Sonata\MediaBundle\Tests\Security;
 
 use Sonata\MediaBundle\Security\RolesDownloadStrategy;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
+class RolesDownloadStrategyTest extends PHPUnit_Framework_TestCase
 {
     public function testIsGrantedTrue()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
 
         // Prefer the Symfony 2.6+ API if available
         if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+            $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         } else {
-            $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+            $security = $this->createMock('Symfony\Component\Security\Core\SecurityContextInterface');
         }
 
         $security->expects($this->any())
@@ -40,15 +41,15 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testIsGrantedFalse()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
 
         // Prefer the Symfony 2.6+ API if available
         if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+            $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         } else {
-            $security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+            $security = $this->createMock('Symfony\Component\Security\Core\SecurityContextInterface');
         }
 
         $security->expects($this->any())

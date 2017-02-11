@@ -39,4 +39,16 @@ class PHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
 
         return parent::setExpectedException($exception, $message, $code);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function createMock($originalClassName)
+    {
+        if (is_callable('parent::createMock')) {
+            return parent::createMock($originalClassName);
+        }
+
+        return parent::getMock($originalClassName);
+    }
 }

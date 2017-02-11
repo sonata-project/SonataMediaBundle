@@ -12,12 +12,13 @@
 namespace Sonata\MediaBundle\Tests\PHPCR;
 
 use Sonata\MediaBundle\PHPCR\MediaManager;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 /**
  * @group document
  * @group PHPCR
  */
-class MediaManagerTest extends \PHPUnit_Framework_TestCase
+class MediaManagerTest extends PHPUnit_Framework_TestCase
 {
     /** @var MediaManager */
     private $manager;
@@ -71,7 +72,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
     {
         $dm = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')->disableOriginalConstructor()->getMock();
 
-        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
         $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($dm));
 
         return $registry;

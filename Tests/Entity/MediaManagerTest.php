@@ -13,11 +13,12 @@ namespace Sonata\MediaBundle\Test\Entity;
 
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
 use Sonata\MediaBundle\Entity\MediaManager;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 /**
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
  */
-class MediaManagerTest extends \PHPUnit_Framework_TestCase
+class MediaManagerTest extends PHPUnit_Framework_TestCase
 {
     public function testGetPager()
     {
@@ -101,7 +102,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
             'enabled',
         ));
 
-        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
         $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
 
         return new MediaManager('Sonata\MediaBundle\Entity\BaseMedia', $registry);

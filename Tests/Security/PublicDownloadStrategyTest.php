@@ -12,14 +12,15 @@
 namespace Sonata\MediaBundle\Tests\Security;
 
 use Sonata\MediaBundle\Security\PublicDownloadStrategy;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class PublicDownloadStrategyTest extends \PHPUnit_Framework_TestCase
+class PublicDownloadStrategyTest extends PHPUnit_Framework_TestCase
 {
     public function testIsGranted()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
 
         $strategy = new PublicDownloadStrategy($translator);
         $this->assertTrue($strategy->isGranted($media, $request));

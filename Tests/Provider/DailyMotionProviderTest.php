@@ -26,14 +26,19 @@ class DailyMotionProviderTest extends AbstractProviderTest
             $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
         }
 
-        $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
         $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
 
-        $adapter = $this->getMock('Gaufrette\Adapter');
+        $adapter = $this->createMock('Gaufrette\Adapter');
 
-        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
+        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+            ->setMethods(array('get'))
+            ->setConstructorArgs(array($adapter))
+            ->getMock();
+        $file = $this->getMockBuilder('Gaufrette\File')
+            ->setConstructorArgs(array('foo', $filesystem))
+            ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
@@ -42,7 +47,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
         $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
         $provider->setResizer($resizer);
@@ -71,7 +76,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
     public function testThumbnail()
     {
-        $response = $this->getMock('Buzz\Message\AbstractMessage');
+        $response = $this->createMock('Buzz\Message\AbstractMessage');
         $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
 
         $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
@@ -154,12 +159,15 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider();
 
-        $admin = $this->getMock('Sonata\AdminBundle\Admin\AdminInterface');
+        $admin = $this->createMock('Sonata\AdminBundle\Admin\AdminInterface');
         $admin->expects($this->any())
             ->method('trans')
             ->will($this->returnValue('message'));
 
-        $formMapper = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add', 'getAdmin'), array(), '', false);
+        $formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')
+            ->setMethods(array('add', 'getAdmin'))
+            ->disableOriginalConstructor()
+            ->getMock();
         $formMapper->expects($this->exactly(8))
             ->method('add')
             ->will($this->returnValue(null));
