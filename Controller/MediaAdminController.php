@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -77,35 +78,57 @@ class MediaAdminController extends Controller
         $datagrid->setValue('context', null, $context);
 
         // retrieve the main category for the tree view
-        $category = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
+        $rootCategory = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
 
         if (!$filters) {
-            $datagrid->setValue('category', null, $category);
+            $datagrid->setValue('category', null, $rootCategory->getId());
         }
         if ($request->get('category')) {
-            $categoryByContext = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
+            $category = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
                 'id' => (int) $request->get('category'),
                 'context' => $context,
             ));
 
-            if (!empty($categoryByContext)) {
-                $datagrid->setValue('category', null, $categoryByContext);
+            if (!empty($category)) {
+                $datagrid->setValue('category', null, $category->getId());
             } else {
-                $datagrid->setValue('category', null, $category);
+                $datagrid->setValue('category', null, $rootCategory->getId());
             }
         }
 
         $formView = $datagrid->getForm()->createView();
 
-        // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
+        $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
         return $this->render($this->admin->getTemplate('list'), array(
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
-            'root_category' => $category,
+            'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ));
+    }
+
+    /**
+     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
+     *
+     * @param FormView $formView
+     * @param string   $theme
+     */
+    private function setFormTheme(FormView $formView, $theme)
+    {
+        $twig = $this->get('twig');
+
+        try {
+            $twig
+                ->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')
+                ->setTheme($formView, $theme);
+        } catch (\Twig_Error_Runtime $e) {
+            // BC for Symfony < 3.2 where this runtime not exists
+            $twig
+                ->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
+                ->renderer
+                ->setTheme($formView, $theme);
+        }
     }
 }
