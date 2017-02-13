@@ -21,7 +21,7 @@ class ApiMediaTypeTest extends AbstractTypeTest
     public function testBuildForm()
     {
         parent::testBuildForm();
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\MediaProviderInterface')->getMock();
 
         $mediaPool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
         $mediaPool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));

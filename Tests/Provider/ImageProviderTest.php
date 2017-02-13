@@ -20,14 +20,19 @@ class ImageProviderTest extends AbstractProviderTest
 {
     public function getProvider($allowedExtensions = array(), $allowedMimeTypes = array())
     {
-        $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
         $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
 
-        $adapter = $this->getMock('Gaufrette\Adapter');
+        $adapter = $this->createMock('Gaufrette\Adapter');
 
-        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
+        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+            ->setMethods(array('get'))
+            ->setConstructorArgs(array($adapter))
+            ->getMock();
+        $file = $this->getMockBuilder('Gaufrette\File')
+            ->setConstructorArgs(array('foo', $filesystem))
+            ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
@@ -36,17 +41,17 @@ class ImageProviderTest extends AbstractProviderTest
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $size = $this->getMock('Imagine\Image\BoxInterface');
+        $size = $this->createMock('Imagine\Image\BoxInterface');
         $size->expects($this->any())->method('getWidth')->will($this->returnValue(100));
         $size->expects($this->any())->method('getHeight')->will($this->returnValue(100));
 
-        $image = $this->getMock('Imagine\Image\ImageInterface');
+        $image = $this->createMock('Imagine\Image\ImageInterface');
         $image->expects($this->any())->method('getSize')->will($this->returnValue($size));
 
-        $adapter = $this->getMock('Imagine\Image\ImagineInterface');
+        $adapter = $this->createMock('Imagine\Image\ImagineInterface');
         $adapter->expects($this->any())->method('open')->will($this->returnValue($image));
 
-        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
         $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
         $provider->setResizer($resizer);

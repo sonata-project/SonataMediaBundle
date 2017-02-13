@@ -14,9 +14,10 @@ namespace Sonata\MediaBundle\Tests\Security;
 use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
+class FormatThumbnailTest extends PHPUnit_Framework_TestCase
 {
     public function testGenerate()
     {
@@ -31,10 +32,10 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
            'anothercontext_large' => array('height' => 500, 'width' => 500, 'quality' => 100),
         );
 
-        $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->exactly(2))->method('resize')->will($this->returnValue(true));
 
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->once())->method('requireThumbnails')->will($this->returnValue(true));
         $provider->expects($this->once())->method('getReferenceFile')->will($this->returnValue($referenceFile));
         $provider->expects($this->once())->method('getFormats')->will($this->returnValue($formats));
@@ -42,7 +43,7 @@ class FormatThumbnailTest extends \PHPUnit_Framework_TestCase
         $provider->expects($this->exactly(2))->method('generatePrivateUrl')->will($this->returnValue('/my/private/path'));
         $provider->expects($this->exactly(2))->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->exactly(6))->method('getContext')->will($this->returnValue('mycontext'));
         $media->expects($this->exactly(2))->method('getExtension')->will($this->returnValue('png'));
 

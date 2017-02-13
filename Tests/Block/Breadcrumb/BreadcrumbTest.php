@@ -28,9 +28,9 @@ class BreadcrumbTest extends AbstractBlockServiceTestCase
         $blockService = new BreadcrumbGalleryBlockService_Test(
             'context',
             'name',
-            $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface'),
-            $this->getMock('Knp\Menu\Provider\MenuProviderInterface'),
-            $this->getMock('Knp\Menu\FactoryInterface')
+            $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')->reveal(),
+            $this->prophesize('Knp\Menu\Provider\MenuProviderInterface')->reveal(),
+            $this->prophesize('Knp\Menu\FactoryInterface')->reveal()
         );
 
         $this->assertTrue($blockService->handleContext('context'));

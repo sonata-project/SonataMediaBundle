@@ -21,10 +21,15 @@ class BaseProviderTest extends AbstractProviderTest
 {
     public function getProvider()
     {
-        $adapter = $this->getMock('Gaufrette\Adapter');
+        $adapter = $this->createMock('Gaufrette\Adapter');
 
-        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
+        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+            ->setMethods(array('get'))
+            ->setConstructorArgs(array($adapter))
+            ->getMock();
+        $file = $this->getMockBuilder('Gaufrette\File')
+            ->setConstructorArgs(array('foo', $filesystem))
+            ->getMock();
 
         $filesystem->expects($this->any())
             ->method('get')
@@ -34,9 +39,9 @@ class BaseProviderTest extends AbstractProviderTest
 
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
 
-        $thumbnail = $this->getMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
+        $thumbnail = $this->createMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
 
-        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
         $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail, $metadata);
 

@@ -14,9 +14,10 @@ namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
+class ProviderDataTransformerTest extends PHPUnit_Framework_TestCase
 {
     public function testReverseTransformFakeValue()
     {
@@ -33,7 +34,7 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $pool = new Pool('default');
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('unknown'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
@@ -46,13 +47,13 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
     public function testReverseTransformValidProvider()
     {
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->once())->method('transform');
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
@@ -65,12 +66,12 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
     public function testReverseTransformWithNewMediaAndNoBinaryContent()
     {
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->any())->method('getId')->will($this->returnValue(null));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(null));
         $media->expects($this->any())->method('getProviderName')->will($this->returnValue('default'));
@@ -86,12 +87,12 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
     public function testReverseTransformWithMediaAndNoBinaryContent()
     {
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(null));
 
@@ -101,11 +102,11 @@ class ProviderDataTransformerTest extends \PHPUnit_Framework_TestCase
 
     public function testReverseTransformWithMediaAndUploadFileInstance()
     {
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));

@@ -12,12 +12,13 @@
 namespace Sonata\MediaBundle\Tests\Metadata;
 
 use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class NoopMetadataBuilderTest extends \PHPUnit_Framework_TestCase
+class NoopMetadataBuilderTest extends PHPUnit_Framework_TestCase
 {
     public function testNoop()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $filename = '/test/folder/testfile.png';
 
         $noopmetadatabuilder = new NoopMetadataBuilder();
