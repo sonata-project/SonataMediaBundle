@@ -16,7 +16,7 @@ use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 
 class AmazonMetadataBuilderTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Aws\S3\Enum\CannedAcl')) {
             $this->markTestSkipped('Missing Aws\\S3\\Enum\\CannedAcl');

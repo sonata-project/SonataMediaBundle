@@ -41,7 +41,7 @@ abstract class AbstractProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected $provider;
 
-    public function setUp()
+    protected function setUp()
     {
         // NEXT_MAJOR: Hack for php 5.3 only, remove it when requirement of PHP is >= 5.4
         $that = $this;
