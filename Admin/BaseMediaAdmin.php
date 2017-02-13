@@ -114,8 +114,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
                         $this->getRequest()->get(sprintf('%s[providerName]', $uniqid), null, true)
                     );
                 } else {
+                    $provider = $this->getRequest()->get($uniqid);
                     $media->setProviderName(
-                        $this->getRequest()->get($uniqid)['providerName']
+                        $provider['providerName']
                     );
                 }
             } else {
