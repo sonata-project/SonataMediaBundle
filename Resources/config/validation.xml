@@ -34,9 +34,5 @@
             <constraint name="NotNull"/>
             <constraint name="NotBlank"/>
         </property>
-        <property name="defaultFormat">
-            <constraint name="NotNull"/>
-            <constraint name="NotBlank"/>
-        </property>
     </class>
 </constraint-mapping>
