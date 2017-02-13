@@ -115,7 +115,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
                     );
                 } else {
                     $media->setProviderName(
-                        $this->getRequest()->get($uniqid['providerName'])
+                        $this->getRequest()->get($uniqid)['providerName']
                     );
                 }
             } else {
