@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Tests\Block\Service;
+namespace Sonata\MediaBundle\Tests\Block;
 
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
