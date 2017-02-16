@@ -12,12 +12,14 @@
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
-use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
+/**
+ * @method void setCategory($category)
+ */
 abstract class Media implements MediaInterface
 {
     /**
@@ -151,6 +153,28 @@ abstract class Media implements MediaInterface
     public function __toString()
     {
         return $this->getName() ?: 'n/a';
+    }
+
+    // NEXT_MAJOR: Remove this method
+    public function __set($property, $value)
+    {
+        if ($property == 'category') {
+            if (null !== $value && !is_a($value, 'Sonata\ClassificationBundle\Model\CategoryInterface')) {
+                throw new \InvalidArgumentException(
+                    '$category should be an instance of Sonata\ClassificationBundle\Model\CategoryInterface or null'
+                );
+            }
+
+            $this->category = $value;
+        }
+    }
+
+    // NEXT_MAJOR: Remove this method
+    public function __call($method, $arguments)
+    {
+        if ($method == 'setCategory') {
+            $this->__set('category', current($arguments));
+        }
     }
 
     public function prePersist()
@@ -657,11 +681,12 @@ abstract class Media implements MediaInterface
         return $this->category;
     }
 
-    /**
-     * @param CategoryInterface $category|null
-     */
-    public function setCategory(CategoryInterface $category = null)
-    {
-        $this->category = $category;
-    }
+    // NEXT_MAJOR: Uncomment this method and remove __call and __set
+    // /**
+    //  * @param CategoryInterface|null $category
+    //  */
+    // public function setCategory($category = null)
+    // {
+    //     $this->category = $category;
+    // }
 }

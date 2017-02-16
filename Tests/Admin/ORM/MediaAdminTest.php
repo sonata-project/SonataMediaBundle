@@ -22,7 +22,7 @@ class MediaAdminTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $this->categoryManager = $this->prophesize('Sonata\ClassificationBundle\Entity\CategoryManager');
+        $this->categoryManager = $this->prophesize('Sonata\MediaBundle\Model\CategoryManagerInterface');
 
         $this->mediaAdmin = new MediaAdmin(
             null,

@@ -79,7 +79,7 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
     {
         $datagrid = $this->prophesize('Sonata\AdminBundle\Datagrid\DatagridInterface');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $categoryManager = $this->prophesize('Sonata\ClassificationBundle\Entity\CategoryManager');
+        $categoryManager = $this->prophesize('Sonata\MediaBundle\Model\CategoryManagerInterface');
         $category = $this->prophesize();
         $category->willExtend('Sonata\MediaBundle\Tests\Controller\EntityWithGetId');
         $category->willImplement('Sonata\ClassificationBundle\Model\CategoryInterface');
@@ -101,7 +101,8 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
         $category->getId()->willReturn(1);
         $form->createView()->willReturn($formView->reveal());
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
-        $this->container->get('sonata.classification.manager.category')->willReturn($categoryManager->reveal());
+        $this->container->has('sonata.media.manager.category')->willReturn(true);
+        $this->container->get('sonata.media.manager.category')->willReturn($categoryManager->reveal());
         $this->admin->checkAccess('list')->shouldBeCalled();
         $this->admin->setListMode('mosaic')->shouldBeCalled();
         $this->admin->getDatagrid()->willReturn($datagrid->reveal());

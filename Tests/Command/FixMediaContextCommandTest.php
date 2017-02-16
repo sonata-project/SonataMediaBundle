@@ -11,14 +11,15 @@
 
 namespace Sonata\MediaBundle\Tests\Command;
 
-use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
+class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
@@ -74,7 +75,7 @@ class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
 
         $this->contextManger = $contextManger = $this->getMockBuilder('Sonata\ClassificationBundle\Model\ContextManagerInterface')->getMock();
 
-        $this->categoryManger = $categoryManger = $this->getMockBuilder('Sonata\ClassificationBundle\Entity\CategoryManager')->disableOriginalConstructor()->getMock();
+        $this->categoryManger = $categoryManger = $this->createMock('Sonata\MediaBundle\Model\CategoryManagerInterface');
 
         $this->container->expects($this->any())
             ->method('get')
@@ -84,12 +85,22 @@ class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
                         return $pool;
                     case 'sonata.classification.manager.context':
                         return $contextManger;
-                    case 'sonata.classification.manager.category':
+                    case 'sonata.media.manager.category':
                         return $categoryManger;
                 }
 
                 return;
             }));
+    }
+
+    public function testExecuteWithDisabledClassfication()
+    {
+        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
+            ->will($this->returnValue(false));
+
+        $this->setExpectedException('\LogicException');
+
+        $this->tester->execute(array('command' => $this->command->getName()));
     }
 
     public function testExecuteWithExisting()
@@ -99,6 +110,9 @@ class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
             'formats' => array(),
             'download' => array(),
         );
+
+        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
+            ->will($this->returnValue(true));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
 
@@ -124,6 +138,9 @@ class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
             'formats' => array(),
             'download' => array(),
         );
+
+        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
+            ->will($this->returnValue(true));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
 
@@ -151,6 +168,9 @@ class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
             'formats' => array(),
             'download' => array(),
         );
+
+        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
+            ->will($this->returnValue(true));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
 

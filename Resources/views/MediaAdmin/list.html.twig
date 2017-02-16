@@ -22,7 +22,7 @@ file that was distributed with this source code.
         </div>
     {% endif %}
     <ul{% if root %} class="sonata-tree sonata-tree--small js-treeview sonata-tree--toggleable"{% endif %}>
-        {% for element in collection %}
+        {% for element in collection if element is not null %}
             <li>
                 <div class="sonata-tree__item{% if element.id == current_category_id %} is-active{% endif %}"{% if depth < 2 %} data-treeview-toggled{% endif %}>
                     {% if element.parent or root %}<i class="fa fa-caret-right" data-treeview-toggler></i>{% endif %}
@@ -38,10 +38,14 @@ file that was distributed with this source code.
 {% endmacro %}
 
 {% block list_table %}
-    <div class="col-xs-6 col-md-3">
-        {{ tree.navigate_child([root_category], admin, true, datagrid.values['category']['value'], 1) }}
-    </div>
+    {% if datagrid.values['category']['value'] is defined %}
+        <div class="col-xs-6 col-md-3">
+            {{ tree.navigate_child([root_category], admin, true, datagrid.values['category']['value'], 1) }}
+        </div>
     <div class="col-xs-12 col-md-9">
         {{ parent() }}
     </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}

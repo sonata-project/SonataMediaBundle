@@ -35,7 +35,7 @@ class BaseMediaAdminTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $this->categoryManager = $this->prophesize('Sonata\ClassificationBundle\Entity\CategoryManager');
+        $this->categoryManager = $this->prophesize('Sonata\MediaBundle\Model\CategoryManagerInterface');
         $this->request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
         $this->modelManager = $this->prophesize('Sonata\AdminBundle\Model\ModelManagerInterface');
 
@@ -66,24 +66,32 @@ class BaseMediaAdminTest extends \PHPUnit_Framework_TestCase
         $this->modelManager->getModelInstance('Sonata\MediaBundle\Entity\BaseMedia')->willReturn($media->reveal());
         $this->categoryManager->find(1)->willReturn($category->reveal());
         $this->request->isMethod('POST')->willReturn(true);
+        $this->request->get('context')->willReturn('context');
         $category->getContext()->willReturn($context->reveal());
+        $context->getId()->willReturn('context');
         $media->setContext('context')->shouldBeCalled();
+        $media->setCategory($category->reveal())->shouldBeCalled();
 
         $this->assertSame($media->reveal(), $this->mediaAdmin->getNewInstance());
     }
 
     private function configureGetPersistentParameters()
     {
+        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $category = $this->prophesize();
         $category->willExtend('Sonata\MediaBundle\Tests\Admin\EntityWithGetId');
         $category->willImplement('Sonata\ClassificationBundle\Model\CategoryInterface');
+        $query = $this->prophesize('Symfony\Component\HttpFoundation\ParameterBag');
+        $this->request->query = $query->reveal();
 
+        $this->pool->getDefaultContext()->willReturn('default_context');
+        $this->pool->getProvidersByContext('context')->willReturn(array($provider->reveal()));
         $this->categoryManager->getRootCategory('context')->willReturn($category->reveal());
         $this->request->get('filter')->willReturn(array());
-        $this->request->get('provider')->willReturn('provider');
-        $this->request->get('category')->willReturn(1);
+        $this->request->get('provider')->willReturn(null);
+        $this->request->get('category')->willReturn(null);
         $this->request->get('hide_context')->willReturn(true);
-        $this->request->get('context', null)->willReturn('context');
+        $this->request->get('context', 'default_context')->willReturn('context');
         $category->getId()->willReturn(1);
     }
 
