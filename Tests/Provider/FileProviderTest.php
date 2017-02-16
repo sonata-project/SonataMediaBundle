@@ -87,10 +87,6 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testForm()
     {
-        if (!class_exists('Sonata\AdminBundle\Form\FormMapper')) {
-            $this->markTestSkipped("AdminBundle doesn't seem to be installed");
-        }
-
         $provider = $this->getProvider();
 
         $admin = $this->createMock('Sonata\AdminBundle\Admin\AdminInterface');

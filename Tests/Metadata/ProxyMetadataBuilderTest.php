@@ -20,13 +20,6 @@ use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
-        if (!class_exists('AmazonS3', true)) {
-            $this->markTestSkipped('The class AmazonS3 does not exist');
-        }
-    }
-
     public function testProxyAmazon()
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
@@ -62,7 +55,7 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
@@ -101,7 +94,7 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }
@@ -140,7 +133,7 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array(), $proxymetadatabuilder->get($media, $filename));
     }
@@ -182,7 +175,7 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
@@ -223,7 +216,7 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }

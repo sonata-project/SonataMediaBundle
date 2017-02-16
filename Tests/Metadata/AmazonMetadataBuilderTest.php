@@ -17,13 +17,6 @@ use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 class AmazonMetadataBuilderTest extends PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
-        if (!class_exists('Aws\S3\Enum\CannedAcl')) {
-            $this->markTestSkipped('Missing Aws\\S3\\Enum\\CannedAcl');
-        }
-    }
-
     public function testAmazon()
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');

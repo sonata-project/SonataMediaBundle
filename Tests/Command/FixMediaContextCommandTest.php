@@ -17,9 +17,8 @@ use Sonata\MediaBundle\Command\FixMediaContextCommand;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Console\Tests\Command\CommandTest;
 
-class FixMediaContextCommandTest extends CommandTest
+class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
