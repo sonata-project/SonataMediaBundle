@@ -77,10 +77,11 @@ class MediaAdminController extends Controller
         $datagrid->setValue('context', null, $context);
 
         // retrieve the main category for the tree view
-        $category = $this->container->get('sonata.classification.manager.category')->getRootCategory($context);
+        $rootCategory = $this->container->get('sonata.classification.manager.category')->getRootCategory($context); 
+        $rootCategoryId = $rootCategory->getId(); // This is safe
 
         if (!$filters) {
-            $datagrid->setValue('category', null, $category);
+            $datagrid->setValue('category', null, $rootCategoryId);
         }
         if ($request->get('category')) {
             $categoryByContext = $this->container->get('sonata.classification.manager.category')->findOneBy(array(
@@ -89,9 +90,9 @@ class MediaAdminController extends Controller
             ));
 
             if (!empty($categoryByContext)) {
-                $datagrid->setValue('category', null, $categoryByContext);
+                $datagrid->setValue('category', null, $categoryByContext->getId());
             } else {
-                $datagrid->setValue('category', null, $category);
+                $datagrid->setValue('category', null, $rootCategoryId);
             }
         }
 
@@ -104,7 +105,7 @@ class MediaAdminController extends Controller
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
-            'root_category' => $category,
+            'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ));
     }
