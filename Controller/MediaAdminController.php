@@ -116,16 +116,12 @@ class MediaAdminController extends Controller
     {
         $twig = $this->get('twig');
 
-        try {
-            $twig
-                ->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')
-                ->setTheme($formView, $theme);
-        } catch (\Twig_Error_Runtime $e) {
-            // BC for Symfony < 3.2 where this runtime not exists
-            $twig
-                ->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
-                ->renderer
-                ->setTheme($formView, $theme);
+        // BC for Symfony < 3.2 where this runtime does not exists
+        if (!method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
+            $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
+                ->renderer->setTheme($formView, $theme);
+            return;
         }
+        $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->setTheme($formView, $theme);
     }
 }
