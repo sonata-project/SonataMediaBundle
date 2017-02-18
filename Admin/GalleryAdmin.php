@@ -118,20 +118,17 @@ class GalleryAdmin extends AbstractAdmin
 
         // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
         $choiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\AdminBundle\Form\Type\ChoiceType'
+            ? 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
             : 'choice';
 
         // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
         $collectionType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\AdminBundle\Form\Type\CollectionType'
+            ? 'Sonata\CoreBundle\Form\Type\CollectionType'
             : 'sonata_type_collection';
 
         $formMapper
             ->with('Options')
-                ->add('context', $choiceType, array(
-                    'choices' => $contexts,
-                    'translation_domain' => 'SonataMediaBundle',
-                ))
+                ->add('context', $choiceType, array('choices' => $contexts))
                 ->add('enabled', null, array('required' => false))
                 ->add('name')
                 ->ifTrue($formats)

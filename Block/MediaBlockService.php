@@ -233,7 +233,12 @@ class MediaBlockService extends AbstractBlockService
             'type' => ClassMetadataInfo::MANY_TO_ONE,
         ));
 
-        return $formMapper->create('mediaId', 'sonata_type_model_list', array(
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Sonata\AdminBundle\Form\Type\ModelListType'
+            : 'sonata_type_model_list';
+
+        return $formMapper->create('mediaId', $modelListType, array(
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),
