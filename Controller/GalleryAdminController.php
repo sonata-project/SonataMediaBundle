@@ -78,6 +78,7 @@ class GalleryAdminController extends Controller
         if (!method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
             $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
                 ->renderer->setTheme($formView, $theme);
+
             return;
         }
         $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->setTheme($formView, $theme);

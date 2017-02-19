@@ -23,7 +23,10 @@ class EntityWithGetId
 
 class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
 {
-    protected $controller;
+    private $container;
+    private $admin;
+    private $request;
+    private $controller;
 
     protected function setUp()
     {
@@ -125,7 +128,6 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
         $this->request->get('_xml_http_request')->willReturn(false);
         $this->request->get('_sonata_admin')->willReturn('admin_code');
         $this->request->get('uniqid')->shouldBeCalled();
-        $this->container->has('templating')->willReturn(true);
         $this->container->get('sonata.admin.pool')->willReturn($pool->reveal());
         $this->container->get('sonata.admin.breadcrumbs_builder')->willReturn($breadcrumbsBuilder->reveal());
         $this->admin->getTemplate('layout')->willReturn('layout.html.twig');
@@ -173,13 +175,25 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
         $twig = $this->prophesize('\Twig_Environment');
         $twigRenderer = $this->prophesize('Symfony\Bridge\Twig\Form\TwigRenderer');
 
-        $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->willReturn($twigRenderer->reveal());
-        $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
         $this->container->get('twig')->willReturn($twig->reveal());
+
+        // Remove this trick when bumping Symfony requirement to 3.2+.
+        if (method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
+            $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->willReturn($twigRenderer->reveal());
+        } else {
+            $formExtension = $this->prophesize('Symfony\Bridge\Twig\Extension\FormExtension');
+            $formExtension->renderer = $twigRenderer->reveal();
+
+            // This Throw is for the CRUDController::setFormTheme()
+            $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->willThrow('\Twig_Error_Runtime');
+            $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')->willReturn($formExtension->reveal());
+        }
+        $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
 
     private function configureSetCsrfToken($intention)
     {
+        // NEXT_MAJOR: Remove this trick when bumping Symfony requirement to 2.8+.
         if (interface_exists('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface')) {
             $tokenManager = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
             $token = $this->prophesize('Symfony\Component\Security\Csrf\CsrfToken');
