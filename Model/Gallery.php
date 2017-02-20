@@ -43,7 +43,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * @var string
      */
-    protected $defaultFormat;
+    protected $defaultFormat = 'reference';
 
     /**
      * @var GalleryItemInterface[]

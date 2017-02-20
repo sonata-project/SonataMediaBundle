@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Tests\Block\Service;
+namespace Sonata\MediaBundle\Tests\Block;
 
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
@@ -34,13 +34,13 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
     {
         parent::setUp();
 
-        $this->galleryManager = $this->getMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $this->galleryManager = $this->getMockBuilder('Sonata\MediaBundle\Model\GalleryManagerInterface')->getMock();
         $this->pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
     }
 
     public function testExecute()
     {
-        $pager = $this->getMock('Sonata\DatagridBundle\Pager\PagerInterface');
+        $pager = $this->getMockBuilder('Sonata\DatagridBundle\Pager\PagerInterface')->getMock();
         $this->galleryManager->expects($this->once())->method('getPager')->will($this->returnValue($pager));
 
         $block = new Block();

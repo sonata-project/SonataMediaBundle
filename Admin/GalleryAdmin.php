@@ -116,27 +116,33 @@ class GalleryAdmin extends AbstractAdmin
             $contexts[$contextItem] = $contextItem;
         }
 
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        $choiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+            : 'choice';
+
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        $collectionType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Sonata\CoreBundle\Form\Type\CollectionType'
+            : 'sonata_type_collection';
+
         $formMapper
             ->with('Options')
-                ->add('context', 'choice', array(
-                    'choices' => $contexts,
-                    'translation_domain' => 'SonataMediaBundle',
-                ))
+                ->add('context', $choiceType, array('choices' => $contexts))
                 ->add('enabled', null, array('required' => false))
                 ->add('name')
-                ->add('defaultFormat', 'choice', array('choices' => $formats))
+                ->ifTrue($formats)
+                    ->add('defaultFormat', $choiceType, array('choices' => $formats))
+                ->ifEnd()
             ->end()
             ->with('Gallery')
-                ->add('galleryItems', 'sonata_type_collection', array(
-                        'cascade_validation' => true,
-                    ), array(
-                        'edit' => 'inline',
-                        'inline' => 'table',
-                        'sortable' => 'position',
-                        'link_parameters' => array('context' => $context),
-                        'admin_code' => 'sonata.media.admin.gallery_item',
-                    )
-                )
+                ->add('galleryItems', $collectionType, array(), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable' => 'position',
+                    'link_parameters' => array('context' => $context),
+                    'admin_code' => 'sonata.media.admin.gallery_item',
+                ))
             ->end()
         ;
     }

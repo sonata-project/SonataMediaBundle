@@ -15,6 +15,8 @@ interface CategoryInterface
 {
     public function setContext($context);
 
+    public function getContext();
+
     public function setName($name);
 
     public function setEnabled($enabled);

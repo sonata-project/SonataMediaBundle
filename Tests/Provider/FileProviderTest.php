@@ -21,14 +21,19 @@ class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider()
     {
-        $resizer = $this->getMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
         $adapter = $this->getMockBuilder('Sonata\MediaBundle\Filesystem\Local')->disableOriginalConstructor()->getMock();
         $adapter->expects($this->any())->method('getDirectory')->will($this->returnValue(realpath(__DIR__).'/../fixtures'));
 
-        $filesystem = $this->getMock('Gaufrette\Filesystem', array('get'), array($adapter));
-        $file = $this->getMock('Gaufrette\File', array(), array('foo', $filesystem));
+        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+            ->setMethods(array('get'))
+            ->setConstructorArgs(array($adapter))
+            ->getMock();
+        $file = $this->getMockBuilder('Gaufrette\File')
+            ->setConstructorArgs(array('foo', $filesystem))
+            ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
@@ -37,7 +42,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
         $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail, array('txt'), array('foo/bar'), $metadata);
         $provider->setResizer($resizer);
@@ -82,18 +87,17 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testForm()
     {
-        if (!class_exists('Sonata\AdminBundle\Form\FormMapper')) {
-            $this->markTestSkipped("AdminBundle doesn't seem to be installed");
-        }
-
         $provider = $this->getProvider();
 
-        $admin = $this->getMock('Sonata\AdminBundle\Admin\AdminInterface');
+        $admin = $this->createMock('Sonata\AdminBundle\Admin\AdminInterface');
         $admin->expects($this->any())
             ->method('trans')
             ->will($this->returnValue('message'));
 
-        $formMapper = $this->getMock('Sonata\AdminBundle\Form\FormMapper', array('add', 'getAdmin'), array(), '', false);
+        $formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')
+            ->setMethods(array('add', 'getAdmin'))
+            ->disableOriginalConstructor()
+            ->getMock();
         $formMapper->expects($this->exactly(8))
             ->method('add')
             ->will($this->returnValue(null));
@@ -232,7 +236,7 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testBinaryContentWithRealPath()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
         $media->expects($this->any())
             ->method('getProviderReference')
@@ -277,7 +281,7 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testBinaryContentStreamWrapped()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
         $media->expects($this->any())
             ->method('getProviderReference')

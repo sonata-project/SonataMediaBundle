@@ -11,8 +11,8 @@
 
 namespace Sonata\MediaBundle\Tests\Block\Breadcrumb;
 
+use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
 use Sonata\MediaBundle\Block\Breadcrumb\BaseGalleryBreadcrumbBlockService;
-use Sonata\SeoBundle\Tests\Block\BaseBlockTest;
 
 class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockService
 {
@@ -21,16 +21,16 @@ class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockServi
 /**
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
-class BreadcrumbTest extends BaseBlockTest
+class BreadcrumbTest extends AbstractBlockServiceTestCase
 {
     public function testBlockService()
     {
         $blockService = new BreadcrumbGalleryBlockService_Test(
             'context',
             'name',
-            $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface'),
-            $this->getMock('Knp\Menu\Provider\MenuProviderInterface'),
-            $this->getMock('Knp\Menu\FactoryInterface')
+            $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')->reveal(),
+            $this->prophesize('Knp\Menu\Provider\MenuProviderInterface')->reveal(),
+            $this->prophesize('Knp\Menu\FactoryInterface')->reveal()
         );
 
         $this->assertTrue($blockService->handleContext('context'));

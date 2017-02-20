@@ -12,8 +12,8 @@
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
@@ -22,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GalleryListBlockService extends BaseBlockService
+class GalleryListBlockService extends AbstractBlockService
 {
     /**
      * @var GalleryManagerInterface
@@ -59,29 +59,42 @@ class GalleryListBlockService extends BaseBlockService
             $contextChoices[$name] = $name;
         }
 
-        $formMapper->add('settings', 'sonata_type_immutable_array', array(
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
+            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
+            $integerType = 'Symfony\Component\Form\Extension\Core\Type\IntegerType';
+            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
+        } else {
+            $immutableArrayType = 'sonata_type_immutable_array';
+            $textType = 'text';
+            $integerType = 'integer';
+            $choiceType = 'choice';
+        }
+
+        $formMapper->add('settings', $immutableArrayType, array(
             'keys' => array(
-                array('title', 'text', array(
+                array('title', $textType, array(
                     'label' => 'form.label_title',
                     'required' => false,
                 )),
-                array('number', 'integer', array(
+                array('number', $integerType, array(
                     'label' => 'form.label_number',
                     'required' => true,
                 )),
-                array('context', 'choice', array(
+                array('context', $choiceType, array(
                     'required' => true,
                     'label' => 'form.label_context',
                     'choices' => $contextChoices,
                 )),
-                array('mode', 'choice', array(
+                array('mode', $choiceType, array(
                     'label' => 'form.label_mode',
                     'choices' => array(
                         'public' => 'form.label_mode_public',
                         'admin' => 'form.label_mode_admin',
                     ),
                 )),
-                array('order', 'choice',  array(
+                array('order', $choiceType,  array(
                     'label' => 'form.label_order',
                     'choices' => array(
                         'name' => 'form.label_order_name',
@@ -89,7 +102,7 @@ class GalleryListBlockService extends BaseBlockService
                         'updatedAt' => 'form.label_order_updated_at',
                     ),
                 )),
-                array('sort', 'choice', array(
+                array('sort', $choiceType, array(
                     'label' => 'form.label_sort',
                     'choices' => array(
                         'desc' => 'form.label_sort_desc',

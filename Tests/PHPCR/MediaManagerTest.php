@@ -12,22 +12,19 @@
 namespace Sonata\MediaBundle\Tests\PHPCR;
 
 use Sonata\MediaBundle\PHPCR\MediaManager;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 /**
  * @group document
  * @group PHPCR
  */
-class MediaManagerTest extends \PHPUnit_Framework_TestCase
+class MediaManagerTest extends PHPUnit_Framework_TestCase
 {
     /** @var MediaManager */
     private $manager;
 
     protected function setUp()
     {
-        if (!class_exists('Doctrine\\ODM\\PHPCR\\DocumentManager', true)) {
-            $this->markTestSkipped('Sonata\\MediaBundle\\PHPCR\\MediaManager requires "Doctrine\\ODM\\PHPCR" lib.');
-        }
-
         $this->manager = new MediaManager('Sonata\MediaBundle\Model\MediaInterface', $this->createRegistryMock());
     }
 
@@ -69,9 +66,14 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function createRegistryMock()
     {
-        $dm = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')->disableOriginalConstructor()->getMock();
+        $dm = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
+            ->setMethods(array('persist', 'flush'))
+            ->disableOriginalConstructor()
+            ->getMock();
+        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
 
-        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $dm->expects($this->any())->method('persist');
+        $dm->expects($this->any())->method('flush');
         $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($dm));
 
         return $registry;

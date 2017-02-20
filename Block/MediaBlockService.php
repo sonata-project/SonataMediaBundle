@@ -13,8 +13,8 @@ namespace Sonata\MediaBundle\Block;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
@@ -30,7 +30,7 @@ use Symfony\Component\Templating\EngineInterface;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaBlockService extends BaseBlockService
+class MediaBlockService extends AbstractBlockService
 {
     /**
      * @var BaseMediaAdmin
@@ -102,14 +102,25 @@ class MediaBlockService extends BaseBlockService
 
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', 'sonata_type_immutable_array', array(
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
+            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
+            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
+        } else {
+            $immutableArrayType = 'sonata_type_immutable_array';
+            $textType = 'text';
+            $choiceType = 'choice';
+        }
+
+        $formMapper->add('settings', $immutableArrayType, array(
             'keys' => array(
-                array('title', 'text', array(
+                array('title', $textType, array(
                     'required' => false,
                     'label' => 'form.label_title',
                 )),
                 array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', 'choice', array(
+                array('format', $choiceType, array(
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
@@ -222,7 +233,12 @@ class MediaBlockService extends BaseBlockService
             'type' => ClassMetadataInfo::MANY_TO_ONE,
         ));
 
-        return $formMapper->create('mediaId', 'sonata_type_model_list', array(
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Sonata\AdminBundle\Form\Type\ModelListType'
+            : 'sonata_type_model_list';
+
+        return $formMapper->create('mediaId', $modelListType, array(
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),

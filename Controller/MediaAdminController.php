@@ -12,9 +12,9 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaAdminController extends Controller
 {
@@ -23,15 +23,15 @@ class MediaAdminController extends Controller
      */
     public function createAction(Request $request = null)
     {
-        if (false === $this->admin->isGranted('CREATE')) {
-            throw new AccessDeniedException();
-        }
+        $this->admin->checkAccess('create');
 
         if (!$request->get('provider') && $request->isMethod('get')) {
+            $pool = $this->get('sonata.media.pool');
+
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
-                'providers' => $this->get('sonata.media.pool')->getProvidersByContext($request->get('context', $this->get('sonata.media.pool')->getDefaultContext())),
-                'base_template' => $this->getBaseTemplate(),
-                'admin' => $this->admin,
+                'providers' => $pool->getProvidersByContext(
+                    $request->get('context', $pool->getDefaultContext())
+                ),
                 'action' => 'create',
             ));
         }
@@ -42,12 +42,12 @@ class MediaAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function render($view, array $parameters = array(), Response $response = null, Request $request = null)
+    public function render($view, array $parameters = array(), Response $response = null)
     {
-        $parameters['media_pool'] = $this->container->get('sonata.media.pool');
+        $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
-        return parent::render($view, $parameters, $response, $request);
+        return parent::render($view, $parameters, $response);
     }
 
     /**
@@ -55,9 +55,7 @@ class MediaAdminController extends Controller
      */
     public function listAction(Request $request = null)
     {
-        if (false === $this->admin->isGranted('LIST')) {
-            throw new AccessDeniedException();
-        }
+        $this->admin->checkAccess('list');
 
         if ($listMode = $request->get('_list_mode', 'mosaic')) {
             $this->admin->setListMode($listMode);
@@ -77,38 +75,60 @@ class MediaAdminController extends Controller
         $datagrid->setValue('context', null, $context);
 
         // retrieve the main category for the tree view
-        $category = null;
+        $rootCategory = null;
         if ($this->container->has('sonata.media.manager.category')) {
-            $category = $this->container->get('sonata.media.manager.category')->getRootCategory($context);
+            $rootCategory = $this->container->get('sonata.media.manager.category')->getRootCategory($context);
         }
 
-        if (null !== $category && !$filters) {
-            $datagrid->setValue('category', null, $category);
+        if (null !== $rootCategory && !$filters) {
+            $datagrid->setValue('category', null, $rootCategory->getId());
         }
         if ($this->container->has('sonata.media.manager.category') && $request->get('category')) {
-            $categoryByContext = $this->container->get('sonata.media.manager.category')->findOneBy(array(
+            $category = $this->container->get('sonata.media.manager.category')->findOneBy(array(
                 'id' => (int) $request->get('category'),
                 'context' => $context,
             ));
 
-            if (!empty($categoryByContext)) {
-                $datagrid->setValue('category', null, $categoryByContext);
+            if (!empty($category)) {
+                $datagrid->setValue('category', null, $category->getId());
             } else {
-                $datagrid->setValue('category', null, $category);
+                $datagrid->setValue('category', null, $rootCategory->getId());
             }
         }
 
         $formView = $datagrid->getForm()->createView();
 
-        // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
+        $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
         return $this->render($this->admin->getTemplate('list'), array(
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
-            'root_category' => $category,
+            'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ));
+    }
+
+    /**
+     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
+     *
+     * @param FormView $formView
+     * @param string   $theme
+     */
+    private function setFormTheme(FormView $formView, $theme)
+    {
+        $twig = $this->get('twig');
+
+        try {
+            $twig
+                ->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')
+                ->setTheme($formView, $theme);
+        } catch (\Twig_Error_Runtime $e) {
+            // BC for Symfony < 3.2 where this runtime not exists
+            $twig
+                ->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
+                ->renderer
+                ->setTheme($formView, $theme);
+        }
     }
 }

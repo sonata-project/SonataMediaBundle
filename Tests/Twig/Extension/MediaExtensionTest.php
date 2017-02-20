@@ -10,12 +10,13 @@
  */
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 
 /**
  * @author Geza Buza <bghome@gmail.com>
  */
-class MediaExtensionTest extends \PHPUnit_Framework_TestCase
+class MediaExtensionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Sonata\MediaBundle\Provider\MediaProviderInterface
@@ -84,13 +85,13 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function getMediaManager()
     {
-        return $this->getMock('Sonata\CoreBundle\Model\ManagerInterface');
+        return $this->createMock('Sonata\CoreBundle\Model\ManagerInterface');
     }
 
     public function getProvider()
     {
         if (is_null($this->provider)) {
-            $this->provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+            $this->provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
             $this->provider->method('getFormatName')->will($this->returnArgument(1));
         }
 
@@ -100,7 +101,7 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
     public function getTemplate()
     {
         if (is_null($this->template)) {
-            $this->template = $this->getMock('Twig_TemplateInterface');
+            $this->template = $this->createMock('Twig_TemplateInterface');
         }
 
         return $this->template;
@@ -121,7 +122,7 @@ class MediaExtensionTest extends \PHPUnit_Framework_TestCase
     public function getMedia()
     {
         if (is_null($this->media)) {
-            $this->media = $this->getMock('Sonata\MediaBundle\Model\Media');
+            $this->media = $this->createMock('Sonata\MediaBundle\Model\Media');
             $this->media->method('getProviderStatus')->willReturn(MediaInterface::STATUS_OK);
         }
 
