@@ -9,6 +9,23 @@ file that was distributed with this source code.
 
 #}
 
+{% import _self as macros %}
+
+{% macro bytesToSize(bytes) %}
+{% spaceless %}
+    {% set kilobyte = 1024 %}
+    {% set megabyte = kilobyte * 1024 %}
+
+    {% if bytes < kilobyte %}
+        {{ bytes ~ ' B' }}
+    {% elseif bytes < megabyte %}
+        {{ (bytes / kilobyte)|number_format(2) ~ ' KB' }}
+    {% else %}
+        {{ (bytes / megabyte)|number_format(2) ~ ' MB' }}
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
 {% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
 
 {% block stylesheets %}
@@ -50,8 +67,10 @@ file that was distributed with this source code.
                             <table class="table">
                                 <tr>
                                     <th>{{ 'label.size'|trans({}, 'SonataMediaBundle') }}</th>
-                                    <td>{{ object.width|number_format_decimal }}px x {{ object.height|number_format_decimal }}px
-                                        {% if object.size > 0 %}({{ object.size|number_format_decimal }}o){% endif %}</td>
+                                    <td>
+                                        {{ object.width }} x {{ object.height }}
+                                        {% if object.size > 0 %}({{ macros.bytesToSize(object.size) }}){% endif %}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>{{ 'label.content_type'|trans({}, 'SonataMediaBundle') }}</th>

@@ -12,15 +12,16 @@
 namespace Sonata\MediaBundle\Tests\Security;
 
 use Sonata\MediaBundle\Security\RolesDownloadStrategy;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
+class RolesDownloadStrategyTest extends PHPUnit_Framework_TestCase
 {
     public function testIsGrantedTrue()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $security->expects($this->any())
             ->method('isGranted')
@@ -34,10 +35,10 @@ class RolesDownloadStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testIsGrantedFalse()
     {
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $security = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $security->expects($this->any())
             ->method('isGranted')

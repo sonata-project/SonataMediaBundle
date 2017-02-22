@@ -11,18 +11,19 @@
 
 namespace Sonata\MediaBundle\Tests\Thumbnail;
 
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
 
-class ConsumerThumbnailTest extends \PHPUnit_Framework_TestCase
+class ConsumerThumbnailTest extends PHPUnit_Framework_TestCase
 {
     public function testGenerateDispatchesEvents()
     {
-        $thumbnail = $this->getMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
-        $backend = $this->getMock('Sonata\NotificationBundle\Backend\BackendInterface');
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $thumbnail = $this->createMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
+        $backend = $this->createMock('Sonata\NotificationBundle\Backend\BackendInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
-        $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $dispatcher = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $dispatcher->expects($this->at(0))
             ->method('addListener')
             ->with($this->equalTo('kernel.finish_request'), $this->anything());

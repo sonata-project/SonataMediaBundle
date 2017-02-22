@@ -61,9 +61,9 @@ class FormatterMediaExtension extends BaseProxyExtension
     public function getTokenParsers()
     {
         return array(
-            new MediaTokenParser($this->getName()),
-            new ThumbnailTokenParser($this->getName()),
-            new PathTokenParser($this->getName()),
+            new MediaTokenParser(get_class()),
+            new ThumbnailTokenParser(get_class()),
+            new PathTokenParser(get_class()),
         );
     }
 
@@ -73,14 +73,6 @@ class FormatterMediaExtension extends BaseProxyExtension
     public function getTwigExtension()
     {
         return $this->twigExtension;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'sonata_formatter_media';
     }
 
     /**

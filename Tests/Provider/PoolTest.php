@@ -12,12 +12,13 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class PoolTest extends \PHPUnit_Framework_TestCase
+class PoolTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException        \InvalidArgumentException
@@ -81,7 +82,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
         $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
         $thumbnail = new FormatThumbnail('jpg');
-        $metadata = $this->getMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
         return new FileProvider($name, $filesystem, $cdn, $generator, $thumbnail, array(), array(), $metadata);
     }

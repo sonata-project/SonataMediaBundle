@@ -21,7 +21,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     protected $config;
 
-    public function setUp()
+    protected function setUp()
     {
         $configs = array(
             'sonata_media' => array(

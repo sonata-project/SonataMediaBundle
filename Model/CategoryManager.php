@@ -67,6 +67,14 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
+    public function findOneBy(array $criteria)
+    {
+        return $this->categoryManager->findOneBy($criteria);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function create()
     {
         return $this->categoryManager->create();

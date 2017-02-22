@@ -13,17 +13,19 @@ namespace Sonata\MediaBundle\Test\Entity;
 
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
 use Sonata\MediaBundle\Entity\GalleryManager;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 /**
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
  */
-class GalleryManagerTest extends \PHPUnit_Framework_TestCase
+class GalleryManagerTest extends PHPUnit_Framework_TestCase
 {
     public function testGetPager()
     {
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->once())->method('orderBy')->with(
                     $self->equalTo('g.name'),
@@ -52,6 +54,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->exactly(2))->method('orderBy')->with(
                     $self->logicalOr(
@@ -76,6 +79,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('g.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => true)));
             })
@@ -87,6 +91,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
         $self = $this;
         $this
             ->getGalleryManager(function ($qb) use ($self) {
+                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(array('g')));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('g.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(array('enabled' => false)));
             })
@@ -101,7 +106,7 @@ class GalleryManagerTest extends \PHPUnit_Framework_TestCase
             'enabled',
         ));
 
-        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
         $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
 
         return new GalleryManager('Sonata\MediaBundle\Entity\BaseGallery', $registry);

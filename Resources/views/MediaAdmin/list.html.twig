@@ -12,7 +12,10 @@ file that was distributed with this source code.
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 
 {% import _self as tree %}
-{% macro navigate_child(collection, admin, root, current_category, depth) %}
+
+{% macro navigate_child(collection, admin, root, current_category_id, depth) %}
+    {% import _self as tree %}
+
     {% if root and collection|length == 0 %}
         <div>
             <p class="bg-warning">{{ 'warning_no_category'|trans({}, admin.translationdomain) }}</p>
@@ -21,13 +24,13 @@ file that was distributed with this source code.
     <ul{% if root %} class="sonata-tree sonata-tree--small js-treeview sonata-tree--toggleable"{% endif %}>
         {% for element in collection if element is not null %}
             <li>
-                <div class="sonata-tree__item{% if element.id == current_category.id %} is-active{% endif %}"{% if depth < 2 %} data-treeview-toggled{% endif %}>
+                <div class="sonata-tree__item{% if element.id == current_category_id %} is-active{% endif %}"{% if depth < 2 %} data-treeview-toggled{% endif %}>
                     {% if element.parent or root %}<i class="fa fa-caret-right" data-treeview-toggler></i>{% endif %}
                     <a class="sonata-tree__item__edit" href="{{ url(app.request.attributes.get('_route'), app.request.query.all|merge({category: element.id})) }}">{{ element.name }}</a>
                 </div>
 
                 {% if element.children|length %}
-                    {{ _self.navigate_child(element.children, admin, false, current_category, depth + 1) }}
+                    {{ tree.navigate_child(element.children, admin, false, current_category_id, depth + 1) }}
                 {% endif %}
             </li>
         {% endfor %}

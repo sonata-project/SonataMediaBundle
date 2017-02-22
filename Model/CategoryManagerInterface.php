@@ -48,6 +48,13 @@ interface CategoryManagerInterface
     public function findBy(array $criteria);
 
     /**
+     * @param array $criteria
+     *
+     * @return CategoryInterface
+     */
+    public function findOneBy(array $criteria);
+
+    /**
      * Create an empty category instance.
      *
      * @return CategoryInterface

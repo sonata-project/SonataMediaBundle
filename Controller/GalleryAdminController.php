@@ -12,9 +12,9 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GalleryAdminController extends Controller
 {
@@ -22,16 +22,15 @@ class GalleryAdminController extends Controller
      * @param string   $view
      * @param array    $parameters
      * @param Response $response
-     * @param Request  $request
      *
      * @return Response
      */
-    public function render($view, array $parameters = array(), Response $response = null, Request $request = null)
+    public function render($view, array $parameters = array(), Response $response = null)
     {
-        $parameters['media_pool'] = $this->container->get('sonata.media.pool');
+        $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
-        return parent::render($view, $parameters, $response, $request);
+        return parent::render($view, $parameters, $response);
     }
 
     /**
@@ -43,9 +42,7 @@ class GalleryAdminController extends Controller
      */
     public function listAction(Request $request = null)
     {
-        if (false === $this->admin->isGranted('LIST')) {
-            throw new AccessDeniedException();
-        }
+        $this->admin->checkAccess('list');
 
         if ($listMode = $request->get('_list_mode')) {
             $this->admin->setListMode($listMode);
@@ -57,7 +54,7 @@ class GalleryAdminController extends Controller
         $formView = $datagrid->getForm()->createView();
 
         // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
+        $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
         return $this->render($this->admin->getTemplate('list'), array(
             'action' => 'list',
@@ -65,5 +62,25 @@ class GalleryAdminController extends Controller
             'datagrid' => $datagrid,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ));
+    }
+
+    /**
+     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
+     *
+     * @param FormView $formView
+     * @param string   $theme
+     */
+    private function setFormTheme(FormView $formView, $theme)
+    {
+        $twig = $this->get('twig');
+
+        // BC for Symfony < 3.2 where this runtime does not exists
+        if (!method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
+            $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
+                ->renderer->setTheme($formView, $theme);
+
+            return;
+        }
+        $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->setTheme($formView, $theme);
     }
 }

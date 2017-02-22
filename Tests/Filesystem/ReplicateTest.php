@@ -12,13 +12,14 @@
 namespace Sonata\MediaBundle\Tests\Filesystem;
 
 use Sonata\MediaBundle\Filesystem\Replicate;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class ReplicateTest extends \PHPUnit_Framework_TestCase
+class ReplicateTest extends PHPUnit_Framework_TestCase
 {
     public function testReplicate()
     {
-        $master = $this->getMock('Gaufrette\Adapter');
-        $slave = $this->getMock('Gaufrette\Adapter');
+        $master = $this->createMock('Gaufrette\Adapter');
+        $slave = $this->createMock('Gaufrette\Adapter');
         $replicate = new Replicate($master, $slave);
 
         $master->expects($this->once())->method('mtime')->will($this->returnValue('master'));

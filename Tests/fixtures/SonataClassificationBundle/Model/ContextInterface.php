@@ -18,4 +18,6 @@ interface ContextInterface
     public function setName($name);
 
     public function setEnabled($enabled);
+
+    public function getContext();
 }

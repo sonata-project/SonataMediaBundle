@@ -93,7 +93,6 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                             ->arrayNode('formats')
-                                ->isRequired()
                                 ->useAttributeAsKey('id')
                                 ->prototype('array')
                                     ->children()

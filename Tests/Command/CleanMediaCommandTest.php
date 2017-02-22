@@ -80,7 +80,7 @@ class CleanMediaCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
 
         $this->command = new CleanMediaCommand();
         $this->command->setContainer($this->container);
@@ -92,7 +92,7 @@ class CleanMediaCommandTest extends TestCase
 
         $this->pool = $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
 
-        $this->mediaManager = $mediaManager = $this->getMock('Sonata\MediaBundle\Model\MediaManagerInterface');
+        $this->mediaManager = $mediaManager = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaManagerInterface')->getMock();
 
         $this->fileSystemLocal = $fileSystemLocal = $this->getMockBuilder('Sonata\MediaBundle\Filesystem\Local')->disableOriginalConstructor()->getMock();
         $this->fileSystemLocal->expects($this->once())->method('getDirectory')->will($this->returnValue($this->workspace));
@@ -167,7 +167,7 @@ class CleanMediaCommandTest extends TestCase
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
         $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue(array($provider)));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaInterface')->getMock();
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
@@ -201,7 +201,7 @@ class CleanMediaCommandTest extends TestCase
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
         $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue(array($provider)));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaInterface')->getMock();
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))

@@ -16,16 +16,10 @@ use Gaufrette\Adapter\AmazonS3;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
+class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        if (!class_exists('AmazonS3', true)) {
-            $this->markTestSkipped('The class AmazonS3 does not exist');
-        }
-    }
-
     public function testProxyAmazon()
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
@@ -33,7 +27,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue(array('key' => 'amazon')));
 
-        $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
             ->will($this->returnValue(array('key' => 'noop')));
@@ -45,10 +39,10 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -61,7 +55,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
@@ -73,7 +67,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue(array('key' => 'amazon')));
 
-        $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->once())
             ->method('get')
             ->will($this->returnValue(array('key' => 'noop')));
@@ -84,10 +78,10 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -100,7 +94,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }
@@ -112,7 +106,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue(array('key' => 'amazon')));
 
-        $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
             ->will($this->returnValue(array('key' => 'noop')));
@@ -123,10 +117,10 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('wrongprovider'));
@@ -139,7 +133,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array(), $proxymetadatabuilder->get($media, $filename));
     }
@@ -151,7 +145,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue(array('key' => 'amazon')));
 
-        $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
             ->will($this->returnValue(array('key' => 'noop')));
@@ -165,10 +159,10 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -181,7 +175,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
     }
@@ -193,7 +187,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue(array('key' => 'amazon')));
 
-        $noop = $this->getMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->once())
             ->method('get')
             ->will($this->returnValue(array('key' => 'noop')));
@@ -206,10 +200,10 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->getMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->getMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -222,7 +216,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
             'sonata.media.provider.image' => $provider,
         ));
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, array());
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
         $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
     }
@@ -236,7 +230,7 @@ class ProxyMetadataBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getContainerMock(array $services)
     {
-        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $container
             ->expects($this->any())
             ->method('get')

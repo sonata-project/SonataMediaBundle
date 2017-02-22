@@ -45,17 +45,30 @@ class FeatureMediaBlockService extends MediaBlockService
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', 'sonata_type_immutable_array', array(
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
+            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
+            $textareaType = 'Symfony\Component\Form\Extension\Core\Type\TextareaType';
+            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
+        } else {
+            $immutableArrayType = 'sonata_type_immutable_array';
+            $textType = 'text';
+            $textareaType = 'textarea';
+            $choiceType = 'choice';
+        }
+
+        $formMapper->add('settings', $immutableArrayType, array(
             'keys' => array(
-                array('title', 'text', array(
+                array('title', $textType, array(
                     'required' => false,
                     'label' => 'form.label_title',
                 )),
-                array('content', 'textarea', array(
+                array('content', $textareaType, array(
                     'required' => false,
                     'label' => 'form.label_content',
                 )),
-                array('orientation', 'choice', array(
+                array('orientation', $choiceType, array(
                     'required' => false,
                     'choices' => array(
                         'left' => 'form.label_orientation_left',
@@ -64,7 +77,7 @@ class FeatureMediaBlockService extends MediaBlockService
                     'label' => 'form.label_orientation',
                 )),
                 array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', 'choice', array(
+                array('format', $choiceType, array(
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',

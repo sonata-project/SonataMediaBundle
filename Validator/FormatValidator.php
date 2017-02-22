@@ -50,7 +50,10 @@ class FormatValidator extends ConstraintValidator
             }
         }
 
-        if (!array_key_exists($value->getDefaultFormat(), $formats)) {
+        $galleryDefaultFormat = $value->getDefaultFormat();
+
+        if ($galleryDefaultFormat !== 'reference'
+            && !($formats && array_key_exists($galleryDefaultFormat, $formats))) {
             $this->context->addViolation('invalid format');
         }
     }

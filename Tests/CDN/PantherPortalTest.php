@@ -12,12 +12,13 @@
 namespace Sonata\MediaBundle\Tests\CDN;
 
 use Sonata\MediaBundle\CDN\PantherPortal;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class PantherPortalTest extends \PHPUnit_Framework_TestCase
+class PantherPortalTest extends PHPUnit_Framework_TestCase
 {
     public function testPortal()
     {
-        $client = $this->getMock(
+        $client = $this->createMock(
             'Sonata\MediaBundle\Tests\CDN\ClientSpy',
             array('flush'),
             array(),
@@ -42,7 +43,7 @@ class PantherPortalTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\RuntimeException', 'Unable to flush : Failed!!');
 
-        $client = $this->getMock(
+        $client = $this->createMock(
             'Sonata\MediaBundle\Tests\CDN\ClientSpy',
             array('flush'),
             array(),
