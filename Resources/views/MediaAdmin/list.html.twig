@@ -12,7 +12,10 @@ file that was distributed with this source code.
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 
 {% import _self as tree %}
+
 {% macro navigate_child(collection, admin, root, current_category_id, depth) %}
+    {% import _self as tree %}
+
     {% if root and collection|length == 0 %}
         <div>
             <p class="bg-warning">{{ 'warning_no_category'|trans({}, admin.translationdomain) }}</p>
@@ -27,7 +30,7 @@ file that was distributed with this source code.
                 </div>
 
                 {% if element.children|length %}
-                    {{ _self.navigate_child(element.children, admin, false, current_category_id, depth + 1) }}
+                    {{ tree.navigate_child(element.children, admin, false, current_category_id, depth + 1) }}
                 {% endif %}
             </li>
         {% endfor %}
