@@ -91,7 +91,7 @@ class BaseMediaAdminTest extends \PHPUnit_Framework_TestCase
     {
         // NEXT_MAJOR remove this block when dropping sf < 2.8 compatibility
         if (method_exists('Symfony\Component\HttpFoundation\JsonResponse', 'transformJsonError')) {
-            $this->request->get('uniqid[providerName]')->willReturn('providerName');
+            $this->request->get('uniqid[providerName]', null, true)->willReturn('providerName');
         } else {
             $this->request->get('uniqid')->willReturn(array('providerName' => 'providerName'));
         }
