@@ -12,9 +12,7 @@
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 abstract class Media implements MediaInterface
 {
@@ -609,21 +607,6 @@ abstract class Media implements MediaInterface
     public function getPreviousProviderReference()
     {
         return $this->previousProviderReference;
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method when bumping Symfony requirement to 2.8+.
-     *
-     * @param ClassMetadata $metadata
-     */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        if (class_exists('Symfony\Component\Validator\Constraints\Expression')) {
-            $method = 'isStatusErroneous';
-        } else {
-            $method = array('methods' => array('isStatusErroneous'));
-        }
-        $metadata->addConstraint(new Assert\Callback($method));
     }
 
     /**

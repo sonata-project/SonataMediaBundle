@@ -102,25 +102,14 @@ class MediaBlockService extends AbstractBlockService
 
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
-            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
-            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
-        } else {
-            $immutableArrayType = 'sonata_type_immutable_array';
-            $textType = 'text';
-            $choiceType = 'choice';
-        }
-
-        $formMapper->add('settings', $immutableArrayType, array(
+        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', array(
             'keys' => array(
-                array('title', $textType, array(
+                array('title', 'Symfony\Component\Form\Extension\Core\Type\TextType', array(
                     'required' => false,
                     'label' => 'form.label_title',
                 )),
                 array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', $choiceType, array(
+                array('format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
@@ -233,12 +222,7 @@ class MediaBlockService extends AbstractBlockService
             'type' => ClassMetadataInfo::MANY_TO_ONE,
         ));
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\AdminBundle\Form\Type\ModelListType'
-            : 'sonata_type_model_list';
-
-        return $formMapper->create('mediaId', $modelListType, array(
+        return $formMapper->create('mediaId', 'Sonata\AdminBundle\Form\Type\ModelListType', array(
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),
