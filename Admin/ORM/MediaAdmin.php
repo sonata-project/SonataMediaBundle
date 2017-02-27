@@ -29,13 +29,18 @@ class MediaAdmin extends Admin
             $options['choices'][$name] = $name;
         }
 
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        $choiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+            : 'choice';
+
         $datagridMapper
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
             ->add('context', null, array(
                 'show_filter' => $this->getPersistentParameter('hide_context') !== true,
-            ), 'choice', $options)
+            ), $choiceType, $options)
             ->add('category', null, array(
                 'show_filter' => false,
             ))
@@ -63,7 +68,7 @@ class MediaAdmin extends Admin
                 'multiple' => false,
                 'expanded' => false,
             ),
-            'field_type' => 'choice',
+            'field_type' => $choiceType,
         ));
     }
 }
