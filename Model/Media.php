@@ -660,8 +660,11 @@ abstract class Media implements MediaInterface
     /**
      * @param CategoryInterface $category|null
      */
-    public function setCategory(CategoryInterface $category = null)
+    public function setCategory($category = null)
     {
+        if (null !== $category && $category instanceof CategoryInterface) {
+            throw new \InvalidArgumentException('Argument 1 should be an instance of Sonata\ClassificationBundle\Model\CategoryInterface or null');
+        }
         $this->category = $category;
     }
 }
