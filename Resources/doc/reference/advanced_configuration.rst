@@ -11,7 +11,7 @@ Full configuration options:
             media:              Application\Sonata\MediaBundle\Entity\Media
             gallery:            Application\Sonata\MediaBundle\Entity\Gallery
             gallery_item:       Application\Sonata\MediaBundle\Entity\GalleryItem
-            category:           null # Application\Sonata\ClassificationBundle\Entity\Category if exists
+            category:           Application\Sonata\ClassificationBundle\Entity\Category
 
         force_disable_category: false # true, if you really want to disable the relation with category
         category_manager:       null  # null or "sonata.media.manager.category.default" if classification bundle exists
@@ -174,4 +174,3 @@ Full configuration options:
 
         buzz:
             connector:  sonata.media.buzz.connector.file_get_contents # sonata.media.buzz.connector.curl
-

@@ -45,8 +45,7 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadWithDefaultAndCustomCategoryManager()
     {
-        $container = $this->getContainer(
-            array(array(
+        $container = $this->getContainer(array(array(
             'class' => array('category' => '\stdClass'),
             'category_manager' => 'dummy.service.name',
         )));
@@ -57,8 +56,7 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadWithForceDisableTrueAndWithCategoryManager()
     {
-        $container = $this->getContainer(
-            array(array(
+        $container = $this->getContainer(array(array(
             'class' => array('category' => '\stdClass'),
             'category_manager' => 'dummy.service.name',
             'force_disable_category' => true,
@@ -83,11 +81,10 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadWithDefaultAndClassificationBundleEnableAndCustomCategoryManager()
     {
-        $container = $this->getContainer(
-            array(array(
-                'class' => array('category' => '\stdClass'),
-                'category_manager' => 'dummy.service.name',
-            )));
+        $container = $this->getContainer(array(array(
+            'class' => array('category' => '\stdClass'),
+            'category_manager' => 'dummy.service.name',
+        )));
 
         $this->assertTrue($container->hasAlias('sonata.media.manager.category'));
         $this->assertSame($container->getAlias('sonata.media.manager.category')->__toString(), 'dummy.service.name');

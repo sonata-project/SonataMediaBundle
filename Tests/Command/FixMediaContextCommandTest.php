@@ -15,10 +15,11 @@ use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
+class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
@@ -71,10 +72,8 @@ class FixMediaContextCommandTest extends \PHPUnit_Framework_TestCase
         $this->tester = new CommandTester($this->application->find('sonata:media:fix-media-context'));
 
         $this->pool = $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
-
         $this->contextManger = $contextManger = $this->getMockBuilder('Sonata\ClassificationBundle\Model\ContextManagerInterface')->getMock();
-
-        $this->categoryManger = $categoryManger = $this->getMockBuilder('Sonata\MediaBundle\Model\CategoryManagerInterface')->getMock();
+        $this->categoryManger = $categoryManger = $this->createMock('Sonata\MediaBundle\Model\CategoryManagerInterface');
 
         $this->container->expects($this->any())
             ->method('get')
