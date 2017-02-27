@@ -13,9 +13,9 @@ namespace Sonata\ClassificationBundle\Model;
 
 interface CategoryInterface
 {
-    public function setContext($context);
-
     public function getContext();
+
+    public function setContext($context);
 
     public function setName($name);
 

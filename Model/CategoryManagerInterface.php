@@ -50,7 +50,7 @@ interface CategoryManagerInterface
     /**
      * @param array $criteria
      *
-     * @return CategoryInterface
+     * @return CategoryInterface|null
      */
     public function findOneBy(array $criteria);
 

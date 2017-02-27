@@ -100,6 +100,7 @@ class SonataMediaExtension extends Extension
 
         if ($this->isClassificationEnabled($config)) {
             $loader->load('category.xml');
+            $container->setAlias('sonata.media.manager.category', $config['category_manager']);
         }
 
         if (!array_key_exists($config['default_context'], $config['contexts'])) {
@@ -112,7 +113,6 @@ class SonataMediaExtension extends Extension
             $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
         }
 
-        $this->configureCategoryInMedia($container, $config);
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
 
@@ -553,25 +553,6 @@ class SonataMediaExtension extends Extension
     }
 
     /**
-     * Sets category and category manager in media bundle.
-     *
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
-    private function configureCategoryInMedia(ContainerBuilder $container, array $config)
-    {
-        if (!$this->isClassificationEnabled($config)) {
-            return;
-        }
-
-        $container->setAlias('sonata.media.manager.category', $config['category_manager'] ?: 'sonata.media.manager.category.default');
-
-        if (null === $config['class']['category']) {
-            $config['class']['category'] = 'Application\\Sonata\\ClassificationBundle\\Entity\\Category';
-        }
-    }
-
-    /**
      * Checks if the classification of media is enabled.
      *
      * @param array $config
@@ -580,11 +561,11 @@ class SonataMediaExtension extends Extension
      */
     private function isClassificationEnabled(array $config)
     {
-        return !$config['force_disable_category'] &&
-            (null !== $config['category_manager'] || interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface'));
+        return interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface')
+            && !$config['force_disable_category'];
     }
 
-    /*
+    /**
      * @param ContainerBuilder $container
      * @param array            $config
      */

@@ -11,7 +11,9 @@
 
 namespace Sonata\MediaBundle\Tests\Entity;
 
-class MediaTest extends \PHPUnit_Framework_TestCase
+use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
+
+class MediaTest extends PHPUnit_Framework_TestCase
 {
     public function testMetadata()
     {
@@ -33,6 +35,10 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGet()
     {
+        $category = $this->prophesize();
+        $category->willExtend('Sonata\MediaBundle\Tests\Controller\EntityWithGetId');
+        $category->willImplement('Sonata\ClassificationBundle\Model\CategoryInterface');
+
         $media = new Media();
         $media->setName('MediaBundle');
         $media->setSize(12);
@@ -40,6 +46,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $media->setEnabled(true);
         $media->setProviderName('name');
         $media->setLength(2);
+        $media->setCategory($category->reveal());
         $media->setCopyright('copyleft');
         $media->setAuthorName('Thomas');
         $media->setCdnIsFlushable(true);
@@ -53,6 +60,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($media->getEnabled());
         $this->assertSame('name', $media->getProviderName());
         $this->assertSame(2, $media->getLength());
+        $this->assertSame($category->reveal(), $media->getCategory());
         $this->assertSame('copyleft', $media->getCopyright());
         $this->assertSame('Thomas', $media->getAuthorName());
         $this->assertTrue($media->getCdnIsFlushable());
@@ -77,5 +85,14 @@ class MediaTest extends \PHPUnit_Framework_TestCase
 
         $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1#with-some-hash');
         $this->assertSame('png', $media->getExtension(), 'extension should not contain query strings or hashes');
+    }
+
+    public function testSetCategoryWithoutAnActualCategory()
+    {
+        $this->expectException('\InvalidArgumentException');
+
+        $media = new Media();
+
+        $media->setCategory(new \stdClass());
     }
 }
