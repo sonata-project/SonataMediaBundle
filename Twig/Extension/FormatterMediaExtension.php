@@ -109,4 +109,14 @@ class FormatterMediaExtension extends BaseProxyExtension
     {
         return $this->getTwigExtension()->path($media, $format);
     }
+
+    /**
+     * NEXT_MAJOR: Remove this method when bumping requirements to twig 2.
+     *
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'sonata_formatter_media';
+    }
 }
