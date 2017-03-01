@@ -2,6 +2,31 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.3.1...3.4.0) - 2017-02-28
+### Added
+- An icon to admin menu (fa-image)
+- Added `getRequest` method on controller for BC with Symfony 2.3+
+- Added test on `MediaAdminController`
+
+### Changed
+- Replaced form types for the FQCN's
+
+### Fixed
+- Support for Twig 2.0
+- Callback contraint is not a valid callable on Symfony 3
+- `BaseAdmin` incorrectly retrieved `providerName`
+- Fixed BlockBundle deprecation messages
+- Fixed pager test with DatagridBundle 2.2.1
+- Media List is now filterable by Category again
+- Incorrect access to providerName parameter in request in `Admin/BaseMediaAdmin.php`
+- Wrong FQCN's and added missing end() on GalleryAdmin
+- Calling a macro without importing it is an error on twig 2.0
+- Remove deprecations from non FQCNs on form types on `MediaAdmin`
+
+### Removed
+- `cascade_validation` from `GalleryAdmin`
+- ClassificationBundle is now an optional dependency
+
 ## [3.3.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.3.0...3.3.1) - 2017-02-02
 ### Added
 - Added filesize check to upload
