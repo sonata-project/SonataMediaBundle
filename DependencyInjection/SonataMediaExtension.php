@@ -119,10 +119,6 @@ class SonataMediaExtension extends Extension
         $pool = $container->getDefinition('sonata.media.pool');
         $pool->replaceArgument(0, $config['default_context']);
 
-        // this shameless hack is done in order to have one clean configuration
-        // for adding formats ....
-        $pool->addMethodCall('__hack__', $config);
-
         $strategies = array();
 
         foreach ($config['contexts'] as $name => $settings) {
