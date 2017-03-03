@@ -36,22 +36,12 @@ class GalleryItemAdmin extends AbstractAdmin
             }
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\AdminBundle\Form\Type\ModelListType'
-            : 'sonata_type_model_list';
-
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $hiddenType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\HiddenType'
-            : 'hidden';
-
         $formMapper
-            ->add('media', $modelListType, array('required' => false), array(
+            ->add('media', 'Sonata\AdminBundle\Form\Type\ModelListType', array('required' => false), array(
                 'link_parameters' => $link_parameters,
             ))
             ->add('enabled', null, array('required' => false))
-            ->add('position', $hiddenType)
+            ->add('position', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
         ;
     }
 

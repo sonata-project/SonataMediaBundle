@@ -31,9 +31,11 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
 
+        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+
         $this->configureGetMedia(1, null);
 
-        $this->controller->downloadAction(1);
+        $this->controller->downloadAction($request->reveal(), 1);
     }
 
     public function testDownloadActionAccessDenied()
@@ -44,12 +46,11 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
         $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
 
-        $this->configureGetCurrentRequest($request->reveal());
         $this->configureGetMedia(1, $media->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), false);
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
 
-        $this->controller->downloadAction(1);
+        $this->controller->downloadAction($request->reveal(), 1);
     }
 
     public function testDownloadActionBinaryFile()
@@ -63,13 +64,12 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
         $this->configureGetMedia(1, $media->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
         $this->configureGetProvider($pool, $media, $provider->reveal());
-        $this->configureGetCurrentRequest($request->reveal());
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
         $pool->getDownloadMode($media->reveal())->willReturn('mode');
         $provider->getDownloadResponse($media->reveal(), 'format', 'mode')->willReturn($response->reveal());
         $response->prepare($request->reveal())->shouldBeCalled();
 
-        $result = $this->controller->downloadAction(1, 'format');
+        $result = $this->controller->downloadAction($request->reveal(), 1, 'format');
 
         $this->assertSame($response->reveal(), $result);
     }
@@ -78,9 +78,11 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
 
+        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+
         $this->configureGetMedia(1, null);
 
-        $this->controller->viewAction(1);
+        $this->controller->viewAction($request->reveal(), 1);
     }
 
     public function testViewActionAccessDenied()
@@ -92,11 +94,10 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
         $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
 
         $this->configureGetMedia(1, $media->reveal());
-        $this->configureGetCurrentRequest($request->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), false);
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
 
-        $this->controller->viewAction(1);
+        $this->controller->viewAction($request->reveal(), 1);
     }
 
     public function testViewActionRendersView()
@@ -106,7 +107,6 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
         $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
 
         $this->configureGetMedia(1, $media->reveal());
-        $this->configureGetCurrentRequest($request->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
         $this->configureRender('SonataMediaBundle:Media:view.html.twig', array(
             'media' => $media->reveal(),
@@ -117,7 +117,7 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
         $media->getContext()->willReturn('context');
         $pool->getFormatNamesByContext('context')->willReturn(array('format'));
 
-        $response = $this->controller->viewAction(1, 'format');
+        $response = $this->controller->viewAction($request->reveal(), 1, 'format');
 
         $this->assertSame('renderResponse', $response);
     }
@@ -142,21 +142,6 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
     {
         $pool->getProvider('provider')->willReturn($provider);
         $media->getProviderName()->willReturn('provider');
-    }
-
-    private function configureGetCurrentRequest($request)
-    {
-        // NEXT_MAJOR: Remove this trick when bumping Symfony requirement to 2.8+.
-        if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
-
-            $this->container->has('request_stack')->willReturn(true);
-            $this->container->get('request_stack')->willReturn($requestStack->reveal());
-            $requestStack->getCurrentRequest()->willReturn($request);
-        } else {
-            $this->container->has('request_stack')->willReturn(false);
-            $this->container->get('request')->willReturn($request);
-        }
     }
 
     private function configureRender($template, $data, $rendered)

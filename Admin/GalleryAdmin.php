@@ -116,27 +116,21 @@ class GalleryAdmin extends AbstractAdmin
             $contexts[$contextItem] = $contextItem;
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $choiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
-            : 'choice';
-
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $collectionType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\CoreBundle\Form\Type\CollectionType'
-            : 'sonata_type_collection';
-
         $formMapper
             ->with('Options')
-                ->add('context', $choiceType, array('choices' => $contexts))
+                ->add('context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                    'choices' => $contexts,
+                ))
                 ->add('enabled', null, array('required' => false))
                 ->add('name')
                 ->ifTrue($formats)
-                    ->add('defaultFormat', $choiceType, array('choices' => $formats))
+                    ->add('defaultFormat', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                        'choices' => $formats,
+                    ))
                 ->ifEnd()
             ->end()
             ->with('Gallery')
-                ->add('galleryItems', $collectionType, array(), array(
+                ->add('galleryItems', 'Sonata\CoreBundle\Form\Type\CollectionType', array(), array(
                     'edit' => 'inline',
                     'inline' => 'table',
                     'sortable' => 'position',
