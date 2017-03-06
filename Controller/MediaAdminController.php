@@ -12,16 +12,15 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sonata\MediaBundle\Form\Type\MultiUploadType;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaAdminController extends Controller
 {
@@ -116,26 +115,6 @@ class MediaAdminController extends Controller
     }
 
     /**
-     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
-     *
-     * @param FormView $formView
-     * @param string   $theme
-     */
-    private function setFormTheme(FormView $formView, $theme)
-    {
-        $twig = $this->get('twig');
-
-        // BC for Symfony < 3.2 where this runtime does not exists
-        if (!method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
-            $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
-                ->renderer->setTheme($formView, $theme);
-
-            return;
-        }
-        $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->setTheme($formView, $theme);
-    }
-
-    /**
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
@@ -149,7 +128,6 @@ class MediaAdminController extends Controller
         $parameters = $this->admin->getPersistentParameters();
 
         $provider = $this->getRequest()->get('provider');
-
 
         if (!$provider) {
             $providers = $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', $this->get('sonata.media.pool')->getDefaultContext()));
@@ -234,5 +212,25 @@ class MediaAdminController extends Controller
                 'files' => $files,
             )
         );
+    }
+
+    /**
+     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
+     *
+     * @param FormView $formView
+     * @param string   $theme
+     */
+    private function setFormTheme(FormView $formView, $theme)
+    {
+        $twig = $this->get('twig');
+
+        // BC for Symfony < 3.2 where this runtime does not exists
+        if (!method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
+            $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
+                ->renderer->setTheme($formView, $theme);
+
+            return;
+        }
+        $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->setTheme($formView, $theme);
     }
 }
