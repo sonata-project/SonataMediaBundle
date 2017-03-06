@@ -18,7 +18,7 @@ use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Extra\ApiMediaFile;
-use Sonata\MediaBundle\Form\Type\MultiUploadFileType;
+use Sonata\MediaBundle\Form\Type\MultiUploadType;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-class FileProvider extends BaseProvider
+class FileProvider extends BaseProvider implements MultiUploadInterface
 {
     protected $allowedExtensions;
 
@@ -336,6 +336,28 @@ class FileProvider extends BaseProvider
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function configureMultiUpload(Request $request, FormContractor $formContractor, $context)
+    {
+        $formFactory = $formContractor->getFormFactory();
+
+        $form = $formFactory->create(
+            new MultiUploadType(),
+            null,
+            array(
+                'provider' => $this->getName(),
+                'context' => $context,
+            )
+        );
+
+        return array(
+            'action' => 'multi_upload',
+            'multi_form' => $form->createView(),
+        );
+    }
+
+    /**
      * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
@@ -498,24 +520,5 @@ class FileProvider extends BaseProvider
         $file->setMimetype($media->getContentType());
 
         $media->setBinaryContent($file);
-    }
-
-    public function configureMultiUpload(Request $request, FormContractor $formContractor, $context)
-    {
-        $formFactory = $formContractor->getFormFactory();
-
-        $form = $formFactory->create(
-            new MultiUploadType(),
-            null,
-            array(
-                'provider' => $this->getName(),
-                'context' => $context,
-            )
-        );
-
-        return array(
-            'action' => 'multi_upload',
-            'multi_form' => $form->createView()
-        );
     }
 }

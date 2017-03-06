@@ -253,30 +253,4 @@ interface MediaProviderInterface
      * @param bool           $force
      */
     public function updateMetadata(MediaInterface $media, $force = false);
-
-    /**
-     * @return bool
-     */
-//    NEXT_MAJOR: disabled to prevent BC
-//    public function supportsMultiUpload();
-
-    /**
-     * @param Request        $request
-     * @param FormContractor $formContractor
-     * @param string         $context
-     *
-     * @return array
-     */
-//    NEXT_MAJOR: disabled to prevent BC
-//    public function configureMultiUpload(Request $request, FormContractor $formContractor, $context);
-
-    /**
-     * @param Request        $request
-     * @param FormContractor $formContractor
-     * @param string         $context
-     *
-     * @return array
-     */
-//    NEXT_MAJOR: disabled to prevent BC
-//    public function createMediaFromMultiUpload(Request $request, FormContractor $formContractor, $context);
 }

@@ -12,11 +12,10 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Form\Type\MultiUploadType;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\MultiUploadInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -117,7 +116,7 @@ class MediaAdminController extends Controller
     }
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException|\Exception
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
      */
@@ -130,23 +129,17 @@ class MediaAdminController extends Controller
         $providerName = $this->getRequest()->get('provider');
         $provider = $this->get($providerName);
 
-        // NEXT_MAJOR: remove $supportMethodCallable with the next major release.
-        $supportMethodCallable = method_exists($provider, 'supportsMultiUpload');
-
         $defaultContext = $this->get('sonata.media.pool')->getDefaultContext();
         $context = $this->get('request')->get('context', $defaultContext);
 
         if (!$provider) {
             $pool = $this->get('sonata.media.pool');
+            /** @var $providers MediaProviderInterface[] */
             $providers = $pool->getProvidersByContext($context);
 
             $filteredProviders = array();
-            /**
-             * @var $key string
-             * @var $provider MediaProviderInterface
-             */
-            foreach ($providers as $key => $provider) {
-                if ($supportMethodCallable && $provider->supportsMultiUpload()) {
+            foreach ($providers as $provider) {
+                if ($provider instanceof MultiUploadInterface) {
                     $filteredProviders[] = $provider;
                 }
             }
@@ -157,8 +150,8 @@ class MediaAdminController extends Controller
                 'admin' => $this->admin,
                 'action' => 'multi_upload',
             ));
-        } elseif (!$supportMethodCallable || !$provider->supportsMultiUpload()) {
-            throw new \Exception("Provider {$providerName} does not support MultiUpload");
+        } elseif (!$provider instanceof MultiUploadInterface) {
+            throw new \Exception("Provider {$providerName} does not implement MultiUploadInterface");
         }
 
         return $this->render(
