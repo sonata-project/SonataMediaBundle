@@ -12,9 +12,11 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Form\Type\MultiUploadType;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -119,22 +121,32 @@ class MediaAdminController extends Controller
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
      */
-    public function multiUploadAction()
+    public function multiUploadAction(Request $request)
     {
         if (false === $this->admin->isGranted('CREATE')) {
             throw new AccessDeniedHttpException('Access denied');
         }
 
-        $parameters = $this->admin->getPersistentParameters();
+        $providerName = $this->getRequest()->get('provider');
+        $provider = $this->get($providerName);
 
-        $provider = $this->getRequest()->get('provider');
+        // NEXT_MAJOR: remove $supportMethodCallable with the next major release.
+        $supportMethodCallable = method_exists($provider, 'supportsMultiUpload');
+
+        $defaultContext = $this->get('sonata.media.pool')->getDefaultContext();
+        $context = $this->get('request')->get('context', $defaultContext);
 
         if (!$provider) {
-            $providers = $this->get('sonata.media.pool')->getProvidersByContext($this->get('request')->get('context', $this->get('sonata.media.pool')->getDefaultContext()));
+            $pool = $this->get('sonata.media.pool');
+            $providers = $pool->getProvidersByContext($context);
 
             $filteredProviders = array();
+            /**
+             * @var $key string
+             * @var $provider MediaProviderInterface
+             */
             foreach ($providers as $key => $provider) {
-                if ($provider instanceof FileProvider) {
+                if ($supportMethodCallable && $provider->supportsMultiUpload()) {
                     $filteredProviders[] = $provider;
                 }
             }
@@ -145,14 +157,14 @@ class MediaAdminController extends Controller
                 'admin' => $this->admin,
                 'action' => 'multi_upload',
             ));
+        } elseif (!$supportMethodCallable || !$provider->supportsMultiUpload()) {
+            throw new \Exception("Provider {$providerName} does not support MultiUpload");
         }
 
-        $form = $this->createForm(new MultiUploadType(), null, array('provider' => $provider, 'context' => $parameters['context']));
-
-        return $this->render('SonataMediaBundle:MediaAdmin:multi_upload.html.twig', array(
-            'action' => 'multi_upload',
-            'multi_form' => $form->createView(),
-        ));
+        return $this->render(
+            $provider->getTemplate('multi_upload_input'),
+            $provider->configureMultiUpload($request, $this->admin->getFormContractor(), $context)
+        );
     }
 
     /**

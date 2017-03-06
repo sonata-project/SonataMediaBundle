@@ -15,9 +15,11 @@ use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\MetadataInterface;
 use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 interface MediaProviderInterface
@@ -251,4 +253,30 @@ interface MediaProviderInterface
      * @param bool           $force
      */
     public function updateMetadata(MediaInterface $media, $force = false);
+
+    /**
+     * @return bool
+     */
+//    NEXT_MAJOR: disabled to prevent BC
+//    public function supportsMultiUpload();
+
+    /**
+     * @param Request        $request
+     * @param FormContractor $formContractor
+     * @param string         $context
+     *
+     * @return array
+     */
+//    NEXT_MAJOR: disabled to prevent BC
+//    public function configureMultiUpload(Request $request, FormContractor $formContractor, $context);
+
+    /**
+     * @param Request        $request
+     * @param FormContractor $formContractor
+     * @param string         $context
+     *
+     * @return array
+     */
+//    NEXT_MAJOR: disabled to prevent BC
+//    public function createMediaFromMultiUpload(Request $request, FormContractor $formContractor, $context);
 }

@@ -12,13 +12,17 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class BaseProvider implements MediaProviderInterface
 {
@@ -315,6 +319,17 @@ abstract class BaseProvider implements MediaProviderInterface
     public function preUpdate(MediaInterface $media)
     {
         $media->setUpdatedAt(new \Datetime());
+    }
+
+    public function supportsMultiUpload()
+    {
+        return $this->getTemplate('multi_upload_input') !== null;
+    }
+
+
+    public function configureMultiUpload(Request $request, FormContractor $formContractor, $context)
+    {
+        return array();
     }
 
     /**

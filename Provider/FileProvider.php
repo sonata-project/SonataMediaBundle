@@ -15,8 +15,10 @@ use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Extra\ApiMediaFile;
+use Sonata\MediaBundle\Form\Type\MultiUploadFileType;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -496,5 +498,24 @@ class FileProvider extends BaseProvider
         $file->setMimetype($media->getContentType());
 
         $media->setBinaryContent($file);
+    }
+
+    public function configureMultiUpload(Request $request, FormContractor $formContractor, $context)
+    {
+        $formFactory = $formContractor->getFormFactory();
+
+        $form = $formFactory->create(
+            new MultiUploadType(),
+            null,
+            array(
+                'provider' => $this->getName(),
+                'context' => $context,
+            )
+        );
+
+        return array(
+            'action' => 'multi_upload',
+            'multi_form' => $form->createView()
+        );
     }
 }
