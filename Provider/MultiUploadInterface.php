@@ -24,7 +24,7 @@ interface MultiUploadInterface
     /*
      * @param Request        $request
      * @param FormContractor $formContractor
-     * @param                $context
+     * @param string         $context
      *
      * @return mixed
      */
