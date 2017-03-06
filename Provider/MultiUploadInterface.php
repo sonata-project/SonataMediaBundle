@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
- namespace Sonata\MediaBundle\Provider;
+namespace Sonata\MediaBundle\Provider;
 
- use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
- use Symfony\Component\HttpFoundation\Request;
+use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
+use Symfony\Component\HttpFoundation\Request;
 
  /**
-  * Interface MultiUploadInterface
-  *
-  * @author Maximilian Behrsing <m.behrsing@gmail.com>
-  */
+ * Interface MultiUploadInterface.
+ *
+ * @author Maximilian Behrsing <m.behrsing@gmail.com>
+ */
 interface MultiUploadInterface
 {
     /*
