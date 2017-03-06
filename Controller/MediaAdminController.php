@@ -116,7 +116,7 @@ class MediaAdminController extends Controller
     }
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException|\Exception
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException|\LogicException
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
      */
@@ -151,7 +151,7 @@ class MediaAdminController extends Controller
                 'action' => 'multi_upload',
             ));
         } elseif (!$provider instanceof MultiUploadInterface) {
-            throw new \Exception("Provider {$providerName} does not implement MultiUploadInterface");
+            throw new \LogicException("Provider {$providerName} does not implement MultiUploadInterface");
         }
 
         return $this->render(
