@@ -200,6 +200,7 @@ class MediaAdminController extends Controller
                     'thumbnailUrl' => $provider->getCdnPath($provider->getReferenceImage($media), true),
                 );
             } catch (\Exception $e) {
+                $this->get('logger')->error('Could not save media', array('exception' => $e, 'media' => $media));
                 $uploadedFile = $media->getBinaryContent();
                 $files[] = array(
                     'name' => $uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : '',
