@@ -172,7 +172,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
      */
     protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
-        $menu->addChild('MultiUpload', array('route' => 'admin_sonata_media_media_multi_upload'));
+        $menu->addChild('multi_upload.title', array('route' => 'admin_sonata_media_media_multi_upload'));
     }
 
     /**
