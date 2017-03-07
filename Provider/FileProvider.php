@@ -91,21 +91,19 @@ class FileProvider extends BaseProvider implements MultiUploadInterface
      */
     public function buildEditForm(FormMapper $formMapper)
     {
+        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
+        // (when requirement of Symfony is >= 2.8)
+        $fileType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
+            : 'file';
+        
         $formMapper->add('name');
         $formMapper->add('enabled', null, array('required' => false));
         $formMapper->add('authorName');
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add(
-            'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
-                : 'file',
-            array('required' => false)
-        );
+        $formMapper->add('binaryContent', $fileType, array('required' => false));
     }
 
     /**
@@ -113,13 +111,15 @@ class FileProvider extends BaseProvider implements MultiUploadInterface
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
+        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
+        // (when requirement of Symfony is >= 2.8)
+        $fileType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
+            : 'file';        
+        
         $formMapper->add(
             'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
-                : 'file',
+            $fileType,
             array(
                 'constraints' => array(
                     new NotBlank(),
