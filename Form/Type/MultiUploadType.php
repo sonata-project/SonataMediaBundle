@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author Maximilian Behrsing <m.behrsing@gmail.com>
  */
-class MultiUploadType extends AbstractType
+final class MultiUploadType extends AbstractType
 {
     /**
      * @var string
