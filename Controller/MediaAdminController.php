@@ -153,7 +153,7 @@ class MediaAdminController extends Controller
                 'action' => 'multi_upload',
             ));
         } elseif (!$provider instanceof MultiUploadInterface) {
-            throw new \LogicException("Provider {$providerName} does not implement MultiUploadInterface");
+            throw new \LogicException(sprintf('Provider %s does not implement MultiUploadInterface', $providerName));
         }
 
         $form = $this->createMultiUploadForm($provider, $context);
