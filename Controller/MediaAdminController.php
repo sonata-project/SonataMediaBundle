@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class MediaAdminController extends Controller
 {
@@ -233,7 +232,7 @@ class MediaAdminController extends Controller
 
         $formMapper = new FormMapper($formContractor, $formBuilder, $this->admin);
         $provider->configureMultiUpload($formMapper);
-        
+
         return $formMapper->getFormBuilder()->getForm();
     }
 
