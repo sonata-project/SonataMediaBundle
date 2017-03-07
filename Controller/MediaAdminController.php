@@ -156,7 +156,6 @@ class MediaAdminController extends Controller
             throw new \LogicException(sprintf('Provider %s does not implement MultiUploadInterface', $providerName));
         }
 
-
         $form = $this->createMultiUploadForm($provider, $context);
 
         return $this->render(
