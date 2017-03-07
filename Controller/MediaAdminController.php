@@ -210,11 +210,7 @@ class MediaAdminController extends Controller
             }
         }
 
-        return new JsonResponse(
-            array(
-                'files' => $files,
-            )
-        );
+        return new JsonResponse(array('files' => $files));
     }
 
     protected function createMultiUploadForm(MediaProviderInterface $provider, $context = 'default')
