@@ -12,22 +12,16 @@
 namespace Sonata\MediaBundle\Provider;
 
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Interface MultiUploadInterface.
- *
  * @author Maximilian Behrsing <m.behrsing@gmail.com>
  */
 interface MultiUploadInterface
 {
     /*
-     * @param Request        $request
-     * @param FormContractor $formContractor
-     * @param string         $context
+     * @param FormMapper $formMapper
      *
-     * @return array
+     * @return mixed
      */
     public function configureMultiUpload(FormMapper $formMapper);
 }

@@ -338,7 +338,11 @@ class FileProvider extends BaseProvider implements MultiUploadInterface
      */
     public function configureMultiUpload(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'file', array('attr' => array('multiple' => true)));
+        // NEXT_MAJOR: Remove BC trick when bumping Symfony requirement to 2.8+
+        $fileType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
+            : 'file';
+        $formMapper->add('binaryContent', $fileType, array('attr' => array('multiple' => true)));
     }
 
     /**

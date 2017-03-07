@@ -16,8 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class MultiUploadType.
- *
  * @author Maximilian Behrsing <m.behrsing@gmail.com>
  */
 class MultiUploadType extends AbstractType
@@ -30,7 +28,7 @@ class MultiUploadType extends AbstractType
     /**
      * @param string $class
      */
-    public function __construct(Pool $pool, $class)
+    public function __construct($class)
     {
         $this->class = $class;
     }
@@ -40,9 +38,14 @@ class MultiUploadType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // NEXT_MAJOR: Remove BC trick when bumping Symfony requirement to 2.8+
+        $hiddenType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+            ? 'Symfony\Component\Form\Extension\Core\Type\HiddenType'
+            : 'hidden';
+
         $builder
-            ->add('context', 'hidden', array('data' => $options['context']))
-            ->add('providerName', 'hidden', array('data' => $options['provider']))
+            ->add('context', $hiddenType, array('data' => $options['context']))
+            ->add('providerName', $hiddenType, array('data' => $options['provider']))
         ;
     }
 
@@ -67,7 +70,7 @@ class MultiUploadType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'sonata_media_multi_type';
+        return 'sonata_media_multi_upload_type';
     }
 
     /**
