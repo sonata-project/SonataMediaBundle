@@ -13,13 +13,10 @@ namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\MediaBundle\Form\Type\MediaType;
 use Sonata\MediaBundle\Form\Type\MultiUploadType;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\MultiUploadInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -170,32 +167,6 @@ class MediaAdminController extends Controller
         );
     }
 
-    protected function createMultiUploadForm(MediaProviderInterface $provider, $context = 'default')
-    {
-        $formContractor = $this->admin->getFormContractor();
-
-        /** @var $formFactory FormFactory */
-        $formFactory = $formContractor->getFormFactory();
-        $mediaManager = $this->get('sonata.media.manager.media');
-        $mediaClass = $mediaManager->getClass();
-
-        $formBuilder = $formFactory->createBuilder(
-            new MultiUploadType($mediaClass),
-            null,
-            array(
-                'provider' => $provider->getName(),
-                'context' => $context,
-                'action' => $this->admin->generateUrl('multi_upload_ajax', array('provider' => $provider->getName()))
-            )
-        );
-
-        $formMapper = new FormMapper($formContractor, $formBuilder, $this->admin);
-        $provider->configureMultiUpload($formMapper);
-        $form = $formMapper->getFormBuilder()->getForm();
-
-        return $form;
-    }
-
     /**
      * @param Request $request
      *
@@ -210,7 +181,6 @@ class MediaAdminController extends Controller
         $providerName = $providerName = $this->getRequest()->get('provider');
         /** @var $provider MediaProviderInterface */
         $provider = $this->get($providerName);
-
 
         $form = $this->createMultiUploadForm($provider);
         $form->handleRequest($request);
@@ -231,7 +201,7 @@ class MediaAdminController extends Controller
                     'editUrl' => $this->admin->generateUrl('edit', array('id' => $media->getId())),
                     'thumbnailUrl' => $provider->getCdnPath($provider->getReferenceImage($media), true),
                 );
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $uploadedFile = $media->getBinaryContent();
                 $files[] = array(
                     'name' => $uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : '',
@@ -245,6 +215,32 @@ class MediaAdminController extends Controller
                 'files' => $files,
             )
         );
+    }
+
+    protected function createMultiUploadForm(MediaProviderInterface $provider, $context = 'default')
+    {
+        $formContractor = $this->admin->getFormContractor();
+
+        /** @var $formFactory FormFactory */
+        $formFactory = $formContractor->getFormFactory();
+        $mediaManager = $this->get('sonata.media.manager.media');
+        $mediaClass = $mediaManager->getClass();
+
+        $formBuilder = $formFactory->createBuilder(
+            new MultiUploadType($mediaClass),
+            null,
+            array(
+                'provider' => $provider->getName(),
+                'context' => $context,
+                'action' => $this->admin->generateUrl('multi_upload_ajax', array('provider' => $provider->getName())),
+            )
+        );
+
+        $formMapper = new FormMapper($formContractor, $formBuilder, $this->admin);
+        $provider->configureMultiUpload($formMapper);
+        $form = $formMapper->getFormBuilder()->getForm();
+
+        return $form;
     }
 
     /**

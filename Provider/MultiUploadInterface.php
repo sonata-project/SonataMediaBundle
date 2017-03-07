@@ -15,7 +15,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
 use Symfony\Component\HttpFoundation\Request;
 
- /**
+/**
  * Interface MultiUploadInterface.
  *
  * @author Maximilian Behrsing <m.behrsing@gmail.com>
