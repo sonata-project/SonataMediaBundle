@@ -2,19 +2,19 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/sonatamedia/multi_upload/css/jquery.fileupload.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/sonatamedia/multi_upload/css/jquery.fileupload-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/sonatamedia/vendor/blueimp-fileupload/css/jquery.fileupload.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/sonatamedia/vendor/blueimp-fileupload/css/jquery.fileupload-ui.css') }}">
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/load-image.all.min.js') }}"></script>
-    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/tmpl.min.js') }}"></script>
-    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.iframe-transport.js') }}"></script>
-    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload.js') }}"></script>
-    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload-process.js') }}"></script>
-    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload-image.js') }}"></script>
-    <script src="{{ asset('bundles/sonatamedia/multi_upload/js/jquery.fileupload-ui.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/vendor/blueimp-load-image/load-image.all.min.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/vendor/blueimp-template/tmpl.min.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/vendor/blueimp-iframe-transport/jquery.iframe-transport.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/vendor/blueimp-fileupload/js/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/vendor/blueimp-fileupload/js/jquery.fileupload-process.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/vendor/blueimp-fileupload/js/jquery.fileupload-image.js') }}"></script>
+    <script src="{{ asset('bundles/sonatamedia/vendor/blueimp-fileupload/js/jquery.fileupload-ui.js') }}"></script>
 {% endblock %}
 
 {% block title %}
