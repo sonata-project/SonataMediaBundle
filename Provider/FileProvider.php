@@ -91,12 +91,6 @@ class FileProvider extends BaseProvider implements MultiUploadInterface
      */
     public function buildEditForm(FormMapper $formMapper)
     {
-        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\FileType' value
-        // (when requirement of Symfony is >= 2.8)
-        $fileType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
-            : 'file';
-        
         $formMapper->add('name');
         $formMapper->add('enabled', null, array('required' => false));
         $formMapper->add('authorName');
@@ -110,7 +104,7 @@ class FileProvider extends BaseProvider implements MultiUploadInterface
             method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
                 ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
                 : 'file',
-            , array('required' => false)
+            array('required' => false)
         );
     }
 
