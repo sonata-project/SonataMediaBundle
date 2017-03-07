@@ -234,9 +234,8 @@ class MediaAdminController extends Controller
 
         $formMapper = new FormMapper($formContractor, $formBuilder, $this->admin);
         $provider->configureMultiUpload($formMapper);
-        $form = $formMapper->getFormBuilder()->getForm();
-
-        return $form;
+        
+        return $formMapper->getFormBuilder()->getForm();
     }
 
     /**
