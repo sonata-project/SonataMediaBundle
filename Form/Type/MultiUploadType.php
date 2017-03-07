@@ -23,7 +23,7 @@ final class MultiUploadType extends AbstractType
     /**
      * @var string
      */
-    protected $class;
+    private $class;
 
     /**
      * @param string $class
