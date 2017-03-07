@@ -118,6 +118,8 @@ class MediaAdminController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException|\LogicException
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
