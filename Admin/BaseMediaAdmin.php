@@ -50,6 +50,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $this->categoryManager = $categoryManager;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function configureRoutes(RouteCollection $collection)
     {
         $collection->add('multi_upload', 'upload/multi');
@@ -164,6 +167,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 
+    /**
+     * {@inheritdoc}
+     */    
     protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
         $menu->addChild('MultiUpload', array('route' => 'admin_sonata_media_media_multi_upload'));
