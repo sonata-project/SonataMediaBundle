@@ -129,7 +129,7 @@ class MediaAdminController extends Controller
         $this->admin->checkAccess('create');
 
         $providerName = $this->getRequest()->get('provider');
-        $provider = $this->get($providerName);
+        $provider = !empty($providerName) ? $this->get($providerName) : null;
 
         $defaultContext = $this->get('sonata.media.pool')->getDefaultContext();
         $context = $this->get('request')->get('context', $defaultContext);
@@ -155,6 +155,7 @@ class MediaAdminController extends Controller
         } elseif (!$provider instanceof MultiUploadInterface) {
             throw new \LogicException(sprintf('Provider %s does not implement MultiUploadInterface', $providerName));
         }
+
 
         $form = $this->createMultiUploadForm($provider, $context);
 

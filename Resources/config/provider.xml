@@ -54,6 +54,7 @@
                 <argument type="collection">
                     <argument key="helper_thumbnail">SonataMediaBundle:Provider:thumbnail.html.twig</argument>
                     <argument key="helper_view">SonataMediaBundle:Provider:view_file.html.twig</argument>
+                    <argument key="multi_upload_input">SonataMediaBundle:MediaAdmin:multi_upload.html.twig</argument>
                 </argument>
             </call>
         </service>
