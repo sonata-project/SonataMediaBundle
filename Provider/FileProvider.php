@@ -18,6 +18,7 @@ use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\DoctrineORMAdminBundle\Builder\FormContractor;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Extra\ApiMediaFile;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Sonata\MediaBundle\Form\Type\MultiUploadType;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
@@ -338,23 +339,9 @@ class FileProvider extends BaseProvider implements MultiUploadInterface
     /**
      * {@inheritdoc}
      */
-    public function configureMultiUpload(Request $request, FormContractor $formContractor, $context)
+    public function configureMultiUpload(FormMapper $formMapper)
     {
-        $formFactory = $formContractor->getFormFactory();
-
-        $form = $formFactory->create(
-            new MultiUploadType(),
-            null,
-            array(
-                'provider' => $this->getName(),
-                'context' => $context,
-            )
-        );
-
-        return array(
-            'action' => 'multi_upload',
-            'multi_form' => $form->createView(),
-        );
+        $formMapper->add('binaryContent', 'file', array('attr' => array('multiple' => true)));
     }
 
     /**

@@ -23,25 +23,51 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MultiUploadType extends AbstractType
 {
     /**
+     * @var string
+     */
+    protected $class;
+
+    /**
+     * @param string $class
+     */
+    public function __construct(Pool $pool, $class)
+    {
+        $this->class = $class;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('context', 'hidden', array('data' => $options['context']))
-            ->add('provider', 'hidden', array('data' => $options['provider']))
-            ->add('files', 'file', array(
-                'multiple' => true,
-            ))
+            ->add('providerName', 'hidden', array('data' => $options['provider']))
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'context' => 'default',
-            'provider' => null,
-        ));
+        $resolver
+            ->setDefaults(
+                array(
+                    'data_class' => $this->class,
+                    'provider' => '',
+                    'context' => 'default',
+                )
+            )
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'sonata_media_multi_type';
     }
 
     /**
@@ -49,6 +75,6 @@ class MultiUploadType extends AbstractType
      */
     public function getName()
     {
-        return 'multi_upload';
+        return $this->getBlockPrefix();
     }
 }

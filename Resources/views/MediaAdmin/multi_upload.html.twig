@@ -23,13 +23,13 @@
 
 {% block sonata_admin_content %}
     <div class="container">
-    {{ form_start(multi_form, {attr: {id: multi_form.vars.id }}) }}
+    {{ form_start(form, {attr: {id: form.vars.id }}) }}
         <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>Add files...</span>
-                    {{ form_widget(multi_form.files) }}
+                    {{ form_widget(form.binaryContent) }}
                 </span>
                 <button type="reset" class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
@@ -45,7 +45,7 @@
             </div>
         </div>
         <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-    {{ form_end(multi_form) }}
+    {{ form_end(form) }}
     </div>
 {% verbatim %}
 <script id="template-download" type="text/x-tmpl">
@@ -53,9 +53,9 @@
     <tr class="template-download fade">
         <td>
             <span class="preview" >
-                <!--{% if (file.thumbnailUrl) { %}-->
-                    <!--<img height="70" src="{%=file.thumbnailUrl%}">-->
-                <!--{% } %}-->
+                {% if (file.thumbnailUrl) { %}
+                    <img height="70" src="{%=file.thumbnailUrl%}">
+                {% } %}
             </span>
         </td>
         <td>
@@ -116,8 +116,8 @@
         $(function () {
             'use strict';
 
-            $('#{{ multi_form.vars.id }}').fileupload({
-                url: '{{ admin.generateUrl('multi_upload_ajax', {}) }}',
+            $('#{{ form.vars.id }}').fileupload({
+                url: '{{ form.vars.action }}',
                 autoUpload: true,
                 uploadTemplateId: 'template-upload',
                 disableImageResize: true,

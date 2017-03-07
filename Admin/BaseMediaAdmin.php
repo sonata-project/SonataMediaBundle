@@ -53,7 +53,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     public function configureRoutes(RouteCollection $collection)
     {
         $collection->add('multi_upload', 'upload/multi');
-        $collection->add('multi_upload_ajax', 'upload/multi/ajax');
+        $collection->add('multi_upload_ajax', 'upload/multi/ajax/{provider}');
     }
 
     /**

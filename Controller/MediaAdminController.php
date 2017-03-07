@@ -12,10 +12,15 @@
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Sonata\MediaBundle\Form\Type\MultiUploadType;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\MultiUploadInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -154,10 +159,41 @@ class MediaAdminController extends Controller
             throw new \LogicException("Provider {$providerName} does not implement MultiUploadInterface");
         }
 
+        $form = $this->createMultiUploadForm($provider, $context);
+
         return $this->render(
             $provider->getTemplate('multi_upload_input'),
-            $provider->configureMultiUpload($request, $this->admin->getFormContractor(), $context)
+            array(
+                'action' => 'multi_upload',
+                'form' => $form->createView(),
+            )
         );
+    }
+
+    protected function createMultiUploadForm(MediaProviderInterface $provider, $context = 'default')
+    {
+        $formContractor = $this->admin->getFormContractor();
+
+        /** @var $formFactory FormFactory */
+        $formFactory = $formContractor->getFormFactory();
+        $mediaManager = $this->get('sonata.media.manager.media');
+        $mediaClass = $mediaManager->getClass();
+
+        $formBuilder = $formFactory->createBuilder(
+            new MultiUploadType($mediaClass),
+            null,
+            array(
+                'provider' => $provider->getName(),
+                'context' => $context,
+                'action' => $this->admin->generateUrl('multi_upload_ajax', array('provider' => $provider->getName()))
+            )
+        );
+
+        $formMapper = new FormMapper($formContractor, $formBuilder, $this->admin);
+        $provider->configureMultiUpload($formMapper);
+        $form = $formMapper->getFormBuilder()->getForm();
+
+        return $form;
     }
 
     /**
@@ -171,44 +207,36 @@ class MediaAdminController extends Controller
             throw new AccessDeniedHttpException('Access denied');
         }
 
-        $form = $this->createForm(new MultiUploadType());
+        $providerName = $providerName = $this->getRequest()->get('provider');
+        /** @var $provider MediaProviderInterface */
+        $provider = $this->get($providerName);
+
+
+        $form = $this->createMultiUploadForm($provider);
         $form->handleRequest($request);
 
-        $logger = $this->get('logger');
-
         $files = array();
-        if ($form->isValid()) {
-            $data = $form->getData();
+        if ($form->isSubmitted()) {
+            /** @var $media MediaInterface */
+            $media = $form->getData();
 
-            $uploadedFiles = $data['files'];
-            $mediaPool = $this->get('sonata.media.pool');
-            /** @var $uploadedFile UploadedFile */
-            foreach ($uploadedFiles as $uploadedFile) {
-                if ($uploadedFile->isValid()) {
-                    $this->admin->setRequest($request);
-                    /** @var $media MediaInterface */
-                    $media = $this->admin->getNewInstance();
-                    $media->setProviderName($data['provider']);
-                    $media->setContext($data['context']);
-                    $media->setBinaryContent($uploadedFile);
+            /** @var $provider MediaProviderInterface */
+            $provider = $this->get($media->getProviderName());
+            try {
+                $mediaManager = $this->get('sonata.media.manager.media');
+                $mediaManager->save($media);
 
-                    try {
-                        $media = $this->admin->update($media);
-                        $provider = $mediaPool->getProvider($data['provider']);
-
-                        $files[] = array(
-                            'name' => $media->getName(),
-                            'editUrl' => $this->admin->generateUrl('edit', array('id' => $media->getId())),
-                            'thumbnailUrl' => $provider->getCdnPath($provider->getReferenceImage($media), true),
-                        );
-                    } catch (\Exception $e) {
-                        $logger->error('Could not create Media', array('exception' => $e));
-                        $files[] = array(
-                            'name' => $uploadedFile->getClientOriginalName(),
-                            'error' => $e->getMessage(),
-                        );
-                    }
-                }
+                $files[] = array(
+                    'name' => $media->getName(),
+                    'editUrl' => $this->admin->generateUrl('edit', array('id' => $media->getId())),
+                    'thumbnailUrl' => $provider->getCdnPath($provider->getReferenceImage($media), true),
+                );
+            } catch(\Exception $e) {
+                $uploadedFile = $media->getBinaryContent();
+                $files[] = array(
+                    'name' => $uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : '',
+                    'error' => $e->getMessage(),
+                );
             }
         }
 
