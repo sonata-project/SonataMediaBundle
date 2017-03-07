@@ -126,9 +126,7 @@ class MediaAdminController extends Controller
      */
     public function multiUploadAction(Request $request)
     {
-        if (!$this->admin->isGranted('CREATE')) {
-            throw new AccessDeniedHttpException('Access denied');
-        }
+        $this->admin->checkAccess('create');
 
         $providerName = $this->getRequest()->get('provider');
         $provider = $this->get($providerName);
@@ -176,9 +174,7 @@ class MediaAdminController extends Controller
      */
     public function multiUploadAjaxAction(Request $request)
     {
-        if (!$this->admin->isGranted('CREATE')) {
-            throw new AccessDeniedHttpException('Access denied');
-        }
+        $this->admin->checkAccess('create');
 
         $providerName = $providerName = $this->getRequest()->get('provider');
         /** @var $provider MediaProviderInterface */
