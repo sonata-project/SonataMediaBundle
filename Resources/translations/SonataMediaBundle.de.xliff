@@ -579,6 +579,22 @@
                 <source>Options</source>
                 <target>Einstellungen</target>
             </trans-unit>
+            <trans-unit id="multi_upload.title">
+                <source>multi_upload.title</source>
+                <target>MultiUpload</target>
+            </trans-unit>
+            <trans-unit id="multi_upload.add_files">
+                <source>multi_upload.add_files</source>
+                <target>Dateien auswählen</target>
+            </trans-unit>
+            <trans-unit id="multi_upload.start_upload">
+                <source>multi_upload.start_upload</source>
+                <target>Upload starten</target>
+            </trans-unit>
+            <trans-unit id="multi_upload.cancel_upload">
+                <source>multi_upload.cancel_upload</source>
+                <target>Upload abbrechen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

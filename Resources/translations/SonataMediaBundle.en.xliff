@@ -567,6 +567,22 @@
                 <source>form.label_class</source>
                 <target>CSS class</target>
             </trans-unit>
+            <trans-unit id="multi_upload.title">
+                <source>multi_upload.title</source>
+                <target>MultiUpload</target>
+            </trans-unit>
+            <trans-unit id="multi_upload.add_files">
+                <source>multi_upload.add_files</source>
+                <target>Add files</target>
+            </trans-unit>
+            <trans-unit id="multi_upload.start_upload">
+                <source>multi_upload.start_upload</source>
+                <target>Start Upload</target>
+            </trans-unit>
+            <trans-unit id="multi_upload.cancel_upload">
+                <source>multi_upload.cancel_upload</source>
+                <target>Cancel upload</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
