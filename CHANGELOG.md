@@ -3,11 +3,6 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.5.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.4.0...3.5.0) - 2017-03-08
-### Changed
-- `MediaController::downloadAction` signature to include Request as first parameter
-- `MediaController::viewAction` signature to include Request as first parameter
-- `MediaController::liipImagineFilterAction` signature to include Request as first parameter
-
 ### Fixed
 - Optional dependency to SonataFormatterBundle is now on `^3.2`
 - Fixed issue when using SonataMediaBundle blocks in conjunction with SonataPageBundle and page composer (Sonata sandbox)
