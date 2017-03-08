@@ -51,7 +51,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     public function fixSettings(ContainerBuilder $container)
     {
         @trigger_error(
-            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            'The '.__METHOD__.' method is deprecated since 3.5, to be removed in 4.0.',
             E_USER_DEPRECATED
         );
 
