@@ -11,6 +11,8 @@
 
 namespace Sonata\MediaBundle\DependencyInjection\Compiler;
 
+use Sonata\MediaBundle\DependencyInjection\Configuration;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,11 +27,11 @@ class AddProviderCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $settings = $this->fixSettings($container);
+        $config = $this->getExtensionConfig($container);
 
         // define configuration per provider
-        $this->applyFormats($container, $settings);
-        $this->attachArguments($container, $settings);
+        $this->applyFormats($container, $config);
+        $this->attachArguments($container, $config);
         $this->attachProviders($container);
 
         $format = $container->getParameter('sonata.media.admin_format');
@@ -40,31 +42,20 @@ class AddProviderCompilerPass implements CompilerPassInterface
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
      * @param ContainerBuilder $container
      *
      * @return array
      */
     public function fixSettings(ContainerBuilder $container)
     {
-        $pool = $container->getDefinition('sonata.media.pool');
+        @trigger_error(
+            'The '.__METHOD__.' method is deprecated since 3.5, to be removed in 4.0.',
+            E_USER_DEPRECATED
+        );
 
-        // not very clean but don't know how to do that for now
-        $settings = false;
-        $methods = $pool->getMethodCalls();
-        foreach ($methods as $pos => $calls) {
-            if ($calls[0] == '__hack__') {
-                $settings = $calls[1];
-                break;
-            }
-        }
-
-        if ($settings) {
-            unset($methods[$pos]);
-        }
-
-        $pool->setMethodCalls($methods);
-
-        return $settings;
+        return $this->getExtensionConfig($container);
     }
 
     /**
@@ -128,5 +119,18 @@ class AddProviderCompilerPass implements CompilerPassInterface
                 }
             }
         }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return array
+     */
+    private function getExtensionConfig(ContainerBuilder $container)
+    {
+        $config = $container->getExtensionConfig('sonata_media');
+        $processor = new Processor();
+
+        return $processor->processConfiguration(new Configuration(), $config);
     }
 }
