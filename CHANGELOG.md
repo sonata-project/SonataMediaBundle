@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.5.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.4.0...3.5.0) - 2017-03-08
+### Fixed
+- Optional dependency to SonataFormatterBundle is now on `^3.2`
+- Fixed issue when using SonataMediaBundle blocks in conjunction with SonataPageBundle and page composer (Sonata sandbox)
+- Double padding on media list
+
+### Removed
+- Removed an ugly hack to retrieve configuration on `AddProviderCompilerPass`
+
 ## [3.4.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.3.1...3.4.0) - 2017-02-28
 ### Added
 - An icon to admin menu (fa-image)
