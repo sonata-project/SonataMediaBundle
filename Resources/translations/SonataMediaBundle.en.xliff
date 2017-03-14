@@ -577,7 +577,7 @@
             </trans-unit>
             <trans-unit id="multi_upload.start_upload">
                 <source>multi_upload.start_upload</source>
-                <target>Start Upload</target>
+                <target>Start upload</target>
             </trans-unit>
             <trans-unit id="multi_upload.cancel_upload">
                 <source>multi_upload.cancel_upload</source>
