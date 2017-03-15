@@ -25,9 +25,9 @@ use Symfony\Component\Finder\Finder;
 class CleanMediaCommand extends ContainerAwareCommand
 {
     /**
-     * @var MediaProviderInterface[]|false
+     * @var MediaProviderInterface[]|null
      */
-    private $providers = false;
+    private $providers;
 
     /**
      * {@inheritdoc}
@@ -45,7 +45,7 @@ class CleanMediaCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dryRun = (bool) $input->getOption('dry-run');
-        $verbose = (bool) $input->getOption('verbose');
+        $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
 
         $pool = $this->getContainer()->get('sonata.media.pool');
         $finder = Finder::create();
@@ -121,14 +121,14 @@ class CleanMediaCommand extends ContainerAwareCommand
 
         if (count($fileParts) > 1 && $fileParts[0] == 'thumb') {
             return $mediaManager->findOneBy(array(
-                    'id' => $fileParts[1],
-                    'context' => $context,
-                )) != null;
+                'id' => $fileParts[1],
+                'context' => $context,
+            )) != null;
         }
 
         return count($mediaManager->findBy(array(
-                'providerReference' => $filename,
-                'providers' => $this->getProviders(),
-            ))) > 0;
+            'providerReference' => $filename,
+            'providerName' => $this->getProviders(),
+        ))) > 0;
     }
 }

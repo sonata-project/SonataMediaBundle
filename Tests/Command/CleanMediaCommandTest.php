@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Tests\FilesystemTestCase;
@@ -173,7 +174,7 @@ class CleanMediaCommandTest extends TestCase
             ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
             ->will($this->returnValue(array($media)));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providers' => array('fooprovider'))))
+            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
             ->will($this->returnValue(array($media)));
 
         $output = $this->tester->execute(array('command' => $this->command->getName()));
@@ -207,10 +208,13 @@ class CleanMediaCommandTest extends TestCase
             ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
             ->will($this->returnValue(array($media)));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providers' => array('fooprovider'))))
+            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
             ->will($this->returnValue(array($media)));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName(), '--verbose' => true));
+        $output = $this->tester->execute(
+            array('command' => $this->command->getName()),
+            array('verbosity' => OutputInterface::VERBOSITY_VERBOSE)
+        );
 
         $this->assertOutputFoundInContext(
             '/Context: foo\s+(.+)\s+done!/ms',
@@ -245,7 +249,7 @@ class CleanMediaCommandTest extends TestCase
             ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
             ->will($this->returnValue(array()));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providers' => array('fooprovider'))))
+            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
             ->will($this->returnValue(array()));
 
         $output = $this->tester->execute(array('command' => $this->command->getName(), '--dry-run' => true));
@@ -283,7 +287,7 @@ class CleanMediaCommandTest extends TestCase
             ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
             ->will($this->returnValue(array()));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providers' => array('fooprovider'))))
+            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
             ->will($this->returnValue(array()));
 
         $output = $this->tester->execute(array('command' => $this->command->getName()));
