@@ -1,5 +1,5 @@
-Media Bundle Documentation
-==========================
+Media Bundle
+============
 
 The ``SonataMediaBundle`` is a media library based on a dedicated ``provider``
 which handles different ``type`` of media: files, videos or images.
@@ -19,10 +19,9 @@ is defined by a set of ``formats`` and a set of ``providers``.
 As the infrastructure is not standard, the ``MediaBundle`` abstracts the
 ``filesystem`` layer and the ``cdn`` layer.
 
-Reference Guide
----------------
-
 .. toctree::
+   :caption: Reference Guide
+   :name: reference-guide
    :maxdepth: 1
    :numbered:
 
