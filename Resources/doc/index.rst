@@ -39,6 +39,14 @@ As the infrastructure is not standard, the ``MediaBundle`` abstracts the
    reference/api
    reference/troubleshooting
 
+.. toctree::
+   :caption: Cookbook
+   :name: cookbook
+   :maxdepth: 1
+   :numbered:
+
+   cookbook/enable_multi_upload
+
 Available services
 ------------------
 
