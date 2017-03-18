@@ -319,6 +319,13 @@ class FileProvider extends BaseProvider
                     ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
                 ->end();
         }
+
+        if ($media->getProviderStatus() === MediaInterface::STATUS_ERROR) {
+            $errorElement
+                ->with('binaryContent')
+                    ->addViolation('Error processing file')
+                ->end();
+        }
     }
 
     /**
