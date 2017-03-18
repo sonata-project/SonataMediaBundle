@@ -20,7 +20,7 @@
         "php": "^5.3 || ^7.0",
         "imagine/imagine": "^0.6",
         "jms/serializer-bundle": "^0.13 || ^1.0",
-        "knplabs/gaufrette": "^0.1.6 || ^0.2",
+        "knplabs/gaufrette": "^0.1.6 || ^0.2 || ^0.3",
         "kriswallsmith/buzz": "^0.15",
         "sonata-project/core-bundle": "^3.2",
         "sonata-project/doctrine-extensions": "^1.0",
