@@ -33,7 +33,7 @@ In your provider you can add fields by adding them to the ``FormMapper``
         // ...
     }
 
-If you want to disable this feature in an extended class or want to do some other stuff before enabling it, you can do it this way:
+You can add your custom logic to enable the MultiUpload:
 
 .. code-block:: php
 
