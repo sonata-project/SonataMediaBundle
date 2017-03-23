@@ -347,6 +347,14 @@ class FileProvider extends BaseProvider implements MultiUploadInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isMultiUploadEnabled()
+    {
+        return isset($this->templates['multi_upload_input']);
+    }
+
+    /**
      * @param MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)

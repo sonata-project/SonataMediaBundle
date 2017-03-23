@@ -140,7 +140,7 @@ class MediaAdminController extends Controller
 
             $filteredProviders = array();
             foreach ($providers as $provider) {
-                if ($provider instanceof MultiUploadInterface) {
+                if ($provider instanceof MultiUploadInterface && $provider->isMultiUploadEnabled()) {
                     $filteredProviders[] = $provider;
                 }
             }
@@ -151,8 +151,8 @@ class MediaAdminController extends Controller
                 'admin' => $this->admin,
                 'action' => 'multi_upload',
             ));
-        } elseif (!$provider instanceof MultiUploadInterface) {
-            throw new \LogicException(sprintf('Provider %s does not implement MultiUploadInterface', $providerName));
+        } elseif (!$provider instanceof MultiUploadInterface || !$provider->isMultiUploadEnabled()) {
+            throw new \LogicException(sprintf('MultiUpload is not enabled for provider %s', $providerName));
         }
 
         $form = $this->createMultiUploadForm($provider, $context);

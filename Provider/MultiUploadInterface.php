@@ -24,4 +24,9 @@ interface MultiUploadInterface
      * @return mixed
      */
     public function configureMultiUpload(FormMapper $formMapper);
+
+    /*
+     * @return bool
+     */
+    public function isMultiUploadEnabled();
 }
