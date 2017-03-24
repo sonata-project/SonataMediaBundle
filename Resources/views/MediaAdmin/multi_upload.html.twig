@@ -27,12 +27,12 @@
         <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
                 <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
+                    <i class="fa fa-plus"></i>
                     <span>{{ "multi_upload.add_files"|trans({}, 'SonataMediaBundle') }}</span>
                     {{ form_widget(form.binaryContent) }}
                 </span>
                 <button type="reset" class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <i class="fa fa-ban"></i>
                     <span>{{ "multi_upload.cancel_upload"|trans({}, 'SonataMediaBundle') }}</span>
                 </button>
                 <span class="fileupload-process"></span>
@@ -96,13 +96,13 @@
         <td>
             {% if (!i && !o.options.autoUpload) { %}
                 <button class="btn btn-primary start" disabled>
-                    <i class="glyphicon glyphicon-upload"></i>
+                    <i class="fa fa-upload"></i>
                     <span>{% endverbatim %}{{ "multi_upload.start_upload"|trans({}, 'SonataMediaBundle') }}{% verbatim %}</span>
                 </button>
             {% } %}
             {% if (!i) { %}
                 <button class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <i class="fa fa-ban"></i>
                     <span>{% endverbatim %}{{ "multi_upload.cancel_upload"|trans({}, 'SonataMediaBundle') }}{% verbatim %}</span>
                 </button>
             {% } %}
