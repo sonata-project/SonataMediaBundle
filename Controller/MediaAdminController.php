@@ -211,6 +211,12 @@ class MediaAdminController extends Controller
         return new JsonResponse(array('files' => $files));
     }
 
+    /**
+     * @param MediaProviderInterface $provider
+     * @param string                 $context
+     *
+     * @return mixed
+     */
     protected function createMultiUploadForm(MediaProviderInterface $provider, $context = 'default')
     {
         $formContractor = $this->admin->getFormContractor();
