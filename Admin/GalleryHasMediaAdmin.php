@@ -36,7 +36,7 @@ class GalleryHasMediaAdmin extends AbstractAdmin
             }
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
+        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+
         $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
             ? 'Sonata\AdminBundle\Form\Type\ModelListType'
             : 'sonata_type_model_list';

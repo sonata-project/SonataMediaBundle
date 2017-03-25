@@ -12,11 +12,10 @@
          bootstrap="Tests/tests/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="MediaBundle Test Suite">
-            <directory>./Tests/</directory>
+        <testsuite name="SonataMediaBundle Test Suite">
+            <directory>./Tests</directory>
         </testsuite>
     </testsuites>
-
 
     <filter>
         <whitelist>
@@ -25,17 +24,14 @@
                 <directory>./Tests/</directory>
                 <directory>./DataFixtures/</directory>
                 <directory>./Resources/</directory>
-                <directory>./DependencyInjection/</directory>
                 <directory>./vendor/</directory>
-
-                <!-- ignore driver dependencies -->
-                <directory>./Admin/Manager</directory>
-                <directory>./**/ODM</directory>
-                <directory>./**/ORM</directory>
-                <directory>./**/PHPCR</directory>
-
+                <directory>./coverage/</directory>
             </exclude>
         </whitelist>
     </filter>
+
+    <php>
+        <ini name="precision" value="8"/>
+    </php>
 
 </phpunit>
