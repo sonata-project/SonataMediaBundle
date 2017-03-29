@@ -31,6 +31,9 @@ class Server implements CDNInterface
      */
     public function getPath($relativePath, $isFlushable)
     {
+        // safety replace:
+        $relativePath = str_replace(rtrim($this->path, '/').'/', '', $relativePath);
+
         return sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
     }
 
