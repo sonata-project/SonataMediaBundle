@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.5.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.5.0...3.5.1) - 2017-03-31
+### Changed
+- allow `knplabs/gaufrette v0.3.0`
+
+### Fixed
+- Replace missing `providers` column by `providerName` on clean command
+
 ## [3.5.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.4.0...3.5.0) - 2017-03-08
 ### Fixed
 - Optional dependency to SonataFormatterBundle is now on `^3.2`
