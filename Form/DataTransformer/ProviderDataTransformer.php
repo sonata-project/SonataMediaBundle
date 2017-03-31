@@ -14,6 +14,7 @@ namespace Sonata\MediaBundle\Form\DataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ProviderDataTransformer implements DataTransformerInterface
 {
@@ -84,6 +85,8 @@ class ProviderDataTransformer implements DataTransformerInterface
         $newMedia->setContext($media->getContext());
         $newMedia->setBinaryContent($binaryContent);
 
+        $this->migrateUserFields($newMedia, $media);
+
         if (!$newMedia->getProviderName() && $this->options['provider']) {
             $newMedia->setProviderName($this->options['provider']);
         }
@@ -97,6 +100,27 @@ class ProviderDataTransformer implements DataTransformerInterface
         $provider->transform($newMedia);
 
         return $newMedia;
+
+    }
+
+    /**
+     * Migrates user defined properties in an extended media class, from original media object to new media object
+     *
+     * @param $newMedia
+     * @param $media
+     */
+    private function migrateUserFields(MediaInterface $newMedia, MediaInterface $media)
+    {
+        $mediaClass = new \ReflectionClass($media);
+        $mediaProperties = $mediaClass->getProperties();
+
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        foreach ($mediaProperties as $mediaProperty) {
+            if ($mediaProperty->getDeclaringClass() == $mediaClass && !in_array($mediaProperty->getName(),array('id','__phpunit_staticInvocationMocker','__phpunit_invocationMocker')) ) {
+                $accessor->setValue($newMedia, $mediaProperty->getName(), $accessor->getValue($media, $mediaProperty->getName()));
+            }
+        }
     }
 
     /**
