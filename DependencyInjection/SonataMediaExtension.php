@@ -243,6 +243,7 @@ class SonataMediaExtension extends Extension
                 array(
                     'name' => 'gallery_id',
                     'referencedColumnName' => 'id',
+                    'onDelete' => 'CASCADE',
                 ),
             ),
             'orphanRemoval' => false,
@@ -260,6 +261,7 @@ class SonataMediaExtension extends Extension
                 array(
                     'name' => 'media_id',
                     'referencedColumnName' => 'id',
+                    'onDelete' => 'CASCADE',
                 ),
             ),
             'orphanRemoval' => false,
