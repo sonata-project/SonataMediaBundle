@@ -215,6 +215,6 @@ class YouTubeProviderTest extends AbstractProviderTest
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertEquals('http://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
+        $this->assertEquals('https://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
     }
 }

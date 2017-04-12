@@ -202,7 +202,7 @@ class YouTubeProvider extends BaseVideoProvider
      */
     public function updateMetadata(MediaInterface $media, $force = false)
     {
-        $url = sprintf('http://www.youtube.com/oembed?url=%s&format=json', $this->getReferenceUrl($media));
+        $url = sprintf('https://www.youtube.com/oembed?url=%s&format=json', $this->getReferenceUrl($media));
 
         try {
             $metadata = $this->getMetadata($media, $url);
@@ -242,7 +242,7 @@ class YouTubeProvider extends BaseVideoProvider
      */
     public function getReferenceUrl(MediaInterface $media)
     {
-        return sprintf('http://www.youtube.com/watch?v=%s', $media->getProviderReference());
+        return sprintf('https://www.youtube.com/watch?v=%s', $media->getProviderReference());
     }
 
     /**
