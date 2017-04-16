@@ -23,12 +23,6 @@ For instance, a youtube video can be created and saved like this :
 
     $mediaManager->save($media);
 
-    // or
-    $media = new Media;
-    $media->setBinaryContent('13142153');
-
-    $mediaManager->save($media, 'user', 'sonata.media.provider.youtube');
-
 
 Retrieving metadata information
 -------------------------------
