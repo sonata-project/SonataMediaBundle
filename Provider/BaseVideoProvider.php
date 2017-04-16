@@ -99,11 +99,9 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        return $this->getCdn()->getPath(sprintf('%s/thumb_%s_%s.jpg',
-            $this->generatePath($media),
-            $media->getId(),
-            $format
-        ), $media->getCdnIsFlushable());
+        return $this->getCdn()->getPath(
+            $this->generatePrivateUrl($media, $format),
+            $media->getCdnIsFlushable());
     }
 
     /**
