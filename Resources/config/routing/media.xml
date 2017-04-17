@@ -7,6 +7,6 @@
     <route id="sonata_media_download" path="/download/{id}/{format}">
         <default key="_controller">SonataMediaBundle:Media:download</default>
         <default key="format">reference</default>
-        <requirement key="id">.*</requirement>
+        <requirement key="id">\d+</requirement>
     </route>
 </routes>
