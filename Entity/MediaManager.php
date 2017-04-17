@@ -29,11 +29,13 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
 
         // BC compatibility for $context parameter
         if ($andFlush && is_string($andFlush)) {
+            @trigger_error(sprintf('Since version 2.2.7, passing context in argument 2 for %s() is deprecated and support for it will be removed in 3.0. Use %s::setContext() instead.', __METHOD__, $this->class), E_USER_DEPRECATED);
             $media->setContext($andFlush);
         }
 
         // BC compatibility for $providerName parameter
         if (3 == func_num_args()) {
+            @trigger_error(sprintf('Since version 2.2.7, passing provider name in argument 3 for %s() is deprecated and support for it will be removed in 3.0. Use %s::setProviderName() instead.', __METHOD__, $this->class), E_USER_DEPRECATED);
             $media->setProviderName(func_get_arg(2));
         }
 
