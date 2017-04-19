@@ -11,6 +11,9 @@
 
 namespace Sonata\MediaBundle\Form\Type;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\AbstractType;
@@ -22,7 +25,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class MediaType extends AbstractType
+class MediaType extends AbstractType implements LoggerAwareInterface
 {
     /**
      * @var Pool
@@ -35,6 +38,13 @@ class MediaType extends AbstractType
     protected $class;
 
     /**
+     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param Pool   $pool
      * @param string $class
      */
@@ -42,6 +52,17 @@ class MediaType extends AbstractType
     {
         $this->pool = $pool;
         $this->class = $class;
+        $this->logger = new NullLogger();
+    }
+
+    /**
+     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     /**
@@ -49,12 +70,15 @@ class MediaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer(new ProviderDataTransformer($this->pool, $this->class, array(
+        $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, array(
             'provider' => $options['provider'],
             'context' => $options['context'],
             'empty_on_new' => $options['empty_on_new'],
             'new_on_update' => $options['new_on_update'],
-        )));
+        ));
+        $dataTransformer->setLogger($this->logger);
+
+        $builder->addModelTransformer($dataTransformer);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             if ($event->getForm()->has('unlink') && $event->getForm()->get('unlink')->getData()) {

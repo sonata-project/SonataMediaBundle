@@ -22,6 +22,7 @@
         "jms/serializer-bundle": "^0.13 || ^1.0",
         "knplabs/gaufrette": "^0.1.6 || ^0.2 || ^0.3",
         "kriswallsmith/buzz": "^0.15",
+        "psr/log": "^1.0",
         "sonata-project/core-bundle": "^3.2",
         "sonata-project/doctrine-extensions": "^1.0",
         "sonata-project/easy-extends-bundle": "^2.2",
@@ -64,6 +65,7 @@
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "^3.0",
         "sonata-project/seo-bundle": "^2.1",
+        "symfony/monolog-bundle": "^2.4",
         "tilleuls/ckeditor-sonata-media-bundle": "^1.0"
     },
     "conflict": {
