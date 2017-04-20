@@ -90,7 +90,7 @@ class Pixlr
         $this->container = $container;
 
         $this->validFormats = array('jpg', 'jpeg', 'png');
-        $this->allowEreg = '@https://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
+        $this->allowEreg = '@https?://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
     }
 
     /**
