@@ -14,14 +14,14 @@
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
 
-    <document name="Application\Sonata\MediaBundle\PHPCR\GalleryHasMedia"
-              repository-class="Application\Sonata\MediaBundle\PHPCR\GalleryHasMediaRepository">
+    <document name="{{ namespace }}\PHPCR\GalleryHasMedia"
+              repository-class="{{ namespace }}\PHPCR\GalleryHasMediaRepository">
 
         <id name="id">
             <generator strategy="REPOSITORY" />
         </id>
 
-        <reference-many name="media" target-document="Application\Sonata\MediaBundle\PHPCR\Media" />
+        <reference-many name="media" target-document="{{ namespace }}\PHPCR\Media" />
 
     </document>
 
