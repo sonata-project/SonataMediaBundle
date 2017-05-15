@@ -103,6 +103,26 @@ class ProviderDataTransformerTest extends PHPUnit_Framework_TestCase
     public function testReverseTransformWithMediaAndUploadFileInstance()
     {
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+
+        $pool = new Pool('default');
+        $pool->addProvider('default', $provider);
+
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media->expects($this->any())->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
+        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
+
+        $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
+            'new_on_update' => false,
+        ));
+        $transformer->reverseTransform($media);
+    }
+
+    public function testReverseTransformWithThrowingProviderNoThrow()
+    {
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider->expects($this->once())->method('transform')->will($this->throwException(new \Exception()));
+
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
@@ -114,6 +134,29 @@ class ProviderDataTransformerTest extends PHPUnit_Framework_TestCase
         $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
             'new_on_update' => false,
         ));
+        $transformer->reverseTransform($media);
+    }
+
+    public function testReverseTransformWithThrowingProviderLogsException()
+    {
+        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider->expects($this->once())->method('transform')->will($this->throwException(new \Exception()));
+
+        $pool = new Pool('default');
+        $pool->addProvider('default', $provider);
+
+        $logger = $this->createMock('Psr\Log\LoggerInterface');
+        $logger->expects($this->once())->method('error');
+
+        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
+        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
+
+        $transformer = new ProviderDataTransformer($pool, 'stdClass', array(
+            'new_on_update' => false,
+        ));
+        $transformer->setLogger($logger);
         $transformer->reverseTransform($media);
     }
 }
