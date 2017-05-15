@@ -115,7 +115,10 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     protected function getContentType($filename)
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = Mimetypes::getInstance()->fromExtension($extension);
+/* Code that fixed it. */
+        $contentType = \GuzzleHttp\Psr7\mimetype_from_extension($extension);
+/* Problematic line of code is below */
+//        $contentType = Mimetypes::getInstance()->fromExtension($extension);
 
         return array('contentType' => $contentType);
     }
