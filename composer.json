@@ -23,6 +23,7 @@
         "knplabs/gaufrette": "^0.1.6 || ^0.2 || ^0.3",
         "kriswallsmith/buzz": "^0.15",
         "psr/log": "^1.0",
+        "sensio/generator-bundle": "^3.1",
         "sonata-project/core-bundle": "^3.2",
         "sonata-project/doctrine-extensions": "^1.0",
         "sonata-project/easy-extends-bundle": "^2.2",

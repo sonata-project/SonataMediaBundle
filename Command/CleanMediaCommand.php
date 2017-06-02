@@ -13,7 +13,6 @@ namespace Sonata\MediaBundle\Command;
 
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

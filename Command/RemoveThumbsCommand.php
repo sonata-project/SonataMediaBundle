@@ -13,10 +13,12 @@ namespace Sonata\MediaBundle\Command;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 /**
  * This command can be used to re-generate the thumbnails for all uploaded medias.
@@ -66,22 +68,16 @@ class RemoveThumbsCommand extends BaseCommand
         $this->input = $input;
         $this->output = $output;
 
-        $this->quiet = $input->getOption('quiet');
+        $this->quiet = $this->input->getOption('quiet');
 
         $provider = $this->getProvider();
         $context = $this->getContext();
-
         $format = $this->getFormat($provider, $context);
 
-        $filesystem = $provider->getFilesystem();
-        $fsReflection = new \ReflectionClass($filesystem);
-        $fsRegister = $fsReflection->getProperty('fileRegister');
-        $fsRegister->setAccessible(true);
-
         $batchCounter = 0;
-        $batchSize = intval($input->getOption('batchSize'));
-        $batchesLimit = intval($input->getOption('batchesLimit'));
-        $startOffset = intval($input->getOption('startOffset'));
+        $batchSize = intval($this->input->getOption('batchSize'));
+        $batchesLimit = intval($this->input->getOption('batchesLimit'));
+        $startOffset = intval($this->input->getOption('startOffset'));
         $totalMediasCount = 0;
         do {
             ++$batchCounter;
@@ -127,11 +123,8 @@ class RemoveThumbsCommand extends BaseCommand
                     continue;
                 }
                 //clean filesystem registry for saving memory
-                $fsRegister->setValue($filesystem, []);
+                $provider->getFilesystem()->clearFileRegister();
             }
-
-            //clear entity manager for saving memory
-            $this->getMediaManager()->getEntityManager()->clear();
 
             if ($batchesLimit > 0 && $batchCounter == $batchesLimit) {
                 break;
@@ -147,11 +140,13 @@ class RemoveThumbsCommand extends BaseCommand
     public function getProvider()
     {
         $providerName = $this->input->getArgument('providerName');
+
         if (null === $providerName) {
-            $providers = array_keys($this->getMediaPool()->getProviders());
-            $dialog = $this->getHelperSet()->get('dialog');
-            $providerKey = $dialog->select($this->output, 'Please select the provider', $providers);
-            $providerName = $providers[$providerKey];
+            $providerName = $this->getQuestionHelper()->ask(
+                $this->input,
+                $this->output,
+                new ChoiceQuestion('Please select the provider', array_keys($this->getMediaPool()->getProviders()))
+            );
         }
 
         return $this->getMediaPool()->getProvider($providerName);
@@ -163,11 +158,13 @@ class RemoveThumbsCommand extends BaseCommand
     public function getContext()
     {
         $context = $this->input->getArgument('context');
+
         if (null === $context) {
-            $contexts = array_keys($this->getMediaPool()->getContexts());
-            $dialog = $this->getHelperSet()->get('dialog');
-            $contextKey = $dialog->select($this->output, 'Please select the context', $contexts);
-            $context = $contexts[$contextKey];
+            $context = $this->getQuestionHelper()->ask(
+                $this->input,
+                $this->output,
+                new ChoiceQuestion('Please select the context', array_keys($this->getMediaPool()->getContexts()))
+            );
         }
 
         return $context;
@@ -182,13 +179,17 @@ class RemoveThumbsCommand extends BaseCommand
     public function getFormat(MediaProviderInterface $provider, $context)
     {
         $format = $this->input->getArgument('format');
+
         if (null === $format) {
             $formats = array_keys($provider->getFormats());
             $formats[] = '<ALL THUMBNAILS>';
 
-            $dialog = $this->getHelperSet()->get('dialog');
-            $formatKey = $dialog->select($this->output, 'Please select the format', $formats);
-            $format = $formats[$formatKey];
+            $format = $this->getQuestionHelper()->ask(
+                $this->input,
+                $this->output,
+                new ChoiceQuestion('Please select the format', $formats)
+            );
+
             if ('<ALL THUMBNAILS>' === $format) {
                 $format = $context.'_all';
             }
@@ -237,5 +238,13 @@ class RemoveThumbsCommand extends BaseCommand
         if (false === $this->quiet) {
             $this->output->writeln($message);
         }
+    }
+
+    /**
+     * @return QuestionHelper
+     */
+    private function getQuestionHelper()
+    {
+        return $this->getHelper('question');
     }
 }
