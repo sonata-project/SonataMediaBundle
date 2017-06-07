@@ -542,9 +542,6 @@ class SonataMediaExtension extends Extension
             'Sonata\\MediaBundle\\Thumbnail\\FormatThumbnail',
             'Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface',
             'Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension',
-            'Sonata\\MediaBundle\\Twig\\Node\\MediaNode',
-            'Sonata\\MediaBundle\\Twig\\Node\\PathNode',
-            'Sonata\\MediaBundle\\Twig\\Node\\ThumbnailNode',
         ));
     }
 
