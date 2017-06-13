@@ -34,5 +34,7 @@ This is a sample config file to enable amazon S3 as a filesystem & provider:
                 sdk_version: '%s3_sdk_version%' # 2 by default
 
 
-.. note:: This bundle is currently using KNP Gaufrette as S3 adapter and the default sdk used is version 2.
-  Changes have been made in the bundle to allow you to use version 3, simply update `sdk_version` parameter for this.
+.. note:: 
+
+   This bundle is currently using KNP Gaufrette as S3 adapter and the default sdk used is version 2.
+   Changes have been made in the bundle to allow you to use version 3, simply update `sdk_version` parameter for this.
