@@ -3,12 +3,16 @@ Amazon S3
 
 In order to use Amazon S3, you will need to add the following dependency to your composer.json:
 
+.. code-block:: bash
+
     composer require aws/aws-sdk-php
 
 Configuration
 -------------
 
 This is a sample config file to enable amazon S3 as a filesystem & provider:
+
+.. code-block:: yaml
 
     sonata_media:
         cdn:
