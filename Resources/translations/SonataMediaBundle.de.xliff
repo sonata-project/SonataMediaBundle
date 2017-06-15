@@ -595,6 +595,10 @@
                 <source>multi_upload.cancel_upload</source>
                 <target>Upload abbrechen</target>
             </trans-unit>
+            <trans-unit id="breadcrumb.link_media_multi_upload">
+                <source>breadcrumb.link_media_multi_upload</source>
+                <target>MultiUpload</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
