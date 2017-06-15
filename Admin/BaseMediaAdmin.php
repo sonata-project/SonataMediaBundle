@@ -17,6 +17,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
 abstract class BaseMediaAdmin extends AbstractAdmin
@@ -150,7 +151,10 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     {
         $provider = $this->pool->getProvider($object->getProviderName());
 
-        $url = $provider->generatePublicUrl($object, $provider->getFormatName($object, 'admin'));
+        $url = $provider->generatePublicUrl(
+            $object,
+            $provider->getFormatName($object, MediaProviderInterface::FORMAT_ADMIN)
+        );
 
         return new Metadata($object->getName(), $object->getDescription(), $url);
     }

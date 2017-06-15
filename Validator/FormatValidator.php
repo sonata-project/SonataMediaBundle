@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Validator;
 
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -52,7 +53,7 @@ class FormatValidator extends ConstraintValidator
 
         $galleryDefaultFormat = $value->getDefaultFormat();
 
-        if ($galleryDefaultFormat !== 'reference'
+        if ($galleryDefaultFormat !== MediaProviderInterface::FORMAT_REFERENCE
             && !($formats && array_key_exists($galleryDefaultFormat, $formats))) {
             $this->context->addViolation('invalid format');
         }

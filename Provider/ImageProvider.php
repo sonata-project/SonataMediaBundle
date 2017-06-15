@@ -60,7 +60,7 @@ class ImageProvider extends FileProvider
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $box = $media->getBox();
         } else {
             $resizerFormat = $this->getFormat($format);
@@ -82,7 +82,7 @@ class ImageProvider extends FileProvider
             'height' => $box->getHeight(),
         );
 
-        if ($format !== 'admin') {
+        if ($format !== MediaProviderInterface::FORMAT_ADMIN) {
             $srcSet = array();
 
             foreach ($this->getFormats() as $providerFormat => $settings) {
@@ -95,7 +95,11 @@ class ImageProvider extends FileProvider
             }
 
             // The reference format is not in the formats list
-            $srcSet[] = sprintf('%s %dw', $this->generatePublicUrl($media, 'reference'), $media->getBox()->getWidth());
+            $srcSet[] = sprintf(
+                '%s %dw',
+                $this->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
+                $media->getBox()->getWidth()
+            );
 
             $params['srcset'] = implode(', ', $srcSet);
             $params['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);
@@ -150,7 +154,7 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $this->getReferenceImage($media);
         } else {
             $path = $this->thumbnail->generatePublicUrl($this, $media, $format);

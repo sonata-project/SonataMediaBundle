@@ -34,7 +34,7 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $provider->getReferenceImage($media);
         } else {
             $path = sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
@@ -48,7 +48,7 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        if ('reference' === $format) {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $provider->getReferenceImage($media);
         }
 
@@ -77,7 +77,8 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         foreach ($provider->getFormats() as $format => $settings) {
-            if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
+            if (substr($format, 0, strlen($media->getContext())) == $media->getContext() ||
+                MediaProviderInterface::FORMAT_ADMIN === $format) {
                 $provider->getResizer()->resize(
                     $media,
                     $referenceFile,

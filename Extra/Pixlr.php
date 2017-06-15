@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Extra;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -117,7 +118,7 @@ class Pixlr
             's' => 'c', // ??
             'referrer' => $this->referrer,
             'exit' => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
-            'image' => $provider->generatePublicUrl($media, 'reference'),
+            'image' => $provider->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
             'title' => $media->getName(),
             'target' => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
             'locktitle' => true,
