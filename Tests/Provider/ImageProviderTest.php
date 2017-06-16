@@ -18,11 +18,13 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends AbstractProviderTest
 {
-    public function getProvider($allowedExtensions = array(), $allowedMimeTypes = array())
+    public function getProvider($allowedExtensions = array(), $allowedMimeTypes = array(), $box = false)
     {
         $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
-        $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
+        if ($box) {
+            $resizer->expects($this->any())->method('getBox')->will($box);
+        }
 
         $adapter = $this->createMock('Gaufrette\Adapter');
 
@@ -81,25 +83,62 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testHelperProperies()
     {
-        $provider = $this->getProvider();
+        $adminBox = new Box(100, 100);
+        $mediumBox = new Box(500, 250);
+        $largeBox = new Box(1000, 500);
+
+        $provider = $this->getProvider(
+            array(),
+            array(),
+            $this->onConsecutiveCalls(
+                $largeBox, // first properties call
+                $mediumBox,
+                $largeBox,
+                $mediumBox, // second call
+                $mediumBox,
+                $largeBox,
+                $adminBox // Third call
+            ));
 
         $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('default_medium', array('width' => 500));
+        $provider->addFormat('default_large', array('width' => 1000));
+
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
-        $media->setHeight(100);
+        $media->setHeight(500);
+        $media->setWidth(1500);
         $media->setContext('default');
 
-        $properties = $provider->getHelperProperties($media, 'admin');
+        $srcSet = '/uploads/media/default/0001/01/thumb_10_default_medium.png 500w, /uploads/media/default/0001/01/thumb_10_default_large.png 1000w, /uploads/media/default/0001/01/ASDASDAS.png 1500w';
+
+        $properties = $provider->getHelperProperties($media, 'default_large');
 
         $this->assertInternalType('array', $properties);
         $this->assertSame('test.png', $properties['title']);
-        $this->assertSame(100, $properties['width']);
+        $this->assertSame(1000, $properties['width']);
+        $this->assertSame($srcSet, $properties['srcset']);
+        $this->assertSame(
+            '/uploads/media/default/0001/01/thumb_10_default_large.png',
+            $properties['src']
+        );
+        $this->assertSame('(max-width: 1000px) 100vw, 1000px', $properties['sizes']);
+
+        $properties = $provider->getHelperProperties($media, 'default_medium');
+        $this->assertSame($srcSet, $properties['srcset']);
+        $this->assertSame(
+            '/uploads/media/default/0001/01/thumb_10_default_medium.png',
+            $properties['src']
+        );
+        $this->assertSame('(max-width: 500px) 100vw, 500px', $properties['sizes']);
 
         $properties = $provider->getHelperProperties($media, 'admin', array(
             'width' => 150,
         ));
+        $this->assertArrayNotHasKey('sizes', $properties);
+        $this->assertArrayNotHasKey('srcset', $properties);
 
         $this->assertSame(150, $properties['width']);
     }
