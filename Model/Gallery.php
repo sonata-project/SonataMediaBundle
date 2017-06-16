@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 abstract class Gallery implements GalleryInterface
 {
@@ -43,7 +44,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * @var string
      */
-    protected $defaultFormat = 'reference';
+    protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
      * @var GalleryHasMediaInterface[]

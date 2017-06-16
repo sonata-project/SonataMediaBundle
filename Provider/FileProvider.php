@@ -221,7 +221,7 @@ class FileProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $this->getReferenceImage($media);
         } else {
             // @todo: fix the asset path
@@ -248,7 +248,7 @@ class FileProvider extends BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $this->getReferenceImage($media);
         }
 
@@ -271,7 +271,7 @@ class FileProvider extends BaseProvider
         }
 
         if ($mode == 'http') {
-            if ($format == 'reference') {
+            if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
                 $file = $this->getReferenceFile($media);
             } else {
                 $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));

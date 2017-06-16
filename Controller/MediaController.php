@@ -49,7 +49,7 @@ class MediaController extends Controller
      *
      * @return Response
      */
-    public function downloadAction($id, $format = 'reference')
+    public function downloadAction($id, $format = MediaProviderInterface::FORMAT_REFERENCE)
     {
         $media = $this->getMedia($id);
 
@@ -78,7 +78,7 @@ class MediaController extends Controller
      *
      * @return Response
      */
-    public function viewAction($id, $format = 'reference')
+    public function viewAction($id, $format = MediaProviderInterface::FORMAT_REFERENCE)
     {
         $media = $this->getMedia($id);
 

@@ -80,7 +80,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function getReferenceFile(MediaInterface $media)
     {
-        $key = $this->generatePrivateUrl($media, 'reference');
+        $key = $this->generatePrivateUrl($media, MediaProviderInterface::FORMAT_REFERENCE);
 
         // the reference file is remote, get it and store it with the 'reference' format
         if ($this->getFilesystem()->has($key)) {
@@ -251,7 +251,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $media->getBox();
         }
 

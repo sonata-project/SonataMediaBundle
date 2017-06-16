@@ -99,7 +99,8 @@ abstract class BaseProvider implements MediaProviderInterface
         if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
             $flushPaths = array();
             foreach ($this->getFormats() as $format => $settings) {
-                if ('admin' === $format || substr($format, 0, strlen($media->getContext())) === $media->getContext()) {
+                if (MediaProviderInterface::FORMAT_ADMIN === $format ||
+                    substr($format, 0, strlen($media->getContext())) === $media->getContext()) {
                     $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
                 }
             }
@@ -157,12 +158,12 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function getFormatName(MediaInterface $media, $format)
     {
-        if ($format == 'admin') {
-            return 'admin';
+        if (MediaProviderInterface::FORMAT_ADMIN === $format) {
+            return MediaProviderInterface::FORMAT_ADMIN;
         }
 
-        if ($format == 'reference') {
-            return 'reference';
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
+            return MediaProviderInterface::FORMAT_REFERENCE;
         }
 
         $baseName = $media->getContext().'_';

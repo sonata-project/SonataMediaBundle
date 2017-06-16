@@ -172,7 +172,7 @@ class MediaController
     {
         $media = $this->getMedium($id);
 
-        $formats = array('reference');
+        $formats = array(MediaProviderInterface::FORMAT_REFERENCE);
         $formats = array_merge($formats, array_keys($this->mediaPool->getFormatNamesByContext($media->getContext())));
 
         $provider = $this->mediaPool->getProvider($media->getProviderName());

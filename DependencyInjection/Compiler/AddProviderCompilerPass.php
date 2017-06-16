@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\DependencyInjection\Compiler;
 
 use Sonata\MediaBundle\DependencyInjection\Configuration;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,7 +38,10 @@ class AddProviderCompilerPass implements CompilerPassInterface
         $format = $container->getParameter('sonata.media.admin_format');
 
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
-            $container->getDefinition($id)->addMethodCall('addFormat', array('admin', $format));
+            $container->getDefinition($id)->addMethodCall(
+                'addFormat',
+                array(MediaProviderInterface::FORMAT_ADMIN, $format)
+            );
         }
     }
 
