@@ -60,7 +60,7 @@
         "symfony/phpunit-bridge": "^2.7 || ^3.0"
     },
     "suggest": {
-        "liip/imagine-bundle": "^0.9",
+        "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...)",
         "rackspace/php-opencloud": "^1.6",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "^3.0",
