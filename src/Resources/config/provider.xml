@@ -19,7 +19,7 @@
             <argument type="string">%sonata.media.thumbnail.format.default%</argument>
         </service>
         <service id="sonata.media.thumbnail.liip_imagine" class="%sonata.media.thumbnail.liip_imagine%">
-            <argument type="service" id="router"/>
+            <argument type="service" id="liip_imagine.cache.manager" />
         </service>
         <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
             <tag name="sonata.media.provider"/>

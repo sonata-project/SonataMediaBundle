@@ -179,6 +179,11 @@ class ImageProvider extends FileProvider
             $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
         }
 
+        // if path is url, do not action
+        if (null !== parse_url($path, PHP_URL_SCHEME)) {
+            return $path;
+        }
+
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 

@@ -11,23 +11,23 @@
 
 namespace Sonata\MediaBundle\Thumbnail;
 
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class LiipImagineThumbnail implements ThumbnailInterface
 {
     /**
-     * @var RouterInterface
+     * @var CacheManager
      */
-    protected $router;
+    private $cacheManager;
 
     /**
-     * @param RouterInterface $router
+     * @param CacheManager $cacheManager
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(CacheManager $cacheManager)
     {
-        $this->router = $router;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -35,16 +35,15 @@ class LiipImagineThumbnail implements ThumbnailInterface
      */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
-            $path = $provider->getReferenceImage($media);
-        } else {
-            $path = $this->router->generate(
-                sprintf('_imagine_%s', $format),
-                ['path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format)]
-            );
+        $path = $provider->getReferenceImage($media);
+
+        if (MediaProviderInterface::FORMAT_ADMIN === $format || MediaProviderInterface::FORMAT_REFERENCE === $format) {
+            return $path;
         }
 
-        return $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        $path = $provider->getCdnPath($path, $media->getCdnIsFlushable());
+
+        return $this->cacheManager->getBrowserPath($path, $format);
     }
 
     /**
