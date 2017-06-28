@@ -8,7 +8,7 @@ The Multi Upload provides a way to create multiple media elements at once.
    :alt: The Sonata Multi Upload
 
 To enable this feature your provider must implement the ``MultiUploadInterface``
- and the provider template ``multi_upload_input`` needs to be set.
+and the provider template ``multi_upload_input`` needs to be set.
 
 .. code-block:: xml
 
@@ -31,8 +31,7 @@ To enable this feature your provider must implement the ``MultiUploadInterface``
             calls:
                 - [ 'setTemplates' , [{multi_upload_input: SonataMediaBundle:MediaAdmin:multi_upload.html.twig}]]
 
-
-In your provider you can add fields by adding them to the ``FormMapper``
+In your provider you can add fields by adding them to the ``FormMapper``.
 
 .. code-block:: php
 
