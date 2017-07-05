@@ -45,6 +45,7 @@
         "twig/twig": "^1.28 || ^2.0"
     },
     "require-dev": {
+        "alcaeus/mongo-php-adapter": "^1.1",
         "amazonwebservices/aws-sdk-for-php": "^1.5",
         "aws/aws-sdk-php": "^2.7",
         "friendsofsymfony/rest-bundle": "^1.7.4 || ^2.0",
