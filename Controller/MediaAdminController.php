@@ -123,7 +123,7 @@ class MediaAdminController extends Controller
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
      */
-    public final function multiUploadAction(Request $request)
+    final public function multiUploadAction(Request $request)
     {
         $this->admin->checkAccess('create');
 
@@ -171,7 +171,7 @@ class MediaAdminController extends Controller
      *
      * @return JsonResponse
      */
-    public final function multiUploadAjaxAction(Request $request)
+    final public function multiUploadAjaxAction(Request $request)
     {
         $this->admin->checkAccess('create');
 
