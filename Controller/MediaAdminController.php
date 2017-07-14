@@ -156,24 +156,6 @@ class MediaAdminController extends Controller
     }
 
     /**
-     * @param string $context
-     *
-     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface[]
-     */
-    private function getProvidersForMultiUploadByContext($context)
-    {
-        $filteredProviders = array();
-        $pool = $this->get('sonata.media.pool');
-        foreach ($pool->getProvidersByContext($context) as $provider) {
-            if ($provider instanceof MultiUploadInterface) {
-                $filteredProviders[$provider->getName()] = $provider;
-            }
-        }
-
-        return $filteredProviders;
-    }
-
-    /**
      * @param Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
@@ -228,6 +210,24 @@ class MediaAdminController extends Controller
     }
 
     /**
+     * @param string $context
+     *
+     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface[]
+     */
+    private function getProvidersForMultiUploadByContext($context)
+    {
+        $filteredProviders = array();
+        $pool = $this->get('sonata.media.pool');
+        foreach ($pool->getProvidersByContext($context) as $provider) {
+            if ($provider instanceof MultiUploadInterface) {
+                $filteredProviders[$provider->getName()] = $provider;
+            }
+        }
+
+        return $filteredProviders;
+    }
+
+    /**
      * @param MediaProviderInterface $provider
      * @param string                 $context
      *
@@ -252,7 +252,7 @@ class MediaAdminController extends Controller
                     'multi_upload_submit',
                     array(
                         'provider' => $provider->getName(),
-                        'context' => $context
+                        'context' => $context,
                     )
                 ),
             )
