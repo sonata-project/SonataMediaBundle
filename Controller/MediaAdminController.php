@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class MediaAdminController extends Controller
 {
@@ -127,26 +128,16 @@ class MediaAdminController extends Controller
     {
         $this->admin->checkAccess('create');
 
-        $providerName = $this->getRequest()->get('provider');
-        $provider = !empty($providerName) ? $this->get($providerName) : null;
-
         $defaultContext = $this->get('sonata.media.pool')->getDefaultContext();
         $context = $request->get('context', $defaultContext);
 
+        $availableProviders = $this->getProvidersForMultiUploadByContext($context);
+        $providerName = $this->getRequest()->get('provider');
+        $provider = isset($availableProviders[$providerName]) ? $this->get($providerName) : null;
+
         if (!$provider) {
-            $pool = $this->get('sonata.media.pool');
-            /** @var $providers MediaProviderInterface[] */
-            $providers = $pool->getProvidersByContext($context);
-
-            $filteredProviders = array();
-            foreach ($providers as $provider) {
-                if ($provider instanceof MultiUploadInterface) {
-                    $filteredProviders[] = $provider;
-                }
-            }
-
             return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
-                'providers' => $filteredProviders,
+                'providers' => $availableProviders,
                 'base_template' => $this->getBaseTemplate(),
                 'admin' => $this->admin,
                 'action' => 'multi_upload',
@@ -155,27 +146,52 @@ class MediaAdminController extends Controller
             throw new \LogicException(sprintf('The provider %s does not implement MultiUploadInterface', $providerName));
         }
 
-        $form = $this->createMultiUploadForm($provider, $context);
-
         return $this->render(
             $provider->getTemplate('multi_upload_input'),
             array(
                 'action' => 'multi_upload',
-                'form' => $form->createView(),
+                'form' => $this->createMultiUploadForm($provider, $context)->createView(),
             )
         );
     }
 
     /**
+     * @param string $context
+     *
+     * @return \Sonata\MediaBundle\Provider\MediaProviderInterface[]
+     */
+    private function getProvidersForMultiUploadByContext($context)
+    {
+        $filteredProviders = array();
+        $pool = $this->get('sonata.media.pool');
+        foreach ($pool->getProvidersByContext($context) as $provider) {
+            if ($provider instanceof MultiUploadInterface) {
+                $filteredProviders[$provider->getName()] = $provider;
+            }
+        }
+
+        return $filteredProviders;
+    }
+
+    /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    final public function multiUploadAjaxAction(Request $request)
+    final public function multiUploadSubmitAction(Request $request)
     {
         $this->admin->checkAccess('create');
 
-        $providerName = $providerName = $this->getRequest()->get('provider');
+        $context = $request->get('context');
+        $availableProviders = $this->getProvidersForMultiUploadByContext($context);
+        $providerName = $this->getRequest()->get('provider');
+
+        if (!isset($availableProviders[$providerName])) {
+            throw new BadRequestHttpException(sprintf('Provider %s does not exist in context %s or does not implement MultiUploadInterface', $providerName, $context));
+        }
+
         /** @var $provider MediaProviderInterface */
         $provider = $this->get($providerName);
 
@@ -232,7 +248,13 @@ class MediaAdminController extends Controller
             array(
                 'provider' => $provider->getName(),
                 'context' => $context,
-                'action' => $this->admin->generateUrl('multi_upload_ajax', array('provider' => $provider->getName())),
+                'action' => $this->admin->generateUrl(
+                    'multi_upload_submit',
+                    array(
+                        'provider' => $provider->getName(),
+                        'context' => $context
+                    )
+                ),
             )
         );
 
