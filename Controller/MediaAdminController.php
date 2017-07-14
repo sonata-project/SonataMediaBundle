@@ -123,7 +123,7 @@ class MediaAdminController extends Controller
      *
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response|\Symfony\Component\HttpFoundation\Response
      */
-    public function multiUploadAction(Request $request)
+    public final function multiUploadAction(Request $request)
     {
         $this->admin->checkAccess('create');
 
@@ -131,7 +131,7 @@ class MediaAdminController extends Controller
         $provider = !empty($providerName) ? $this->get($providerName) : null;
 
         $defaultContext = $this->get('sonata.media.pool')->getDefaultContext();
-        $context = $this->get('request')->get('context', $defaultContext);
+        $context = $request->get('context', $defaultContext);
 
         if (!$provider) {
             $pool = $this->get('sonata.media.pool');
@@ -140,7 +140,7 @@ class MediaAdminController extends Controller
 
             $filteredProviders = array();
             foreach ($providers as $provider) {
-                if ($provider instanceof MultiUploadInterface && $provider->isMultiUploadEnabled()) {
+                if ($provider instanceof MultiUploadInterface) {
                     $filteredProviders[] = $provider;
                 }
             }
@@ -171,7 +171,7 @@ class MediaAdminController extends Controller
      *
      * @return JsonResponse
      */
-    public function multiUploadAjaxAction(Request $request)
+    public final function multiUploadAjaxAction(Request $request)
     {
         $this->admin->checkAccess('create');
 
@@ -217,7 +217,7 @@ class MediaAdminController extends Controller
      *
      * @return mixed
      */
-    protected function createMultiUploadForm(MediaProviderInterface $provider, $context = 'default')
+    private function createMultiUploadForm(MediaProviderInterface $provider, $context = 'default')
     {
         $formContractor = $this->admin->getFormContractor();
 
