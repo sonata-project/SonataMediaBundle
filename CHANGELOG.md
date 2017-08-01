@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.6.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.5.1...3.6.0) - 2017-08-01
+### Added
+- The Image Provider returns responsive images to the twig media helper.
+
+### Changed
+- Allowed `jms/serializer-bundle ^2.0`
+
+### Fixed
+- Change Youtube urls to use https
+- The DataTransformers and MediaTypes (both standard and API) now depend on `Psr\Log\LoggerInterface` in order to log any exception that could arise from `$provider->transform()` to get form errors when uploads are too big!
+- fix protocol error from image url returned by pixlr when sonata is under https protocol
+- Fixed hardcoded paths to classes in `.xml.skeleton` files of config
+- Ability to extend the `MediaExtension` class
+
 ## [3.5.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.5.0...3.5.1) - 2017-03-31
 ### Changed
 - allow `knplabs/gaufrette v0.3.0`
