@@ -19,6 +19,9 @@ php:
   - nightly
   - hhvm
 
+services:
+  - mongodb
+
 sudo: false
 
 cache:
@@ -43,25 +46,29 @@ matrix:
       env: TARGET=lint
     - php: '5.3'
       env: COMPOSER_FLAGS="--prefer-lowest"
-    - php: '5.6'
+    - php: '7.1'
+      env: SYMFONY=2.3.*
+    - php: '7.1'
+      env: SYMFONY=2.7.*
+    - php: '7.1'
       env: SYMFONY=2.8.*
-    - php: '5.6'
+    - php: '7.1'
       env: SYMFONY=3.1.*
-    - php: '5.6'
+    - php: '7.1'
       env: SYMFONY=3.2.*
-    - php: '5.6'
+    - php: '7.1'
       env: SYMFONY=dev-master@dev
-    - php: '5.6'
+    - php: '7.1'
       env: DOCTRINE_ODM=1.*
-    - php: '5.6'
+    - php: '7.1'
       env: DOCTRINE_ODM=dev-master@dev
-    - php: '5.6'
+    - php: '7.1'
       env: SONATA_CORE=3.*
-    - php: '5.6'
+    - php: '7.1'
       env: SONATA_CORE=dev-master@dev
-    - php: '5.6'
+    - php: '7.1'
       env: SONATA_ADMIN=3.*
-    - php: '5.6'
+    - php: '7.1'
       env: SONATA_ADMIN=dev-master@dev
     - php: '7.1'
       env: SYMFONY_DEPRECATIONS_HELPER=0
