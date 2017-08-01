@@ -7,6 +7,8 @@ if [ "${TRAVIS_PHP_VERSION}" != "hhvm" ]; then
 
     if [ ${TRAVIS_PHP_VERSION} '<' '7.0' ]; then
         echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+    else
+        echo "extension=mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     fi
 fi
 
