@@ -116,6 +116,11 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
 
         $provider = $this->pool->getProvider($newMedia->getProviderName());
 
+        if ($media->getId() && $this->options['new_on_update']) {
+            // Prevent the provider reference from being erased
+            $media->setProviderReference($media->getPreviousProviderReference());
+        }
+
         try {
             $provider->transform($newMedia);
         } catch (\Exception $e) { // NEXT_MAJOR: When switching to PHP 7+, change this to \Throwable
