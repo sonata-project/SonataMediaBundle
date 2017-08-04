@@ -494,6 +494,10 @@ class SonataMediaExtension extends Extension
      */
     public function configureClassesToCompile()
     {
+        if (\PHP_VERSION_ID >= 70000) {
+            return;
+        }
+
         $this->addClassesToCompile(array(
             'Sonata\\MediaBundle\\CDN\\CDNInterface',
             'Sonata\\MediaBundle\\CDN\\CloudFront',
