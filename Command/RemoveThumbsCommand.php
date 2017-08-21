@@ -85,6 +85,7 @@ class RemoveThumbsCommand extends BaseCommand
         $totalMediasCount = 0;
         do {
             ++$batchCounter;
+
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->getMediaManager()->findBy(
@@ -100,6 +101,7 @@ class RemoveThumbsCommand extends BaseCommand
                 );
             } catch (\Exception $e) {
                 $this->log('Error: '.$e->getMessage());
+
                 break;
             }
 
