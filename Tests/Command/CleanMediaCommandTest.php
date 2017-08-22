@@ -318,6 +318,7 @@ class CleanMediaCommandTest extends TestCase
         foreach ($matches[1] as $match) {
             if ($this->containsAll($match, $expected)) {
                 $found = true;
+
                 break;
             }
         }
