@@ -390,6 +390,7 @@ class FileProvider extends BaseProvider
         if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
             $media->setProviderReference(uniqid($media->getName(), true));
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
             throw new UploadException('The uploaded file is not found');
         }
 
