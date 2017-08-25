@@ -26,7 +26,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     /**
      * @var int
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * @var \DateTime
@@ -41,16 +41,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     /**
      * @var bool
      */
-    protected $enabled;
-
-    /**
-     * Construct.
-     */
-    public function __construct()
-    {
-        $this->position = 0;
-        $this->enabled = false;
-    }
+    protected $enabled = false;
 
     /**
      * {@inheritdoc}
