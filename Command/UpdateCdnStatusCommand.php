@@ -85,6 +85,7 @@ class UpdateCdnStatusCommand extends BaseCommand
 
             if (!$media->getCdnFlushIdentifier()) {
                 $this->log('<error>Skiping while empty flush identifier</error>');
+
                 continue;
             }
 
@@ -108,6 +109,7 @@ class UpdateCdnStatusCommand extends BaseCommand
                 }
             } catch (\Exception $e) {
                 $this->log(sprintf('<error>Unable update CDN status, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+
                 continue;
             }
 
@@ -115,6 +117,7 @@ class UpdateCdnStatusCommand extends BaseCommand
                 $this->getMediaManager()->save($media);
             } catch (\Exception $e) {
                 $this->log(sprintf('<error>Unable saving media, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+
                 continue;
             }
         }

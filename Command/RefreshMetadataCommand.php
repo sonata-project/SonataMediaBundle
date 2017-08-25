@@ -84,6 +84,7 @@ class RefreshMetadataCommand extends BaseCommand
                 $provider->updateMetadata($media, false);
             } catch (\Exception $e) {
                 $this->log(sprintf('<error>Unable to update metadata, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+
                 continue;
             }
 
@@ -91,6 +92,7 @@ class RefreshMetadataCommand extends BaseCommand
                 $this->getMediaManager()->save($media);
             } catch (\Exception $e) {
                 $this->log(sprintf('<error>Unable saving media, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+
                 continue;
             }
         }
