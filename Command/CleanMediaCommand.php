@@ -57,6 +57,7 @@ class CleanMediaCommand extends ContainerAwareCommand
         foreach ($pool->getContexts() as $contextName => $context) {
             if (!$filesystem->exists($baseDirectory.'/'.$contextName)) {
                 $output->writeln(sprintf("<info>'%s' does not exist</info>", $baseDirectory.'/'.$contextName));
+
                 continue;
             }
 
