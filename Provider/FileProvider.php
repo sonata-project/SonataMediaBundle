@@ -401,12 +401,14 @@ class FileProvider extends BaseProvider
             $media->setProviderReference($this->generateReferenceName($media));
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile) {
-            $media->setContentType($media->getBinaryContent()->getClientMimeType());
+        if ($media->getBinaryContent() instanceof File) {
             $media->setSize($media->getBinaryContent()->getSize());
-        } elseif ($media->getBinaryContent() instanceof File) {
-            $media->setContentType($media->getBinaryContent()->getMimeType());
-            $media->setSize($media->getBinaryContent()->getSize());
+
+            if ($media->getBinaryContent() instanceof UploadedFile) {
+                $media->setContentType($media->getBinaryContent()->getClientMimeType());
+            } else {
+                $media->setContentType($media->getBinaryContent()->getMimeType());
+            }
         }
 
         $media->setProviderStatus(MediaInterface::STATUS_OK);
