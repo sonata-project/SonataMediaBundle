@@ -57,7 +57,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function setCreatedAt(\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
-        
+
         return $this;
     }
 
@@ -75,7 +75,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
-        
+
         return $this;
     }
 
@@ -93,7 +93,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function setGallery(GalleryInterface $gallery = null)
     {
         $this->gallery = $gallery;
-        
+
         return $this;
     }
 
@@ -111,7 +111,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function setMedia(MediaInterface $media = null)
     {
         $this->media = $media;
-        
+
         return $this;
     }
 
@@ -129,7 +129,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function setPosition($position)
     {
         $this->position = $position;
-        
+
         return $this;
     }
 
@@ -147,7 +147,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     public function setUpdatedAt(\DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
-        
+
         return $this;
     }
 
