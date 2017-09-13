@@ -52,6 +52,7 @@ class AddMassMediaCommand extends BaseCommand
                 $this->setters = $data;
 
                 ++$imported;
+
                 continue;
             }
 

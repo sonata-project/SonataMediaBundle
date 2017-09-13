@@ -88,6 +88,7 @@ class SyncThumbsCommand extends BaseCommand
         $totalMediasCount = 0;
         do {
             ++$batchCounter;
+
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->getMediaManager()->findBy(
@@ -103,6 +104,7 @@ class SyncThumbsCommand extends BaseCommand
                 );
             } catch (\Exception $e) {
                 $this->log('Error: '.$e->getMessage());
+
                 break;
             }
 

@@ -209,7 +209,7 @@ class FileProvider extends BaseProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $this->getReferenceImage($media);
         } else {
             // @todo: fix the asset path
@@ -236,7 +236,7 @@ class FileProvider extends BaseProvider
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $this->getReferenceImage($media);
         }
 
@@ -259,7 +259,7 @@ class FileProvider extends BaseProvider
         }
 
         if ($mode == 'http') {
-            if ($format == 'reference') {
+            if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
                 $file = $this->getReferenceFile($media);
             } else {
                 $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
@@ -378,6 +378,7 @@ class FileProvider extends BaseProvider
         if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
             $media->setProviderReference(uniqid($media->getName(), true));
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
             throw new UploadException('The uploaded file is not found');
         }
 

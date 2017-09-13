@@ -60,7 +60,7 @@ class ImageProvider extends FileProvider
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $box = $media->getBox();
         } else {
             $resizerFormat = $this->getFormat($format);
@@ -72,13 +72,40 @@ class ImageProvider extends FileProvider
             $box = $this->resizer->getBox($media, $resizerFormat);
         }
 
-        return array_merge(array(
+        $mediaWidth = $box->getWidth();
+
+        $params = array(
             'alt' => $media->getName(),
             'title' => $media->getName(),
             'src' => $this->generatePublicUrl($media, $format),
-            'width' => $box->getWidth(),
+            'width' => $mediaWidth,
             'height' => $box->getHeight(),
-        ), $options);
+        );
+
+        if ($format !== MediaProviderInterface::FORMAT_ADMIN) {
+            $srcSet = array();
+
+            foreach ($this->getFormats() as $providerFormat => $settings) {
+                // Check if format belongs to the current media's context
+                if (strpos($providerFormat, $media->getContext()) === 0) {
+                    $width = $this->resizer->getBox($media, $settings)->getWidth();
+
+                    $srcSet[] = sprintf('%s %dw', $this->generatePublicUrl($media, $providerFormat), $width);
+                }
+            }
+
+            // The reference format is not in the formats list
+            $srcSet[] = sprintf(
+                '%s %dw',
+                $this->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
+                $media->getBox()->getWidth()
+            );
+
+            $params['srcset'] = implode(', ', $srcSet);
+            $params['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);
+        }
+
+        return array_merge($params, $options);
     }
 
     /**
@@ -127,7 +154,7 @@ class ImageProvider extends FileProvider
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
-        if ($format == 'reference') {
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $this->getReferenceImage($media);
         } else {
             $path = $this->thumbnail->generatePublicUrl($this, $media, $format);

@@ -11,6 +11,9 @@
 
 namespace Sonata\MediaBundle\Form\Type;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\AbstractType;
@@ -20,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author Hugo Briand <briand@ekino.com>
  */
-class ApiMediaType extends AbstractType
+class ApiMediaType extends AbstractType implements LoggerAwareInterface
 {
     /**
      * @var Pool
@@ -33,6 +36,13 @@ class ApiMediaType extends AbstractType
     protected $class;
 
     /**
+     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param Pool   $mediaPool
      * @param string $class
      */
@@ -40,6 +50,17 @@ class ApiMediaType extends AbstractType
     {
         $this->mediaPool = $mediaPool;
         $this->class = $class;
+        $this->logger = new NullLogger();
+    }
+
+    /**
+     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     /**
@@ -47,9 +68,12 @@ class ApiMediaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer(new ProviderDataTransformer($this->mediaPool, $this->class, array(
+        $dataTransformer = new ProviderDataTransformer($this->mediaPool, $this->class, array(
             'empty_on_new' => false,
-        )), true);
+        ));
+        $dataTransformer->setLogger($this->logger);
+
+        $builder->addModelTransformer($dataTransformer, true);
 
         $provider = $this->mediaPool->getProvider($options['provider_name']);
         $provider->buildMediaType($builder);

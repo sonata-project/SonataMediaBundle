@@ -64,9 +64,9 @@ Next, add the correct routing files:
             prefix: /media
 
 
-Then you must configure the interaction with the orm and add the mediaBundles settings:
+Then, you must configure the interaction with the persistence backend you picked:
 
-Doctrine ORM:
+If you picked Doctrine ORM:
 
 .. configuration-block::
 
@@ -85,7 +85,7 @@ Doctrine ORM:
                 types:
                     json: Sonata\Doctrine\Types\JsonType
 
-Doctrine PHPCR:
+If you picked Doctrine PHPCR:
 
 .. configuration-block::
 
@@ -99,6 +99,10 @@ Doctrine PHPCR:
                 mappings:
                     SonataMediaBundle:
                         prefix: Sonata\MediaBundle\PHPCR
+
+Once you have done that, you can configure the Media bundle itself:
+
+.. configuration-block::
 
     .. code-block:: yaml
 
