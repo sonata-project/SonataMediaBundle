@@ -59,13 +59,25 @@ Render the path:
 .. code-block:: jinja
 
     {% path media, 'small' %}
-    
+
 Render the path to a ``sonata.media.provider.file`` context:
 
 .. code-block:: jinja
-    
+
     {% path media, 'reference' %}
-    
+
+Media helper for images
+-----------------------
+
+The media helper for the ``sonata.media.provider.image`` provider renders a responsive image tag with sensible defaults for ``srcset`` and ``sizes``.
+The size configured will be the one used for the default fallback ``src``.
+
+To override the ``sizes`` to fit your particular design, just pass a ``sizes`` option to the helper.
+
+.. code-block:: jinja
+
+    {% media media, 'large' with {'sizes': '(min-width: 20em) 50vw, 100vw'} %}
+
 
 Thumbnails for files
 --------------------

@@ -22,6 +22,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface MediaProviderInterface
 {
+    // This format is used to display thumbnails in Sonata Admin
+    const FORMAT_ADMIN = 'admin';
+
+    // This format holds the original media
+    const FORMAT_REFERENCE = 'reference';
+
     /**
      * @param string $name
      * @param array  $format

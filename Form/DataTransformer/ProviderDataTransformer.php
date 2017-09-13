@@ -11,11 +11,14 @@
 
 namespace Sonata\MediaBundle\Form\DataTransformer;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\DataTransformerInterface;
 
-class ProviderDataTransformer implements DataTransformerInterface
+class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareInterface
 {
     /**
      * @var Pool
@@ -28,6 +31,13 @@ class ProviderDataTransformer implements DataTransformerInterface
     protected $options;
 
     /**
+     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param Pool   $pool
      * @param string $class
      * @param array  $options
@@ -37,6 +47,18 @@ class ProviderDataTransformer implements DataTransformerInterface
         $this->pool = $pool;
         $this->options = $this->getOptions($options);
         $this->class = $class;
+
+        $this->logger = new NullLogger();
+    }
+
+    /**
+     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     /**
@@ -94,7 +116,17 @@ class ProviderDataTransformer implements DataTransformerInterface
 
         $provider = $this->pool->getProvider($newMedia->getProviderName());
 
-        $provider->transform($newMedia);
+        try {
+            $provider->transform($newMedia);
+        } catch (\Exception $e) { // NEXT_MAJOR: When switching to PHP 7+, change this to \Throwable
+            // #1107 We must never throw an exception here.
+            // An exception here would prevent us to provide meaningful errors through the Form
+            // Error message inspired from Monolog\ErrorHandler
+            $this->logger->error(
+                sprintf('Caught Exception %s: "%s" at %s line %s', get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()),
+                array('exception' => $e)
+            );
+        }
 
         return $newMedia;
     }

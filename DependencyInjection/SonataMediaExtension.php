@@ -475,6 +475,10 @@ class SonataMediaExtension extends Extension
      */
     public function configureClassesToCompile()
     {
+        if (\PHP_VERSION_ID >= 70000) {
+            return;
+        }
+
         $this->addClassesToCompile(array(
             'Sonata\\MediaBundle\\CDN\\CDNInterface',
             'Sonata\\MediaBundle\\CDN\\CloudFront',
@@ -523,9 +527,6 @@ class SonataMediaExtension extends Extension
             'Sonata\\MediaBundle\\Thumbnail\\FormatThumbnail',
             'Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface',
             'Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension',
-            'Sonata\\MediaBundle\\Twig\\Node\\MediaNode',
-            'Sonata\\MediaBundle\\Twig\\Node\\PathNode',
-            'Sonata\\MediaBundle\\Twig\\Node\\ThumbnailNode',
         ));
     }
 

@@ -51,6 +51,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     public function delete($key)
     {
         $ok = true;
+
         try {
             $this->slave->delete($key);
         } catch (\Exception $e) {

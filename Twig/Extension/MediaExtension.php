@@ -56,9 +56,9 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     public function getTokenParsers()
     {
         return array(
-            new MediaTokenParser(get_class()),
-            new ThumbnailTokenParser(get_class()),
-            new PathTokenParser(get_class()),
+            new MediaTokenParser(get_called_class()),
+            new ThumbnailTokenParser(get_called_class()),
+            new PathTokenParser(get_called_class()),
         );
     }
 
