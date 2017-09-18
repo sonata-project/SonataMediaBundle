@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Guzzle\Http\Mimetypes;
+use Sonata\MediaBundle\Extra\Mimetype;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
@@ -115,7 +115,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     protected function getContentType($filename)
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = Mimetypes::getInstance()->fromExtension($extension);
+        $contentType = Mimetype::fromExtension($extension);
 
         return ['contentType' => $contentType];
     }
