@@ -49,6 +49,7 @@
         "aws/aws-sdk-php": "^2.7",
         "friendsofsymfony/rest-bundle": "^1.7.4 || ^2.0",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^0.7 || ^1.0",
         "nelmio/api-doc-bundle": "^2.11",
         "sllh/php-cs-fixer-styleci-bridge": "^2.0",
         "sonata-project/admin-bundle": "^3.11",
