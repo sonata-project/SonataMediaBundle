@@ -11,89 +11,83 @@
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 
-class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
+class SonataMediaExtensionTest extends AbstractExtensionTestCase
 {
-    /**
-     * @var SonataMediaExtension
-     */
-    private $extension;
-
-    /**
-     * Root name of the configuration.
-     *
-     * @var ContainerBuilder
-     */
-    private $container;
-
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $configs = $this->getConfigs();
+        parent::setUp();
 
-        $this->container = new ContainerBuilder();
-        $this->container->setParameter('kernel.bundles', array());
-
-        $this->extension = $this->getExtension();
-        $this->extension->load($configs, $this->container);
+        $this->container->setParameter('kernel.bundles', array('SonataAdminBundle' => true));
     }
 
     public function testLoadWithDefaultAndCustomCategoryManager()
     {
-        $container = $this->getContainer(array(array(
-            'class' => array('category' => '\stdClass'),
+        $this->load(array(
+            'class' => array(
+                'category' => '\stdClass',
+            ),
             'category_manager' => 'dummy.service.name',
-        )));
+        ));
 
-        $this->assertTrue($container->hasAlias('sonata.media.manager.category'));
-        $this->assertSame($container->getAlias('sonata.media.manager.category')->__toString(), 'dummy.service.name');
+        $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
     }
 
     public function testLoadWithForceDisableTrueAndWithCategoryManager()
     {
-        $container = $this->getContainer(array(array(
-            'class' => array('category' => '\stdClass'),
+        $this->load(array(
+            'class' => array(
+                'category' => '\stdClass',
+            ),
             'category_manager' => 'dummy.service.name',
             'force_disable_category' => true,
-        )));
+        ));
 
-        $this->assertFalse($container->hasDefinition('sonata.media.manager.category'));
+        $this->assertContainerBuilderNotHasService('sonata.media.manager.category');
     }
 
     public function testLoadWithDefaultAndClassificationBundleEnable()
     {
-        $container = $this->getContainer();
-        $this->assertTrue($container->hasAlias('sonata.media.manager.category'));
-        $this->assertSame($container->getDefinition('sonata.media.manager.category.default')->getClass(), 'Sonata\MediaBundle\Model\CategoryManager');
+        $this->load();
+
+        $this->assertContainerBuilderHasAlias('sonata.media.manager.category');
+        $this->assertContainerBuilderHasService(
+            'sonata.media.manager.category.default',
+            'Sonata\MediaBundle\Model\CategoryManager'
+        );
     }
 
     public function testLoadWithDefaultAndClassificationBundleEnableAndForceDisableCategory()
     {
-        $container = $this->getContainer(array(array('force_disable_category' => true)));
+        $this->load(array(
+            'force_disable_category' => true,
+        ));
 
-        $this->assertFalse($container->hasDefinition('sonata.media.manager.category'));
+        $this->assertContainerBuilderNotHasService('sonata.media.manager.category');
     }
 
     public function testLoadWithDefaultAndClassificationBundleEnableAndCustomCategoryManager()
     {
-        $container = $this->getContainer(array(array(
-            'class' => array('category' => '\stdClass'),
+        $this->load(array(
+            'class' => array(
+                'category' => '\stdClass',
+            ),
             'category_manager' => 'dummy.service.name',
-        )));
+        ));
 
-        $this->assertTrue($container->hasAlias('sonata.media.manager.category'));
-        $this->assertSame($container->getAlias('sonata.media.manager.category')->__toString(), 'dummy.service.name');
+        $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
     }
 
     public function testDefaultAdapter()
     {
-        $this->assertTrue($this->container->hasAlias('sonata.media.adapter.image.default'));
-        $this->assertEquals('sonata.media.adapter.image.gd', $this->container->getAlias('sonata.media.adapter.image.default'));
+        $this->load();
+
+        $this->assertContainerBuilderHasAlias('sonata.media.adapter.image.default', 'sonata.media.adapter.image.gd');
     }
 
     /**
@@ -105,8 +99,9 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAdapter($serviceId, $extension, $type)
     {
-        $this->assertTrue($this->container->has($serviceId));
+        $this->load();
 
+        $this->assertContainerBuilderHasService($serviceId);
         if (extension_loaded($extension)) {
             $this->isInstanceOf($type, $this->container->get($serviceId));
         }
@@ -123,10 +118,14 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultResizer()
     {
-        $this->assertTrue($this->container->hasAlias('sonata.media.resizer.default'));
-        $this->assertEquals('sonata.media.resizer.simple', $this->container->getAlias('sonata.media.resizer.default'));
+        $this->load();
+
+        $this->assertContainerBuilderHasAlias('sonata.media.resizer.default', 'sonata.media.resizer.simple');
         if (extension_loaded('gd')) {
-            $this->isInstanceOf('Sonata\\MediaBundle\\Resizer\\SimpleResizer', $this->container->get('sonata.media.resizer.default'));
+            $this->assertContainerBuilderHasService(
+                'sonata.media.resizer.default',
+                'Sonata\\MediaBundle\\Resizer\\SimpleResizer'
+            );
         }
     }
 
@@ -138,7 +137,9 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testResizer($serviceId, $type)
     {
-        $this->assertTrue($this->container->has($serviceId));
+        $this->load();
+
+        $this->assertContainerBuilderHasService($serviceId);
         if (extension_loaded('gd')) {
             $this->isInstanceOf($type, $this->container->get($serviceId));
         }
@@ -152,81 +153,36 @@ class SonataMediaExtensionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @return SonataMediaExtension
-     */
-    protected function getExtension()
+    protected function getMinimalConfiguration()
     {
-        return new SonataMediaExtension();
-    }
-
-    /**
-     * @return ContainerBuilder
-     */
-    protected function getContainer($config = array())
-    {
-        $defaults = array(array(
+        return array(
             'default_context' => 'default',
             'db_driver' => 'doctrine_orm',
-            'contexts' => array('default' => array('formats' => array('small' => array('width' => 100, 'quality' => 50)))),
-            'filesystem' => array('local' => array('directory' => '/tmp/')),
-        ));
-
-        $container = new ContainerBuilder();
-        $container->setParameter('kernel.bundles', array('SonataAdminBundle' => true));
-        $container->setDefinition('translator', new Definition('\stdClass'));
-        $container->setDefinition('security.context', new Definition('\stdClass'));
-        $container->setDefinition('doctrine', new Definition('\stdClass'));
-        $container->setDefinition('session', new Definition('\stdClass'));
-
-        if (isset($config[0]['category_manager'])) {
-            $container->setDefinition($config[0]['category_manager'], new Definition('\stdClass'));
-        }
-
-        $container->setDefinition('sonata.classification.manager.category', new Definition('Sonata\ClassificationBundle\Model\CategoryManager'));
-
-        $loader = new SonataMediaExtension();
-        $loader->load(array_merge($defaults, $config), $container);
-        $container->compile();
-
-        return $container;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getConfigs()
-    {
-        $configs = array(
-            'sonata_media' => array(
-                'db_driver' => 'doctrine_orm',
-                'default_context' => 'default',
-                'contexts' => array(
-                    'default' => array(
-                        'providers' => array(
-                            'sonata.media.provider.image',
+            'contexts' => array(
+                'default' => array(
+                    'formats' => array(
+                        'small' => array(
+                            'width' => 100,
+                            'quality' => 50,
                         ),
-                        'formats' => array(
-                            'default' => array(
-                                'width' => 100,
-                                'quality' => 100,
-                            ),
-                        ),
-                    ),
-                ),
-                'cdn' => array(
-                    'server' => array(
-                        'path' => '/uploads/media',
-                    ),
-                ),
-                'filesystem' => array(
-                    'local' => array(
-                        'directory' => '%kernel.root_dir%/../web/uploads/media',
                     ),
                 ),
             ),
+            'filesystem' => array(
+                'local' => array(
+                    'directory' => '/tmp/',
+                ),
+            ),
         );
+    }
 
-        return $configs;
+    /**
+     * {@inheritdoc}
+     */
+    protected function getContainerExtensions()
+    {
+        return array(
+            new SonataMediaExtension(),
+        );
     }
 }
