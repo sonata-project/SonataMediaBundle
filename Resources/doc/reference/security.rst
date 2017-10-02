@@ -7,10 +7,12 @@ a download strategy interface, which can be set per context and authorize the me
 
 Built-in security strategy:
 
-* ``sonata.media.security.superadmin_strategy`` : DEFAULT - the user need to have one of the following roles : ``ROLE_SUPER_ADMIN`` or ``ROLE_ADMIN``
+* ``sonata.media.security.superadmin_strategy`` : DEFAULT - the user needs to have one of the following roles :
+  ``ROLE_SUPER_ADMIN`` or ``ROLE_ADMIN`` (although these roles can be configured in SonataAdminBundle)
 * ``sonata.media.security.public_strategy`` : no restriction, files are public
 * ``sonata.media.security.forbidden_strategy`` : not possible to retrieve the original file
-* ``sonata.media.security.connected_strategy`` : the need to have one of the following roles : ``IS_AUTHENTICATED_FULLY`` or ``IS_AUTHENTICATED_REMEMBERED``
+* ``sonata.media.security.connected_strategy`` : the need to have one of the following roles :
+  ``IS_AUTHENTICATED_FULLY`` or ``IS_AUTHENTICATED_REMEMBERED``
 
 On top of that, there is 3 download modes which can be configured to download the media. The download mode depends on
 the HTTP server you used:

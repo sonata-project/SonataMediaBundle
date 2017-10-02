@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class SonataMediaExtensionTest extends AbstractExtensionTestCase
 {
@@ -150,6 +151,52 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         return array(
             array('sonata.media.resizer.simple', 'Sonata\\MediaBundle\\Resizer\\SimpleResizer'),
             array('sonata.media.resizer.square', 'Sonata\\MediaBundle\\Resizer\\SquareResizer'),
+        );
+    }
+
+    public function testLoadWithSonataAdminDefaults()
+    {
+        $this->load();
+
+        $this->assertEquals(
+            $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
+            array('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')
+        );
+    }
+
+    public function testLoadWithSonataAdminCustomConfiguration()
+    {
+        $fakeContainer = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->setMethods(array('getParameter', 'getExtensionConfig'))
+            ->getMock();
+
+        $fakeContainer->expects($this->once())
+            ->method('getParameter')
+            ->with($this->equalTo('kernel.bundles'))
+            ->willReturn($this->container->getParameter('kernel.bundles'));
+
+        $fakeContainer->expects($this->once())
+            ->method('getExtensionConfig')
+            ->with($this->equalTo('sonata_admin'))
+            ->willReturn(array(array(
+                'security' => array(
+                    'role_admin' => 'ROLE_FOO',
+                    'role_super_admin' => 'ROLE_BAR',
+                ),
+            )));
+
+        $configs = array($this->getMinimalConfiguration());
+        foreach ($this->getContainerExtensions() as $extension) {
+            if ($extension instanceof PrependExtensionInterface) {
+                $extension->prepend($fakeContainer);
+            }
+
+            $extension->load($configs, $this->container);
+        }
+
+        $this->assertEquals(
+            $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
+            array('ROLE_FOO', 'ROLE_BAR')
         );
     }
 

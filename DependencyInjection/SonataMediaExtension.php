@@ -16,6 +16,7 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -23,8 +24,13 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class SonataMediaExtension extends Extension
+class SonataMediaExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @var array
+     */
+    private $bundleConfigs;
+
     /**
      * {@inheritdoc}
      */
@@ -111,6 +117,24 @@ class SonataMediaExtension extends Extension
 
         if (isset($bundles['SonataAdminBundle'])) {
             $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
+
+            $sonataAdminConfig = $this->bundleConfigs['SonataAdminBundle'];
+
+            $sonataRoles = array();
+            if (isset($sonataAdminConfig['security']['role_admin'])) {
+                $sonataRoles[] = $sonataAdminConfig['security']['role_admin'];
+            } else {
+                $sonataRoles[] = 'ROLE_ADMIN';
+            }
+
+            if (isset($sonataAdminConfig['security']['role_super_admin'])) {
+                $sonataRoles[] = $sonataAdminConfig['security']['role_super_admin'];
+            } else {
+                $sonataRoles[] = 'ROLE_SUPER_ADMIN';
+            }
+
+            $container->getDefinition('sonata.media.security.superadmin_strategy')
+                ->replaceArgument(2, $sonataRoles);
         }
 
         $this->configureFilesystemAdapter($container, $config);
@@ -549,6 +573,21 @@ class SonataMediaExtension extends Extension
             'Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface',
             'Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension',
         ));
+    }
+
+    /**
+     * Allow an extension to prepend the extension configurations.
+     *
+     * @param ContainerBuilder $container
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $bundles = $container->getParameter('kernel.bundles');
+
+        // Store SonataAdminBundle configuration for later use
+        if (isset($bundles['SonataAdminBundle'])) {
+            $this->bundleConfigs['SonataAdminBundle'] = current($container->getExtensionConfig('sonata_admin'));
+        }
     }
 
     /**
