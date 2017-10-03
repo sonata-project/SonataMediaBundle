@@ -24,7 +24,7 @@ class MediaExtensionTest extends PHPUnit_Framework_TestCase
     private $provider;
 
     /**
-     * @var Twig_TemplateInterface
+     * @var Twig_Template
      */
     private $template;
 
@@ -101,7 +101,10 @@ class MediaExtensionTest extends PHPUnit_Framework_TestCase
     public function getTemplate()
     {
         if (is_null($this->template)) {
-            $this->template = $this->createMock('Twig_TemplateInterface');
+            $this->template = $this->getMockBuilder('Twig_Template')
+                                   ->disableOriginalConstructor()
+                                   ->setMethods(array('render'))
+                                   ->getMockForAbstractClass();
         }
 
         return $this->template;
