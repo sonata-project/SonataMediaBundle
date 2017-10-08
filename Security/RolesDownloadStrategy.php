@@ -40,7 +40,7 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
      * @param AuthorizationCheckerInterface|SecurityContextInterface $security
      * @param string[]                                               $roles
      */
-    public function __construct(TranslatorInterface $translator, $security, array $roles = array())
+    public function __construct(TranslatorInterface $translator, $security, array $roles = [])
     {
         if (!$security instanceof AuthorizationCheckerInterface && !$security instanceof SecurityContextInterface) {
             throw new \InvalidArgumentException('Argument 2 should be an instance of Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface or Symfony\Component\Security\Core\SecurityContextInterface');
@@ -69,6 +69,6 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
      */
     public function getDescription()
     {
-        return $this->translator->trans('description.roles_download_strategy', array('%roles%' => '<code>'.implode('</code>, <code>', $this->roles).'</code>'), 'SonataMediaBundle');
+        return $this->translator->trans('description.roles_download_strategy', ['%roles%' => '<code>'.implode('</code>, <code>', $this->roles).'</code>'], 'SonataMediaBundle');
     }
 }

@@ -25,7 +25,7 @@ class GalleryAdminController extends Controller
      *
      * @return Response
      */
-    public function render($view, array $parameters = array(), Response $response = null)
+    public function render($view, array $parameters = [], Response $response = null)
     {
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
@@ -56,12 +56,12 @@ class GalleryAdminController extends Controller
         // set the theme for the current Admin Form
         $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
-        return $this->render($this->admin->getTemplate('list'), array(
+        return $this->render($this->admin->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
-        ));
+        ]);
     }
 
     /**

@@ -91,11 +91,11 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $categoryId = $this->categoryManager->getRootCategory($context)->getId();
         }
 
-        return array_merge($parameters, array(
+        return array_merge($parameters, [
             'context' => $context,
             'category' => $categoryId,
             'hide_context' => (bool) $this->getRequest()->get('hide_context'),
-        ));
+        ]);
     }
 
     /**
@@ -210,13 +210,13 @@ abstract class BaseMediaAdmin extends AbstractAdmin
                 ? 'Sonata\AdminBundle\Form\Type\ModelListType'
                 : 'sonata_type_model_list';
 
-            $formMapper->add('category', $modelListType, array(), array(
-                'link_parameters' => array(
+            $formMapper->add('category', $modelListType, [], [
+                'link_parameters' => [
                     'context' => $media->getContext(),
                     'hide_context' => true,
                     'mode' => 'tree',
-                ),
-            ));
+                ],
+            ]);
         }
     }
 }

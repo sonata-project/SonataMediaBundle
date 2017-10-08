@@ -32,7 +32,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $mediaManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $formFactory = $this->createMock('Symfony\Component\Form\FormFactoryInterface');
 
-        $gManager->expects($this->once())->method('getPager')->will($this->returnValue(array()));
+        $gManager->expects($this->once())->method('getPager')->will($this->returnValue([]));
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
@@ -40,9 +40,9 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $paramFetcher->expects($this->exactly(3))->method('get');
-        $paramFetcher->expects($this->once())->method('all')->will($this->returnValue(array()));
+        $paramFetcher->expects($this->once())->method('all')->will($this->returnValue([]));
 
-        $this->assertSame(array(), $gController->getGalleriesAction($paramFetcher));
+        $this->assertSame([], $gController->getGalleriesAction($paramFetcher));
     }
 
     public function testGetGalleryAction()
@@ -84,7 +84,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
         $formFactory = $this->createMock('Symfony\Component\Form\FormFactoryInterface');
 
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue([$galleryHasMedia]));
 
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
@@ -92,7 +92,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertSame(array($galleryHasMedia), $gController->getGalleryGalleryhasmediasAction(1));
+        $this->assertSame([$galleryHasMedia], $gController->getGalleryGalleryhasmediasAction(1));
     }
 
     public function testGetGalleryMediaAction()
@@ -104,7 +104,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue([$galleryHasMedia]));
 
         $gManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $gManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
@@ -113,7 +113,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertSame(array($media), $gController->getGalleryMediasAction(1));
+        $this->assertSame([$media], $gController->getGalleryMediasAction(1));
     }
 
     public function testPostGalleryMediaGalleryhasmediaAction()
@@ -127,7 +127,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media2));
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue([$galleryHasMedia]));
 
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
@@ -159,7 +159,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue([$galleryHasMedia]));
 
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
@@ -185,7 +185,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue([$galleryHasMedia]));
 
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
@@ -217,7 +217,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue(array($galleryHasMedia)));
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->will($this->returnValue([$galleryHasMedia]));
 
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
@@ -247,7 +247,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media));
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->any())->method('getGalleryHasMedias')->will($this->returnValue(new ArrayCollection(array($galleryHasMedia))));
+        $gallery->expects($this->any())->method('getGalleryHasMedias')->will($this->returnValue(new ArrayCollection([$galleryHasMedia])));
 
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
@@ -260,7 +260,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'Sonata\MediaBundle\Tests\Controller\Api\GalleryTest');
         $view = $galleryController->deleteGalleryMediaGalleryhasmediaAction(1, 1);
 
-        $this->assertSame(array('deleted' => true), $view);
+        $this->assertSame(['deleted' => true], $view);
     }
 
     public function testDeleteGalleryMediaGalleryhasmediaInvalidAction()
@@ -274,7 +274,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->will($this->returnValue($media2));
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
-        $gallery->expects($this->any())->method('getGalleryHasMedias')->will($this->returnValue(new ArrayCollection(array($galleryHasMedia))));
+        $gallery->expects($this->any())->method('getGalleryHasMedias')->will($this->returnValue(new ArrayCollection([$galleryHasMedia])));
 
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));

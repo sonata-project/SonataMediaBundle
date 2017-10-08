@@ -20,12 +20,12 @@ class Pool
     /**
      * @var array
      */
-    protected $providers = array();
+    protected $providers = [];
 
     /**
      * @var array
      */
-    protected $contexts = array();
+    protected $contexts = [];
 
     /**
      * NEXT_MAJOR: remove this property.
@@ -34,12 +34,12 @@ class Pool
      *
      * @var DownloadStrategyInterface[]
      */
-    protected $downloadSecurities = array();
+    protected $downloadSecurities = [];
 
     /**
      * @var DownloadStrategyInterface[]
      */
-    protected $downloadStrategies = array();
+    protected $downloadStrategies = [];
 
     /**
      * @var string
@@ -136,14 +136,14 @@ class Pool
      * @param array  $formats
      * @param array  $download
      */
-    public function addContext($name, array $providers = array(), array $formats = array(), array $download = array())
+    public function addContext($name, array $providers = [], array $formats = [], array $download = [])
     {
         if (!$this->hasContext($name)) {
-            $this->contexts[$name] = array(
-                'providers' => array(),
-                'formats' => array(),
-                'download' => array(),
-            );
+            $this->contexts[$name] = [
+                'providers' => [],
+                'formats' => [],
+                'download' => [],
+            ];
         }
 
         $this->contexts[$name]['providers'] = $providers;
@@ -224,7 +224,7 @@ class Pool
      */
     public function getProvidersByContext($name)
     {
-        $providers = array();
+        $providers = [];
 
         if (!$this->hasContext($name)) {
             return $providers;
@@ -242,7 +242,7 @@ class Pool
      */
     public function getProviderList()
     {
-        $choices = array();
+        $choices = [];
         foreach (array_keys($this->providers) as $name) {
             $choices[$name] = $name;
         }

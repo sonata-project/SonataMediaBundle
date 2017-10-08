@@ -28,7 +28,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     /**
      * @var array
      */
-    protected $resources = array();
+    protected $resources = [];
 
     /**
      * @var ManagerInterface
@@ -55,11 +55,11 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      */
     public function getTokenParsers()
     {
-        return array(
+        return [
             new MediaTokenParser(get_called_class()),
             new ThumbnailTokenParser(get_called_class()),
             new PathTokenParser(get_called_class()),
-        );
+        ];
     }
 
     /**
@@ -77,7 +77,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      *
      * @return string
      */
-    public function media($media, $format, $options = array())
+    public function media($media, $format, $options = [])
     {
         $media = $this->getMedia($media);
 
@@ -93,11 +93,11 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
 
         $options = $provider->getHelperProperties($media, $format, $options);
 
-        return $this->render($provider->getTemplate('helper_view'), array(
+        return $this->render($provider->getTemplate('helper_view'), [
             'media' => $media,
             'format' => $format,
             'options' => $options,
-        ));
+        ]);
     }
 
     /**
@@ -109,7 +109,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      *
      * @return string
      */
-    public function thumbnail($media, $format, $options = array())
+    public function thumbnail($media, $format, $options = [])
     {
         $media = $this->getMedia($media);
 
@@ -124,10 +124,10 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
         $format_definition = $provider->getFormat($format);
 
         // build option
-        $defaultOptions = array(
+        $defaultOptions = [
             'title' => $media->getName(),
             'alt' => $media->getName(),
-        );
+        ];
 
         if ($format_definition['width']) {
             $defaultOptions['width'] = $format_definition['width'];
@@ -140,10 +140,10 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
 
         $options['src'] = $provider->generatePublicUrl($media, $format);
 
-        return $this->render($provider->getTemplate('helper_thumbnail'), array(
+        return $this->render($provider->getTemplate('helper_thumbnail'), [
             'media' => $media,
             'options' => $options,
-        ));
+        ]);
     }
 
     /**
@@ -152,7 +152,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      *
      * @return mixed
      */
-    public function render($template, array $parameters = array())
+    public function render($template, array $parameters = [])
     {
         if (!isset($this->resources[$template])) {
             $this->resources[$template] = $this->environment->loadTemplate($template);
@@ -199,9 +199,9 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     private function getMedia($media)
     {
         if (!$media instanceof MediaInterface && strlen($media) > 0) {
-            $media = $this->mediaManager->findOneBy(array(
+            $media = $this->mediaManager->findOneBy([
                 'id' => $media,
-            ));
+            ]);
         }
 
         if (!$media instanceof MediaInterface) {

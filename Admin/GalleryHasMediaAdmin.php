@@ -22,10 +22,10 @@ class GalleryHasMediaAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $link_parameters = array();
+        $link_parameters = [];
 
         if ($this->hasParentFieldDescription()) {
-            $link_parameters = $this->getParentFieldDescription()->getOption('link_parameters', array());
+            $link_parameters = $this->getParentFieldDescription()->getOption('link_parameters', []);
         }
 
         if ($this->hasRequest()) {
@@ -47,10 +47,10 @@ class GalleryHasMediaAdmin extends AbstractAdmin
             : 'hidden';
 
         $formMapper
-            ->add('media', $modelListType, array('required' => false), array(
+            ->add('media', $modelListType, ['required' => false], [
                 'link_parameters' => $link_parameters,
-            ))
-            ->add('enabled', null, array('required' => false))
+            ])
+            ->add('enabled', null, ['required' => false])
             ->add('position', $hiddenType)
         ;
     }

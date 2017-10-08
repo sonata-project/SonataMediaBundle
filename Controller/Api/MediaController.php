@@ -102,9 +102,9 @@ class MediaController
 
         $paramFetcher->addParam($orderByQueryParam);
 
-        $supportedCriteria = array(
+        $supportedCriteria = [
             'enabled' => '',
-        );
+        ];
 
         $page = $paramFetcher->get('page');
         $limit = $paramFetcher->get('count');
@@ -118,9 +118,9 @@ class MediaController
         }
 
         if (!$sort) {
-            $sort = array();
+            $sort = [];
         } elseif (!is_array($sort)) {
-            $sort = array($sort => 'asc');
+            $sort = [$sort => 'asc'];
         }
 
         return $this->mediaManager->getPager($criteria, $page, $limit, $sort);
@@ -172,12 +172,12 @@ class MediaController
     {
         $media = $this->getMedium($id);
 
-        $formats = array(MediaProviderInterface::FORMAT_REFERENCE);
+        $formats = [MediaProviderInterface::FORMAT_REFERENCE];
         $formats = array_merge($formats, array_keys($this->mediaPool->getFormatNamesByContext($media->getContext())));
 
         $provider = $this->mediaPool->getProvider($media->getProviderName());
 
-        $properties = array();
+        $properties = [];
         foreach ($formats as $format) {
             $properties[$format]['url'] = $provider->generatePublicUrl($media, $format);
             $properties[$format]['properties'] = $provider->getHelperProperties($media, $format);
@@ -245,7 +245,7 @@ class MediaController
 
         $this->mediaManager->delete($medium);
 
-        return array('deleted' => true);
+        return ['deleted' => true];
     }
 
     /**
@@ -373,7 +373,7 @@ class MediaController
      */
     protected function getMedium($id = null)
     {
-        $media = $this->mediaManager->findOneBy(array('id' => $id));
+        $media = $this->mediaManager->findOneBy(['id' => $id]);
 
         if (null === $media) {
             throw new NotFoundHttpException(sprintf('Media (%d) was not found', $id));
@@ -393,10 +393,10 @@ class MediaController
      */
     protected function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
     {
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $media, array(
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $media, [
             'provider_name' => $provider->getName(),
             'csrf_protection' => false,
-        ));
+        ]);
 
         $form->handleRequest($request);
 
@@ -409,12 +409,12 @@ class MediaController
             // BC for FOSRestBundle < 2.0
             if (method_exists($view, 'setSerializationContext')) {
                 $serializationContext = SerializationContext::create();
-                $serializationContext->setGroups(array('sonata_api_read'));
+                $serializationContext->setGroups(['sonata_api_read']);
                 $serializationContext->enableMaxDepthChecks();
                 $view->setSerializationContext($serializationContext);
             } else {
                 $context = new Context();
-                $context->setGroups(array('sonata_api_read'));
+                $context->setGroups(['sonata_api_read']);
                 $context->setMaxDepth(0);
                 $view->setContext($context);
             }

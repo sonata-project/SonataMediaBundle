@@ -104,9 +104,9 @@ class GalleryController
 
         $paramFetcher->addParam($orderByQueryParam);
 
-        $supportedCriteria = array(
+        $supportedCriteria = [
             'enabled' => '',
-        );
+        ];
 
         $page = $paramFetcher->get('page');
         $limit = $paramFetcher->get('count');
@@ -120,9 +120,9 @@ class GalleryController
         }
 
         if (!$sort) {
-            $sort = array();
+            $sort = [];
         } elseif (!is_array($sort)) {
-            $sort = array($sort => 'asc');
+            $sort = [$sort => 'asc'];
         }
 
         return $this->getGalleryManager()->getPager($criteria, $page, $limit, $sort);
@@ -177,7 +177,7 @@ class GalleryController
     {
         $ghms = $this->getGallery($id)->getGalleryHasMedias();
 
-        $media = array();
+        $media = [];
         foreach ($ghms as $ghm) {
             $media[] = $ghm->getMedia();
         }
@@ -292,9 +292,9 @@ class GalleryController
 
         foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
             if ($galleryHasMedia->getMedia()->getId() == $media->getId()) {
-                return FOSRestView::create(array(
+                return FOSRestView::create([
                     'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
-                ), 400);
+                ], 400);
             }
         }
 
@@ -371,13 +371,13 @@ class GalleryController
                 $gallery->getGalleryHasMedias()->remove($key);
                 $this->getGalleryManager()->save($gallery);
 
-                return array('deleted' => true);
+                return ['deleted' => true];
             }
         }
 
-        return FOSRestView::create(array(
+        return FOSRestView::create([
             'error' => sprintf('Gallery "%s" does not have media "%s" associated', $galleryId, $mediaId),
-        ), 400);
+        ], 400);
     }
 
     /**
@@ -406,7 +406,7 @@ class GalleryController
 
         $this->galleryManager->delete($gallery);
 
-        return array('deleted' => true);
+        return ['deleted' => true];
     }
 
     /**
@@ -421,9 +421,9 @@ class GalleryController
      */
     protected function handleWriteGalleryhasmedia(GalleryInterface $gallery, MediaInterface $media, GalleryHasMediaInterface $galleryHasMedia = null, Request $request)
     {
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery_has_media', $galleryHasMedia, array(
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery_has_media', $galleryHasMedia, [
             'csrf_protection' => false,
-        ));
+        ]);
 
         $form->handleRequest($request);
 
@@ -439,12 +439,12 @@ class GalleryController
             // BC for FOSRestBundle < 2.0
             if (method_exists($view, 'setSerializationContext')) {
                 $serializationContext = SerializationContext::create();
-                $serializationContext->setGroups(array('sonata_api_read'));
+                $serializationContext->setGroups(['sonata_api_read']);
                 $serializationContext->enableMaxDepthChecks();
                 $view->setSerializationContext($serializationContext);
             } else {
                 $context = new Context();
-                $context->setGroups(array('sonata_api_read'));
+                $context->setGroups(['sonata_api_read']);
                 $context->setMaxDepth(0);
                 $view->setContext($context);
             }
@@ -466,7 +466,7 @@ class GalleryController
      */
     protected function getGallery($id)
     {
-        $gallery = $this->getGalleryManager()->findOneBy(array('id' => $id));
+        $gallery = $this->getGalleryManager()->findOneBy(['id' => $id]);
 
         if (null === $gallery) {
             throw new NotFoundHttpException(sprintf('Gallery (%d) not found', $id));
@@ -486,7 +486,7 @@ class GalleryController
      */
     protected function getMedia($id)
     {
-        $media = $this->getMediaManager()->findOneBy(array('id' => $id));
+        $media = $this->getMediaManager()->findOneBy(['id' => $id]);
 
         if (null === $media) {
             throw new NotFoundHttpException(sprintf('Media (%d) not found', $id));
@@ -523,9 +523,9 @@ class GalleryController
     {
         $gallery = $id ? $this->getGallery($id) : null;
 
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery', $gallery, array(
+        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery', $gallery, [
             'csrf_protection' => false,
-        ));
+        ]);
 
         $form->handleRequest($request);
 
@@ -538,12 +538,12 @@ class GalleryController
             // BC for FOSRestBundle < 2.0
             if (method_exists($view, 'setSerializationContext')) {
                 $serializationContext = SerializationContext::create();
-                $serializationContext->setGroups(array('sonata_api_read'));
+                $serializationContext->setGroups(['sonata_api_read']);
                 $serializationContext->enableMaxDepthChecks();
                 $view->setSerializationContext($serializationContext);
             } else {
                 $context = new Context();
-                $context->setGroups(array('sonata_api_read'));
+                $context->setGroups(['sonata_api_read']);
                 $context->setMaxDepth(0);
                 $view->setContext($context);
             }

@@ -81,14 +81,14 @@ class MediaBlockService extends AbstractAdminBlockService
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'media' => false,
             'title' => false,
             'context' => false,
             'mediaId' => null,
             'format' => false,
             'template' => 'SonataMediaBundle:Block:block_media.html.twig',
-        ));
+        ]);
     }
 
     /**
@@ -113,21 +113,21 @@ class MediaBlockService extends AbstractAdminBlockService
             $choiceType = 'choice';
         }
 
-        $formMapper->add('settings', $immutableArrayType, array(
-            'keys' => array(
-                array('title', $textType, array(
+        $formMapper->add('settings', $immutableArrayType, [
+            'keys' => [
+                ['title', $textType, [
                     'required' => false,
                     'label' => 'form.label_title',
-                )),
-                array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', $choiceType, array(
+                ]],
+                [$this->getMediaBuilder($formMapper), null, []],
+                ['format', $choiceType, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
-                )),
-            ),
+                ]],
+            ],
             'translation_domain' => 'SonataMediaBundle',
-        ));
+        ]);
     }
 
     /**
@@ -145,11 +145,11 @@ class MediaBlockService extends AbstractAdminBlockService
             }
         }
 
-        return $this->renderResponse($blockContext->getTemplate(), array(
+        return $this->renderResponse($blockContext->getTemplate(), [
             'media' => $blockContext->getSetting('mediaId'),
             'block' => $blockContext->getBlock(),
             'settings' => $blockContext->getSettings(),
-        ), $response);
+        ], $response);
     }
 
     /**
@@ -160,7 +160,7 @@ class MediaBlockService extends AbstractAdminBlockService
         $media = $block->getSetting('mediaId', null);
 
         if (is_int($media)) {
-            $media = $this->mediaManager->findOneBy(array('id' => $media));
+            $media = $this->mediaManager->findOneBy(['id' => $media]);
         }
 
         $block->setSetting('mediaId', $media);
@@ -187,9 +187,9 @@ class MediaBlockService extends AbstractAdminBlockService
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
-        ));
+        ]);
     }
 
     /**
@@ -199,7 +199,7 @@ class MediaBlockService extends AbstractAdminBlockService
      */
     protected function getFormatChoices(MediaInterface $media = null)
     {
-        $formatChoices = array();
+        $formatChoices = [];
 
         if (!$media instanceof MediaInterface) {
             return $formatChoices;
@@ -222,27 +222,27 @@ class MediaBlockService extends AbstractAdminBlockService
     protected function getMediaBuilder(FormMapper $formMapper)
     {
         // simulate an association ...
-        $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', array(
+        $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', [
             'translation_domain' => 'SonataMediaBundle',
-        ));
+        ]);
         $fieldDescription->setAssociationAdmin($this->getMediaAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping(array(
+        $fieldDescription->setAssociationMapping([
             'fieldName' => 'media',
             'type' => ClassMetadataInfo::MANY_TO_ONE,
-        ));
+        ]);
 
         // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
         $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
             ? 'Sonata\AdminBundle\Form\Type\ModelListType'
             : 'sonata_type_model_list';
 
-        return $formMapper->create('mediaId', $modelListType, array(
+        return $formMapper->create('mediaId', $modelListType, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),
             'label' => 'form.label_media',
-        ));
+        ]);
     }
 }

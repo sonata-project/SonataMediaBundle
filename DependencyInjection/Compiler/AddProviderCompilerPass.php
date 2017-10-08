@@ -40,7 +40,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
             $container->getDefinition($id)->addMethodCall(
                 'addFormat',
-                array(MediaProviderInterface::FORMAT_ADMIN, $format)
+                [MediaProviderInterface::FORMAT_ADMIN, $format]
             );
         }
     }
@@ -69,7 +69,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     {
         $pool = $container->getDefinition('sonata.media.pool');
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
-            $pool->addMethodCall('addProvider', array($id, new Reference($id)));
+            $pool->addMethodCall('addProvider', [$id, new Reference($id)]);
         }
     }
 
@@ -92,7 +92,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
                     ;
 
                     if ($config['resizer']) {
-                        $definition->addMethodCall('setResizer', array(new Reference($config['resizer'])));
+                        $definition->addMethodCall('setResizer', [new Reference($config['resizer'])]);
                     }
                 }
             }
@@ -119,7 +119,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
                     $config['constraint'] = isset($config['constraint']) ? $config['constraint'] : true;
 
                     $formatName = sprintf('%s_%s', $name, $format);
-                    $definition->addMethodCall('addFormat', array($formatName, $config));
+                    $definition->addMethodCall('addFormat', [$formatName, $config]);
                 }
             }
         }

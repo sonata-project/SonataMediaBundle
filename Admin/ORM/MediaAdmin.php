@@ -21,9 +21,9 @@ class MediaAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $options = array(
-            'choices' => array(),
-        );
+        $options = [
+            'choices' => [],
+        ];
 
         foreach ($this->pool->getContexts() as $name => $context) {
             $options['choices'][$name] = $name;
@@ -38,12 +38,12 @@ class MediaAdmin extends Admin
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
-            ->add('context', null, array(
+            ->add('context', null, [
                 'show_filter' => $this->getPersistentParameter('hide_context') !== true,
-            ), $choiceType, $options);
+            ], $choiceType, $options);
 
         if (null !== $this->categoryManager) {
-            $datagridMapper->add('category', null, array('show_filter' => false));
+            $datagridMapper->add('category', null, ['show_filter' => false]);
         }
 
         $datagridMapper
@@ -52,7 +52,7 @@ class MediaAdmin extends Admin
             ->add('contentType')
         ;
 
-        $providers = array();
+        $providers = [];
 
         $providerNames = (array) $this->pool->getProviderNamesByContext($this->getPersistentParameter('context', $this->pool->getDefaultContext()));
         foreach ($providerNames as $name) {
@@ -64,14 +64,14 @@ class MediaAdmin extends Admin
             ? 'Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter'
             : 'doctrine_orm_choice';
 
-        $datagridMapper->add('providerName', $ormChoiceType, array(
-            'field_options' => array(
+        $datagridMapper->add('providerName', $ormChoiceType, [
+            'field_options' => [
                 'choices' => $providers,
                 'required' => false,
                 'multiple' => false,
                 'expanded' => false,
-            ),
+            ],
             'field_type' => $choiceType,
-        ));
+        ]);
     }
 }

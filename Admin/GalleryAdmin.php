@@ -70,9 +70,9 @@ class GalleryAdmin extends AbstractAdmin
             return $parameters;
         }
 
-        return array_merge($parameters, array(
+        return array_merge($parameters, [
             'context' => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
-        ));
+        ]);
     }
 
     /**
@@ -96,8 +96,8 @@ class GalleryAdmin extends AbstractAdmin
     {
         // define group zoning
         $formMapper
-            ->with('Gallery', array('class' => 'col-md-9'))->end()
-            ->with('Options', array('class' => 'col-md-3'))->end()
+            ->with('Gallery', ['class' => 'col-md-9'])->end()
+            ->with('Options', ['class' => 'col-md-3'])->end()
         ;
 
         $context = $this->getPersistentParameter('context');
@@ -106,12 +106,12 @@ class GalleryAdmin extends AbstractAdmin
             $context = $this->pool->getDefaultContext();
         }
 
-        $formats = array();
+        $formats = [];
         foreach ((array) $this->pool->getFormatNamesByContext($context) as $name => $options) {
             $formats[$name] = $name;
         }
 
-        $contexts = array();
+        $contexts = [];
         foreach ((array) $this->pool->getContexts() as $contextItem => $format) {
             $contexts[$contextItem] = $contextItem;
         }
@@ -128,21 +128,21 @@ class GalleryAdmin extends AbstractAdmin
 
         $formMapper
             ->with('Options')
-                ->add('context', $choiceType, array('choices' => $contexts))
-                ->add('enabled', null, array('required' => false))
+                ->add('context', $choiceType, ['choices' => $contexts])
+                ->add('enabled', null, ['required' => false])
                 ->add('name')
                 ->ifTrue($formats)
-                    ->add('defaultFormat', $choiceType, array('choices' => $formats))
+                    ->add('defaultFormat', $choiceType, ['choices' => $formats])
                 ->ifEnd()
             ->end()
             ->with('Gallery')
-                ->add('galleryHasMedias', $collectionType, array(), array(
+                ->add('galleryHasMedias', $collectionType, [], [
                     'edit' => 'inline',
                     'inline' => 'table',
                     'sortable' => 'position',
-                    'link_parameters' => array('context' => $context),
+                    'link_parameters' => ['context' => $context],
                     'admin_code' => 'sonata.media.admin.gallery_has_media',
-                ))
+                ])
             ->end()
         ;
     }
@@ -154,9 +154,9 @@ class GalleryAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('name')
-            ->add('enabled', 'boolean', array('editable' => true))
-            ->add('context', 'trans', array('catalogue' => 'SonataMediaBundle'))
-            ->add('defaultFormat', 'trans', array('catalogue' => 'SonataMediaBundle'))
+            ->add('enabled', 'boolean', ['editable' => true])
+            ->add('context', 'trans', ['catalogue' => 'SonataMediaBundle'])
+            ->add('defaultFormat', 'trans', ['catalogue' => 'SonataMediaBundle'])
         ;
     }
 
@@ -168,9 +168,9 @@ class GalleryAdmin extends AbstractAdmin
         $datagridMapper
             ->add('name')
             ->add('enabled')
-            ->add('context', null, array(
+            ->add('context', null, [
                 'show_filter' => false,
-            ))
+            ])
         ;
     }
 }

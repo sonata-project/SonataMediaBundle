@@ -28,12 +28,12 @@ class MediaAdminController extends Controller
         if (!$request->get('provider') && $request->isMethod('get')) {
             $pool = $this->get('sonata.media.pool');
 
-            return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', array(
+            return $this->render('SonataMediaBundle:MediaAdmin:select_provider.html.twig', [
                 'providers' => $pool->getProvidersByContext(
                     $request->get('context', $pool->getDefaultContext())
                 ),
                 'action' => 'create',
-            ));
+            ]);
         }
 
         return parent::createAction();
@@ -42,7 +42,7 @@ class MediaAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function render($view, array $parameters = array(), Response $response = null)
+    public function render($view, array $parameters = [], Response $response = null)
     {
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
@@ -83,10 +83,10 @@ class MediaAdminController extends Controller
             $datagrid->setValue('category', null, $rootCategory->getId());
         }
         if ($this->has('sonata.media.manager.category') && $request->get('category')) {
-            $category = $this->get('sonata.media.manager.category')->findOneBy(array(
+            $category = $this->get('sonata.media.manager.category')->findOneBy([
                 'id' => (int) $request->get('category'),
                 'context' => $context,
-            ));
+            ]);
 
             if (!empty($category)) {
                 $datagrid->setValue('category', null, $category->getId());
@@ -99,13 +99,13 @@ class MediaAdminController extends Controller
 
         $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
-        return $this->render($this->admin->getTemplate('list'), array(
+        return $this->render($this->admin->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
             'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
-        ));
+        ]);
     }
 
     /**

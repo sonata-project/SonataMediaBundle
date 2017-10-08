@@ -25,7 +25,7 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
         $mManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
-        $mManager->expects($this->once())->method('getPager')->will($this->returnValue(array($media)));
+        $mManager->expects($this->once())->method('getPager')->will($this->returnValue([$media]));
 
         $mController = $this->createMediaController($mManager);
 
@@ -33,9 +33,9 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $paramFetcher->expects($this->exactly(3))->method('get');
-        $paramFetcher->expects($this->once())->method('all')->will($this->returnValue(array()));
+        $paramFetcher->expects($this->once())->method('all')->will($this->returnValue([]));
 
-        $this->assertSame(array($media), $mController->getMediaAction($paramFetcher));
+        $this->assertSame([$media], $mController->getMediaAction($paramFetcher));
     }
 
     public function testGetMediumAction()
@@ -67,28 +67,28 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
         $manager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
-        $provider->expects($this->exactly(2))->method('getHelperProperties')->will($this->returnValue(array('foo' => 'bar')));
+        $provider->expects($this->exactly(2))->method('getHelperProperties')->will($this->returnValue(['foo' => 'bar']));
 
         $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
         $pool->expects($this->any())->method('getProvider')->will($this->returnValue($provider));
-        $pool->expects($this->once())->method('getFormatNamesByContext')->will($this->returnValue(array('format_name1' => 'value1')));
+        $pool->expects($this->once())->method('getFormatNamesByContext')->will($this->returnValue(['format_name1' => 'value1']));
 
         $controller = $this->createMediaController($manager, $pool);
 
-        $expected = array(
-            'reference' => array(
+        $expected = [
+            'reference' => [
                 'url' => null,
-                'properties' => array(
+                'properties' => [
                     'foo' => 'bar',
-                ),
-            ),
-            'format_name1' => array(
+                ],
+            ],
+            'format_name1' => [
                 'url' => null,
-                'properties' => array(
+                'properties' => [
                     'foo' => 'bar',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
         $this->assertSame($expected, $controller->getMediumFormatsAction(1));
     }
 
@@ -120,7 +120,7 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
 
         $controller = $this->createMediaController($manager);
 
-        $expected = array('deleted' => true);
+        $expected = ['deleted' => true];
 
         $this->assertSame($expected, $controller->deleteMediumAction(1));
     }

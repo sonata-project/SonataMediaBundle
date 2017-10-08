@@ -36,7 +36,7 @@ class GalleryManager extends BaseEntityManager implements GalleryManagerInterfac
     /**
      * {@inheritdoc}
      */
-    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         $query = $this->getRepository()
             ->createQueryBuilder('g')
@@ -49,13 +49,13 @@ class GalleryManager extends BaseEntityManager implements GalleryManagerInterfac
             }
         }
         if (count($sort) == 0) {
-            $sort = array('name' => 'ASC');
+            $sort = ['name' => 'ASC'];
         }
         foreach ($sort as $field => $direction) {
             $query->orderBy(sprintf('g.%s', $field), strtoupper($direction));
         }
 
-        $parameters = array();
+        $parameters = [];
 
         if (isset($criteria['enabled'])) {
             $query->andWhere('g.enabled = :enabled');

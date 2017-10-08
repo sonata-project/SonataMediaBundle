@@ -35,14 +35,14 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     /**
      * @var string[]
      */
-    protected $acl = array(
+    protected $acl = [
         'private' => self::PRIVATE_ACCESS,
         'public' => self::PUBLIC_READ,
         'open' => self::PUBLIC_READ_WRITE,
         'auth_read' => self::AUTHENTICATED_READ,
         'owner_read' => self::BUCKET_OWNER_READ,
         'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
-    );
+    ];
 
     /**
      * @param array $settings
@@ -71,7 +71,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     protected function getDefaultMetadata()
     {
         //merge acl
-        $output = array();
+        $output = [];
         if (isset($this->settings['acl']) && !empty($this->settings['acl'])) {
             $output['ACL'] = $this->acl[$this->settings['acl']];
         }
@@ -117,6 +117,6 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $contentType = Mimetypes::getInstance()->fromExtension($extension);
 
-        return array('contentType' => $contentType);
+        return ['contentType' => $contentType];
     }
 }

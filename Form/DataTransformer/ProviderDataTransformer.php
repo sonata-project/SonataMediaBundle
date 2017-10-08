@@ -42,7 +42,7 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
      * @param string $class
      * @param array  $options
      */
-    public function __construct(Pool $pool, $class, array $options = array())
+    public function __construct(Pool $pool, $class, array $options = [])
     {
         $this->pool = $pool;
         $this->options = $this->getOptions($options);
@@ -124,7 +124,7 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
             // Error message inspired from Monolog\ErrorHandler
             $this->logger->error(
                 sprintf('Caught Exception %s: "%s" at %s line %s', get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()),
-                array('exception' => $e)
+                ['exception' => $e]
             );
         }
 
@@ -140,11 +140,11 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
      */
     protected function getOptions(array $options)
     {
-        return array_merge(array(
+        return array_merge([
             'provider' => false,
             'context' => false,
             'empty_on_new' => true,
             'new_on_update' => true,
-        ), $options);
+        ], $options);
     }
 }

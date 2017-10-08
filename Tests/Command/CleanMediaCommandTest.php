@@ -116,15 +116,15 @@ class CleanMediaCommandTest extends TestCase
 
     public function testExecuteDirectoryNotExists()
     {
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
-        $this->pool->expects($this->once())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
+        $this->pool->expects($this->once())->method('getContexts')->will($this->returnValue(['foo' => $context]));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName()));
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertRegExp('@\'.+\' does not exist\s+done!@', $this->tester->getDisplay());
 
@@ -135,15 +135,15 @@ class CleanMediaCommandTest extends TestCase
     {
         $this->filesystem->mkdir($this->workspace.DIRECTORY_SEPARATOR.'foo');
 
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
-        $this->pool->expects($this->once())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
+        $this->pool->expects($this->once())->method('getContexts')->will($this->returnValue(['foo' => $context]));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName()));
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertRegExp('@Context: foo\s+done!@', $this->tester->getDisplay());
 
@@ -156,28 +156,28 @@ class CleanMediaCommandTest extends TestCase
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
         $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue(array($provider)));
+        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
+        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
         $media = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaInterface')->getMock();
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
-            ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
-            ->will($this->returnValue(array($media)));
+            ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
+            ->will($this->returnValue([$media]));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
-            ->will($this->returnValue(array($media)));
+            ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+            ->will($this->returnValue([$media]));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName()));
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertRegExp('@Context: foo\s+done!@', $this->tester->getDisplay());
 
@@ -190,38 +190,38 @@ class CleanMediaCommandTest extends TestCase
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
         $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue(array($provider)));
+        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
+        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
         $media = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaInterface')->getMock();
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
-            ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
-            ->will($this->returnValue(array($media)));
+            ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
+            ->will($this->returnValue([$media]));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
-            ->will($this->returnValue(array($media)));
+            ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+            ->will($this->returnValue([$media]));
 
         $output = $this->tester->execute(
-            array('command' => $this->command->getName()),
-            array('verbosity' => OutputInterface::VERBOSITY_VERBOSE)
+            ['command' => $this->command->getName()],
+            ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]
         );
 
         $this->assertOutputFoundInContext(
             '/Context: foo\s+(.+)\s+done!/ms',
-            array(
+            [
                 '\'qwertz.ext\' found',
                 '\'thumb_1_bar.ext\' found',
-            ),
+            ],
             $this->tester->getDisplay()
         );
         $this->assertSame(0, $output);
@@ -233,33 +233,33 @@ class CleanMediaCommandTest extends TestCase
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
         $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue(array($provider)));
+        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
+        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
-            ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
-            ->will($this->returnValue(array()));
+            ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
+            ->will($this->returnValue([]));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
-            ->will($this->returnValue(array()));
+            ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+            ->will($this->returnValue([]));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName(), '--dry-run' => true));
+        $output = $this->tester->execute(['command' => $this->command->getName(), '--dry-run' => true]);
 
         $this->assertOutputFoundInContext(
             '/Context: foo\s+(.+)\s+done!/ms',
-            array(
+            [
                 '\'qwertz.ext\' is orphanend',
                 '\'thumb_1_bar.ext\' is orphanend',
-            ),
+            ],
             $this->tester->getDisplay()
         );
         $this->assertSame(0, $output);
@@ -271,33 +271,33 @@ class CleanMediaCommandTest extends TestCase
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
         $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue(array($provider)));
+        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
+        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
-            ->with($this->equalTo(array('id' => 1, 'context' => 'foo')))
-            ->will($this->returnValue(array()));
+            ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
+            ->will($this->returnValue([]));
         $this->mediaManager->expects($this->once())->method('findBy')
-            ->with($this->equalTo(array('providerReference' => 'qwertz.ext', 'providerName' => array('fooprovider'))))
-            ->will($this->returnValue(array()));
+            ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+            ->will($this->returnValue([]));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName()));
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertOutputFoundInContext(
             '/Context: foo\s+(.+)\s+done!/ms',
-            array(
+            [
                 '\'qwertz.ext\' was successfully removed',
                 '\'thumb_1_bar.ext\' was successfully removed',
-            ),
+            ],
             $this->tester->getDisplay()
         );
         $this->assertSame(0, $output);

@@ -19,7 +19,7 @@ class MediaTest extends PHPUnit_Framework_TestCase
     {
         $media = new Media();
 
-        $media->setProviderMetadata(array('thumbnail_url' => 'http://pasloin.com/thumb.png'));
+        $media->setProviderMetadata(['thumbnail_url' => 'http://pasloin.com/thumb.png']);
 
         $this->assertSame($media->getMetadataValue('thumbnail_url'), 'http://pasloin.com/thumb.png', '::getMetadataValue() return the good value');
         $this->assertSame($media->getMetadataValue('thumbnail_url1', 'default'), 'default', '::getMetadataValue() return the default');

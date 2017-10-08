@@ -140,7 +140,7 @@ interface MediaProviderInterface
      * @param string         $format
      * @param array          $options
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array());
+    public function getHelperProperties(MediaInterface $media, $format, $options = []);
 
     /**
      * Generate the media path.
@@ -218,7 +218,7 @@ interface MediaProviderInterface
      *
      * @return Response
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array());
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = []);
 
     /**
      * @return ResizerInterface

@@ -74,11 +74,11 @@ class MediaAdmin extends Admin
     protected function configureRoutes(RouteCollection $collection)
     {
         // Allow path in id parameter
-        $collection->add('view', $this->getRouterIdParameter().'/view', array(), array('id' => '.+', '_method' => 'GET'));
-        $collection->add('show', $this->getRouterIdParameter().'/show', array(
+        $collection->add('view', $this->getRouterIdParameter().'/view', [], ['id' => '.+', '_method' => 'GET']);
+        $collection->add('show', $this->getRouterIdParameter().'/show', [
                 '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view'),
-            ),
-            array('id' => '.+', '_method' => 'GET')
+            ],
+            ['id' => '.+', '_method' => 'GET']
         );
     }
 }

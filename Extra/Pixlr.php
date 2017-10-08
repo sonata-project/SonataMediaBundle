@@ -90,7 +90,7 @@ class Pixlr
         $this->templating = $templating;
         $this->container = $container;
 
-        $this->validFormats = array('jpg', 'jpeg', 'png');
+        $this->validFormats = ['jpg', 'jpeg', 'png'];
         $this->allowEreg = '@https?://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
     }
 
@@ -104,7 +104,7 @@ class Pixlr
      */
     public function editAction($id, $mode)
     {
-        if (!in_array($mode, array('express', 'editor'))) {
+        if (!in_array($mode, ['express', 'editor'])) {
             throw new NotFoundHttpException('Invalid mode');
         }
 
@@ -114,16 +114,16 @@ class Pixlr
 
         $hash = $this->generateHash($media);
 
-        $parameters = array(
+        $parameters = [
             's' => 'c', // ??
             'referrer' => $this->referrer,
-            'exit' => $this->router->generate('sonata_media_pixlr_exit', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
+            'exit' => $this->router->generate('sonata_media_pixlr_exit', ['hash' => $hash, 'id' => $media->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'image' => $provider->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
             'title' => $media->getName(),
-            'target' => $this->router->generate('sonata_media_pixlr_target', array('hash' => $hash, 'id' => $media->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
+            'target' => $this->router->generate('sonata_media_pixlr_target', ['hash' => $hash, 'id' => $media->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'locktitle' => true,
             'locktarget' => true,
-        );
+        ];
 
         $url = sprintf('https://pixlr.com/%s/?%s', $mode, $this->buildQuery($parameters));
 
@@ -207,10 +207,10 @@ class Pixlr
             throw new NotFoundHttpException('The media is not editable');
         }
 
-        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_editor.html.twig', array(
+        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_editor.html.twig', [
             'media' => $media,
             'admin_pool' => $this->container->get('sonata.admin.pool'),
-        )));
+        ]));
     }
 
     /**
@@ -232,7 +232,7 @@ class Pixlr
      */
     private function getMedia($id)
     {
-        $media = $this->mediaManager->findOneBy(array('id' => $id));
+        $media = $this->mediaManager->findOneBy(['id' => $id]);
 
         if (!$media) {
             throw new NotFoundHttpException('Media not found');
@@ -263,9 +263,9 @@ class Pixlr
      *
      * @return string
      */
-    private function buildQuery(array $parameters = array())
+    private function buildQuery(array $parameters = [])
     {
-        $query = array();
+        $query = [];
         foreach ($parameters as $name => $value) {
             $query[] = sprintf('%s=%s', $name, $value);
         }

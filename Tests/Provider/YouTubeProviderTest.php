@@ -33,11 +33,11 @@ class YouTubeProviderTest extends AbstractProviderTest
         $adapter = $this->createMock('Gaufrette\Adapter');
 
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
-            ->setMethods(array('get'))
-            ->setConstructorArgs(array($adapter))
+            ->setMethods(['get'])
+            ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder('Gaufrette\File')
-            ->setConstructorArgs(array('foo', $filesystem))
+            ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
@@ -95,7 +95,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -114,7 +114,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
@@ -140,7 +140,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $media = new Media();
         $media->setBinaryContent($url);
@@ -155,19 +155,19 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public static function getUrls()
     {
-        return array(
-        array('BDYAbAtaDzA'),
-        array('http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'),
-        array('http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'),
-        array('http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'),
-        array('http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'),
-        array('http://www.youtube.com/watch?v=BDYAbAtaDzA'),
-        array('http://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
-        array('http://m.youtube.com/watch?v=BDYAbAtaDzA'),
-        array('https://www.m.youtube.com/watch?v=BDYAbAtaDzA'),
-        array('https://m.youtube.com/watch?v=BDYAbAtaDzA'),
-        array('http://youtu.be/BDYAbAtaDzA'),
-        );
+        return [
+        ['BDYAbAtaDzA'],
+        ['http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'],
+        ['http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'],
+        ['http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'],
+        ['http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'],
+        ['http://www.youtube.com/watch?v=BDYAbAtaDzA'],
+        ['http://www.m.youtube.com/watch?v=BDYAbAtaDzA'],
+        ['http://m.youtube.com/watch?v=BDYAbAtaDzA'],
+        ['https://www.m.youtube.com/watch?v=BDYAbAtaDzA'],
+        ['https://m.youtube.com/watch?v=BDYAbAtaDzA'],
+        ['http://youtu.be/BDYAbAtaDzA'],
+        ];
     }
 
     public function testForm()
@@ -180,7 +180,7 @@ class YouTubeProviderTest extends AbstractProviderTest
             ->will($this->returnValue('message'));
 
         $formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')
-            ->setMethods(array('add', 'getAdmin'))
+            ->setMethods(['add', 'getAdmin'])
             ->disableOriginalConstructor()
             ->getMock();
         $formMapper->expects($this->exactly(8))
@@ -196,7 +196,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', ['width' => 100]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
