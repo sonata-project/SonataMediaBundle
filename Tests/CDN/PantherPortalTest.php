@@ -20,8 +20,8 @@ class PantherPortalTest extends PHPUnit_Framework_TestCase
     {
         $client = $this->createMock(
             'Sonata\MediaBundle\Tests\CDN\ClientSpy',
-            array('flush'),
-            array(),
+            ['flush'],
+            [],
             '',
             false
         );
@@ -36,7 +36,7 @@ class PantherPortalTest extends PHPUnit_Framework_TestCase
 
         $panther->flushByString($path);
         $panther->flush($path);
-        $panther->flushPaths(array($path));
+        $panther->flushPaths([$path]);
     }
 
     public function testException()
@@ -45,8 +45,8 @@ class PantherPortalTest extends PHPUnit_Framework_TestCase
 
         $client = $this->createMock(
             'Sonata\MediaBundle\Tests\CDN\ClientSpy',
-            array('flush'),
-            array(),
+            ['flush'],
+            [],
             '',
             false
         );
@@ -55,7 +55,7 @@ class PantherPortalTest extends PHPUnit_Framework_TestCase
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);
 
-        $panther->flushPaths(array('boom'));
+        $panther->flushPaths(['boom']);
     }
 }
 

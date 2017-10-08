@@ -24,30 +24,30 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         parent::setUp();
 
-        $this->container->setParameter('kernel.bundles', array('SonataAdminBundle' => true));
+        $this->container->setParameter('kernel.bundles', ['SonataAdminBundle' => true]);
     }
 
     public function testLoadWithDefaultAndCustomCategoryManager()
     {
-        $this->load(array(
-            'class' => array(
+        $this->load([
+            'class' => [
                 'category' => '\stdClass',
-            ),
+            ],
             'category_manager' => 'dummy.service.name',
-        ));
+        ]);
 
         $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
     }
 
     public function testLoadWithForceDisableTrueAndWithCategoryManager()
     {
-        $this->load(array(
-            'class' => array(
+        $this->load([
+            'class' => [
                 'category' => '\stdClass',
-            ),
+            ],
             'category_manager' => 'dummy.service.name',
             'force_disable_category' => true,
-        ));
+        ]);
 
         $this->assertContainerBuilderNotHasService('sonata.media.manager.category');
     }
@@ -65,21 +65,21 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     public function testLoadWithDefaultAndClassificationBundleEnableAndForceDisableCategory()
     {
-        $this->load(array(
+        $this->load([
             'force_disable_category' => true,
-        ));
+        ]);
 
         $this->assertContainerBuilderNotHasService('sonata.media.manager.category');
     }
 
     public function testLoadWithDefaultAndClassificationBundleEnableAndCustomCategoryManager()
     {
-        $this->load(array(
-            'class' => array(
+        $this->load([
+            'class' => [
                 'category' => '\stdClass',
-            ),
+            ],
             'category_manager' => 'dummy.service.name',
-        ));
+        ]);
 
         $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
     }
@@ -110,11 +110,11 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     public function dataAdapter()
     {
-        return array(
-            array('sonata.media.adapter.image.gd', 'gd', 'Imagine\\Gd\\Imagine'),
-            array('sonata.media.adapter.image.gmagick', 'gmagick', 'Imagine\\Gmagick\\Imagine'),
-            array('sonata.media.adapter.image.imagick', 'imagick', 'Imagine\\Imagick\\Imagine'),
-        );
+        return [
+            ['sonata.media.adapter.image.gd', 'gd', 'Imagine\\Gd\\Imagine'],
+            ['sonata.media.adapter.image.gmagick', 'gmagick', 'Imagine\\Gmagick\\Imagine'],
+            ['sonata.media.adapter.image.imagick', 'imagick', 'Imagine\\Imagick\\Imagine'],
+        ];
     }
 
     public function testDefaultResizer()
@@ -148,10 +148,10 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     public function dataResizer()
     {
-        return array(
-            array('sonata.media.resizer.simple', 'Sonata\\MediaBundle\\Resizer\\SimpleResizer'),
-            array('sonata.media.resizer.square', 'Sonata\\MediaBundle\\Resizer\\SquareResizer'),
-        );
+        return [
+            ['sonata.media.resizer.simple', 'Sonata\\MediaBundle\\Resizer\\SimpleResizer'],
+            ['sonata.media.resizer.square', 'Sonata\\MediaBundle\\Resizer\\SquareResizer'],
+        ];
     }
 
     public function testLoadWithSonataAdminDefaults()
@@ -160,14 +160,14 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertEquals(
             $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
-            array('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')
+            ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
         );
     }
 
     public function testLoadWithSonataAdminCustomConfiguration()
     {
         $fakeContainer = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('getParameter', 'getExtensionConfig'))
+            ->setMethods(['getParameter', 'getExtensionConfig'])
             ->getMock();
 
         $fakeContainer->expects($this->once())
@@ -178,14 +178,14 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $fakeContainer->expects($this->once())
             ->method('getExtensionConfig')
             ->with($this->equalTo('sonata_admin'))
-            ->willReturn(array(array(
-                'security' => array(
+            ->willReturn([[
+                'security' => [
                     'role_admin' => 'ROLE_FOO',
                     'role_super_admin' => 'ROLE_BAR',
-                ),
-            )));
+                ],
+            ]]);
 
-        $configs = array($this->getMinimalConfiguration());
+        $configs = [$this->getMinimalConfiguration()];
         foreach ($this->getContainerExtensions() as $extension) {
             if ($extension instanceof PrependExtensionInterface) {
                 $extension->prepend($fakeContainer);
@@ -196,31 +196,31 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertEquals(
             $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
-            array('ROLE_FOO', 'ROLE_BAR')
+            ['ROLE_FOO', 'ROLE_BAR']
         );
     }
 
     protected function getMinimalConfiguration()
     {
-        return array(
+        return [
             'default_context' => 'default',
             'db_driver' => 'doctrine_orm',
-            'contexts' => array(
-                'default' => array(
-                    'formats' => array(
-                        'small' => array(
+            'contexts' => [
+                'default' => [
+                    'formats' => [
+                        'small' => [
                             'width' => 100,
                             'quality' => 50,
-                        ),
-                    ),
-                ),
-            ),
-            'filesystem' => array(
-                'local' => array(
+                        ],
+                    ],
+                ],
+            ],
+            'filesystem' => [
+                'local' => [
                     'directory' => '/tmp/',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     /**
@@ -228,8 +228,8 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
      */
     protected function getContainerExtensions()
     {
-        return array(
+        return [
             new SonataMediaExtension(),
-        );
+        ];
     }
 }

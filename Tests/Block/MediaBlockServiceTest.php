@@ -41,11 +41,11 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
         $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface');
         $blockContext = $this->prophesize('Sonata\BlockBundle\Block\BlockContext');
 
-        $this->configureGetFormatChoices($media, array('format1' => 'format1'));
+        $this->configureGetFormatChoices($media, ['format1' => 'format1']);
         $blockContext->getBlock()->willReturn($block->reveal());
         $blockContext->getSetting('format')->willReturn('format');
         $blockContext->setSetting('format', 'format1')->shouldBeCalled();
-        $blockContext->getSettings()->willReturn(array());
+        $blockContext->getSettings()->willReturn([]);
         $blockContext->getTemplate()->willReturn('template');
         $blockContext->getSetting('mediaId')->willReturn($media->reveal());
         $block->getSetting('mediaId')->willReturn($media->reveal());
@@ -62,10 +62,10 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
     {
         $blockContext = $this->getBlockContext($this->blockService);
 
-        $this->assertSettings(array(
-            'attr' => array(),
+        $this->assertSettings([
+            'attr' => [],
             'context' => false,
-            'extra_cache_keys' => array(),
+            'extra_cache_keys' => [],
             'format' => false,
             'media' => false,
             'mediaId' => null,
@@ -73,7 +73,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
             'title' => false,
             'ttl' => 0,
             'use_cache' => true,
-        ), $blockContext);
+        ], $blockContext);
     }
 
     private function configureGetFormatChoices($media, $choices)

@@ -24,11 +24,11 @@ class BaseProviderTest extends AbstractProviderTest
         $adapter = $this->createMock('Gaufrette\Adapter');
 
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
-            ->setMethods(array('get'))
-            ->setConstructorArgs(array($adapter))
+            ->setMethods(['get'])
+            ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder('Gaufrette\File')
-            ->setConstructorArgs(array('foo', $filesystem))
+            ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
 
         $filesystem->expects($this->any())
@@ -51,16 +51,16 @@ class BaseProviderTest extends AbstractProviderTest
     public function testBaseProvider()
     {
         $provider = $this->getProvider();
-        $provider->setTemplates(array(
+        $provider->setTemplates([
             'edit' => 'edit.twig',
-        ));
+        ]);
 
         $this->assertInternalType('array', $provider->getTemplates());
         $this->assertSame('edit.twig', $provider->getTemplate('edit'));
 
         $this->assertInstanceOf('\Sonata\MediaBundle\CDN\CDNInterface', $provider->getCdn());
 
-        $provider->addFormat('small', array());
+        $provider->addFormat('small', []);
 
         $this->assertInternalType('array', $provider->getFormat('small'));
 
@@ -96,7 +96,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         // TODO: Implement getHelperProperties() method.
     }
@@ -200,7 +200,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         // TODO: Implement getDownloadResponse() method.
     }

@@ -89,7 +89,7 @@ class PantherPortal implements CDNInterface
      */
     public function flushByString($string)
     {
-        $this->flushPaths(array($string));
+        $this->flushPaths([$string]);
     }
 
     /**
@@ -97,7 +97,7 @@ class PantherPortal implements CDNInterface
      */
     public function flush($string)
     {
-        $this->flushPaths(array($string));
+        $this->flushPaths([$string]);
     }
 
     /**

@@ -90,14 +90,14 @@ class ConsumerThumbnail implements ThumbnailInterface
         $id = $this->id;
 
         $publish = function () use ($backend, $media, $id) {
-            $backend->createAndPublish('sonata.media.create_thumbnail', array(
+            $backend->createAndPublish('sonata.media.create_thumbnail', [
                 'thumbnailId' => $id,
                 'mediaId' => $media->getId(),
 
                 // force this value as the message is sent inside a transaction,
                 // so we have a race condition
                 'providerReference' => $media->getProviderReference(),
-            ));
+            ]);
         };
 
         /*

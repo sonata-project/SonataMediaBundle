@@ -60,7 +60,7 @@ class MediaHelper extends Helper
      *
      * @return string
      */
-    public function media($media, $format, $options = array())
+    public function media($media, $format, $options = [])
     {
         if (!$media) {
             return '';
@@ -72,11 +72,11 @@ class MediaHelper extends Helper
 
         $options = $provider->getHelperProperties($media, $format, $options);
 
-        return $this->templating->render($provider->getTemplate('helper_view'), array(
+        return $this->templating->render($provider->getTemplate('helper_view'), [
              'media' => $media,
              'format' => $format,
              'options' => $options,
-        ));
+        ]);
     }
 
     /**
@@ -88,7 +88,7 @@ class MediaHelper extends Helper
      *
      * @return string
      */
-    public function thumbnail($media, $format, $options = array())
+    public function thumbnail($media, $format, $options = [])
     {
         if (!$media) {
             return '';
@@ -100,17 +100,17 @@ class MediaHelper extends Helper
         $formatDefinition = $provider->getFormat($format);
 
         // build option
-        $options = array_merge(array(
+        $options = array_merge([
             'title' => $media->getName(),
             'width' => $formatDefinition['width'],
-        ), $options);
+        ], $options);
 
         $options['src'] = $provider->generatePublicUrl($media, $format);
 
-        return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), array(
+        return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), [
             'media' => $media,
             'options' => $options,
-        ));
+        ]);
     }
 
     /**

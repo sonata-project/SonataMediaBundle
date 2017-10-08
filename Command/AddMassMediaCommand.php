@@ -29,12 +29,12 @@ class AddMassMediaCommand extends BaseCommand
     {
         $this->setName('sonata:media:add-multiple')
             ->setDescription('Add medias in mass into the database')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse'),
                 new InputOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ','),
                 new InputOption('enclosure', null, InputOption::VALUE_OPTIONAL, 'Set the field enclosure character (one character only).', '"'),
                 new InputOption('escape', null, InputOption::VALUE_OPTIONAL, 'Set the escape character (one character only). Defaults as a backslash', '\\'),
-            ));
+            ]);
     }
 
     /**
@@ -97,7 +97,7 @@ class AddMassMediaCommand extends BaseCommand
         $media = $this->getMediaManager()->create();
 
         foreach ($this->setters as $pos => $name) {
-            call_user_func(array($media, 'set'.$name), $data[$pos]);
+            call_user_func([$media, 'set'.$name], $data[$pos]);
         }
 
         try {

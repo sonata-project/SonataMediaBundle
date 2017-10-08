@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends AbstractProviderTest
 {
-    public function getProvider($allowedExtensions = array(), $allowedMimeTypes = array(), $box = false)
+    public function getProvider($allowedExtensions = [], $allowedMimeTypes = [], $box = false)
     {
         $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
@@ -29,11 +29,11 @@ class ImageProviderTest extends AbstractProviderTest
         $adapter = $this->createMock('Gaufrette\Adapter');
 
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
-            ->setMethods(array('get'))
-            ->setConstructorArgs(array($adapter))
+            ->setMethods(['get'])
+            ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder('Gaufrette\File')
-            ->setConstructorArgs(array('foo', $filesystem))
+            ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
@@ -88,8 +88,8 @@ class ImageProviderTest extends AbstractProviderTest
         $largeBox = new Box(1000, 500);
 
         $provider = $this->getProvider(
-            array(),
-            array(),
+            [],
+            [],
             $this->onConsecutiveCalls(
                 $largeBox, // first properties call
                 $mediumBox,
@@ -100,9 +100,9 @@ class ImageProviderTest extends AbstractProviderTest
                 $adminBox // Third call
             ));
 
-        $provider->addFormat('admin', array('width' => 100));
-        $provider->addFormat('default_medium', array('width' => 500));
-        $provider->addFormat('default_large', array('width' => 1000));
+        $provider->addFormat('admin', ['width' => 100]);
+        $provider->addFormat('default_medium', ['width' => 500]);
+        $provider->addFormat('default_large', ['width' => 1000]);
 
         $media = new Media();
         $media->setName('test.png');
@@ -134,9 +134,9 @@ class ImageProviderTest extends AbstractProviderTest
         );
         $this->assertSame('(max-width: 500px) 100vw, 500px', $properties['sizes']);
 
-        $properties = $provider->getHelperProperties($media, 'admin', array(
+        $properties = $provider->getHelperProperties($media, 'admin', [
             'width' => 150,
-        ));
+        ]);
         $this->assertArrayNotHasKey('sizes', $properties);
         $this->assertArrayNotHasKey('srcset', $properties);
 
@@ -155,7 +155,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -168,7 +168,7 @@ class ImageProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
 

@@ -33,11 +33,11 @@ class VimeoProviderTest extends AbstractProviderTest
         $adapter = $this->createMock('Gaufrette\Adapter');
 
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
-            ->setMethods(array('get'))
-            ->setConstructorArgs(array($adapter))
+            ->setMethods(['get'])
+            ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder('Gaufrette\File')
-            ->setConstructorArgs(array('foo', $filesystem))
+            ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
@@ -95,7 +95,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -114,7 +114,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
@@ -141,7 +141,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => 100, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         // pre persist the media
         $provider->transform($media);
@@ -161,10 +161,10 @@ class VimeoProviderTest extends AbstractProviderTest
         $mediaPlayer->setBinaryContent('http://player.vimeo.com/video/012341231');
         $mediaPlayer->setId(1023456);
 
-        return array(
-            'transform with website url' => array($mediaWebsite),
-            'transform with player url' => array($mediaPlayer),
-        );
+        return [
+            'transform with website url' => [$mediaWebsite],
+            'transform with player url' => [$mediaPlayer],
+        ];
     }
 
     public function testForm()
@@ -177,7 +177,7 @@ class VimeoProviderTest extends AbstractProviderTest
             ->will($this->returnValue('message'));
 
         $formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')
-            ->setMethods(array('add', 'getAdmin'))
+            ->setMethods(['add', 'getAdmin'])
             ->disableOriginalConstructor()
             ->getMock();
         $formMapper->expects($this->exactly(8))
@@ -193,7 +193,7 @@ class VimeoProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', ['width' => 100]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

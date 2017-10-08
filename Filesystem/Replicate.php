@@ -202,7 +202,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
             return $this->slave->getMetadata($key);
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -212,10 +212,10 @@ class Replicate implements AdapterInterface, MetadataSupporter
      */
     public function getAdapterClassNames()
     {
-        return array(
+        return [
             get_class($this->master),
             get_class($this->slave),
-        );
+        ];
     }
 
     /**

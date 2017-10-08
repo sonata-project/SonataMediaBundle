@@ -50,7 +50,7 @@ class FileProvider extends BaseProvider
      * @param array                    $allowedMimeTypes
      * @param MetadataBuilderInterface $metadata
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), MetadataBuilderInterface $metadata = null)
+    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = [], array $allowedMimeTypes = [], MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
@@ -64,7 +64,7 @@ class FileProvider extends BaseProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-file-text-o'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', ['class' => 'fa fa-file-text-o']);
     }
 
     /**
@@ -92,7 +92,7 @@ class FileProvider extends BaseProvider
     public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name');
-        $formMapper->add('enabled', null, array('required' => false));
+        $formMapper->add('enabled', null, ['required' => false]);
         $formMapper->add('authorName');
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
@@ -104,7 +104,7 @@ class FileProvider extends BaseProvider
             method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
                 ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
                 : 'file',
-            array('required' => false)
+            ['required' => false]
         );
     }
 
@@ -120,12 +120,12 @@ class FileProvider extends BaseProvider
             method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
                 ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
                 : 'file',
-            array(
-                'constraints' => array(
+            [
+                'constraints' => [
                     new NotBlank(),
                     new NotNull(),
-                ),
-            )
+                ],
+            ]
         );
     }
 
@@ -144,10 +144,10 @@ class FileProvider extends BaseProvider
             $formBuilder->add('binaryContent', $fileType);
             $formBuilder->add('contentType');
         } else {
-            $formBuilder->add('binaryContent', $fileType, array(
+            $formBuilder->add('binaryContent', $fileType, [
                 'required' => false,
                 'label' => 'widget_label_binary_content',
-            ));
+            ]);
         }
     }
 
@@ -234,13 +234,13 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
-        return array_merge(array(
+        return array_merge([
             'title' => $media->getName(),
             'thumbnail' => $this->getReferenceImage($media),
             'file' => $this->getReferenceImage($media),
-        ), $options);
+        ], $options);
     }
 
     /**
@@ -258,15 +258,15 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         // build the default headers
-        $headers = array_merge(array(
+        $headers = array_merge([
             'Content-Type' => $media->getContentType(),
             'Content-Disposition' => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
-        ), $headers);
+        ], $headers);
 
-        if (!in_array($mode, array('http', 'X-Sendfile', 'X-Accel-Redirect'))) {
+        if (!in_array($mode, ['http', 'X-Sendfile', 'X-Accel-Redirect'])) {
             throw new \RuntimeException('Invalid mode provided');
         }
 
@@ -328,7 +328,7 @@ class FileProvider extends BaseProvider
         if ('' != $media->getBinaryContent()->getFilename() && !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
-                    ->addViolation('Invalid mime type : %type%', array('%type%' => $media->getBinaryContent()->getMimeType()))
+                    ->addViolation('Invalid mime type : %type%', ['%type%' => $media->getBinaryContent()->getMimeType()])
                 ->end();
         }
     }
@@ -418,7 +418,7 @@ class FileProvider extends BaseProvider
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
         $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
-        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
+        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
 
         if ($contents) {
             $file->setContent($contents, $metadata);

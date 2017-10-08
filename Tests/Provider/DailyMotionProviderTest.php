@@ -33,11 +33,11 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $adapter = $this->createMock('Gaufrette\Adapter');
 
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
-            ->setMethods(array('get'))
-            ->setConstructorArgs(array($adapter))
+            ->setMethods(['get'])
+            ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder('Gaufrette\File')
-            ->setConstructorArgs(array('foo', $filesystem))
+            ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
@@ -96,7 +96,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $this->assertTrue($provider->requireThumbnails($media));
 
-        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -115,7 +115,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
         $media = new Media();
         $media->setBinaryContent('x9wjql');
@@ -138,7 +138,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($browser);
 
-        $provider->addFormat('big', array('width' => 200, 'height' => null, 'constraint' => true));
+        $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
         $media = new Media();
         $media->setBinaryContent('http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds');
@@ -161,7 +161,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
             ->will($this->returnValue('message'));
 
         $formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')
-            ->setMethods(array('add', 'getAdmin'))
+            ->setMethods(['add', 'getAdmin'])
             ->disableOriginalConstructor()
             ->getMock();
         $formMapper->expects($this->exactly(8))
@@ -177,7 +177,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', array('width' => 100));
+        $provider->addFormat('admin', ['width' => 100]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

@@ -30,8 +30,8 @@ class ReplicateTest extends PHPUnit_Framework_TestCase
         $slave->expects($this->once())->method('delete')->will($this->returnValue('master'));
         $replicate->delete('foo');
 
-        $master->expects($this->once())->method('keys')->will($this->returnValue(array()));
-        $slave->expects($this->never())->method('keys')->will($this->returnValue(array()));
+        $master->expects($this->once())->method('keys')->will($this->returnValue([]));
+        $slave->expects($this->never())->method('keys')->will($this->returnValue([]));
         $this->assertInternalType('array', $replicate->keys());
 
         $master->expects($this->once())->method('exists')->will($this->returnValue(true));

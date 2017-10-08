@@ -61,7 +61,7 @@ class SimpleResizer implements ResizerInterface
 
         $content = $image
             ->thumbnail($this->getBox($media, $settings), $this->mode)
-            ->get($format, array('quality' => $settings['quality']));
+            ->get($format, ['quality' => $settings['quality']]);
 
         $out->setContent($content, $this->metadata->get($media, $out->getName()));
     }
@@ -104,10 +104,10 @@ class SimpleResizer implements ResizerInterface
 
         $size = $media->getBox();
 
-        $ratios = array(
+        $ratios = [
             $settings['width'] / $size->getWidth(),
             $settings['height'] / $size->getHeight(),
-        );
+        ];
 
         if ($this->mode === ImageInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
