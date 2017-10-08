@@ -31,7 +31,7 @@ class SimpleResizerTest extends PHPUnit_Framework_TestCase
         $file = $this->getMockBuilder('Gaufrette\File')->disableOriginalConstructor()->getMock();
 
         $resizer = new SimpleResizer($adapter, 'foo', $metadata);
-        $resizer->resize($media, $file, $file, 'bar', array());
+        $resizer->resize($media, $file, $file, 'bar', []);
     }
 
     public function testResize()
@@ -53,10 +53,10 @@ class SimpleResizerTest extends PHPUnit_Framework_TestCase
         $out = $filesystem->get('out', true);
 
         $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
-        $metadata->expects($this->once())->method('get')->will($this->returnValue(array()));
+        $metadata->expects($this->once())->method('get')->will($this->returnValue([]));
 
         $resizer = new SimpleResizer($adapter, 'outbound', $metadata);
-        $resizer->resize($media, $in, $out, 'bar', array('height' => null, 'width' => 90, 'quality' => 100));
+        $resizer->resize($media, $in, $out, 'bar', ['height' => null, 'width' => 90, 'quality' => 100]);
     }
 
     /**
@@ -83,17 +83,17 @@ class SimpleResizerTest extends PHPUnit_Framework_TestCase
 
     public static function getBoxSettings()
     {
-        return array(
-            array('inset', array('width' => 90, 'height' => 90), new Box(100, 120), new Box(75, 90)),
-            array('inset', array('width' => 90, 'height' => 90), new Box(50, 50), new Box(90, 90)),
-            array('inset', array('width' => 90, 'height' => null), new Box(50, 50), new Box(90, 90)),
-            array('inset', array('width' => 90, 'height' => null), new Box(567, 200), new Box(88, 31)),
-            array('inset', array('width' => 100, 'height' => 100), new Box(567, 200), new Box(100, 35)),
+        return [
+            ['inset', ['width' => 90, 'height' => 90], new Box(100, 120), new Box(75, 90)],
+            ['inset', ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
+            ['inset', ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
+            ['inset', ['width' => 90, 'height' => null], new Box(567, 200), new Box(88, 31)],
+            ['inset', ['width' => 100, 'height' => 100], new Box(567, 200), new Box(100, 35)],
 
-            array('outbound', array('width' => 90, 'height' => 90), new Box(100, 120), new Box(90, 108)),
-            array('outbound', array('width' => 90, 'height' => 90), new Box(50, 50), new Box(90, 90)),
-            array('outbound', array('width' => 90, 'height' => null), new Box(50, 50), new Box(90, 90)),
-            array('outbound', array('width' => 90, 'height' => null), new Box(567, 50), new Box(90, 8)),
-        );
+            ['outbound', ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 108)],
+            ['outbound', ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
+            ['outbound', ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
+            ['outbound', ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)],
+        ];
     }
 }

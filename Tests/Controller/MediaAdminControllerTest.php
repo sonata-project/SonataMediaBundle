@@ -49,7 +49,7 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
             Argument::type('array'),
             'renderResponse'
         );
-        $pool->getProvidersByContext('context')->willReturn(array('provider'));
+        $pool->getProvidersByContext('context')->willReturn(['provider']);
         $pool->getDefaultContext()->willReturn('default_context');
         $this->admin->checkAccess('create')->shouldBeCalled();
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
@@ -94,10 +94,10 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
         $datagrid->getForm()->willReturn($form->reveal());
         $pool->getDefaultContext()->willReturn('context');
         $categoryManager->getRootCategory('another_context')->willReturn($category->reveal());
-        $categoryManager->findOneBy(array(
+        $categoryManager->findOneBy([
             'id' => 2,
             'context' => 'another_context',
-        ))->willReturn($category->reveal());
+        ])->willReturn($category->reveal());
         $category->getId()->willReturn(1);
         $form->createView()->willReturn($formView->reveal());
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
@@ -110,7 +110,7 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
         $this->admin->getFilterTheme()->willReturn('filterTheme');
         $this->admin->getTemplate('list')->willReturn('templateList');
         $this->request->get('_list_mode', 'mosaic')->willReturn('mosaic');
-        $this->request->get('filter')->willReturn(array());
+        $this->request->get('filter')->willReturn([]);
         $this->request->get('category')->willReturn(2);
 
         $response = $this->controller->listAction($this->request->reveal());
@@ -218,7 +218,7 @@ class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
 
-        $this->admin->getPersistentParameters()->willReturn(array('param' => 'param'));
+        $this->admin->getPersistentParameters()->willReturn(['param' => 'param']);
         $this->container->has('templating')->willReturn(true);
         $this->container->get('templating')->willReturn($templating->reveal());
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());

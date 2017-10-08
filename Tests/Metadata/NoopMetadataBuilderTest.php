@@ -23,6 +23,6 @@ class NoopMetadataBuilderTest extends PHPUnit_Framework_TestCase
 
         $noopmetadatabuilder = new NoopMetadataBuilder();
 
-        $this->assertSame(array(), $noopmetadatabuilder->get($media, $filename));
+        $this->assertSame([], $noopmetadatabuilder->get($media, $filename));
     }
 }

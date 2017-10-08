@@ -100,31 +100,31 @@ class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedException('\LogicException');
 
-        $this->tester->execute(array('command' => $this->command->getName()));
+        $this->tester->execute(['command' => $this->command->getName()]);
     }
 
     public function testExecuteWithExisting()
     {
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->will($this->returnValue(true));
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
+        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
 
         $contextModel = $this->getMockBuilder('Sonata\ClassificationBundle\Model\ContextInterface')->getMock();
 
-        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(array('id' => 'foo')))->will($this->returnValue($contextModel));
+        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue($contextModel));
 
         $category = $this->getMockBuilder('Sonata\ClassificationBundle\Model\CategoryInterface')->getMock();
 
         $this->categoryManger->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue($category));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName()));
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertRegExp('@Done!@', $this->tester->getDisplay());
 
@@ -133,20 +133,20 @@ class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
 
     public function testExecuteWithEmptyRoot()
     {
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->will($this->returnValue(true));
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
+        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
 
         $contextModel = $this->getMockBuilder('Sonata\ClassificationBundle\Model\ContextInterface')->getMock();
 
-        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(array('id' => 'foo')))->will($this->returnValue($contextModel));
+        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue($contextModel));
 
         $category = $this->getMockBuilder('Sonata\ClassificationBundle\Model\CategoryInterface')->getMock();
 
@@ -154,7 +154,7 @@ class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
         $this->categoryManger->expects($this->once())->method('create')->will($this->returnValue($category));
         $this->categoryManger->expects($this->once())->method('save')->with($this->equalTo($category));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName()));
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertRegExp('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
@@ -163,20 +163,20 @@ class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
 
     public function testExecuteWithNew()
     {
-        $context = array(
-            'providers' => array(),
-            'formats' => array(),
-            'download' => array(),
-        );
+        $context = [
+            'providers' => [],
+            'formats' => [],
+            'download' => [],
+        ];
 
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->will($this->returnValue(true));
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(array('foo' => $context)));
+        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
 
         $contextModel = $this->getMockBuilder('Sonata\ClassificationBundle\Model\ContextInterface')->getMock();
 
-        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(array('id' => 'foo')))->will($this->returnValue(null));
+        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue(null));
         $this->contextManger->expects($this->once())->method('create')->will($this->returnValue($contextModel));
         $this->contextManger->expects($this->once())->method('save')->with($this->equalTo($contextModel));
 
@@ -186,7 +186,7 @@ class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
         $this->categoryManger->expects($this->once())->method('create')->will($this->returnValue($category));
         $this->categoryManger->expects($this->once())->method('save')->with($this->equalTo($category));
 
-        $output = $this->tester->execute(array('command' => $this->command->getName()));
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertRegExp('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 

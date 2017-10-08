@@ -94,7 +94,7 @@ class CleanMediaCommand extends ContainerAwareCommand
     private function getProviders()
     {
         if (!$this->providers) {
-            $this->providers = array();
+            $this->providers = [];
 
             $pool = $this->getContainer()->get('sonata.media.pool');
 
@@ -121,15 +121,15 @@ class CleanMediaCommand extends ContainerAwareCommand
         $fileParts = explode('_', $filename);
 
         if (count($fileParts) > 1 && $fileParts[0] == 'thumb') {
-            return $mediaManager->findOneBy(array(
+            return $mediaManager->findOneBy([
                 'id' => $fileParts[1],
                 'context' => $context,
-            )) != null;
+            ]) != null;
         }
 
-        return count($mediaManager->findBy(array(
+        return count($mediaManager->findBy([
             'providerReference' => $filename,
             'providerName' => $this->getProviders(),
-        ))) > 0;
+        ])) > 0;
     }
 }

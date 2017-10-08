@@ -47,14 +47,14 @@ class RemoveThumbsCommand extends BaseCommand
     {
         $this->setName('sonata:media:remove-thumbnails')
             ->setDescription('Remove uploaded image thumbs')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
                 new InputArgument('format', InputArgument::OPTIONAL, 'The format (pass `all` to delete all thumbs)'),
                 new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
                 new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
                 new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
-            )
+            ]
         );
     }
 
@@ -89,13 +89,13 @@ class RemoveThumbsCommand extends BaseCommand
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->getMediaManager()->findBy(
-                    array(
+                    [
                         'providerName' => $provider->getName(),
                         'context' => $context,
-                    ),
-                    array(
+                    ],
+                    [
                         'id' => 'ASC',
-                    ),
+                    ],
                     $batchSize,
                     $batchOffset
                 );
@@ -127,7 +127,7 @@ class RemoveThumbsCommand extends BaseCommand
                     continue;
                 }
                 //clean filesystem registry for saving memory
-                $fsRegister->setValue($filesystem, array());
+                $fsRegister->setValue($filesystem, []);
             }
 
             //clear entity manager for saving memory

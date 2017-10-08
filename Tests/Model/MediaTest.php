@@ -23,12 +23,12 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('name', $metadata, 'name metadata should be stored in the empty array');
         $this->assertSame('value', $metadata['name'], 'the string value should be returned');
 
-        $cropData = array(
+        $cropData = [
             'x' => 10,
             'y' => 20,
             'width' => 500,
             'height' => 500,
-        );
+        ];
         $media->setMetadataValue('crop', $cropData);
         $metadata = $metadataProperty->getValue($media);
         $this->assertArrayHasKey('crop', $metadata, 'crop should be stored in the existing array');

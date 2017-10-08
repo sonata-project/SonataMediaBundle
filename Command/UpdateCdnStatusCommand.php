@@ -41,10 +41,10 @@ class UpdateCdnStatusCommand extends BaseCommand
     {
         $this->setName('sonata:media:update-cdn-status')
             ->setDescription('Refresh CDN status for medias that are in status flushing')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-            )
+            ]
         );
     }
 
@@ -70,11 +70,11 @@ class UpdateCdnStatusCommand extends BaseCommand
         $this->quiet = $input->getOption('quiet');
         $this->output = $output;
 
-        $medias = $this->getMediaManager()->findBy(array(
+        $medias = $this->getMediaManager()->findBy([
             'providerName' => $provider,
             'context' => $context,
             'cdnIsFlushable' => true,
-        ));
+        ]);
 
         $this->log(sprintf('Loaded %s medias for updating CDN status (provider: %s, context: %s)', count($medias), $provider, $context));
 

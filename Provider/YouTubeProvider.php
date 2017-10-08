@@ -49,13 +49,13 @@ class YouTubeProvider extends BaseVideoProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-youtube'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', ['class' => 'fa fa-youtube']);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         // Override html5 value if $options['html5'] is a boolean
         if (!isset($options['html5'])) {
@@ -64,7 +64,7 @@ class YouTubeProvider extends BaseVideoProvider
 
         // documentation : http://code.google.com/apis/youtube/player_parameters.html
 
-        $default_player_url_parameters = array(
+        $default_player_url_parameters = [
             //Values: 0 or 1. Default is 1. Sets whether the player should load related
             // videos once playback of the initial video starts. Related videos are
             // displayed in the "genie menu" when the menu button is pressed. The player
@@ -155,9 +155,9 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
             'wmode' => 'window',
-        );
+        ];
 
-        $default_player_parameters = array(
+        $default_player_parameters = [
             // Values: 0 or 1. Default is 0. Setting to 1 enables a border around the entire video
             // player. The border's primary color can be set via the color1 parameter, and a
             // secondary color can be set by the color2 parameter.
@@ -177,22 +177,22 @@ class YouTubeProvider extends BaseVideoProvider
             // When wmode=opaque, the Flash movie is rendered as part of the page.
             // When wmode=transparent, the Flash movie is rendered as part of the page.
             'wmode' => $default_player_url_parameters['wmode'],
-        );
+        ];
 
-        $player_url_parameters = array_merge($default_player_url_parameters, isset($options['player_url_parameters']) ? $options['player_url_parameters'] : array());
+        $player_url_parameters = array_merge($default_player_url_parameters, isset($options['player_url_parameters']) ? $options['player_url_parameters'] : []);
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
-        $player_parameters = array_merge($default_player_parameters, isset($options['player_parameters']) ? $options['player_parameters'] : array(), array(
+        $player_parameters = array_merge($default_player_parameters, isset($options['player_parameters']) ? $options['player_parameters'] : [], [
             'width' => $box->getWidth(),
             'height' => $box->getHeight(),
-        ));
+        ]);
 
-        $params = array(
+        $params = [
             'html5' => $options['html5'],
             'player_url_parameters' => http_build_query($player_url_parameters),
             'player_parameters' => $player_parameters,
-        );
+        ];
 
         return $params;
     }
@@ -228,7 +228,7 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
     }

@@ -47,7 +47,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     {
         //get adapter for current media
         if (!$this->container->has($media->getProviderName())) {
-            return array();
+            return [];
         }
 
         if ($meta = $this->getAmazonBuilder($media, $filename)) {
@@ -55,7 +55,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         }
 
         if (!$this->container->has('sonata.media.metadata.noop')) {
-            return array();
+            return [];
         }
 
         return $this->container->get('sonata.media.metadata.noop')->get($media, $filename);
@@ -75,7 +75,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         if ($adapter instanceof Replicate) {
             $adapterClassNames = $adapter->getAdapterClassNames();
         } else {
-            $adapterClassNames = array(get_class($adapter));
+            $adapterClassNames = [get_class($adapter)];
         }
 
         //for amazon s3

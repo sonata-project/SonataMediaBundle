@@ -53,9 +53,9 @@ class CreateThumbnailConsumer implements ConsumerInterface
      */
     public function process(ConsumerEvent $event)
     {
-        $media = $this->mediaManager->findOneBy(array(
+        $media = $this->mediaManager->findOneBy([
             'id' => $event->getMessage()->getValue('mediaId'),
-        ));
+        ]);
 
         if (!$media) {
             throw new HandlingException(sprintf('Media not found - id: %s', $event->getMessage()->getValue('mediaId')));

@@ -45,7 +45,7 @@ class MediaTokenParser extends \Twig_TokenParser
 
             $attributes = $this->parser->getExpressionParser()->parseExpression();
         } else {
-            $attributes = new \Twig_Node_Expression_Array(array(), $token->getLine());
+            $attributes = new \Twig_Node_Expression_Array([], $token->getLine());
         }
 
         $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);

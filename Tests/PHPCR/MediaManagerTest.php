@@ -67,7 +67,7 @@ class MediaManagerTest extends PHPUnit_Framework_TestCase
     protected function createRegistryMock()
     {
         $dm = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
-            ->setMethods(array('persist', 'flush'))
+            ->setMethods(['persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
         $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');

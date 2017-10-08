@@ -39,11 +39,11 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
     {
         $blockContext = $this->getBlockContext($this->blockService);
 
-        $this->assertSettings(array(
-            'attr' => array(),
+        $this->assertSettings([
+            'attr' => [],
             'content' => false,
             'context' => false,
-            'extra_cache_keys' => array(),
+            'extra_cache_keys' => [],
             'format' => false,
             'media' => false,
             'mediaId' => null,
@@ -52,6 +52,6 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
             'title' => false,
             'ttl' => 0,
             'use_cache' => true,
-        ), $blockContext);
+        ], $blockContext);
     }
 }

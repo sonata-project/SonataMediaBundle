@@ -22,14 +22,14 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::prePersist,
             Events::preUpdate,
             Events::preRemove,
             Events::postUpdate,
             Events::postRemove,
             Events::postPersist,
-        );
+        ];
     }
 
     /**

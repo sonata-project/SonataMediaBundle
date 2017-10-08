@@ -26,7 +26,7 @@ class FeatureMediaBlockService extends MediaBlockService
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'media' => false,
             'orientation' => 'left',
             'title' => false,
@@ -35,7 +35,7 @@ class FeatureMediaBlockService extends MediaBlockService
             'mediaId' => null,
             'format' => false,
             'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig',
-        ));
+        ]);
     }
 
     /**
@@ -58,33 +58,33 @@ class FeatureMediaBlockService extends MediaBlockService
             $choiceType = 'choice';
         }
 
-        $formMapper->add('settings', $immutableArrayType, array(
-            'keys' => array(
-                array('title', $textType, array(
+        $formMapper->add('settings', $immutableArrayType, [
+            'keys' => [
+                ['title', $textType, [
                     'required' => false,
                     'label' => 'form.label_title',
-                )),
-                array('content', $textareaType, array(
+                ]],
+                ['content', $textareaType, [
                     'required' => false,
                     'label' => 'form.label_content',
-                )),
-                array('orientation', $choiceType, array(
+                ]],
+                ['orientation', $choiceType, [
                     'required' => false,
-                    'choices' => array(
+                    'choices' => [
                         'left' => 'form.label_orientation_left',
                         'right' => 'form.label_orientation_right',
-                    ),
+                    ],
                     'label' => 'form.label_orientation',
-                )),
-                array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', $choiceType, array(
+                ]],
+                [$this->getMediaBuilder($formMapper), null, []],
+                ['format', $choiceType, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
-                )),
-            ),
+                ]],
+            ],
             'translation_domain' => 'SonataMediaBundle',
-        ));
+        ]);
     }
 
     /**
@@ -92,9 +92,9 @@ class FeatureMediaBlockService extends MediaBlockService
      */
     public function getStylesheets($media)
     {
-        return array(
+        return [
             '/bundles/sonatamedia/blocks/feature_media/theme.css',
-        );
+        ];
     }
 
     /**
@@ -102,8 +102,8 @@ class FeatureMediaBlockService extends MediaBlockService
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
-        ));
+        ]);
     }
 }

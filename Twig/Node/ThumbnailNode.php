@@ -30,7 +30,7 @@ class ThumbnailNode extends \Twig_Node
     {
         $this->extensionName = $extensionName;
 
-        parent::__construct(array('media' => $media, 'format' => $format, 'attributes' => $attributes), array(), $lineno, $tag);
+        parent::__construct(['media' => $media, 'format' => $format, 'attributes' => $attributes], [], $lineno, $tag);
     }
 
     /**

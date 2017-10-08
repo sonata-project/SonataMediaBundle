@@ -64,10 +64,10 @@ class PoolTest extends PHPUnit_Framework_TestCase
             ->setMethods(null)
             ->getMock()
         ;
-        $mediaPool->setProviders(array(
+        $mediaPool->setProviders([
             'provider_a' => $this->createProvider('provider_a'),
             'provider_b' => $this->createProvider('provider_b'),
-        ));
+        ]);
         $mediaPool->getProvider('provider_c');
     }
 
@@ -84,6 +84,6 @@ class PoolTest extends PHPUnit_Framework_TestCase
         $thumbnail = new FormatThumbnail('jpg');
         $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
 
-        return new FileProvider($name, $filesystem, $cdn, $generator, $thumbnail, array(), array(), $metadata);
+        return new FileProvider($name, $filesystem, $cdn, $generator, $thumbnail, [], [], $metadata);
     }
 }

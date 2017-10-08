@@ -42,10 +42,10 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
         $blockContext = $this->prophesize('Sonata\BlockBundle\Block\BlockContext');
 
         $blockContext->getBlock()->willReturn($block->reveal());
-        $blockContext->getSettings()->willReturn(array('settings'));
+        $blockContext->getSettings()->willReturn(['settings']);
         $blockContext->getTemplate()->willReturn('template');
         $block->getSetting('galleryId')->willReturn($gallery->reveal());
-        $gallery->getGalleryHasMedias()->willReturn(array());
+        $gallery->getGalleryHasMedias()->willReturn([]);
 
         $this->blockService->execute($blockContext->reveal());
 
@@ -60,10 +60,10 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
     {
         $blockContext = $this->getBlockContext($this->blockService);
 
-        $this->assertSettings(array(
-            'attr' => array(),
+        $this->assertSettings([
+            'attr' => [],
             'context' => false,
-            'extra_cache_keys' => array(),
+            'extra_cache_keys' => [],
             'format' => false,
             'gallery' => false,
             'galleryId' => null,
@@ -74,6 +74,6 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
             'ttl' => 0,
             'use_cache' => true,
             'wrap' => true,
-        ), $blockContext);
+        ], $blockContext);
     }
 }

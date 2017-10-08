@@ -43,6 +43,6 @@ class PublicDownloadStrategy implements DownloadStrategyInterface
      */
     public function getDescription()
     {
-        return $this->translator->trans('description.public_download_strategy', array(), 'SonataMediaBundle');
+        return $this->translator->trans('description.public_download_strategy', [], 'SonataMediaBundle');
     }
 }

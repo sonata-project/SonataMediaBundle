@@ -37,7 +37,7 @@ class AddMediaCommand extends BaseCommand
     {
         $this->setName('sonata:media:add')
             ->setDescription('Add a media into the database')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
                 new InputArgument('context', InputArgument::REQUIRED, 'The context'),
                 new InputArgument('binaryContent', InputArgument::REQUIRED, 'The content'),
@@ -46,7 +46,7 @@ class AddMediaCommand extends BaseCommand
                 new InputOption('copyright', null, InputOption::VALUE_OPTIONAL, 'The media copyright field', null),
                 new InputOption('author', null, InputOption::VALUE_OPTIONAL, 'The media author name field', null),
                 new InputOption('enabled', null, InputOption::VALUE_OPTIONAL, 'The media enabled field', true),
-        ));
+        ]);
     }
 
     /**
@@ -75,7 +75,7 @@ class AddMediaCommand extends BaseCommand
             $media->setAuthorName($input->getOption('author'));
         }
 
-        if (in_array($input->getOption('enabled'), array(1, true, 'true'), true)) {
+        if (in_array($input->getOption('enabled'), [1, true, 'true'], true)) {
             $media->setEnabled(true);
         } else {
             $media->setEnabled(false);

@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 class FakeHttpWrapper
 {
-    public static $ref = array(
+    public static $ref = [
         // youtube content
         'http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=BDYAbAtaDzA&format=json' => 'valide_youtube.txt',
         'http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg' => 'logo.jpg',
@@ -25,7 +25,7 @@ class FakeHttpWrapper
         // vimeo content
         'http://vimeo.com/api/oembed.json?url=http://vimeo.com/BDYAbAtaDzA' => 'valide_vimeo.txt',
         'http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg' => 'logo.jpg',
-    );
+    ];
 
     /* Properties */
     public $context;

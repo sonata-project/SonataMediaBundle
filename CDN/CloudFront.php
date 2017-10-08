@@ -99,7 +99,7 @@ class CloudFront implements CDNInterface
      */
     public function flushByString($string)
     {
-        return $this->flushPaths(array($string));
+        return $this->flushPaths([$string]);
     }
 
     /**
@@ -107,7 +107,7 @@ class CloudFront implements CDNInterface
      */
     public function flush($string)
     {
-        return $this->flushPaths(array($string));
+        return $this->flushPaths([$string]);
     }
 
     /**
@@ -127,16 +127,16 @@ class CloudFront implements CDNInterface
         }, $paths);
 
         try {
-            $result = $this->getClient()->createInvalidation(array(
+            $result = $this->getClient()->createInvalidation([
                 'DistributionId' => $this->distributionId,
-                'Paths' => array(
+                'Paths' => [
                     'Quantity' => count($normalizedPaths),
                     'Items' => $normalizedPaths,
-                ),
+                ],
                 'CallerReference' => $this->getCallerReference($normalizedPaths),
-            ));
+            ]);
 
-            if (!in_array($status = $result->get('Status'), array('Completed', 'InProgress'))) {
+            if (!in_array($status = $result->get('Status'), ['Completed', 'InProgress'])) {
                 throw new \RuntimeException('Unable to flush : '.$status);
             }
 
@@ -166,10 +166,10 @@ class CloudFront implements CDNInterface
     public function getFlushStatus($identifier)
     {
         try {
-            $result = $this->getClient()->getInvalidation(array(
+            $result = $this->getClient()->getInvalidation([
                 'DistributionId' => $this->distributionId,
                 'Id' => $identifier,
-            ));
+            ]);
 
             return array_search($result->get('Status'), self::getStatusList());
         } catch (CloudFrontException $ex) {
@@ -185,13 +185,13 @@ class CloudFront implements CDNInterface
     public static function getStatusList()
     {
         // @todo: check for a complete list of available CloudFront statuses
-        return array(
+        return [
             self::STATUS_OK => 'Completed',
             self::STATUS_TO_SEND => 'STATUS_TO_SEND',
             self::STATUS_TO_FLUSH => 'STATUS_TO_FLUSH',
             self::STATUS_ERROR => 'STATUS_ERROR',
             self::STATUS_WAITING => 'InProgress',
-        );
+        ];
     }
 
     /**
@@ -216,10 +216,10 @@ class CloudFront implements CDNInterface
     private function getClient()
     {
         if (!$this->client) {
-            $this->client = CloudFrontClient::factory(array(
+            $this->client = CloudFrontClient::factory([
                 'key' => $this->key,
                 'secret' => $this->secret,
-            ));
+            ]);
         }
 
         return $this->client;

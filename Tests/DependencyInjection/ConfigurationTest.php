@@ -23,12 +23,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $configs = array(
-            'sonata_media' => array(
+        $configs = [
+            'sonata_media' => [
                 'db_driver' => 'doctrine_orm',
                 'default_context' => 'default',
-            ),
-        );
+            ],
+        ];
         $processor = new Processor();
         $configuration = new Configuration();
         $this->config = $processor->processConfiguration($configuration, $configs);

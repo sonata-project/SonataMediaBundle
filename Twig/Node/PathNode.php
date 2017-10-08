@@ -29,7 +29,7 @@ class PathNode extends \Twig_Node
     {
         $this->extensionName = $extensionName;
 
-        parent::__construct(array('media' => $media, 'format' => $format), array(), $lineno, $tag);
+        parent::__construct(['media' => $media, 'format' => $format], [], $lineno, $tag);
     }
 
     /**

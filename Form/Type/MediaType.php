@@ -70,12 +70,12 @@ class MediaType extends AbstractType implements LoggerAwareInterface
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, array(
+        $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, [
             'provider' => $options['provider'],
             'context' => $options['context'],
             'empty_on_new' => $options['empty_on_new'],
             'new_on_update' => $options['new_on_update'],
-        ));
+        ]);
         $dataTransformer->setLogger($this->logger);
 
         $builder->addModelTransformer($dataTransformer);
@@ -95,12 +95,12 @@ class MediaType extends AbstractType implements LoggerAwareInterface
             method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
                 ? 'Symfony\Component\Form\Extension\Core\Type\CheckboxType'
                 : 'checkbox',
-            array(
+            [
                 'label' => 'widget_label_unlink',
                 'mapped' => false,
                 'data' => false,
                 'required' => false,
-            )
+            ]
         );
     }
 
@@ -131,16 +131,16 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'data_class' => $this->class,
                 'empty_on_new' => true,
                 'new_on_update' => true,
                 'translation_domain' => 'SonataMediaBundle',
-            ))
-            ->setRequired(array(
+            ])
+            ->setRequired([
                 'provider',
                 'context',
-            ));
+            ]);
 
         // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
         if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
@@ -152,14 +152,14 @@ class MediaType extends AbstractType implements LoggerAwareInterface
             ;
         } else {
             $resolver
-                ->setAllowedTypes(array(
+                ->setAllowedTypes([
                     'provider' => 'string',
                     'context' => 'string',
-                ))
-                ->setAllowedValues(array(
+                ])
+                ->setAllowedValues([
                     'provider' => $this->pool->getProviderList(),
                     'context' => array_keys($this->pool->getContexts()),
-                ));
+                ]);
         }
     }
 

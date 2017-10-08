@@ -69,9 +69,9 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $dataTransformer = new ProviderDataTransformer($this->mediaPool, $this->class, array(
+        $dataTransformer = new ProviderDataTransformer($this->mediaPool, $this->class, [
             'empty_on_new' => false,
-        ));
+        ]);
         $dataTransformer->setLogger($this->logger);
 
         $builder->addModelTransformer($dataTransformer, true);
@@ -97,10 +97,10 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'provider_name' => 'sonata.media.provider.image',
             'context' => 'api',
-        ));
+        ]);
     }
 
     /**

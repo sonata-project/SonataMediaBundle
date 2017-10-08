@@ -34,19 +34,19 @@ class AmazonMetadataBuilderTest extends PHPUnit_Framework_TestCase
      */
     public function provider()
     {
-        return array(
-            array(array('acl' => 'private'), array('ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png')),
-            array(array('acl' => 'public'), array('ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'contentType' => 'image/png')),
-            array(array('acl' => 'open'), array('ACL' => AmazonMetadataBuilder::PUBLIC_READ_WRITE, 'contentType' => 'image/png')),
-            array(array('acl' => 'auth_read'), array('ACL' => AmazonMetadataBuilder::AUTHENTICATED_READ, 'contentType' => 'image/png')),
-            array(array('acl' => 'owner_read'), array('ACL' => AmazonMetadataBuilder::BUCKET_OWNER_READ, 'contentType' => 'image/png')),
-            array(array('acl' => 'owner_full_control'), array('ACL' => AmazonMetadataBuilder::BUCKET_OWNER_FULL_CONTROL, 'contentType' => 'image/png')),
-            array(array('storage' => 'standard'), array('storage' => AmazonMetadataBuilder::STORAGE_STANDARD, 'contentType' => 'image/png')),
-            array(array('storage' => 'reduced'), array('storage' => AmazonMetadataBuilder::STORAGE_REDUCED, 'contentType' => 'image/png')),
-            array(array('cache_control' => 'max-age=86400'), array('CacheControl' => 'max-age=86400', 'contentType' => 'image/png')),
-            array(array('encryption' => 'aes256'), array('encryption' => 'AES256', 'contentType' => 'image/png')),
-            array(array('meta' => array('key' => 'value')), array('meta' => array('key' => 'value'), 'contentType' => 'image/png')),
-            array(array('acl' => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => array('key' => 'value')), array('ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'storage' => Storage::STANDARD, 'meta' => array('key' => 'value'), 'CacheControl' => 'max-age=86400', 'encryption' => 'AES256', 'contentType' => 'image/png')),
-        );
+        return [
+            [['acl' => 'private'], ['ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png']],
+            [['acl' => 'public'], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'contentType' => 'image/png']],
+            [['acl' => 'open'], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ_WRITE, 'contentType' => 'image/png']],
+            [['acl' => 'auth_read'], ['ACL' => AmazonMetadataBuilder::AUTHENTICATED_READ, 'contentType' => 'image/png']],
+            [['acl' => 'owner_read'], ['ACL' => AmazonMetadataBuilder::BUCKET_OWNER_READ, 'contentType' => 'image/png']],
+            [['acl' => 'owner_full_control'], ['ACL' => AmazonMetadataBuilder::BUCKET_OWNER_FULL_CONTROL, 'contentType' => 'image/png']],
+            [['storage' => 'standard'], ['storage' => AmazonMetadataBuilder::STORAGE_STANDARD, 'contentType' => 'image/png']],
+            [['storage' => 'reduced'], ['storage' => AmazonMetadataBuilder::STORAGE_REDUCED, 'contentType' => 'image/png']],
+            [['cache_control' => 'max-age=86400'], ['CacheControl' => 'max-age=86400', 'contentType' => 'image/png']],
+            [['encryption' => 'aes256'], ['encryption' => 'AES256', 'contentType' => 'image/png']],
+            [['meta' => ['key' => 'value']], ['meta' => ['key' => 'value'], 'contentType' => 'image/png']],
+            [['acl' => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => ['key' => 'value']], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'storage' => Storage::STANDARD, 'meta' => ['key' => 'value'], 'CacheControl' => 'max-age=86400', 'encryption' => 'AES256', 'contentType' => 'image/png']],
+        ];
     }
 }

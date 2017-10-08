@@ -29,7 +29,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::prePersist,
             Events::preUpdate,
             Events::preRemove,
@@ -37,7 +37,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
             Events::postRemove,
             Events::postPersist,
             Events::onClear,
-        );
+        ];
     }
 
     public function onClear()

@@ -20,6 +20,6 @@ class NoopMetadataBuilder implements MetadataBuilderInterface
      */
     public function get(MediaInterface $media, $filename)
     {
-        return array();
+        return [];
     }
 }

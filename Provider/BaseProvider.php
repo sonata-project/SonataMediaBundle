@@ -25,12 +25,12 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * @var array
      */
-    protected $formats = array();
+    protected $formats = [];
 
     /**
      * @var string[]
      */
-    protected $templates = array();
+    protected $templates = [];
 
     /**
      * @var ResizerInterface
@@ -97,7 +97,7 @@ abstract class BaseProvider implements MediaProviderInterface
     public function flushCdn(MediaInterface $media)
     {
         if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
-            $flushPaths = array();
+            $flushPaths = [];
             foreach ($this->getFormats() as $format => $settings) {
                 if (MediaProviderInterface::FORMAT_ADMIN === $format ||
                     substr($format, 0, strlen($media->getContext())) === $media->getContext()) {
@@ -179,7 +179,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-file'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', ['class' => 'fa fa-file']);
     }
 
     /**

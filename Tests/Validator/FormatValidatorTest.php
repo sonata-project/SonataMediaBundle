@@ -21,7 +21,7 @@ class FormatValidatorTest extends PHPUnit_Framework_TestCase
     public function testValidate()
     {
         $pool = new Pool('defaultContext');
-        $pool->addContext('test', array(), array('format1' => array()));
+        $pool->addContext('test', [], ['format1' => []]);
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
@@ -48,7 +48,7 @@ class FormatValidatorTest extends PHPUnit_Framework_TestCase
     public function testValidateNotValidDefaultFormat()
     {
         $pool = new Pool('defaultContext');
-        $pool->addContext('test', array(), array('format1' => array()));
+        $pool->addContext('test', [], ['format1' => []]);
 
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('non_existing_format'));
