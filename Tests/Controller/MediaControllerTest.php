@@ -119,7 +119,8 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
 
         $response = $this->controller->viewAction(1, 'format');
 
-        $this->assertSame('renderResponse', $response);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertSame('renderResponse', $response->getContent());
     }
 
     private function configureDownloadSecurity($pool, $media, $request, $isGranted)
@@ -162,9 +163,13 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
     private function configureRender($template, $data, $rendered)
     {
         $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
+        $response = $this->prophesize('Symfony\Component\HttpFoundation\Response');
+        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
 
         $this->container->has('templating')->willReturn(true);
         $this->container->get('templating')->willReturn($templating->reveal());
-        $templating->renderResponse($template, $data, null)->willReturn($rendered);
+        $response->getContent()->willReturn($rendered);
+        $templating->renderResponse($template, $data, null)->willReturn($response->reveal());
+        $templating->render($template, $data)->willReturn($rendered);
     }
 }
