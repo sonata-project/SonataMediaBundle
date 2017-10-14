@@ -81,7 +81,7 @@ class GalleryBlockService extends AbstractAdminBlockService
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'gallery' => false,
             'title' => false,
             'context' => false,
@@ -90,7 +90,7 @@ class GalleryBlockService extends AbstractAdminBlockService
             'startPaused' => false,
             'template' => 'SonataMediaBundle:Block:block_gallery.html.twig',
             'galleryId' => null,
-        ));
+        ]);
     }
 
     /**
@@ -98,7 +98,7 @@ class GalleryBlockService extends AbstractAdminBlockService
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
-        $contextChoices = array();
+        $contextChoices = [];
 
         foreach ($this->getMediaPool()->getContexts() as $name => $context) {
             $contextChoices[$name] = $name;
@@ -106,7 +106,7 @@ class GalleryBlockService extends AbstractAdminBlockService
 
         $gallery = $block->getSetting('galleryId');
 
-        $formatChoices = array();
+        $formatChoices = [];
 
         if ($gallery instanceof GalleryInterface) {
             $formats = $this->getMediaPool()->getFormatNamesByContext($gallery->getContext());
@@ -117,48 +117,48 @@ class GalleryBlockService extends AbstractAdminBlockService
         }
 
         // simulate an association ...
-        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media', array(
+        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media', [
             'translation_domain' => 'SonataMediaBundle',
-        ));
+        ]);
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
         $fieldDescription->setAdmin($formMapper->getAdmin());
         $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping(array('fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE));
+        $fieldDescription->setAssociationMapping(['fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE]);
 
-        $builder = $formMapper->create('galleryId', 'Sonata\AdminBundle\Form\Type\ModelListType', array(
+        $builder = $formMapper->create('galleryId', 'Sonata\AdminBundle\Form\Type\ModelListType', [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getGalleryAdmin()->getClass(),
             'model_manager' => $this->getGalleryAdmin()->getModelManager(),
             'label' => 'form.label_gallery',
-        ));
+        ]);
 
-        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', array(
-            'keys' => array(
-                array('title', 'Symfony\Component\Form\Extension\Core\Type\TextType', array(
+        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', [
+            'keys' => [
+                ['title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                     'required' => false,
                     'label' => 'form.label_title',
-                )),
-                array('context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                ]],
+                ['context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                     'required' => true,
                     'choices' => $contextChoices,
                     'label' => 'form.label_context',
-                )),
-                array('format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                ]],
+                ['format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
-                )),
-                array($builder, null, array()),
-                array('pauseTime', 'Symfony\Component\Form\Extension\Core\Type\NumberType', array(
+                ]],
+                [$builder, null, []],
+                ['pauseTime', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
                     'label' => 'form.label_pause_time',
-                )),
-                array('startPaused', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', array(
+                ]],
+                ['startPaused', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
                     'required' => false,
                     'label' => 'form.label_start_paused',
-                )),
-            ),
+                ]],
+            ],
             'translation_domain' => 'SonataMediaBundle',
-        ));
+        ]);
     }
 
     /**
@@ -168,12 +168,12 @@ class GalleryBlockService extends AbstractAdminBlockService
     {
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
 
-        return $this->renderResponse($blockContext->getTemplate(), array(
+        return $this->renderResponse($blockContext->getTemplate(), [
             'gallery' => $gallery,
             'block' => $blockContext->getBlock(),
             'settings' => $blockContext->getSettings(),
-            'elements' => $gallery ? $this->buildElements($gallery) : array(),
-        ), $response);
+            'elements' => $gallery ? $this->buildElements($gallery) : [],
+        ], $response);
     }
 
     /**
@@ -184,7 +184,7 @@ class GalleryBlockService extends AbstractAdminBlockService
         $gallery = $block->getSetting('galleryId');
 
         if ($gallery) {
-            $gallery = $this->galleryManager->findOneBy(array('id' => $gallery));
+            $gallery = $this->galleryManager->findOneBy(['id' => $gallery]);
         }
 
         $block->setSetting('galleryId', $gallery);
@@ -211,9 +211,9 @@ class GalleryBlockService extends AbstractAdminBlockService
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
-        ));
+        ]);
     }
 
     /**
@@ -223,7 +223,7 @@ class GalleryBlockService extends AbstractAdminBlockService
      */
     private function buildElements(GalleryInterface $gallery)
     {
-        $elements = array();
+        $elements = [];
         foreach ($gallery->getGalleryItems() as $galleryItem) {
             if (!$galleryItem->getEnabled()) {
                 continue;
@@ -235,12 +235,12 @@ class GalleryBlockService extends AbstractAdminBlockService
                 continue;
             }
 
-            $elements[] = array(
+            $elements[] = [
                 'title' => $galleryItem->getMedia()->getName(),
                 'caption' => $galleryItem->getMedia()->getDescription(),
                 'type' => $type,
                 'media' => $galleryItem->getMedia(),
-            );
+            ];
         }
 
         return $elements;

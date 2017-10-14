@@ -51,7 +51,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $loader->load('validators.xml');
         $loader->load('serializer.xml');
 
-        if (!in_array(strtolower($config['db_driver']), array('doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'))) {
+        if (!in_array(strtolower($config['db_driver']), ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'])) {
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
         }
 
@@ -101,7 +101,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
             $sonataAdminConfig = $this->bundleConfigs['SonataAdminBundle'];
 
-            $sonataRoles = array();
+            $sonataRoles = [];
             if (isset($sonataAdminConfig['security']['role_admin'])) {
                 $sonataRoles[] = $sonataAdminConfig['security']['role_admin'];
             } else {
@@ -124,17 +124,17 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $pool = $container->getDefinition('sonata.media.pool');
         $pool->replaceArgument(0, $config['default_context']);
 
-        $strategies = array();
+        $strategies = [];
 
         foreach ($config['contexts'] as $name => $settings) {
-            $formats = array();
+            $formats = [];
 
             foreach ($settings['formats'] as $format => $value) {
                 $formats[$name.'_'.$format] = $value;
             }
 
             $strategies[] = $settings['download']['strategy'];
-            $pool->addMethodCall('addContext', array($name, $settings['providers'], $formats, $settings['download']));
+            $pool->addMethodCall('addContext', [$name, $settings['providers'], $formats, $settings['download']]);
         }
 
         $container->setParameter('sonata.media.admin_format', $config['admin_format']);
@@ -142,7 +142,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $strategies = array_unique($strategies);
 
         foreach ($strategies as $strategyId) {
-            $pool->addMethodCall('addDownloadStrategy', array($strategyId, new Reference($strategyId)));
+            $pool->addMethodCall('addDownloadStrategy', [$strategyId, new Reference($strategyId)]);
         }
 
         if ('doctrine_orm' == $config['db_driver']) {
@@ -190,16 +190,16 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $container->getDefinition('sonata.media.buzz.browser')
             ->replaceArgument(0, new Reference($config['buzz']['connector']));
 
-        foreach (array(
+        foreach ([
             'sonata.media.buzz.connector.curl',
             'sonata.media.buzz.connector.file_get_contents',
-        ) as $connector) {
+        ] as $connector) {
             $container->getDefinition($connector)
-                ->addMethodCall('setIgnoreErrors', array($config['buzz']['client']['ignore_errors']))
-                ->addMethodCall('setMaxRedirects', array($config['buzz']['client']['max_redirects']))
-                ->addMethodCall('setTimeout', array($config['buzz']['client']['timeout']))
-                ->addMethodCall('setVerifyPeer', array($config['buzz']['client']['verify_peer']))
-                ->addMethodCall('setProxy', array($config['buzz']['client']['proxy']));
+                ->addMethodCall('setIgnoreErrors', [$config['buzz']['client']['ignore_errors']])
+                ->addMethodCall('setMaxRedirects', [$config['buzz']['client']['max_redirects']])
+                ->addMethodCall('setTimeout', [$config['buzz']['client']['timeout']])
+                ->addMethodCall('setVerifyPeer', [$config['buzz']['client']['verify_peer']])
+                ->addMethodCall('setProxy', [$config['buzz']['client']['proxy']]);
         }
     }
 
@@ -226,83 +226,83 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
     {
         $collector = DoctrineCollector::getInstance();
 
-        $collector->addAssociation($config['class']['media'], 'mapOneToMany', array(
+        $collector->addAssociation($config['class']['media'], 'mapOneToMany', [
             'fieldName' => 'galleryItems',
             'targetEntity' => $config['class']['gallery_item'],
-            'cascade' => array(
+            'cascade' => [
                 'persist',
-            ),
+            ],
             'mappedBy' => 'media',
             'orphanRemoval' => false,
-        ));
+        ]);
 
-        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', array(
+        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', [
             'fieldName' => 'gallery',
             'targetEntity' => $config['class']['gallery'],
-            'cascade' => array(
+            'cascade' => [
                 'persist',
-            ),
+            ],
             'mappedBy' => null,
             'inversedBy' => 'galleryItems',
-            'joinColumns' => array(
-                array(
+            'joinColumns' => [
+                [
                     'name' => 'gallery_id',
                     'referencedColumnName' => 'id',
                     'onDelete' => 'CASCADE',
-                ),
-            ),
+                ],
+            ],
             'orphanRemoval' => false,
-        ));
+        ]);
 
-        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', array(
+        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', [
             'fieldName' => 'media',
             'targetEntity' => $config['class']['media'],
-            'cascade' => array(
+            'cascade' => [
                  'persist',
-            ),
+            ],
             'mappedBy' => null,
             'inversedBy' => 'galleryItems',
-            'joinColumns' => array(
-                array(
+            'joinColumns' => [
+                [
                     'name' => 'media_id',
                     'referencedColumnName' => 'id',
                     'onDelete' => 'CASCADE',
-                ),
-            ),
+                ],
+            ],
             'orphanRemoval' => false,
-        ));
+        ]);
 
-        $collector->addAssociation($config['class']['gallery'], 'mapOneToMany', array(
+        $collector->addAssociation($config['class']['gallery'], 'mapOneToMany', [
             'fieldName' => 'galleryItems',
             'targetEntity' => $config['class']['gallery_item'],
-            'cascade' => array(
+            'cascade' => [
                 'persist',
-            ),
+            ],
             'mappedBy' => 'gallery',
             'orphanRemoval' => true,
-            'orderBy' => array(
+            'orderBy' => [
                 'position' => 'ASC',
-            ),
-        ));
+            ],
+        ]);
 
         if ($this->isClassificationEnabled($config)) {
-            $collector->addAssociation($config['class']['media'], 'mapManyToOne', array(
+            $collector->addAssociation($config['class']['media'], 'mapManyToOne', [
                 'fieldName' => 'category',
                 'targetEntity' => $config['class']['category'],
-                'cascade' => array(
+                'cascade' => [
                     'persist',
-                ),
+                ],
                 'mappedBy' => null,
                 'inversedBy' => null,
-                'joinColumns' => array(
-                    array(
+                'joinColumns' => [
+                    [
                      'name' => 'category_id',
                      'referencedColumnName' => 'id',
                      'onDelete' => 'SET NULL',
-                    ),
-                ),
+                    ],
+                ],
                 'orphanRemoval' => false,
-            ));
+            ]);
         }
     }
 
@@ -378,14 +378,14 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $container->getDefinition('sonata.media.adapter.filesystem.ftp')
                 ->addArgument($config['filesystem']['ftp']['directory'])
                 ->addArgument($config['filesystem']['ftp']['host'])
-                ->addArgument(array(
+                ->addArgument([
                     'port' => $config['filesystem']['ftp']['port'],
                     'username' => $config['filesystem']['ftp']['username'],
                     'password' => $config['filesystem']['ftp']['password'],
                     'passive' => $config['filesystem']['ftp']['passive'],
                     'create' => $config['filesystem']['ftp']['create'],
                     'mode' => $config['filesystem']['ftp']['mode'],
-                ))
+                ])
             ;
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.ftp');
@@ -397,36 +397,36 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
-                ->replaceArgument(2, array('create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']))
+                ->replaceArgument(2, ['create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']])
             ;
 
             $container->getDefinition('sonata.media.metadata.amazon')
-                ->addArgument(array(
+                ->addArgument([
                         'acl' => $config['filesystem']['s3']['acl'],
                         'storage' => $config['filesystem']['s3']['storage'],
                         'encryption' => $config['filesystem']['s3']['encryption'],
                         'meta' => $config['filesystem']['s3']['meta'],
                         'cache_control' => $config['filesystem']['s3']['cache_control'],
-                ))
+                ])
             ;
 
             if (3 === $config['filesystem']['s3']['sdk_version']) {
                 $container->getDefinition('sonata.media.adapter.service.s3')
-                ->replaceArgument(0, array(
-                    'credentials' => array(
+                ->replaceArgument(0, [
+                    'credentials' => [
                         'secret' => $config['filesystem']['s3']['secretKey'],
                         'key' => $config['filesystem']['s3']['accessKey'],
-                    ),
+                    ],
                     'region' => $config['filesystem']['s3']['region'],
                     'version' => $config['filesystem']['s3']['version'],
-                ))
+                ])
             ;
             } else {
                 $container->getDefinition('sonata.media.adapter.service.s3')
-                    ->replaceArgument(0, array(
+                    ->replaceArgument(0, [
                         'secret' => $config['filesystem']['s3']['secretKey'],
                         'key' => $config['filesystem']['s3']['accessKey'],
-                    ))
+                    ])
                 ;
             }
         } else {
@@ -505,7 +505,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             return;
         }
 
-        $this->addClassesToCompile(array(
+        $this->addClassesToCompile([
             'Sonata\\MediaBundle\\CDN\\CDNInterface',
             'Sonata\\MediaBundle\\CDN\\CloudFront',
             'Sonata\\MediaBundle\\CDN\\Fallback',
@@ -553,7 +553,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             'Sonata\\MediaBundle\\Thumbnail\\FormatThumbnail',
             'Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface',
             'Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension',
-        ));
+        ]);
     }
 
     /**
@@ -590,7 +590,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
      */
     private function configureAdapters(ContainerBuilder $container, array $config)
     {
-        foreach (array('gd', 'imagick', 'gmagick') as $adapter) {
+        foreach (['gd', 'imagick', 'gmagick'] as $adapter) {
             if ($container->hasParameter('sonata.media.adapter.image.'.$adapter.'.class')) {
                 $container->register('sonata.media.adapter.image.'.$adapter, $container->getParameter('sonata.media.adapter.image.'.$adapter.'.class'));
             }
@@ -606,21 +606,21 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
     {
         if ($container->hasParameter('sonata.media.resizer.simple.class')) {
             $class = $container->getParameter('sonata.media.resizer.simple.class');
-            $definition = new Definition($class, array(
+            $definition = new Definition($class, [
                 new Reference('sonata.media.adapter.image.default'),
                 '%sonata.media.resizer.simple.adapter.mode%',
                 new Reference('sonata.media.metadata.proxy'),
-            ));
+            ]);
             $container->setDefinition('sonata.media.resizer.simple', $definition);
         }
 
         if ($container->hasParameter('sonata.media.resizer.square.class')) {
             $class = $container->getParameter('sonata.media.resizer.square.class');
-            $definition = new Definition($class, array(
+            $definition = new Definition($class, [
                 new Reference('sonata.media.adapter.image.default'),
                 '%sonata.media.resizer.square.adapter.mode%',
                 new Reference('sonata.media.metadata.proxy'),
-            ));
+            ]);
             $container->setDefinition('sonata.media.resizer.square', $definition);
         }
 

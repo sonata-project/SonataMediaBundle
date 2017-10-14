@@ -45,10 +45,10 @@ class MediaExtensionTest extends PHPUnit_Framework_TestCase
 
         $media = $this->getMedia();
         $format = 'png';
-        $options = array(
+        $options = [
             'title' => 'Test title',
             'alt' => 'Test title',
-        );
+        ];
 
         $provider = $this->getProvider();
         $provider->expects($this->once())->method('generatePublicUrl')->with($media, $format)
@@ -59,14 +59,14 @@ class MediaExtensionTest extends PHPUnit_Framework_TestCase
             ->method('render')
             ->with(
                 $this->equalTo(
-                    array(
+                    [
                         'media' => $media,
-                        'options' => array(
+                        'options' => [
                             'title' => 'Test title',
                             'alt' => 'Test title',
                             'src' => 'http://some.url.com',
-                        ),
-                    )
+                        ],
+                    ]
                 )
             );
 
@@ -103,7 +103,7 @@ class MediaExtensionTest extends PHPUnit_Framework_TestCase
         if (is_null($this->template)) {
             $this->template = $this->getMockBuilder('Twig_Template')
                                    ->disableOriginalConstructor()
-                                   ->setMethods(array('render'))
+                                   ->setMethods(['render'])
                                    ->getMockForAbstractClass();
         }
 

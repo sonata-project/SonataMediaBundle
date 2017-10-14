@@ -39,7 +39,7 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
      * @param AuthorizationCheckerInterface $security
      * @param string[]                      $roles
      */
-    public function __construct(TranslatorInterface $translator, AuthorizationCheckerInterface $security, array $roles = array())
+    public function __construct(TranslatorInterface $translator, AuthorizationCheckerInterface $security, array $roles = [])
     {
         $this->roles = $roles;
         $this->security = $security;
@@ -64,6 +64,6 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
      */
     public function getDescription()
     {
-        return $this->translator->trans('description.roles_download_strategy', array('%roles%' => '<code>'.implode('</code>, <code>', $this->roles).'</code>'), 'SonataMediaBundle');
+        return $this->translator->trans('description.roles_download_strategy', ['%roles%' => '<code>'.implode('</code>, <code>', $this->roles).'</code>'], 'SonataMediaBundle');
     }
 }

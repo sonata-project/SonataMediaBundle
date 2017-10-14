@@ -36,11 +36,11 @@ class FormatterMediaExtension extends BaseProxyExtension
      */
     public function getAllowedTags()
     {
-        return array(
+        return [
             'media',
             'path',
             'thumbnail',
-        );
+        ];
     }
 
     /**
@@ -48,11 +48,11 @@ class FormatterMediaExtension extends BaseProxyExtension
      */
     public function getAllowedMethods()
     {
-        return array(
-            'Sonata\MediaBundle\Model\MediaInterface' => array(
+        return [
+            'Sonata\MediaBundle\Model\MediaInterface' => [
                 'getproviderreference',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -60,11 +60,11 @@ class FormatterMediaExtension extends BaseProxyExtension
      */
     public function getTokenParsers()
     {
-        return array(
+        return [
             new MediaTokenParser(get_class()),
             new ThumbnailTokenParser(get_class()),
             new PathTokenParser(get_class()),
-        );
+        ];
     }
 
     /**
@@ -82,7 +82,7 @@ class FormatterMediaExtension extends BaseProxyExtension
      *
      * @return string
      */
-    public function media($media, $format, $options = array())
+    public function media($media, $format, $options = [])
     {
         return $this->getTwigExtension()->media($media, $format, $options);
     }
@@ -94,7 +94,7 @@ class FormatterMediaExtension extends BaseProxyExtension
      *
      * @return string
      */
-    public function thumbnail($media, $format, $options = array())
+    public function thumbnail($media, $format, $options = [])
     {
         return $this->getTwigExtension()->thumbnail($media, $format, $options);
     }

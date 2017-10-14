@@ -42,9 +42,9 @@ class FixMediaContextCommand extends ContainerAwareCommand
 
         foreach ($pool->getContexts() as $context => $contextAttrs) {
             /** @var ContextInterface $defaultContext */
-            $defaultContext = $contextManager->findOneBy(array(
+            $defaultContext = $contextManager->findOneBy([
                 'id' => $context,
-            ));
+            ]);
 
             if (!$defaultContext) {
                 $output->writeln(sprintf(" > default context for '%s' is missing, creating one", $context));

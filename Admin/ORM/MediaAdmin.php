@@ -21,9 +21,9 @@ class MediaAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $options = array(
-            'choices' => array(),
-        );
+        $options = [
+            'choices' => [],
+        ];
 
         foreach ($this->pool->getContexts() as $name => $context) {
             $options['choices'][$name] = $name;
@@ -33,12 +33,12 @@ class MediaAdmin extends Admin
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
-            ->add('context', null, array(
+            ->add('context', null, [
                 'show_filter' => $this->getPersistentParameter('hide_context') !== true,
-            ), 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', $options);
+            ], 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', $options);
 
         if (null !== $this->categoryManager) {
-            $datagridMapper->add('category', null, array('show_filter' => false));
+            $datagridMapper->add('category', null, ['show_filter' => false]);
         }
 
         $datagridMapper
@@ -47,21 +47,21 @@ class MediaAdmin extends Admin
             ->add('contentType')
         ;
 
-        $providers = array();
+        $providers = [];
 
         $providerNames = (array) $this->pool->getProviderNamesByContext($this->getPersistentParameter('context', $this->pool->getDefaultContext()));
         foreach ($providerNames as $name) {
             $providers[$name] = $name;
         }
 
-        $datagridMapper->add('providerName', 'Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter', array(
-            'field_options' => array(
+        $datagridMapper->add('providerName', 'Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter', [
+            'field_options' => [
                 'choices' => $providers,
                 'required' => false,
                 'multiple' => false,
                 'expanded' => false,
-            ),
+            ],
             'field_type' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-        ));
+        ]);
     }
 }

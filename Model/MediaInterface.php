@@ -151,7 +151,7 @@ interface MediaInterface
      *
      * @param array $providerMetadata
      */
-    public function setProviderMetadata(array $providerMetadata = array());
+    public function setProviderMetadata(array $providerMetadata = []);
 
     /**
      * Get provider_metadata.

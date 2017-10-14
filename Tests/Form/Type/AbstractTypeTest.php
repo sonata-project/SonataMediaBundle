@@ -63,13 +63,13 @@ abstract class AbstractTypeTest extends TypeTestCase
 
     public function testBuildForm()
     {
-        $this->formType->buildForm($this->formBuilder, array(
+        $this->formType->buildForm($this->formBuilder, [
             'provider_name' => 'sonata.media.provider.image',
             'provider' => null,
             'context' => null,
             'empty_on_new' => true,
             'new_on_update' => true,
-        ));
+        ]);
     }
 
     public function testGetParent()

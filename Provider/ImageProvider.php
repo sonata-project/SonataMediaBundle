@@ -52,13 +52,13 @@ class ImageProvider extends FileProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-picture-o'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', ['class' => 'fa fa-picture-o']);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $box = $media->getBox();
@@ -74,16 +74,16 @@ class ImageProvider extends FileProvider
 
         $mediaWidth = $box->getWidth();
 
-        $params = array(
+        $params = [
             'alt' => $media->getName(),
             'title' => $media->getName(),
             'src' => $this->generatePublicUrl($media, $format),
             'width' => $mediaWidth,
             'height' => $box->getHeight(),
-        );
+        ];
 
         if ($format !== MediaProviderInterface::FORMAT_ADMIN) {
-            $srcSet = array();
+            $srcSet = [];
 
             foreach ($this->getFormats() as $providerFormat => $settings) {
                 // Check if format belongs to the current media's context

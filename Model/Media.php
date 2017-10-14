@@ -49,7 +49,7 @@ abstract class Media implements MediaInterface
     /**
      * @var array
      */
-    protected $providerMetadata = array();
+    protected $providerMetadata = [];
 
     /**
      * @var int
@@ -167,13 +167,13 @@ abstract class Media implements MediaInterface
      */
     public static function getStatusList()
     {
-        return array(
+        return [
             self::STATUS_OK => 'ok',
             self::STATUS_SENDING => 'sending',
             self::STATUS_PENDING => 'pending',
             self::STATUS_ERROR => 'error',
             self::STATUS_ENCODING => 'encoding',
-        );
+        ];
     }
 
     /**
@@ -331,7 +331,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setProviderMetadata(array $providerMetadata = array())
+    public function setProviderMetadata(array $providerMetadata = [])
     {
         $this->providerMetadata = $providerMetadata;
     }

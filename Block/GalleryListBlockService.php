@@ -53,52 +53,52 @@ class GalleryListBlockService extends AbstractAdminBlockService
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
-        $contextChoices = array();
+        $contextChoices = [];
 
         foreach ($this->pool->getContexts() as $name => $context) {
             $contextChoices[$name] = $name;
         }
 
-        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', array(
-            'keys' => array(
-                array('title', 'Symfony\Component\Form\Extension\Core\Type\TextType', array(
+        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', [
+            'keys' => [
+                ['title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                     'label' => 'form.label_title',
                     'required' => false,
-                )),
-                array('number', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', array(
+                ]],
+                ['number', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                     'label' => 'form.label_number',
                     'required' => true,
-                )),
-                array('context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                ]],
+                ['context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                     'required' => true,
                     'label' => 'form.label_context',
                     'choices' => $contextChoices,
-                )),
-                array('mode', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                ]],
+                ['mode', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                     'label' => 'form.label_mode',
-                    'choices' => array(
+                    'choices' => [
                         'public' => 'form.label_mode_public',
                         'admin' => 'form.label_mode_admin',
-                    ),
-                )),
-                array('order', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',  array(
+                    ],
+                ]],
+                ['order', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',  [
                     'label' => 'form.label_order',
-                    'choices' => array(
+                    'choices' => [
                         'name' => 'form.label_order_name',
                         'createdAt' => 'form.label_order_created_at',
                         'updatedAt' => 'form.label_order_updated_at',
-                    ),
-                )),
-                array('sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                    ],
+                ]],
+                ['sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                     'label' => 'form.label_sort',
-                    'choices' => array(
+                    'choices' => [
                         'desc' => 'form.label_sort_desc',
                         'asc' => 'form.label_sort_asc',
-                    ),
-                )),
-            ),
+                    ],
+                ]],
+            ],
             'translation_domain' => 'SonataMediaBundle',
-        ));
+        ]);
     }
 
     /**
@@ -108,16 +108,16 @@ class GalleryListBlockService extends AbstractAdminBlockService
     {
         $context = $blockContext->getBlock()->getSetting('context');
 
-        $criteria = array(
+        $criteria = [
             'mode' => $blockContext->getSetting('mode'),
             'context' => $context,
-        );
+        ];
 
-        $order = array(
+        $order = [
             $blockContext->getSetting('order') => $blockContext->getSetting('sort'),
-        );
+        ];
 
-        return $this->renderResponse($blockContext->getTemplate(), array(
+        return $this->renderResponse($blockContext->getTemplate(), [
             'context' => $blockContext,
             'settings' => $blockContext->getSettings(),
             'block' => $blockContext->getBlock(),
@@ -127,7 +127,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
                 $blockContext->getSetting('number'),
                 $order
             ),
-        ), $response);
+        ], $response);
     }
 
     /**
@@ -135,7 +135,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'number' => 15,
             'mode' => 'public',
             'order' => 'createdAt',
@@ -143,7 +143,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
             'context' => false,
             'title' => 'Gallery List',
             'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
-        ));
+        ]);
     }
 
     /**
@@ -151,8 +151,8 @@ class GalleryListBlockService extends AbstractAdminBlockService
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
-        ));
+        ]);
     }
 }

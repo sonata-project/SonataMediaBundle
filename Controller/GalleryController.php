@@ -22,13 +22,13 @@ class GalleryController extends Controller
      */
     public function indexAction()
     {
-        $galleries = $this->get('sonata.media.manager.gallery')->findBy(array(
+        $galleries = $this->get('sonata.media.manager.gallery')->findBy([
             'enabled' => true,
-        ));
+        ]);
 
-        return $this->render('SonataMediaBundle:Gallery:index.html.twig', array(
+        return $this->render('SonataMediaBundle:Gallery:index.html.twig', [
             'galleries' => $galleries,
-        ));
+        ]);
     }
 
     /**
@@ -40,17 +40,17 @@ class GalleryController extends Controller
      */
     public function viewAction($id)
     {
-        $gallery = $this->get('sonata.media.manager.gallery')->findOneBy(array(
+        $gallery = $this->get('sonata.media.manager.gallery')->findOneBy([
             'id' => $id,
             'enabled' => true,
-        ));
+        ]);
 
         if (!$gallery) {
             throw new NotFoundHttpException('unable to find the gallery with the id');
         }
 
-        return $this->render('SonataMediaBundle:Gallery:view.html.twig', array(
+        return $this->render('SonataMediaBundle:Gallery:view.html.twig', [
             'gallery' => $gallery,
-        ));
+        ]);
     }
 }

@@ -44,7 +44,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $mediaManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $formFactory = $this->createMock('Symfony\Component\Form\FormFactoryInterface');
 
-        $galleryManager->expects($this->once())->method('getPager')->will($this->returnValue(array()));
+        $galleryManager->expects($this->once())->method('getPager')->will($this->returnValue([]));
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
@@ -55,13 +55,13 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $paramFetcher
             ->expects($this->once())
             ->method('all')
-            ->will($this->returnValue(array(
+            ->will($this->returnValue([
                 'page' => 1,
                 'count' => 10,
-                'orderBy' => array('id' => 'ASC'),
-            )));
+                'orderBy' => ['id' => 'ASC'],
+            ]));
 
-        $this->assertSame(array(), $gController->getGalleriesAction($paramFetcher));
+        $this->assertSame([], $gController->getGalleriesAction($paramFetcher));
     }
 
     public function testGetGalleryAction()
@@ -103,7 +103,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
         $formFactory = $this->createMock('Symfony\Component\Form\FormFactoryInterface');
 
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue(array($galleryItem)));
+        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
 
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
@@ -111,7 +111,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertSame(array($galleryItem), $gController->getGalleryGalleryItemAction(1));
+        $this->assertSame([$galleryItem], $gController->getGalleryGalleryItemAction(1));
     }
 
     public function testGetGalleryMediaAction()
@@ -124,12 +124,12 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $mediaManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
 
         $galleryItem->expects($this->once())->method('getMedia')->will($this->returnValue($media));
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue(array($galleryItem)));
+        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertSame(array($media), $gController->getGalleryMediasAction(1));
+        $this->assertSame([$media], $gController->getGalleryMediasAction(1));
     }
 
     public function testPostGalleryMediaGalleryItemAction()
@@ -143,7 +143,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
 
         $media2->expects($this->any())->method('getId')->will($this->returnValue(1));
         $galleryItem->expects($this->once())->method('getMedia')->will($this->returnValue($media2));
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue(array($galleryItem)));
+        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
@@ -177,7 +177,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
 
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $galleryItem->expects($this->once())->method('getMedia')->will($this->returnValue($media));
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue(array($galleryItem)));
+        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
@@ -205,7 +205,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
 
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $galleryItem->expects($this->once())->method('getMedia')->will($this->returnValue($media));
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue(array($galleryItem)));
+        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
@@ -239,7 +239,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
 
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $galleryItem->expects($this->once())->method('getMedia')->will($this->returnValue($media));
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue(array($galleryItem)));
+        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
@@ -274,7 +274,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $gallery
             ->expects($this->any())
             ->method('getGalleryItems')
-            ->will($this->returnValue(new ArrayCollection(array($galleryItem))));
+            ->will($this->returnValue(new ArrayCollection([$galleryItem])));
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
@@ -288,7 +288,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         );
         $view = $galleryController->deleteGalleryMediaGalleryItemAction(1, 1);
 
-        $this->assertSame(array('deleted' => true), $view);
+        $this->assertSame(['deleted' => true], $view);
     }
 
     public function testDeleteGalleryMediaGalleryItemInvalidAction()
@@ -305,7 +305,7 @@ class GalleryControllerTest extends PHPUnit_Framework_TestCase
         $gallery
             ->expects($this->any())
             ->method('getGalleryItems')
-            ->will($this->returnValue(new ArrayCollection(array($galleryItem))));
+            ->will($this->returnValue(new ArrayCollection([$galleryItem])));
         $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 

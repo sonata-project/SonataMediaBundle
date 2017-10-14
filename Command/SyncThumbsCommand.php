@@ -42,13 +42,13 @@ class SyncThumbsCommand extends BaseCommand
     {
         $this->setName('sonata:media:sync-thumbnails')
             ->setDescription('Sync uploaded image thumbs with new media formats')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
                 new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
                 new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
                 new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
-            )
+            ]
         );
     }
 
@@ -92,13 +92,13 @@ class SyncThumbsCommand extends BaseCommand
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->getMediaManager()->findBy(
-                    array(
+                    [
                         'providerName' => $providerName,
                         'context' => $context,
-                    ),
-                    array(
+                    ],
+                    [
                         'id' => 'ASC',
-                    ),
+                    ],
                     $batchSize,
                     $batchOffset
                 );
@@ -130,7 +130,7 @@ class SyncThumbsCommand extends BaseCommand
                     continue;
                 }
                 //clean filesystem registry for saving memory
-                $fsRegister->setValue($filesystem, array());
+                $fsRegister->setValue($filesystem, []);
             }
 
             //clear entity manager for saving memory

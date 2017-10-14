@@ -71,7 +71,7 @@ class ServiceProviderDataTransformerTest extends PHPUnit_Framework_TestCase
         $logger = $this->prophesize('Psr\Log\LoggerInterface');
         $logger->error(
             Argument::containingString('Caught Exception Exception: "foo" at'),
-            Argument::is(array('exception' => $exception))
+            Argument::is(['exception' => $exception])
         )->shouldBeCalled();
 
         $transformer = new ServiceProviderDataTransformer($provider->reveal());

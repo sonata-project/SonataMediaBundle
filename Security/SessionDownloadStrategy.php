@@ -79,7 +79,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
         return $this->translator->transChoice(
             'description.session_download_strategy',
             $this->times,
-            array('%times%' => $this->times),
+            ['%times%' => $this->times],
             'SonataMediaBundle'
         );
     }

@@ -24,14 +24,14 @@ class CloudFrontTest extends PHPUnit_Framework_TestCase
     public function testLegacyCloudFront()
     {
         $client = $this->getMockBuilder('Aws\CloudFront\CloudFrontClient')
-            ->setMethods(array('createInvalidation'))
+            ->setMethods(['createInvalidation'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $client->expects($this->exactly(3))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy()));
 
         $cloudFront = $this->getMockBuilder('Sonata\MediaBundle\CDN\CloudFront')
-            ->setConstructorArgs(array('/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'))
+            ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
             ->setMethods(null)
             ->getMock();
         $cloudFront->setClient($client);
@@ -42,7 +42,7 @@ class CloudFrontTest extends PHPUnit_Framework_TestCase
 
         $cloudFront->flushByString($path);
         $cloudFront->flush($path);
-        $cloudFront->flushPaths(array($path));
+        $cloudFront->flushPaths([$path]);
     }
 
     /**
@@ -53,17 +53,17 @@ class CloudFrontTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('\RuntimeException', 'Unable to flush : ');
 
         $client = $this->getMockBuilder('Aws\CloudFront\CloudFrontClient')
-            ->setMethods(array('createInvalidation'))
+            ->setMethods(['createInvalidation'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $client->expects($this->exactly(1))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy(true)));
         $cloudFront = $this->getMockBuilder('Sonata\MediaBundle\CDN\CloudFront')
-            ->setConstructorArgs(array('/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'))
+            ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
             ->setMethods(null)
             ->getMock();
         $cloudFront->setClient($client);
-        $cloudFront->flushPaths(array('boom'));
+        $cloudFront->flushPaths(['boom']);
     }
 }
 

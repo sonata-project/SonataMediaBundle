@@ -20,10 +20,10 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         // documentation : http://vimeo.com/api/docs/moogaloop
-        $defaults = array(
+        $defaults = [
             // (optional) Flash Player version of app. Defaults to 9 .NEW!
             // 10 - New Moogaloop. 9 - Old Moogaloop without newest features.
             'fp_version' => 10,
@@ -54,13 +54,13 @@ class VimeoProvider extends BaseVideoProvider
 
             // Unique id that is passed into all player events as the ending parameter.
             'js_swf_id' => uniqid('vimeo_player_'),
-        );
+        ];
 
-        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
+        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
-        $params = array(
+        $params = [
             'src' => http_build_query($player_parameters),
             'id' => $player_parameters['js_swf_id'],
             'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
@@ -68,7 +68,7 @@ class VimeoProvider extends BaseVideoProvider
             'height' => $box->getHeight(),
             'class' => isset($options['class']) ? $options['class'] : '',
             'allow_fullscreen' => isset($options['allowfullscreen']) ? true : false,
-        );
+        ];
 
         return $params;
     }
@@ -78,7 +78,7 @@ class VimeoProvider extends BaseVideoProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'fa fa-vimeo-square'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', ['class' => 'fa fa-vimeo-square']);
     }
 
     /**
@@ -116,7 +116,7 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
     }

@@ -22,10 +22,10 @@ class GalleryItemAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $link_parameters = array();
+        $link_parameters = [];
 
         if ($this->hasParentFieldDescription()) {
-            $link_parameters = $this->getParentFieldDescription()->getOption('link_parameters', array());
+            $link_parameters = $this->getParentFieldDescription()->getOption('link_parameters', []);
         }
 
         if ($this->hasRequest()) {
@@ -37,10 +37,10 @@ class GalleryItemAdmin extends AbstractAdmin
         }
 
         $formMapper
-            ->add('media', 'Sonata\AdminBundle\Form\Type\ModelListType', array('required' => false), array(
+            ->add('media', 'Sonata\AdminBundle\Form\Type\ModelListType', ['required' => false], [
                 'link_parameters' => $link_parameters,
-            ))
-            ->add('enabled', null, array('required' => false))
+            ])
+            ->add('enabled', null, ['required' => false])
             ->add('position', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
         ;
     }

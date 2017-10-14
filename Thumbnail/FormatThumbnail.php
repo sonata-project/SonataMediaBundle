@@ -98,7 +98,7 @@ class FormatThumbnail implements ThumbnailInterface
         if (is_null($formats)) {
             $formats = array_keys($provider->getFormats());
         } elseif (is_string($formats)) {
-            $formats = array($formats);
+            $formats = [$formats];
         }
 
         if (!is_array($formats)) {

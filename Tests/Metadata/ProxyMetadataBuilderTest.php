@@ -25,15 +25,15 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'amazon')));
+            ->will($this->returnValue(['key' => 'amazon']));
 
         $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'noop')));
+            ->will($this->returnValue(['key' => 'noop']));
 
         //adapter cannot be mocked
-        $amazonclient = new AmazonClient(array('key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
+        $amazonclient = new AmazonClient(['key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']);
         $adapter = new AmazonS3($amazonclient, '');
 
         $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
@@ -49,15 +49,15 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
 
         $filename = '/test/folder/testfile.png';
 
-        $container = $this->getContainerMock(array(
+        $container = $this->getContainerMock([
             'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
-        ));
+        ]);
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
-        $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyLocal()
@@ -65,12 +65,12 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'amazon')));
+            ->will($this->returnValue(['key' => 'amazon']));
 
         $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'noop')));
+            ->will($this->returnValue(['key' => 'noop']));
 
         //adapter cannot be mocked
         $adapter = new Local('');
@@ -88,15 +88,15 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
 
         $filename = '/test/folder/testfile.png';
 
-        $container = $this->getContainerMock(array(
+        $container = $this->getContainerMock([
             'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
-        ));
+        ]);
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
-        $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyNoProvider()
@@ -104,12 +104,12 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'amazon')));
+            ->will($this->returnValue(['key' => 'amazon']));
 
         $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'noop')));
+            ->will($this->returnValue(['key' => 'noop']));
 
         //adapter cannot be mocked
         $adapter = new Local('');
@@ -127,15 +127,15 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
 
         $filename = '/test/folder/testfile.png';
 
-        $container = $this->getContainerMock(array(
+        $container = $this->getContainerMock([
             'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
-        ));
+        ]);
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
-        $this->assertSame(array(), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame([], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithAmazon()
@@ -143,15 +143,15 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'amazon')));
+            ->will($this->returnValue(['key' => 'amazon']));
 
         $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'noop')));
+            ->will($this->returnValue(['key' => 'noop']));
 
         //adapter cannot be mocked
-        $amazonclient = new AmazonClient(array('key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'));
+        $amazonclient = new AmazonClient(['key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']);
         $adapter1 = new AmazonS3($amazonclient, '');
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
@@ -169,15 +169,15 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
 
         $filename = '/test/folder/testfile.png';
 
-        $container = $this->getContainerMock(array(
+        $container = $this->getContainerMock([
             'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
-        ));
+        ]);
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
-        $this->assertSame(array('key' => 'amazon'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithoutAmazon()
@@ -185,12 +185,12 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'amazon')));
+            ->will($this->returnValue(['key' => 'amazon']));
 
         $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
         $noop->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(array('key' => 'noop')));
+            ->will($this->returnValue(['key' => 'noop']));
 
         //adapter cannot be mocked
         $adapter1 = new Local('');
@@ -210,15 +210,15 @@ class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
 
         $filename = '/test/folder/testfile.png';
 
-        $container = $this->getContainerMock(array(
+        $container = $this->getContainerMock([
             'sonata.media.metadata.noop' => $noop,
             'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
-        ));
+        ]);
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container);
 
-        $this->assertSame(array('key' => 'noop'), $proxymetadatabuilder->get($media, $filename));
+        $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
     /**

@@ -91,11 +91,11 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $categoryId = $this->categoryManager->getRootCategory($context)->getId();
         }
 
-        return array_merge($parameters, array(
+        return array_merge($parameters, [
             'context' => $context,
             'category' => $categoryId,
             'hide_context' => (bool) $this->getRequest()->get('hide_context'),
-        ));
+        ]);
     }
 
     /**
@@ -192,13 +192,13 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         if (null !== $this->categoryManager) {
-            $formMapper->add('category', 'Sonata\AdminBundle\Form\Type\ModelListType', array(), array(
-                'link_parameters' => array(
+            $formMapper->add('category', 'Sonata\AdminBundle\Form\Type\ModelListType', [], [
+                'link_parameters' => [
                     'context' => $media->getContext(),
                     'hide_context' => true,
                     'mode' => 'tree',
-                ),
-            ));
+                ],
+            ]);
         }
     }
 }

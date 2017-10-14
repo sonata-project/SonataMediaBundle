@@ -69,12 +69,12 @@ class MediaType extends AbstractType implements LoggerAwareInterface
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, array(
+        $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, [
             'provider' => $options['provider'],
             'context' => $options['context'],
             'empty_on_new' => $options['empty_on_new'],
             'new_on_update' => $options['new_on_update'],
-        ));
+        ]);
         $dataTransformer->setLogger($this->logger);
 
         $builder->addModelTransformer($dataTransformer);
@@ -90,12 +90,12 @@ class MediaType extends AbstractType implements LoggerAwareInterface
         $builder->add(
             'unlink',
             'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-            array(
+            [
                 'label' => 'widget_label_unlink',
                 'mapped' => false,
                 'data' => false,
                 'required' => false,
-            )
+            ]
         );
     }
 
@@ -114,16 +114,16 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'data_class' => $this->class,
                 'empty_on_new' => true,
                 'new_on_update' => true,
                 'translation_domain' => 'SonataMediaBundle',
-            ))
-            ->setRequired(array(
+            ])
+            ->setRequired([
                 'provider',
                 'context',
-            ));
+            ]);
 
         $resolver
             ->setAllowedTypes('provider', 'string')

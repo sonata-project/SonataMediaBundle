@@ -36,9 +36,9 @@ class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockServic
     {
         parent::configureSettings($resolver);
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'gallery' => false,
-        ));
+        ]);
     }
 
     /**
@@ -49,12 +49,12 @@ class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockServic
         $menu = $this->getRootMenu($blockContext);
 
         if ($gallery = $blockContext->getBlock()->getSetting('gallery')) {
-            $menu->addChild($gallery->getName(), array(
+            $menu->addChild($gallery->getName(), [
                 'route' => 'sonata_media_gallery_view',
-                'routeParameters' => array(
+                'routeParameters' => [
                     'id' => $gallery->getId(),
-                ),
-            ));
+                ],
+            ]);
         }
 
         return $menu;

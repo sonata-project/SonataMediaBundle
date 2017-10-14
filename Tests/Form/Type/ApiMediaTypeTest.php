@@ -31,7 +31,7 @@ class ApiMediaTypeTest extends AbstractTypeTest
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')->disableOriginalConstructor()->getMock();
         $builder->expects($this->once())->method('addModelTransformer');
 
-        $type->buildForm($builder, array('provider_name' => 'sonata.media.provider.image'));
+        $type->buildForm($builder, ['provider_name' => 'sonata.media.provider.image']);
     }
 
     protected function getTestedInstance()

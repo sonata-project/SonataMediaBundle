@@ -23,14 +23,14 @@ class FormatThumbnailTest extends PHPUnit_Framework_TestCase
     {
         $thumbnail = new FormatThumbnail('foo');
 
-        $filesystem = new Filesystem(new InMemory(array('myfile' => 'content')));
+        $filesystem = new Filesystem(new InMemory(['myfile' => 'content']));
         $referenceFile = new File('myfile', $filesystem);
 
-        $formats = array(
-           'admin' => array('height' => 50, 'width' => 50, 'quality' => 100),
-           'mycontext_medium' => array('height' => 500, 'width' => 500, 'quality' => 100),
-           'anothercontext_large' => array('height' => 500, 'width' => 500, 'quality' => 100),
-        );
+        $formats = [
+           'admin' => ['height' => 50, 'width' => 50, 'quality' => 100],
+           'mycontext_medium' => ['height' => 500, 'width' => 500, 'quality' => 100],
+           'anothercontext_large' => ['height' => 500, 'width' => 500, 'quality' => 100],
+        ];
 
         $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
         $resizer->expects($this->exactly(2))->method('resize')->will($this->returnValue(true));

@@ -29,7 +29,7 @@ class RolesDownloadStrategyTest extends PHPUnit_Framework_TestCase
                 return in_array('ROLE_ADMIN', $roles);
             }));
 
-        $strategy = new RolesDownloadStrategy($translator, $security, array('ROLE_ADMIN'));
+        $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
         $this->assertTrue($strategy->isGranted($media, $request));
     }
 
@@ -46,7 +46,7 @@ class RolesDownloadStrategyTest extends PHPUnit_Framework_TestCase
                 return in_array('FOO', $roles);
             }));
 
-        $strategy = new RolesDownloadStrategy($translator, $security, array('ROLE_ADMIN'));
+        $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
         $this->assertFalse($strategy->isGranted($media, $request));
     }
 }

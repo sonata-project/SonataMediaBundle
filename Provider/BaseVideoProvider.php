@@ -64,7 +64,7 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', array('class' => 'fa fa-video-camera'));
+        return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-video-camera']);
     }
 
     /**
@@ -87,7 +87,7 @@ abstract class BaseVideoProvider extends BaseProvider
             $referenceFile = $this->getFilesystem()->get($key);
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
-            $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : array();
+            $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
             $referenceFile->setContent($this->browser->get($this->getReferenceImage($media))->getContent(), $metadata);
         }
 
@@ -124,7 +124,7 @@ abstract class BaseVideoProvider extends BaseProvider
     public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name');
-        $formMapper->add('enabled', null, array('required' => false));
+        $formMapper->add('enabled', null, ['required' => false]);
         $formMapper->add('authorName');
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
@@ -132,7 +132,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add(
             'binaryContent',
             'Symfony\Component\Form\Extension\Core\Type\TextType',
-            array('required' => false)
+            ['required' => false]
         );
     }
 
@@ -144,12 +144,12 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add(
             'binaryContent',
             'Symfony\Component\Form\Extension\Core\Type\TextType',
-            array(
-                'constraints' => array(
+            [
+                'constraints' => [
                     new NotBlank(),
                     new NotNull(),
-                ),
-            )
+                ],
+            ]
         );
     }
 
@@ -161,9 +161,9 @@ abstract class BaseVideoProvider extends BaseProvider
         $formBuilder->add(
             'binaryContent',
             'Symfony\Component\Form\Extension\Core\Type\TextType',
-            array(
+            [
                 'label' => 'widget_label_binary_content',
-            )
+            ]
         );
     }
 
@@ -238,17 +238,17 @@ abstract class BaseVideoProvider extends BaseProvider
      *
      * @return Box
      */
-    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
+    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = [])
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $media->getBox();
         }
 
         if (isset($options['width']) || isset($options['height'])) {
-            $settings = array(
+            $settings = [
                 'width' => isset($options['width']) ? $options['width'] : null,
                 'height' => isset($options['height']) ? $options['height'] : null,
-            );
+            ];
         } else {
             $settings = $this->getFormat($format);
         }

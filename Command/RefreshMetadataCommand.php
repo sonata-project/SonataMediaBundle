@@ -39,10 +39,10 @@ class RefreshMetadataCommand extends BaseCommand
     {
         $this->setName('sonata:media:refresh-metadata')
             ->setDescription('Refresh meta information')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-            )
+            ]
         );
     }
 
@@ -68,10 +68,10 @@ class RefreshMetadataCommand extends BaseCommand
         $this->quiet = $input->getOption('quiet');
         $this->output = $output;
 
-        $medias = $this->getMediaManager()->findBy(array(
+        $medias = $this->getMediaManager()->findBy([
             'providerName' => $provider,
             'context' => $context,
-        ));
+        ]);
 
         $this->log(sprintf('Loaded %s medias for generating thumbs (provider: %s, context: %s)', count($medias), $provider, $context));
 

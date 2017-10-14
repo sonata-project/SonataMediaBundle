@@ -45,7 +45,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
 
         $block = new Block();
 
-        $blockContext = new BlockContext($block, array(
+        $blockContext = new BlockContext($block, [
             'number' => 15,
             'mode' => 'public',
             'order' => 'createdAt',
@@ -53,7 +53,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'context' => false,
             'title' => 'Gallery List',
             'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
-        ));
+        ]);
 
         $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
         $blockService->execute($blockContext);
@@ -71,7 +71,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
         $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
         $blockContext = $this->getBlockContext($blockService);
 
-        $this->assertSettings(array(
+        $this->assertSettings([
             'number' => 15,
             'mode' => 'public',
             'order' => 'createdAt',
@@ -79,6 +79,6 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'context' => false,
             'title' => 'Gallery List',
             'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
-        ), $blockContext);
+        ], $blockContext);
     }
 }

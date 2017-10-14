@@ -48,7 +48,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         $query = $this->getRepository()
             ->createQueryBuilder('m')
@@ -65,7 +65,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
             $query->orderBy(sprintf('m.%s', $field), strtoupper($direction));
         }
 
-        $parameters = array();
+        $parameters = [];
 
         if (isset($criteria['enabled'])) {
             $query->andWhere('m.enabled = :enabled');

@@ -125,7 +125,7 @@ class GalleryAdminControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
 
-        $this->admin->getPersistentParameters()->willReturn(array('param' => 'param'));
+        $this->admin->getPersistentParameters()->willReturn(['param' => 'param']);
         $this->container->has('templating')->willReturn(true);
         $this->container->get('templating')->willReturn($templating->reveal());
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());

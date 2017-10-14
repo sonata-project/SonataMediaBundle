@@ -26,7 +26,7 @@ class FeatureMediaBlockService extends MediaBlockService
      */
     public function configureSettings(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'media' => false,
             'orientation' => 'left',
             'title' => false,
@@ -35,7 +35,7 @@ class FeatureMediaBlockService extends MediaBlockService
             'mediaId' => null,
             'format' => false,
             'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig',
-        ));
+        ]);
     }
 
     /**
@@ -45,33 +45,33 @@ class FeatureMediaBlockService extends MediaBlockService
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', array(
-            'keys' => array(
-                array('title', 'Symfony\Component\Form\Extension\Core\Type\TextType', array(
+        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', [
+            'keys' => [
+                ['title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                     'required' => false,
                     'label' => 'form.label_title',
-                )),
-                array('content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
+                ]],
+                ['content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
                     'required' => false,
                     'label' => 'form.label_content',
-                )),
-                array('orientation', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                ]],
+                ['orientation', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                     'required' => false,
-                    'choices' => array(
+                    'choices' => [
                         'left' => 'form.label_orientation_left',
                         'right' => 'form.label_orientation_right',
-                    ),
+                    ],
                     'label' => 'form.label_orientation',
-                )),
-                array($this->getMediaBuilder($formMapper), null, array()),
-                array('format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                ]],
+                [$this->getMediaBuilder($formMapper), null, []],
+                ['format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
-                )),
-            ),
+                ]],
+            ],
             'translation_domain' => 'SonataMediaBundle',
-        ));
+        ]);
     }
 
     /**
@@ -79,9 +79,9 @@ class FeatureMediaBlockService extends MediaBlockService
      */
     public function getStylesheets($media)
     {
-        return array(
+        return [
             '/bundles/sonatamedia/blocks/feature_media/theme.css',
-        );
+        ];
     }
 
     /**
@@ -89,8 +89,8 @@ class FeatureMediaBlockService extends MediaBlockService
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', array(
+        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
-        ));
+        ]);
     }
 }

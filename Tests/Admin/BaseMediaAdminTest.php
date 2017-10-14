@@ -85,9 +85,9 @@ class BaseMediaAdminTest extends \PHPUnit_Framework_TestCase
         $this->request->query = $query->reveal();
 
         $this->pool->getDefaultContext()->willReturn('default_context');
-        $this->pool->getProvidersByContext('context')->willReturn(array($provider->reveal()));
+        $this->pool->getProvidersByContext('context')->willReturn([$provider->reveal()]);
         $this->categoryManager->getRootCategory('context')->willReturn($category->reveal());
-        $this->request->get('filter')->willReturn(array());
+        $this->request->get('filter')->willReturn([]);
         $this->request->get('provider')->willReturn(null);
         $this->request->get('category')->willReturn(null);
         $this->request->get('hide_context')->willReturn(true);
@@ -97,7 +97,7 @@ class BaseMediaAdminTest extends \PHPUnit_Framework_TestCase
 
     private function configureGetProviderName($media)
     {
-        $this->request->get('uniqid')->willReturn(array('providerName' => 'providerName'));
+        $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
         $media->setProviderName('providerName')->shouldBeCalled();
     }
 }

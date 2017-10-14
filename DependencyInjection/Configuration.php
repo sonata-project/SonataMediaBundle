@@ -88,7 +88,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->arrayNode('providers')
                                 ->prototype('scalar')
-                                    ->defaultValue(array())
+                                    ->defaultValue([])
                                 ->end()
                             ->end()
                             ->arrayNode('formats')
@@ -202,7 +202,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('storage')
                                     ->defaultValue('standard')
                                     ->validate()
-                                    ->ifNotInArray(array('standard', 'reduced'))
+                                    ->ifNotInArray(['standard', 'reduced'])
                                         ->thenInvalid('Invalid storage type - "%s"')
                                     ->end()
                                 ->end()
@@ -210,21 +210,21 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('acl')
                                     ->defaultValue('public')
                                     ->validate()
-                                    ->ifNotInArray(array('private', 'public', 'open', 'auth_read', 'owner_read', 'owner_full_control'))
+                                    ->ifNotInArray(['private', 'public', 'open', 'auth_read', 'owner_read', 'owner_full_control'])
                                         ->thenInvalid('Invalid acl permission - "%s"')
                                     ->end()
                                 ->end()
                                 ->scalarNode('encryption')
                                     ->defaultValue('')
                                     ->validate()
-                                    ->ifNotInArray(array('aes256'))
+                                    ->ifNotInArray(['aes256'])
                                         ->thenInvalid('Invalid encryption type - "%s"')
                                     ->end()
                                 ->end()
                                 ->scalarNode('region')->defaultValue('s3.amazonaws.com')->end()
                                 ->scalarNode('version')->defaultValue('latest')->end()
                                 ->enumNode('sdk_version')
-                                    ->values(array(2, 3))
+                                    ->values([2, 3])
                                     ->defaultValue(2)
                                 ->end()
                                 ->arrayNode('meta')
@@ -307,24 +307,24 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
                                 ->arrayNode('allowed_extensions')
                                     ->prototype('scalar')->end()
-                                    ->defaultValue(array(
+                                    ->defaultValue([
                                         'pdf', 'txt', 'rtf',
                                         'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
                                         'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb',
                                         'csv',
                                         'xml',
-                                    ))
+                                    ])
                                 ->end()
                                 ->arrayNode('allowed_mime_types')
                                     ->prototype('scalar')->end()
-                                    ->defaultValue(array(
+                                    ->defaultValue([
                                         'application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain',
                                         'application/excel', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint',
                                         'application/vnd.ms-powerpoint', 'application/vnd.oasis.opendocument.text', 'application/vnd.oasis.opendocument.graphics', 'application/vnd.oasis.opendocument.presentation', 'application/vnd.oasis.opendocument.spreadsheet', 'application/vnd.oasis.opendocument.chart', 'application/vnd.oasis.opendocument.formula', 'application/vnd.oasis.opendocument.database', 'application/vnd.oasis.opendocument.image',
                                         'text/comma-separated-values',
                                         'text/xml', 'application/xml',
                                         'application/zip', // seems to be used for xlsx document ...
-                                    ))
+                                    ])
                                 ->end()
                             ->end()
                         ->end()
@@ -341,16 +341,16 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('adapter')->defaultValue('sonata.media.adapter.image.default')->end()
                                 ->arrayNode('allowed_extensions')
                                     ->prototype('scalar')->end()
-                                    ->defaultValue(array('jpg', 'png', 'jpeg'))
+                                    ->defaultValue(['jpg', 'png', 'jpeg'])
                                 ->end()
                                 ->arrayNode('allowed_mime_types')
                                     ->prototype('scalar')->end()
-                                    ->defaultValue(array(
+                                    ->defaultValue([
                                         'image/pjpeg',
                                         'image/jpeg',
                                         'image/png',
                                         'image/x-png',
-                                    ))
+                                    ])
                                 ->end()
                             ->end()
                         ->end()

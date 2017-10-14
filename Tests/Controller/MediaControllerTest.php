@@ -108,14 +108,14 @@ class MediaControllerTest extends PHPUnit_Framework_TestCase
 
         $this->configureGetMedia(1, $media->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
-        $this->configureRender('SonataMediaBundle:Media:view.html.twig', array(
+        $this->configureRender('SonataMediaBundle:Media:view.html.twig', [
             'media' => $media->reveal(),
-            'formats' => array('format'),
+            'formats' => ['format'],
             'format' => 'format',
-        ), 'renderResponse');
+        ], 'renderResponse');
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
         $media->getContext()->willReturn('context');
-        $pool->getFormatNamesByContext('context')->willReturn(array('format'));
+        $pool->getFormatNamesByContext('context')->willReturn(['format']);
 
         $response = $this->controller->viewAction($request->reveal(), 1, 'format');
 

@@ -20,11 +20,11 @@ class DailyMotionProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = array())
+    public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         // documentation : http://www.dailymotion.com/en/doc/api/player
 
-        $defaults = array(
+        $defaults = [
             // Values: 0 or 1. Default is 0. Determines if the player loads related videos when
             // the current video begins playback.
             'related' => 0,
@@ -68,19 +68,19 @@ class DailyMotionProvider extends BaseVideoProvider
             'foreground' => null,
             'background' => null,
             'highlight' => null,
-        );
+        ];
 
-        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
+        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
-        $params = array(
+        $params = [
             'player_parameters' => http_build_query($player_parameters),
             'allowFullScreen' => isset($options['allowFullScreen']) ? $options['allowFullScreen'] : 'true',
             'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
             'width' => $box->getWidth(),
             'height' => $box->getHeight(),
-        );
+        ];
 
         return $params;
     }
@@ -123,7 +123,7 @@ class DailyMotionProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = array())
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
     }
