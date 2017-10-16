@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Controller;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\MediaController;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class MediaControllerTest extends PHPUnit_Framework_TestCase
+class MediaControllerTest extends TestCase
 {
     protected $container;
     protected $controller;

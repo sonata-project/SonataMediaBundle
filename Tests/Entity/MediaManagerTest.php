@@ -11,14 +11,14 @@
 
 namespace Sonata\MediaBundle\Test\Entity;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
 use Sonata\MediaBundle\Entity\MediaManager;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 /**
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
  */
-class MediaManagerTest extends PHPUnit_Framework_TestCase
+class MediaManagerTest extends TestCase
 {
     public function testGetPager()
     {

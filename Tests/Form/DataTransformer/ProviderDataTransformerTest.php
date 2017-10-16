@@ -11,13 +11,13 @@
 
 namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ProviderDataTransformerTest extends PHPUnit_Framework_TestCase
+class ProviderDataTransformerTest extends TestCase
 {
     public function testReverseTransformFakeValue()
     {

@@ -15,10 +15,10 @@ use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class SimpleResizerTest extends PHPUnit_Framework_TestCase
+class SimpleResizerTest extends TestCase
 {
     /**
      * @expectedException \RuntimeException

@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Security;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Security\ForbiddenDownloadStrategy;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class ForbiddenDownloadStrategyTest extends PHPUnit_Framework_TestCase
+class ForbiddenDownloadStrategyTest extends TestCase
 {
     public function testIsGranted()
     {

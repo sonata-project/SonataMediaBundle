@@ -12,9 +12,9 @@
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryHasMedia;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class GalleryTest extends GalleryHasMedia
@@ -24,7 +24,7 @@ class GalleryTest extends GalleryHasMedia
 /**
  * @author Hugo Briand <briand@ekino.com>
  */
-class GalleryControllerTest extends PHPUnit_Framework_TestCase
+class GalleryControllerTest extends TestCase
 {
     public function testGetGalleriesAction()
     {

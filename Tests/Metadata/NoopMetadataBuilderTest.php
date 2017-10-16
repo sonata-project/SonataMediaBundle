@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Metadata;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class NoopMetadataBuilderTest extends PHPUnit_Framework_TestCase
+class NoopMetadataBuilderTest extends TestCase
 {
     public function testNoop()
     {

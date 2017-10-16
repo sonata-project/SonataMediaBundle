@@ -13,10 +13,10 @@ namespace Sonata\MediaBundle\Tests\Resizer;
 
 use Gaufrette\File;
 use Imagine\Image\Box;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Resizer\SquareResizer;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class SquareResizerTest extends PHPUnit_Framework_TestCase
+class SquareResizerTest extends TestCase
 {
     /**
      * @expectedException \RuntimeException

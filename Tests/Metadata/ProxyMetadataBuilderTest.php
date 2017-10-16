@@ -13,12 +13,12 @@ namespace Sonata\MediaBundle\Tests\Metadata;
 
 use AmazonS3 as AmazonClient;
 use Gaufrette\Adapter\AmazonS3;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class ProxyMetadataBuilderTest extends PHPUnit_Framework_TestCase
+class ProxyMetadataBuilderTest extends TestCase
 {
     public function testProxyAmazon()
     {

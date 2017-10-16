@@ -11,15 +11,15 @@
 
 namespace Sonata\MediaBundle\Tests\Command;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class FixMediaContextCommandTest extends PHPUnit_Framework_TestCase
+class FixMediaContextCommandTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
