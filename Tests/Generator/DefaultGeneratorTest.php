@@ -11,10 +11,11 @@
 
 namespace Sonata\MediaBundle\Tests\Generator;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Tests\Entity\Media;
 
-class DefaultGeneratorTest extends \PHPUnit_Framework_TestCase
+class DefaultGeneratorTest extends TestCase
 {
     public function testProvider()
     {

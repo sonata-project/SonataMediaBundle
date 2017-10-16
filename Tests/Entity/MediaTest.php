@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\Tests\Entity;
 
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class MediaTest extends PHPUnit_Framework_TestCase
+class MediaTest extends TestCase
 {
     public function testMetadata()
     {

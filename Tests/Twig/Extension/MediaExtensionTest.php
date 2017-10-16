@@ -1,4 +1,5 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
 /*
  * This file is part of the Sonata Project package.
@@ -10,13 +11,12 @@
  */
 
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 
 /**
  * @author Geza Buza <bghome@gmail.com>
  */
-class MediaExtensionTest extends PHPUnit_Framework_TestCase
+class MediaExtensionTest extends TestCase
 {
     /**
      * @var Sonata\MediaBundle\Provider\MediaProviderInterface

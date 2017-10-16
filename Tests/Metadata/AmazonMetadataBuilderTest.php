@@ -12,10 +12,10 @@
 namespace Sonata\MediaBundle\Tests\Metadata;
 
 use Aws\S3\Enum\Storage;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class AmazonMetadataBuilderTest extends PHPUnit_Framework_TestCase
+class AmazonMetadataBuilderTest extends TestCase
 {
     public function testAmazon()
     {

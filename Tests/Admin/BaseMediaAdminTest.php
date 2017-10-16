@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Tests\Admin;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 
 class TestMediaAdmin extends BaseMediaAdmin
@@ -24,7 +25,7 @@ class EntityWithGetId
     }
 }
 
-class BaseMediaAdminTest extends \PHPUnit_Framework_TestCase
+class BaseMediaAdminTest extends TestCase
 {
     private $pool;
     private $categoryManager;

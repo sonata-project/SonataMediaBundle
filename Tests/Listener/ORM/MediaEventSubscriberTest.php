@@ -12,16 +12,16 @@
 namespace Sonata\MediaBundle\Tests\Listener\ORM;
 
 use Doctrine\ORM\Events;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Listener\ORM\MediaEventSubscriber;
 use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author Mathieu Lemoine <mlemoine@mlemoine.name>
  */
-class MediaEventSubscriberTest extends PHPUnit_Framework_TestCase
+class MediaEventSubscriberTest extends TestCase
 {
     /**
      * @see https://github.com/sonata-project/SonataClassificationBundle/issues/60

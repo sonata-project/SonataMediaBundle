@@ -11,10 +11,11 @@
 
 namespace Sonata\MediaBundle\Tests\Controller;
 
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
 
-class GalleryAdminControllerTest extends \PHPUnit_Framework_TestCase
+class GalleryAdminControllerTest extends TestCase
 {
     private $container;
     private $admin;

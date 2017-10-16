@@ -11,14 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\PHPCR;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\PHPCR\MediaManager;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 /**
  * @group document
  * @group PHPCR
  */
-class MediaManagerTest extends PHPUnit_Framework_TestCase
+class MediaManagerTest extends TestCase
 {
     /** @var MediaManager */
     private $manager;

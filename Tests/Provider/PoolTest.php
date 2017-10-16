@@ -11,14 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\FileProvider;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class PoolTest extends PHPUnit_Framework_TestCase
+class PoolTest extends TestCase
 {
     /**
      * @expectedException        \InvalidArgumentException

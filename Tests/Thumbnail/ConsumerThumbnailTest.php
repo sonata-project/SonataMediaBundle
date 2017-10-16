@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Thumbnail;
 
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
 
-class ConsumerThumbnailTest extends PHPUnit_Framework_TestCase
+class ConsumerThumbnailTest extends TestCase
 {
     public function testGenerateDispatchesEvents()
     {
