@@ -1,5 +1,4 @@
 <?php
-use PHPUnit\Framework\TestCase;
 
 /*
  * This file is part of the Sonata Project package.
@@ -10,6 +9,7 @@ use PHPUnit\Framework\TestCase;
  * file that was distributed with this source code.
  */
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 
