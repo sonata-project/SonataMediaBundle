@@ -11,9 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Admin;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\GalleryItemAdmin;
 
-class GalleryItemAdminTest extends \PHPUnit_Framework_TestCase
+class GalleryItemAdminTest extends TestCase
 {
     private $mediaAdmin;
 

@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Security;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Security\PublicDownloadStrategy;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class PublicDownloadStrategyTest extends PHPUnit_Framework_TestCase
+class PublicDownloadStrategyTest extends TestCase
 {
     public function testIsGranted()
     {

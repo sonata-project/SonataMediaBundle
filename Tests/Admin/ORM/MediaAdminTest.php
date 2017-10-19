@@ -11,9 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Admin\ORM;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
 
-class MediaAdminTest extends \PHPUnit_Framework_TestCase
+class MediaAdminTest extends TestCase
 {
     private $pool;
     private $categoryManager;

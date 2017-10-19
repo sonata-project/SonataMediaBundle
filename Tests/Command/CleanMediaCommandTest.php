@@ -22,22 +22,10 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Tests\FilesystemTestCase;
 
-if (class_exists('Symfony\Component\Filesystem\Tests\FilesystemTestCase')) {
-    class TestCase extends FilesystemTestCase
-    {
-    }
-} else {
-    class TestCase extends \PHPUnit_Framework_TestCase
-    {
-    }
-}
-
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
- *
- * @requires function Symfony\Component\Filesystem\Tests\FilesystemTestCase::setUpBeforeClass
  */
-class CleanMediaCommandTest extends TestCase
+class CleanMediaCommandTest extends FilesystemTestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface

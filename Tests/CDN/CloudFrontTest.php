@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Tests\CDN;
 
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class CloudFrontTest extends PHPUnit_Framework_TestCase
+class CloudFrontTest extends TestCase
 {
     /**
      * @group legacy

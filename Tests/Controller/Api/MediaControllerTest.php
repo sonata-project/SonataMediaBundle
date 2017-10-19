@@ -11,14 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\Api\MediaController;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Hugo Briand <briand@ekino.com>
  */
-class MediaControllerTest extends PHPUnit_Framework_TestCase
+class MediaControllerTest extends TestCase
 {
     public function testGetMediaAction()
     {

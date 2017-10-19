@@ -11,16 +11,16 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
  */
-abstract class AbstractProviderTest extends PHPUnit_Framework_TestCase
+abstract class AbstractProviderTest extends TestCase
 {
     /**
      * @var FormBuilder

@@ -11,12 +11,12 @@
 
 namespace Sonata\MediaBundle\Tests\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 use Sonata\MediaBundle\Validator\FormatValidator;
 
-class FormatValidatorTest extends PHPUnit_Framework_TestCase
+class FormatValidatorTest extends TestCase
 {
     public function testValidate()
     {

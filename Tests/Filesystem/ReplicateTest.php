@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Filesystem;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Replicate;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class ReplicateTest extends PHPUnit_Framework_TestCase
+class ReplicateTest extends TestCase
 {
     public function testReplicate()
     {

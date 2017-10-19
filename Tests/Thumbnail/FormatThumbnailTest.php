@@ -14,10 +14,10 @@ namespace Sonata\MediaBundle\Tests\Security;
 use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class FormatThumbnailTest extends PHPUnit_Framework_TestCase
+class FormatThumbnailTest extends TestCase
 {
     public function testGenerate()
     {
