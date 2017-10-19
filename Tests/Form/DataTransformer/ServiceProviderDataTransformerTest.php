@@ -11,11 +11,11 @@
 
 namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sonata\MediaBundle\Form\DataTransformer\ServiceProviderDataTransformer;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class ServiceProviderDataTransformerTest extends PHPUnit_Framework_TestCase
+class ServiceProviderDataTransformerTest extends TestCase
 {
     public function testTransformNoop()
     {

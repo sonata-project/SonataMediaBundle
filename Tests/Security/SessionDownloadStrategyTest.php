@@ -11,13 +11,13 @@
 
 namespace Sonata\MediaBundle\Tests\Security;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Security\SessionDownloadStrategy;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
 /**
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
  */
-final class SessionDownloadStrategyTest extends PHPUnit_Framework_TestCase
+final class SessionDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedFalse()
     {

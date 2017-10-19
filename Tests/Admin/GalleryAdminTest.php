@@ -11,9 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\Admin;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 
-class GalleryAdminTest extends \PHPUnit_Framework_TestCase
+class GalleryAdminTest extends TestCase
 {
     protected $pool;
     protected $categoryManager;

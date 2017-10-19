@@ -11,10 +11,10 @@
 
 namespace Sonata\MediaBundle\Tests\CDN;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\CDN\PantherPortal;
-use Sonata\MediaBundle\Tests\Helpers\PHPUnit_Framework_TestCase;
 
-class PantherPortalTest extends PHPUnit_Framework_TestCase
+class PantherPortalTest extends TestCase
 {
     public function testPortal()
     {

@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Tests\Controller;
 
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sonata\MediaBundle\Controller\MediaAdminController;
 
@@ -21,7 +22,7 @@ class EntityWithGetId
     }
 }
 
-class MediaAdminControllerTest extends \PHPUnit_Framework_TestCase
+class MediaAdminControllerTest extends TestCase
 {
     private $container;
     private $admin;
