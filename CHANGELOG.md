@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.8.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.7.0...3.8.0) - 2017-10-22
+### Removed
+- Support for old versions of php and Symfony.
+
+## [3.7.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.6.0...3.7.0) - 2017-10-22
+### Added
+- Added `'onDelete' => 'CASCADE'` for mapping from GalleryHasMedia to Media and Gallery
+
+### Changed
+- Use SonataAdminBundle configuration to configure bundle services
+
+### Fixed
+- Prevent file from being removed if an error occurred while deleting its database entry.
+- deprecation notices related to `addClassesToCompile`
+
 ## [3.6.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.5.1...3.6.0) - 2017-08-01
 ### Added
 - The Image Provider returns responsive images to the twig media helper.
