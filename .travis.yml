@@ -10,6 +10,8 @@ branches:
 language: php
 
 php:
+  - '5.6'
+  - '7.0'
   - '7.1'
   - nightly
 
@@ -17,7 +19,7 @@ services:
   - mongodb
 
 sudo: false
-dist: precise
+dist: trusty
 
 cache:
   pip: true
@@ -39,7 +41,7 @@ matrix:
       env: TARGET=docs
     - php: '7.1'
       env: TARGET=lint
-    - php: '7.1'
+    - php: '5.6'
       env: COMPOSER_FLAGS="--prefer-lowest"
     - php: '7.1'
       env: SYMFONY=2.8.*
@@ -64,7 +66,6 @@ matrix:
     - php: '7.1'
       env: SYMFONY_DEPRECATIONS_HELPER=0
     - php: hhvm
-      dist: trusty
   allow_failures:
     - php: nightly
     - php: hhvm
