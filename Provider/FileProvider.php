@@ -140,7 +140,7 @@ class FileProvider extends BaseProvider
             ? 'Symfony\Component\Form\Extension\Core\Type\FileType'
             : 'file';
 
-        if ($formBuilder->getOption('context') == 'api') {
+        if ('api' == $formBuilder->getOption('context')) {
             $formBuilder->add('binaryContent', $fileType);
             $formBuilder->add('contentType');
         } else {
@@ -156,7 +156,7 @@ class FileProvider extends BaseProvider
      */
     public function postPersist(MediaInterface $media)
     {
-        if ($media->getBinaryContent() === null) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -180,7 +180,7 @@ class FileProvider extends BaseProvider
         $oldMedia = clone $media;
         // if no previous reference is provided, it prevents
         // Filesystem from trying to remove a directory
-        if ($media->getPreviousProviderReference() !== null) {
+        if (null !== $media->getPreviousProviderReference()) {
             $oldMedia->setProviderReference($media->getPreviousProviderReference());
 
             $path = $this->getReferenceImage($oldMedia);
@@ -270,7 +270,7 @@ class FileProvider extends BaseProvider
             throw new \RuntimeException('Invalid mode provided');
         }
 
-        if ($mode == 'http') {
+        if ('http' == $mode) {
             if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
                 $file = $this->getReferenceFile($media);
             } else {
@@ -338,7 +338,7 @@ class FileProvider extends BaseProvider
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
-        if ($media->getBinaryContent() === null || $media->getBinaryContent() instanceof File) {
+        if (null === $media->getBinaryContent() || $media->getBinaryContent() instanceof File) {
             return;
         }
 
@@ -396,7 +396,7 @@ class FileProvider extends BaseProvider
 
         // this is the name used to store the file
         if (!$media->getProviderReference() ||
-            $media->getProviderReference() === MediaInterface::MISSING_BINARY_REFERENCE
+            MediaInterface::MISSING_BINARY_REFERENCE === $media->getProviderReference()
         ) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
@@ -462,7 +462,7 @@ class FileProvider extends BaseProvider
      */
     protected function generateBinaryFromRequest(MediaInterface $media)
     {
-        if (php_sapi_name() === 'cli') {
+        if ('cli' === php_sapi_name()) {
             throw new \RuntimeException('The current process cannot be executed in cli environment');
         }
 

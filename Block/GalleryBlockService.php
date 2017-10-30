@@ -275,9 +275,9 @@ class GalleryBlockService extends AbstractAdminBlockService
      */
     private function getMediaType(MediaInterface $media)
     {
-        if ($media->getContentType() == 'video/x-flv') {
+        if ('video/x-flv' == $media->getContentType()) {
             return 'video';
-        } elseif (substr($media->getContentType(), 0, 5) == 'image') {
+        } elseif ('image' == substr($media->getContentType(), 0, 5)) {
             return 'image';
         }
 

@@ -107,7 +107,7 @@ class PantherPortal implements CDNInterface
     {
         $result = $this->getClient()->flush($this->username, $this->password, 'paths', $this->siteId, implode("\n", $paths), true, false);
 
-        if ($result != 'Flush successfully submitted.') {
+        if ('Flush successfully submitted.' != $result) {
             throw new \RuntimeException('Unable to flush : '.$result);
         }
     }

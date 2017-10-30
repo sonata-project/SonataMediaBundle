@@ -66,7 +66,7 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
      */
     public function transform($value)
     {
-        if ($value === null) {
+        if (null === $value) {
             return new $this->class();
         }
 
@@ -87,7 +87,7 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
         // no binary
         if (empty($binaryContent)) {
             // and no media id
-            if ($media->getId() === null && $this->options['empty_on_new']) {
+            if (null === $media->getId() && $this->options['empty_on_new']) {
                 return;
             } elseif ($media->getId()) {
                 return $media;

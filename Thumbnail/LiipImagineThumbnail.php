@@ -52,7 +52,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        if ($format !== MediaProviderInterface::FORMAT_REFERENCE) {
+        if (MediaProviderInterface::FORMAT_REFERENCE !== $format) {
             throw new \RuntimeException('No private url for LiipImagineThumbnail');
         }
 

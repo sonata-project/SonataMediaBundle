@@ -21,7 +21,7 @@ class LocalTest extends TestCase
         $local = new Local('/tmp');
 
         // check if OS is Mac OS X where /tmp is a symlink to /private/tmp
-        $result = php_uname('s') == 'Darwin' ? '/private/tmp' : '/tmp';
+        $result = 'Darwin' == php_uname('s') ? '/private/tmp' : '/tmp';
 
         $this->assertSame($result, $local->getDirectory());
     }
