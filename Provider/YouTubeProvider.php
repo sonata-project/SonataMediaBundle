@@ -165,7 +165,7 @@ class YouTubeProvider extends BaseVideoProvider
 
             // Values: 'allowfullscreen' or empty. Default is 'allowfullscreen'. Setting to empty value disables
             //  the fullscreen button.
-            'allowFullScreen' => $default_player_url_parameters['fs'] == '1' ? true : false,
+            'allowFullScreen' => '1' == $default_player_url_parameters['fs'] ? true : false,
 
             // The allowScriptAccess parameter in the code is needed to allow the player SWF to call
             // functions on the containing HTML page, since the player is hosted on a different domain
@@ -254,7 +254,7 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (strlen($media->getBinaryContent()) === 11) {
+        if (11 === strlen($media->getBinaryContent())) {
             return;
         }
 
