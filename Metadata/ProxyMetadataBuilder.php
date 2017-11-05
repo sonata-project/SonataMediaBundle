@@ -32,7 +32,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     {
         $this->container = $container;
 
-        if ($map !== null) {
+        if (null !== $map) {
             @trigger_error(
                 'The "map" parameter is deprecated since version 2.4 and will be removed in 4.0.',
                 E_USER_DEPRECATED
