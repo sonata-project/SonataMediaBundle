@@ -89,9 +89,9 @@ class SyncThumbsCommand extends BaseCommand
         $fsRegister->setAccessible(true);
 
         $batchCounter = 0;
-        $batchSize = intval($input->getOption('batchSize'));
-        $batchesLimit = intval($input->getOption('batchesLimit'));
-        $startOffset = intval($input->getOption('startOffset'));
+        $batchSize = (int) $input->getOption('batchSize');
+        $batchesLimit = (int) $input->getOption('batchesLimit');
+        $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
         do {
             ++$batchCounter;
