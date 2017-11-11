@@ -106,7 +106,7 @@ class RemoveThumbsCommand extends BaseCommand
             }
 
             $batchMediasCount = count($medias);
-            if ($batchMediasCount === 0) {
+            if (0 === $batchMediasCount) {
                 break;
             }
 
@@ -189,7 +189,7 @@ class RemoveThumbsCommand extends BaseCommand
             $dialog = $this->getHelperSet()->get('dialog');
             $formatKey = $dialog->select($this->output, 'Please select the format', $formats);
             $format = $formats[$formatKey];
-            if ($format === '<ALL THUMBNAILS>') {
+            if ('<ALL THUMBNAILS>' === $format) {
                 $format = $context.'_all';
             }
         } else {

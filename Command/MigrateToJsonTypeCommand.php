@@ -43,7 +43,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
 
         foreach ($medias as $media) {
             // if the row need to migrate
-            if (0 !== strpos($media[$column], '{') && $media[$column] !== '[]') {
+            if (0 !== strpos($media[$column], '{') && '[]' !== $media[$column]) {
                 $media[$column] = json_encode(unserialize($media[$column]));
                 $connection->update($table, [$column => $media[$column]], [$columnId => $media[$columnId]]);
                 ++$count;

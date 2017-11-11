@@ -80,7 +80,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         // if the context has only one provider, set it into the request
         // so the intermediate provider selection is skipped
-        if (count($providers) == 1 && null === $provider) {
+        if (1 == count($providers) && null === $provider) {
             $provider = array_shift($providers)->getName();
             $this->getRequest()->query->set('provider', $provider);
         }

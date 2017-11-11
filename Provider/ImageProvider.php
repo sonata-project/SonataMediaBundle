@@ -64,7 +64,7 @@ class ImageProvider extends FileProvider
             $box = $media->getBox();
         } else {
             $resizerFormat = $this->getFormat($format);
-            if ($resizerFormat === false) {
+            if (false === $resizerFormat) {
                 throw new \RuntimeException(sprintf('The image format "%s" is not defined.
                         Is the format registered in your ``sonata_media`` configuration?', $format));
             }
@@ -82,12 +82,12 @@ class ImageProvider extends FileProvider
             'height' => $box->getHeight(),
         ];
 
-        if ($format !== MediaProviderInterface::FORMAT_ADMIN) {
+        if (MediaProviderInterface::FORMAT_ADMIN !== $format) {
             $srcSet = [];
 
             foreach ($this->getFormats() as $providerFormat => $settings) {
                 // Check if format belongs to the current media's context
-                if (strpos($providerFormat, $media->getContext()) === 0) {
+                if (0 === strpos($providerFormat, $media->getContext())) {
                     $width = $this->resizer->getBox($media, $settings)->getWidth();
 
                     $srcSet[] = sprintf('%s %dw', $this->generatePublicUrl($media, $providerFormat), $width);

@@ -208,7 +208,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
             return false;
         }
 
-        if ($media->getProviderStatus() !== MediaInterface::STATUS_OK) {
+        if (MediaInterface::STATUS_OK !== $media->getProviderStatus()) {
             return false;
         }
 
