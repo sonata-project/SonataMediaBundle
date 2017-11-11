@@ -12,7 +12,7 @@ else
     echo "extension=mongodb.so" >> "$TRAVIS_INI_FILE"
 
     # Backwards compatibility with old mongo extension
-    composer require "alcaeus/mongo-php-adapter" --no-update
+    composer require "alcaeus/mongo-php-adapter" --ignore-platform-reqs
 fi
 
 sed --in-place "s/\"dev-master\":/\"dev-${TRAVIS_COMMIT}\":/" composer.json
