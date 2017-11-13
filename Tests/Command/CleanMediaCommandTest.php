@@ -11,9 +11,9 @@
 
 namespace Sonata\MediaBundle\Tests\Command;
 
+use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\MediaBundle\Command\CleanMediaCommand;
 use Sonata\MediaBundle\Filesystem\Local;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Application;
@@ -53,7 +53,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     private $pool;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|MediaManagerInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|ManagerInterface
      */
     private $mediaManager;
 
@@ -81,7 +81,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->pool = $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
 
-        $this->mediaManager = $mediaManager = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaManagerInterface')->getMock();
+        $this->mediaManager = $mediaManager = $this->getMockBuilder('Sonata\CoreBundle\Model\ManagerInterface');
 
         $this->fileSystemLocal = $fileSystemLocal = $this->getMockBuilder('Sonata\MediaBundle\Filesystem\Local')->disableOriginalConstructor()->getMock();
         $this->fileSystemLocal->expects($this->once())->method('getDirectory')->will($this->returnValue($this->workspace));

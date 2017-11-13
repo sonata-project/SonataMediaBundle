@@ -12,25 +12,10 @@
 namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\CoreBundle\Model\BaseDocumentManager;
-use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 class GalleryManager extends BaseDocumentManager implements GalleryManagerInterface
 {
-    /**
-     * BC Compatibility.
-     *
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated Please use save() from now
-     *
-     * @param GalleryInterface $gallery
-     */
-    public function update(GalleryInterface $gallery)
-    {
-        parent::save($gallery);
-    }
-
     /**
      * {@inheritdoc}
      */

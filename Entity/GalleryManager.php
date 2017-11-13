@@ -14,25 +14,10 @@ namespace Sonata\MediaBundle\Entity;
 use Sonata\CoreBundle\Model\BaseEntityManager;
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
-use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {
-    /**
-     * BC Compatibility.
-     *
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated Please use save() from now
-     *
-     * @param GalleryInterface $gallery
-     */
-    public function update(GalleryInterface $gallery)
-    {
-        parent::save($gallery);
-    }
-
     /**
      * {@inheritdoc}
      */
