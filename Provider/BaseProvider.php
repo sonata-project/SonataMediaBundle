@@ -134,7 +134,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function requireThumbnails()
     {
-        return $this->getResizer() !== null;
+        return null !== $this->getResizer();
     }
 
     /**

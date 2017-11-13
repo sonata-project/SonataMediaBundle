@@ -76,7 +76,7 @@ class FakeHttpWrapper
 
     public function stream_eof()
     {
-        return feof($this->fp) == 0;
+        return 0 == feof($this->fp);
     }
 
     public function stream_flush()

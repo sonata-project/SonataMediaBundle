@@ -109,7 +109,7 @@ class SyncThumbsCommand extends BaseCommand
             }
 
             $batchMediasCount = count($medias);
-            if ($batchMediasCount === 0) {
+            if (0 === $batchMediasCount) {
                 break;
             }
 

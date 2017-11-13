@@ -34,7 +34,7 @@ class MediaAdmin extends Admin
             ->add('providerReference')
             ->add('enabled')
             ->add('context', null, [
-                'show_filter' => $this->getPersistentParameter('hide_context') !== true,
+                'show_filter' => true !== $this->getPersistentParameter('hide_context'),
             ], 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', $options);
 
         if (null !== $this->categoryManager) {
