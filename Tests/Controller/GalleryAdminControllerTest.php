@@ -14,6 +14,10 @@ namespace Sonata\MediaBundle\Tests\Controller;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
+use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Component\Form\FormRenderer;
 
 class GalleryAdminControllerTest extends TestCase
 {
@@ -121,20 +125,21 @@ class GalleryAdminControllerTest extends TestCase
     private function configureSetFormTheme($formView, $formTheme)
     {
         $twig = $this->prophesize('\Twig_Environment');
-        $twigRenderer = $this->prophesize('Symfony\Bridge\Twig\Form\TwigRenderer');
-
         $this->container->get('twig')->willReturn($twig->reveal());
 
         // Remove this trick when bumping Symfony requirement to 3.2+.
-        if (method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
-            $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->willReturn($twigRenderer->reveal());
+        if (method_exists(AppVariable::class, 'getToken')) {
+            $twigRenderer = $this->prophesize(FormRenderer::class);
+            $twig->getRuntime(FormRenderer::class)->willReturn($twigRenderer->reveal());
+            $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
         } else {
-            $formExtension = $this->prophesize('Symfony\Bridge\Twig\Extension\FormExtension');
+            $twigRenderer = $this->prophesize(TwigRenderer::class);
+            $formExtension = $this->prophesize(FormExtension::class);
             $formExtension->renderer = $twigRenderer->reveal();
 
-            $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')->willReturn($formExtension->reveal());
+            $twig->getExtension(FormExtension::class)->willReturn($formExtension->reveal());
+            $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
         }
-        $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
 
     private function configureRender($template, $data, $rendered)
