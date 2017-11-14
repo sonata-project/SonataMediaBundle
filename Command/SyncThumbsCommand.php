@@ -17,6 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 /**
  * This command can be used to re-generate the thumbnails for all uploaded medias.
@@ -57,18 +58,24 @@ class SyncThumbsCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $helper = $this->getHelper('question');
+
         $providerName = $input->getArgument('providerName');
         if (null === $providerName) {
             $providers = array_keys($this->getMediaPool()->getProviders());
-            $providerKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the provider', $providers);
-            $providerName = $providers[$providerKey];
+            $question = new ChoiceQuestion('Please select the provider', $providers, 0);
+            $question->setErrorMessage('Provider %s is invalid.');
+
+            $providerName = $helper->ask($input, $output, $question);
         }
 
         $context = $input->getArgument('context');
         if (null === $context) {
             $contexts = array_keys($this->getMediaPool()->getContexts());
-            $contextKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the context', $contexts);
-            $context = $contexts[$contextKey];
+            $question = new ChoiceQuestion('Please select the context', $contexts, 0);
+            $question->setErrorMessage('Context %s is invalid.');
+
+            $context = $helper->ask($input, $output, $question);
         }
 
         $this->quiet = $input->getOption('quiet');
@@ -82,9 +89,9 @@ class SyncThumbsCommand extends BaseCommand
         $fsRegister->setAccessible(true);
 
         $batchCounter = 0;
-        $batchSize = intval($input->getOption('batchSize'));
-        $batchesLimit = intval($input->getOption('batchesLimit'));
-        $startOffset = intval($input->getOption('startOffset'));
+        $batchSize = (int) $input->getOption('batchSize');
+        $batchesLimit = (int) $input->getOption('batchesLimit');
+        $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
         do {
             ++$batchCounter;
