@@ -10,6 +10,8 @@ branches:
 language: php
 
 php:
+  - '5.6'
+  - '7.0'
   - '7.1'
   - nightly
 
@@ -17,7 +19,7 @@ services:
   - mongodb
 
 sudo: false
-dist: precise
+dist: trusty
 
 cache:
   pip: true
@@ -39,7 +41,7 @@ matrix:
       env: TARGET=docs
     - php: '7.1'
       env: TARGET=lint
-    - php: '7.1'
+    - php: '5.6'
       env: COMPOSER_FLAGS="--prefer-lowest"
     - php: '7.1'
       env: SYMFONY=2.8.*
@@ -48,31 +50,28 @@ matrix:
     - php: '7.1'
       env: SYMFONY=3.3.*
     - php: '7.1'
-      env: SYMFONY=dev-master@dev
+      env: SYMFONY='dev-master as 3.3'
     - php: '7.1'
       env: DOCTRINE_ODM=1.*
     - php: '7.1'
-      env: DOCTRINE_ODM=dev-master@dev
+      env: DOCTRINE_ODM='dev-master as 1'
     - php: '7.1'
       env: SONATA_CORE=3.*
     - php: '7.1'
-      env: SONATA_CORE=dev-master@dev
+      env: SONATA_CORE='dev-master as 3'
     - php: '7.1'
       env: SONATA_ADMIN=3.*
     - php: '7.1'
-      env: SONATA_ADMIN=dev-master@dev
+      env: SONATA_ADMIN='dev-master as 3'
     - php: '7.1'
       env: SYMFONY_DEPRECATIONS_HELPER=0
-    - php: hhvm
-      dist: trusty
   allow_failures:
     - php: nightly
-    - php: hhvm
     - env: SYMFONY_DEPRECATIONS_HELPER=0
-    - env: SYMFONY=dev-master@dev
-    - env: DOCTRINE_ODM=dev-master@dev
-    - env: SONATA_CORE=dev-master@dev
-    - env: SONATA_ADMIN=dev-master@dev
+    - env: SYMFONY='dev-master as 3.3'
+    - env: DOCTRINE_ODM='dev-master as 1'
+    - env: SONATA_CORE='dev-master as 3'
+    - env: SONATA_ADMIN='dev-master as 3'
 
 before_install:
   - git remote add upstream ${UPSTREAM_URL} && git fetch --all
