@@ -1,5 +1,5 @@
 /build
-/Resources/doc/_build
+/docs/_build
 /vendor
 .php_cs.cache
 composer.lock
