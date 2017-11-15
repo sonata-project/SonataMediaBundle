@@ -11,9 +11,12 @@
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 /**
  * This command can be used to re-generate the thumbnails for all uploaded medias.
@@ -31,6 +34,11 @@ class RefreshMetadataCommand extends BaseCommand
      * @var OutputInterface
      */
     protected $output;
+
+    /**
+     * @var InputInterface
+     */
+    private $input;
 
     /**
      * {@inheritdoc}
@@ -51,33 +59,27 @@ class RefreshMetadataCommand extends BaseCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $provider = $input->getArgument('providerName');
-        if (null === $provider) {
-            $providers = array_keys($this->getMediaPool()->getProviders());
-            $providerKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the provider', $providers);
-            $provider = $providers[$providerKey];
-        }
-
-        $context = $input->getArgument('context');
-        if (null === $context) {
-            $contexts = array_keys($this->getMediaPool()->getContexts());
-            $contextKey = $this->getHelperSet()->get('dialog')->select($output, 'Please select the context', $contexts);
-            $context = $contexts[$contextKey];
-        }
-
         $this->quiet = $input->getOption('quiet');
+
+        $this->input = $input;
         $this->output = $output;
 
+        $provider = $this->getProvider();
+        $context = $this->getContext();
+
         $medias = $this->getMediaManager()->findBy([
-            'providerName' => $provider,
+            'providerName' => $provider->getName(),
             'context' => $context,
         ]);
 
-        $this->log(sprintf('Loaded %s medias for generating thumbs (provider: %s, context: %s)', count($medias), $provider, $context));
+        $this->log(sprintf(
+            'Loaded %s medias for generating thumbs (provider: %s, context: %s)',
+            count($medias),
+            $provider->getName(),
+            $context
+        ));
 
         foreach ($medias as $media) {
-            $provider = $this->getMediaPool()->getProvider($media->getProviderName());
-
             $this->log('Refresh media '.$media->getName().' - '.$media->getId());
 
             try {
@@ -110,5 +112,49 @@ class RefreshMetadataCommand extends BaseCommand
         if (false === $this->quiet) {
             $this->output->writeln($message);
         }
+    }
+
+    /**
+     * @return MediaProviderInterface
+     */
+    private function getProvider()
+    {
+        $providerName = $this->input->getArgument('providerName');
+
+        if (null === $providerName) {
+            $providerName = $this->getQuestionHelper()->ask(
+                $this->input,
+                $this->output,
+                new ChoiceQuestion('Please select the provider', array_keys($this->getMediaPool()->getProviders()))
+            );
+        }
+
+        return $this->getMediaPool()->getProvider($providerName);
+    }
+
+    /**
+     * @return string
+     */
+    private function getContext()
+    {
+        $context = $this->input->getArgument('context');
+
+        if (null === $context) {
+            $context = $this->getQuestionHelper()->ask(
+                $this->input,
+                $this->output,
+                new ChoiceQuestion('Please select the context', array_keys($this->getMediaPool()->getContexts()))
+            );
+        }
+
+        return $context;
+    }
+
+    /**
+     * @return QuestionHelper
+     */
+    private function getQuestionHelper()
+    {
+        return $this->getHelper('question');
     }
 }
