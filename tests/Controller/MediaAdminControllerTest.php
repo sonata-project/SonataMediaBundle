@@ -178,19 +178,27 @@ class MediaAdminControllerTest extends TestCase
     private function configureSetFormTheme($formView, $formTheme)
     {
         $twig = $this->prophesize('\Twig_Environment');
-        $twigRenderer = $this->prophesize('Symfony\Bridge\Twig\Form\TwigRenderer');
+
+        // Remove this trick when bumping Symfony requirement to 3.4+
+        if (method_exists('Symfony\Bridge\Twig\Command\DebugCommand', 'getLoaderPaths')) {
+            $rendererClass = 'Symfony\Component\Form\FormRenderer';
+        } else {
+            $rendererClass = 'Symfony\Bridge\Twig\Form\TwigRenderer';
+        }
+
+        $twigRenderer = $this->prophesize($rendererClass);
 
         $this->container->get('twig')->willReturn($twig->reveal());
 
         // Remove this trick when bumping Symfony requirement to 3.2+.
         if (method_exists('Symfony\Bridge\Twig\AppVariable', 'getToken')) {
-            $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->willReturn($twigRenderer->reveal());
+            $twig->getRuntime($rendererClass)->willReturn($twigRenderer->reveal());
         } else {
             $formExtension = $this->prophesize('Symfony\Bridge\Twig\Extension\FormExtension');
             $formExtension->renderer = $twigRenderer->reveal();
 
             // This Throw is for the CRUDController::setFormTheme()
-            $twig->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')->willThrow('\Twig_Error_Runtime');
+            $twig->getRuntime($rendererClass)->willThrow('\Twig_Error_Runtime');
             $twig->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')->willReturn($formExtension->reveal());
         }
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
