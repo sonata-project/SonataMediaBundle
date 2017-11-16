@@ -124,7 +124,7 @@ Medias in CKEditor with CoopTilleulsCKEditorSonataMediaBundle
 
 `CoopTilleulsCKEditorSonataMediaBundle <https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle>`_ allows to browse and upload files managed by SonataMedia directly from the UI of the `CKEditor <http://ckeditor.com/>`_ WYSIWYG editor.
 
-To use this feature, follow `CoopTilleulsCKEditorSonataMediaBundle installation instructions <https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle/blob/master/Resources/doc/install.md>`.
+To use this feature, follow `CoopTilleulsCKEditorSonataMediaBundle installation instructions <https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle/blob/master/docs/install.md>`.
 
 Now, just create a field with ckeditor as type and your done:
 

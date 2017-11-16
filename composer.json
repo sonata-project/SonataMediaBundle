@@ -80,15 +80,12 @@
         "symfony/monolog-bundle": "<2.4"
     },
     "autoload": {
-        "psr-4": { "Sonata\\MediaBundle\\": "" },
-        "exclude-from-classmap": [
-            "Tests/"
-        ]
+        "psr-4": { "Sonata\\MediaBundle\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": {
-            "Sonata\\MediaBundle\\Tests\\": "Tests/",
-            "Sonata\\ClassificationBundle\\": "Tests/fixtures/SonataClassificationBundle"
+            "Sonata\\MediaBundle\\Tests\\": "tests/",
+            "Sonata\\ClassificationBundle\\": "tests/fixtures/SonataClassificationBundle"
         }
     },
     "config": {
