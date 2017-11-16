@@ -83,25 +83,39 @@ class ImageProvider extends FileProvider
         ];
 
         if (MediaProviderInterface::FORMAT_ADMIN !== $format) {
-            $srcSet = [];
+            $srcSetFormats = $this->getFormats();
 
-            foreach ($this->getFormats() as $providerFormat => $settings) {
-                // Check if format belongs to the current media's context
-                if (0 === strpos($providerFormat, $media->getContext())) {
-                    $width = $this->resizer->getBox($media, $settings)->getWidth();
-
-                    $srcSet[] = sprintf('%s %dw', $this->generatePublicUrl($media, $providerFormat), $width);
+            if (isset($options['srcset']) && is_array($options['srcset'])) {
+                $srcSetFormats = [];
+                foreach ($options['srcset'] as $srcSetFormat) {
+                    $formatName = $this->getFormatName($media, $srcSetFormat);
+                    $srcSetFormats[$formatName] = $this->getFormat($formatName);
                 }
+                unset($options['srcset']);
             }
 
-            // The reference format is not in the formats list
-            $srcSet[] = sprintf(
-                '%s %dw',
-                $this->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
-                $media->getBox()->getWidth()
-            );
+            if (!isset($options['srcset'])) {
+                $srcSet = [];
 
-            $params['srcset'] = implode(', ', $srcSet);
+                foreach ($srcSetFormats as $providerFormat => $settings) {
+                    // Check if format belongs to the current media's context
+                    if (0 === strpos($providerFormat, $media->getContext())) {
+                        $width = $this->resizer->getBox($media, $settings)->getWidth();
+
+                        $srcSet[] = sprintf('%s %dw', $this->generatePublicUrl($media, $providerFormat), $width);
+                    }
+                }
+
+                // The reference format is not in the formats list
+                $srcSet[] = sprintf(
+                    '%s %dw',
+                    $this->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
+                    $media->getBox()->getWidth()
+                );
+
+                $params['srcset'] = implode(', ', $srcSet);
+            }
+
             $params['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);
         }
 
