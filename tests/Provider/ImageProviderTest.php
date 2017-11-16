@@ -126,8 +126,11 @@ class ImageProviderTest extends AbstractProviderTest
         );
         $this->assertSame('(max-width: 1000px) 100vw, 1000px', $properties['sizes']);
 
-        $properties = $provider->getHelperProperties($media, 'default_medium');
-        $this->assertSame($srcSet, $properties['srcset']);
+        $properties = $provider->getHelperProperties($media, 'default_medium', ['srcset' => ['default_large']]);
+        $this->assertSame(
+            '/uploads/media/default/0001/01/thumb_10_default_large.png 500w, /uploads/media/default/0001/01/ASDASDAS.png 1500w',
+            $properties['srcset']
+        );
         $this->assertSame(
             '/uploads/media/default/0001/01/thumb_10_default_medium.png',
             $properties['src']
