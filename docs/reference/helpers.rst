@@ -78,6 +78,13 @@ To override the ``sizes`` to fit your particular design, just pass a ``sizes`` o
 
     {% media media, 'large' with {'sizes': '(min-width: 20em) 50vw, 100vw'} %}
 
+To override the ``srcset`` attribute, just pass a ``srcset`` option to the
+helper. The option expects either a string or an array of formats.
+
+.. code-block:: jinja
+
+    {% media media, 'large' with {'srcset': ['small', 'big']} %}
+
 
 Thumbnails for files
 --------------------
