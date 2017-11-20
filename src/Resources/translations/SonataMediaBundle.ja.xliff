@@ -391,10 +391,6 @@
                 <source>sonata_media_gallery_index</source>
                 <target>ギャラリー</target>
             </trans-unit>
-            <trans-unit id="sonata_template_box_media_gallery_block">
-                <source>sonata_template_box_media_gallery_block</source>
-                <target>This is the gallery media block. Feel free to override it.</target>
-            </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
                 <target>説明</target>

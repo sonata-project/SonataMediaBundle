@@ -371,10 +371,6 @@
                 <source>sonata_media_gallery_index</source>
                 <target>Галерея</target>
             </trans-unit>
-            <trans-unit id="sonata_template_box_media_gallery_block">
-                <source>sonata_template_box_media_gallery_block</source>
-                <target>Це галерея медіаблок. Можна перевизначити її</target>
-            </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
                 <target>Опис</target>
