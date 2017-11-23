@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.9.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.8.0...3.9.0) - 2017-11-23
+### Added
+- Added option to set the img `srcset` tag by giving it an array of format names.
+
+### Changed
+- Rollback to PHP 5.6 as minimum support.
+
+### Fixed
+- fixed bug against twig 2.0 as `translationBundle` cannot be null
+- Silent `sonata:media:remove-thumbnails` command when running this command without arguments.
+- Sf3 compatibility on the sync-thumbnails command (dialog helper)
+- Sf3 compatibility on the refresh-metadata and update-cdn-status commands (dialog helper)
+- Use FormRenderer runtime to maintain compatibility with Symfony 3.4
+
 ## [3.8.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.7.0...3.8.0) - 2017-10-22
 ### Removed
 - Support for old versions of php and Symfony.
