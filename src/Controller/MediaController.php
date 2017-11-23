@@ -11,10 +11,13 @@
 
 namespace Sonata\MediaBundle\Controller;
 
+use InvalidArgumentException;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -42,12 +45,13 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string $id
      * @param string $format
      *
      * @return Response
+     *
+     * @throws AccessDeniedException
+     * @throws NotFoundHttpException
      */
     public function downloadAction($id, $format = MediaProviderInterface::FORMAT_REFERENCE)
     {
@@ -71,12 +75,13 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string $id
      * @param string $format
      *
      * @return Response
+     *
+     * @throws AccessDeniedException
+     * @throws NotFoundHttpException
      */
     public function viewAction($id, $format = MediaProviderInterface::FORMAT_REFERENCE)
     {
@@ -98,49 +103,44 @@ class MediaController extends Controller
     }
 
     /**
-     * This action applies a given filter to a given image,
-     * optionally saves the image and
-     * outputs it to the browser at the same time.
+     * This action applies a given filter to a given image, optionally saves the image and outputs it to the browser at the same time.
      *
      * @param string $path
      * @param string $filter
      *
-     * @return Response
+     * @return RedirectResponse
+     *
+     * @throws InvalidArgumentException
+     * @throws NotFoundHttpException
      */
     public function liipImagineFilterAction($path, $filter)
     {
-        if (!preg_match('@([^/]*)/(.*)/([0-9]*)_([a-z_A-Z]*).jpg@', $path, $matches)) {
-            throw new NotFoundHttpException();
+        $path = urldecode($path);
+        $resolver = $this->getCurrentRequest()->get('resolver');
+
+        if (!$this->get('liip_imagine.cache.manager')->isStored($path, $filter, $resolver)) {
+            if (!preg_match('@([^/]*)/(.*)/([0-9]*)_([a-z_A-Z]*).jpg@', $path, $matches)) {
+                throw new NotFoundHttpException();
+            }
+
+            $media = $this->getMedia($matches[3]);
+            if (!$media) {
+                throw new NotFoundHttpException();
+            }
+
+            $provider = $this->getProvider($media);
+            $file = $provider->getReferenceFile($media);
+            $binary = $this->get('liip_imagine.data.manager')->find($filter, '/uploads/media/'.$file->getKey());
+
+            $this->get('liip_imagine.cache.manager')->store(
+                $this->get('liip_imagine.filter.manager')->applyFilter($binary, $filter),
+                $path,
+                $filter,
+                $resolver
+            );
         }
 
-        $targetPath = $this->get('liip_imagine.cache.manager')->resolve($this->getCurrentRequest(), $path, $filter);
-
-        if ($targetPath instanceof Response) {
-            return $targetPath;
-        }
-
-        // get the file
-        $media = $this->getMedia($matches[3]);
-        if (!$media) {
-            throw new NotFoundHttpException();
-        }
-
-        $provider = $this->getProvider($media);
-        $file = $provider->getReferenceFile($media);
-
-        // load the file content from the abstracted file system
-        $tmpFile = sprintf('%s.%s', tempnam(sys_get_temp_dir(), 'sonata_media_liip_imagine'), $media->getExtension());
-        file_put_contents($tmpFile, $file->getContent());
-
-        $image = $this->get('liip_imagine')->open($tmpFile);
-
-        $response = $this->get('liip_imagine.filter.manager')->get($this->getCurrentRequest(), $filter, $image, $path);
-
-        if ($targetPath) {
-            $response = $this->get('liip_imagine.cache.manager')->store($response, $targetPath, $filter);
-        }
-
-        return $response;
+        return new RedirectResponse($this->get('liip_imagine.cache.manager')->resolve($path, $filter, $resolver), 301);
     }
 
     /**

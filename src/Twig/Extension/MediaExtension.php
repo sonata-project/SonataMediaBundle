@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Twig\Extension;
 
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
@@ -117,28 +118,57 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
             return '';
         }
 
-        $provider = $this->getMediaService()
-           ->getProvider($media->getProviderName());
+        $provider = $this->getMediaService()->getProvider($media->getProviderName());
 
         $format = $provider->getFormatName($media, $format);
-        $format_definition = $provider->getFormat($format);
+        $formatOptions = $provider->getFormat($format);
 
-        // build option
-        $defaultOptions = [
-            'title' => $media->getName(),
-            'alt' => $media->getName(),
-        ];
+        $options = array_merge(
+            false !== $formatOptions ? $formatOptions : [],
+            [
+                'title' => $media->getName(),
+                'alt' => $media->getName(),
+                'src' => $provider->generatePublicUrl($media, $format),
+            ],
+            $options
+        );
 
-        if ($format_definition['width']) {
-            $defaultOptions['width'] = $format_definition['width'];
+        if (isset($options['width']) && !isset($options['sizes'])) {
+            $options['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $options['width']);
         }
-        if ($format_definition['height']) {
-            $defaultOptions['height'] = $format_definition['height'];
+
+        if (MediaProviderInterface::FORMAT_ADMIN !== $format) {
+            $srcSetFormats = $provider->getFormats();
+
+            if (isset($options['srcset']) && is_array($options['srcset'])) {
+                $srcSetFormats = [];
+                foreach ($options['srcset'] as $srcSetFormat) {
+                    $formatName = $provider->getFormatName($media, $srcSetFormat);
+                    $srcSetFormats[$formatName] = $provider->getFormat($formatName);
+                }
+                unset($options['srcset']);
+            }
+
+            if (!isset($options['srcset'])) {
+                $srcSet = [];
+
+                foreach ($srcSetFormats as $providerFormat => $settings) {
+                    if (0 === strpos($providerFormat, $media->getContext()) && isset($settings['width'])) {
+                        $srcSet[] = sprintf('%s %dw', $provider->generatePublicUrl($media, $providerFormat), $settings['width']);
+                    }
+                }
+
+                if (isset($options['width'])) {
+                    $srcSet[] = sprintf(
+                        '%s %dw',
+                        $provider->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
+                        $options['width']
+                    );
+                }
+
+                $options['srcset'] = implode(', ', $srcSet);
+            }
         }
-
-        $options = array_merge($defaultOptions, $options);
-
-        $options['src'] = $provider->generatePublicUrl($media, $format);
 
         return $this->render($provider->getTemplate('helper_thumbnail'), [
             'media' => $media,

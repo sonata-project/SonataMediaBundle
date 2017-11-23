@@ -39,9 +39,17 @@ class LiipImagineThumbnail implements ThumbnailInterface
             $path = $provider->getReferenceImage($media);
         } else {
             $path = $this->router->generate(
-                sprintf('_imagine_%s', $format),
-                ['path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format)]
+                'liip_imagine_filter',
+                [
+                    'filter' => $format,
+                    'path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format),
+                ]
             );
+
+            // @todo: find a cleaner way to generate the path without the site's relative path.
+            if ($this->router->getContext() instanceof \Sonata\PageBundle\Request\SiteRequestContextInterface) {
+                $path = substr($path, strlen($this->router->getContext()->getSite()->getRelativePath()));
+            }
         }
 
         return $provider->getCdnPath($path, $media->getCdnIsFlushable());
