@@ -126,7 +126,7 @@ class SquareResizer implements ResizerInterface
             }
 
             if ($higher - $lower > 0) {
-                return new Box($lower, $lower);
+                $size = new Box($lower, $lower);
             }
         }
 
