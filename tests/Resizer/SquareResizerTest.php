@@ -57,7 +57,7 @@ class SquareResizerTest extends TestCase
     public static function getBoxSettings()
     {
         return [
-            [['width' => 90, 'height' => 90], new Box(100, 120), new Box(100, 100)],
+            [['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
             [['width' => 90, 'height' => 90], new Box(50, 50), new Box(50, 50)],
             [['width' => 90, 'height' => null], new Box(50, 50), new Box(50, 50)],
             [['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 7)],
