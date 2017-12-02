@@ -92,6 +92,11 @@ class ImageProvider extends FileProvider
                     $srcSetFormats[$formatName] = $this->getFormat($formatName);
                 }
                 unset($options['srcset']);
+
+                // Make sure the requested format is also in the srcSetFormats
+                if (!isset($srcSetFormats[$format])) {
+                    $srcSetFormats[$format] = $this->getFormat($format);
+                }
             }
 
             if (!isset($options['srcset'])) {

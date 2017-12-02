@@ -68,6 +68,7 @@ class BaseMediaAdminTest extends TestCase
         $this->categoryManager->find(1)->willReturn($category->reveal());
         $this->request->isMethod('POST')->willReturn(true);
         $this->request->get('context')->willReturn('context');
+        $this->request->get('id')->willReturn(null);
         $category->getContext()->willReturn($context->reveal());
         $context->getId()->willReturn('context');
         $media->setContext('context')->shouldBeCalled();

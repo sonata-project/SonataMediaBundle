@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.10.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.9.0...3.10.0) - 2017-11-30
+### Added
+- Added automatically adding src format to srcset
+
+### Fixed
+- Return size after resize in cropping flow, not just the cropped dimensions
+- FOSRest-related deprecations
+- It is now allowed to install Symfony 4
+
 ## [3.9.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.8.0...3.9.0) - 2017-11-23
 ### Added
 - Added option to set the img `srcset` tag by giving it an array of format names.

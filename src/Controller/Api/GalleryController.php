@@ -461,7 +461,13 @@ class GalleryController
             } else {
                 $context = new Context();
                 $context->setGroups(['sonata_api_read']);
-                $context->setMaxDepth(0);
+
+                // NEXT_MAJOR: simplify when dropping FOSRest < 2.1
+                if (method_exists($context, 'disableMaxDepth')) {
+                    $context->disableMaxDepth();
+                } else {
+                    $context->setMaxDepth(0);
+                }
                 $view->setContext($context);
             }
 
@@ -560,7 +566,13 @@ class GalleryController
             } else {
                 $context = new Context();
                 $context->setGroups(['sonata_api_read']);
-                $context->setMaxDepth(0);
+
+                // NEXT_MAJOR: simplify when dropping FOSRest < 2.1
+                if (method_exists($context, 'disableMaxDepth')) {
+                    $context->disableMaxDepth();
+                } else {
+                    $context->setMaxDepth(0);
+                }
                 $view->setContext($context);
             }
 
