@@ -95,10 +95,10 @@ class Pixlr
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string $id
      * @param string $mode
+     *
+     * @throws NotFoundHttpException
      *
      * @return RedirectResponse
      */
@@ -193,9 +193,9 @@ class Pixlr
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string $id
+     *
+     * @throws NotFoundHttpException
      *
      * @return Response
      */
@@ -224,9 +224,9 @@ class Pixlr
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string $id
+     *
+     * @throws NotFoundHttpException
      *
      * @return MediaInterface
      */
@@ -242,10 +242,10 @@ class Pixlr
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string         $hash
      * @param MediaInterface $media
+     *
+     * @throws NotFoundHttpException
      */
     private function checkMedia($hash, MediaInterface $media)
     {

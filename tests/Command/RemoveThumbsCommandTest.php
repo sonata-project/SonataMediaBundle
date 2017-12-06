@@ -89,8 +89,6 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
                     case 'sonata.media.manager.media':
                         return $this->mediaManager;
                 }
-
-                return;
             }));
     }
 

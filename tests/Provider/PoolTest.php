@@ -20,12 +20,11 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class PoolTest extends TestCase
 {
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Provider name cannot be empty, did you forget to call setProviderName() in your Media object?
-     */
     public function testGetEmptyProviderName()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
+
         $mediaPool = $this
             ->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
             ->disableOriginalConstructor()
@@ -36,12 +35,11 @@ class PoolTest extends TestCase
         $mediaPool->getProvider(null);
     }
 
-    /**
-     * @expectedException        \RuntimeException
-     * @expectedExceptionMessage Unable to retrieve provider named "provider_a" since there are no providers configured yet.
-     */
     public function testGetWithEmptyProviders()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to retrieve provider named "provider_a" since there are no providers configured yet.');
+
         $mediaPool = $this
             ->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
             ->disableOriginalConstructor()
@@ -52,12 +50,11 @@ class PoolTest extends TestCase
         $mediaPool->getProvider('provider_a');
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Unable to retrieve the provider named "provider_c". Available providers are "provider_a", "provider_b".
-     */
     public function testGetInvalidProviderName()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unable to retrieve the provider named "provider_c". Available providers are "provider_a", "provider_b".');
+
         $mediaPool = $this
             ->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
             ->disableOriginalConstructor()

@@ -51,8 +51,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException(
-            'Symfony\Component\OptionsResolver\Exception\MissingOptionsException',
+        $this->expectException(
+            'Symfony\Component\OptionsResolver\Exception\MissingOptionsException'
+        );
+        $this->expectExceptionMessage(
             'The required options "context", "provider" are missing.'
         );
 
@@ -70,7 +72,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
 
         $this->factory->create($this->getFormType(), null, [
             'provider' => 'provider_a',
@@ -88,7 +90,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
 
         $this->factory->create($this->getFormType(), null, [
             'context' => 'pic',
@@ -108,13 +110,17 @@ class MediaTypeTest extends AbstractTypeTest
 
         // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
         if (class_exists('Symfony\Component\Validator\Validator\RecursiveValidator')) {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+            $this->expectException(
+                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
+            );
+            $this->expectExceptionMessage(
                 'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
             );
         } else {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+            $this->expectException(
+                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
+            );
+            $this->expectExceptionMessage(
                 'The option "provider" has the value "provider_c", but is expected to be one of "provider_a", "provider_b"'
             );
         }
@@ -138,13 +144,17 @@ class MediaTypeTest extends AbstractTypeTest
 
         // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
         if (class_exists('Symfony\Component\Validator\Validator\RecursiveValidator')) {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+            $this->expectException(
+                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
+            );
+            $this->expectExceptionMessage(
                 'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
             );
         } else {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+            $this->expectException(
+                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
+            );
+            $this->expectExceptionMessage(
                 'The option "context" has the value "photo", but is expected to be one of "video", "pic"'
             );
         }

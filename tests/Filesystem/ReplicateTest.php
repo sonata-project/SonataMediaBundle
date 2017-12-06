@@ -40,7 +40,7 @@ class ReplicateTest extends TestCase
 
         $master->expects($this->once())->method('write')->will($this->returnValue(123));
         $slave->expects($this->once())->method('write')->will($this->returnValue(123));
-        $this->assertSame(true, $replicate->write('foo', 'contents'));
+        $this->assertTrue($replicate->write('foo', 'contents'));
 
         $master->expects($this->once())->method('read')->will($this->returnValue('master content'));
         $slave->expects($this->never())->method('read');

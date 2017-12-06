@@ -97,8 +97,6 @@ class CleanMediaCommandTest extends FilesystemTestCase
                     case 'sonata.media.adapter.filesystem.local':
                         return $fileSystemLocal;
                 }
-
-                return;
             }));
     }
 

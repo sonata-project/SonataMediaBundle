@@ -75,11 +75,10 @@ final class SessionDownloadStrategyTest extends TestCase
         $this->assertTrue($strategy->isGranted($media, $request));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidArgumentException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
 
         new SessionDownloadStrategy($translator, 'foo', 1);

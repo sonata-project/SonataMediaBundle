@@ -18,11 +18,10 @@ use Sonata\MediaBundle\Resizer\SquareResizer;
 
 class SquareResizerTest extends TestCase
 {
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testResizeWithNoWidth()
     {
+        $this->expectException(\RuntimeException::class);
+
         $adapter = $this->createMock('Imagine\Image\ImagineInterface');
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $file = $this->getMockBuilder('Gaufrette\File')->disableOriginalConstructor()->getMock();

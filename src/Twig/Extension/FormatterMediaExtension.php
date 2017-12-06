@@ -61,9 +61,9 @@ class FormatterMediaExtension extends BaseProxyExtension
     public function getTokenParsers()
     {
         return [
-            new MediaTokenParser(get_class()),
-            new ThumbnailTokenParser(get_class()),
-            new PathTokenParser(get_class()),
+            new MediaTokenParser(__CLASS__),
+            new ThumbnailTokenParser(__CLASS__),
+            new PathTokenParser(__CLASS__),
         ];
     }
 

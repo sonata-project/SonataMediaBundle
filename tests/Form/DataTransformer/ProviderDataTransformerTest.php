@@ -27,11 +27,10 @@ class ProviderDataTransformerTest extends TestCase
         $this->assertSame('foo', $transformer->reverseTransform('foo'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testReverseTransformUnknownProvider()
     {
+        $this->expectException(\RuntimeException::class);
+
         $pool = new Pool('default');
 
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');

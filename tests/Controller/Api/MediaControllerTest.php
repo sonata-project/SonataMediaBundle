@@ -50,12 +50,11 @@ class MediaControllerTest extends TestCase
         $this->assertSame($media, $controller->getMediumAction(1));
     }
 
-    /**
-     * @expectedException        \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @expectedExceptionMessage Media (42) was not found
-     */
     public function testGetMediumNotFoundExceptionAction()
     {
+        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+        $this->expectExceptionMessage('Media (42) was not found');
+
         $this->createMediaController()->getMediumAction(42);
     }
 
@@ -203,11 +202,10 @@ class MediaControllerTest extends TestCase
         $this->assertInstanceOf('FOS\RestBundle\View\View', $controller->postProviderMediumAction('providerName', new Request()));
     }
 
-    /**
-     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
     public function testPostProviderActionNotFound()
     {
+        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+
         $medium = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $medium->expects($this->once())->method('setProviderName');
 

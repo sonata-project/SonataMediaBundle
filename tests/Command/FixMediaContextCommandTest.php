@@ -88,8 +88,6 @@ class FixMediaContextCommandTest extends TestCase
                     case 'sonata.media.manager.category':
                         return $categoryManger;
                 }
-
-                return;
             }));
     }
 
@@ -98,7 +96,7 @@ class FixMediaContextCommandTest extends TestCase
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->will($this->returnValue(false));
 
-        $this->setExpectedException('\LogicException');
+        $this->expectException('\LogicException');
 
         $this->tester->execute(['command' => $this->command->getName()]);
     }
