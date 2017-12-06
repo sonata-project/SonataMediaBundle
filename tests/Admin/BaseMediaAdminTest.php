@@ -99,12 +99,7 @@ class BaseMediaAdminTest extends TestCase
 
     private function configureGetProviderName($media)
     {
-        // NEXT_MAJOR remove this block when dropping sf < 2.8 compatibility
-        if (method_exists('Symfony\Component\HttpFoundation\JsonResponse', 'transformJsonError')) {
-            $this->request->get('uniqid[providerName]', null, true)->willReturn('providerName');
-        } else {
-            $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
-        }
+        $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
         $media->setProviderName('providerName')->shouldBeCalled();
     }
 }

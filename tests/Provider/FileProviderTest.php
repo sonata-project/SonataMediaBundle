@@ -175,14 +175,12 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testTransform($expected, $media)
     {
-        $self = $this;
-
-        $closure = function () use ($self, $expected, $media) {
-            $provider = $self->getProvider();
+        $closure = function () use ($expected, $media) {
+            $provider = $this->getProvider();
 
             $provider->transform($media);
 
-            $self->assertInstanceOf($expected, $media->getBinaryContent());
+            $this->assertInstanceOf($expected, $media->getBinaryContent());
         };
 
         $closure();

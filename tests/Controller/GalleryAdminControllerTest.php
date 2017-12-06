@@ -19,6 +19,9 @@ use Symfony\Bridge\Twig\Command\DebugCommand;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\Form\FormRenderer;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class GalleryAdminControllerTest extends TestCase
 {
@@ -89,38 +92,22 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureGetCurrentRequest($request)
     {
-        // NEXT_MAJOR: Remove this trick when bumping Symfony requirement to 2.8+.
-        if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->prophesize(RequestStack::class);
 
-            $this->container->has('request_stack')->willReturn(true);
-            $this->container->get('request_stack')->willReturn($requestStack->reveal());
-            $requestStack->getCurrentRequest()->willReturn($request);
-        } else {
-            $this->container->has('request_stack')->willReturn(false);
-            $this->container->get('request')->willReturn($request);
-        }
+        $this->container->has('request_stack')->willReturn(true);
+        $this->container->get('request_stack')->willReturn($requestStack->reveal());
+        $requestStack->getCurrentRequest()->willReturn($request);
     }
 
     private function configureSetCsrfToken($intention)
     {
-        // NEXT_MAJOR: Remove this trick when bumping Symfony requirement to 2.8+.
-        if (interface_exists('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface')) {
-            $tokenManager = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
-            $token = $this->prophesize('Symfony\Component\Security\Csrf\CsrfToken');
+        $tokenManager = $this->prophesize(CsrfTokenManagerInterface::class);
+        $token = $this->prophesize(CsrfToken::class);
 
-            $tokenManager->getToken($intention)->willReturn($token->reveal());
-            $token->getValue()->willReturn('token');
-            $this->container->has('security.csrf.token_manager')->willReturn(true);
-            $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
-        } else {
-            $csrfProvider = $this->prophesize('Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface');
-
-            $csrfProvider->generateCsrfToken($intention)->shouldBeCalled('token');
-            $this->container->has('security.csrf.token_manager')->willReturn(false);
-            $this->container->has('form.csrf_provider')->willReturn(true);
-            $this->container->get('form.csrf_provider')->willReturn($csrfProvider->reveal());
-        }
+        $tokenManager->getToken($intention)->willReturn($token->reveal());
+        $token->getValue()->willReturn('token');
+        $this->container->has('security.csrf.token_manager')->willReturn(true);
+        $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
     }
 
     private function configureSetFormTheme($formView, $formTheme)

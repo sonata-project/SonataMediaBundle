@@ -15,10 +15,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -59,42 +63,29 @@ class GalleryListBlockService extends AbstractAdminBlockService
             $contextChoices[$name] = $name;
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
-            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
-            $integerType = 'Symfony\Component\Form\Extension\Core\Type\IntegerType';
-            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
-        } else {
-            $immutableArrayType = 'sonata_type_immutable_array';
-            $textType = 'text';
-            $integerType = 'integer';
-            $choiceType = 'choice';
-        }
-
-        $formMapper->add('settings', $immutableArrayType, [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', $textType, [
+                ['title', TextType::class, [
                     'label' => 'form.label_title',
                     'required' => false,
                 ]],
-                ['number', $integerType, [
+                ['number', IntegerType::class, [
                     'label' => 'form.label_number',
                     'required' => true,
                 ]],
-                ['context', $choiceType, [
+                ['context', ChoiceType::class, [
                     'required' => true,
                     'label' => 'form.label_context',
                     'choices' => $contextChoices,
                 ]],
-                ['mode', $choiceType, [
+                ['mode', ChoiceType::class, [
                     'label' => 'form.label_mode',
                     'choices' => [
                         'public' => 'form.label_mode_public',
                         'admin' => 'form.label_mode_admin',
                     ],
                 ]],
-                ['order', $choiceType,  [
+                ['order', ChoiceType::class,  [
                     'label' => 'form.label_order',
                     'choices' => [
                         'name' => 'form.label_order_name',
@@ -102,7 +93,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
                         'updatedAt' => 'form.label_order_updated_at',
                     ],
                 ]],
-                ['sort', $choiceType, [
+                ['sort', ChoiceType::class, [
                     'label' => 'form.label_sort',
                     'choices' => [
                         'desc' => 'form.label_sort_desc',

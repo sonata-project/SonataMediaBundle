@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 use Sonata\MediaBundle\Validator\FormatValidator;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
 class FormatValidatorTest extends TestCase
 {
@@ -27,16 +28,7 @@ class FormatValidatorTest extends TestCase
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
-        // Prefer the Symfony 2.5+ API if available
-        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
-            $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
-        } else {
-            $contextClass = 'Symfony\Component\Validator\ExecutionContext';
-        }
-
-        $context = $this->getMockBuilder($contextClass)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $context = $this->createMock(ExecutionContext::class);
         $context->expects($this->never())->method('addViolation');
 
         $validator = new FormatValidator($pool);
@@ -54,16 +46,7 @@ class FormatValidatorTest extends TestCase
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('non_existing_format'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
-        // Prefer the Symfony 2.5+ API if available
-        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
-            $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
-        } else {
-            $contextClass = 'Symfony\Component\Validator\ExecutionContext';
-        }
-
-        $context = $this->getMockBuilder($contextClass)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $context = $this->createMock(ExecutionContext::class);
         $context->expects($this->once())->method('addViolation');
 
         $validator = new FormatValidator($pool);
@@ -81,16 +64,7 @@ class FormatValidatorTest extends TestCase
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format_that_is_not_reference'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
-        // Prefer the Symfony 2.5+ API if available
-        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
-            $contextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
-        } else {
-            $contextClass = 'Symfony\Component\Validator\ExecutionContext';
-        }
-
-        $context = $this->getMockBuilder($contextClass)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $context = $this->createMock(ExecutionContext::class);
         $context->expects($this->once())->method('addViolation');
 
         $validator = new FormatValidator($pool);

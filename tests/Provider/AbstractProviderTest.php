@@ -44,32 +44,13 @@ abstract class AbstractProviderTest extends TestCase
 
     protected function setUp()
     {
-        // NEXT_MAJOR: Hack for php 5.3 only, remove it when requirement of PHP is >= 5.4
-        $that = $this;
-
         $this->formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')->disableOriginalConstructor()->getMock();
         $this->formMapper
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($that) {
-                // NEXT_MAJOR: Remove this "if" (when requirement of Symfony is >= 2.8)
-                if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-                    if (null !== $type) {
-                        $isFQCN = class_exists($type);
-                        if (!$isFQCN && method_exists('Symfony\Component\Form\AbstractType', 'getName')) {
-                            // 2.8
-                            @trigger_error(
-                                sprintf(
-                                    'Accessing type "%s" by its string name is deprecated since version 2.8 and will be removed in 3.0.'
-                                    .' Use the fully-qualified type class name instead.',
-                                    $type
-                                ),
-                                E_USER_DEPRECATED)
-                            ;
-                        }
-
-                        $that->assertTrue($isFQCN, sprintf('Unable to ensure %s is a FQCN', $type));
-                    }
+            ->will($this->returnCallback(function ($name, $type = null) {
+                if (null !== $type) {
+                    $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
             }));
 
@@ -77,25 +58,9 @@ abstract class AbstractProviderTest extends TestCase
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($that) {
-                // NEXT_MAJOR: Remove this "if" (when requirement of Symfony is >= 2.8)
-                if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-                    if (null !== $type) {
-                        $isFQCN = class_exists($type);
-                        if (!$isFQCN && method_exists('Symfony\Component\Form\AbstractType', 'getName')) {
-                            // 2.8
-                            @trigger_error(
-                                sprintf(
-                                    'Accessing type "%s" by its string name is deprecated since version 2.8 and will be removed in 3.0.'
-                                    .' Use the fully-qualified type class name instead.',
-                                    $type
-                                ),
-                                E_USER_DEPRECATED)
-                            ;
-                        }
-
-                        $that->assertTrue($isFQCN, sprintf('Unable to ensure %s is a FQCN', $type));
-                    }
+            ->will($this->returnCallback(function ($name, $type = null) {
+                if (null !== $type) {
+                    $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
             }));
 

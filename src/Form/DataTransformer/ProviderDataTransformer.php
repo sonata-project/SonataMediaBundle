@@ -12,7 +12,7 @@
 namespace Sonata\MediaBundle\Form\DataTransformer;
 
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -20,6 +20,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var Pool
      */
@@ -29,13 +31,6 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
      * @var array
      */
     protected $options;
-
-    /**
-     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
-     *
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @param Pool   $pool
@@ -49,16 +44,6 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
         $this->class = $class;
 
         $this->logger = new NullLogger();
-    }
-
-    /**
-     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
-     *
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
     }
 
     /**
