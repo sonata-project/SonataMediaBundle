@@ -13,7 +13,11 @@ namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\Metadata;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -45,30 +49,17 @@ class FeatureMediaBlockService extends MediaBlockService
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
-            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
-            $textareaType = 'Symfony\Component\Form\Extension\Core\Type\TextareaType';
-            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
-        } else {
-            $immutableArrayType = 'sonata_type_immutable_array';
-            $textType = 'text';
-            $textareaType = 'textarea';
-            $choiceType = 'choice';
-        }
-
-        $formMapper->add('settings', $immutableArrayType, [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', $textType, [
+                ['title', TextType::class, [
                     'required' => false,
                     'label' => 'form.label_title',
                 ]],
-                ['content', $textareaType, [
+                ['content', TextareaType::class, [
                     'required' => false,
                     'label' => 'form.label_content',
                 ]],
-                ['orientation', $choiceType, [
+                ['orientation', ChoiceType::class, [
                     'required' => false,
                     'choices' => [
                         'left' => 'form.label_orientation_left',
@@ -77,7 +68,7 @@ class FeatureMediaBlockService extends MediaBlockService
                     'label' => 'form.label_orientation',
                 ]],
                 [$this->getMediaBuilder($formMapper), null, []],
-                ['format', $choiceType, [
+                ['format', ChoiceType::class, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',

@@ -15,7 +15,9 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class GalleryAdmin extends AbstractAdmin
 {
@@ -116,27 +118,17 @@ class GalleryAdmin extends AbstractAdmin
             $contexts[$contextItem] = $contextItem;
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $choiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
-            : 'choice';
-
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $collectionType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\CoreBundle\Form\Type\CollectionType'
-            : 'sonata_type_collection';
-
         $formMapper
             ->with('Options')
-                ->add('context', $choiceType, ['choices' => $contexts])
+                ->add('context', ChoiceType::class, ['choices' => $contexts])
                 ->add('enabled', null, ['required' => false])
                 ->add('name')
                 ->ifTrue($formats)
-                    ->add('defaultFormat', $choiceType, ['choices' => $formats])
+                    ->add('defaultFormat', ChoiceType::class, ['choices' => $formats])
                 ->ifEnd()
             ->end()
             ->with('Gallery')
-                ->add('galleryHasMedias', $collectionType, [], [
+                ->add('galleryHasMedias', CollectionType::class, [], [
                     'edit' => 'inline',
                     'inline' => 'table',
                     'sortable' => 'position',

@@ -14,15 +14,21 @@ namespace Sonata\MediaBundle\Block;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
@@ -126,55 +132,38 @@ class GalleryBlockService extends AbstractAdminBlockService
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(['fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE]);
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $modelListType = 'Sonata\AdminBundle\Form\Type\ModelListType';
-            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
-            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
-            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
-            $numberType = 'Symfony\Component\Form\Extension\Core\Type\NumberType';
-            $checkboxType = 'Symfony\Component\Form\Extension\Core\Type\CheckboxType';
-        } else {
-            $modelListType = 'sonata_type_model_list';
-            $immutableArrayType = 'sonata_type_immutable_array';
-            $textType = 'text';
-            $choiceType = 'choice';
-            $numberType = 'number';
-            $checkboxType = 'checkbox';
-        }
-
-        $builder = $formMapper->create('galleryId', $modelListType, [
+        $builder = $formMapper->create('galleryId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getGalleryAdmin()->getClass(),
             'model_manager' => $this->getGalleryAdmin()->getModelManager(),
             'label' => 'form.label_gallery',
         ]);
 
-        $formMapper->add('settings', $immutableArrayType, [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', $textType, [
+                ['title', TextType::class, [
                     'required' => false,
                     'label' => 'form.label_title',
                 ]],
-                ['context', $choiceType, [
+                ['context', ChoiceType::class, [
                     'required' => true,
                     'choices' => $contextChoices,
                     'label' => 'form.label_context',
                 ]],
-                ['format', $choiceType, [
+                ['format', ChoiceType::class, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],
                 [$builder, null, []],
-                ['pauseTime', $numberType, [
+                ['pauseTime', NumberType::class, [
                     'label' => 'form.label_pause_time',
                 ]],
-                ['startPaused', $checkboxType, [
+                ['startPaused', CheckboxType::class, [
                     'required' => false,
                     'label' => 'form.label_start_paused',
                 ]],
-                ['wrap', $checkboxType, [
+                ['wrap', CheckboxType::class, [
                     'required' => false,
                     'label' => 'form.label_wrap',
                 ]],

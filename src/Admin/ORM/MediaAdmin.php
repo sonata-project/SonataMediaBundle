@@ -12,7 +12,9 @@
 namespace Sonata\MediaBundle\Admin\ORM;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MediaAdmin extends Admin
 {
@@ -29,18 +31,13 @@ class MediaAdmin extends Admin
             $options['choices'][$name] = $name;
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $choiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
-            : 'choice';
-
         $datagridMapper
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
             ->add('context', null, [
                 'show_filter' => true !== $this->getPersistentParameter('hide_context'),
-            ], $choiceType, $options);
+            ], ChoiceType::class, $options);
 
         if (null !== $this->categoryManager) {
             $datagridMapper->add('category', null, ['show_filter' => false]);
@@ -59,19 +56,14 @@ class MediaAdmin extends Admin
             $providers[$name] = $name;
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $ormChoiceType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter'
-            : 'doctrine_orm_choice';
-
-        $datagridMapper->add('providerName', $ormChoiceType, [
+        $datagridMapper->add('providerName', ChoiceFilter::class, [
             'field_options' => [
                 'choices' => $providers,
                 'required' => false,
                 'multiple' => false,
                 'expanded' => false,
             ],
-            'field_type' => $choiceType,
+            'field_type' => ChoiceType::class,
         ]);
     }
 }

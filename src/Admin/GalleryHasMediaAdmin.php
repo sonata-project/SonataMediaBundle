@@ -14,6 +14,8 @@ namespace Sonata\MediaBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class GalleryHasMediaAdmin extends AbstractAdmin
 {
@@ -36,22 +38,12 @@ class GalleryHasMediaAdmin extends AbstractAdmin
             }
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+
-        $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\AdminBundle\Form\Type\ModelListType'
-            : 'sonata_type_model_list';
-
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $hiddenType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\HiddenType'
-            : 'hidden';
-
         $formMapper
-            ->add('media', $modelListType, ['required' => false], [
+            ->add('media', ModelListType::class, ['required' => false], [
                 'link_parameters' => $link_parameters,
             ])
             ->add('enabled', null, ['required' => false])
-            ->add('position', $hiddenType)
+            ->add('position', HiddenType::class)
         ;
     }
 

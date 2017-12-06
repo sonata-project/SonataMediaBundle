@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\MediaController;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class MediaControllerTest extends TestCase
 {
@@ -147,17 +148,11 @@ class MediaControllerTest extends TestCase
 
     private function configureGetCurrentRequest($request)
     {
-        // NEXT_MAJOR: Remove this trick when bumping Symfony requirement to 2.8+.
-        if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->prophesize(RequestStack::class);
 
-            $this->container->has('request_stack')->willReturn(true);
-            $this->container->get('request_stack')->willReturn($requestStack->reveal());
-            $requestStack->getCurrentRequest()->willReturn($request);
-        } else {
-            $this->container->has('request_stack')->willReturn(false);
-            $this->container->get('request')->willReturn($request);
-        }
+        $this->container->has('request_stack')->willReturn(true);
+        $this->container->get('request_stack')->willReturn($requestStack->reveal());
+        $requestStack->getCurrentRequest()->willReturn($request);
     }
 
     private function configureRender($template, $data, $rendered)

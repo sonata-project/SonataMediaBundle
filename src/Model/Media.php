@@ -14,7 +14,6 @@ namespace Sonata\MediaBundle\Model;
 use Imagine\Image\Box;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
@@ -644,12 +643,7 @@ abstract class Media implements MediaInterface
      */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        if (class_exists('Symfony\Component\Validator\Constraints\Expression')) {
-            $method = 'isStatusErroneous';
-        } else {
-            $method = ['methods' => ['isStatusErroneous']];
-        }
-        $metadata->addConstraint(new Assert\Callback($method));
+        $metadata->addConstraint(new Assert\Callback('isStatusErroneous'));
     }
 
     /**
@@ -658,18 +652,12 @@ abstract class Media implements MediaInterface
     public function isStatusErroneous($context)
     {
         if ($this->getBinaryContent() && self::STATUS_ERROR == $this->getProviderStatus()) {
-            // Interface compatibility, the new ExecutionContextInterface should be typehinted when support for Symfony <2.5 is dropped
-            if (!$context instanceof ExecutionContextInterface && !$context instanceof LegacyExecutionContextInterface) {
-                throw new \InvalidArgumentException('Argument 1 should be an instance of Symfony\Component\Validator\ExecutionContextInterface or Symfony\Component\Validator\Context\ExecutionContextInterface');
+            // NEXT_MAJOR: Restore type hint
+            if (!$context instanceof ExecutionContextInterface) {
+                throw new \InvalidArgumentException('Argument 1 should be an instance of Symfony\Component\Validator\ExecutionContextInterface');
             }
 
-            if ($context instanceof LegacyExecutionContextInterface) {
-                $context->addViolationAt('binaryContent', 'invalid', [], null);
-            } else {
-                $context->buildViolation('invalid')
-                   ->atPath('binaryContent')
-                   ->addViolation();
-            }
+            $context->buildViolation('invalid')->atPath('binaryContent')->addViolation();
         }
     }
 
