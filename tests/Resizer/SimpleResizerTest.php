@@ -20,11 +20,10 @@ use Sonata\MediaBundle\Resizer\SimpleResizer;
 
 class SimpleResizerTest extends TestCase
 {
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testResizeWithNoWidth()
     {
+        $this->expectException(\RuntimeException::class);
+
         $adapter = $this->createMock('Imagine\Image\ImagineInterface');
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');

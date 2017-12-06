@@ -55,9 +55,9 @@ class Pool
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @param string $name
+     *
+     * @throws \RuntimeException
      *
      * @return MediaProviderInterface
      */
@@ -257,9 +257,9 @@ class Pool
      *
      * @param MediaInterface $media
      *
-     * @return DownloadStrategyInterface
-     *
      * @throws \RuntimeException
+     *
+     * @return DownloadStrategyInterface
      */
     public function getDownloadSecurity(MediaInterface $media)
     {
@@ -271,9 +271,9 @@ class Pool
     /**
      * @param MediaInterface $media
      *
-     * @return DownloadStrategyInterface
-     *
      * @throws \RuntimeException
+     *
+     * @return DownloadStrategyInterface
      */
     public function getDownloadStrategy(MediaInterface $media)
     {

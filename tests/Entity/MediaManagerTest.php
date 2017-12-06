@@ -32,12 +32,11 @@ class MediaManagerTest extends TestCase
             ->getPager([], 1);
     }
 
-    /**
-     * @expectedException        \RuntimeException
-     * @expectedExceptionMessage Invalid sort field 'invalid' in 'Sonata\MediaBundle\Entity\BaseMedia' class
-     */
     public function testGetPagerWithInvalidSort()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Invalid sort field \'invalid\' in \'Sonata\\MediaBundle\\Entity\\BaseMedia\' class');
+
         $self = $this;
         $this
             ->getMediaManager(function ($qb) use ($self) {

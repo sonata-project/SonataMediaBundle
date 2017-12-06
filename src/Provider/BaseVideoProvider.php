@@ -218,10 +218,10 @@ abstract class BaseVideoProvider extends BaseProvider
     // abstract public function getReferenceUrl(MediaInterface $media);
 
     /**
-     * @throws \RuntimeException
-     *
      * @param MediaInterface $media
      * @param string         $url
+     *
+     * @throws \RuntimeException
      *
      * @return mixed
      */
