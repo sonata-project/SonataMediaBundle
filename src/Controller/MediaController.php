@@ -74,8 +74,8 @@ class MediaController extends Controller
 
     /**
      * @param Request $request
-     * @param string $id
-     * @param string $format
+     * @param string  $id
+     * @param string  $format
      *
      * @throws NotFoundHttpException
      *
