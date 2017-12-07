@@ -173,29 +173,16 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @dataProvider mediaProvider
      */
-    public function testTransform($expected, $media, $overridePhpSapiName = true)
+    public function testTransform($expected, $media)
     {
         $self = $this;
 
-        $closure = function () use ($self, $expected, $media, $overridePhpSapiName) {
-            if ($overridePhpSapiName) {
-                require_once 'phpSapiNameOverride.php';
-            }
-
+        $closure = function () use ($self, $expected, $media) {
             $provider = $self->getProvider();
 
-            try {
-                $provider->transform($media);
+            $provider->transform($media);
 
-                $self->assertInstanceOf($expected, $media->getBinaryContent());
-            } catch (\Exception $e) {
-                if ($overridePhpSapiName) {
-                    $self->assertInstanceOf('\RuntimeException', $e);
-                    $self->assertNull($media->getContentType());
-                } else {
-                    $self->assertEquals('The current process cannot be executed in cli environment', $e->getMessage());
-                }
-            }
+            $self->assertInstanceOf($expected, $media->getBinaryContent());
         };
 
         $closure();
@@ -217,15 +204,10 @@ class FileProviderTest extends AbstractProviderTest
         $media2->setContentType('text/plain');
         $media2->setId(1023456);
 
-        $media3 = new Media();
-        $media3->setBinaryContent($request);
-        $media3->setId(1023456);
-
         return [
-            ['\Symfony\Component\HttpFoundation\File\File', $media1, false],
+            ['\Symfony\Component\HttpFoundation\File\File', $media1],
             ['\Symfony\Component\HttpFoundation\File\File', $media1],
             ['\Symfony\Component\HttpFoundation\File\File', $media2],
-            [null, $media3],
         ];
     }
 
