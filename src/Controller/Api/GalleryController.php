@@ -240,9 +240,9 @@ class GalleryController
      *
      * @param Request $request A Symfony request
      *
-     * @return GalleryInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return GalleryInterface
      */
     public function postGalleryAction(Request $request)
     {
@@ -268,9 +268,9 @@ class GalleryController
      * @param int     $id      User id
      * @param Request $request A Symfony request
      *
-     * @return GalleryInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return GalleryInterface
      */
     public function putGalleryAction($id, Request $request)
     {
@@ -297,9 +297,9 @@ class GalleryController
      * @param int     $mediaId   A media identifier
      * @param Request $request   A Symfony request
      *
-     * @return GalleryInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return GalleryInterface
      */
     public function postGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
@@ -337,9 +337,9 @@ class GalleryController
      * @param int     $mediaId   A media identifier
      * @param Request $request   A Symfony request
      *
-     * @return GalleryInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return GalleryInterface
      */
     public function putGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
@@ -373,9 +373,9 @@ class GalleryController
      * @param int $galleryId A gallery identifier
      * @param int $mediaId   A media identifier
      *
-     * @return View
-     *
      * @throws NotFoundHttpException
+     *
+     * @return View
      */
     public function deleteGalleryMediaGalleryItemAction($galleryId, $mediaId)
     {
@@ -412,9 +412,9 @@ class GalleryController
      *
      * @param int $id A Gallery identifier
      *
-     * @return View
-     *
      * @throws NotFoundHttpException
+     *
+     * @return View
      */
     public function deleteGalleryAction($id)
     {
@@ -482,9 +482,9 @@ class GalleryController
      *
      * @param $id
      *
-     * @return GalleryInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return GalleryInterface
      */
     protected function getGallery($id)
     {
@@ -502,9 +502,9 @@ class GalleryController
      *
      * @param $id
      *
-     * @return MediaInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return MediaInterface
      */
     protected function getMedia($id)
     {

@@ -41,7 +41,8 @@ class PantherPortalTest extends TestCase
 
     public function testException()
     {
-        $this->setExpectedException('\RuntimeException', 'Unable to flush : Failed!!');
+        $this->expectException('\RuntimeException');
+        $this->expectExceptionMessage('Unable to flush : Failed!!');
 
         $client = $this->createMock(
             'Sonata\MediaBundle\Tests\CDN\ClientSpy',

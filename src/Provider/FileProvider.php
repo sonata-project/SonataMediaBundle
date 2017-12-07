@@ -347,9 +347,9 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @param MediaInterface $media
+     *
+     * @throws \RuntimeException
      */
     protected function fixFilename(MediaInterface $media)
     {
@@ -450,10 +450,6 @@ class FileProvider extends BaseProvider
      */
     protected function generateBinaryFromRequest(MediaInterface $media)
     {
-        if ('cli' === php_sapi_name()) {
-            throw new \RuntimeException('The current process cannot be executed in cli environment');
-        }
-
         if (!$media->getContentType()) {
             throw new \RuntimeException(
                 'You must provide the content type value for your media before setting the binary content'

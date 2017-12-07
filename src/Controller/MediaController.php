@@ -43,11 +43,11 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param Request $request
      * @param string  $id
      * @param string  $format
+     *
+     * @throws NotFoundHttpException
      *
      * @return Response
      */
@@ -73,11 +73,11 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param Request $request
-     * @param string  $id
-     * @param string  $format
+     * @param string $id
+     * @param string $format
+     *
+     * @throws NotFoundHttpException
      *
      * @return Response
      */

@@ -67,7 +67,6 @@ class LiipImagineThumbnail implements ThumbnailInterface
     public function generate(MediaProviderInterface $provider, MediaInterface $media)
     {
         // nothing to generate, as generated on demand
-        return;
     }
 
     /**
@@ -76,6 +75,5 @@ class LiipImagineThumbnail implements ThumbnailInterface
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
         // feature not available
-        return;
     }
 }

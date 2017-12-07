@@ -75,9 +75,9 @@ class RemoveThumbsCommand extends BaseCommand
         $format = $this->getFormat($provider, $context);
 
         $batchCounter = 0;
-        $batchSize = intval($this->input->getOption('batchSize'));
-        $batchesLimit = intval($this->input->getOption('batchesLimit'));
-        $startOffset = intval($this->input->getOption('startOffset'));
+        $batchSize = (int) ($this->input->getOption('batchSize'));
+        $batchesLimit = (int) ($this->input->getOption('batchesLimit'));
+        $startOffset = (int) ($this->input->getOption('startOffset'));
         $totalMediasCount = 0;
         do {
             ++$batchCounter;

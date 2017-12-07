@@ -78,15 +78,13 @@ class GalleryControllerTest extends TestCase
         $this->assertSame($gallery, $gController->getGalleryAction(1));
     }
 
-    /**
-     * @expectedException        \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @expectedExceptionMessage Gallery (42) not found
-     */
     public function testGetGalleryNotFoundAction()
     {
+        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+        $this->expectExceptionMessage('Gallery (42) not found');
+
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $mediaManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
-
         $formFactory = $this->createMock('Symfony\Component\Form\FormFactoryInterface');
 
         $galleryManager->expects($this->once())->method('findOneBy');

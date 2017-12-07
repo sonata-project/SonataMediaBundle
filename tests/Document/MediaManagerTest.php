@@ -43,19 +43,17 @@ class MediaManagerTest extends TestCase
         $this->assertNull($media->getProviderName());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testSaveException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $this->manager->save(null);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testDeleteException()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $this->manager->delete(null);
     }
 

@@ -89,10 +89,10 @@ class SimpleResizer implements ResizerInterface
     }
 
     /**
-     * @throws InvalidArgumentException
-     *
      * @param MediaInterface $media
      * @param array          $settings
+     *
+     * @throws InvalidArgumentException
      *
      * @return Box
      */

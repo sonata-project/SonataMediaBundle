@@ -95,7 +95,7 @@ class FormatThumbnail implements ThumbnailInterface
      */
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
-        if (is_null($formats)) {
+        if (null === $formats) {
             $formats = array_keys($provider->getFormats());
         } elseif (is_string($formats)) {
             $formats = [$formats];

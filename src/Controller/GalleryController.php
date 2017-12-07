@@ -34,9 +34,9 @@ class GalleryController extends Controller
     /**
      * @param string $id
      *
-     * @return Response
-     *
      * @throws NotFoundHttpException
+     *
+     * @return Response
      */
     public function viewAction($id)
     {

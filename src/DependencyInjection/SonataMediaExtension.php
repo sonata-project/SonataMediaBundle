@@ -57,7 +57,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
         $bundles = $container->getParameter('kernel.bundles');
 
-        if (isset($bundles['FOSRestBundle']) && isset($bundles['NelmioApiDocBundle'])) {
+        if (isset($bundles['FOSRestBundle'], $bundles['NelmioApiDocBundle'])) {
             $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
 
             if ('doctrine_orm' == $config['db_driver']) {

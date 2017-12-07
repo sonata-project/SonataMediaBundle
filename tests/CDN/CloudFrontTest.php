@@ -50,7 +50,8 @@ class CloudFrontTest extends TestCase
      */
     public function testLegacyException()
     {
-        $this->setExpectedException('\RuntimeException', 'Unable to flush : ');
+        $this->expectException('\RuntimeException');
+        $this->expectExceptionMessage('Unable to flush : ');
 
         $client = $this->getMockBuilder('Aws\CloudFront\CloudFrontClient')
             ->setMethods(['createInvalidation'])

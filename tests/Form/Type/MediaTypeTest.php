@@ -51,8 +51,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException(
-            'Symfony\Component\OptionsResolver\Exception\MissingOptionsException',
+        $this->expectException(
+            'Symfony\Component\OptionsResolver\Exception\MissingOptionsException'
+        );
+        $this->expectExceptionMessage(
             'The required options "context", "provider" are missing.'
         );
 
@@ -70,7 +72,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
 
         $this->factory->create($this->getFormType(), null, [
             'provider' => 'provider_a',
@@ -88,7 +90,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
 
         $this->factory->create($this->getFormType(), null, [
             'context' => 'pic',
@@ -106,8 +108,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException(
-            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+        $this->expectException(
+            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
+        );
+        $this->expectExceptionMessage(
             'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
         );
 
@@ -128,8 +132,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException(
-            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
+        $this->expectException(
+            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
+        );
+        $this->expectExceptionMessage(
             'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
         );
 
