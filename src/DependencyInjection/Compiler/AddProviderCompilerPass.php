@@ -85,14 +85,14 @@ class AddProviderCompilerPass implements CompilerPassInterface
                     $definition = $container->getDefinition($id);
 
                     $definition
-                        ->replaceArgument(1, new Reference($config['filesystem']))
-                        ->replaceArgument(2, new Reference($config['cdn']))
-                        ->replaceArgument(3, new Reference($config['generator']))
-                        ->replaceArgument(4, new Reference($config['thumbnail']))
+                        ->replaceArgument(1, new Reference($container->getParameterBag()->resolveValue($config['filesystem'])))
+                        ->replaceArgument(2, new Reference($container->getParameterBag()->resolveValue($config['cdn'])))
+                        ->replaceArgument(3, new Reference($container->getParameterBag()->resolveValue($config['generator'])))
+                        ->replaceArgument(4, new Reference($container->getParameterBag()->resolveValue($config['thumbnail'])))
                     ;
 
                     if ($config['resizer']) {
-                        $definition->addMethodCall('setResizer', [new Reference($config['resizer'])]);
+                        $definition->addMethodCall('setResizer', [new Reference($container->getParameterBag()->resolveValue($config['resizer']))]);
                     }
                 }
             }
