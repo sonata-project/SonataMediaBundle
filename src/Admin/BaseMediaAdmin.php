@@ -14,11 +14,13 @@ namespace Sonata\MediaBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
@@ -108,8 +110,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
                 $uniqid = $this->getUniqid();
-                $providerParams = $this->getRequest()->get($uniqid);
-                $media->setProviderName($providerParams['providerName']);
+                $media->setProviderName($this->getRequest()->get($uniqid)['providerName']);
             } else {
                 $media->setProviderName($this->getRequest()->get('provider'));
             }
@@ -179,7 +180,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             return;
         }
 
-        $formMapper->add('providerName', 'Symfony\Component\Form\Extension\Core\Type\HiddenType');
+        $formMapper->add('providerName', HiddenType::class);
 
         $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
 
@@ -192,7 +193,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         if (null !== $this->categoryManager) {
-            $formMapper->add('category', 'Sonata\AdminBundle\Form\Type\ModelListType', [], [
+            $formMapper->add('category', ModelListType::class, [], [
                 'link_parameters' => [
                     'context' => $media->getContext(),
                     'hide_context' => true,

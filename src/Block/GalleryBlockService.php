@@ -14,15 +14,21 @@ namespace Sonata\MediaBundle\Block;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
@@ -125,34 +131,34 @@ class GalleryBlockService extends AbstractAdminBlockService
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(['fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE]);
 
-        $builder = $formMapper->create('galleryId', 'Sonata\AdminBundle\Form\Type\ModelListType', [
+        $builder = $formMapper->create('galleryId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getGalleryAdmin()->getClass(),
             'model_manager' => $this->getGalleryAdmin()->getModelManager(),
             'label' => 'form.label_gallery',
         ]);
 
-        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+                ['title', TextType::class, [
                     'required' => false,
                     'label' => 'form.label_title',
                 ]],
-                ['context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['context', ChoiceType::class, [
                     'required' => true,
                     'choices' => $contextChoices,
                     'label' => 'form.label_context',
                 ]],
-                ['format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['format', ChoiceType::class, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],
                 [$builder, null, []],
-                ['pauseTime', 'Symfony\Component\Form\Extension\Core\Type\NumberType', [
+                ['pauseTime', NumberType::class, [
                     'label' => 'form.label_pause_time',
                 ]],
-                ['startPaused', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+                ['startPaused', CheckboxType::class, [
                     'required' => false,
                     'label' => 'form.label_start_paused',
                 ]],

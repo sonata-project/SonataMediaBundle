@@ -21,6 +21,7 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -129,11 +130,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add(
-            'binaryContent',
-            'Symfony\Component\Form\Extension\Core\Type\TextType',
-            ['required' => false]
-        );
+        $formMapper->add('binaryContent', TextType::class, ['required' => false]);
     }
 
     /**
@@ -141,16 +138,12 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add(
-            'binaryContent',
-            'Symfony\Component\Form\Extension\Core\Type\TextType',
-            [
-                'constraints' => [
-                    new NotBlank(),
-                    new NotNull(),
-                ],
-            ]
-        );
+        $formMapper->add('binaryContent', TextType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new NotNull(),
+            ],
+        ]);
     }
 
     /**
@@ -158,13 +151,9 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $formBuilder->add(
-            'binaryContent',
-            'Symfony\Component\Form\Extension\Core\Type\TextType',
-            [
-                'label' => 'widget_label_binary_content',
-            ]
-        );
+        $formBuilder->add('binaryContent', TextType::class, [
+            'label' => 'widget_label_binary_content',
+        ]);
     }
 
     /**

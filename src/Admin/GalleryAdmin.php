@@ -15,7 +15,9 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class GalleryAdmin extends AbstractAdmin
 {
@@ -118,19 +120,15 @@ class GalleryAdmin extends AbstractAdmin
 
         $formMapper
             ->with('Options')
-                ->add('context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-                    'choices' => $contexts,
-                ])
+                ->add('context', ChoiceType::class, ['choices' => $contexts])
                 ->add('enabled', null, ['required' => false])
                 ->add('name')
                 ->ifTrue($formats)
-                    ->add('defaultFormat', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-                        'choices' => $formats,
-                    ])
+                    ->add('defaultFormat', ChoiceType::class, ['choices' => $formats])
                 ->ifEnd()
             ->end()
             ->with('Gallery')
-                ->add('galleryItems', 'Sonata\CoreBundle\Form\Type\CollectionType', [], [
+                ->add('galleryItems', CollectionType::class, [], [
                     'edit' => 'inline',
                     'inline' => 'table',
                     'sortable' => 'position',

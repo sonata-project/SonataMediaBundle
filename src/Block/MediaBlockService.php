@@ -13,15 +13,19 @@ namespace Sonata\MediaBundle\Block;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -102,14 +106,14 @@ class MediaBlockService extends AbstractAdminBlockService
 
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+                ['title', TextType::class, [
                     'required' => false,
                     'label' => 'form.label_title',
                 ]],
                 [$this->getMediaBuilder($formMapper), null, []],
-                ['format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['format', ChoiceType::class, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
@@ -222,7 +226,7 @@ class MediaBlockService extends AbstractAdminBlockService
             'type' => ClassMetadataInfo::MANY_TO_ONE,
         ]);
 
-        return $formMapper->create('mediaId', 'Sonata\AdminBundle\Form\Type\ModelListType', [
+        return $formMapper->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),

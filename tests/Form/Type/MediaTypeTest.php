@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Tests\Form\Type;
 
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
@@ -108,9 +109,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->expectException(
-            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
-        );
+        $this->expectException(InvalidOptionsException::class);
         $this->expectExceptionMessage(
             'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
         );
@@ -132,9 +131,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->expectException(
-            'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException'
-        );
+        $this->expectException(InvalidOptionsException::class);
         $this->expectExceptionMessage(
             'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
         );
@@ -152,8 +149,6 @@ class MediaTypeTest extends AbstractTypeTest
 
     private function getFormType()
     {
-        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ?
-            'Sonata\MediaBundle\Form\Type\MediaType' :
-            'sonata_media_type';
+        return MediaType::class;
     }
 }

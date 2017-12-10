@@ -14,6 +14,8 @@ namespace Sonata\MediaBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class GalleryItemAdmin extends AbstractAdmin
 {
@@ -37,11 +39,11 @@ class GalleryItemAdmin extends AbstractAdmin
         }
 
         $formMapper
-            ->add('media', 'Sonata\AdminBundle\Form\Type\ModelListType', ['required' => false], [
+            ->add('media', ModelListType::class, ['required' => false], [
                 'link_parameters' => $link_parameters,
             ])
             ->add('enabled', null, ['required' => false])
-            ->add('position', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
+            ->add('position', HiddenType::class)
         ;
     }
 

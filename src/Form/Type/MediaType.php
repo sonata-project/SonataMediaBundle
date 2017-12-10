@@ -12,11 +12,13 @@
 namespace Sonata\MediaBundle\Form\Type;
 
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -26,6 +28,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MediaType extends AbstractType implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var Pool
      */
@@ -37,13 +41,6 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     protected $class;
 
     /**
-     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
-     *
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param Pool   $pool
      * @param string $class
      */
@@ -52,16 +49,6 @@ class MediaType extends AbstractType implements LoggerAwareInterface
         $this->pool = $pool;
         $this->class = $class;
         $this->logger = new NullLogger();
-    }
-
-    /**
-     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
-     *
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
     }
 
     /**
@@ -87,16 +74,12 @@ class MediaType extends AbstractType implements LoggerAwareInterface
 
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 
-        $builder->add(
-            'unlink',
-            'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-            [
-                'label' => 'widget_label_unlink',
-                'mapped' => false,
-                'data' => false,
-                'required' => false,
-            ]
-        );
+        $builder->add('unlink', CheckboxType::class, [
+            'label' => 'widget_label_unlink',
+            'mapped' => false,
+            'data' => false,
+            'required' => false,
+        ]);
     }
 
     /**
@@ -120,12 +103,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
                 'new_on_update' => true,
                 'translation_domain' => 'SonataMediaBundle',
             ])
-            ->setRequired([
-                'provider',
-                'context',
-            ]);
-
-        $resolver
+            ->setRequired(['provider', 'context'])
             ->setAllowedTypes('provider', 'string')
             ->setAllowedTypes('context', 'string')
             ->setAllowedValues('provider', $this->pool->getProviderList())
@@ -137,7 +115,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
      */
     public function getParent()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\FormType';
+        return FormType::class;
     }
 
     /**

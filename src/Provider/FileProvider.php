@@ -21,6 +21,7 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
@@ -97,11 +98,7 @@ class FileProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add(
-            'binaryContent',
-            'Symfony\Component\Form\Extension\Core\Type\FileType',
-            ['required' => false]
-        );
+        $formMapper->add('binaryContent', FileType::class, ['required' => false]);
     }
 
     /**
@@ -109,16 +106,12 @@ class FileProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add(
-            'binaryContent',
-            'Symfony\Component\Form\Extension\Core\Type\FileType',
-            [
-                'constraints' => [
-                    new NotBlank(),
-                    new NotNull(),
-                ],
-            ]
-        );
+        $formMapper->add('binaryContent', FileType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new NotNull(),
+            ],
+        ]);
     }
 
     /**
@@ -126,13 +119,11 @@ class FileProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        $fileType = 'Symfony\Component\Form\Extension\Core\Type\FileType';
-
         if ('api' == $formBuilder->getOption('context')) {
-            $formBuilder->add('binaryContent', $fileType);
+            $formBuilder->add('binaryContent', FileType::class);
             $formBuilder->add('contentType');
         } else {
-            $formBuilder->add('binaryContent', $fileType, [
+            $formBuilder->add('binaryContent', FileType::class, [
                 'required' => false,
                 'label' => 'widget_label_binary_content',
             ]);

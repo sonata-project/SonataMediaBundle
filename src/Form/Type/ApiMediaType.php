@@ -12,7 +12,7 @@
 namespace Sonata\MediaBundle\Form\Type;
 
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\Pool;
@@ -25,6 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ApiMediaType extends AbstractType implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var Pool
      */
@@ -36,13 +38,6 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
     protected $class;
 
     /**
-     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
-     *
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param Pool   $mediaPool
      * @param string $class
      */
@@ -51,16 +46,6 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
         $this->mediaPool = $mediaPool;
         $this->class = $class;
         $this->logger = new NullLogger();
-    }
-
-    /**
-     * NEXT_MAJOR: When switching to PHP 5.4+, replace by LoggerAwareTrait.
-     *
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
     }
 
     /**
@@ -95,7 +80,7 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
      */
     public function getParent()
     {
-        return 'Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType';
+        return ApiDoctrineMediaType::class;
     }
 
     /**

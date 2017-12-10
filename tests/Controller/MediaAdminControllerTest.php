@@ -19,6 +19,9 @@ use Symfony\Bridge\Twig\Command\DebugCommand;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\Form\FormRenderer;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EntityWithGetId
 {
@@ -167,7 +170,7 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureGetCurrentRequest($request)
     {
-        $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->prophesize(RequestStack::class);
 
         $this->container->has('request_stack')->willReturn(true);
         $this->container->get('request_stack')->willReturn($requestStack->reveal());
@@ -205,8 +208,8 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureSetCsrfToken($intention)
     {
-        $tokenManager = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
-        $token = $this->prophesize('Symfony\Component\Security\Csrf\CsrfToken');
+        $tokenManager = $this->prophesize(CsrfTokenManagerInterface::class);
+        $token = $this->prophesize(CsrfToken::class);
 
         $tokenManager->getToken($intention)->willReturn($token->reveal());
         $token->getValue()->willReturn('token');

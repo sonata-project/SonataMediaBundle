@@ -15,10 +15,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -59,29 +63,29 @@ class GalleryListBlockService extends AbstractAdminBlockService
             $contextChoices[$name] = $name;
         }
 
-        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+                ['title', TextType::class, [
                     'label' => 'form.label_title',
                     'required' => false,
                 ]],
-                ['number', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+                ['number', IntegerType::class, [
                     'label' => 'form.label_number',
                     'required' => true,
                 ]],
-                ['context', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['context', ChoiceType::class, [
                     'required' => true,
                     'label' => 'form.label_context',
                     'choices' => $contextChoices,
                 ]],
-                ['mode', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['mode', ChoiceType::class, [
                     'label' => 'form.label_mode',
                     'choices' => [
                         'public' => 'form.label_mode_public',
                         'admin' => 'form.label_mode_admin',
                     ],
                 ]],
-                ['order', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',  [
+                ['order', ChoiceType::class,  [
                     'label' => 'form.label_order',
                     'choices' => [
                         'name' => 'form.label_order_name',
@@ -89,7 +93,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
                         'updatedAt' => 'form.label_order_updated_at',
                     ],
                 ]],
-                ['sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['sort', ChoiceType::class, [
                     'label' => 'form.label_sort',
                     'choices' => [
                         'desc' => 'form.label_sort_desc',

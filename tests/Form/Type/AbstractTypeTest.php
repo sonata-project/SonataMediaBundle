@@ -45,16 +45,13 @@ abstract class AbstractTypeTest extends TypeTestCase
         $this->mediaPool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
         $this->mediaPool->expects($this->any())->method('getProvider')->willReturn($provider);
 
-        // NEXT_MAJOR: Hack for php 5.3 only, remove it when requirement of PHP is >= 5.4
-        $that = $this;
-
         $this->formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')->disableOriginalConstructor()->getMock();
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($that) {
+            ->will($this->returnCallback(function ($name, $type = null) {
                 if (null !== $type) {
-                    $that->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
+                    $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
             }));
 
@@ -75,7 +72,6 @@ abstract class AbstractTypeTest extends TypeTestCase
     public function testGetParent()
     {
         $parentRef = $this->formType->getParent();
-
         $this->assertTrue(class_exists($parentRef), sprintf('Unable to ensure %s is a FQCN', $parentRef));
     }
 

@@ -44,16 +44,13 @@ abstract class AbstractProviderTest extends TestCase
 
     protected function setUp()
     {
-        // NEXT_MAJOR: Hack for php 5.3 only, remove it when requirement of PHP is >= 5.4
-        $that = $this;
-
         $this->formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')->disableOriginalConstructor()->getMock();
         $this->formMapper
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($that) {
+            ->will($this->returnCallback(function ($name, $type = null) {
                 if (null !== $type) {
-                    $that->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
+                    $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
             }));
 
@@ -61,9 +58,9 @@ abstract class AbstractProviderTest extends TestCase
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) use ($that) {
+            ->will($this->returnCallback(function ($name, $type = null) {
                 if (null !== $type) {
-                    $that->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
+                    $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
             }));
 

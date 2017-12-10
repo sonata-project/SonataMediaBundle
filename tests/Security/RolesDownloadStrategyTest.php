@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Tests\Security;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Security\RolesDownloadStrategy;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RolesDownloadStrategyTest extends TestCase
 {
@@ -21,7 +22,7 @@ class RolesDownloadStrategyTest extends TestCase
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
         $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-        $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security->expects($this->any())
             ->method('isGranted')
@@ -38,7 +39,7 @@ class RolesDownloadStrategyTest extends TestCase
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
         $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-        $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security->expects($this->any())
             ->method('isGranted')

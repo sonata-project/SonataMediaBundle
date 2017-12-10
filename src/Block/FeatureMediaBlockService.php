@@ -13,7 +13,11 @@ namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\Metadata;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -45,17 +49,17 @@ class FeatureMediaBlockService extends MediaBlockService
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', 'Sonata\CoreBundle\Form\Type\ImmutableArrayType', [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+                ['title', TextType::class, [
                     'required' => false,
                     'label' => 'form.label_title',
                 ]],
-                ['content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+                ['content', TextareaType::class, [
                     'required' => false,
                     'label' => 'form.label_content',
                 ]],
-                ['orientation', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['orientation', ChoiceType::class, [
                     'required' => false,
                     'choices' => [
                         'left' => 'form.label_orientation_left',
@@ -64,7 +68,7 @@ class FeatureMediaBlockService extends MediaBlockService
                     'label' => 'form.label_orientation',
                 ]],
                 [$this->getMediaBuilder($formMapper), null, []],
-                ['format', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                ['format', ChoiceType::class, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
