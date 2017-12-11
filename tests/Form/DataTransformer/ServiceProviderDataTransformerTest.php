@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -17,7 +19,7 @@ use Sonata\MediaBundle\Form\DataTransformer\ServiceProviderDataTransformer;
 
 class ServiceProviderDataTransformerTest extends TestCase
 {
-    public function testTransformNoop()
+    public function testTransformNoop(): void
     {
         $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
 
@@ -27,7 +29,7 @@ class ServiceProviderDataTransformerTest extends TestCase
         $this->assertSame($value, $transformer->transform($value));
     }
 
-    public function testReverseTransformSkipsProviderIfNotMedia()
+    public function testReverseTransformSkipsProviderIfNotMedia(): void
     {
         $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->transform()->shouldNotBeCalled();
@@ -38,7 +40,7 @@ class ServiceProviderDataTransformerTest extends TestCase
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
 
-    public function testReverseTransformForwardsToProvider()
+    public function testReverseTransformForwardsToProvider(): void
     {
         $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface')->reveal();
 
@@ -49,7 +51,7 @@ class ServiceProviderDataTransformerTest extends TestCase
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
 
-    public function testReverseTransformWithThrowingProviderNoThrow()
+    public function testReverseTransformWithThrowingProviderNoThrow(): void
     {
         $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface')->reveal();
 
@@ -60,7 +62,7 @@ class ServiceProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithThrowingProviderLogsException()
+    public function testReverseTransformWithThrowingProviderLogsException(): void
     {
         $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface')->reveal();
 

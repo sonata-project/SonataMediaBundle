@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -71,7 +73,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addContextsSection(ArrayNodeDefinition $node)
+    private function addContextsSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -113,7 +115,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addCdnSection(ArrayNodeDefinition $node)
+    private function addCdnSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -165,7 +167,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addFilesystemSection(ArrayNodeDefinition $node)
+    private function addFilesystemSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -289,7 +291,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addProvidersSection(ArrayNodeDefinition $node)
+    private function addProvidersSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -400,7 +402,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addExtraSection(ArrayNodeDefinition $node)
+    private function addExtraSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -409,7 +411,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('enabled')->defaultValue(false)->end()
-                        ->scalarNode('secret')->defaultValue(sha1(uniqid(rand(1, 9999), true)))->end()
+                        ->scalarNode('secret')->defaultValue(sha1(uniqid(random_int(1, 9999), true)))->end()
                         ->scalarNode('referrer')->defaultValue('Sonata Media')->end()
                     ->end()
                 ->end()
@@ -420,7 +422,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addModelSection(ArrayNodeDefinition $node)
+    private function addModelSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -441,7 +443,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addBuzzSection(ArrayNodeDefinition $node)
+    private function addBuzzSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -467,7 +469,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addResizerSection(ArrayNodeDefinition $node)
+    private function addResizerSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -501,7 +503,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $node
      */
-    private function addAdapterSection(ArrayNodeDefinition $node)
+    private function addAdapterSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()

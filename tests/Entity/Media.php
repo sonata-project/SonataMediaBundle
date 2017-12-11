@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -15,7 +17,7 @@ class Media extends \Sonata\MediaBundle\Entity\BaseMedia
 {
     protected $id;
 
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }

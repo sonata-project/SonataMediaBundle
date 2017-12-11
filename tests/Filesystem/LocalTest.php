@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -16,7 +18,7 @@ use Sonata\MediaBundle\Filesystem\Local;
 
 class LocalTest extends TestCase
 {
-    public function testReplicate()
+    public function testReplicate(): void
     {
         $local = new Local('/tmp');
 

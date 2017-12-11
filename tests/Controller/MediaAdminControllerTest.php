@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -25,7 +27,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EntityWithGetId
 {
-    public function getId()
+    public function getId(): void
     {
     }
 }
@@ -37,7 +39,7 @@ class MediaAdminControllerTest extends TestCase
     private $request;
     private $controller;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->admin = $this->prophesize('Sonata\MediaBundle\Admin\BaseMediaAdmin');
@@ -49,7 +51,7 @@ class MediaAdminControllerTest extends TestCase
         $this->controller->setContainer($this->container->reveal());
     }
 
-    public function testCreateActionToSelectProvider()
+    public function testCreateActionToSelectProvider(): void
     {
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
 
@@ -72,7 +74,7 @@ class MediaAdminControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $this->configureCreateAction('Sonata\MediaBundle\Tests\Entity\Media');
         $this->configureRender('template', Argument::type('array'), 'renderResponse');
@@ -86,7 +88,7 @@ class MediaAdminControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    public function testListAction()
+    public function testListAction(): void
     {
         $datagrid = $this->prophesize('Sonata\AdminBundle\Datagrid\DatagridInterface');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
@@ -130,7 +132,7 @@ class MediaAdminControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    private function configureCRUDController()
+    private function configureCRUDController(): void
     {
         $pool = $this->prophesize('Sonata\AdminBundle\Admin\Pool');
         $breadcrumbsBuilder = $this->prophesize('Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface');
@@ -148,7 +150,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->setRequest($this->request->reveal())->shouldBeCalled();
     }
 
-    private function configureCreateAction($class)
+    private function configureCreateAction($class): void
     {
         $object = $this->prophesize('Sonata\MediaBundle\Tests\Entity\Media');
         $form = $this->prophesize('Symfony\Component\Form\Form');
@@ -168,7 +170,7 @@ class MediaAdminControllerTest extends TestCase
         $form->isSubmitted()->willReturn(false);
     }
 
-    private function configureGetCurrentRequest($request)
+    private function configureGetCurrentRequest($request): void
     {
         $requestStack = $this->prophesize(RequestStack::class);
 
@@ -177,7 +179,7 @@ class MediaAdminControllerTest extends TestCase
         $requestStack->getCurrentRequest()->willReturn($request);
     }
 
-    private function configureSetFormTheme($formView, $formTheme)
+    private function configureSetFormTheme($formView, $formTheme): void
     {
         $twig = $this->prophesize(\Twig_Environment::class);
 
@@ -206,7 +208,7 @@ class MediaAdminControllerTest extends TestCase
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
 
-    private function configureSetCsrfToken($intention)
+    private function configureSetCsrfToken($intention): void
     {
         $tokenManager = $this->prophesize(CsrfTokenManagerInterface::class);
         $token = $this->prophesize(CsrfToken::class);
@@ -217,7 +219,7 @@ class MediaAdminControllerTest extends TestCase
         $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
     }
 
-    private function configureRender($template, $data, $rendered)
+    private function configureRender($template, $data, $rendered): void
     {
         $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $response = $this->prophesize('Symfony\Component\HttpFoundation\Response');

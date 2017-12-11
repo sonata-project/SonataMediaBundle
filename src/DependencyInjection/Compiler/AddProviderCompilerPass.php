@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -26,7 +28,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $config = $this->getExtensionConfig($container);
 
@@ -65,7 +67,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    public function attachProviders(ContainerBuilder $container)
+    public function attachProviders(ContainerBuilder $container): void
     {
         $pool = $container->getDefinition('sonata.media.pool');
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
@@ -77,7 +79,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
      * @param ContainerBuilder $container
      * @param array            $settings
      */
-    public function attachArguments(ContainerBuilder $container, array $settings)
+    public function attachArguments(ContainerBuilder $container, array $settings): void
     {
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
             foreach ($settings['providers'] as $name => $config) {
@@ -105,7 +107,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
      * @param ContainerBuilder $container
      * @param array            $settings
      */
-    public function applyFormats(ContainerBuilder $container, array $settings)
+    public function applyFormats(ContainerBuilder $container, array $settings): void
     {
         foreach ($settings['contexts'] as $name => $context) {
             // add the different related formats
@@ -113,10 +115,10 @@ class AddProviderCompilerPass implements CompilerPassInterface
                 $definition = $container->getDefinition($id);
 
                 foreach ($context['formats'] as $format => $config) {
-                    $config['quality'] = isset($config['quality']) ? $config['quality'] : 80;
-                    $config['format'] = isset($config['format']) ? $config['format'] : 'jpg';
-                    $config['height'] = isset($config['height']) ? $config['height'] : false;
-                    $config['constraint'] = isset($config['constraint']) ? $config['constraint'] : true;
+                    $config['quality'] = $config['quality'] ?? 80;
+                    $config['format'] = $config['format'] ?? 'jpg';
+                    $config['height'] = $config['height'] ?? false;
+                    $config['constraint'] = $config['constraint'] ?? true;
 
                     $formatName = sprintf('%s_%s', $name, $format);
                     $definition->addMethodCall('addFormat', [$formatName, $config]);

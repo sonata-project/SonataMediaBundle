@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -31,7 +33,7 @@ class CleanMediaCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:clean-uploads')
             ->setDescription('Find orphaned files in media upload directory')
@@ -41,7 +43,7 @@ class CleanMediaCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $dryRun = (bool) $input->getOption('dry-run');
         $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;

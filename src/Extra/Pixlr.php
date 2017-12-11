@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -247,7 +249,7 @@ class Pixlr
      *
      * @throws NotFoundHttpException
      */
-    private function checkMedia($hash, MediaInterface $media)
+    private function checkMedia($hash, MediaInterface $media): void
     {
         if ($hash != $this->generateHash($media)) {
             throw new NotFoundHttpException('Invalid hash');

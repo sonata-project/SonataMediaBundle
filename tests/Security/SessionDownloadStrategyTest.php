@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -19,7 +21,7 @@ use Sonata\MediaBundle\Security\SessionDownloadStrategy;
  */
 final class SessionDownloadStrategyTest extends TestCase
 {
-    public function testIsGrantedFalse()
+    public function testIsGrantedFalse(): void
     {
         $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
@@ -34,7 +36,7 @@ final class SessionDownloadStrategyTest extends TestCase
         $this->assertFalse($strategy->isGranted($media, $request));
     }
 
-    public function testIsGrantedTrue()
+    public function testIsGrantedTrue(): void
     {
         $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');

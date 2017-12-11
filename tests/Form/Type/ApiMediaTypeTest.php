@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -18,7 +20,7 @@ use Sonata\MediaBundle\Form\Type\ApiMediaType;
  */
 class ApiMediaTypeTest extends AbstractTypeTest
 {
-    public function testBuildForm()
+    public function testBuildForm(): void
     {
         parent::testBuildForm();
         $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\MediaProviderInterface')->getMock();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MediaControllerTest extends TestCase
 {
-    public function testGetMediaAction()
+    public function testGetMediaAction(): void
     {
         $mManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
@@ -38,7 +40,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame([$media], $mController->getMediaAction($paramFetcher));
     }
 
-    public function testGetMediumAction()
+    public function testGetMediumAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
@@ -50,7 +52,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame($media, $controller->getMediumAction(1));
     }
 
-    public function testGetMediumNotFoundExceptionAction()
+    public function testGetMediumNotFoundExceptionAction(): void
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
         $this->expectExceptionMessage('Media (42) was not found');
@@ -58,7 +60,7 @@ class MediaControllerTest extends TestCase
         $this->createMediaController()->getMediumAction(42);
     }
 
-    public function testGetMediumFormatsAction()
+    public function testGetMediumFormatsAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
@@ -91,7 +93,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame($expected, $controller->getMediumFormatsAction(1));
     }
 
-    public function testGetMediumBinariesAction()
+    public function testGetMediumBinariesAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
@@ -111,7 +113,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame($binaryResponse, $controller->getMediumBinaryAction(1, 'format', new Request()));
     }
 
-    public function testDeleteMediumAction()
+    public function testDeleteMediumAction(): void
     {
         $manager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
         $manager->expects($this->once())->method('delete');
@@ -124,7 +126,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame($expected, $controller->deleteMediumAction(1));
     }
 
-    public function testPutMediumAction()
+    public function testPutMediumAction(): void
     {
         $medium = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
@@ -150,7 +152,7 @@ class MediaControllerTest extends TestCase
         $this->assertInstanceOf('FOS\RestBundle\View\View', $controller->putMediumAction(1, new Request()));
     }
 
-    public function testPutMediumInvalidFormAction()
+    public function testPutMediumInvalidFormAction(): void
     {
         $medium = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
 
@@ -175,7 +177,7 @@ class MediaControllerTest extends TestCase
         $this->assertInstanceOf('Symfony\Component\Form\Form', $controller->putMediumAction(1, new Request()));
     }
 
-    public function testPostProviderMediumAction()
+    public function testPostProviderMediumAction(): void
     {
         $medium = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $medium->expects($this->once())->method('setProviderName');
@@ -202,7 +204,7 @@ class MediaControllerTest extends TestCase
         $this->assertInstanceOf('FOS\RestBundle\View\View', $controller->postProviderMediumAction('providerName', new Request()));
     }
 
-    public function testPostProviderActionNotFound()
+    public function testPostProviderActionNotFound(): void
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
@@ -219,7 +221,7 @@ class MediaControllerTest extends TestCase
         $controller->postProviderMediumAction('non existing provider', new Request());
     }
 
-    public function testPutMediumBinaryContentAction()
+    public function testPutMediumBinaryContentAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media->expects($this->once())->method('setBinaryContent');

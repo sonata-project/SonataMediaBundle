@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -39,7 +41,7 @@ class SyncThumbsCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:sync-thumbnails')
             ->setDescription('Sync uploaded image thumbs with new media formats')
@@ -56,7 +58,7 @@ class SyncThumbsCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $helper = $this->getHelper('question');
 
@@ -187,7 +189,7 @@ class SyncThumbsCommand extends BaseCommand
      *
      * @param string $message
      */
-    protected function log($message)
+    protected function log($message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

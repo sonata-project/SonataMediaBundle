@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -24,7 +26,7 @@ class GalleryTest extends GalleryItem
     public function __construct()
     {
         parent::__construct();
-        $this->id = rand();
+        $this->id = random_int(0, getrandmax());
     }
 
     public function getId()
@@ -38,7 +40,7 @@ class GalleryTest extends GalleryItem
  */
 class GalleryControllerTest extends TestCase
 {
-    public function testGetGalleriesAction()
+    public function testGetGalleriesAction(): void
     {
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $mediaManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
@@ -64,7 +66,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame([], $gController->getGalleriesAction($paramFetcher));
     }
 
-    public function testGetGalleryAction()
+    public function testGetGalleryAction(): void
     {
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $mediaManager = $this->createMock('Sonata\MediaBundle\Model\MediaManagerInterface');
@@ -78,7 +80,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame($gallery, $gController->getGalleryAction(1));
     }
 
-    public function testGetGalleryNotFoundAction()
+    public function testGetGalleryNotFoundAction(): void
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
         $this->expectExceptionMessage('Gallery (42) not found');
@@ -94,7 +96,7 @@ class GalleryControllerTest extends TestCase
         $gController->getGalleryAction(42);
     }
 
-    public function testGetGalleryGalleryItemsAction()
+    public function testGetGalleryGalleryItemsAction(): void
     {
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
         $galleryItem = $this->createMock('Sonata\MediaBundle\Model\GalleryItemInterface');
@@ -112,7 +114,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame([$galleryItem], $gController->getGalleryGalleryItemAction(1));
     }
 
-    public function testGetGalleryMediaAction()
+    public function testGetGalleryMediaAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $formFactory = $this->createMock('Symfony\Component\Form\FormFactoryInterface');
@@ -130,7 +132,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame([$media], $gController->getGalleryMediasAction(1));
     }
 
-    public function testPostGalleryMediaGalleryItemAction()
+    public function testPostGalleryMediaGalleryItemAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $galleryItem = $this->createMock('Sonata\MediaBundle\Model\GalleryItemInterface');
@@ -165,7 +167,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(200, $view->getResponse()->getStatusCode(), 'Should return 200');
     }
 
-    public function testPostGalleryMediaGalleryItemInvalidAction()
+    public function testPostGalleryMediaGalleryItemInvalidAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $galleryManager = $this->createMock('Sonata\MediaBundle\Model\GalleryManagerInterface');
@@ -193,7 +195,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(400, $view->getResponse()->getStatusCode(), 'Should return 400');
     }
 
-    public function testPutGalleryMediaGalleryItemAction()
+    public function testPutGalleryMediaGalleryItemAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
@@ -227,7 +229,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(200, $view->getResponse()->getStatusCode(), 'Should return 200');
     }
 
-    public function testPutGalleryMediaGalleryItemInvalidAction()
+    public function testPutGalleryMediaGalleryItemInvalidAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $galleryItem = $this->createMock('Sonata\MediaBundle\Model\GalleryItemInterface');
@@ -259,7 +261,7 @@ class GalleryControllerTest extends TestCase
         $this->assertInstanceOf('Symfony\Component\Form\FormInterface', $view);
     }
 
-    public function testDeleteGalleryMediaGalleryItemAction()
+    public function testDeleteGalleryMediaGalleryItemAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $galleryItem = $this->createMock('Sonata\MediaBundle\Model\GalleryItemInterface');
@@ -289,7 +291,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(['deleted' => true], $view);
     }
 
-    public function testDeleteGalleryMediaGalleryItemInvalidAction()
+    public function testDeleteGalleryMediaGalleryItemInvalidAction(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $media2 = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');

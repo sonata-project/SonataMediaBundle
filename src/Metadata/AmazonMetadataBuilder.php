@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -16,16 +18,16 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
-    const PRIVATE_ACCESS = 'private';
-    const PUBLIC_READ = 'public-read';
-    const PUBLIC_READ_WRITE = 'public-read-write';
-    const AUTHENTICATED_READ = 'authenticated-read';
-    const BUCKET_OWNER_READ = 'bucket-owner-read';
-    const BUCKET_OWNER_FULL_CONTROL = 'bucket-owner-full-control';
+    public const PRIVATE_ACCESS = 'private';
+    public const PUBLIC_READ = 'public-read';
+    public const PUBLIC_READ_WRITE = 'public-read-write';
+    public const AUTHENTICATED_READ = 'authenticated-read';
+    public const BUCKET_OWNER_READ = 'bucket-owner-read';
+    public const BUCKET_OWNER_FULL_CONTROL = 'bucket-owner-full-control';
 
-    const STORAGE_STANDARD = 'STANDARD';
-    const STORAGE_REDUCED = 'REDUCED_REDUNDANCY';
-    const STORAGE_GLACIER = 'GLACIER';
+    public const STORAGE_STANDARD = 'STANDARD';
+    public const STORAGE_REDUCED = 'REDUCED_REDUNDANCY';
+    public const STORAGE_GLACIER = 'GLACIER';
 
     /**
      * @var array

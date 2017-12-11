@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -17,7 +19,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 
 class PHPCRGeneratorTest extends TestCase
 {
-    public function testPHPCRGenerator()
+    public function testPHPCRGenerator(): void
     {
         $generator = new PHPCRGenerator();
 

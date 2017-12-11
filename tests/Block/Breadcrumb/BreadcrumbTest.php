@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -23,7 +25,7 @@ class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockServi
  */
 class BreadcrumbTest extends AbstractBlockServiceTestCase
 {
-    public function testBlockService()
+    public function testBlockService(): void
     {
         $blockService = new BreadcrumbGalleryBlockService_Test(
             'context',

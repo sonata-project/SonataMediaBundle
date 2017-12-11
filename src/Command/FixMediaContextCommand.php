@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -21,7 +23,7 @@ class FixMediaContextCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:fix-media-context');
         $this->setDescription('Generate the default category for each media context');
@@ -30,7 +32,7 @@ class FixMediaContextCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         if (!$this->getContainer()->has('sonata.media.manager.category')) {
             throw new \LogicException('The classification feature is disabled.');

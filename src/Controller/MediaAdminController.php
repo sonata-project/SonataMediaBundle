@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -119,7 +121,7 @@ class MediaAdminController extends Controller
      * @param FormView $formView
      * @param string   $theme
      */
-    private function setFormTheme(FormView $formView, $theme)
+    private function setFormTheme(FormView $formView, $theme): void
     {
         $twig = $this->get('twig');
 

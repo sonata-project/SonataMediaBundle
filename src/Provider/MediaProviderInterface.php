@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -23,10 +25,10 @@ use Symfony\Component\HttpFoundation\Response;
 interface MediaProviderInterface
 {
     // This format is used to display thumbnails in Sonata Admin
-    const FORMAT_ADMIN = 'admin';
+    public const FORMAT_ADMIN = 'admin';
 
     // This format holds the original media
-    const FORMAT_REFERENCE = 'reference';
+    public const FORMAT_REFERENCE = 'reference';
 
     /**
      * @param string $name

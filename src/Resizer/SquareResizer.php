@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -61,7 +63,7 @@ class SquareResizer implements ResizerInterface
     /**
      * {@inheritdoc}
      */
-    public function setAdapter(ImagineInterface $adapter)
+    public function setAdapter(ImagineInterface $adapter): void
     {
         $this->adapter = $adapter;
     }
@@ -69,7 +71,7 @@ class SquareResizer implements ResizerInterface
     /**
      * {@inheritdoc}
      */
-    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings)
+    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings): void
     {
         if (!isset($settings['width'])) {
             throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderName()));

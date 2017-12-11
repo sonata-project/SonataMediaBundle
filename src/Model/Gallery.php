@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -62,7 +64,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -78,7 +80,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): void
     {
         $this->enabled = $enabled;
     }
@@ -94,7 +96,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
+    public function setUpdatedAt(\DateTime $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -110,7 +112,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt(\DateTime $createdAt = null)
+    public function setCreatedAt(\DateTime $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }
@@ -126,7 +128,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setDefaultFormat($defaultFormat)
+    public function setDefaultFormat($defaultFormat): void
     {
         $this->defaultFormat = $defaultFormat;
     }
@@ -142,7 +144,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setGalleryItems($galleryItems)
+    public function setGalleryItems($galleryItems): void
     {
         $this->galleryItems = new ArrayCollection();
 
@@ -162,7 +164,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function addGalleryItem(GalleryItemInterface $galleryItem)
+    public function addGalleryItem(GalleryItemInterface $galleryItem): void
     {
         $galleryItem->setGallery($this);
 
@@ -172,7 +174,7 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function setContext($context)
+    public function setContext($context): void
     {
         $this->context = $context;
     }

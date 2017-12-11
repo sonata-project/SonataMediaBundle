@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -45,7 +47,7 @@ class RemoveThumbsCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:remove-thumbnails')
             ->setDescription('Remove uploaded image thumbs')
@@ -63,7 +65,7 @@ class RemoveThumbsCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->input = $input;
         $this->output = $output;
@@ -233,7 +235,7 @@ class RemoveThumbsCommand extends BaseCommand
      *
      * @param string $message
      */
-    protected function log($message)
+    protected function log($message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

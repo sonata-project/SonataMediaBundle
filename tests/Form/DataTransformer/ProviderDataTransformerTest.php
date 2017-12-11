@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -19,7 +21,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProviderDataTransformerTest extends TestCase
 {
-    public function testReverseTransformFakeValue()
+    public function testReverseTransformFakeValue(): void
     {
         $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
 
@@ -27,7 +29,7 @@ class ProviderDataTransformerTest extends TestCase
         $this->assertSame('foo', $transformer->reverseTransform('foo'));
     }
 
-    public function testReverseTransformUnknownProvider()
+    public function testReverseTransformUnknownProvider(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -44,7 +46,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformValidProvider()
+    public function testReverseTransformValidProvider(): void
     {
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->once())->method('transform');
@@ -63,7 +65,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithNewMediaAndNoBinaryContent()
+    public function testReverseTransformWithNewMediaAndNoBinaryContent(): void
     {
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
 
@@ -84,7 +86,7 @@ class ProviderDataTransformerTest extends TestCase
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
 
-    public function testReverseTransformWithMediaAndNoBinaryContent()
+    public function testReverseTransformWithMediaAndNoBinaryContent(): void
     {
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
 
@@ -99,7 +101,7 @@ class ProviderDataTransformerTest extends TestCase
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
 
-    public function testReverseTransformWithMediaAndUploadFileInstance()
+    public function testReverseTransformWithMediaAndUploadFileInstance(): void
     {
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
 
@@ -117,7 +119,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithThrowingProviderNoThrow()
+    public function testReverseTransformWithThrowingProviderNoThrow(): void
     {
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->once())->method('transform')->will($this->throwException(new \Exception()));
@@ -136,7 +138,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithThrowingProviderLogsException()
+    public function testReverseTransformWithThrowingProviderLogsException(): void
     {
         $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $provider->expects($this->once())->method('transform')->will($this->throwException(new \Exception()));

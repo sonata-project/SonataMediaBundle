@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -61,7 +63,7 @@ class ImageProviderTest extends AbstractProviderTest
         return $provider;
     }
 
-    public function testProvider()
+    public function testProvider(): void
     {
         $provider = $this->getProvider();
 
@@ -81,7 +83,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testHelperProperies()
+    public function testHelperProperies(): void
     {
         $adminBox = new Box(100, 100);
         $mediumBox = new Box(500, 250);
@@ -143,7 +145,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame(150, $properties['width']);
     }
 
-    public function testThumbnail()
+    public function testThumbnail(): void
     {
         $provider = $this->getProvider();
 
@@ -164,7 +166,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testEvent()
+    public function testEvent(): void
     {
         $provider = $this->getProvider();
 
@@ -189,7 +191,7 @@ class ImageProviderTest extends AbstractProviderTest
         $provider->postRemove($media);
     }
 
-    public function testTransformFormatNotSupported()
+    public function testTransformFormatNotSupported(): void
     {
         $provider = $this->getProvider();
 

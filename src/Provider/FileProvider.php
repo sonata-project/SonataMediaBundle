@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -90,7 +92,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildEditForm(FormMapper $formMapper)
+    public function buildEditForm(FormMapper $formMapper): void
     {
         $formMapper->add('name');
         $formMapper->add('enabled', null, ['required' => false]);
@@ -104,7 +106,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildCreateForm(FormMapper $formMapper)
+    public function buildCreateForm(FormMapper $formMapper): void
     {
         $formMapper->add('binaryContent', FileType::class, [
             'constraints' => [
@@ -117,7 +119,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildMediaType(FormBuilder $formBuilder)
+    public function buildMediaType(FormBuilder $formBuilder): void
     {
         if ('api' == $formBuilder->getOption('context')) {
             $formBuilder->add('binaryContent', FileType::class);
@@ -133,7 +135,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postPersist(MediaInterface $media)
+    public function postPersist(MediaInterface $media): void
     {
         if (null === $media->getBinaryContent()) {
             return;
@@ -149,7 +151,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postUpdate(MediaInterface $media)
+    public function postUpdate(MediaInterface $media): void
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             return;
@@ -181,7 +183,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function updateMetadata(MediaInterface $media, $force = true)
+    public function updateMetadata(MediaInterface $media, $force = true): void
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             // this is now optimized at all!!!
@@ -256,7 +258,7 @@ class FileProvider extends BaseProvider
                 $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
             }
 
-            return new StreamedResponse(function () use ($file) {
+            return new StreamedResponse(function () use ($file): void {
                 echo $file->getContent();
             }, 200, $headers);
         }
@@ -276,7 +278,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    public function validate(ErrorElement $errorElement, MediaInterface $media): void
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             return;
@@ -315,7 +317,7 @@ class FileProvider extends BaseProvider
     /**
      * @param MediaInterface $media
      */
-    protected function fixBinaryContent(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media): void
     {
         if (null === $media->getBinaryContent() || $media->getBinaryContent() instanceof File) {
             return;
@@ -342,7 +344,7 @@ class FileProvider extends BaseProvider
      *
      * @throws \RuntimeException
      */
-    protected function fixFilename(MediaInterface $media)
+    protected function fixFilename(MediaInterface $media): void
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
             $media->setName($media->getName() ?: $media->getBinaryContent()->getClientOriginalName());
@@ -361,7 +363,7 @@ class FileProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    protected function doTransform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media): void
     {
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
@@ -394,7 +396,7 @@ class FileProvider extends BaseProvider
      * @param MediaInterface $media
      * @param string         $contents path to contents, defaults to MediaInterface BinaryContent
      */
-    protected function setFileContents(MediaInterface $media, $contents = null)
+    protected function setFileContents(MediaInterface $media, $contents = null): void
     {
         $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
         $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
@@ -431,7 +433,7 @@ class FileProvider extends BaseProvider
      */
     protected function generateMediaUniqId(MediaInterface $media)
     {
-        return sha1($media->getName().uniqid().rand(11111, 99999));
+        return sha1($media->getName().uniqid().random_int(11111, 99999));
     }
 
     /**
@@ -439,7 +441,7 @@ class FileProvider extends BaseProvider
      *
      * @param MediaInterface $media
      */
-    protected function generateBinaryFromRequest(MediaInterface $media)
+    protected function generateBinaryFromRequest(MediaInterface $media): void
     {
         if (!$media->getContentType()) {
             throw new \RuntimeException(

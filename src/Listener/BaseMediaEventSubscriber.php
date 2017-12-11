@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -43,7 +45,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @param EventArgs $args
      */
-    public function postUpdate(EventArgs $args)
+    public function postUpdate(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -55,7 +57,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @param EventArgs $args
      */
-    public function postRemove(EventArgs $args)
+    public function postRemove(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -67,7 +69,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @param EventArgs $args
      */
-    public function postPersist(EventArgs $args)
+    public function postPersist(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -79,7 +81,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @param EventArgs $args
      */
-    public function preUpdate(EventArgs $args)
+    public function preUpdate(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -94,7 +96,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @param EventArgs $args
      */
-    public function preRemove(EventArgs $args)
+    public function preRemove(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -106,7 +108,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @param EventArgs $args
      */
-    public function prePersist(EventArgs $args)
+    public function prePersist(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;

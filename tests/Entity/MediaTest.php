@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -15,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class MediaTest extends TestCase
 {
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $media = new Media();
 
@@ -26,14 +28,14 @@ class MediaTest extends TestCase
         $this->assertSame($media->getMetadataValue('thumbnail_url1'), null, '::getMetadataValue() return the null value');
     }
 
-    public function testStatusList()
+    public function testStatusList(): void
     {
         $status = Media::getStatusList();
 
         $this->assertInternalType('array', $status);
     }
 
-    public function testSetGet()
+    public function testSetGet(): void
     {
         $category = $this->prophesize();
         $category->willExtend('Sonata\MediaBundle\Tests\Controller\EntityWithGetId');
@@ -73,7 +75,7 @@ class MediaTest extends TestCase
         $this->assertNull($media->getMetadataValue('foo'));
     }
 
-    public function testGetMediaFileExtension()
+    public function testGetMediaFileExtension(): void
     {
         $media = new Media();
 
@@ -87,7 +89,7 @@ class MediaTest extends TestCase
         $this->assertSame('png', $media->getExtension(), 'extension should not contain query strings or hashes');
     }
 
-    public function testSetCategoryWithoutAnActualCategory()
+    public function testSetCategoryWithoutAnActualCategory(): void
     {
         $this->expectException('\InvalidArgumentException');
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -83,7 +85,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($category)
+    public function save($category): void
     {
         $this->categoryManager->save($category);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
     private $galleryManager;
     private $blockService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +37,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
         );
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $block = $this->prophesize('Sonata\BlockBundle\Model\Block');
         $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface');
@@ -58,7 +60,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
         $this->assertSame($block->reveal(), $this->templating->parameters['block']);
     }
 
-    public function testDefaultSettings()
+    public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);
 
@@ -76,7 +78,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
         ], $blockContext);
     }
 
-    private function configureGetFormatChoices($media, $choices)
+    private function configureGetFormatChoices($media, $choices): void
     {
         $mediaAdmin = $this->prophesize('Sonata\MediaBundle\Admin\BaseMediaAdmin');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');

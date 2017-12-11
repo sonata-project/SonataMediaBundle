@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -151,7 +153,7 @@ class CloudFront implements CDNInterface
      *
      * @param CloudFrontClient $client
      */
-    public function setClient(CloudFrontClient $client)
+    public function setClient(CloudFrontClient $client): void
     {
         $this->client = $client;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
     private $galleryManager;
     private $blockService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +37,7 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
         );
     }
 
-    public function testDefaultSettings()
+    public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -48,7 +50,7 @@ class BaseProviderTest extends AbstractProviderTest
         return $provider;
     }
 
-    public function testBaseProvider()
+    public function testBaseProvider(): void
     {
         $provider = $this->getProvider();
         $provider->setTemplates([
@@ -73,13 +75,13 @@ class BaseProviderTest extends AbstractProviderTest
         $this->assertSame('test_small', $provider->getFormatName($media, 'test_small'));
     }
 
-    public function testGetCdnPath()
+    public function testGetCdnPath(): void
     {
         $provider = $this->getProvider();
         $this->assertSame('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
     }
 
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $provider = $this->getProvider();
 
@@ -96,7 +98,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getHelperProperties(MediaInterface $media, $format, $options = [])
+    public function getHelperProperties(MediaInterface $media, $format, $options = []): void
     {
         // TODO: Implement getHelperProperties() method.
     }
@@ -104,7 +106,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postPersist(MediaInterface $media)
+    public function postPersist(MediaInterface $media): void
     {
         // TODO: Implement postPersist() method.
     }
@@ -112,7 +114,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildEditForm(FormMapper $form)
+    public function buildEditForm(FormMapper $form): void
     {
         // TODO: Implement buildEditForm() method.
     }
@@ -120,7 +122,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildCreateForm(FormMapper $form)
+    public function buildCreateForm(FormMapper $form): void
     {
         // TODO: Implement buildCreateForm() method.
     }
@@ -128,7 +130,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postUpdate(MediaInterface $media)
+    public function postUpdate(MediaInterface $media): void
     {
         // TODO: Implement postUpdate() method.
     }
@@ -136,7 +138,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getAbsolutePath(MediaInterface $media)
+    public function getAbsolutePath(MediaInterface $media): void
     {
         // TODO: Implement getAbsolutePath() method.
     }
@@ -144,7 +146,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getReferenceImage(MediaInterface $media)
+    public function getReferenceImage(MediaInterface $media): void
     {
         // TODO: Implement getReferenceImage() method.
     }
@@ -152,7 +154,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function generatePrivateUrl(MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, $format): void
     {
         // TODO: Implement generatePrivateUrl() method.
     }
@@ -160,7 +162,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function generatePublicUrl(MediaInterface $media, $format)
+    public function generatePublicUrl(MediaInterface $media, $format): void
     {
         // TODO: Implement generatePublicUrl() method.
     }
@@ -168,7 +170,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getReferenceFile(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media): void
     {
         // TODO: Implement getReferenceFile() method.
     }
@@ -176,7 +178,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function preUpdate(MediaInterface $media)
+    public function preUpdate(MediaInterface $media): void
     {
         // TODO: Implement preUpdate() method.
     }
@@ -184,7 +186,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postRemove(MediaInterface $media)
+    public function postRemove(MediaInterface $media): void
     {
         // TODO: Implement postRemove() method.
     }
@@ -192,7 +194,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function prePersist(MediaInterface $media)
+    public function prePersist(MediaInterface $media): void
     {
         // TODO: Implement prePersist() method.
     }
@@ -200,7 +202,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
+    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = []): void
     {
         // TODO: Implement getDownloadResponse() method.
     }
@@ -208,7 +210,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildMediaType(FormBuilder $formBuilder)
+    public function buildMediaType(FormBuilder $formBuilder): void
     {
         // TODO: Implement buildMediaType() method.
     }
@@ -216,7 +218,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function updateMetadata(MediaInterface $media, $force = false)
+    public function updateMetadata(MediaInterface $media, $force = false): void
     {
         // TODO: Implement updateMetadata() method.
     }
@@ -224,7 +226,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    protected function doTransform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media): void
     {
         // TODO: Implement doTransform() method.
     }

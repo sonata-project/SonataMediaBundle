@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -25,7 +27,7 @@ class AddMassMediaCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:add-multiple')
             ->setDescription('Add medias in mass into the database')
@@ -40,7 +42,7 @@ class AddMassMediaCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $fp = $this->getFilePointer($input, $output);
         $imported = -1;
@@ -92,7 +94,7 @@ class AddMassMediaCommand extends BaseCommand
      * @param array           $data
      * @param OutputInterface $output
      */
-    protected function insertMedia(array $data, OutputInterface $output)
+    protected function insertMedia(array $data, OutputInterface $output): void
     {
         $media = $this->getMediaManager()->create();
 
@@ -108,7 +110,7 @@ class AddMassMediaCommand extends BaseCommand
         }
     }
 
-    protected function optimize()
+    protected function optimize(): void
     {
         if ($this->getContainer()->has('doctrine')) {
             $this->getContainer()->get('doctrine')->getManager()->getUnitOfWork()->clear();

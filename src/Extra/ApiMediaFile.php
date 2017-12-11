@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -57,7 +59,7 @@ class ApiMediaFile extends File
     /**
      * @param string $extension
      */
-    public function setExtension($extension)
+    public function setExtension($extension): void
     {
         $this->extension = $extension;
     }
@@ -73,7 +75,7 @@ class ApiMediaFile extends File
     /**
      * @param string $mimetype
      */
-    public function setMimetype($mimetype)
+    public function setMimetype($mimetype): void
     {
         $this->mimetype = $mimetype;
     }
