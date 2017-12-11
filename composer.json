@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.1",
         "imagine/imagine": "^0.6",
         "jms/serializer-bundle": "^0.13 || ^1.0 || ^2.0",
         "knplabs/gaufrette": "^0.1.6 || ^0.2 || ^0.3",
