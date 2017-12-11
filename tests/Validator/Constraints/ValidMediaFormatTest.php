@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -16,7 +18,7 @@ use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 
 class ValidMediaFormatTest extends TestCase
 {
-    public function testInstance()
+    public function testInstance(): void
     {
         $constraint = new ValidMediaFormat();
 

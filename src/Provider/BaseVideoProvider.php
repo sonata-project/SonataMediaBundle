@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -122,7 +124,7 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildEditForm(FormMapper $formMapper)
+    public function buildEditForm(FormMapper $formMapper): void
     {
         $formMapper->add('name');
         $formMapper->add('enabled', null, ['required' => false]);
@@ -136,7 +138,7 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildCreateForm(FormMapper $formMapper)
+    public function buildCreateForm(FormMapper $formMapper): void
     {
         $formMapper->add('binaryContent', TextType::class, [
             'constraints' => [
@@ -149,7 +151,7 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function buildMediaType(FormBuilder $formBuilder)
+    public function buildMediaType(FormBuilder $formBuilder): void
     {
         $formBuilder->add('binaryContent', TextType::class, [
             'label' => 'widget_label_binary_content',
@@ -159,7 +161,7 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postUpdate(MediaInterface $media)
+    public function postUpdate(MediaInterface $media): void
     {
         $this->postPersist($media);
     }
@@ -167,7 +169,7 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postPersist(MediaInterface $media)
+    public function postPersist(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -181,7 +183,7 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function postRemove(MediaInterface $media)
+    public function postRemove(MediaInterface $media): void
     {
     }
 
@@ -235,8 +237,8 @@ abstract class BaseVideoProvider extends BaseProvider
 
         if (isset($options['width']) || isset($options['height'])) {
             $settings = [
-                'width' => isset($options['width']) ? $options['width'] : null,
-                'height' => isset($options['height']) ? $options['height'] : null,
+                'width' => $options['width'] ?? null,
+                'height' => $options['height'] ?? null,
             ];
         } else {
             $settings = $this->getFormat($format);

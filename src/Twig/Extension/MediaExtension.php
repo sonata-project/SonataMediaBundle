@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -65,7 +67,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     /**
      * {@inheritdoc}
      */
-    public function initRuntime(\Twig_Environment $environment)
+    public function initRuntime(\Twig_Environment $environment): void
     {
         $this->environment = $environment;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -17,7 +19,7 @@ use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 
 class AmazonMetadataBuilderTest extends TestCase
 {
-    public function testAmazon()
+    public function testAmazon(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $filename = '/test/folder/testfile.png';

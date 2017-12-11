@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -17,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RolesDownloadStrategyTest extends TestCase
 {
-    public function testIsGrantedTrue()
+    public function testIsGrantedTrue(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
@@ -34,7 +36,7 @@ class RolesDownloadStrategyTest extends TestCase
         $this->assertTrue($strategy->isGranted($media, $request));
     }
 
-    public function testIsGrantedFalse()
+    public function testIsGrantedFalse(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->createMock('Symfony\Component\HttpFoundation\Request');

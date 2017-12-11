@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -33,7 +35,7 @@ class AddMediaCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:add')
             ->setDescription('Add a media into the database')
@@ -52,7 +54,7 @@ class AddMediaCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $provider = $input->getArgument('providerName');
         $context = $input->getArgument('context');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -19,7 +21,7 @@ class MediaControllerTest extends TestCase
     protected $container;
     protected $controller;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = $this->prophesize('Symfony\Component\DependencyInjection\Container');
 
@@ -27,7 +29,7 @@ class MediaControllerTest extends TestCase
         $this->controller->setContainer($this->container->reveal());
     }
 
-    public function testDownloadActionWithNotFoundMedia()
+    public function testDownloadActionWithNotFoundMedia(): void
     {
         $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
 
@@ -38,7 +40,7 @@ class MediaControllerTest extends TestCase
         $this->controller->downloadAction($request->reveal(), 1);
     }
 
-    public function testDownloadActionAccessDenied()
+    public function testDownloadActionAccessDenied(): void
     {
         $this->expectException('Symfony\Component\Security\Core\Exception\AccessDeniedException');
 
@@ -53,7 +55,7 @@ class MediaControllerTest extends TestCase
         $this->controller->downloadAction($request->reveal(), 1);
     }
 
-    public function testDownloadActionBinaryFile()
+    public function testDownloadActionBinaryFile(): void
     {
         $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
@@ -74,7 +76,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame($response->reveal(), $result);
     }
 
-    public function testViewActionWithNotFoundMedia()
+    public function testViewActionWithNotFoundMedia(): void
     {
         $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
 
@@ -85,7 +87,7 @@ class MediaControllerTest extends TestCase
         $this->controller->viewAction($request->reveal(), 1);
     }
 
-    public function testViewActionAccessDenied()
+    public function testViewActionAccessDenied(): void
     {
         $this->expectException('Symfony\Component\Security\Core\Exception\AccessDeniedException');
 
@@ -100,7 +102,7 @@ class MediaControllerTest extends TestCase
         $this->controller->viewAction($request->reveal(), 1);
     }
 
-    public function testViewActionRendersView()
+    public function testViewActionRendersView(): void
     {
         $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
         $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
@@ -123,7 +125,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    private function configureDownloadSecurity($pool, $media, $request, $isGranted)
+    private function configureDownloadSecurity($pool, $media, $request, $isGranted): void
     {
         $strategy = $this->prophesize('Sonata\MediaBundle\Security\DownloadStrategyInterface');
 
@@ -131,7 +133,7 @@ class MediaControllerTest extends TestCase
         $strategy->isGranted($media, $request)->willReturn($isGranted);
     }
 
-    private function configureGetMedia($id, $media)
+    private function configureGetMedia($id, $media): void
     {
         $mediaManager = $this->prophesize('Sonata\CoreBundle\Model\BaseEntityManager');
 
@@ -139,13 +141,13 @@ class MediaControllerTest extends TestCase
         $mediaManager->find($id)->willReturn($media);
     }
 
-    private function configureGetProvider($pool, $media, $provider)
+    private function configureGetProvider($pool, $media, $provider): void
     {
         $pool->getProvider('provider')->willReturn($provider);
         $media->getProviderName()->willReturn('provider');
     }
 
-    private function configureRender($template, $data, $rendered)
+    private function configureRender($template, $data, $rendered): void
     {
         $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $response = $this->prophesize('Symfony\Component\HttpFoundation\Response');

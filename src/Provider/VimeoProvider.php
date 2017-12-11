@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -56,17 +58,17 @@ class VimeoProvider extends BaseVideoProvider
             'js_swf_id' => uniqid('vimeo_player_'),
         ];
 
-        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
+        $player_parameters = array_merge($defaults, $options['player_parameters'] ?? []);
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $params = [
             'src' => http_build_query($player_parameters),
             'id' => $player_parameters['js_swf_id'],
-            'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
+            'frameborder' => $options['frameborder'] ?? 0,
             'width' => $box->getWidth(),
             'height' => $box->getHeight(),
-            'class' => isset($options['class']) ? $options['class'] : '',
+            'class' => $options['class'] ?? '',
             'allow_fullscreen' => isset($options['allowfullscreen']) ? true : false,
         ];
 
@@ -84,7 +86,7 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function updateMetadata(MediaInterface $media, $force = false)
+    public function updateMetadata(MediaInterface $media, $force = false): void
     {
         $url = sprintf('http://vimeo.com/api/oembed.json?url=%s', $this->getReferenceUrl($media));
 
@@ -136,7 +138,7 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * @param MediaInterface $media
      */
-    protected function fixBinaryContent(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -150,7 +152,7 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    protected function doTransform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media): void
     {
         $this->fixBinaryContent($media);
 

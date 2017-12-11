@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -45,7 +47,7 @@ abstract class BaseGallery extends Gallery
     /**
      * {@inheritdoc}
      */
-    public function addGalleryItem(GalleryItemInterface $galleryItem)
+    public function addGalleryItem(GalleryItemInterface $galleryItem): void
     {
         $galleryItem->setGallery($this);
 
@@ -62,7 +64,7 @@ abstract class BaseGallery extends Gallery
     /**
      * Pre persist method.
      */
-    public function prePersist()
+    public function prePersist(): void
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
@@ -73,7 +75,7 @@ abstract class BaseGallery extends Gallery
     /**
      * Pre Update method.
      */
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->updatedAt = new \DateTime();
 
@@ -83,7 +85,7 @@ abstract class BaseGallery extends Gallery
     /**
      * Reorders gallery items based on their position.
      */
-    public function reorderGalleryItems()
+    public function reorderGalleryItems(): void
     {
         if ($this->getGalleryItems() && $this->getGalleryItems() instanceof \IteratorAggregate) {
             // reorder

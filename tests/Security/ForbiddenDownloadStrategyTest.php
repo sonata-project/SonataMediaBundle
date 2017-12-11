@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -16,7 +18,7 @@ use Sonata\MediaBundle\Security\ForbiddenDownloadStrategy;
 
 class ForbiddenDownloadStrategyTest extends TestCase
 {
-    public function testIsGranted()
+    public function testIsGranted(): void
     {
         $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
         $request = $this->createMock('Symfony\Component\HttpFoundation\Request');

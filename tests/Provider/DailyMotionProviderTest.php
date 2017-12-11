@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -55,7 +57,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         return $provider;
     }
 
-    public function testProvider()
+    public function testProvider(): void
     {
         $provider = $this->getProvider();
 
@@ -74,7 +76,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame('/uploads/media/default/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
-    public function testThumbnail()
+    public function testThumbnail(): void
     {
         $response = $this->createMock('Buzz\Message\AbstractMessage');
         $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
@@ -105,7 +107,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023458_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testTransformWithSig()
+    public function testTransformWithSig(): void
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
@@ -128,7 +130,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function testTransformWithUrl()
+    public function testTransformWithUrl(): void
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
@@ -151,7 +153,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function testForm()
+    public function testForm(): void
     {
         $provider = $this->getProvider();
 
@@ -173,7 +175,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $provider->buildEditForm($formMapper);
     }
 
-    public function testHelperProperies()
+    public function testHelperProperies(): void
     {
         $provider = $this->getProvider();
 
@@ -192,7 +194,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame(100, $properties['width']);
     }
 
-    public function testGetReferenceUrl()
+    public function testGetReferenceUrl(): void
     {
         $media = new Media();
         $media->setProviderReference('123456');

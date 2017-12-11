@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
 
 class ProxyMetadataBuilderTest extends TestCase
 {
-    public function testProxyAmazon()
+    public function testProxyAmazon(): void
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->once())
@@ -60,7 +62,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyLocal()
+    public function testProxyLocal(): void
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
@@ -99,7 +101,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyNoProvider()
+    public function testProxyNoProvider(): void
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())
@@ -138,7 +140,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame([], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyReplicateWithAmazon()
+    public function testProxyReplicateWithAmazon(): void
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->once())
@@ -180,7 +182,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyReplicateWithoutAmazon()
+    public function testProxyReplicateWithoutAmazon(): void
     {
         $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
         $amazon->expects($this->never())

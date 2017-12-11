@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,14 +22,14 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->container->setParameter('kernel.bundles', ['SonataAdminBundle' => true]);
     }
 
-    public function testLoadWithDefaultAndCustomCategoryManager()
+    public function testLoadWithDefaultAndCustomCategoryManager(): void
     {
         $this->load([
             'class' => [
@@ -39,7 +41,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
     }
 
-    public function testLoadWithForceDisableTrueAndWithCategoryManager()
+    public function testLoadWithForceDisableTrueAndWithCategoryManager(): void
     {
         $this->load([
             'class' => [
@@ -52,7 +54,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderNotHasService('sonata.media.manager.category');
     }
 
-    public function testLoadWithDefaultAndClassificationBundleEnable()
+    public function testLoadWithDefaultAndClassificationBundleEnable(): void
     {
         $this->load();
 
@@ -63,7 +65,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
-    public function testLoadWithDefaultAndClassificationBundleEnableAndForceDisableCategory()
+    public function testLoadWithDefaultAndClassificationBundleEnableAndForceDisableCategory(): void
     {
         $this->load([
             'force_disable_category' => true,
@@ -72,7 +74,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderNotHasService('sonata.media.manager.category');
     }
 
-    public function testLoadWithDefaultAndClassificationBundleEnableAndCustomCategoryManager()
+    public function testLoadWithDefaultAndClassificationBundleEnableAndCustomCategoryManager(): void
     {
         $this->load([
             'class' => [
@@ -84,7 +86,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
     }
 
-    public function testDefaultAdapter()
+    public function testDefaultAdapter(): void
     {
         $this->load();
 
@@ -98,7 +100,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
      *
      * @dataProvider dataAdapter
      */
-    public function testAdapter($serviceId, $extension, $type)
+    public function testAdapter($serviceId, $extension, $type): void
     {
         $this->load();
 
@@ -117,7 +119,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    public function testDefaultResizer()
+    public function testDefaultResizer(): void
     {
         $this->load();
 
@@ -136,7 +138,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
      *
      * @dataProvider dataResizer
      */
-    public function testResizer($serviceId, $type)
+    public function testResizer($serviceId, $type): void
     {
         $this->load();
 
@@ -154,7 +156,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    public function testLoadWithSonataAdminDefaults()
+    public function testLoadWithSonataAdminDefaults(): void
     {
         $this->load();
 
@@ -164,7 +166,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
-    public function testLoadWithSonataAdminCustomConfiguration()
+    public function testLoadWithSonataAdminCustomConfiguration(): void
     {
         $fakeContainer = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
             ->setMethods(['getParameter', 'getExtensionConfig'])

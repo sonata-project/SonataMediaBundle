@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -16,7 +18,7 @@ use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
 
 class ConsumerThumbnailTest extends TestCase
 {
-    public function testGenerateDispatchesEvents()
+    public function testGenerateDispatchesEvents(): void
     {
         $thumbnail = $this->createMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
         $backend = $this->createMock('Sonata\NotificationBundle\Backend\BackendInterface');

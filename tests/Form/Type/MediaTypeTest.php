@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -28,7 +30,7 @@ class MediaTypeTest extends AbstractTypeTest
      */
     protected $mediaType;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -41,7 +43,7 @@ class MediaTypeTest extends AbstractTypeTest
             ->getFormFactory();
     }
 
-    public function testMissingFormOptions()
+    public function testMissingFormOptions(): void
     {
         $this->mediaPool->expects($this->any())->method('getProviderList')->will($this->returnValue([
             'provider_a' => 'provider_a',
@@ -62,7 +64,7 @@ class MediaTypeTest extends AbstractTypeTest
         $this->factory->create($this->getFormType(), null);
     }
 
-    public function testMissingFormContextOption()
+    public function testMissingFormContextOption(): void
     {
         $this->mediaPool->expects($this->any())->method('getProviderList')->will($this->returnValue([
             'provider_a' => 'provider_a',
@@ -80,7 +82,7 @@ class MediaTypeTest extends AbstractTypeTest
         ]);
     }
 
-    public function testMissingFormProviderOption()
+    public function testMissingFormProviderOption(): void
     {
         $this->mediaPool->expects($this->any())->method('getProviderList')->will($this->returnValue([
             'provider_a' => 'provider_a',
@@ -98,7 +100,7 @@ class MediaTypeTest extends AbstractTypeTest
         ]);
     }
 
-    public function testInvalidFormProviderOption()
+    public function testInvalidFormProviderOption(): void
     {
         $this->mediaPool->expects($this->any())->method('getProviderList')->will($this->returnValue([
             'provider_a' => 'provider_a',
@@ -120,7 +122,7 @@ class MediaTypeTest extends AbstractTypeTest
         ]);
     }
 
-    public function testInvalidFormContextOption()
+    public function testInvalidFormContextOption(): void
     {
         $this->mediaPool->expects($this->any())->method('getProviderList')->will($this->returnValue([
             'provider_a' => 'provider_a',

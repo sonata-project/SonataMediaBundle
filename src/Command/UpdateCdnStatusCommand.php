@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -45,7 +47,7 @@ class UpdateCdnStatusCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:update-cdn-status')
             ->setDescription('Refresh CDN status for medias that are in status flushing')
@@ -59,7 +61,7 @@ class UpdateCdnStatusCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->quiet = $input->getOption('quiet');
 
@@ -130,7 +132,7 @@ class UpdateCdnStatusCommand extends BaseCommand
      * @param string    $message
      * @param bool|true $newLine
      */
-    protected function log($message, $newLine = true)
+    protected function log($message, $newLine = true): void
     {
         if (false === $this->quiet) {
             if ($newLine) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -64,7 +66,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function generate(MediaProviderInterface $provider, MediaInterface $media)
+    public function generate(MediaProviderInterface $provider, MediaInterface $media): void
     {
         // nothing to generate, as generated on demand
     }
@@ -72,7 +74,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void
     {
         // feature not available
     }

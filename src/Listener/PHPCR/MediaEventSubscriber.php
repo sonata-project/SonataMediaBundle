@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -35,7 +37,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     /**
      * {@inheritdoc}
      */
-    protected function recomputeSingleEntityChangeSet(EventArgs $args)
+    protected function recomputeSingleEntityChangeSet(EventArgs $args): void
     {
         /* @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
         /** @var $dm \Doctrine\ODM\PHPCR\DocumentManager */

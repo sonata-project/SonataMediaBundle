@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -23,12 +25,12 @@ class MediaManagerTest extends TestCase
     /** @var MediaManager */
     private $manager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->manager = new MediaManager('Sonata\MediaBundle\Model\MediaInterface', $this->createRegistryMock());
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         $media = new Media();
         $this->manager->save($media, 'default', 'media.test');
@@ -43,14 +45,14 @@ class MediaManagerTest extends TestCase
         $this->assertNull($media->getProviderName());
     }
 
-    public function testSaveException()
+    public function testSaveException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
         $this->manager->save(null);
     }
 
-    public function testDeleteException()
+    public function testDeleteException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

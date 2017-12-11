@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -17,7 +19,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 
 class DefaultGeneratorTest extends TestCase
 {
-    public function testProvider()
+    public function testProvider(): void
     {
         $generator = new DefaultGenerator();
 

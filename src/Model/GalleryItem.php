@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -54,7 +56,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt(\DateTime $createdAt = null)
+    public function setCreatedAt(\DateTime $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }
@@ -70,7 +72,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): void
     {
         $this->enabled = $enabled;
     }
@@ -86,7 +88,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setGallery(GalleryInterface $gallery = null)
+    public function setGallery(GalleryInterface $gallery = null): void
     {
         $this->gallery = $gallery;
     }
@@ -102,7 +104,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setMedia(MediaInterface $media = null)
+    public function setMedia(MediaInterface $media = null): void
     {
         $this->media = $media;
     }
@@ -118,7 +120,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -134,7 +136,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
+    public function setUpdatedAt(\DateTime $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }

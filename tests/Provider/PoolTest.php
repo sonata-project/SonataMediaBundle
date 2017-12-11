@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class PoolTest extends TestCase
 {
-    public function testGetEmptyProviderName()
+    public function testGetEmptyProviderName(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
@@ -35,7 +37,7 @@ class PoolTest extends TestCase
         $mediaPool->getProvider(null);
     }
 
-    public function testGetWithEmptyProviders()
+    public function testGetWithEmptyProviders(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to retrieve provider named "provider_a" since there are no providers configured yet.');
@@ -50,7 +52,7 @@ class PoolTest extends TestCase
         $mediaPool->getProvider('provider_a');
     }
 
-    public function testGetInvalidProviderName()
+    public function testGetInvalidProviderName(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to retrieve the provider named "provider_c". Available providers are "provider_a", "provider_b".');

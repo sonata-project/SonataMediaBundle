@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ use Sonata\MediaBundle\Resizer\SimpleResizer;
 
 class SimpleResizerTest extends TestCase
 {
-    public function testResizeWithNoWidth()
+    public function testResizeWithNoWidth(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -33,7 +35,7 @@ class SimpleResizerTest extends TestCase
         $resizer->resize($media, $file, $file, 'bar', []);
     }
 
-    public function testResize()
+    public function testResize(): void
     {
         $image = $this->createMock('Imagine\Image\ImageInterface');
         $image->expects($this->once())->method('thumbnail')->will($this->returnValue($image));
@@ -61,7 +63,7 @@ class SimpleResizerTest extends TestCase
     /**
      * @dataProvider getBoxSettings
      */
-    public function testGetBox($mode, $settings, Box $mediaSize, Box $result)
+    public function testGetBox($mode, $settings, Box $mediaSize, Box $result): void
     {
         $adapter = $this->createMock('Imagine\Image\ImagineInterface');
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -30,7 +32,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
      */
     protected $pool;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +40,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
         $this->pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $pager = $this->getMockBuilder('Sonata\DatagridBundle\Pager\PagerInterface')->getMock();
         $this->galleryManager->expects($this->once())->method('getPager')->will($this->returnValue($pager));
@@ -66,7 +68,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
         $this->assertSame($pager, $this->templating->parameters['pager']);
     }
 
-    public function testDefaultSettings()
+    public function testDefaultSettings(): void
     {
         $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
         $blockContext = $this->getBlockContext($blockService);

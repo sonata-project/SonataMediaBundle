@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -181,7 +183,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * {@inheritdoc}
      */
-    public function setMetadata($key, $metadata)
+    public function setMetadata($key, $metadata): void
     {
         if ($this->master instanceof MetadataSupporter) {
             $this->master->setMetadata($key, $metadata);

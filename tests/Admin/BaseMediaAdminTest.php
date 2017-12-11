@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ class TestMediaAdmin extends BaseMediaAdmin
 
 class EntityWithGetId
 {
-    public function getId()
+    public function getId(): void
     {
     }
 }
@@ -33,7 +35,7 @@ class BaseMediaAdminTest extends TestCase
     private $modelManager;
     private $mediaAdmin;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
         $this->categoryManager = $this->prophesize('Sonata\MediaBundle\Model\CategoryManagerInterface');
@@ -52,7 +54,7 @@ class BaseMediaAdminTest extends TestCase
         $this->mediaAdmin->setUniqid('uniqid');
     }
 
-    public function testGetNewInstance()
+    public function testGetNewInstance(): void
     {
         $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
         $category = $this->prophesize();
@@ -77,7 +79,7 @@ class BaseMediaAdminTest extends TestCase
         $this->assertSame($media->reveal(), $this->mediaAdmin->getNewInstance());
     }
 
-    private function configureGetPersistentParameters()
+    private function configureGetPersistentParameters(): void
     {
         $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
         $category = $this->prophesize();
@@ -97,7 +99,7 @@ class BaseMediaAdminTest extends TestCase
         $category->getId()->willReturn(1);
     }
 
-    private function configureGetProviderName($media)
+    private function configureGetProviderName($media): void
     {
         $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
         $media->setProviderName('providerName')->shouldBeCalled();
