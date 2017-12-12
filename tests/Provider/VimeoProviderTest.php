@@ -119,6 +119,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $media = new Media();
+        $media->setContext('default');
         $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1023456);
 
@@ -156,10 +157,12 @@ class VimeoProviderTest extends AbstractProviderTest
     public function getTransformWithUrlMedia()
     {
         $mediaWebsite = new Media();
+        $mediaWebsite->setContext('default');
         $mediaWebsite->setBinaryContent('http://vimeo.com/012341231');
         $mediaWebsite->setId(1023456);
 
         $mediaPlayer = new Media();
+        $mediaPlayer->setContext('default');
         $mediaPlayer->setBinaryContent('http://player.vimeo.com/video/012341231');
         $mediaPlayer->setId(1023456);
 

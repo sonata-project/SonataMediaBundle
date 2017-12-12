@@ -20,14 +20,9 @@ class PantherPortalTest extends TestCase
 {
     public function testPortal(): void
     {
-        $client = $this->createMock(
-            'Sonata\MediaBundle\Tests\CDN\ClientSpy',
-            ['flush'],
-            [],
-            '',
-            false
-        );
-        $client->expects($this->exactly(3))->method('flush')->will($this->returnValue('Flush successfully submitted.'));
+        $client = $this->createMock('Sonata\MediaBundle\Tests\CDN\ClientSpy');
+        $client->expects($this->any())->method('flush')
+            ->will($this->returnValue('Flush successfully submitted.'));
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);
@@ -46,13 +41,7 @@ class PantherPortalTest extends TestCase
         $this->expectException('\RuntimeException');
         $this->expectExceptionMessage('Unable to flush : Failed!!');
 
-        $client = $this->createMock(
-            'Sonata\MediaBundle\Tests\CDN\ClientSpy',
-            ['flush'],
-            [],
-            '',
-            false
-        );
+        $client = $this->createMock('Sonata\MediaBundle\Tests\CDN\ClientSpy');
         $client->expects($this->exactly(1))->method('flush')->will($this->returnValue('Failed!!'));
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
@@ -64,7 +53,8 @@ class PantherPortalTest extends TestCase
 
 class ClientSpy
 {
-    public function flush(): void
+    public function flush()
     {
+        return 'flushed';
     }
 }

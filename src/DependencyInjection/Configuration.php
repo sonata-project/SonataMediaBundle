@@ -411,7 +411,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('enabled')->defaultValue(false)->end()
-                        ->scalarNode('secret')->defaultValue(sha1(uniqid(random_int(1, 9999), true)))->end()
+                        ->scalarNode('secret')->defaultValue(sha1(uniqid((string) random_int(1, 9999), true)))->end()
                         ->scalarNode('referrer')->defaultValue('Sonata Media')->end()
                     ->end()
                 ->end()

@@ -27,8 +27,11 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EntityWithGetId
 {
-    public function getId(): void
+    protected $id;
+
+    public function getId()
     {
+        return $this->id;
     }
 }
 
