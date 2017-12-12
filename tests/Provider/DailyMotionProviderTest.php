@@ -120,6 +120,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
         $media = new Media();
+        $media->setContext('default');
         $media->setBinaryContent('x9wjql');
         $media->setId(1023456);
 
@@ -143,6 +144,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
         $media = new Media();
+        $media->setContext('default');
         $media->setBinaryContent('http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds');
         $media->setId(1023456);
 

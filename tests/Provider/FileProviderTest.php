@@ -142,6 +142,7 @@ class FileProviderTest extends AbstractProviderTest
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
 
         $media = new Media();
+        $media->setContext('default');
         $media->setBinaryContent($file);
         $media->setId(1023456);
 

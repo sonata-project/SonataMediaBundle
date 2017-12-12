@@ -175,6 +175,7 @@ class ImageProviderTest extends AbstractProviderTest
         $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
 
         $media = new Media();
+        $media->setContext('default');
         $media->setBinaryContent($file);
         $media->setId(1023456);
 

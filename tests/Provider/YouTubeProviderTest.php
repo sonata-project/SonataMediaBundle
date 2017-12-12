@@ -119,6 +119,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $media = new Media();
+        $media->setContext('default');
         $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1023456);
 
@@ -145,6 +146,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $media = new Media();
+        $media->setContext('default');
         $media->setBinaryContent($url);
         $media->setId(1023456);
 
