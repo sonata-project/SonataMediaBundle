@@ -11,8 +11,13 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Gaufrette\Filesystem;
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\CDN\Server;
+use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
@@ -26,7 +31,7 @@ class PoolTest extends TestCase
         $this->expectExceptionMessage('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
 
         $mediaPool = $this
-            ->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
+            ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock()
@@ -41,7 +46,7 @@ class PoolTest extends TestCase
         $this->expectExceptionMessage('Unable to retrieve provider named "provider_a" since there are no providers configured yet.');
 
         $mediaPool = $this
-            ->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
+            ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock()
@@ -56,7 +61,7 @@ class PoolTest extends TestCase
         $this->expectExceptionMessage('Unable to retrieve the provider named "provider_c". Available providers are "provider_a", "provider_b".');
 
         $mediaPool = $this
-            ->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
+            ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock()
@@ -75,11 +80,11 @@ class PoolTest extends TestCase
      */
     protected function createProvider($name)
     {
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        $filesystem = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $cdn = new Server('/uploads/media');
+        $generator = new DefaultGenerator();
         $thumbnail = new FormatThumbnail('jpg');
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         return new FileProvider($name, $filesystem, $cdn, $generator, $thumbnail, [], [], $metadata);
     }

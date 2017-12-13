@@ -13,7 +13,9 @@ namespace Sonata\MediaBundle\Tests\Block;
 
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
+use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Block\GalleryListBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -34,13 +36,13 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
     {
         parent::setUp();
 
-        $this->galleryManager = $this->getMockBuilder('Sonata\MediaBundle\Model\GalleryManagerInterface')->getMock();
-        $this->pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->galleryManager = $this->getMockBuilder(GalleryManagerInterface::class)->getMock();
+        $this->pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
     }
 
     public function testExecute()
     {
-        $pager = $this->getMockBuilder('Sonata\DatagridBundle\Pager\PagerInterface')->getMock();
+        $pager = $this->getMockBuilder(PagerInterface::class)->getMock();
         $this->galleryManager->expects($this->once())->method('getPager')->will($this->returnValue($pager));
 
         $block = new Block();
@@ -62,7 +64,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
 
         $this->assertSame($blockContext, $this->templating->parameters['context']);
         $this->assertInternalType('array', $this->templating->parameters['settings']);
-        $this->assertInstanceOf('Sonata\BlockBundle\Model\BlockInterface', $this->templating->parameters['block']);
+        $this->assertInstanceOf(BlockInterface::class, $this->templating->parameters['block']);
         $this->assertSame($pager, $this->templating->parameters['pager']);
     }
 

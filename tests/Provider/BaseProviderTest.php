@@ -11,23 +11,31 @@
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Gaufrette\Adapter;
+use Gaufrette\File;
+use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\CDN\Server;
+use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
 
 class BaseProviderTest extends AbstractProviderTest
 {
     public function getProvider()
     {
-        $adapter = $this->createMock('Gaufrette\Adapter');
+        $adapter = $this->createMock(Adapter::class);
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+        $filesystem = $this->getMockBuilder(Filesystem::class)
             ->setMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
-        $file = $this->getMockBuilder('Gaufrette\File')
+        $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
 
@@ -35,13 +43,13 @@ class BaseProviderTest extends AbstractProviderTest
             ->method('get')
             ->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
+        $cdn = new Server('/uploads/media');
 
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        $generator = new DefaultGenerator();
 
-        $thumbnail = $this->createMock('Sonata\MediaBundle\Thumbnail\ThumbnailInterface');
+        $thumbnail = $this->createMock(ThumbnailInterface::class);
 
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail, $metadata);
 
@@ -58,13 +66,13 @@ class BaseProviderTest extends AbstractProviderTest
         $this->assertInternalType('array', $provider->getTemplates());
         $this->assertSame('edit.twig', $provider->getTemplate('edit'));
 
-        $this->assertInstanceOf('\Sonata\MediaBundle\CDN\CDNInterface', $provider->getCdn());
+        $this->assertInstanceOf(CDNInterface::class, $provider->getCdn());
 
         $provider->addFormat('small', []);
 
         $this->assertInternalType('array', $provider->getFormat('small'));
 
-        $media = new \Sonata\MediaBundle\Tests\Entity\Media();
+        $media = new Media();
         $media->setContext('test');
 
         $this->assertSame('admin', $provider->getFormatName($media, 'admin'));

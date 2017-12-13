@@ -11,10 +11,14 @@
 
 namespace Sonata\MediaBundle\Tests\Listener\ORM;
 
+use Doctrine\Common\EventArgs;
 use Doctrine\ORM\Events;
 use PHPUnit\Framework\TestCase;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\MediaBundle\Listener\ORM\MediaEventSubscriber;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Model\Media;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,20 +33,20 @@ class MediaEventSubscriberTest extends TestCase
      */
     public function testRefetchCategoriesAfterClear()
     {
-        $provider = $this->createMock('Sonata\\MediaBundle\\Provider\\MediaProviderInterface');
+        $provider = $this->createMock(MediaProviderInterface::class);
 
-        $pool = $this->getMockBuilder('Sonata\\MediaBundle\\Provider\\Pool')
+        $pool = $this->getMockBuilder(Pool::class)
             ->setMethods(['getProvider'])
             ->setConstructorArgs(['default'])
             ->getMock();
 
         $pool->method('getProvider')->will($this->returnValueMap([['provider', $provider]]));
 
-        $category = $this->createMock('Sonata\\ClassificationBundle\\Model\\CategoryInterface');
+        $category = $this->createMock(CategoryInterface::class);
 
-        $catManager = $this->createMock('Sonata\\MediaBundle\\Model\\CategoryManagerInterface');
+        $catManager = $this->createMock(CategoryManagerInterface::class);
 
-        $container = $this->createMock('Symfony\\Component\\DependencyInjection\\ContainerInterface');
+        $container = $this->createMock(ContainerInterface::class);
 
         $container->method('get')->will($this->returnValueMap([
             ['sonata.media.pool', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool],
@@ -61,13 +65,13 @@ class MediaEventSubscriberTest extends TestCase
 
         $this->assertContains(Events::onClear, $subscriber->getSubscribedEvents());
 
-        $media1 = $this->getMockBuilder('Sonata\\MediaBundle\\Model\\Media')
+        $media1 = $this->getMockBuilder(Media::class)
             ->setMethods(['getId', 'getCategory', 'getProvider', 'getContext'])
             ->getMock();
         $media1->method('getProvider')->willReturn('provider');
         $media1->method('getContext')->willReturn('context');
 
-        $args1 = $this->getMockBuilder('Doctrine\\Common\\EventArgs')
+        $args1 = $this->getMockBuilder(EventArgs::class)
             ->setMethods(['getEntity'])
             ->getMock();
         $args1->method('getEntity')->willReturn($media1);
@@ -76,13 +80,13 @@ class MediaEventSubscriberTest extends TestCase
 
         $subscriber->onClear();
 
-        $media2 = $this->getMockBuilder('Sonata\\MediaBundle\\Model\\Media')
+        $media2 = $this->getMockBuilder(Media::class)
             ->setMethods(['getId', 'getCategory', 'getProvider', 'getContext'])
             ->getMock();
         $media2->method('getProvider')->willReturn('provider');
         $media2->method('getContext')->willReturn('context');
 
-        $args2 = $this->getMockBuilder('Doctrine\\Common\\EventArgs')
+        $args2 = $this->getMockBuilder(EventArgs::class)
             ->setMethods(['getEntity'])
             ->getMock();
         $args2->method('getEntity')->willReturn($media2);

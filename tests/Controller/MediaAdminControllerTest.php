@@ -13,13 +13,27 @@ namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
+use Sonata\AdminBundle\Admin\Pool as AdminPool;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Controller\MediaAdminController;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\Entity\Media;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Command\DebugCommand;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormRenderer;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -39,9 +53,9 @@ class MediaAdminControllerTest extends TestCase
 
     protected function setUp()
     {
-        $this->container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->admin = $this->prophesize('Sonata\MediaBundle\Admin\BaseMediaAdmin');
-        $this->request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->admin = $this->prophesize(BaseMediaAdmin::class);
+        $this->request = $this->prophesize(Request::class);
 
         $this->configureCRUDController();
 
@@ -51,7 +65,7 @@ class MediaAdminControllerTest extends TestCase
 
     public function testCreateActionToSelectProvider()
     {
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $pool = $this->prophesize(Pool::class);
 
         $this->configureRender(
             'SonataMediaBundle:MediaAdmin:select_provider.html.twig',
@@ -68,13 +82,13 @@ class MediaAdminControllerTest extends TestCase
 
         $response = $this->controller->createAction($this->request->reveal());
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame('renderResponse', $response->getContent());
     }
 
     public function testCreateAction()
     {
-        $this->configureCreateAction('Sonata\MediaBundle\Tests\Entity\Media');
+        $this->configureCreateAction(Media::class);
         $this->configureRender('template', Argument::type('array'), 'renderResponse');
         $this->admin->checkAccess('create')->shouldBeCalled();
         $this->request->get('provider')->willReturn(true);
@@ -82,20 +96,20 @@ class MediaAdminControllerTest extends TestCase
 
         $response = $this->controller->createAction($this->request->reveal());
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame('renderResponse', $response->getContent());
     }
 
     public function testListAction()
     {
-        $datagrid = $this->prophesize('Sonata\AdminBundle\Datagrid\DatagridInterface');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $categoryManager = $this->prophesize('Sonata\MediaBundle\Model\CategoryManagerInterface');
+        $datagrid = $this->prophesize(DatagridInterface::class);
+        $pool = $this->prophesize(Pool::class);
+        $categoryManager = $this->prophesize(CategoryManagerInterface::class);
         $category = $this->prophesize();
-        $category->willExtend('Sonata\MediaBundle\Tests\Controller\EntityWithGetId');
-        $category->willImplement('Sonata\ClassificationBundle\Model\CategoryInterface');
-        $form = $this->prophesize('Symfony\Component\Form\Form');
-        $formView = $this->prophesize('Symfony\Component\Form\FormView');
+        $category->willExtend(EntityWithGetId::class);
+        $category->willImplement(CategoryInterface::class);
+        $form = $this->prophesize(Form::class);
+        $formView = $this->prophesize(FormView::class);
 
         $this->configureSetFormTheme($formView->reveal(), 'filterTheme');
         $this->configureSetCsrfToken('sonata.batch');
@@ -126,14 +140,14 @@ class MediaAdminControllerTest extends TestCase
 
         $response = $this->controller->listAction($this->request->reveal());
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame('renderResponse', $response->getContent());
     }
 
     private function configureCRUDController()
     {
-        $pool = $this->prophesize('Sonata\AdminBundle\Admin\Pool');
-        $breadcrumbsBuilder = $this->prophesize('Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface');
+        $pool = $this->prophesize(AdminPool::class);
+        $breadcrumbsBuilder = $this->prophesize(BreadcrumbsBuilderInterface::class);
 
         $this->configureGetCurrentRequest($this->request->reveal());
         $pool->getAdminByAdminCode('admin_code')->willReturn($this->admin->reveal());
@@ -150,9 +164,9 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureCreateAction($class)
     {
-        $object = $this->prophesize('Sonata\MediaBundle\Tests\Entity\Media');
-        $form = $this->prophesize('Symfony\Component\Form\Form');
-        $formView = $this->prophesize('Symfony\Component\Form\FormView');
+        $object = $this->prophesize(Media::class);
+        $form = $this->prophesize(Form::class);
+        $formView = $this->prophesize(FormView::class);
 
         $this->configureSetFormTheme($formView->reveal(), 'formTheme');
         $this->admin->hasActiveSubClass()->willReturn(false);
@@ -219,9 +233,9 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureRender($template, $data, $rendered)
     {
-        $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
-        $response = $this->prophesize('Symfony\Component\HttpFoundation\Response');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $templating = $this->prophesize(EngineInterface::class);
+        $response = $this->prophesize(Response::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->admin->getPersistentParameters()->willReturn(['param' => 'param']);
         $this->container->has('templating')->willReturn(true);
