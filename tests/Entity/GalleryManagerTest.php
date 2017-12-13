@@ -11,8 +11,10 @@
 
 namespace Sonata\MediaBundle\Test\Entity;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
+use Sonata\MediaBundle\Entity\BaseGallery;
 use Sonata\MediaBundle\Entity\GalleryManager;
 
 /**
@@ -100,9 +102,9 @@ class GalleryManagerTest extends TestCase
             'enabled',
         ]);
 
-        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
 
-        return new GalleryManager('Sonata\MediaBundle\Entity\BaseGallery', $registry);
+        return new GalleryManager(BaseGallery::class, $registry);
     }
 }

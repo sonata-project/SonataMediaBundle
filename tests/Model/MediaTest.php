@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Tests\Media;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\Model\Media;
 
 class MediaTest extends TestCase
 {
@@ -64,7 +65,7 @@ class MediaTest extends TestCase
 
     protected function getMediaPropertyReflection($propertyName)
     {
-        $rc = new \ReflectionClass('Sonata\MediaBundle\Model\Media');
+        $rc = new \ReflectionClass(Media::class);
         $property = $rc->getProperty($propertyName);
         $property->setAccessible(true);
 
@@ -73,7 +74,7 @@ class MediaTest extends TestCase
 
     protected function getMedia($id)
     {
-        $media = $this->getMockForAbstractClass('Sonata\MediaBundle\Model\Media');
+        $media = $this->getMockForAbstractClass(Media::class);
         $media->expects($this->any())
             ->method('getId')
             ->will($this->returnValue($id));

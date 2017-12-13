@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Tests\Validator;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 use Sonata\MediaBundle\Validator\FormatValidator;
@@ -24,7 +25,7 @@ class FormatValidatorTest extends TestCase
         $pool = new Pool('defaultContext');
         $pool->addContext('test', [], ['format1' => []]);
 
-        $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery = $this->createMock(GalleryInterface::class);
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
@@ -42,7 +43,7 @@ class FormatValidatorTest extends TestCase
         $pool = new Pool('defaultContext');
         $pool->addContext('test', [], ['format1' => []]);
 
-        $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery = $this->createMock(GalleryInterface::class);
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('non_existing_format'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 
@@ -60,7 +61,7 @@ class FormatValidatorTest extends TestCase
         $pool = new Pool('defaultContext');
         $pool->addContext('test');
 
-        $gallery = $this->createMock('Sonata\MediaBundle\Model\GalleryInterface');
+        $gallery = $this->createMock(GalleryInterface::class);
         $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format_that_is_not_reference'));
         $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
 

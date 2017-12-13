@@ -12,8 +12,10 @@
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
 use Sonata\MediaBundle\Form\Type\MediaType;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
@@ -32,7 +34,7 @@ class MediaTypeTest extends AbstractTypeTest
     {
         parent::setUp();
 
-        $this->mediaPool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->mediaPool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
         $this->mediaType = new MediaType($this->mediaPool, 'testClass');
 
         $this->factory = Forms::createFormFactoryBuilder()
@@ -52,9 +54,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->expectException(
-            'Symfony\Component\OptionsResolver\Exception\MissingOptionsException'
-        );
+        $this->expectException(MissingOptionsException::class);
         $this->expectExceptionMessage(
             'The required options "context", "provider" are missing.'
         );
@@ -73,7 +73,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->expectException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException(MissingOptionsException::class);
 
         $this->factory->create($this->getFormType(), null, [
             'provider' => 'provider_a',
@@ -91,7 +91,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->expectException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException(MissingOptionsException::class);
 
         $this->factory->create($this->getFormType(), null, [
             'context' => 'pic',

@@ -12,8 +12,20 @@
 namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\CoreBundle\Model\BaseEntityManager;
 use Sonata\MediaBundle\Controller\MediaController;
+use Sonata\MediaBundle\Model\Media;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Security\DownloadStrategyInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaControllerTest extends TestCase
 {
@@ -22,7 +34,7 @@ class MediaControllerTest extends TestCase
 
     protected function setUp()
     {
-        $this->container = $this->prophesize('Symfony\Component\DependencyInjection\Container');
+        $this->container = $this->prophesize(Container::class);
 
         $this->controller = new MediaController();
         $this->controller->setContainer($this->container->reveal());
@@ -30,7 +42,7 @@ class MediaControllerTest extends TestCase
 
     public function testDownloadActionWithNotFoundMedia()
     {
-        $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
+        $this->expectException(NotFoundHttpException::class);
 
         $this->configureGetMedia(1, null);
 
@@ -39,11 +51,11 @@ class MediaControllerTest extends TestCase
 
     public function testDownloadActionAccessDenied()
     {
-        $this->expectException('Symfony\Component\Security\Core\Exception\AccessDeniedException');
+        $this->expectException(AccessDeniedException::class);
 
-        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
-        $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $request = $this->prophesize(Request::class);
+        $media = $this->prophesize(Media::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->configureGetCurrentRequest($request->reveal());
         $this->configureGetMedia(1, $media->reveal());
@@ -55,11 +67,11 @@ class MediaControllerTest extends TestCase
 
     public function testDownloadActionBinaryFile()
     {
-        $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
-        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
-        $response = $this->prophesize('Symfony\Component\HttpFoundation\BinaryFileResponse');
+        $media = $this->prophesize(Media::class);
+        $pool = $this->prophesize(Pool::class);
+        $provider = $this->prophesize(MediaProviderInterface::class);
+        $request = $this->prophesize(Request::class);
+        $response = $this->prophesize(BinaryFileResponse::class);
 
         $this->configureGetMedia(1, $media->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
@@ -77,7 +89,7 @@ class MediaControllerTest extends TestCase
 
     public function testViewActionWithNotFoundMedia()
     {
-        $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
+        $this->expectException(NotFoundHttpException::class);
 
         $this->configureGetMedia(1, null);
 
@@ -86,11 +98,11 @@ class MediaControllerTest extends TestCase
 
     public function testViewActionAccessDenied()
     {
-        $this->expectException('Symfony\Component\Security\Core\Exception\AccessDeniedException');
+        $this->expectException(AccessDeniedException::class);
 
-        $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+        $media = $this->prophesize(Media::class);
+        $pool = $this->prophesize(Pool::class);
+        $request = $this->prophesize(Request::class);
 
         $this->configureGetMedia(1, $media->reveal());
         $this->configureGetCurrentRequest($request->reveal());
@@ -102,9 +114,9 @@ class MediaControllerTest extends TestCase
 
     public function testViewActionRendersView()
     {
-        $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+        $media = $this->prophesize(Media::class);
+        $pool = $this->prophesize(Pool::class);
+        $request = $this->prophesize(Request::class);
 
         $this->configureGetMedia(1, $media->reveal());
         $this->configureGetCurrentRequest($request->reveal());
@@ -120,13 +132,13 @@ class MediaControllerTest extends TestCase
 
         $response = $this->controller->viewAction(1, 'format');
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame('renderResponse', $response->getContent());
     }
 
     private function configureDownloadSecurity($pool, $media, $request, $isGranted)
     {
-        $strategy = $this->prophesize('Sonata\MediaBundle\Security\DownloadStrategyInterface');
+        $strategy = $this->prophesize(DownloadStrategyInterface::class);
 
         $pool->getDownloadSecurity($media)->willReturn($strategy->reveal());
         $strategy->isGranted($media, $request)->willReturn($isGranted);
@@ -134,7 +146,7 @@ class MediaControllerTest extends TestCase
 
     private function configureGetMedia($id, $media)
     {
-        $mediaManager = $this->prophesize('Sonata\CoreBundle\Model\BaseEntityManager');
+        $mediaManager = $this->prophesize(BaseEntityManager::class);
 
         $this->container->get('sonata.media.manager.media')->willReturn($mediaManager->reveal());
         $mediaManager->find($id)->willReturn($media);
@@ -157,9 +169,9 @@ class MediaControllerTest extends TestCase
 
     private function configureRender($template, $data, $rendered)
     {
-        $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
-        $response = $this->prophesize('Symfony\Component\HttpFoundation\Response');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $templating = $this->prophesize(EngineInterface::class);
+        $response = $this->prophesize(Response::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->container->has('templating')->willReturn(true);
         $this->container->get('templating')->willReturn($templating->reveal());

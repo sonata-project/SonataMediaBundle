@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormTypeInterface;
@@ -38,14 +39,14 @@ abstract class AbstractTypeTest extends TypeTestCase
 
     protected function setUp()
     {
-        $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\MediaProviderInterface')
+        $provider = $this->getMockBuilder(MediaProviderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mediaPool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->mediaPool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
         $this->mediaPool->expects($this->any())->method('getProvider')->willReturn($provider);
 
-        $this->formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')->disableOriginalConstructor()->getMock();
+        $this->formBuilder = $this->getMockBuilder(FormBuilder::class)->disableOriginalConstructor()->getMock();
         $this->formBuilder
             ->expects($this->any())
             ->method('add')

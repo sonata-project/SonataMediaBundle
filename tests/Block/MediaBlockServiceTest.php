@@ -11,8 +11,15 @@
 
 namespace Sonata\MediaBundle\Tests\Block;
 
+use Sonata\BlockBundle\Block\BlockContext;
+use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Block\MediaBlockService;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MediaBlockServiceTest extends AbstractBlockServiceTestCase
 {
@@ -24,8 +31,8 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
     {
         parent::setUp();
 
-        $this->container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->galleryManager = $this->prophesize('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new MediaBlockService(
             'block.service',
@@ -37,9 +44,9 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
 
     public function testExecute()
     {
-        $block = $this->prophesize('Sonata\BlockBundle\Model\Block');
-        $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface');
-        $blockContext = $this->prophesize('Sonata\BlockBundle\Block\BlockContext');
+        $block = $this->prophesize(Block::class);
+        $media = $this->prophesize(MediaInterface::class);
+        $blockContext = $this->prophesize(BlockContext::class);
 
         $this->configureGetFormatChoices($media, ['format1' => 'format1']);
         $blockContext->getBlock()->willReturn($block->reveal());
@@ -78,8 +85,8 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
 
     private function configureGetFormatChoices($media, $choices)
     {
-        $mediaAdmin = $this->prophesize('Sonata\MediaBundle\Admin\BaseMediaAdmin');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $mediaAdmin = $this->prophesize(BaseMediaAdmin::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->container->get('sonata.media.admin.media')->willReturn($mediaAdmin->reveal());
         $mediaAdmin->getPool()->willReturn($pool->reveal());

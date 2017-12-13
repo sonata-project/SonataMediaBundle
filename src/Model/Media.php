@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -158,7 +159,7 @@ abstract class Media implements MediaInterface
     public function __set($property, $value)
     {
         if ('category' == $property) {
-            if (null !== $value && !is_a($value, 'Sonata\ClassificationBundle\Model\CategoryInterface')) {
+            if (null !== $value && !is_a($value, CategoryInterface::class)) {
                 throw new \InvalidArgumentException(
                     '$category should be an instance of Sonata\ClassificationBundle\Model\CategoryInterface or null'
                 );
