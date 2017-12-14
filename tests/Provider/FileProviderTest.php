@@ -37,7 +37,7 @@ class FileProviderTest extends AbstractProviderTest
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
-        $adapter = $this->getMockBuilder(Local::class)->disableOriginalConstructor()->getMock();
+        $adapter = $this->createMock(Local::class);
         $adapter->expects($this->any())->method('getDirectory')->will($this->returnValue(realpath(__DIR__).'/../fixtures'));
 
         $filesystem = $this->getMockBuilder(Filesystem::class)

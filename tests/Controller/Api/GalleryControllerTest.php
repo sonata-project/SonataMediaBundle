@@ -47,9 +47,7 @@ class GalleryControllerTest extends TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $paramFetcher = $this->getMockBuilder(ParamFetcher::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $paramFetcher = $this->createMock(ParamFetcher::class);
         $paramFetcher->expects($this->exactly(3))->method('get');
         $paramFetcher->expects($this->once())->method('all')->will($this->returnValue([]));
 
@@ -145,7 +143,7 @@ class GalleryControllerTest extends TestCase
         $mediaManager = $this->createMock(MediaManagerInterface::class);
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
-        $form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
+        $form = $this->createMock(Form::class);
         $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
         $form->expects($this->once())->method('getData')->will($this->returnValue($galleryHasMedia));
@@ -203,7 +201,7 @@ class GalleryControllerTest extends TestCase
         $mediaManager = $this->createMock(MediaManagerInterface::class);
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
-        $form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
+        $form = $this->createMock(Form::class);
         $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
         $form->expects($this->once())->method('getData')->will($this->returnValue($galleryHasMedia));
@@ -235,7 +233,7 @@ class GalleryControllerTest extends TestCase
         $mediaManager = $this->createMock(MediaManagerInterface::class);
         $mediaManager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
-        $form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
+        $form = $this->createMock(Form::class);
         $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(false));
 

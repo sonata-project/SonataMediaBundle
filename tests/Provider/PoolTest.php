@@ -80,7 +80,7 @@ class PoolTest extends TestCase
      */
     protected function createProvider($name)
     {
-        $filesystem = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $cdn = new Server('/uploads/media');
         $generator = new DefaultGenerator();
         $thumbnail = new FormatThumbnail('jpg');

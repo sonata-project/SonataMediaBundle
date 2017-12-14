@@ -44,7 +44,7 @@ abstract class AbstractProviderTest extends TestCase
 
     protected function setUp()
     {
-        $this->formMapper = $this->getMockBuilder(FormMapper::class)->disableOriginalConstructor()->getMock();
+        $this->formMapper = $this->createMock(FormMapper::class);
         $this->formMapper
             ->expects($this->any())
             ->method('add')
@@ -54,7 +54,7 @@ abstract class AbstractProviderTest extends TestCase
                 }
             }));
 
-        $this->formBuilder = $this->getMockBuilder(FormBuilder::class)->disableOriginalConstructor()->getMock();
+        $this->formBuilder = $this->createMock(FormBuilder::class);
         $this->formBuilder
             ->expects($this->any())
             ->method('add')

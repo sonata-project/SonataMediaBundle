@@ -33,7 +33,7 @@ class VimeoProviderTest extends AbstractProviderTest
     public function getProvider(Browser $browser = null)
     {
         if (!$browser) {
-            $browser = $this->getMockBuilder(Browser::class)->getMock();
+            $browser = $this->createMock(Browser::class);
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
@@ -88,7 +88,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $response = $this->createMock(AbstractMessage::class);
         $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
 
-        $browser = $this->getMockBuilder(Browser::class)->getMock();
+        $browser = $this->createMock(Browser::class);
 
         $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
@@ -119,7 +119,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
 
-        $browser = $this->getMockBuilder(Browser::class)->getMock();
+        $browser = $this->createMock(Browser::class);
         $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
         $provider = $this->getProvider($browser);
@@ -146,7 +146,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
 
-        $browser = $this->getMockBuilder(Browser::class)->getMock();
+        $browser = $this->createMock(Browser::class);
         $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
         $provider = $this->getProvider($browser);

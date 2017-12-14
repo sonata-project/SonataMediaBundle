@@ -36,13 +36,13 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
     {
         parent::setUp();
 
-        $this->galleryManager = $this->getMockBuilder(GalleryManagerInterface::class)->getMock();
-        $this->pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $this->galleryManager = $this->createMock(GalleryManagerInterface::class);
+        $this->pool = $this->createMock(Pool::class);
     }
 
     public function testExecute()
     {
-        $pager = $this->getMockBuilder(PagerInterface::class)->getMock();
+        $pager = $this->createMock(PagerInterface::class);
         $this->galleryManager->expects($this->once())->method('getPager')->will($this->returnValue($pager));
 
         $block = new Block();
