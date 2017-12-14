@@ -36,13 +36,11 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
     /**
      * @var CategoryManagerInterface
      */
-    protected $categoryManager;
+    private $categoryManager;
 
     /**
      * @param Pool $pool
      * @param string $class
-     * @param array $options
-     * @param CategoryManagerInterface|null $categoryManager
      */
     public function __construct(Pool $pool, $class, array $options = array(), CategoryManagerInterface $categoryManager = null)
     {

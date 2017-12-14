@@ -35,10 +35,10 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     protected $categoryManager;
 
     /**
-     * @param string                   $code
-     * @param string                   $class
-     * @param string                   $baseControllerName
-     * @param Pool                     $pool
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     * @param Pool $pool
      * @param CategoryManagerInterface $categoryManager
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool, CategoryManagerInterface $categoryManager = null)
@@ -88,8 +88,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         $uniqueId = $this->getRequest()->get('uniqid');
-        $formParams =  $this->getRequest()->get($uniqueId);
-        $categoryId = $formParams && array_key_exists('category', $formParams) ? $formParams['category'] : $this->getRequest()->get('category');
+        $formParams = $this->getRequest()->get($uniqueId);
+        $categoryId = $formParams && array_key_exists('category', $formParams) ?
+            $formParams['category'] : $this->getRequest()->get('category');
 
         if (null !== $this->categoryManager && !$categoryId) {
             $categoryId = $this->categoryManager->getRootCategory($context)->getId();
@@ -98,7 +99,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return array_merge($parameters, [
             'context' => $context,
             'category' => $categoryId,
-            'hide_context' => (bool) $this->getRequest()->get('hide_context'),
+            'hide_context' => (bool)$this->getRequest()->get('hide_context'),
         ]);
     }
 
@@ -164,8 +165,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             ->addIdentifier('name')
             ->add('description')
             ->add('enabled')
-            ->add('size')
-        ;
+            ->add('size');
     }
 
     /**
@@ -185,7 +185,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $formMapper->add('providerName', HiddenType::class);
 
-        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass(), array(), $this->categoryManager), true);
+        $formMapper->getFormBuilder()->addModelTransformer(
+            new ProviderDataTransformer($this->pool, $this->getClass(), array(), $this->categoryManager),
+            true);
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
