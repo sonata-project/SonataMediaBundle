@@ -17,6 +17,7 @@ use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\DataTransformerInterface;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
 
 class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareInterface
 {
@@ -33,11 +34,17 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
     protected $options;
 
     /**
-     * @param Pool   $pool
-     * @param string $class
-     * @param array  $options
+     * @var CategoryManagerInterface
      */
-    public function __construct(Pool $pool, $class, array $options = [])
+    protected $categoryManager;
+
+    /**
+     * @param Pool $pool
+     * @param string $class
+     * @param array $options
+     * @param CategoryManagerInterface|null $categoryManager
+     */
+    public function __construct(Pool $pool, $class, array $options = array(), CategoryManagerInterface $categoryManager = null)
     {
         $this->pool = $pool;
         $this->options = $this->getOptions($options);
@@ -97,6 +104,10 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
 
         if (!$newMedia->getContext() && $this->options['context']) {
             $newMedia->setContext($this->options['context']);
+        }
+
+        if (null !== $this->categoryManager) {
+            $newMedia->setCategory($media->getCategory());
         }
 
         $provider = $this->pool->getProvider($newMedia->getProviderName());

@@ -87,7 +87,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $this->getRequest()->query->set('provider', $provider);
         }
 
-        $categoryId = $this->getRequest()->get('category');
+        $uniqueId = $this->getRequest()->get('uniqid');
+        $formParams =  $this->getRequest()->get($uniqueId);
+        $categoryId = $formParams && array_key_exists('category', $formParams) ? $formParams['category'] : $this->getRequest()->get('category');
 
         if (null !== $this->categoryManager && !$categoryId) {
             $categoryId = $this->categoryManager->getRootCategory($context)->getId();
@@ -183,7 +185,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $formMapper->add('providerName', HiddenType::class);
 
-        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
+        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass(), array(), $this->categoryManager), true);
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
