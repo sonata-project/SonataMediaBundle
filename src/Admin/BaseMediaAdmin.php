@@ -186,8 +186,8 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $formMapper->add('providerName', HiddenType::class);
 
         $formMapper->getFormBuilder()->addModelTransformer(
-            new ProviderDataTransformer($this->pool, $this->getClass(), array(), $this->categoryManager),
-            true);
+           new ProviderDataTransformer($this->pool, $this->getClass(), array(), $this->categoryManager),
+           true);
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
