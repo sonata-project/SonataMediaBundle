@@ -31,7 +31,7 @@ class SimpleResizerTest extends TestCase
         $adapter = $this->createMock(ImagineInterface::class);
         $media = $this->createMock(MediaInterface::class);
         $metadata = $this->createMock(MetadataBuilderInterface::class);
-        $file = $this->getMockBuilder(File::class)->disableOriginalConstructor()->getMock();
+        $file = $this->createMock(File::class);
 
         $resizer = new SimpleResizer($adapter, 'foo', $metadata);
         $resizer->resize($media, $file, $file, 'bar', []);

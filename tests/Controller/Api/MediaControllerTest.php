@@ -39,9 +39,7 @@ class MediaControllerTest extends TestCase
 
         $mController = $this->createMediaController($mManager);
 
-        $paramFetcher = $this->getMockBuilder(ParamFetcher::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $paramFetcher = $this->createMock(ParamFetcher::class);
         $paramFetcher->expects($this->exactly(3))->method('get');
         $paramFetcher->expects($this->once())->method('all')->will($this->returnValue([]));
 
@@ -78,7 +76,7 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->exactly(2))->method('getHelperProperties')->will($this->returnValue(['foo' => 'bar']));
 
-        $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $pool = $this->createMock(Pool::class);
         $pool->expects($this->any())->method('getProvider')->will($this->returnValue($provider));
         $pool->expects($this->once())->method('getFormatNamesByContext')->will($this->returnValue(['format_name1' => 'value1']));
 
@@ -105,7 +103,7 @@ class MediaControllerTest extends TestCase
     {
         $media = $this->createMock(MediaInterface::class);
 
-        $binaryResponse = $this->getMockBuilder(BinaryFileResponse::class)->disableOriginalConstructor()->getMock();
+        $binaryResponse = $this->createMock(BinaryFileResponse::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
@@ -113,7 +111,7 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('getDownloadResponse')->will($this->returnValue($binaryResponse));
 
-        $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $pool = $this->createMock(Pool::class);
         $pool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));
 
         $controller = $this->createMediaController($manager, $pool);
@@ -144,10 +142,10 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('getName');
 
-        $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $pool = $this->createMock(Pool::class);
         $pool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));
 
-        $form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
+        $form = $this->createMock(Form::class);
         $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
         $form->expects($this->once())->method('getData')->will($this->returnValue($medium));
@@ -170,10 +168,10 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('getName');
 
-        $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $pool = $this->createMock(Pool::class);
         $pool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));
 
-        $form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
+        $form = $this->createMock(Form::class);
         $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(false));
 
@@ -196,10 +194,10 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('getName');
 
-        $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $pool = $this->createMock(Pool::class);
         $pool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));
 
-        $form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
+        $form = $this->createMock(Form::class);
         $form->expects($this->once())->method('handleRequest');
         $form->expects($this->once())->method('isValid')->will($this->returnValue(true));
         $form->expects($this->once())->method('getData')->will($this->returnValue($medium));
@@ -222,7 +220,7 @@ class MediaControllerTest extends TestCase
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects($this->once())->method('create')->will($this->returnValue($medium));
 
-        $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $pool = $this->createMock(Pool::class);
         $pool->expects($this->once())->method('getProvider')->will($this->throwException(new \RuntimeException('exception on getProvder')));
 
         $controller = $this->createMediaController($manager, $pool);
@@ -237,7 +235,7 @@ class MediaControllerTest extends TestCase
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects($this->once())->method('findOneBy')->will($this->returnValue($media));
 
-        $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $pool = $this->createMock(Pool::class);
 
         $controller = $this->createMediaController($manager, $pool);
 
@@ -250,7 +248,7 @@ class MediaControllerTest extends TestCase
             $manager = $this->createMock(MediaManagerInterface::class);
         }
         if (null === $pool) {
-            $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+            $pool = $this->createMock(Pool::class);
         }
         if (null === $factory) {
             $factory = $this->createMock(FormFactoryInterface::class);

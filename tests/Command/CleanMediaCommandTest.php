@@ -71,7 +71,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->container = $this->getMockBuilder(ContainerInterface::class)->getMock();
+        $this->container = $this->createMock(ContainerInterface::class);
 
         $this->command = new CleanMediaCommand();
         $this->command->setContainer($this->container);
@@ -81,11 +81,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->tester = new CommandTester($this->application->find('sonata:media:clean-uploads'));
 
-        $this->pool = $pool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $this->pool = $pool = $this->createMock(Pool::class);
 
-        $this->mediaManager = $mediaManager = $this->getMockBuilder(MediaManagerInterface::class)->getMock();
+        $this->mediaManager = $mediaManager = $this->createMock(MediaManagerInterface::class);
 
-        $this->fileSystemLocal = $fileSystemLocal = $this->getMockBuilder(Local::class)->disableOriginalConstructor()->getMock();
+        $this->fileSystemLocal = $fileSystemLocal = $this->createMock(Local::class);
         $this->fileSystemLocal->expects($this->once())->method('getDirectory')->will($this->returnValue($this->workspace));
 
         $this->container->expects($this->any())
@@ -150,13 +150,13 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder(FileProvider::class)->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
         $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
-        $media = $this->getMockBuilder(MediaInterface::class)->getMock();
+        $media = $this->createMock(MediaInterface::class);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
@@ -184,13 +184,13 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder(FileProvider::class)->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
         $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
-        $media = $this->getMockBuilder(MediaInterface::class)->getMock();
+        $media = $this->createMock(MediaInterface::class);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
@@ -227,7 +227,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder(FileProvider::class)->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
@@ -265,7 +265,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder(FileProvider::class)->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));

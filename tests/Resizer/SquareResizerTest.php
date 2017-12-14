@@ -27,7 +27,7 @@ class SquareResizerTest extends TestCase
 
         $adapter = $this->createMock(ImagineInterface::class);
         $media = $this->createMock(MediaInterface::class);
-        $file = $this->getMockBuilder(File::class)->disableOriginalConstructor()->getMock();
+        $file = $this->createMock(File::class);
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $resizer = new SquareResizer($adapter, 'foo', $metadata);

@@ -28,7 +28,7 @@ class ProxyMetadataBuilderTest extends TestCase
 {
     public function testProxyAmazon()
     {
-        $amazon = $this->getMockBuilder(AmazonMetadataBuilder::class)->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
@@ -42,7 +42,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $amazonclient = new AmazonClient(['key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']);
         $adapter = new AmazonS3($amazonclient, '');
 
-        $filesystem = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
         $provider = $this->createMock(MediaProviderInterface::class);
@@ -68,7 +68,7 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyLocal()
     {
-        $amazon = $this->getMockBuilder(AmazonMetadataBuilder::class)->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
@@ -81,7 +81,7 @@ class ProxyMetadataBuilderTest extends TestCase
         //adapter cannot be mocked
         $adapter = new Local('');
 
-        $filesystem = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
         $provider = $this->createMock(MediaProviderInterface::class);
@@ -107,7 +107,7 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyNoProvider()
     {
-        $amazon = $this->getMockBuilder(AmazonMetadataBuilder::class)->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
@@ -120,7 +120,7 @@ class ProxyMetadataBuilderTest extends TestCase
         //adapter cannot be mocked
         $adapter = new Local('');
 
-        $filesystem = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
         $provider = $this->createMock(MediaProviderInterface::class);
@@ -146,7 +146,7 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyReplicateWithAmazon()
     {
-        $amazon = $this->getMockBuilder(AmazonMetadataBuilder::class)->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
@@ -162,7 +162,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
 
-        $filesystem = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
         $provider = $this->createMock(MediaProviderInterface::class);
@@ -188,7 +188,7 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyReplicateWithoutAmazon()
     {
-        $amazon = $this->getMockBuilder(AmazonMetadataBuilder::class)->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
@@ -203,7 +203,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
 
-        $filesystem = $this->getMockBuilder(Filesystem::class)->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
         $provider = $this->createMock(MediaProviderInterface::class);

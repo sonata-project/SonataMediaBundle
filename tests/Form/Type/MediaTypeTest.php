@@ -34,7 +34,7 @@ class MediaTypeTest extends AbstractTypeTest
     {
         parent::setUp();
 
-        $this->mediaPool = $this->getMockBuilder(Pool::class)->disableOriginalConstructor()->getMock();
+        $this->mediaPool = $this->createMock(Pool::class);
         $this->mediaType = new MediaType($this->mediaPool, 'testClass');
 
         $this->factory = Forms::createFormFactoryBuilder()
