@@ -14,7 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Security;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\SessionDownloadStrategy;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
@@ -23,10 +27,10 @@ final class SessionDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedFalse(): void
     {
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
-        $session = $this->createMock('Symfony\Component\HttpFoundation\Session\Session');
+        $translator = $this->createMock(TranslatorInterface::class);
+        $media = $this->createMock(MediaInterface::class);
+        $request = $this->createMock(Request::class);
+        $session = $this->createMock(Session::class);
 
         $session->expects($this->any())
             ->method('get')
@@ -38,10 +42,10 @@ final class SessionDownloadStrategyTest extends TestCase
 
     public function testIsGrantedTrue(): void
     {
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
-        $session = $this->createMock('Symfony\Component\HttpFoundation\Session\Session');
+        $translator = $this->createMock(TranslatorInterface::class);
+        $media = $this->createMock(MediaInterface::class);
+        $request = $this->createMock(Request::class);
+        $session = $this->createMock(Session::class);
 
         $session->expects($this->any())
             ->method('get')

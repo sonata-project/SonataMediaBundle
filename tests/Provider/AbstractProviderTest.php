@@ -46,7 +46,7 @@ abstract class AbstractProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')->disableOriginalConstructor()->getMock();
+        $this->formMapper = $this->createMock(FormMapper::class);
         $this->formMapper
             ->expects($this->any())
             ->method('add')
@@ -56,7 +56,7 @@ abstract class AbstractProviderTest extends TestCase
                 }
             }));
 
-        $this->formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')->disableOriginalConstructor()->getMock();
+        $this->formBuilder = $this->createMock(FormBuilder::class);
         $this->formBuilder
             ->expects($this->any())
             ->method('add')

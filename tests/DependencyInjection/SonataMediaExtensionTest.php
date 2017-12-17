@@ -13,8 +13,15 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
+use Imagine\Gd\Imagine as GdImagine;
+use Imagine\Gmagick\Imagine as GmagicImagine;
+use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
+use Sonata\MediaBundle\Model\CategoryManager;
+use Sonata\MediaBundle\Resizer\SimpleResizer;
+use Sonata\MediaBundle\Resizer\SquareResizer;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class SonataMediaExtensionTest extends AbstractExtensionTestCase
@@ -33,7 +40,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load([
             'class' => [
-                'category' => '\stdClass',
+                'category' => \stdClass::class,
             ],
             'category_manager' => 'dummy.service.name',
         ]);
@@ -45,7 +52,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load([
             'class' => [
-                'category' => '\stdClass',
+                'category' => \stdClass::class,
             ],
             'category_manager' => 'dummy.service.name',
             'force_disable_category' => true,
@@ -61,7 +68,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasAlias('sonata.media.manager.category');
         $this->assertContainerBuilderHasService(
             'sonata.media.manager.category.default',
-            'Sonata\MediaBundle\Model\CategoryManager'
+            CategoryManager::class
         );
     }
 
@@ -78,7 +85,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load([
             'class' => [
-                'category' => '\stdClass',
+                'category' => \stdClass::class,
             ],
             'category_manager' => 'dummy.service.name',
         ]);
@@ -113,9 +120,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     public function dataAdapter()
     {
         return [
-            ['sonata.media.adapter.image.gd', 'gd', 'Imagine\\Gd\\Imagine'],
-            ['sonata.media.adapter.image.gmagick', 'gmagick', 'Imagine\\Gmagick\\Imagine'],
-            ['sonata.media.adapter.image.imagick', 'imagick', 'Imagine\\Imagick\\Imagine'],
+            ['sonata.media.adapter.image.gd', 'gd', GdImagine::class],
+            ['sonata.media.adapter.image.gmagick', 'gmagick', GmagicImagine::class],
+            ['sonata.media.adapter.image.imagick', 'imagick', ImagicImagine::class],
         ];
     }
 
@@ -127,7 +134,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         if (extension_loaded('gd')) {
             $this->assertContainerBuilderHasService(
                 'sonata.media.resizer.default',
-                'Sonata\\MediaBundle\\Resizer\\SimpleResizer'
+                SimpleResizer::class
             );
         }
     }
@@ -151,8 +158,8 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     public function dataResizer()
     {
         return [
-            ['sonata.media.resizer.simple', 'Sonata\\MediaBundle\\Resizer\\SimpleResizer'],
-            ['sonata.media.resizer.square', 'Sonata\\MediaBundle\\Resizer\\SquareResizer'],
+            ['sonata.media.resizer.simple', SimpleResizer::class],
+            ['sonata.media.resizer.square', SquareResizer::class],
         ];
     }
 
@@ -168,7 +175,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     public function testLoadWithSonataAdminCustomConfiguration(): void
     {
-        $fakeContainer = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+        $fakeContainer = $this->getMockBuilder(ContainerBuilder::class)
             ->setMethods(['getParameter', 'getExtensionConfig'])
             ->getMock();
 

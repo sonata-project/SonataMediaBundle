@@ -12,7 +12,11 @@ declare(strict_types=1);
  */
 
 use PHPUnit\Framework\TestCase;
+use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 
 /**
@@ -77,7 +81,7 @@ class MediaExtensionTest extends TestCase
 
     public function getMediaService()
     {
-        $mediaService = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
+        $mediaService = $this->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->getMock();
         $mediaService->method('getProvider')->willReturn($this->getProvider());
@@ -87,13 +91,13 @@ class MediaExtensionTest extends TestCase
 
     public function getMediaManager()
     {
-        return $this->createMock('Sonata\CoreBundle\Model\ManagerInterface');
+        return $this->createMock(ManagerInterface::class);
     }
 
     public function getProvider()
     {
         if (null === $this->provider) {
-            $this->provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+            $this->provider = $this->createMock(MediaProviderInterface::class);
             $this->provider->method('getFormatName')->will($this->returnArgument(1));
         }
 
@@ -127,7 +131,7 @@ class MediaExtensionTest extends TestCase
     public function getMedia()
     {
         if (null === $this->media) {
-            $this->media = $this->createMock('Sonata\MediaBundle\Model\Media');
+            $this->media = $this->createMock(Media::class);
             $this->media->method('getProviderStatus')->willReturn(MediaInterface::STATUS_OK);
         }
 

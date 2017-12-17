@@ -15,7 +15,10 @@ namespace Sonata\MediaBundle\Tests\Resizer;
 
 use Gaufrette\File;
 use Imagine\Image\Box;
+use Imagine\Image\ImagineInterface;
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 
 class SquareResizerTest extends TestCase
@@ -24,10 +27,10 @@ class SquareResizerTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $adapter = $this->createMock('Imagine\Image\ImagineInterface');
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
-        $file = $this->getMockBuilder('Gaufrette\File')->disableOriginalConstructor()->getMock();
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $adapter = $this->createMock(ImagineInterface::class);
+        $media = $this->createMock(MediaInterface::class);
+        $file = $this->createMock(File::class);
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $resizer = new SquareResizer($adapter, 'foo', $metadata);
         $resizer->resize($media, $file, $file, 'bar', []);
@@ -38,18 +41,18 @@ class SquareResizerTest extends TestCase
      */
     public function testGetBox($settings, Box $mediaSize, Box $expected): void
     {
-        $adapter = $this->createMock('Imagine\Image\ImagineInterface');
+        $adapter = $this->createMock(ImagineInterface::class);
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->once())->method('getBox')->will($this->returnValue($mediaSize));
 
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $resizer = new SquareResizer($adapter, 'foo', $metadata);
 
         $box = $resizer->getBox($media, $settings);
 
-        $this->assertInstanceOf('Imagine\Image\Box', $box);
+        $this->assertInstanceOf(Box::class, $box);
 
         $this->assertSame($expected->getWidth(), $box->getWidth());
         $this->assertSame($expected->getHeight(), $box->getHeight());

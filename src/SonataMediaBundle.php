@@ -16,6 +16,11 @@ namespace Sonata\MediaBundle;
 use Sonata\CoreBundle\Form\FormHelper;
 use Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass;
 use Sonata\MediaBundle\DependencyInjection\Compiler\GlobalVariablesCompilerPass;
+use Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType;
+use Sonata\MediaBundle\Form\Type\ApiGalleryItemType;
+use Sonata\MediaBundle\Form\Type\ApiGalleryType;
+use Sonata\MediaBundle\Form\Type\ApiMediaType;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -51,11 +56,11 @@ class SonataMediaBundle extends Bundle
     public function registerFormMapping(): void
     {
         FormHelper::registerFormTypeMapping([
-            'sonata_media_type' => 'Sonata\MediaBundle\Form\Type\MediaType',
-            'sonata_media_api_form_media' => 'Sonata\MediaBundle\Form\Type\ApiMediaType',
-            'sonata_media_api_form_doctrine_media' => 'Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType',
-            'sonata_media_api_form_gallery' => 'Sonata\MediaBundle\Form\Type\ApiGalleryType',
-            'sonata_media_api_form_gallery_item' => 'Sonata\MediaBundle\Form\Type\ApiGalleryItemType',
+            'sonata_media_type' => MediaType::class,
+            'sonata_media_api_form_media' => ApiMediaType::class,
+            'sonata_media_api_form_doctrine_media' => ApiDoctrineMediaType::class,
+            'sonata_media_api_form_gallery' => ApiGalleryType::class,
+            'sonata_media_api_form_gallery_item' => ApiGalleryItemType::class,
         ]);
     }
 }

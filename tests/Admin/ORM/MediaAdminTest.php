@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\Tests\Admin\ORM;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
+use Sonata\MediaBundle\Entity\BaseMedia;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
+use Sonata\MediaBundle\Provider\Pool;
 
 class MediaAdminTest extends TestCase
 {
@@ -24,12 +27,12 @@ class MediaAdminTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $this->categoryManager = $this->prophesize('Sonata\MediaBundle\Model\CategoryManagerInterface');
+        $this->pool = $this->prophesize(Pool::class);
+        $this->categoryManager = $this->prophesize(CategoryManagerInterface::class);
 
         $this->mediaAdmin = new MediaAdmin(
             null,
-            'Sonata\MediaBundle\Entity\BaseMedia',
+            BaseMedia::class,
             'SonataMediaBundle:MediaAdmin',
             $this->pool->reveal(),
             $this->categoryManager->reveal()

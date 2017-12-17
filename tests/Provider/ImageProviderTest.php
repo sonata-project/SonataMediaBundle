@@ -13,8 +13,18 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Gaufrette\Adapter;
+use Gaufrette\File;
+use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
+use Sonata\MediaBundle\CDN\Server;
+use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
@@ -22,40 +32,40 @@ class ImageProviderTest extends AbstractProviderTest
 {
     public function getProvider($allowedExtensions = [], $allowedMimeTypes = [], $box = false)
     {
-        $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer = $this->createMock(ResizerInterface::class);
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
         if ($box) {
             $resizer->expects($this->any())->method('getBox')->will($box);
         }
 
-        $adapter = $this->createMock('Gaufrette\Adapter');
+        $adapter = $this->createMock(Adapter::class);
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+        $filesystem = $this->getMockBuilder(Filesystem::class)
             ->setMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
-        $file = $this->getMockBuilder('Gaufrette\File')
+        $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
+        $cdn = new Server('/uploads/media');
 
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        $generator = new DefaultGenerator();
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $size = $this->createMock('Imagine\Image\BoxInterface');
+        $size = $this->createMock(BoxInterface::class);
         $size->expects($this->any())->method('getWidth')->will($this->returnValue(100));
         $size->expects($this->any())->method('getHeight')->will($this->returnValue(100));
 
-        $image = $this->createMock('Imagine\Image\ImageInterface');
+        $image = $this->createMock(ImageInterface::class);
         $image->expects($this->any())->method('getSize')->will($this->returnValue($size));
 
-        $adapter = $this->createMock('Imagine\Image\ImagineInterface');
+        $adapter = $this->createMock(ImagineInterface::class);
         $adapter->expects($this->any())->method('open')->will($this->returnValue($image));
 
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
         $provider->setResizer($resizer);

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
@@ -160,7 +161,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $this->configureProviders($container, $config);
         $this->configureAdapters($container, $config);
         $this->configureResizers($container, $config);
-        $this->configureClassesToCompile();
     }
 
     /**
@@ -499,66 +499,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
     }
 
     /**
-     * Add class to compile.
-     */
-    public function configureClassesToCompile(): void
-    {
-        if (\PHP_VERSION_ID >= 70000) {
-            return;
-        }
-
-        $this->addClassesToCompile([
-            'Sonata\\MediaBundle\\CDN\\CDNInterface',
-            'Sonata\\MediaBundle\\CDN\\CloudFront',
-            'Sonata\\MediaBundle\\CDN\\Fallback',
-            'Sonata\\MediaBundle\\CDN\\PantherPortal',
-            'Sonata\\MediaBundle\\CDN\\Server',
-            'Sonata\\MediaBundle\\Extra\\Pixlr',
-            'Sonata\\MediaBundle\\Filesystem\\Local',
-            'Sonata\\MediaBundle\\Filesystem\\Replicate',
-            'Sonata\\MediaBundle\\Generator\\DefaultGenerator',
-            'Sonata\\MediaBundle\\Generator\\GeneratorInterface',
-            'Sonata\\MediaBundle\\Generator\\ODMGenerator',
-            'Sonata\\MediaBundle\\Generator\\PHPCRGenerator',
-            'Sonata\\MediaBundle\\Metadata\\AmazonMetadataBuilder',
-            'Sonata\\MediaBundle\\Metadata\\MetadataBuilderInterface',
-            'Sonata\\MediaBundle\\Metadata\\NoopMetadataBuilder',
-            'Sonata\\MediaBundle\\Metadata\\ProxyMetadataBuilder',
-            'Sonata\\MediaBundle\\Model\\Gallery',
-            'Sonata\\MediaBundle\\Model\\GalleryItem',
-            'Sonata\\MediaBundle\\Model\\GalleryItemInterface',
-            'Sonata\\MediaBundle\\Model\\GalleryInterface',
-            'Sonata\\MediaBundle\\Model\\GalleryManager',
-            'Sonata\\MediaBundle\\Model\\GalleryManagerInterface',
-            'Sonata\\MediaBundle\\Model\\Media',
-            'Sonata\\MediaBundle\\Model\\MediaInterface',
-            'Sonata\\MediaBundle\\Model\\MediaManagerInterface',
-            'Sonata\\MediaBundle\\Provider\\BaseProvider',
-            'Sonata\\MediaBundle\\Provider\\BaseVideoProvider',
-            'Sonata\\MediaBundle\\Provider\\DailyMotionProvider',
-            'Sonata\\MediaBundle\\Provider\\FileProvider',
-            'Sonata\\MediaBundle\\Provider\\ImageProvider',
-            'Sonata\\MediaBundle\\Provider\\MediaProviderInterface',
-            'Sonata\\MediaBundle\\Provider\\Pool',
-            'Sonata\\MediaBundle\\Provider\\VimeoProvider',
-            'Sonata\\MediaBundle\\Provider\\YouTubeProvider',
-            'Sonata\\MediaBundle\\Resizer\\ResizerInterface',
-            'Sonata\\MediaBundle\\Resizer\\SimpleResizer',
-            'Sonata\\MediaBundle\\Resizer\\SquareResizer',
-            'Sonata\\MediaBundle\\Security\\DownloadStrategyInterface',
-            'Sonata\\MediaBundle\\Security\\ForbiddenDownloadStrategy',
-            'Sonata\\MediaBundle\\Security\\PublicDownloadStrategy',
-            'Sonata\\MediaBundle\\Security\\RolesDownloadStrategy',
-            'Sonata\\MediaBundle\\Security\\SessionDownloadStrategy',
-            'Sonata\\MediaBundle\\Templating\\Helper\\MediaHelper',
-            'Sonata\\MediaBundle\\Thumbnail\\ConsumerThumbnail',
-            'Sonata\\MediaBundle\\Thumbnail\\FormatThumbnail',
-            'Sonata\\MediaBundle\\Thumbnail\\ThumbnailInterface',
-            'Sonata\\MediaBundle\\Twig\\Extension\\MediaExtension',
-        ]);
-    }
-
-    /**
      * Allow an extension to prepend the extension configurations.
      *
      * @param ContainerBuilder $container
@@ -582,7 +522,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
      */
     private function isClassificationEnabled(array $config)
     {
-        return interface_exists('Sonata\ClassificationBundle\Model\CategoryInterface')
+        return interface_exists(CategoryInterface::class)
             && !$config['force_disable_category'];
     }
 

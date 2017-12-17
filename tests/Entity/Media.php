@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Entity;
 
-class Media extends \Sonata\MediaBundle\Entity\BaseMedia
+use Sonata\MediaBundle\Entity\BaseMedia;
+
+class Media extends BaseMedia
 {
     protected $id;
 

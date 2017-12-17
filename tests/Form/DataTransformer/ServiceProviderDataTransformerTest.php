@@ -15,13 +15,16 @@ namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Psr\Log\LoggerInterface;
 use Sonata\MediaBundle\Form\DataTransformer\ServiceProviderDataTransformer;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 class ServiceProviderDataTransformerTest extends TestCase
 {
     public function testTransformNoop(): void
     {
-        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->prophesize(MediaProviderInterface::class);
 
         $transformer = new ServiceProviderDataTransformer($provider->reveal());
 
@@ -31,7 +34,7 @@ class ServiceProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformSkipsProviderIfNotMedia(): void
     {
-        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->prophesize(MediaProviderInterface::class);
         $provider->transform()->shouldNotBeCalled();
 
         $transformer = new ServiceProviderDataTransformer($provider->reveal());
@@ -42,9 +45,9 @@ class ServiceProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformForwardsToProvider(): void
     {
-        $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface')->reveal();
+        $media = $this->prophesize(MediaInterface::class)->reveal();
 
-        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->prophesize(MediaProviderInterface::class);
         $provider->transform(Argument::is($media))->shouldBeCalledTimes(1);
 
         $transformer = new ServiceProviderDataTransformer($provider->reveal());
@@ -53,9 +56,9 @@ class ServiceProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformWithThrowingProviderNoThrow(): void
     {
-        $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface')->reveal();
+        $media = $this->prophesize(MediaInterface::class)->reveal();
 
-        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->prophesize(MediaProviderInterface::class);
         $provider->transform(Argument::is($media))->shouldBeCalled()->willThrow(new \Exception());
 
         $transformer = new ServiceProviderDataTransformer($provider->reveal());
@@ -64,13 +67,13 @@ class ServiceProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformWithThrowingProviderLogsException(): void
     {
-        $media = $this->prophesize('Sonata\MediaBundle\Model\MediaInterface')->reveal();
+        $media = $this->prophesize(MediaInterface::class)->reveal();
 
         $exception = new \Exception('foo');
-        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->prophesize(MediaProviderInterface::class);
         $provider->transform(Argument::is($media))->shouldBeCalled()->willThrow($exception);
 
-        $logger = $this->prophesize('Psr\Log\LoggerInterface');
+        $logger = $this->prophesize(LoggerInterface::class);
         $logger->error(
             Argument::containingString('Caught Exception Exception: "foo" at'),
             Argument::is(['exception' => $exception])

@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Document;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Document\MediaManager;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @group document
@@ -27,7 +30,7 @@ class MediaManagerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->manager = new MediaManager('Sonata\MediaBundle\Model\MediaInterface', $this->createRegistryMock());
+        $this->manager = new MediaManager(MediaInterface::class, $this->createRegistryMock());
     }
 
     public function testSave(): void
@@ -66,11 +69,11 @@ class MediaManagerTest extends TestCase
      */
     protected function createRegistryMock()
     {
-        $dm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
+        $dm = $this->getMockBuilder(DocumentManager::class)
             ->setMethods(['persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
-        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $dm->expects($this->any())->method('persist');
         $dm->expects($this->any())->method('flush');

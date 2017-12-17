@@ -14,15 +14,18 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Security;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\ForbiddenDownloadStrategy;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ForbiddenDownloadStrategyTest extends TestCase
 {
     public function testIsGranted(): void
     {
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $media = $this->createMock(MediaInterface::class);
+        $request = $this->createMock(Request::class);
+        $translator = $this->createMock(TranslatorInterface::class);
 
         $strategy = new ForbiddenDownloadStrategy($translator);
         $this->assertFalse($strategy->isGranted($media, $request));

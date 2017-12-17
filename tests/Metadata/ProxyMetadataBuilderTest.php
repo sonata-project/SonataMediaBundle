@@ -15,21 +15,27 @@ namespace Sonata\MediaBundle\Tests\Metadata;
 
 use AmazonS3 as AmazonClient;
 use Gaufrette\Adapter\AmazonS3;
+use Gaufrette\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
+use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
+use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
 use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProxyMetadataBuilderTest extends TestCase
 {
     public function testProxyAmazon(): void
     {
-        $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
 
-        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'noop']));
@@ -38,13 +44,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $amazonclient = new AmazonClient(['key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']);
         $adapter = new AmazonS3($amazonclient, '');
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -64,12 +70,12 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyLocal(): void
     {
-        $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
 
-        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->once())
             ->method('get')
             ->will($this->returnValue(['key' => 'noop']));
@@ -77,13 +83,13 @@ class ProxyMetadataBuilderTest extends TestCase
         //adapter cannot be mocked
         $adapter = new Local('');
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -103,12 +109,12 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyNoProvider(): void
     {
-        $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
 
-        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'noop']));
@@ -116,13 +122,13 @@ class ProxyMetadataBuilderTest extends TestCase
         //adapter cannot be mocked
         $adapter = new Local('');
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('wrongprovider'));
@@ -142,12 +148,12 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyReplicateWithAmazon(): void
     {
-        $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
 
-        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'noop']));
@@ -158,13 +164,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -184,12 +190,12 @@ class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyReplicateWithoutAmazon(): void
     {
-        $amazon = $this->getMockBuilder('Sonata\MediaBundle\Metadata\AmazonMetadataBuilder')->disableOriginalConstructor()->getMock();
+        $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
             ->will($this->returnValue(['key' => 'amazon']));
 
-        $noop = $this->createMock('Sonata\MediaBundle\Metadata\NoopMetadataBuilder');
+        $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->once())
             ->method('get')
             ->will($this->returnValue(['key' => 'noop']));
@@ -199,13 +205,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')->disableOriginalConstructor()->getMock();
+        $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
 
-        $provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
             ->will($this->returnValue('sonata.media.provider.image'));
@@ -232,7 +238,7 @@ class ProxyMetadataBuilderTest extends TestCase
      */
     protected function getContainerMock(array $services)
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->createMock(ContainerInterface::class);
         $container
             ->expects($this->any())
             ->method('get')

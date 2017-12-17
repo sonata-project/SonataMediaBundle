@@ -13,38 +13,51 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Gaufrette\File as GaufretteFile;
+use Gaufrette\Filesystem;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\MediaBundle\CDN\Server;
+use Sonata\MediaBundle\Filesystem\Local;
+use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider()
     {
-        $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer = $this->createMock(ResizerInterface::class);
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
 
-        $adapter = $this->getMockBuilder('Sonata\MediaBundle\Filesystem\Local')->disableOriginalConstructor()->getMock();
+        $adapter = $this->createMock(Local::class);
         $adapter->expects($this->any())->method('getDirectory')->will($this->returnValue(realpath(__DIR__).'/../fixtures'));
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+        $filesystem = $this->getMockBuilder(Filesystem::class)
             ->setMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
-        $file = $this->getMockBuilder('Gaufrette\File')
+        $file = $this->getMockBuilder(GaufretteFile::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
+        $cdn = new Server('/uploads/media');
 
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        $generator = new DefaultGenerator();
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail, ['txt'], ['foo/bar'], $metadata);
         $provider->setResizer($resizer);
@@ -91,12 +104,12 @@ class FileProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $admin = $this->createMock('Sonata\AdminBundle\Admin\AdminInterface');
+        $admin = $this->createMock(AdminInterface::class);
         $admin->expects($this->any())
             ->method('trans')
             ->will($this->returnValue('message'));
 
-        $formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')
+        $formMapper = $this->getMockBuilder(FormMapper::class)
             ->setMethods(['add', 'getAdmin'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -134,12 +147,12 @@ class FileProviderTest extends AbstractProviderTest
         $media->setBinaryContent($file);
         $provider->transform($media);
 
-        $this->assertInstanceOf('\DateTime', $media->getUpdatedAt());
+        $this->assertInstanceOf(\DateTime::class, $media->getUpdatedAt());
         $this->assertNotNull($media->getProviderReference());
 
         $provider->postUpdate($media);
 
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
+        $file = new File(realpath(__DIR__.'/../fixtures/file.txt'));
 
         $media = new Media();
         $media->setContext('default');
@@ -170,7 +183,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $response = $provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\BinaryFileResponse', $response);
+        $this->assertInstanceOf(BinaryFileResponse::class, $response);
     }
 
     /**
@@ -191,7 +204,7 @@ class FileProviderTest extends AbstractProviderTest
 
     public function mediaProvider()
     {
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/file.txt'));
+        $file = new File(realpath(__DIR__.'/../fixtures/file.txt'));
         $content = file_get_contents(realpath(__DIR__.'/../fixtures/file.txt'));
         $request = new Request([], [], [], [], [], [], $content);
 
@@ -206,9 +219,9 @@ class FileProviderTest extends AbstractProviderTest
         $media2->setId(1023456);
 
         return [
-            ['\Symfony\Component\HttpFoundation\File\File', $media1],
-            ['\Symfony\Component\HttpFoundation\File\File', $media1],
-            ['\Symfony\Component\HttpFoundation\File\File', $media2],
+            [File::class, $media1],
+            [File::class, $media1],
+            [File::class, $media2],
         ];
     }
 
@@ -219,7 +232,7 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testBinaryContentWithRealPath(): void
     {
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
 
         $media->expects($this->any())
             ->method('getProviderReference')
@@ -233,7 +246,7 @@ class FileProviderTest extends AbstractProviderTest
             ->method('getContext')
             ->willReturn('context');
 
-        $binaryContent = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\File')
+        $binaryContent = $this->getMockBuilder(File::class)
             ->setMethods(['getRealPath', 'getPathname'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -251,7 +264,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider();
 
-        $setFileContents = new \ReflectionMethod('Sonata\MediaBundle\Provider\FileProvider', 'setFileContents');
+        $setFileContents = new \ReflectionMethod(FileProvider::class, 'setFileContents');
         $setFileContents->setAccessible(true);
 
         $setFileContents->invoke($provider, $media);
@@ -264,7 +277,7 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testBinaryContentStreamWrapped(): void
     {
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
 
         $media->expects($this->any())
             ->method('getProviderReference')
@@ -278,7 +291,7 @@ class FileProviderTest extends AbstractProviderTest
             ->method('getContext')
             ->willReturn('context');
 
-        $binaryContent = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\File')
+        $binaryContent = $this->getMockBuilder(File::class)
             ->setMethods(['getRealPath', 'getPathname'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -297,7 +310,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider();
 
-        $setFileContents = new \ReflectionMethod('Sonata\MediaBundle\Provider\FileProvider', 'setFileContents');
+        $setFileContents = new \ReflectionMethod(FileProvider::class, 'setFileContents');
         $setFileContents->setAccessible(true);
 
         $setFileContents->invoke($provider, $media);
@@ -305,7 +318,7 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidate(): void
     {
-        $errorElement = $this->getMockBuilder('Sonata\CoreBundle\Validator\ErrorElement')
+        $errorElement = $this->getMockBuilder(ErrorElement::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -317,7 +330,7 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadSize(): void
     {
-        $errorElement = $this->getMockBuilder('Sonata\CoreBundle\Validator\ErrorElement')
+        $errorElement = $this->getMockBuilder(ErrorElement::class)
             ->disableOriginalConstructor()
             ->getMock();
         $errorElement->expects($this->once())->method('with')
@@ -328,7 +341,7 @@ class FileProviderTest extends AbstractProviderTest
         $errorElement->expects($this->once())->method('end')
             ->will($this->returnSelf());
 
-        $upload = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
+        $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')
@@ -349,7 +362,7 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadType(): void
     {
-        $errorElement = $this->getMockBuilder('Sonata\CoreBundle\Validator\ErrorElement')
+        $errorElement = $this->getMockBuilder(ErrorElement::class)
             ->disableOriginalConstructor()
             ->getMock();
         $errorElement->expects($this->once())->method('with')
@@ -360,7 +373,7 @@ class FileProviderTest extends AbstractProviderTest
         $errorElement->expects($this->once())->method('end')
             ->will($this->returnSelf());
 
-        $upload = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
+        $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')

@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block\Breadcrumb;
 
+use Knp\Menu\FactoryInterface;
+use Knp\Menu\Provider\MenuProviderInterface;
 use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
 use Sonata\MediaBundle\Block\Breadcrumb\BaseGalleryBreadcrumbBlockService;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockService
 {
@@ -30,9 +33,9 @@ class BreadcrumbTest extends AbstractBlockServiceTestCase
         $blockService = new BreadcrumbGalleryBlockService_Test(
             'context',
             'name',
-            $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface')->reveal(),
-            $this->prophesize('Knp\Menu\Provider\MenuProviderInterface')->reveal(),
-            $this->prophesize('Knp\Menu\FactoryInterface')->reveal()
+            $this->prophesize(EngineInterface::class)->reveal(),
+            $this->prophesize(MenuProviderInterface::class)->reveal(),
+            $this->prophesize(FactoryInterface::class)->reveal()
         );
 
         $this->assertTrue($blockService->handleContext('context'));

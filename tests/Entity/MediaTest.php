@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Entity;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
+use Sonata\MediaBundle\Tests\Controller\EntityWithGetId;
 
 class MediaTest extends TestCase
 {
@@ -38,8 +40,8 @@ class MediaTest extends TestCase
     public function testSetGet(): void
     {
         $category = $this->prophesize();
-        $category->willExtend('Sonata\MediaBundle\Tests\Controller\EntityWithGetId');
-        $category->willImplement('Sonata\ClassificationBundle\Model\CategoryInterface');
+        $category->willExtend(EntityWithGetId::class);
+        $category->willImplement(CategoryInterface::class);
 
         $media = new Media();
         $media->setName('MediaBundle');
@@ -91,7 +93,7 @@ class MediaTest extends TestCase
 
     public function testSetCategoryWithoutAnActualCategory(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
 
         $media = new Media();
 

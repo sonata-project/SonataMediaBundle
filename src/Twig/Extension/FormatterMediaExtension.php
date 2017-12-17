@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Twig\Extension;
 
 use Sonata\FormatterBundle\Extension\BaseProxyExtension;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
@@ -51,7 +52,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     public function getAllowedMethods()
     {
         return [
-            'Sonata\MediaBundle\Model\MediaInterface' => [
+            MediaInterface::class => [
                 'getproviderreference',
             ],
         ];

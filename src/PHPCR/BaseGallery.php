@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\PHPCR;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryItemInterface;
 
@@ -31,7 +32,7 @@ abstract class BaseGallery extends Gallery
      */
     public function __construct()
     {
-        $this->galleryItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galleryItems = new ArrayCollection();
     }
 
     /**

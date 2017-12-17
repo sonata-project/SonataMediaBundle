@@ -15,13 +15,24 @@ namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
+use Sonata\AdminBundle\Admin\Pool as AdminPool;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Command\DebugCommand;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormRenderer;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -34,9 +45,9 @@ class GalleryAdminControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->admin = $this->prophesize('Sonata\MediaBundle\Admin\BaseMediaAdmin');
-        $this->request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->admin = $this->prophesize(BaseMediaAdmin::class);
+        $this->request = $this->prophesize(Request::class);
 
         $this->configureCRUDController();
 
@@ -51,10 +62,10 @@ class GalleryAdminControllerTest extends TestCase
 
     public function testListAction(): void
     {
-        $datagrid = $this->prophesize('Sonata\AdminBundle\Datagrid\DatagridInterface');
-        $form = $this->prophesize('Symfony\Component\Form\Form');
-        $formView = $this->prophesize('Symfony\Component\Form\FormView');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $datagrid = $this->prophesize(DatagridInterface::class);
+        $form = $this->prophesize(Form::class);
+        $formView = $this->prophesize(FormView::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->configureSetFormTheme($formView->reveal(), 'filterTheme');
         $this->configureSetCsrfToken('sonata.batch');
@@ -76,8 +87,8 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureCRUDController(): void
     {
-        $pool = $this->prophesize('Sonata\AdminBundle\Admin\Pool');
-        $breadcrumbsBuilder = $this->prophesize('Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface');
+        $pool = $this->prophesize(AdminPool::class);
+        $breadcrumbsBuilder = $this->prophesize(BreadcrumbsBuilderInterface::class);
 
         $this->configureGetCurrentRequest($this->request->reveal());
         $pool->getAdminByAdminCode('admin_code')->willReturn($this->admin->reveal());
@@ -141,9 +152,9 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureRender($template, $data, $rendered): void
     {
-        $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
-        $response = $this->prophesize('Symfony\Component\HttpFoundation\Response');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $templating = $this->prophesize(EngineInterface::class);
+        $response = $this->prophesize(Response::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->admin->getPersistentParameters()->willReturn(['param' => 'param']);
         $this->container->has('templating')->willReturn(true);

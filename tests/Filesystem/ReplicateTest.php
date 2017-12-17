@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Filesystem;
 
+use Gaufrette\Adapter;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Replicate;
 
@@ -20,8 +21,8 @@ class ReplicateTest extends TestCase
 {
     public function testReplicate(): void
     {
-        $master = $this->createMock('Gaufrette\Adapter');
-        $slave = $this->createMock('Gaufrette\Adapter');
+        $master = $this->createMock(Adapter::class);
+        $slave = $this->createMock(Adapter::class);
         $replicate = new Replicate($master, $slave);
 
         $master->expects($this->once())->method('mtime')->will($this->returnValue('master'));
