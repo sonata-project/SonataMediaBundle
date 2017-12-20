@@ -54,12 +54,12 @@ class FixMediaContextCommandTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ContextManagerInterface
      */
-    private $contextManger;
+    private $contextManager;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|CategoryManagerInterface
      */
-    private $categoryManger;
+    private $categoryManager;
 
     /**
      * {@inheritdoc}
@@ -78,20 +78,20 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->pool = $pool = $this->createMock(Pool::class);
 
-        $this->contextManger = $contextManger = $this->createMock(ContextManagerInterface::class);
+        $this->contextManager = $contextManager = $this->createMock(ContextManagerInterface::class);
 
-        $this->categoryManger = $categoryManger = $this->createMock(CategoryManagerInterface::class);
+        $this->categoryManager = $categoryManager = $this->createMock(CategoryManagerInterface::class);
 
         $this->container->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function ($id) use ($pool, $contextManger, $categoryManger) {
+            ->will($this->returnCallback(function ($id) use ($pool, $contextManager, $categoryManager) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $pool;
                     case 'sonata.classification.manager.context':
-                        return $contextManger;
+                        return $contextManager;
                     case 'sonata.media.manager.category':
-                        return $categoryManger;
+                        return $categoryManager;
                 }
             }));
     }
@@ -121,11 +121,11 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = $this->createMock(ContextInterface::class);
 
-        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue($contextModel));
+        $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue($contextModel));
 
         $category = $this->createMock(CategoryInterface::class);
 
-        $this->categoryManger->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue($category));
+        $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue($category));
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
@@ -149,13 +149,13 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = $this->createMock(ContextInterface::class);
 
-        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue($contextModel));
+        $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue($contextModel));
 
         $category = $this->createMock(CategoryInterface::class);
 
-        $this->categoryManger->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue(null));
-        $this->categoryManger->expects($this->once())->method('create')->will($this->returnValue($category));
-        $this->categoryManger->expects($this->once())->method('save')->with($this->equalTo($category));
+        $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue(null));
+        $this->categoryManager->expects($this->once())->method('create')->will($this->returnValue($category));
+        $this->categoryManager->expects($this->once())->method('save')->with($this->equalTo($category));
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
@@ -179,15 +179,15 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = $this->createMock(ContextInterface::class);
 
-        $this->contextManger->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue(null));
-        $this->contextManger->expects($this->once())->method('create')->will($this->returnValue($contextModel));
-        $this->contextManger->expects($this->once())->method('save')->with($this->equalTo($contextModel));
+        $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->will($this->returnValue(null));
+        $this->contextManager->expects($this->once())->method('create')->will($this->returnValue($contextModel));
+        $this->contextManager->expects($this->once())->method('save')->with($this->equalTo($contextModel));
 
         $category = $this->createMock(CategoryInterface::class);
 
-        $this->categoryManger->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue(null));
-        $this->categoryManger->expects($this->once())->method('create')->will($this->returnValue($category));
-        $this->categoryManger->expects($this->once())->method('save')->with($this->equalTo($category));
+        $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->will($this->returnValue(null));
+        $this->categoryManager->expects($this->once())->method('create')->will($this->returnValue($category));
+        $this->categoryManager->expects($this->once())->method('save')->with($this->equalTo($category));
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
