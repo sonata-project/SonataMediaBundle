@@ -41,6 +41,11 @@ class SquareResizer implements ResizerInterface
     protected $mode;
 
     /**
+     * @var MetadataBuilderInterface
+     */
+    protected $metadata;
+
+    /**
      * @param ImagineInterface         $adapter
      * @param string                   $mode
      * @param MetadataBuilderInterface $metadata
