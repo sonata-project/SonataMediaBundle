@@ -134,7 +134,7 @@ class Pixlr
      * @param string $hash
      * @param string $id
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function exitAction($hash, $id)
     {
@@ -150,7 +150,7 @@ class Pixlr
      * @param string  $hash
      * @param string  $id
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function targetAction(Request $request, $hash, $id)
     {
