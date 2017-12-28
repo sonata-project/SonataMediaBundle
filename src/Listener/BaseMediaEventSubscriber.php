@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Listener;
 use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -126,7 +127,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @param EventArgs $args
      *
-     * @return \Sonata\MediaBundle\Model\MediaInterface
+     * @return MediaInterface
      */
     abstract protected function getMedia(EventArgs $args);
 
