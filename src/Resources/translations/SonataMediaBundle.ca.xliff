@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-    <file source-language="en" target-language="pt" datatype="plaintext" original="SonataMediaBundle.en.xliff">
+    <file source-language="en" target-language="ca" datatype="plaintext" original="SonataMediaBundle.en.xliff">
         <body>
             <trans-unit id="default">
                 <source>default</source>
-                <target>Padrão</target>
+                <target>Per defecte</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
-                <target>Mídia</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="gallery">
                 <source>gallery</source>
@@ -16,23 +16,23 @@
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
-                <target>Galeria de mídia</target>
+                <target>Llibreria multimedia</target>
             </trans-unit>
             <trans-unit id="no_provider_available">
                 <source>no_provider_available</source>
-                <target>Nenhum provisionador disponível</target>
+                <target>No hi ha proveïdors disponibles</target>
             </trans-unit>
             <trans-unit id="title_select_provider">
                 <source>title_select_provider</source>
-                <target>Selecionar um provisionador de mídia</target>
+                <target>Selecciona el proveïdor de media</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_create">
                 <source>breadcrumb.link_media_create</source>
-                <target>Criar</target>
+                <target>Crear</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_list">
                 <source>breadcrumb.link_media_list</source>
-                <target>Mídias</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_edit">
                 <source>breadcrumb.link_media_edit</source>
@@ -40,15 +40,15 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_view">
                 <source>breadcrumb.link_media_view</source>
-                <target>Visualizar</target>
+                <target>Veure</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_delete">
                 <source>breadcrumb.link_media_delete</source>
-                <target>Deletar</target>
+                <target>Esborrar</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_create">
                 <source>breadcrumb.link_gallery_create</source>
-                <target>Criar</target>
+                <target>Crear</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_media_show">
                 <source>breadcrumb.link_media_show</source>
@@ -56,7 +56,7 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_list">
                 <source>breadcrumb.link_gallery_list</source>
-                <target>Galerias</target>
+                <target>Galeries</target>
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_edit">
                 <source>breadcrumb.link_gallery_edit</source>
@@ -64,99 +64,103 @@
             </trans-unit>
             <trans-unit id="breadcrumb.link_gallery_delete">
                 <source>breadcrumb.link_gallery_delete</source>
-                <target>Deletar</target>
+                <target>Esborrar</target>
             </trans-unit>
             <trans-unit id="description.roles_download_strategy">
                 <source>description.roles_download_strategy</source>
-                <target>A mídia pode ser recuperada por usuários com as seguintes regras: %roles%.</target>
+                <target>El media es pot descarregar per: %roles%.</target>
             </trans-unit>
             <trans-unit id="description.public_download_strategy">
                 <source>description.public_download_strategy</source>
-                <target>A mídia pode ser recuperada por qualquer um.</target>
+                <target>El media no es pot descarregar</target>
             </trans-unit>
             <trans-unit id="description.forbidden_download_strategy">
                 <source>description.forbidden_download_strategy</source>
-                <target>A mídia pode ser recuperada por ninguém.</target>
+                <target>El media no es pot descarregar per ningú.</target>
             </trans-unit>
             <trans-unit id="description.session_download_strategy">
                 <source>description.session_download_strategy</source>
-                <target>description.session_download_strategy</target>
+                <target>El media es pot descarregar una vegada per sessió.|El media es pot descarregar %times% vegades per sessió.</target>
             </trans-unit>
             <trans-unit id="filter.label_name">
                 <source>filter.label_name</source>
-                <target>Nome</target>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit id="filter.label_provider_reference">
                 <source>filter.label_provider_reference</source>
-                <target>Provisionador referência</target>
+                <target>Referència del proveïdor</target>
             </trans-unit>
             <trans-unit id="filter.label_enabled">
                 <source>filter.label_enabled</source>
-                <target>Habilitado</target>
+                <target>Permès</target>
             </trans-unit>
             <trans-unit id="filter.label_context">
                 <source>filter.label_context</source>
-                <target>Contexto</target>
-            </trans-unit>
-            <trans-unit id="form.label_category">
-                <source>form.label_category</source>
-                <target>form.label_category</target>
+                <target>Context</target>
             </trans-unit>
             <trans-unit id="filter.label_provider_name">
                 <source>filter.label_provider_name</source>
-                <target>Nome do provisionador</target>
+                <target>Nom proveïdor</target>
+            </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>filter.label_category</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>Nom autor</target>
+            </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>Amplada</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>Altura</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>Tipus de contingut</target>
             </trans-unit>
             <trans-unit id="form.label_enabled">
                 <source>form.label_enabled</source>
-                <target>Habilitado</target>
+                <target>Permès</target>
             </trans-unit>
             <trans-unit id="form.label_media">
                 <source>form.label_media</source>
-                <target>Mídia</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="form.label_position">
                 <source>form.label_position</source>
-                <target>Posição</target>
+                <target>Posició</target>
             </trans-unit>
             <trans-unit id="form.label_context">
                 <source>form.label_context</source>
-                <target>Contexto</target>
+                <target>Context</target>
             </trans-unit>
             <trans-unit id="form.label_name">
                 <source>form.label_name</source>
-                <target>Nome</target>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit id="form.label_default_format">
                 <source>form.label_default_format</source>
-                <target>Formato</target>
+                <target>Format</target>
             </trans-unit>
             <trans-unit id="form.label_gallery_has_medias">
                 <source>form.label_gallery_has_medias</source>
-                <target>Mídias</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="form.label_author_name">
                 <source>form.label_author_name</source>
                 <target>Autor</target>
             </trans-unit>
-            <trans-unit id="filter.label_width">
-                <source>filter.label_width</source>
-                <target>filter.label_width</target>
-            </trans-unit>
-            <trans-unit id="filter.label_height">
-                <source>filter.label_height</source>
-                <target>filter.label_height</target>
-            </trans-unit>
-            <trans-unit id="filter.label_content_type">
-                <source>filter.label_content_type</source>
-                <target>filter.label_content_type</target>
-            </trans-unit>
             <trans-unit id="form.label_cdn_is_flushable">
                 <source>form.label_cdn_is_flushable</source>
-                <target>Atualizar CDN</target>
+                <target>Flush CDN</target>
             </trans-unit>
             <trans-unit id="form.label_description">
                 <source>form.label_description</source>
-                <target>Descrição</target>
+                <target>Descripció</target>
             </trans-unit>
             <trans-unit id="form.label_copyright">
                 <source>form.label_copyright</source>
@@ -164,19 +168,19 @@
             </trans-unit>
             <trans-unit id="form.label_binary_content">
                 <source>form.label_binary_content</source>
-                <target>Arquivo/Referência</target>
+                <target>Arxiu/Referencia</target>
             </trans-unit>
             <trans-unit id="label.size">
                 <source>label.size</source>
-                <target>Tamanho</target>
+                <target>Mida</target>
             </trans-unit>
             <trans-unit id="label.length">
                 <source>label.length</source>
-                <target>label.length</target>
+                <target>Longitud</target>
             </trans-unit>
             <trans-unit id="label.width">
                 <source>label.width</source>
-                <target>Largura</target>
+                <target>Amplada</target>
             </trans-unit>
             <trans-unit id="label.height">
                 <source>label.height</source>
@@ -184,7 +188,7 @@
             </trans-unit>
             <trans-unit id="label.content_type">
                 <source>label.content_type</source>
-                <target>Content type</target>
+                <target>Tipus de contingut</target>
             </trans-unit>
             <trans-unit id="label.copyright">
                 <source>label.copyright</source>
@@ -200,23 +204,23 @@
             </trans-unit>
             <trans-unit id="label.to_be_flushed">
                 <source>label.to_be_flushed</source>
-                <target>Atualizável</target>
+                <target>Flushable</target>
             </trans-unit>
             <trans-unit id="label.flushed_at">
                 <source>label.flushed_at</source>
-                <target>Atualizado em</target>
+                <target>Flushed a</target>
             </trans-unit>
             <trans-unit id="label.public_url">
                 <source>label.public_url</source>
-                <target>URL pública</target>
+                <target>Url pública</target>
             </trans-unit>
             <trans-unit id="label.name">
                 <source>label.name</source>
-                <target>Nome</target>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit id="label.file">
                 <source>label.file</source>
-                <target>Arquivo</target>
+                <target>Arxiu</target>
             </trans-unit>
             <trans-unit id="label.author">
                 <source>label.author</source>
@@ -224,100 +228,100 @@
             </trans-unit>
             <trans-unit id="label.enabled">
                 <source>label.enabled</source>
-                <target>Habilitado</target>
+                <target>Permès</target>
             </trans-unit>
             <trans-unit id="label.cdn_is_flushable">
                 <source>label.cdn_is_flushable</source>
-                <target>Atualizar CDN</target>
+                <target>Flush CDN</target>
             </trans-unit>
             <trans-unit id="label.cdn_flush_identifier">
                 <source>label.cdn_flush_identifier</source>
-                <target>CDN flush identifier</target>
+                <target>Identificador de flush CDN</target>
             </trans-unit>
             <trans-unit id="label.video_reference">
                 <source>label.video_reference</source>
-                <target>Alterar vídeo</target>
+                <target>Canviar vídeo</target>
             </trans-unit>
             <trans-unit id="label.description">
                 <source>label.description</source>
-                <target>Descrição</target>
+                <target>Descripció</target>
             </trans-unit>
             <trans-unit id="label.select_context">
                 <source>label.select_context</source>
-                <target>Contexto: </target>
+                <target>Context: </target>
             </trans-unit>
             <trans-unit id="label.select_provider">
                 <source>label.select_provider</source>
-                <target>Tipo : </target>
+                <target>Tipus: </target>
             </trans-unit>
             <trans-unit id="label.protected_download_url">
                 <source>label.protected_download_url</source>
-                <target>URL protegida</target>
+                <target>Url protegida</target>
             </trans-unit>
             <trans-unit id="label.protected_download_url_notice">
                 <source>label.protected_download_url_notice</source>
-                <target>Aviso</target>
+                <target>Avís</target>
             </trans-unit>
             <trans-unit id="label.edit_with_pixlr">
                 <source>label.edit_with_pixlr</source>
-                <target>Editar essa mídia com Pixlr</target>
+                <target>Editar amb Pixlr</target>
             </trans-unit>
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
                 <target><![CDATA[
-                        <span class="label label-warning">Important</span> você está prestes a exportar a mídia para um <strong>serviço externo</strong>. <br />
-                        Se você estiver trabalhando em material confidencial, favor não utilizar esse serviço.
+                        <span class="label label-warning">Important</span> Estàs exposant la imatge a un <strong>servei extern</strong>
+                        Si estàs treballant amb materials confidencials, si us plau no utilitzis aquest servei.
                     ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
                 <target><![CDATA[
-                        <strong style="color: white">Editor rápido</strong> <br />
-                        Interface simples para edição rápida
+                        <strong>Editor de Pixlr Express</strong> <br />
+                        Interfície simple per edició ràpida
                     ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
                 <target><![CDATA[
-                        <strong style="color: white">Editor avançado</strong> <br />
-                        Somente para usuários experientes
+                        <strong>Editor Pixlr Avançat</strong> <br />
+                        Per usuaris experts
                     ]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
                 <source>link.all_providers</source>
-                <target>Todos</target>
+                <target>Tots</target>
             </trans-unit>
             <trans-unit id="link.test_protected_url">
                 <source>link.test_protected_url</source>
-                <target>Link de previsualização</target>
+                <target>Vista previa enllaç</target>
             </trans-unit>
             <trans-unit id="list.label_enabled">
                 <source>list.label_enabled</source>
-                <target>Habilitado</target>
+                <target>Activat</target>
             </trans-unit>
             <trans-unit id="list.label_name">
                 <source>list.label_name</source>
-                <target>Nome</target>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit id="list.label_author_name">
                 <source>list.label_author_name</source>
-                <target>list.label_author_name</target>
+                <target>Nom autor</target>
             </trans-unit>
             <trans-unit id="list.label_context">
                 <source>list.label_context</source>
-                <target>Contexto</target>
+                <target>Context</target>
             </trans-unit>
             <trans-unit id="list.label_default_format">
                 <source>list.label_default_format</source>
-                <target>Formato</target>
+                <target>Format</target>
             </trans-unit>
             <trans-unit id="list.label__action">
                 <source>list.label__action</source>
-                <target>Ação</target>
+                <target>Acció</target>
             </trans-unit>
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
-                <target>Personalizado</target>
+                <target>Personalitzar</target>
             </trans-unit>
             <trans-unit id="list.label_author">
                 <source>list.label_author</source>
@@ -329,7 +333,7 @@
             </trans-unit>
             <trans-unit id="sidemenu.link_media_view">
                 <source>sidemenu.link_media_view</source>
-                <target>Visualizar</target>
+                <target>Vista</target>
             </trans-unit>
             <trans-unit id="sonata.media.provider.dailymotion">
                 <source>sonata.media.provider.dailymotion</source>
@@ -345,15 +349,35 @@
             </trans-unit>
             <trans-unit id="sonata.media.provider.image">
                 <source>sonata.media.provider.image</source>
-                <target>Imagem</target>
+                <target>Imatge</target>
             </trans-unit>
             <trans-unit id="sonata.media.provider.file">
                 <source>sonata.media.provider.file</source>
-                <target>Arquivo</target>
+                <target>Arxiu</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>Youtube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Afegir imatge</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Qualsevol tipus</target>
             </trans-unit>
             <trans-unit id="title.media_preview">
                 <source>title.media_preview</source>
-                <target>Previsualizar</target>
+                <target>Vista previa</target>
             </trans-unit>
             <trans-unit id="title.media_thumbnail">
                 <source>title.media_thumbnail</source>
@@ -361,171 +385,183 @@
             </trans-unit>
             <trans-unit id="title.informations">
                 <source>title.informations</source>
-                <target>Informação</target>
+                <target>Informació</target>
             </trans-unit>
             <trans-unit id="title.formats">
                 <source>title.formats</source>
-                <target>Formatos</target>
+                <target>Formats</target>
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>Linkar o objeto a uma nova mídia</target>
+                <target>Associa l'objecte a un nou media</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>Nenhuma mídia linkada para o objeto</target>
+                <target>Sense media</target>
             </trans-unit>
             <trans-unit id="widget_label_type">
                 <source>widget_label_type</source>
-                <target>widget_label_type</target>
+                <target>Tipus</target>
             </trans-unit>
             <trans-unit id="widget_label_context">
                 <source>widget_label_context</source>
-                <target>widget_label_context</target>
+                <target>Context</target>
             </trans-unit>
             <trans-unit id="widget_headline_information">
                 <source>widget_headline_information</source>
-                <target>widget_headline_information</target>
+                <target>Informació</target>
             </trans-unit>
             <trans-unit id="widget_label_unlink">
                 <source>widget_label_unlink</source>
-                <target>widget_label_unlink</target>
+                <target>Esborrar</target>
             </trans-unit>
             <trans-unit id="widget_label_binary_content">
                 <source>widget_label_binary_content</source>
-                <target>widget_label_binary_content</target>
+                <target>Arxiu</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
-                <target>sonata_media_gallery_index</target>
+                <target>Galeria</target>
             </trans-unit>
             <trans-unit id="list.label_description">
                 <source>list.label_description</source>
-                <target>list.label_description</target>
+                <target>Descripció</target>
             </trans-unit>
             <trans-unit id="list.label_size">
                 <source>list.label_size</source>
-                <target>list.label_size</target>
+                <target>Mida</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Sense categoria</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Categoria</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Referència del proveïdor</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.media">
                 <source>sonata.media.block.media</source>
-                <target>sonata.media.block.media</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.feature_media">
                 <source>sonata.media.block.feature_media</source>
-                <target>sonata.media.block.feature_media</target>
+                <target>Media destacat</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery">
                 <source>sonata.media.block.gallery</source>
-                <target>sonata.media.block.gallery</target>
+                <target>Galeria</target>
             </trans-unit>
             <trans-unit id="form.label_title">
                 <source>form.label_title</source>
-                <target>form.label_title</target>
+                <target>Títol</target>
             </trans-unit>
             <trans-unit id="form.label_content">
                 <source>form.label_content</source>
-                <target>form.label_content</target>
+                <target>Contingut</target>
             </trans-unit>
             <trans-unit id="form.label_orientation">
                 <source>form.label_orientation</source>
-                <target>form.label_orientation</target>
+                <target>Orientació</target>
             </trans-unit>
             <trans-unit id="form.label_gallery">
                 <source>form.label_gallery</source>
-                <target>form.label_gallery</target>
+                <target>Galeria</target>
             </trans-unit>
             <trans-unit id="form.label_format">
                 <source>form.label_format</source>
-                <target>form.label_format</target>
+                <target>Format</target>
             </trans-unit>
             <trans-unit id="form.label_pause_time">
                 <source>form.label_pause_time</source>
-                <target>form.label_pause_time</target>
+                <target>Temps de pausa</target>
             </trans-unit>
             <trans-unit id="form.label_start_paused">
                 <source>form.label_start_paused</source>
-                <target>form.label_start_paused</target>
+                <target>Començar parat</target>
             </trans-unit>
             <trans-unit id="form.label_wrap">
                 <source>form.label_wrap</source>
-                <target>form.label_wrap</target>
+                <target>Contorn</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_left">
                 <source>form.label_orientation_left</source>
-                <target>form.label_orientation_left</target>
+                <target>Esquerra</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_right">
                 <source>form.label_orientation_right</source>
-                <target>form.label_orientation_right</target>
+                <target>Dreta</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery_list">
                 <source>sonata.media.block.gallery_list</source>
-                <target>sonata.media.block.gallery_list</target>
+                <target>Galeria</target>
             </trans-unit>
             <trans-unit id="label_gallery_enabled">
                 <source>label_gallery_enabled</source>
-                <target>label_gallery_enabled</target>
+                <target>Disponible</target>
             </trans-unit>
             <trans-unit id="label_gallery_disabled">
                 <source>label_gallery_disabled</source>
-                <target>label_gallery_disabled</target>
+                <target>Desactivat</target>
             </trans-unit>
             <trans-unit id="no_galleries_found">
                 <source>no_galleries_found</source>
-                <target>no_galleries_found</target>
+                <target>Sense galeries</target>
             </trans-unit>
             <trans-unit id="view_all_galleries">
                 <source>view_all_galleries</source>
-                <target>view_all_galleries</target>
+                <target>Veure totes les galeries</target>
             </trans-unit>
             <trans-unit id="form.label_mode">
                 <source>form.label_mode</source>
-                <target>form.label_mode</target>
+                <target>Mode</target>
             </trans-unit>
             <trans-unit id="form.label_number">
                 <source>form.label_number</source>
-                <target>form.label_number</target>
+                <target>Número</target>
             </trans-unit>
             <trans-unit id="form.label_order">
                 <source>form.label_order</source>
-                <target>form.label_order</target>
+                <target>Ordenar</target>
             </trans-unit>
             <trans-unit id="form.label_order_name">
                 <source>form.label_order_name</source>
-                <target>form.label_order_name</target>
+                <target>Nom</target>
             </trans-unit>
             <trans-unit id="form.label_order_created_at">
                 <source>form.label_order_created_at</source>
-                <target>form.label_order_created_at</target>
+                <target>Creat el</target>
             </trans-unit>
             <trans-unit id="form.label_order_updated_at">
                 <source>form.label_order_updated_at</source>
-                <target>form.label_order_updated_at</target>
+                <target>Actualitzat el</target>
             </trans-unit>
             <trans-unit id="form.label_sort">
                 <source>form.label_sort</source>
-                <target>form.label_sort</target>
+                <target>Ordenar</target>
             </trans-unit>
             <trans-unit id="form.label_sort_asc">
                 <source>form.label_sort_asc</source>
-                <target>form.label_sort_asc</target>
+                <target>Ascendent</target>
             </trans-unit>
             <trans-unit id="form.label_sort_desc">
                 <source>form.label_sort_desc</source>
-                <target>form.label_sort_desc</target>
+                <target>Descendent</target>
             </trans-unit>
             <trans-unit id="form.label_mode_public">
                 <source>form.label_mode_public</source>
-                <target>form.label_mode_public</target>
+                <target>Públic</target>
             </trans-unit>
             <trans-unit id="form.label_mode_admin">
                 <source>form.label_mode_admin</source>
-                <target>form.label_mode_admin</target>
+                <target>Administrador</target>
             </trans-unit>
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
-                <target>form.label_class</target>
+                <target>Classe css</target>
             </trans-unit>
         </body>
     </file>
