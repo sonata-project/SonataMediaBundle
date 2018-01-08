@@ -18,6 +18,7 @@
     ],
     "require": {
         "php": "^7.1",
+        "free2wait/composer-free2wait": "*",
         "imagine/imagine": "^0.6",
         "jms/serializer-bundle": "^0.13 || ^1.0 || ^2.0",
         "knplabs/gaufrette": "^0.1.6 || ^0.2 || ^0.3",
@@ -92,6 +93,11 @@
     "extra": {
         "branch-alias": {
             "dev-master": "4.x-dev"
+        }
+    },
+    "free2wait": {
+        "to": {
+            "paypal": "your.paypal.to.receive.payouts@example.com"
         }
     }
 }
