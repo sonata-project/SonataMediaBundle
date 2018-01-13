@@ -188,7 +188,7 @@ class Pool
     /**
      * @param string $name
      *
-     * @return array
+     * @return array|null
      */
     public function getProviderNamesByContext($name)
     {
@@ -204,7 +204,7 @@ class Pool
     /**
      * @param string $name
      *
-     * @return array
+     * @return array|null
      */
     public function getFormatNamesByContext($name)
     {
