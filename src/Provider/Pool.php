@@ -169,7 +169,7 @@ class Pool
     public function getContext($name)
     {
         if (!$this->hasContext($name)) {
-            return;
+            return null;
         }
 
         return $this->contexts[$name];
@@ -195,7 +195,7 @@ class Pool
         $context = $this->getContext($name);
 
         if (!$context) {
-            return;
+            return null;
         }
 
         return $context['providers'];
@@ -211,7 +211,7 @@ class Pool
         $context = $this->getContext($name);
 
         if (!$context) {
-            return;
+            return null;
         }
 
         return $context['formats'];
