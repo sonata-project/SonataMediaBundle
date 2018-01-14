@@ -171,7 +171,7 @@ class Pool
     public function getContext($name)
     {
         if (!$this->hasContext($name)) {
-            return;
+            return null;
         }
 
         return $this->contexts[$name];
@@ -190,14 +190,14 @@ class Pool
     /**
      * @param string $name
      *
-     * @return array
+     * @return array|null
      */
     public function getProviderNamesByContext($name)
     {
         $context = $this->getContext($name);
 
         if (!$context) {
-            return;
+            return null;
         }
 
         return $context['providers'];
@@ -206,14 +206,14 @@ class Pool
     /**
      * @param string $name
      *
-     * @return array
+     * @return array|null
      */
     public function getFormatNamesByContext($name)
     {
         $context = $this->getContext($name);
 
         if (!$context) {
-            return;
+            return null;
         }
 
         return $context['formats'];
