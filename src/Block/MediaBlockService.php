@@ -91,7 +91,7 @@ class MediaBlockService extends AbstractAdminBlockService
             'context' => false,
             'mediaId' => null,
             'format' => false,
-            'template' => 'SonataMediaBundle:Block:block_media.html.twig',
+            'template' => '@SonataMedia/Block/block_media.html.twig',
         ]);
     }
 

@@ -76,7 +76,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
             'format' => false,
             'media' => false,
             'mediaId' => null,
-            'template' => 'SonataMediaBundle:Block:block_media.html.twig',
+            'template' => '@SonataMedia/Block/block_media.html.twig',
             'title' => false,
             'ttl' => 0,
             'use_cache' => true,

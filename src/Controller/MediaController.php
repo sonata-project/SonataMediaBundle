@@ -91,7 +91,7 @@ class MediaController extends Controller
             throw new AccessDeniedException();
         }
 
-        return $this->render('SonataMediaBundle:Media:view.html.twig', [
+        return $this->render('@SonataMedia/Media/view.html.twig', [
             'media' => $media,
             'formats' => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
             'format' => $format,
