@@ -146,7 +146,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
             'sort' => 'desc',
             'context' => false,
             'title' => 'Gallery List',
-            'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
+            'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ]);
     }
 

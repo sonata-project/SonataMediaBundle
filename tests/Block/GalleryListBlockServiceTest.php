@@ -54,13 +54,13 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'sort' => 'desc',
             'context' => false,
             'title' => 'Gallery List',
-            'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
+            'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ]);
 
         $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
         $blockService->execute($blockContext);
 
-        $this->assertSame('SonataMediaBundle:Block:block_gallery_list.html.twig', $this->templating->view);
+        $this->assertSame('@SonataMedia/Block/block_gallery_list.html.twig', $this->templating->view);
 
         $this->assertSame($blockContext, $this->templating->parameters['context']);
         $this->assertInternalType('array', $this->templating->parameters['settings']);
@@ -80,7 +80,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'sort' => 'desc',
             'context' => false,
             'title' => 'Gallery List',
-            'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
+            'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ], $blockContext);
     }
 }

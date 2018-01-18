@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
 
 {% block field%}
     <a href="{{ admin.generateUrl('edit', {'id' : object|sonata_urlsafeid }) }}">{% thumbnail attribute(object, field_description.name ), 'admin' with {'width': 75, 'height': 60} %}</a>

@@ -95,7 +95,7 @@ class GalleryBlockService extends AbstractAdminBlockService
             'pauseTime' => 3000,
             'startPaused' => false,
             'wrap' => true,
-            'template' => 'SonataMediaBundle:Block:block_gallery.html.twig',
+            'template' => '@SonataMedia/Block/block_gallery.html.twig',
             'galleryId' => null,
         ]);
     }

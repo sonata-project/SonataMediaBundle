@@ -52,4 +52,4 @@ You also need to add a new template for the form component:
         form:
             resources:
                 # other files
-                - 'SonataMediaBundle:Form:media_widgets.html.twig'
+                - '@SonataMedia/Form/media_widgets.html.twig'

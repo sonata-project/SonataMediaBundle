@@ -142,7 +142,7 @@ class Pixlr
 
         $this->checkMedia($hash, $media);
 
-        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_exit.html.twig'));
+        return new Response($this->templating->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
     }
 
     /**
@@ -175,7 +175,7 @@ class Pixlr
 
         $this->mediaManager->save($media);
 
-        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_exit.html.twig'));
+        return new Response($this->templating->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
     }
 
     /**
@@ -207,7 +207,7 @@ class Pixlr
             throw new NotFoundHttpException('The media is not editable');
         }
 
-        return new Response($this->templating->render('SonataMediaBundle:Extra:pixlr_editor.html.twig', [
+        return new Response($this->templating->render('@SonataMedia/Extra/pixlr_editor.html.twig', [
             'media' => $media,
             'admin_pool' => $this->container->get('sonata.admin.pool'),
         ]));

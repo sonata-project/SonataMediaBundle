@@ -68,7 +68,7 @@ class MediaAdminControllerTest extends TestCase
         $pool = $this->prophesize(Pool::class);
 
         $this->configureRender(
-            'SonataMediaBundle:MediaAdmin:select_provider.html.twig',
+            '@SonataMedia/MediaAdmin/select_provider.html.twig',
             Argument::type('array'),
             'renderResponse'
         );

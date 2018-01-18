@@ -38,7 +38,7 @@ class FeatureMediaBlockService extends MediaBlockService
             'context' => false,
             'mediaId' => null,
             'format' => false,
-            'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig',
+            'template' => '@SonataMedia/Block/block_feature_media.html.twig',
         ]);
     }
 
