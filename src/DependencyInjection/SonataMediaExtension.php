@@ -55,7 +55,6 @@ use Sonata\MediaBundle\Security\ForbiddenDownloadStrategy;
 use Sonata\MediaBundle\Security\PublicDownloadStrategy;
 use Sonata\MediaBundle\Security\RolesDownloadStrategy;
 use Sonata\MediaBundle\Security\SessionDownloadStrategy;
-use Sonata\MediaBundle\Templating\Helper\MediaHelper;
 use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
@@ -596,7 +595,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             PublicDownloadStrategy::class,
             RolesDownloadStrategy::class,
             SessionDownloadStrategy::class,
-            MediaHelper::class,
             ConsumerThumbnail::class,
             FormatThumbnail::class,
             ThumbnailInterface::class,
