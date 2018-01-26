@@ -12,7 +12,7 @@
         <parameter key="sonata.media.pool.class">Sonata\MediaBundle\Provider\Pool</parameter>
     </parameters>
     <services>
-        <service id="sonata.media.pool" class="%sonata.media.pool.class%">
+        <service id="sonata.media.pool" class="%sonata.media.pool.class%" public="true">
             <argument/>
         </service>
         <service id="sonata.media.thumbnail.format" class="%sonata.media.thumbnail.format%">
