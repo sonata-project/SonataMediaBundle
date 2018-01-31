@@ -5,7 +5,7 @@
         <parameter key="sonata.media.manager.gallery.class">Sonata\MediaBundle\Entity\GalleryManager</parameter>
     </parameters>
     <services>
-        <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
+        <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%" public="true">
             <argument>%sonata.media.media.class%</argument>
             <argument type="service" id="doctrine"/>
         </service>

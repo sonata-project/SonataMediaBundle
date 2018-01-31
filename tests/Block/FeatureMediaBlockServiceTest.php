@@ -52,7 +52,7 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
             'media' => false,
             'mediaId' => null,
             'orientation' => 'left',
-            'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig',
+            'template' => '@SonataMedia/Block/block_feature_media.html.twig',
             'title' => false,
             'ttl' => 0,
             'use_cache' => true,

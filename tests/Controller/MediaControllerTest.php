@@ -122,7 +122,7 @@ class MediaControllerTest extends TestCase
 
         $this->configureGetMedia(1, $media->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
-        $this->configureRender('SonataMediaBundle:Media:view.html.twig', [
+        $this->configureRender('@SonataMedia/Media/view.html.twig', [
             'media' => $media->reveal(),
             'formats' => ['format'],
             'format' => 'format',

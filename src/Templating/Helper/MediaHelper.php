@@ -23,6 +23,9 @@ use Symfony\Component\Templating\Helper\Helper;
  * MediaHelper manages action inclusions.
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * @deprecated Since version 3.10, will be removed in 4.0.
+ * NEXT_MAJOR : remove this class
  */
 class MediaHelper extends Helper
 {
