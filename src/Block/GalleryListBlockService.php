@@ -69,6 +69,18 @@ class GalleryListBlockService extends AbstractAdminBlockService
                     'label' => 'form.label_title',
                     'required' => false,
                 ]],
+                ['translation_domain', TextType::class, [
+                    'label' => 'form.label_translation_domain',
+                    'required' => false,
+                ]],
+                ['icon', TextType::class, [
+                    'label' => 'form.label_icon',
+                    'required' => false,
+                ]],
+                ['class', TextType::class, [
+                    'label' => 'form.label_class',
+                    'required' => false,
+                ]],
                 ['number', IntegerType::class, [
                     'label' => 'form.label_number',
                     'required' => true,
@@ -145,7 +157,10 @@ class GalleryListBlockService extends AbstractAdminBlockService
             'order' => 'createdAt',
             'sort' => 'desc',
             'context' => false,
-            'title' => 'Gallery List',
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => 'fa fa-images',
+            'class' => null,
             'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ]);
     }

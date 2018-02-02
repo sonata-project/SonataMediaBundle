@@ -89,7 +89,10 @@ class GalleryBlockService extends AbstractAdminBlockService
     {
         $resolver->setDefaults([
             'gallery' => false,
-            'title' => false,
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => null,
+            'class' => null,
             'context' => false,
             'format' => false,
             'pauseTime' => 3000,
@@ -142,8 +145,20 @@ class GalleryBlockService extends AbstractAdminBlockService
         $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
-                    'required' => false,
                     'label' => 'form.label_title',
+                    'required' => false,
+                ]],
+                ['translation_domain', TextType::class, [
+                    'label' => 'form.label_translation_domain',
+                    'required' => false,
+                ]],
+                ['icon', TextType::class, [
+                    'label' => 'form.label_icon',
+                    'required' => false,
+                ]],
+                ['class', TextType::class, [
+                    'label' => 'form.label_class',
+                    'required' => false,
                 ]],
                 ['context', ChoiceType::class, [
                     'required' => true,

@@ -33,7 +33,10 @@ class FeatureMediaBlockService extends MediaBlockService
         $resolver->setDefaults([
             'media' => false,
             'orientation' => 'left',
-            'title' => false,
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => null,
+            'class' => null,
             'content' => false,
             'context' => false,
             'mediaId' => null,
@@ -52,8 +55,20 @@ class FeatureMediaBlockService extends MediaBlockService
         $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
-                    'required' => false,
                     'label' => 'form.label_title',
+                    'required' => false,
+                ]],
+                ['translation_domain', TextType::class, [
+                    'label' => 'form.label_translation_domain',
+                    'required' => false,
+                ]],
+                ['icon', TextType::class, [
+                    'label' => 'form.label_icon',
+                    'required' => false,
+                ]],
+                ['class', TextType::class, [
+                    'label' => 'form.label_class',
+                    'required' => false,
                 ]],
                 ['content', TextareaType::class, [
                     'required' => false,
