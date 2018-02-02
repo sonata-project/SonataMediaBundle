@@ -87,7 +87,10 @@ class MediaBlockService extends AbstractAdminBlockService
     {
         $resolver->setDefaults([
             'media' => false,
-            'title' => false,
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => null,
+            'class' => null,
             'context' => false,
             'mediaId' => null,
             'format' => false,
@@ -109,8 +112,20 @@ class MediaBlockService extends AbstractAdminBlockService
         $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
-                    'required' => false,
                     'label' => 'form.label_title',
+                    'required' => false,
+                ]],
+                ['translation_domain', TextType::class, [
+                    'label' => 'form.label_translation_domain',
+                    'required' => false,
+                ]],
+                ['icon', TextType::class, [
+                    'label' => 'form.label_icon',
+                    'required' => false,
+                ]],
+                ['class', TextType::class, [
+                    'label' => 'form.label_class',
+                    'required' => false,
                 ]],
                 [$this->getMediaBuilder($formMapper), null, []],
                 ['format', ChoiceType::class, [

@@ -12,7 +12,7 @@ file that was distributed with this source code.
 
 {% block block %}
 
-    <div class="sonata-media-block-feature-media-container">
+    <div class="sonata-media-block-feature-media-container {{ settings.class }}">
 
         <div class="sonata-media-block-feature-media-container-{{ settings.orientation }}">
             {% if media and settings.format%}
@@ -23,7 +23,16 @@ file that was distributed with this source code.
         </div>
 
         {% if settings.title %}
-            <h3 class="sonata-media-block-feature-media-title">{{ settings.title }}</h3>
+            <h3>
+                {% if settings.icon %}
+                    <i class="{{ settings.icon }}" aria-hidden="true"></i>
+                {% endif %}
+                {% if settings.translation_domain %}
+                    {{ settings.title|trans({}, settings.translation_domain) }}
+                {% else %}
+                    {{ settings.title }}
+                {% endif %}
+            </h3>
         {% endif %}
 
         <div class="sonata-media-block-feature-media-content">
