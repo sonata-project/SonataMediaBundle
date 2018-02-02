@@ -28,7 +28,7 @@ file that was distributed with this source code.
 
             {% sonata_template_box 'This is the gallery media block. Feel free to override it.' %}
 
-            <div id="carousel-{{ block.id }}" class="carousel slide sonata-media-block-gallery-container"
+            <div id="carousel-{{ block.id }}" class="carousel slide"
                  data-interval="{{ settings.pauseTime }}"
                  {% if settings.startPaused != 1 %}data-ride="carousel"{% endif %}
             >
