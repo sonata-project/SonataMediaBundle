@@ -571,6 +571,14 @@
                 <source>Options</source>
                 <target>Einstellungen</target>
             </trans-unit>
+            <trans-unit id="form.label_translation_domain">
+                <source>form.label_translation_domain</source>
+                <target>Übersetzungsdatei</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form.label_icon</source>
+                <target>Icon</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

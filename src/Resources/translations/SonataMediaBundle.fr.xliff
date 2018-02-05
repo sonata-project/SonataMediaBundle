@@ -559,6 +559,14 @@
                 <source>form.label_class</source>
                 <target>Classes CSS</target>
             </trans-unit>
+            <trans-unit id="form.label_translation_domain">
+                <source>form.label_translation_domain</source>
+                <target>Domaine de traduction</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form.label_icon</source>
+                <target>Icône</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

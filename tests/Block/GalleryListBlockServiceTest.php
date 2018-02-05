@@ -55,7 +55,6 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'order' => 'createdAt',
             'sort' => 'desc',
             'context' => false,
-            'title' => 'Gallery List',
             'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ]);
 
@@ -81,7 +80,10 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'order' => 'createdAt',
             'sort' => 'desc',
             'context' => false,
-            'title' => 'Gallery List',
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => 'fa fa-images',
+            'class' => null,
             'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ], $blockContext);
     }

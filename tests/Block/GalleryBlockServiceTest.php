@@ -77,7 +77,10 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
             'pauseTime' => 3000,
             'startPaused' => false,
             'template' => '@SonataMedia/Block/block_gallery.html.twig',
-            'title' => false,
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => null,
+            'class' => null,
             'ttl' => 0,
             'use_cache' => true,
         ], $blockContext);
