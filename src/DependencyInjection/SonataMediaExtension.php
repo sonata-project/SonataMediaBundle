@@ -97,6 +97,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $loader->load('gaufrette.xml');
         $loader->load('validators.xml');
         $loader->load('serializer.xml');
+        $loader->load('command.xml');
 
         if (!in_array(strtolower($config['db_driver']), ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr'])) {
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));

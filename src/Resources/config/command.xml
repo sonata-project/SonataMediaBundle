@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Sonata\MediaBundle\Command\AddMassMediaCommand" class="Sonata\MediaBundle\Command\AddMassMediaCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\AddMediaCommand" class="Sonata\MediaBundle\Command\AddMediaCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\CleanMediaCommand" class="Sonata\MediaBundle\Command\CleanMediaCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\FixMediaContextCommand" class="Sonata\MediaBundle\Command\FixMediaContextCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\MigrateToJsonTypeCommand" class="Sonata\MediaBundle\Command\MigrateToJsonTypeCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\RefreshMetadataCommand" class="Sonata\MediaBundle\Command\RefreshMetadataCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\RemoveThumbsCommand" class="Sonata\MediaBundle\Command\RemoveThumbsCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\SyncThumbsCommand" class="Sonata\MediaBundle\Command\SyncThumbsCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+        <service id="Sonata\MediaBundle\Command\UpdateCdnStatusCommand" class="Sonata\MediaBundle\Command\UpdateCdnStatusCommand" public="true">
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>
