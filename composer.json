@@ -57,7 +57,7 @@
         "twig/twig": "^1.35 || ^2.0"
     },
     "conflict": {
-        "friendsofsymfony/rest-bundle": "<1.7.4 || >=3.0",
+        "friendsofsymfony/rest-bundle": "<2.1 || >=3.0",
         "jms/serializer": "<0.13",
         "liip/imagine-bundle": "<1.9",
         "sonata-project/block-bundle": "<3.11 || >=4.0",
@@ -68,7 +68,7 @@
     },
     "require-dev": {
         "aws/aws-sdk-php": "^2.8",
-        "friendsofsymfony/rest-bundle": "^1.7.4 || ^2.0",
+        "friendsofsymfony/rest-bundle": "^2.1",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
         "liip/imagine-bundle": "^1.9",
         "matthiasnoback/symfony-dependency-injection-test": "^1.0",
