@@ -141,7 +141,7 @@ class SyncThumbsCommand extends BaseCommand
             }
 
             //clear entity manager for saving memory
-            $this->getMediaManager()->getEntityManager()->clear();
+            $this->getMediaManager()->getObjectManager()->clear();
 
             if ($batchesLimit > 0 && $batchCounter == $batchesLimit) {
                 break;
