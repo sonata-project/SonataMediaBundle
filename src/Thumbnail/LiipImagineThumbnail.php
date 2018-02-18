@@ -14,19 +14,35 @@ namespace Sonata\MediaBundle\Thumbnail;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class LiipImagineThumbnail implements ThumbnailInterface
 {
+    /**
+     * @deprecated Since version 3.3, will be removed in 4.0.
+     *
+     * @var RouterInterface
+     */
+    private $router;
     /**
      * @var CacheManager
      */
     private $cacheManager;
 
     /**
-     * @param CacheManager $cacheManager
+     * @param RouterInterface|CacheManager $cacheManager
      */
-    public function __construct(CacheManager $cacheManager)
+    public function __construct($cacheManager)
     {
+        if ($cacheManager instanceof RouterInterface) {
+            @trigger_error(
+                'Using an instance of Symfony\Component\Routing\RouterInterface is deprecated since 
+                version 3.3 and will be removed in 4.0. 
+                Use Liip\ImagineBundle\Imagine\Cache\CacheManager.',
+                E_USER_DEPRECATED
+            );
+            $this->router = $cacheManager;
+        }
         $this->cacheManager = $cacheManager;
     }
 
@@ -40,10 +56,19 @@ class LiipImagineThumbnail implements ThumbnailInterface
         if (MediaProviderInterface::FORMAT_ADMIN === $format || MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $path;
         }
+        if ($this->router instanceof RouterInterface && !($this->cacheManager instanceof CacheManager)) {
+            $path = $this->router->generate(
+                sprintf('_imagine_%s', $format),
+                ['path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format)]
+            );
+        }
 
         $path = $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        if ($this->cacheManager instanceof CacheManager) {
+            $path = $this->cacheManager->getBrowserPath($path, $format);
+        }
 
-        return $this->cacheManager->getBrowserPath($path, $format);
+        return $path;
     }
 
     /**
