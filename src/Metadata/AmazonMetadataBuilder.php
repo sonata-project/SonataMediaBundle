@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Guzzle\Http\Mimetypes;
+use GuzzleHttp\Psr7;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilder implements MetadataBuilderInterface
@@ -117,7 +117,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     protected function getContentType($filename)
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = Mimetypes::getInstance()->fromExtension($extension);
+        $contentType = Psr7\mimetype_from_extension($extension);
 
         return ['contentType' => $contentType];
     }
