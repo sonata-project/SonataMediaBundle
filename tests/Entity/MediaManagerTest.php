@@ -11,8 +11,10 @@
 
 namespace Sonata\MediaBundle\Test\Entity;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
+use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Entity\MediaManager;
 
 /**
@@ -32,12 +34,11 @@ class MediaManagerTest extends TestCase
             ->getPager([], 1);
     }
 
-    /**
-     * @expectedException        \RuntimeException
-     * @expectedExceptionMessage Invalid sort field 'invalid' in 'Sonata\MediaBundle\Entity\BaseMedia' class
-     */
     public function testGetPagerWithInvalidSort()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Invalid sort field \'invalid\' in \'Sonata\\MediaBundle\\Entity\\BaseMedia\' class');
+
         $self = $this;
         $this
             ->getMediaManager(function ($qb) use ($self) {
@@ -102,9 +103,9 @@ class MediaManagerTest extends TestCase
             'enabled',
         ]);
 
-        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
 
-        return new MediaManager('Sonata\MediaBundle\Entity\BaseMedia', $registry);
+        return new MediaManager(BaseMedia::class, $registry);
     }
 }

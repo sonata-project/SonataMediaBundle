@@ -13,7 +13,9 @@ namespace Sonata\MediaBundle\Tests\Block;
 
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
+use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Block\GalleryListBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -34,13 +36,13 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
     {
         parent::setUp();
 
-        $this->galleryManager = $this->getMockBuilder('Sonata\MediaBundle\Model\GalleryManagerInterface')->getMock();
-        $this->pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->galleryManager = $this->createMock(GalleryManagerInterface::class);
+        $this->pool = $this->createMock(Pool::class);
     }
 
     public function testExecute()
     {
-        $pager = $this->getMockBuilder('Sonata\DatagridBundle\Pager\PagerInterface')->getMock();
+        $pager = $this->createMock(PagerInterface::class);
         $this->galleryManager->expects($this->once())->method('getPager')->will($this->returnValue($pager));
 
         $block = new Block();
@@ -51,18 +53,17 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'order' => 'createdAt',
             'sort' => 'desc',
             'context' => false,
-            'title' => 'Gallery List',
-            'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
+            'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ]);
 
         $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
         $blockService->execute($blockContext);
 
-        $this->assertSame('SonataMediaBundle:Block:block_gallery_list.html.twig', $this->templating->view);
+        $this->assertSame('@SonataMedia/Block/block_gallery_list.html.twig', $this->templating->view);
 
         $this->assertSame($blockContext, $this->templating->parameters['context']);
         $this->assertInternalType('array', $this->templating->parameters['settings']);
-        $this->assertInstanceOf('Sonata\BlockBundle\Model\BlockInterface', $this->templating->parameters['block']);
+        $this->assertInstanceOf(BlockInterface::class, $this->templating->parameters['block']);
         $this->assertSame($pager, $this->templating->parameters['pager']);
     }
 
@@ -77,8 +78,11 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'order' => 'createdAt',
             'sort' => 'desc',
             'context' => false,
-            'title' => 'Gallery List',
-            'template' => 'SonataMediaBundle:Block:block_gallery_list.html.twig',
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => 'fa fa-images',
+            'class' => null,
+            'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ], $blockContext);
     }
 }

@@ -295,8 +295,8 @@ added to the provider pool.
         <argument type="service" id="sonata.media.metadata.proxy" />
         <call method="setTemplates">
             <argument type="collection">
-                <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                <argument key='helper_view'>SonataMediaBundle:Provider:view_vimeo.html.twig</argument>
+                <argument key='helper_thumbnail'>@SonataMedia/Provider/thumbnail.html.twig</argument>
+                <argument key='helper_view'>@SonataMedia/Provider/view_vimeo.html.twig</argument>
             </argument>
         </call>
         <call method="setResizer">

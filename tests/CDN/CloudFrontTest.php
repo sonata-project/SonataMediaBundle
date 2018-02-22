@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Tests\CDN;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\CDN\CloudFront;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
@@ -23,14 +24,14 @@ class CloudFrontTest extends TestCase
      */
     public function testLegacyCloudFront()
     {
-        $client = $this->getMockBuilder('Sonata\MediaBundle\Tests\CDN\CloudFrontClientSpy')
+        $client = $this->getMockBuilder(CloudFrontClientSpy::class)
             ->setMethods(['createInvalidation'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $client->expects($this->exactly(3))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy()));
 
-        $cloudFront = $this->getMockBuilder('Sonata\MediaBundle\CDN\CloudFront')
+        $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
             ->setMethods(null)
             ->getMock();
@@ -50,13 +51,14 @@ class CloudFrontTest extends TestCase
      */
     public function testLegacyException()
     {
-        $this->setExpectedException('\RuntimeException', 'Unable to flush : ');
-        $client = $this->getMockBuilder('Sonata\MediaBundle\Tests\CDN\CloudFrontClientSpy')
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to flush : ');
+        $client = $this->getMockBuilder(CloudFrontClientSpy::class)
             ->setMethods(['createInvalidation'])
             ->disableOriginalConstructor()
             ->getMock();
         $client->expects($this->exactly(1))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy(true)));
-        $cloudFront = $this->getMockBuilder('Sonata\MediaBundle\CDN\CloudFront')
+        $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
             ->setMethods(null)
             ->getMock();

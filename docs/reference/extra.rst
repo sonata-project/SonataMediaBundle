@@ -187,8 +187,8 @@ Second step is optional but you can also define some custom browsing and upload 
   sonata_formatter:
       ckeditor:
           templates:
-              browser: 'SonataFormatterBundle:Ckeditor:browser.html.twig'
-              upload: 'SonataFormatterBundle:Ckeditor:upload.html.twig'
+              browser: '@SonataFormatter/Ckeditor/browser.html.twig'
+              upload: '@SonataFormatter/Ckeditor/upload.html.twig'
 
 Last step takes place in your admin class, you just have to specify the ``ckeditor_context`` parameter.
 

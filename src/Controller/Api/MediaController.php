@@ -235,9 +235,9 @@ class MediaController
      *
      * @param int $id A medium identifier
      *
-     * @return View
-     *
      * @throws NotFoundHttpException
+     *
+     * @return View
      */
     public function deleteMediumAction($id)
     {
@@ -269,9 +269,9 @@ class MediaController
      * @param int     $id      A Medium identifier
      * @param Request $request A Symfony request
      *
-     * @return MediaInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return MediaInterface
      */
     public function putMediumAction($id, Request $request)
     {
@@ -309,9 +309,9 @@ class MediaController
      * @param string  $provider A media provider
      * @param Request $request  A Symfony request
      *
-     * @return MediaInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return MediaInterface
      */
     public function postProviderMediumAction($provider, Request $request)
     {
@@ -346,9 +346,9 @@ class MediaController
      * @param $id
      * @param Request $request A Symfony request
      *
-     * @return MediaInterface
-     *
      * @throws NotFoundHttpException
+     *
+     * @return MediaInterface
      */
     public function putMediumBinaryContentAction($id, Request $request)
     {
@@ -366,10 +366,10 @@ class MediaController
      *
      * @param int $id
      *
-     * @return MediaInterface
-     *
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
+     *
+     * @return MediaInterface
      */
     protected function getMedium($id = null)
     {

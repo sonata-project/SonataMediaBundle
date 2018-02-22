@@ -13,15 +13,19 @@ namespace Sonata\MediaBundle\Block;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -83,11 +87,14 @@ class MediaBlockService extends AbstractAdminBlockService
     {
         $resolver->setDefaults([
             'media' => false,
-            'title' => false,
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => null,
+            'class' => null,
             'context' => false,
             'mediaId' => null,
             'format' => false,
-            'template' => 'SonataMediaBundle:Block:block_media.html.twig',
+            'template' => '@SonataMedia/Block/block_media.html.twig',
         ]);
     }
 
@@ -102,25 +109,26 @@ class MediaBlockService extends AbstractAdminBlockService
 
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $immutableArrayType = 'Sonata\CoreBundle\Form\Type\ImmutableArrayType';
-            $textType = 'Symfony\Component\Form\Extension\Core\Type\TextType';
-            $choiceType = 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
-        } else {
-            $immutableArrayType = 'sonata_type_immutable_array';
-            $textType = 'text';
-            $choiceType = 'choice';
-        }
-
-        $formMapper->add('settings', $immutableArrayType, [
+        $formMapper->add('settings', ImmutableArrayType::class, [
             'keys' => [
-                ['title', $textType, [
-                    'required' => false,
+                ['title', TextType::class, [
                     'label' => 'form.label_title',
+                    'required' => false,
+                ]],
+                ['translation_domain', TextType::class, [
+                    'label' => 'form.label_translation_domain',
+                    'required' => false,
+                ]],
+                ['icon', TextType::class, [
+                    'label' => 'form.label_icon',
+                    'required' => false,
+                ]],
+                ['class', TextType::class, [
+                    'label' => 'form.label_class',
+                    'required' => false,
                 ]],
                 [$this->getMediaBuilder($formMapper), null, []],
-                ['format', $choiceType, [
+                ['format', ChoiceType::class, [
                     'required' => count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
@@ -187,7 +195,7 @@ class MediaBlockService extends AbstractAdminBlockService
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
     }
@@ -233,12 +241,7 @@ class MediaBlockService extends AbstractAdminBlockService
             'type' => ClassMetadataInfo::MANY_TO_ONE,
         ]);
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Sonata\AdminBundle\Form\Type\ModelListType'
-            : 'sonata_type_model_list';
-
-        return $formMapper->create('mediaId', $modelListType, [
+        return $formMapper->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),

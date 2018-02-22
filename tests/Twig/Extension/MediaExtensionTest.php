@@ -10,7 +10,11 @@
  */
 
 use PHPUnit\Framework\TestCase;
+use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 
 /**
@@ -75,7 +79,7 @@ class MediaExtensionTest extends TestCase
 
     public function getMediaService()
     {
-        $mediaService = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')
+        $mediaService = $this->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->getMock();
         $mediaService->method('getProvider')->willReturn($this->getProvider());
@@ -85,13 +89,13 @@ class MediaExtensionTest extends TestCase
 
     public function getMediaManager()
     {
-        return $this->createMock('Sonata\CoreBundle\Model\ManagerInterface');
+        return $this->createMock(ManagerInterface::class);
     }
 
     public function getProvider()
     {
-        if (is_null($this->provider)) {
-            $this->provider = $this->createMock('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        if (null === $this->provider) {
+            $this->provider = $this->createMock(MediaProviderInterface::class);
             $this->provider->method('getFormatName')->will($this->returnArgument(1));
         }
 
@@ -100,7 +104,7 @@ class MediaExtensionTest extends TestCase
 
     public function getTemplate()
     {
-        if (is_null($this->template)) {
+        if (null === $this->template) {
             $this->template = $this->getMockBuilder('Twig_Template')
                                    ->disableOriginalConstructor()
                                    ->setMethods(['render'])
@@ -112,7 +116,7 @@ class MediaExtensionTest extends TestCase
 
     public function getEnvironment()
     {
-        if (is_null($this->environment)) {
+        if (null === $this->environment) {
             $this->environment = $this->getMockBuilder('Twig_Environment')
                 ->disableOriginalConstructor()
                 ->getMock();
@@ -124,8 +128,8 @@ class MediaExtensionTest extends TestCase
 
     public function getMedia()
     {
-        if (is_null($this->media)) {
-            $this->media = $this->createMock('Sonata\MediaBundle\Model\Media');
+        if (null === $this->media) {
+            $this->media = $this->createMock(Media::class);
             $this->media->method('getProviderStatus')->willReturn(MediaInterface::STATUS_OK);
         }
 

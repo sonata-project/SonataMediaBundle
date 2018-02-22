@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\PHPCR;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 
@@ -29,7 +30,7 @@ abstract class BaseGallery extends Gallery
      */
     public function __construct()
     {
-        $this->galleryHasMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galleryHasMedias = new ArrayCollection();
     }
 
     /**

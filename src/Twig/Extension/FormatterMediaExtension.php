@@ -12,6 +12,7 @@
 namespace Sonata\MediaBundle\Twig\Extension;
 
 use Sonata\FormatterBundle\Extension\BaseProxyExtension;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
@@ -49,7 +50,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     public function getAllowedMethods()
     {
         return [
-            'Sonata\MediaBundle\Model\MediaInterface' => [
+            MediaInterface::class => [
                 'getproviderreference',
             ],
         ];
@@ -61,9 +62,9 @@ class FormatterMediaExtension extends BaseProxyExtension
     public function getTokenParsers()
     {
         return [
-            new MediaTokenParser(get_class()),
-            new ThumbnailTokenParser(get_class()),
-            new PathTokenParser(get_class()),
+            new MediaTokenParser(__CLASS__),
+            new ThumbnailTokenParser(__CLASS__),
+            new PathTokenParser(__CLASS__),
         ];
     }
 

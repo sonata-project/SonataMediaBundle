@@ -12,7 +12,10 @@
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
 use Sonata\MediaBundle\Form\Type\MediaType;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
@@ -31,7 +34,7 @@ class MediaTypeTest extends AbstractTypeTest
     {
         parent::setUp();
 
-        $this->mediaPool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->mediaPool = $this->createMock(Pool::class);
         $this->mediaType = new MediaType($this->mediaPool, 'testClass');
 
         $this->factory = Forms::createFormFactoryBuilder()
@@ -51,8 +54,8 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException(
-            'Symfony\Component\OptionsResolver\Exception\MissingOptionsException',
+        $this->expectException(MissingOptionsException::class);
+        $this->expectExceptionMessage(
             'The required options "context", "provider" are missing.'
         );
 
@@ -70,7 +73,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException(MissingOptionsException::class);
 
         $this->factory->create($this->getFormType(), null, [
             'provider' => 'provider_a',
@@ -88,7 +91,7 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
+        $this->expectException(MissingOptionsException::class);
 
         $this->factory->create($this->getFormType(), null, [
             'context' => 'pic',
@@ -106,18 +109,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
-        if (class_exists('Symfony\Component\Validator\Validator\RecursiveValidator')) {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
-            );
-        } else {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "provider" has the value "provider_c", but is expected to be one of "provider_a", "provider_b"'
-            );
-        }
+        $this->expectException(InvalidOptionsException::class);
+        $this->expectExceptionMessage(
+            'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
+        );
 
         $this->factory->create($this->getFormType(), null, [
             'provider' => 'provider_c',
@@ -136,18 +131,10 @@ class MediaTypeTest extends AbstractTypeTest
             'pic' => [],
         ]));
 
-        // NEXT_MAJOR: Remove this hack when dropping support for symfony 2.3
-        if (class_exists('Symfony\Component\Validator\Validator\RecursiveValidator')) {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
-            );
-        } else {
-            $this->setExpectedException(
-                'Symfony\Component\OptionsResolver\Exception\InvalidOptionsException',
-                'The option "context" has the value "photo", but is expected to be one of "video", "pic"'
-            );
-        }
+        $this->expectException(InvalidOptionsException::class);
+        $this->expectExceptionMessage(
+            'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
+        );
 
         $this->factory->create($this->getFormType(), null, [
             'provider' => 'provider_b',
@@ -162,8 +149,6 @@ class MediaTypeTest extends AbstractTypeTest
 
     private function getFormType()
     {
-        return method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix') ?
-            'Sonata\MediaBundle\Form\Type\MediaType' :
-            'sonata_media_type';
+        return MediaType::class;
     }
 }

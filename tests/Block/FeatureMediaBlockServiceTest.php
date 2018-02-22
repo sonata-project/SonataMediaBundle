@@ -13,6 +13,8 @@ namespace Sonata\MediaBundle\Tests\Block;
 
 use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
 use Sonata\MediaBundle\Block\FeatureMediaBlockService;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
 {
@@ -24,8 +26,8 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
     {
         parent::setUp();
 
-        $this->container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->galleryManager = $this->prophesize('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new FeatureMediaBlockService(
             'block.service',
@@ -48,8 +50,11 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
             'media' => false,
             'mediaId' => null,
             'orientation' => 'left',
-            'template' => 'SonataMediaBundle:Block:block_feature_media.html.twig',
-            'title' => false,
+            'template' => '@SonataMedia/Block/block_feature_media.html.twig',
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => null,
+            'class' => null,
             'ttl' => 0,
             'use_cache' => true,
         ], $blockContext);

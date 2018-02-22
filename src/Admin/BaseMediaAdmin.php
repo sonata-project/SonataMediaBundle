@@ -14,11 +14,13 @@ namespace Sonata\MediaBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
@@ -109,15 +111,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             if ($this->getRequest()->isMethod('POST')) {
                 $uniqid = $this->getUniqid();
 
-                if (method_exists('Symfony\Component\HttpFoundation\JsonResponse', 'transformJsonError')) {
-                    // NEXT_MAJOR remove this block when dropping sf < 2.8 compatibility
-                    $media->setProviderName(
-                        $this->getRequest()->get(sprintf('%s[providerName]', $uniqid), null, true)
-                    );
-                } else {
-                    $providerParams = $this->getRequest()->get($uniqid);
-                    $media->setProviderName($providerParams['providerName']);
-                }
+                $media->setProviderName($this->getRequest()->get($uniqid)['providerName']);
             } else {
                 $media->setProviderName($this->getRequest()->get('provider'));
             }
@@ -187,12 +181,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             return;
         }
 
-        // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-        $hiddenType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-            ? 'Symfony\Component\Form\Extension\Core\Type\HiddenType'
-            : 'hidden';
-
-        $formMapper->add('providerName', $hiddenType);
+        $formMapper->add('providerName', HiddenType::class);
 
         $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
 
@@ -205,12 +194,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         if (null !== $this->categoryManager) {
-            // NEXT_MAJOR: Keep FQCN when bumping Symfony requirement to 2.8+.
-            $modelListType = method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Sonata\AdminBundle\Form\Type\ModelListType'
-                : 'sonata_type_model_list';
-
-            $formMapper->add('category', $modelListType, [], [
+            $formMapper->add('category', ModelListType::class, [], [
                 'link_parameters' => [
                     'context' => $media->getContext(),
                     'hide_context' => true,

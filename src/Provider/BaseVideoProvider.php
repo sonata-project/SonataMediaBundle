@@ -21,6 +21,7 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -129,14 +130,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add(
-            'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
-                : 'text',
-            ['required' => false]);
+        $formMapper->add('binaryContent', TextType::class, ['required' => false]);
     }
 
     /**
@@ -144,20 +138,12 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add(
-            'binaryContent',
-            // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType' value
-            // (when requirement of Symfony is >= 2.8)
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
-                : 'text',
-            [
-                'constraints' => [
-                    new NotBlank(),
-                    new NotNull(),
-                ],
-            ]
-        );
+        $formMapper->add('binaryContent', TextType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new NotNull(),
+            ],
+        ]);
     }
 
     /**
@@ -165,17 +151,9 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        // NEXT_MAJOR: Remove ternary and keep 'Symfony\Component\Form\Extension\Core\Type\TextType'
-        // (when requirement of Symfony is >= 2.8)
-        $formBuilder->add(
-            'binaryContent',
-            method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
-                ? 'Symfony\Component\Form\Extension\Core\Type\TextType'
-                : 'text',
-            [
-                'label' => 'widget_label_binary_content',
-            ]
-        );
+        $formBuilder->add('binaryContent', TextType::class, [
+            'label' => 'widget_label_binary_content',
+        ]);
     }
 
     /**
@@ -218,10 +196,10 @@ abstract class BaseVideoProvider extends BaseProvider
     // abstract public function getReferenceUrl(MediaInterface $media);
 
     /**
-     * @throws \RuntimeException
-     *
      * @param MediaInterface $media
      * @param string         $url
+     *
+     * @throws \RuntimeException
      *
      * @return mixed
      */

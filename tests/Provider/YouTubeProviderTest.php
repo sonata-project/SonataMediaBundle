@@ -12,9 +12,19 @@
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Buzz\Browser;
+use Buzz\Message\AbstractMessage;
 use Buzz\Message\Response;
+use Gaufrette\Adapter;
+use Gaufrette\File;
+use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\CDN\Server;
+use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\YouTubeProvider;
+use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
@@ -23,31 +33,31 @@ class YouTubeProviderTest extends AbstractProviderTest
     public function getProvider(Browser $browser = null)
     {
         if (!$browser) {
-            $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+            $browser = $this->createMock(Browser::class);
         }
 
-        $resizer = $this->createMock('Sonata\MediaBundle\Resizer\ResizerInterface');
+        $resizer = $this->createMock(ResizerInterface::class);
         $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
         $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
 
-        $adapter = $this->createMock('Gaufrette\Adapter');
+        $adapter = $this->createMock(Adapter::class);
 
-        $filesystem = $this->getMockBuilder('Gaufrette\Filesystem')
+        $filesystem = $this->getMockBuilder(Filesystem::class)
             ->setMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
-        $file = $this->getMockBuilder('Gaufrette\File')
+        $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
         $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
 
-        $cdn = new \Sonata\MediaBundle\CDN\Server('/uploads/media');
+        $cdn = new Server('/uploads/media');
 
-        $generator = new \Sonata\MediaBundle\Generator\DefaultGenerator();
+        $generator = new DefaultGenerator();
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $provider = new YouTubeProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
         $provider->setResizer($resizer);
@@ -76,10 +86,10 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public function testThumbnail()
     {
-        $response = $this->createMock('Buzz\Message\AbstractMessage');
+        $response = $this->createMock(AbstractMessage::class);
         $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
 
-        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $browser = $this->createMock(Browser::class);
 
         $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
@@ -109,7 +119,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
 
-        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $browser = $this->createMock(Browser::class);
         $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
         $provider = $this->getProvider($browser);
@@ -135,7 +145,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
 
-        $browser = $this->getMockBuilder('Buzz\Browser')->getMock();
+        $browser = $this->createMock(Browser::class);
         $browser->expects($this->once())->method('get')->will($this->returnValue($response));
 
         $provider = $this->getProvider($browser);
@@ -174,12 +184,12 @@ class YouTubeProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $admin = $this->createMock('Sonata\AdminBundle\Admin\AdminInterface');
+        $admin = $this->createMock(AdminInterface::class);
         $admin->expects($this->any())
             ->method('trans')
             ->will($this->returnValue('message'));
 
-        $formMapper = $this->getMockBuilder('Sonata\AdminBundle\Form\FormMapper')
+        $formMapper = $this->getMockBuilder(FormMapper::class)
             ->setMethods(['add', 'getAdmin'])
             ->disableOriginalConstructor()
             ->getMock();

@@ -11,8 +11,10 @@
 
 namespace Sonata\MediaBundle\Test\Entity;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
 use Sonata\CoreBundle\Test\EntityManagerMockFactory;
+use Sonata\MediaBundle\Entity\BaseGallery;
 use Sonata\MediaBundle\Entity\GalleryManager;
 
 /**
@@ -22,51 +24,47 @@ class GalleryManagerTest extends TestCase
 {
     public function testGetPager()
     {
-        $self = $this;
         $this
-            ->getGalleryManager(function ($qb) use ($self) {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
-                $qb->expects($self->never())->method('andWhere');
-                $qb->expects($self->once())->method('orderBy')->with(
-                    $self->equalTo('g.name'),
-                    $self->equalTo('ASC')
+            ->getGalleryManager(function ($qb) {
+                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->never())->method('andWhere');
+                $qb->expects($this->once())->method('orderBy')->with(
+                    $this->equalTo('g.name'),
+                    $this->equalTo('ASC')
                 );
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
+                $qb->expects($this->once())->method('setParameters')->with($this->equalTo([]));
             })
             ->getPager([], 1);
     }
 
-    /**
-     * @expectedException        \RuntimeException
-     * @expectedExceptionMessage Invalid sort field 'invalid' in 'Sonata\MediaBundle\Entity\BaseGallery' class
-     */
     public function testGetPagerWithInvalidSort()
     {
-        $self = $this;
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Invalid sort field \'invalid\' in \'Sonata\\MediaBundle\\Entity\\BaseGallery\' class');
+
         $this
-            ->getGalleryManager(function ($qb) use ($self) {
+            ->getGalleryManager(function ($qb) {
             })
             ->getPager([], 1, 10, ['invalid' => 'ASC']);
     }
 
     public function testGetPagerWithMultipleSort()
     {
-        $self = $this;
         $this
-            ->getGalleryManager(function ($qb) use ($self) {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
-                $qb->expects($self->never())->method('andWhere');
-                $qb->expects($self->exactly(2))->method('orderBy')->with(
-                    $self->logicalOr(
-                        $self->equalTo('g.name'),
-                        $self->equalTo('g.context')
+            ->getGalleryManager(function ($qb) {
+                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->never())->method('andWhere');
+                $qb->expects($this->exactly(2))->method('orderBy')->with(
+                    $this->logicalOr(
+                        $this->equalTo('g.name'),
+                        $this->equalTo('g.context')
                     ),
-                    $self->logicalOr(
-                        $self->equalTo('ASC'),
-                        $self->equalTo('DESC')
+                    $this->logicalOr(
+                        $this->equalTo('ASC'),
+                        $this->equalTo('DESC')
                     )
                 );
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
+                $qb->expects($this->once())->method('setParameters')->with($this->equalTo([]));
             })
             ->getPager([], 1, 10, [
                 'name' => 'ASC',
@@ -76,24 +74,22 @@ class GalleryManagerTest extends TestCase
 
     public function testGetPagerWithEnabledGalleries()
     {
-        $self = $this;
         $this
-            ->getGalleryManager(function ($qb) use ($self) {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
-                $qb->expects($self->once())->method('andWhere')->with($self->equalTo('g.enabled = :enabled'));
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => true]));
+            ->getGalleryManager(function ($qb) {
+                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
+                $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => true]));
             })
             ->getPager(['enabled' => true], 1);
     }
 
     public function testGetPagerWithNoEnabledGalleries()
     {
-        $self = $this;
         $this
-            ->getGalleryManager(function ($qb) use ($self) {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
-                $qb->expects($self->once())->method('andWhere')->with($self->equalTo('g.enabled = :enabled'));
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => false]));
+            ->getGalleryManager(function ($qb) {
+                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
+                $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => false]));
             })
             ->getPager(['enabled' => false], 1);
     }
@@ -106,9 +102,9 @@ class GalleryManagerTest extends TestCase
             'enabled',
         ]);
 
-        $registry = $this->createMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
 
-        return new GalleryManager('Sonata\MediaBundle\Entity\BaseGallery', $registry);
+        return new GalleryManager(BaseGallery::class, $registry);
     }
 }

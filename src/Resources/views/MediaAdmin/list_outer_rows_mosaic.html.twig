@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 #}
 
-{% extends 'SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig' %}
+{% extends '@SonataAdmin/CRUD/list_outer_rows_mosaic.html.twig' %}
 
 {% block sonata_mosaic_default_view %}
     <span class="mosaic-box-label label label-primary pull-right">{{ object.providerName|trans({}, 'SonataMediaBundle') }}</span>

@@ -13,7 +13,9 @@ namespace Sonata\MediaBundle\Tests\Command;
 
 use Sonata\MediaBundle\Command\CleanMediaCommand;
 use Sonata\MediaBundle\Filesystem\Local;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
+use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Application;
@@ -69,7 +71,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
+        $this->container = $this->createMock(ContainerInterface::class);
 
         $this->command = new CleanMediaCommand();
         $this->command->setContainer($this->container);
@@ -79,11 +81,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->tester = new CommandTester($this->application->find('sonata:media:clean-uploads'));
 
-        $this->pool = $pool = $this->getMockBuilder('Sonata\MediaBundle\Provider\Pool')->disableOriginalConstructor()->getMock();
+        $this->pool = $pool = $this->createMock(Pool::class);
 
-        $this->mediaManager = $mediaManager = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaManagerInterface')->getMock();
+        $this->mediaManager = $mediaManager = $this->createMock(MediaManagerInterface::class);
 
-        $this->fileSystemLocal = $fileSystemLocal = $this->getMockBuilder('Sonata\MediaBundle\Filesystem\Local')->disableOriginalConstructor()->getMock();
+        $this->fileSystemLocal = $fileSystemLocal = $this->createMock(Local::class);
         $this->fileSystemLocal->expects($this->once())->method('getDirectory')->will($this->returnValue($this->workspace));
 
         $this->container->expects($this->any())
@@ -97,8 +99,6 @@ class CleanMediaCommandTest extends FilesystemTestCase
                     case 'sonata.media.adapter.filesystem.local':
                         return $fileSystemLocal;
                 }
-
-                return;
             }));
     }
 
@@ -150,13 +150,13 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
         $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
-        $media = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaInterface')->getMock();
+        $media = $this->createMock(MediaInterface::class);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
@@ -184,13 +184,13 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
         $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
 
-        $media = $this->getMockBuilder('Sonata\MediaBundle\Model\MediaInterface')->getMock();
+        $media = $this->createMock(MediaInterface::class);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
@@ -227,7 +227,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
@@ -265,7 +265,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->getMockBuilder('Sonata\MediaBundle\Provider\FileProvider')->disableOriginalConstructor()->getMock();
+        $provider = $this->createMock(FileProvider::class);
         $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
 
         $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));

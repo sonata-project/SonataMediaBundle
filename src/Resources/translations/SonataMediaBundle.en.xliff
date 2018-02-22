@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="en" datatype="plaintext" original="">
         <body>
             <trans-unit id="default">
                 <source>default</source>
@@ -562,6 +562,14 @@
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
                 <target>CSS class</target>
+            </trans-unit>
+            <trans-unit id="form.label_translation_domain">
+                <source>form.label_translation_domain</source>
+                <target>Translation domain</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form.label_icon</source>
+                <target>Icon</target>
             </trans-unit>
         </body>
     </file>

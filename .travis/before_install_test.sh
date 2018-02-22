@@ -11,8 +11,10 @@ if [ "$TRAVIS_PHP_VERSION" '<' '7.0' ]; then
 else
     echo "extension=mongodb.so" >> "$TRAVIS_INI_FILE"
 
+    # https://github.com/composer/composer/issues/5030
+    composer config "platform.ext-mongo" "1.6.16"
     # Backwards compatibility with old mongo extension
-    composer require "alcaeus/mongo-php-adapter" --ignore-platform-reqs
+    composer require "alcaeus/mongo-php-adapter"
 fi
 
 sed --in-place "s/\"dev-master\":/\"dev-${TRAVIS_COMMIT}\":/" composer.json

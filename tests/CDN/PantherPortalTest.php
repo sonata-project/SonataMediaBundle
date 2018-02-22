@@ -19,7 +19,7 @@ class PantherPortalTest extends TestCase
     public function testPortal()
     {
         $client = $this->createMock(
-            'Sonata\MediaBundle\Tests\CDN\ClientSpy',
+            ClientSpy::class,
             ['flush'],
             [],
             '',
@@ -41,10 +41,11 @@ class PantherPortalTest extends TestCase
 
     public function testException()
     {
-        $this->setExpectedException('\RuntimeException', 'Unable to flush : Failed!!');
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to flush : Failed!!');
 
         $client = $this->createMock(
-            'Sonata\MediaBundle\Tests\CDN\ClientSpy',
+            ClientSpy::class,
             ['flush'],
             [],
             '',

@@ -13,12 +13,26 @@ namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
+use Sonata\AdminBundle\Admin\Pool as AdminPool;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Command\DebugCommand;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormRenderer;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class GalleryAdminControllerTest extends TestCase
 {
@@ -29,9 +43,9 @@ class GalleryAdminControllerTest extends TestCase
 
     protected function setUp()
     {
-        $this->container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->admin = $this->prophesize('Sonata\MediaBundle\Admin\BaseMediaAdmin');
-        $this->request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->admin = $this->prophesize(BaseMediaAdmin::class);
+        $this->request = $this->prophesize(Request::class);
 
         $this->configureCRUDController();
 
@@ -46,10 +60,10 @@ class GalleryAdminControllerTest extends TestCase
 
     public function testListAction()
     {
-        $datagrid = $this->prophesize('Sonata\AdminBundle\Datagrid\DatagridInterface');
-        $form = $this->prophesize('Symfony\Component\Form\Form');
-        $formView = $this->prophesize('Symfony\Component\Form\FormView');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $datagrid = $this->prophesize(DatagridInterface::class);
+        $form = $this->prophesize(Form::class);
+        $formView = $this->prophesize(FormView::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->configureSetFormTheme($formView->reveal(), 'filterTheme');
         $this->configureSetCsrfToken('sonata.batch');
@@ -71,8 +85,8 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureCRUDController()
     {
-        $pool = $this->prophesize('Sonata\AdminBundle\Admin\Pool');
-        $breadcrumbsBuilder = $this->prophesize('Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface');
+        $pool = $this->prophesize(AdminPool::class);
+        $breadcrumbsBuilder = $this->prophesize(BreadcrumbsBuilderInterface::class);
 
         $this->configureGetCurrentRequest($this->request->reveal());
         $pool->getAdminByAdminCode('admin_code')->willReturn($this->admin->reveal());
@@ -89,38 +103,22 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureGetCurrentRequest($request)
     {
-        // NEXT_MAJOR: Remove this trick when bumping Symfony requirement to 2.8+.
-        if (class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->prophesize(RequestStack::class);
 
-            $this->container->has('request_stack')->willReturn(true);
-            $this->container->get('request_stack')->willReturn($requestStack->reveal());
-            $requestStack->getCurrentRequest()->willReturn($request);
-        } else {
-            $this->container->has('request_stack')->willReturn(false);
-            $this->container->get('request')->willReturn($request);
-        }
+        $this->container->has('request_stack')->willReturn(true);
+        $this->container->get('request_stack')->willReturn($requestStack->reveal());
+        $requestStack->getCurrentRequest()->willReturn($request);
     }
 
     private function configureSetCsrfToken($intention)
     {
-        // NEXT_MAJOR: Remove this trick when bumping Symfony requirement to 2.8+.
-        if (interface_exists('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface')) {
-            $tokenManager = $this->prophesize('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface');
-            $token = $this->prophesize('Symfony\Component\Security\Csrf\CsrfToken');
+        $tokenManager = $this->prophesize(CsrfTokenManagerInterface::class);
+        $token = $this->prophesize(CsrfToken::class);
 
-            $tokenManager->getToken($intention)->willReturn($token->reveal());
-            $token->getValue()->willReturn('token');
-            $this->container->has('security.csrf.token_manager')->willReturn(true);
-            $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
-        } else {
-            $csrfProvider = $this->prophesize('Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface');
-
-            $csrfProvider->generateCsrfToken($intention)->shouldBeCalled('token');
-            $this->container->has('security.csrf.token_manager')->willReturn(false);
-            $this->container->has('form.csrf_provider')->willReturn(true);
-            $this->container->get('form.csrf_provider')->willReturn($csrfProvider->reveal());
-        }
+        $tokenManager->getToken($intention)->willReturn($token->reveal());
+        $token->getValue()->willReturn('token');
+        $this->container->has('security.csrf.token_manager')->willReturn(true);
+        $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
     }
 
     private function configureSetFormTheme($formView, $formTheme)
@@ -152,9 +150,9 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureRender($template, $data, $rendered)
     {
-        $templating = $this->prophesize('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
-        $response = $this->prophesize('Symfony\Component\HttpFoundation\Response');
-        $pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
+        $templating = $this->prophesize(EngineInterface::class);
+        $response = $this->prophesize(Response::class);
+        $pool = $this->prophesize(Pool::class);
 
         $this->admin->getPersistentParameters()->willReturn(['param' => 'param']);
         $this->container->has('templating')->willReturn(true);

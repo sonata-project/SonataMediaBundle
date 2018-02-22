@@ -15,20 +15,23 @@ use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 
 class SimpleResizerTest extends TestCase
 {
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testResizeWithNoWidth()
     {
-        $adapter = $this->createMock('Imagine\Image\ImagineInterface');
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
-        $file = $this->getMockBuilder('Gaufrette\File')->disableOriginalConstructor()->getMock();
+        $this->expectException(\RuntimeException::class);
+
+        $adapter = $this->createMock(ImagineInterface::class);
+        $media = $this->createMock(MediaInterface::class);
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $file = $this->createMock(File::class);
 
         $resizer = new SimpleResizer($adapter, 'foo', $metadata);
         $resizer->resize($media, $file, $file, 'bar', []);
@@ -36,14 +39,14 @@ class SimpleResizerTest extends TestCase
 
     public function testResize()
     {
-        $image = $this->createMock('Imagine\Image\ImageInterface');
+        $image = $this->createMock(ImageInterface::class);
         $image->expects($this->once())->method('thumbnail')->will($this->returnValue($image));
         $image->expects($this->once())->method('get')->will($this->returnValue(file_get_contents(__DIR__.'/../fixtures/logo.png')));
 
-        $adapter = $this->createMock('Imagine\Image\ImagineInterface');
+        $adapter = $this->createMock(ImagineInterface::class);
         $adapter->expects($this->any())->method('load')->will($this->returnValue($image));
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->exactly(2))->method('getBox')->will($this->returnValue(new Box(535, 132)));
 
         $filesystem = new Filesystem(new InMemory());
@@ -52,7 +55,7 @@ class SimpleResizerTest extends TestCase
 
         $out = $filesystem->get('out', true);
 
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
         $metadata->expects($this->once())->method('get')->will($this->returnValue([]));
 
         $resizer = new SimpleResizer($adapter, 'outbound', $metadata);
@@ -64,18 +67,18 @@ class SimpleResizerTest extends TestCase
      */
     public function testGetBox($mode, $settings, Box $mediaSize, Box $result)
     {
-        $adapter = $this->createMock('Imagine\Image\ImagineInterface');
+        $adapter = $this->createMock(ImagineInterface::class);
 
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
+        $media = $this->createMock(MediaInterface::class);
         $media->expects($this->exactly(2))->method('getBox')->will($this->returnValue($mediaSize));
 
-        $metadata = $this->createMock('Sonata\MediaBundle\Metadata\MetadataBuilderInterface');
+        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $resizer = new SimpleResizer($adapter, $mode, $metadata);
 
         $box = $resizer->getBox($media, $settings);
 
-        $this->assertInstanceOf('Imagine\Image\Box', $box);
+        $this->assertInstanceOf(Box::class, $box);
 
         $this->assertSame($result->getWidth(), $box->getWidth());
         $this->assertSame($result->getHeight(), $box->getHeight());

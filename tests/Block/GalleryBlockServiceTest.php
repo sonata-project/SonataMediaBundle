@@ -11,8 +11,13 @@
 
 namespace Sonata\MediaBundle\Tests\Block;
 
+use Sonata\BlockBundle\Block\BlockContext;
+use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
 use Sonata\MediaBundle\Block\GalleryBlockService;
+use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
 {
@@ -24,8 +29,8 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
     {
         parent::setUp();
 
-        $this->container = $this->prophesize('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->galleryManager = $this->prophesize('Sonata\MediaBundle\Model\GalleryManagerInterface');
+        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new GalleryBlockService(
             'block.service',
@@ -37,9 +42,9 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
 
     public function testExecute()
     {
-        $block = $this->prophesize('Sonata\BlockBundle\Model\Block');
-        $gallery = $this->prophesize('Sonata\MediaBundle\Model\GalleryInterface');
-        $blockContext = $this->prophesize('Sonata\BlockBundle\Block\BlockContext');
+        $block = $this->prophesize(Block::class);
+        $gallery = $this->prophesize(GalleryInterface::class);
+        $blockContext = $this->prophesize(BlockContext::class);
 
         $blockContext->getBlock()->willReturn($block->reveal());
         $blockContext->getSettings()->willReturn(['settings']);
@@ -69,8 +74,11 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
             'galleryId' => null,
             'pauseTime' => 3000,
             'startPaused' => false,
-            'template' => 'SonataMediaBundle:Block:block_gallery.html.twig',
-            'title' => false,
+            'template' => '@SonataMedia/Block/block_gallery.html.twig',
+            'title' => null,
+            'translation_domain' => null,
+            'icon' => null,
+            'class' => null,
             'ttl' => 0,
             'use_cache' => true,
             'wrap' => true,

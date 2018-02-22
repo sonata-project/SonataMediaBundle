@@ -12,22 +12,20 @@
 namespace Sonata\MediaBundle\Tests\Security;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\RolesDownloadStrategy;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class RolesDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedTrue()
     {
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-
-        // Prefer the Symfony 2.6+ API if available
-        if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        } else {
-            $security = $this->createMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        }
+        $media = $this->createMock(MediaInterface::class);
+        $request = $this->createMock(Request::class);
+        $translator = $this->createMock(TranslatorInterface::class);
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security->expects($this->any())
             ->method('isGranted')
@@ -41,16 +39,10 @@ class RolesDownloadStrategyTest extends TestCase
 
     public function testIsGrantedFalse()
     {
-        $media = $this->createMock('Sonata\MediaBundle\Model\MediaInterface');
-        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-
-        // Prefer the Symfony 2.6+ API if available
-        if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $security = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        } else {
-            $security = $this->createMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        }
+        $media = $this->createMock(MediaInterface::class);
+        $request = $this->createMock(Request::class);
+        $translator = $this->createMock(TranslatorInterface::class);
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security->expects($this->any())
             ->method('isGranted')

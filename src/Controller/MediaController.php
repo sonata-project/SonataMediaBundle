@@ -15,6 +15,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -42,10 +43,10 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string $id
      * @param string $format
+     *
+     * @throws NotFoundHttpException
      *
      * @return Response
      */
@@ -71,10 +72,10 @@ class MediaController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
-     *
      * @param string $id
      * @param string $format
+     *
+     * @throws NotFoundHttpException
      *
      * @return Response
      */
@@ -90,7 +91,7 @@ class MediaController extends Controller
             throw new AccessDeniedException();
         }
 
-        return $this->render('SonataMediaBundle:Media:view.html.twig', [
+        return $this->render('@SonataMedia/Media/view.html.twig', [
             'media' => $media,
             'formats' => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
             'format' => $format,

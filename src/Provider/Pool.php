@@ -55,9 +55,9 @@ class Pool
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @param string $name
+     *
+     * @throws \RuntimeException
      *
      * @return MediaProviderInterface
      */
@@ -169,7 +169,7 @@ class Pool
     public function getContext($name)
     {
         if (!$this->hasContext($name)) {
-            return;
+            return null;
         }
 
         return $this->contexts[$name];
@@ -188,14 +188,14 @@ class Pool
     /**
      * @param string $name
      *
-     * @return array
+     * @return array|null
      */
     public function getProviderNamesByContext($name)
     {
         $context = $this->getContext($name);
 
         if (!$context) {
-            return;
+            return null;
         }
 
         return $context['providers'];
@@ -204,14 +204,14 @@ class Pool
     /**
      * @param string $name
      *
-     * @return array
+     * @return array|null
      */
     public function getFormatNamesByContext($name)
     {
         $context = $this->getContext($name);
 
         if (!$context) {
-            return;
+            return null;
         }
 
         return $context['formats'];
@@ -257,9 +257,9 @@ class Pool
      *
      * @param MediaInterface $media
      *
-     * @return DownloadStrategyInterface
-     *
      * @throws \RuntimeException
+     *
+     * @return DownloadStrategyInterface
      */
     public function getDownloadSecurity(MediaInterface $media)
     {
@@ -271,9 +271,9 @@ class Pool
     /**
      * @param MediaInterface $media
      *
-     * @return DownloadStrategyInterface
-     *
      * @throws \RuntimeException
+     *
+     * @return DownloadStrategyInterface
      */
     public function getDownloadStrategy(MediaInterface $media)
     {

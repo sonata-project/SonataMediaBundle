@@ -12,7 +12,17 @@
 namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\AdminBundle\Model\ModelManagerInterface;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
+use Sonata\ClassificationBundle\Model\ContextInterface;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
+use Sonata\MediaBundle\Entity\BaseMedia;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
+use Sonata\MediaBundle\Model\Media;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
 
 class TestMediaAdmin extends BaseMediaAdmin
 {
@@ -35,14 +45,14 @@ class BaseMediaAdminTest extends TestCase
 
     protected function setUp()
     {
-        $this->pool = $this->prophesize('Sonata\MediaBundle\Provider\Pool');
-        $this->categoryManager = $this->prophesize('Sonata\MediaBundle\Model\CategoryManagerInterface');
-        $this->request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
-        $this->modelManager = $this->prophesize('Sonata\AdminBundle\Model\ModelManagerInterface');
+        $this->pool = $this->prophesize(Pool::class);
+        $this->categoryManager = $this->prophesize(CategoryManagerInterface::class);
+        $this->request = $this->prophesize(Request::class);
+        $this->modelManager = $this->prophesize(ModelManagerInterface::class);
 
         $this->mediaAdmin = new TestMediaAdmin(
             null,
-            'Sonata\MediaBundle\Entity\BaseMedia',
+            BaseMedia::class,
             'SonataMediaBundle:MediaAdmin',
             $this->pool->reveal(),
             $this->categoryManager->reveal()
@@ -54,17 +64,17 @@ class BaseMediaAdminTest extends TestCase
 
     public function testGetNewInstance()
     {
-        $media = $this->prophesize('Sonata\MediaBundle\Model\Media');
+        $media = $this->prophesize(Media::class);
         $category = $this->prophesize();
-        $category->willExtend('Sonata\MediaBundle\Tests\Admin\EntityWithGetId');
-        $category->willImplement('Sonata\ClassificationBundle\Model\CategoryInterface');
+        $category->willExtend(EntityWithGetId::class);
+        $category->willImplement(CategoryInterface::class);
         $context = $this->prophesize();
-        $context->willExtend('Sonata\MediaBundle\Tests\Admin\EntityWithGetId');
-        $context->willImplement('Sonata\ClassificationBundle\Model\ContextInterface');
+        $context->willExtend(EntityWithGetId::class);
+        $context->willImplement(ContextInterface::class);
 
         $this->configureGetPersistentParameters();
         $this->configureGetProviderName($media);
-        $this->modelManager->getModelInstance('Sonata\MediaBundle\Entity\BaseMedia')->willReturn($media->reveal());
+        $this->modelManager->getModelInstance(BaseMedia::class)->willReturn($media->reveal());
         $this->categoryManager->find(1)->willReturn($category->reveal());
         $this->request->isMethod('POST')->willReturn(true);
         $this->request->get('context')->willReturn('context');
@@ -79,11 +89,11 @@ class BaseMediaAdminTest extends TestCase
 
     private function configureGetPersistentParameters()
     {
-        $provider = $this->prophesize('Sonata\MediaBundle\Provider\MediaProviderInterface');
+        $provider = $this->prophesize(MediaProviderInterface::class);
         $category = $this->prophesize();
-        $category->willExtend('Sonata\MediaBundle\Tests\Admin\EntityWithGetId');
-        $category->willImplement('Sonata\ClassificationBundle\Model\CategoryInterface');
-        $query = $this->prophesize('Symfony\Component\HttpFoundation\ParameterBag');
+        $category->willExtend(EntityWithGetId::class);
+        $category->willImplement(CategoryInterface::class);
+        $query = $this->prophesize(ParameterBag::class);
         $this->request->query = $query->reveal();
 
         $this->pool->getDefaultContext()->willReturn('default_context');
@@ -99,12 +109,7 @@ class BaseMediaAdminTest extends TestCase
 
     private function configureGetProviderName($media)
     {
-        // NEXT_MAJOR remove this block when dropping sf < 2.8 compatibility
-        if (method_exists('Symfony\Component\HttpFoundation\JsonResponse', 'transformJsonError')) {
-            $this->request->get('uniqid[providerName]', null, true)->willReturn('providerName');
-        } else {
-            $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
-        }
+        $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
         $media->setProviderName('providerName')->shouldBeCalled();
     }
 }

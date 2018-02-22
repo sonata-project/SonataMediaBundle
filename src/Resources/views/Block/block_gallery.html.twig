@@ -8,42 +8,53 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
-{% extends 'SonataBlockBundle:Block:block_base.html.twig' %}
+{% extends '@SonataBlock/Block/block_base.html.twig' %}
 
 {% block block %}
     {% if settings.format %}
-        {% if settings.title %}
-            <h3 class="sonata-media-block-media-title">{{ settings.title }}</h3>
-        {% endif %}
+        <div class="{{ settings.class }}">
+            {% if settings.title %}
+                <h3>
+                    {% if settings.icon %}
+                        <i class="{{ settings.icon }}" aria-hidden="true"></i>
+                    {% endif %}
+                    {% if settings.translation_domain %}
+                        {{ settings.title|trans({}, settings.translation_domain) }}
+                    {% else %}
+                        {{ settings.title }}
+                    {% endif %}
+                </h3>
+            {% endif %}
 
-        {% sonata_template_box 'This is the gallery media block. Feel free to override it.' %}
+            {% sonata_template_box 'This is the gallery media block. Feel free to override it.' %}
 
-        <div id="carousel-{{ block.id }}" class="carousel slide sonata-media-block-gallery-container"
-             data-interval="{{ settings.pauseTime }}"
-             {% if settings.startPaused != 1 %}data-ride="carousel"{% endif %}
-                >
+            <div id="carousel-{{ block.id }}" class="carousel slide"
+                 data-interval="{{ settings.pauseTime }}"
+                 {% if settings.startPaused != 1 %}data-ride="carousel"{% endif %}
+            >
 
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                {% for element in elements %}
-                    {{ block('element_indicator') }}
-                {% endfor %}
-            </ol>
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    {% for element in elements %}
+                        {{ block('element_indicator') }}
+                    {% endfor %}
+                </ol>
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                {% for element in elements %}
-                    {{ block('element_display') }}
-                {% endfor %}
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    {% for element in elements %}
+                        {{ block('element_display') }}
+                    {% endfor %}
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-{{ block.id }}" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-{{ block.id }}" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
             </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-{{ block.id }}" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-{{ block.id }}" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
         </div>
     {% endif %}
 {% endblock %}
