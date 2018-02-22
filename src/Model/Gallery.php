@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 abstract class Gallery implements GalleryInterface
@@ -49,7 +49,7 @@ abstract class Gallery implements GalleryInterface
     protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
-     * @var GalleryItemInterface[]
+     * @var Collection
      */
     protected $galleryItems;
 
@@ -146,8 +146,6 @@ abstract class Gallery implements GalleryInterface
      */
     public function setGalleryItems($galleryItems): void
     {
-        $this->galleryItems = new ArrayCollection();
-
         foreach ($galleryItems as $galleryItem) {
             $this->addGalleryItem($galleryItem);
         }
@@ -168,7 +166,9 @@ abstract class Gallery implements GalleryInterface
     {
         $galleryItem->setGallery($this);
 
-        $this->galleryItems[] = $galleryItem;
+        if (!$this->galleryItems->contains($galleryItem)) {
+            $this->galleryItems->add($galleryItem);
+        }
     }
 
     /**
