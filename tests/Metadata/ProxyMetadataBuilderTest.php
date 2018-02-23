@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Metadata;
 
-use AmazonS3 as AmazonClient;
-use Gaufrette\Adapter\AmazonS3;
+use Aws\S3\S3Client;
+use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Local;
@@ -41,8 +41,14 @@ class ProxyMetadataBuilderTest extends TestCase
             ->will($this->returnValue(['key' => 'noop']));
 
         //adapter cannot be mocked
-        $amazonclient = new AmazonClient(['key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']);
-        $adapter = new AmazonS3($amazonclient, '');
+        $amazonclient = S3Client::factory([
+            'credentials' => [
+                'key' => 'XXXXXXXXXXXX',
+                'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            ],
+            'region' => 'us-west-1',
+        ]);
+        $adapter = new AwsS3($amazonclient, '');
 
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
@@ -159,8 +165,14 @@ class ProxyMetadataBuilderTest extends TestCase
             ->will($this->returnValue(['key' => 'noop']));
 
         //adapter cannot be mocked
-        $amazonclient = new AmazonClient(['key' => 'XXXXXXXXXXXX', 'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']);
-        $adapter1 = new AmazonS3($amazonclient, '');
+        $amazonclient = S3Client::factory([
+            'credentials' => [
+                'key' => 'XXXXXXXXXXXX',
+                'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            ],
+            'region' => 'us-west-1',
+        ]);
+        $adapter1 = new AwsS3($amazonclient, '');
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
 
