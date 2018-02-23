@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.11.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.10.2...3.11.0) - 2018-02-23
+### Added
+- added block title translation domain option
+- added block icon option
+- added block class option
+- Added compatibility with Gaufrette `^0.4` and `^0.5`
+- Added compatibility with Buzz `^0.16`
+
+### Fixed
+- Commands not working on symfony4
+- `AmazonMetadataBuilder` now relies on Psr7 mimeType guesser
+
+### Removed
+- Removed default title from blocks
+- Removed old `sonata-` classes from templates
+- Removed compatibility with Gaufrette `^0.1`and `^0.2`
+- Removed compatibility with JMS serializer `^0.13`
+
 ## [3.10.2](https://github.com/sonata-project/SonataMediaBundle/compare/3.10.1...3.10.2) - 2018-02-02
 ### Added
 - Added support for latest imagine version
