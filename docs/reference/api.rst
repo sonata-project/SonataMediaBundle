@@ -26,9 +26,11 @@ Here's the configuration we used, you may adapt it to your needs:
             validate: true
 
     sensio_framework_extra:
-        view:    { annotations: false }
         router:  { annotations: true }
         request: { converters: true }
+        format_listener:
+            rules:
+                - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
 
     twig:
         exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
