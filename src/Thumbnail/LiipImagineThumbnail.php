@@ -23,7 +23,8 @@ class LiipImagineThumbnail implements ThumbnailInterface
      *
      * @var RouterInterface
      */
-    private $router;
+    protected $router;
+
     /**
      * @var CacheManager
      */
