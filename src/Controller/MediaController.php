@@ -99,6 +99,8 @@ class MediaController extends Controller
     }
 
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * This action applies a given filter to a given image,
      * optionally saves the image and
      * outputs it to the browser at the same time.
@@ -107,9 +109,16 @@ class MediaController extends Controller
      * @param string $filter
      *
      * @return Response
+     *
+     * @deprecated since 3.x, to be removed in 4.0.
      */
     public function liipImagineFilterAction($path, $filter)
     {
+        @trigger_error(
+            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            E_USER_DEPRECATED
+        );
+
         if (!preg_match('@([^/]*)/(.*)/([0-9]*)_([a-z_A-Z]*).jpg@', $path, $matches)) {
             throw new NotFoundHttpException();
         }

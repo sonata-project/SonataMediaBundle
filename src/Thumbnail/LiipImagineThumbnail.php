@@ -11,6 +11,7 @@
 
 namespace Sonata\MediaBundle\Thumbnail;
 
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,16 +19,31 @@ use Symfony\Component\Routing\RouterInterface;
 class LiipImagineThumbnail implements ThumbnailInterface
 {
     /**
+     * @deprecated Since version 3.3, will be removed in 4.0.
+     *
      * @var RouterInterface
      */
     protected $router;
 
     /**
-     * @param RouterInterface $router
+     * @var CacheManager
      */
-    public function __construct(RouterInterface $router)
+    private $cacheManager;
+
+    /**
+     * @param RouterInterface|CacheManager $cacheManager
+     */
+    public function __construct($cacheManager)
     {
-        $this->router = $router;
+        if ($cacheManager instanceof RouterInterface) {
+            @trigger_error(sprintf(
+                'Using an instance of %s is deprecated since version 3.3 and will be removed in 4.0. Use %s.',
+                RouterInterface::class,
+                CacheManager::class
+            ), E_USER_DEPRECATED);
+            $this->router = $cacheManager;
+        }
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -35,16 +51,24 @@ class LiipImagineThumbnail implements ThumbnailInterface
      */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
-            $path = $provider->getReferenceImage($media);
-        } else {
+        $path = $provider->getReferenceImage($media);
+
+        if (MediaProviderInterface::FORMAT_ADMIN === $format || MediaProviderInterface::FORMAT_REFERENCE === $format) {
+            return $path;
+        }
+        if ($this->router instanceof RouterInterface && !($this->cacheManager instanceof CacheManager)) {
             $path = $this->router->generate(
                 sprintf('_imagine_%s', $format),
                 ['path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format)]
             );
         }
 
-        return $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        $path = $provider->getCdnPath($path, $media->getCdnIsFlushable());
+        if ($this->cacheManager instanceof CacheManager) {
+            $path = $this->cacheManager->getBrowserPath($path, $format);
+        }
+
+        return $path;
     }
 
     /**
