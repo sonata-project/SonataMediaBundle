@@ -35,12 +35,11 @@ class LiipImagineThumbnail implements ThumbnailInterface
     public function __construct($cacheManager)
     {
         if ($cacheManager instanceof RouterInterface) {
-            @trigger_error(
-                'Using an instance of Symfony\Component\Routing\RouterInterface is deprecated since 
-                version 3.3 and will be removed in 4.0. 
-                Use Liip\ImagineBundle\Imagine\Cache\CacheManager.',
-                E_USER_DEPRECATED
-            );
+            @trigger_error(sprintf(
+                'Using an instance of %s is deprecated since version 3.3 and will be removed in 4.0. Use %s.',
+                RouterInterface::class,
+                CacheManager::class
+            ), E_USER_DEPRECATED);
             $this->router = $cacheManager;
         }
         $this->cacheManager = $cacheManager;

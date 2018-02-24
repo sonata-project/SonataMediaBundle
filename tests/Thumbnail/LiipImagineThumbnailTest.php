@@ -76,4 +76,33 @@ class LiipImagineThumbnailTest extends TestCase
             'mycontext_medium'
         ));
     }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Using an instance of Symfony\Component\Routing\RouterInterface is deprecated since version 3.3 and will be removed in 4.0. Use Liip\ImagineBundle\Imagine\Cache\CacheManager.
+     */
+    public function testLegacyGenerate()
+    {
+        $router = $this->prophesize(RouterInterface::class);
+        $router->generate(
+            '_imagine_medium',
+            ['path' => '/some/path/42_medium.jpg']
+        )->willReturn('/imagine/medium/some/path/42_medium.jpg');
+        $thumbnail = new LiipImagineThumbnail($router->reveal());
+        $provider = $this->prophesize(MediaProviderInterface::class);
+        $media = $this->prophesize(MediaInterface::class);
+        $media->getId()->willReturn(42);
+        $media->getCdnIsFlushable()->willReturn(true);
+        $format = 'medium';
+        $provider->getReferenceImage($media->reveal())->willReturn('/some/image.jpg');
+        $provider->generatePath($media->reveal())->willReturn('/some/path');
+        $provider->getCdnPath(
+            '/imagine/medium/some/path/42_medium.jpg',
+            true
+        )->willReturn('some/cdn/path');
+        $this->assertSame(
+            'some/cdn/path',
+            $thumbnail->generatePublicUrl($provider->reveal(), $media->reveal(), $format)
+        );
+    }
 }
