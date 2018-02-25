@@ -17,6 +17,11 @@ UPGRADE FROM 3.4 to 3.5
 Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass::fixSettings($container)
 is deprecated. Please avoid using this method, use ``getExtensionConfig($container)`` instead.
 
+Sonata\MediaBundle\Controller\Controller\MediaController::liipImagineFilterAction($path, $filter)
+is deprecated. Please avoid using this method.
+If you define controller_action in liip_imagine configs please remove it.
+
+
 UPGRADE FROM 3.2 to 3.3
 =======================
 
