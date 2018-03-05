@@ -164,11 +164,11 @@ class VimeoProviderTest extends AbstractProviderTest
     public function getTransformWithUrlMedia()
     {
         $mediaWebsite = new Media();
-        $mediaWebsite->setBinaryContent('http://vimeo.com/012341231');
+        $mediaWebsite->setBinaryContent('https://vimeo.com/012341231');
         $mediaWebsite->setId(1023456);
 
         $mediaPlayer = new Media();
-        $mediaPlayer->setBinaryContent('http://player.vimeo.com/video/012341231');
+        $mediaPlayer->setBinaryContent('https://player.vimeo.com/video/012341231');
         $mediaPlayer->setId(1023456);
 
         return [
@@ -222,6 +222,6 @@ class VimeoProviderTest extends AbstractProviderTest
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertEquals('http://vimeo.com/123456', $this->getProvider()->getReferenceUrl($media));
+        $this->assertEquals('https://vimeo.com/123456', $this->getProvider()->getReferenceUrl($media));
     }
 }
