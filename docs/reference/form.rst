@@ -41,7 +41,7 @@ And optionals parameters:
     }
 
 
-You also need to add a new template for the form component:
+You also need to add a new form theme template to twig configuration:
 
 .. code-block:: yaml
 
@@ -49,7 +49,5 @@ You also need to add a new template for the form component:
         debug:            "%kernel.debug%"
         strict_variables: "%kernel.debug%"
 
-        form:
-            resources:
-                # other files
-                - '@SonataMedia/Form/media_widgets.html.twig'
+        form_themes:
+            - '@SonataMedia/Form/media_widgets.html.twig'
