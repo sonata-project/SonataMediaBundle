@@ -50,7 +50,7 @@ Take this video, for example:
 
 * video identifier format : 21216091
 * video player documentation : http://vimeo.com/api/docs/moogaloop
-* metadata : http://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
+* metadata : https://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
 
 .. code-block:: json
 
@@ -140,7 +140,7 @@ is going to be used to store ``Media`` information :
             return;
         }
 
-        $url = sprintf('http://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getBinaryContent());
+        $url = sprintf('https://vimeo.com/api/oembed.json?url=http://vimeo.com/%s', $media->getBinaryContent());
         $metadata = @file_get_contents($url);
 
         if (!$metadata) {
