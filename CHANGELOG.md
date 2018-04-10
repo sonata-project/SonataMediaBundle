@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.12.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.11.0...3.12.0) - 2018-04-09
+### Changed
+- Changed Vimeo endpoint to https
+
+### Fixed
+- LiipImagine generatePublicUrl updated to work with latest version of that bundle
+- Relative path when path it is already an url
+
+### Removed
+- Removed compatibility with older versions of FOSRestBundle (<2.1)
+- Removed `SonataNotificationBundle` as a required dependency
+
 ## [3.11.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.10.2...3.11.0) - 2018-02-23
 ### Added
 - added block title translation domain option
