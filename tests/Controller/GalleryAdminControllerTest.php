@@ -16,6 +16,7 @@ use Prophecy\Argument;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
 use Sonata\MediaBundle\Provider\Pool;
@@ -87,6 +88,7 @@ class GalleryAdminControllerTest extends TestCase
     {
         $pool = $this->prophesize(AdminPool::class);
         $breadcrumbsBuilder = $this->prophesize(BreadcrumbsBuilderInterface::class);
+        $templateRegistry = $this->prophesize(TemplateRegistryInterface::class);
 
         $this->configureGetCurrentRequest($this->request->reveal());
         $pool->getAdminByAdminCode('admin_code')->willReturn($this->admin->reveal());
@@ -96,9 +98,11 @@ class GalleryAdminControllerTest extends TestCase
         $this->request->get('uniqid')->shouldBeCalled();
         $this->container->get('sonata.admin.pool')->willReturn($pool->reveal());
         $this->container->get('sonata.admin.breadcrumbs_builder')->willReturn($breadcrumbsBuilder->reveal());
+        $this->container->get('admin_code.template_registry')->willReturn($templateRegistry);
         $this->admin->getTemplate('layout')->willReturn('layout.html.twig');
         $this->admin->isChild()->willReturn(false);
         $this->admin->setRequest($this->request->reveal())->shouldBeCalled();
+        $this->admin->getCode()->willReturn('admin_code');
     }
 
     private function configureGetCurrentRequest($request)
