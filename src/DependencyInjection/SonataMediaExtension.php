@@ -99,10 +99,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $loader->load('serializer.xml');
         $loader->load('command.xml');
 
-        if (!in_array(strtolower($config['db_driver']), ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'])) {
-            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid db driver "%s".', $config['db_driver']));
-        }
-
         $bundles = $container->getParameter('kernel.bundles');
 
         if (isset($bundles['FOSRestBundle'], $bundles['NelmioApiDocBundle'])) {
