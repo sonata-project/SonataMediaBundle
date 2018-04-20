@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
 
         $node
             ->children()
-                ->scalarNode('db_driver')->isRequired()->end()
+                ->scalarNode('db_driver')->defaultValue('no_driver')->end()
                 ->scalarNode('default_context')->isRequired()->end()
                 ->scalarNode('category_manager')
                     ->defaultValue('sonata.media.manager.category.default')
