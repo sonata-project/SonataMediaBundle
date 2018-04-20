@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('db_driver')
                     ->defaultValue('no_driver')
+                    ->info('Choose persistence mechanism driver from the following list: "doctrine_orm", "doctrine_mongodb", "doctrine_phpcr"')
                     ->validate()
                         ->ifNotInArray(self::DB_DRIVERS)
                         ->thenInvalid('SonataMediaBundle - Invalid db driver %s.')

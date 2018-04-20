@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
  *
  * @author Andrey F. Mindubaev <covex.mobile@gmail.com>
  */
-class NoDriverGenerator implements GeneratorInterface
+final class NoDriverGenerator implements GeneratorInterface
 {
     public function generatePath(MediaInterface $media)
     {
