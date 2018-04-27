@@ -25,6 +25,11 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * NEXT_MAJOR: make constant protected/private.
+     */
+    const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'];
+
+    /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
@@ -34,7 +39,14 @@ class Configuration implements ConfigurationInterface
 
         $node
             ->children()
-                ->scalarNode('db_driver')->isRequired()->end()
+                ->scalarNode('db_driver')
+                    ->defaultValue('no_driver')
+                    ->info('Choose persistence mechanism driver from the following list: "doctrine_orm", "doctrine_mongodb", "doctrine_phpcr"')
+                    ->validate()
+                        ->ifNotInArray(self::DB_DRIVERS)
+                        ->thenInvalid('SonataMediaBundle - Invalid db driver %s.')
+                    ->end()
+                ->end()
                 ->scalarNode('default_context')->isRequired()->end()
                 ->scalarNode('category_manager')
                     ->defaultValue('sonata.media.manager.category.default')
