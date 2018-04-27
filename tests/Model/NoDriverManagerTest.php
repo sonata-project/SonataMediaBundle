@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ class NoDriverManagerTest extends TestCase
     /**
      * @dataProvider providerMethods
      */
-    public function testException($method, array $arguments)
+    public function testException($method, array $arguments): void
     {
         $this->expectException(NoDriverException::class);
 
