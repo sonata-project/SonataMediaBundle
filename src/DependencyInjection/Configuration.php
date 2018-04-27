@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
     /**
      * NEXT_MAJOR: make constant protected/private.
      */
-    const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'];
+    public const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'];
 
     /**
      * {@inheritdoc}
