@@ -46,7 +46,7 @@ abstract class BaseGallery extends Gallery
     /**
      * {@inheritdoc}
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
 

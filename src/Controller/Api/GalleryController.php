@@ -417,7 +417,7 @@ class GalleryController
             $galleryHasMedia = $form->getData();
             $galleryHasMedia->setMedia($media);
 
-            $gallery->addGalleryHasMedias($galleryHasMedia);
+            $gallery->addGalleryHasMedia($galleryHasMedia);
             $this->galleryManager->save($gallery);
 
             $context = new Context();
