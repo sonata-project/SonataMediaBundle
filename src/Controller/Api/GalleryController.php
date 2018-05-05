@@ -21,6 +21,7 @@ use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
+use Sonata\MediaBundle\Model\GalleryMediaCollectionInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -417,7 +418,12 @@ class GalleryController
             $galleryHasMedia = $form->getData();
             $galleryHasMedia->setMedia($media);
 
-            $gallery->addGalleryHasMedia($galleryHasMedia);
+            // NEXT_MAJOR: remove this if/else block. Just call `$gallery->addGalleryHasMedia($galleryHasMedia);`
+            if ($gallery instanceof GalleryMediaCollectionInterface) {
+                $gallery->addGalleryHasMedia($galleryHasMedia);
+            } else {
+                $gallery->addGalleryHasMedias($galleryHasMedia);
+            }
             $this->galleryManager->save($gallery);
 
             $context = new Context();
