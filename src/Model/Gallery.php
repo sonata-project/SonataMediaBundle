@@ -147,7 +147,7 @@ abstract class Gallery implements GalleryInterface
         $this->galleryHasMedias = new ArrayCollection();
 
         foreach ($galleryHasMedias as $galleryHasMedia) {
-            $this->addGalleryHasMedias($galleryHasMedia);
+            $this->addGalleryHasMedia($galleryHasMedia);
         }
     }
 
