@@ -162,7 +162,17 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
+    {
+        $galleryHasMedia->setGallery($this);
+
+        $this->galleryHasMedias[] = $galleryHasMedia;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
 
