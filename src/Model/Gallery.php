@@ -15,7 +15,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
-abstract class Gallery implements GalleryInterface
+
+/**
+ * NEXT_MAJOR: remove GalleryMediaCollectionInterface interface. Move its content into GalleryInterface
+ */
+abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterface
 {
     /**
      * @var string
@@ -179,10 +183,9 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
+     * {@inheritdoc}
      * @deprecated use addGalleryHasMedia method instead
      * NEXT_MAJOR: remove this method with the next major release
-     *
-     * @param GalleryHasMediaInterface $galleryHasMedia
      */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
     {
