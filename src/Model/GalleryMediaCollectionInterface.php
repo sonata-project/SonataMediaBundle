@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Model;
 
 /**
  * This a workaround to maintain BC within SonataMediaBundle v3.
- * NEXT_MAJOR: remove this interface, move all methods into GalleryInterface
+ * NEXT_MAJOR: remove this interface, move all methods into GalleryInterface.
  */
 interface GalleryMediaCollectionInterface
 {
