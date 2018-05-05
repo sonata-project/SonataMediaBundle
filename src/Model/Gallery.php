@@ -180,6 +180,21 @@ abstract class Gallery implements GalleryInterface
     }
 
     /**
+     * @deprecated use addGalleryHasMedia method instead
+     * NEXT_MAJOR: remove this method with the next major release
+     *
+     * @param GalleryHasMediaInterface $galleryHasMedia
+     */
+    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    {
+        @trigger_error(
+            'The '.__METHOD__.' is deprecated and will be removed with next major release. Use `addGalleryHasMedia` method instead.',
+            E_USER_DEPRECATED
+        );
+        $this->addGalleryHasMedia($galleryHasMedia);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setContext($context)
