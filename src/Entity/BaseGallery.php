@@ -13,6 +13,7 @@ namespace Sonata\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
+use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 
 /**
  * Bundle\MediaBundle\Entity\BaseGallery.
@@ -25,6 +26,28 @@ abstract class BaseGallery extends Gallery
     public function __construct()
     {
         $this->galleryHasMedias = new ArrayCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setGalleryHasMedias($galleryHasMedias)
+    {
+        $this->galleryHasMedias = $galleryHasMedias;
+        foreach ($this->galleryHasMedias as $galleryHasMedia) {
+            $this->addGalleryHasMedias($galleryHasMedia);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    {
+        $galleryHasMedia->setGallery($this);
+        if (!$this->galleryHasMedias->contains($galleryHasMedia)) {
+            $this->galleryHasMedias->add($galleryHasMedia);
+        }
     }
 
     /**
