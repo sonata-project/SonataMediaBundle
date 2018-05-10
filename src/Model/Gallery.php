@@ -12,9 +12,13 @@
 namespace Sonata\MediaBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
-abstract class Gallery implements GalleryInterface
+/**
+ * NEXT_MAJOR: remove GalleryMediaCollectionInterface interface. Move its content into GalleryInterface.
+ */
+abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterface
 {
     /**
      * @var string
@@ -47,7 +51,7 @@ abstract class Gallery implements GalleryInterface
     protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
-     * @var GalleryHasMediaInterface[]
+     * @var GalleryHasMediaInterface[]|Collection
      */
     protected $galleryHasMedias;
 
@@ -147,7 +151,7 @@ abstract class Gallery implements GalleryInterface
         $this->galleryHasMedias = new ArrayCollection();
 
         foreach ($galleryHasMedias as $galleryHasMedia) {
-            $this->addGalleryHasMedias($galleryHasMedia);
+            $this->addGalleryHasMedia($galleryHasMedia);
         }
     }
 
@@ -162,11 +166,35 @@ abstract class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
 
         $this->galleryHasMedias[] = $galleryHasMedia;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
+    {
+        $this->galleryHasMedias->removeElement($galleryHasMedia);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @deprecated use addGalleryHasMedia method instead
+     * NEXT_MAJOR: remove this method with the next major release
+     */
+    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    {
+        @trigger_error(
+            'The '.__METHOD__.' is deprecated and will be removed with next major release.'
+            .'Use `addGalleryHasMedia` method instead.',
+            E_USER_DEPRECATED
+        );
+        $this->addGalleryHasMedia($galleryHasMedia);
     }
 
     /**

@@ -108,6 +108,9 @@ interface GalleryInterface
 
     /**
      * @param GalleryHasMediaInterface $galleryHasMedia
+     *
+     * @deprecated implement addGalleryHasMedia method instead, it will be provided with the next major release
+     * NEXT_MAJOR: remove this method
      */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
 }
