@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.13.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.12.0...3.13.0) - 2018-05-17
+
+### Changed
+
+- A `db_driver` configuration parameter is optional now with `no_driver` default value
+
+### Fixed
+
+- Issue where all medias were removed from a gallery on update.
+- Fixed widget template for MediaType as a child form type
+- `sonata:media:sync-thumbnails` command when running this command with PHPCR or ODM  document mapper.
+
 ## [3.12.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.11.0...3.12.0) - 2018-04-09
 ### Changed
 - Changed Vimeo endpoint to https
