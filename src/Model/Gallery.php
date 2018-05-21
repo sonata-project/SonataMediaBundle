@@ -14,9 +14,13 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
-abstract class Gallery implements GalleryInterface
+/**
+ * NEXT_MAJOR: remove GalleryMediaCollectionInterface interface. Move its content into GalleryInterface.
+ */
+abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterface
 {
     /**
      * @var string
@@ -49,7 +53,7 @@ abstract class Gallery implements GalleryInterface
     protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
-     * @var GalleryItemInterface[]
+     * @var GalleryItemInterface[]|Collection
      */
     protected $galleryItems;
 

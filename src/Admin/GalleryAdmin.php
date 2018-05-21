@@ -49,18 +49,6 @@ class GalleryAdmin extends AbstractAdmin
         $parameters = $this->getPersistentParameters();
 
         $gallery->setContext($parameters['context']);
-
-        // fix weird bug with setter object not being call
-        $gallery->setGalleryItems($gallery->getGalleryItems());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function preUpdate($gallery): void
-    {
-        // fix weird bug with setter object not being call
-        $gallery->setGalleryItems($gallery->getGalleryItems());
     }
 
     /**
@@ -130,7 +118,7 @@ class GalleryAdmin extends AbstractAdmin
                 ->ifEnd()
             ->end()
             ->with('Gallery')
-                ->add('galleryItems', CollectionType::class, [], [
+                ->add('galleryItems', CollectionType::class, ['by_reference' => false], [
                     'edit' => 'inline',
                     'inline' => 'table',
                     'sortable' => 'position',
