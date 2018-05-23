@@ -124,6 +124,9 @@ class GalleryControllerTest extends TestCase
         $this->assertSame([$media], $gController->getGalleryMediasAction(1));
     }
 
+    /**
+     * @group legacy
+     */
     public function testPostGalleryMediaGalleryhasmediaAction()
     {
         $media = $this->createMock(MediaInterface::class);
@@ -184,6 +187,9 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(400, $view->getResponse()->getStatusCode(), 'Should return 400');
     }
 
+    /**
+     * @group legacy
+     */
     public function testPutGalleryMediaGalleryhasmediaAction()
     {
         $media = $this->createMock(MediaInterface::class);
