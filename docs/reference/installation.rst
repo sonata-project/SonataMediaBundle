@@ -8,7 +8,7 @@ This bundle is mainly dependant of:
 
 * Core: https://sonata-project.org/bundles/core
 
-This bundle has optional dependancies of:
+This bundle has optional dependencies of:
 
  * Admin: https://sonata-project.org/bundles/admin
  * DoctrineOrm: https://sonata-project.org/bundles/doctrine-orm-admin
