@@ -26,6 +26,8 @@ class GalleryAdmin extends AbstractAdmin
      */
     protected $pool;
 
+    protected $classnameLabel = 'Gallery';
+
     /**
      * @param string $code
      * @param string $class
