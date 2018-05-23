@@ -34,6 +34,8 @@ abstract class BaseMediaAdmin extends AbstractAdmin
      */
     protected $categoryManager;
 
+    protected $classnameLabel = 'Media';
+
     /**
      * @param string                   $code
      * @param string                   $class
