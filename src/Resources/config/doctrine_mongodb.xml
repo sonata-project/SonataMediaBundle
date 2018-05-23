@@ -6,11 +6,11 @@
     </parameters>
     <services>
         <service id="sonata.media.document_manager" alias="doctrine_mongodb.odm.document_manager"/>
-        <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%">
+        <service id="sonata.media.manager.media" class="%sonata.media.manager.media.class%" public="true">
             <argument>%sonata.media.media.class%</argument>
             <argument type="service" id="doctrine_mongodb"/>
         </service>
-        <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
+        <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%" public="true">
             <argument>%sonata.media.gallery.class%</argument>
             <argument type="service" id="doctrine_mongodb"/>
         </service>
