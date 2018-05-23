@@ -21,7 +21,7 @@
         <service id="sonata.media.thumbnail.liip_imagine" class="%sonata.media.thumbnail.liip_imagine%">
             <argument type="service" id="liip_imagine.cache.manager" on-invalid="null"/>
         </service>
-        <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
+        <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%" public="true">
             <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.image</argument>
             <argument/>
@@ -39,7 +39,7 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.provider.file" class="%sonata.media.provider.file.class%">
+        <service id="sonata.media.provider.file" class="%sonata.media.provider.file.class%" public="true">
             <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.file</argument>
             <argument/>
@@ -56,7 +56,7 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.provider.youtube" class="%sonata.media.provider.youtube.class%">
+        <service id="sonata.media.provider.youtube" class="%sonata.media.provider.youtube.class%" public="true">
             <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.youtube</argument>
             <argument/>
@@ -73,7 +73,7 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.provider.dailymotion" class="%sonata.media.provider.dailymotion.class%">
+        <service id="sonata.media.provider.dailymotion" class="%sonata.media.provider.dailymotion.class%" public="true">
             <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.dailymotion</argument>
             <argument/>
@@ -89,7 +89,7 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.provider.vimeo" class="%sonata.media.provider.vimeo.class%">
+        <service id="sonata.media.provider.vimeo" class="%sonata.media.provider.vimeo.class%" public="true">
             <tag name="sonata.media.provider"/>
             <argument>sonata.media.provider.vimeo</argument>
             <argument/>

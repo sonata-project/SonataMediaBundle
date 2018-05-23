@@ -9,7 +9,7 @@
             <argument>%sonata.media.media.class%</argument>
             <argument type="service" id="doctrine"/>
         </service>
-        <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%">
+        <service id="sonata.media.manager.gallery" class="%sonata.media.manager.gallery.class%" public="true">
             <argument>%sonata.media.gallery.class%</argument>
             <argument type="service" id="doctrine"/>
         </service>
