@@ -87,9 +87,11 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
         // create a new media to avoid erasing other media or not ...
         $newMedia = $this->options['new_on_update'] ? new $this->class() : $media;
 
-        $newMedia->setProviderName($media->getProviderName());
-        $newMedia->setContext($media->getContext());
-        $newMedia->setBinaryContent($binaryContent);
+        if ($this->options['new_on_update']) {
+            $newMedia->setProviderName($media->getProviderName());
+            $newMedia->setContext($media->getContext());
+            $newMedia->setBinaryContent($binaryContent);
+        }
 
         if (!$newMedia->getProviderName() && $this->options['provider']) {
             $newMedia->setProviderName($this->options['provider']);

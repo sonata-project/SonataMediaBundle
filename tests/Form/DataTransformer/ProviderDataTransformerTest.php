@@ -36,7 +36,7 @@ class ProviderDataTransformerTest extends TestCase
         $pool = new Pool('default');
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('unknown'));
+        $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('unknown'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
 
@@ -55,7 +55,7 @@ class ProviderDataTransformerTest extends TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('default'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
 
@@ -128,7 +128,7 @@ class ProviderDataTransformerTest extends TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('default'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
 
@@ -150,7 +150,7 @@ class ProviderDataTransformerTest extends TestCase
         $logger->expects($this->once())->method('error');
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->exactly(2))->method('getProviderName')->will($this->returnValue('default'));
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
         $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
 
