@@ -131,7 +131,10 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
         if ($this->isClassificationEnabled($config)) {
             $loader->load('category.xml');
-            $container->setAlias('sonata.media.manager.category', $config['category_manager']);
+            $categoryManagerAlias = 'sonata.media.manager.category';
+            $container->setAlias($categoryManagerAlias, $config['category_manager']);
+            $categoryManager = $container->getAlias($categoryManagerAlias);
+            $categoryManager->setPublic(true);
         }
 
         if (!array_key_exists($config['default_context'], $config['contexts'])) {
