@@ -37,7 +37,7 @@ class GalleryAdminController extends Controller
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
-        return parent::render($view, $parameters, $response);
+        return parent::renderWithExtraParams($view, $parameters, $response);
     }
 
     /**
