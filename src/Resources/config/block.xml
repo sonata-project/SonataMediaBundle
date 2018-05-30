@@ -7,28 +7,28 @@
         <parameter key="sonata.media.block.gallery_list.class">Sonata\MediaBundle\Block\GalleryListBlockService</parameter>
     </parameters>
     <services>
-        <service id="sonata.media.block.media" class="%sonata.media.block.media.class%">
+        <service id="sonata.media.block.media" class="%sonata.media.block.media.class%" public="true">
             <tag name="sonata.block"/>
             <argument>sonata.media.block.media</argument>
             <argument type="service" id="sonata.templating"/>
             <argument type="service" id="service_container"/>
             <argument type="service" id="sonata.media.manager.media"/>
         </service>
-        <service id="sonata.media.block.feature_media" class="%sonata.media.block.feature_media.class%">
+        <service id="sonata.media.block.feature_media" class="%sonata.media.block.feature_media.class%" public="true">
             <tag name="sonata.block"/>
             <argument>sonata.media.block.feature_media</argument>
             <argument type="service" id="sonata.templating"/>
             <argument type="service" id="service_container"/>
             <argument type="service" id="sonata.media.manager.media"/>
         </service>
-        <service id="sonata.media.block.gallery" class="%sonata.media.block.gallery.class%">
+        <service id="sonata.media.block.gallery" class="%sonata.media.block.gallery.class%" public="true">
             <tag name="sonata.block"/>
             <argument>sonata.media.block.gallery</argument>
             <argument type="service" id="sonata.templating"/>
             <argument type="service" id="service_container"/>
             <argument type="service" id="sonata.media.manager.gallery"/>
         </service>
-        <service id="sonata.media.block.gallery_list" class="%sonata.media.block.gallery_list.class%">
+        <service id="sonata.media.block.gallery_list" class="%sonata.media.block.gallery_list.class%" public="true">
             <tag name="sonata.block"/>
             <argument>sonata.media.block.gallery_list</argument>
             <argument type="service" id="sonata.templating"/>
