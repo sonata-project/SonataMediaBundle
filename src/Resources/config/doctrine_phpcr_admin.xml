@@ -18,8 +18,8 @@
         <parameter key="sonata.media.admin.gallery_has_media.translation_domain">%sonata.media.admin.media.translation_domain%</parameter>
     </parameters>
     <services>
-        <service id="sonata.media.admin.media.manager" alias="sonata.admin.manager.doctrine_phpcr"/>
-        <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%">
+        <service id="sonata.media.admin.media.manager" alias="sonata.admin.manager.doctrine_phpcr" public="true"/>
+        <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%" public="true">
             <tag name="sonata.admin" manager_type="doctrine_phpcr" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.media.translation_domain%" label="media" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>
             <argument>%sonata.media.admin.media.entity%</argument>
@@ -41,7 +41,7 @@
                 <argument type="service" id="sonata.admin.route.path_info_slashes"/>
             </call>
         </service>
-        <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">
+        <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%" public="true">
             <tag name="sonata.admin" manager_type="doctrine_phpcr" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.gallery.translation_domain%" label="gallery" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>
             <argument>%sonata.media.admin.gallery.entity%</argument>
@@ -59,7 +59,7 @@
                 <argument type="service" id="sonata.admin.route.path_info_slashes"/>
             </call>
         </service>
-        <service id="sonata.media.admin.gallery_has_media" class="%sonata.media.admin.gallery_has_media.class%">
+        <service id="sonata.media.admin.gallery_has_media" class="%sonata.media.admin.gallery_has_media.class%" public="true">
             <tag name="sonata.admin" manager_type="doctrine_phpcr" show_in_dashboard="false" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.gallery_has_media.translation_domain%" label="gallery_has_media" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>
             <argument>%sonata.media.admin.gallery_has_media.entity%</argument>
