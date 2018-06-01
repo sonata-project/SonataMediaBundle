@@ -187,6 +187,9 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function preRemove(MediaInterface $media)
     {
+        if ($this->requireThumbnails()) {
+            $this->thumbnail->delete($this, $media);
+        }
     }
 
     /**
@@ -198,10 +201,6 @@ abstract class BaseProvider implements MediaProviderInterface
 
         if ($this->getFilesystem()->has($path)) {
             $this->getFilesystem()->delete($path);
-        }
-
-        if ($this->requireThumbnails()) {
-            $this->thumbnail->delete($this, $media);
         }
     }
 
