@@ -72,7 +72,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * ExtensionInterface.
+     * @return ExtensionInterface
      */
     public function getTwigExtension(): ExtensionInterface
     {
