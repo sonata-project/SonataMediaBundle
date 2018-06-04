@@ -94,9 +94,9 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
     public function testExecuteWithoutArguments()
     {
-        $this->filesystem->mkdir($this->workspace.DIRECTORY_SEPARATOR.'foo');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_foo.ext');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_2_bar.ext');
+        $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_foo.ext');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_2_bar.ext');
 
         $context = [
             'providers' => [],

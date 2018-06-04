@@ -121,7 +121,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     public function testExecuteEmptyDirectory()
     {
-        $this->filesystem->mkdir($this->workspace.DIRECTORY_SEPARATOR.'foo');
+        $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
 
         $context = [
             'providers' => [],
@@ -140,9 +140,9 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     public function testExecuteFilesExists()
     {
-        $this->filesystem->mkdir($this->workspace.DIRECTORY_SEPARATOR.'foo');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
+        $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
         $context = [
             'providers' => [],
@@ -174,9 +174,9 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     public function testExecuteFilesExistsVerbose()
     {
-        $this->filesystem->mkdir($this->workspace.DIRECTORY_SEPARATOR.'foo');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
+        $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
         $context = [
             'providers' => [],
@@ -217,9 +217,9 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     public function testExecuteDryRun()
     {
-        $this->filesystem->mkdir($this->workspace.DIRECTORY_SEPARATOR.'foo');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
+        $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
         $context = [
             'providers' => [],
@@ -255,9 +255,9 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     public function testExecute()
     {
-        $this->filesystem->mkdir($this->workspace.DIRECTORY_SEPARATOR.'foo');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'qwertz.ext');
-        $this->filesystem->touch($this->workspace.DIRECTORY_SEPARATOR.'foo'.DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
+        $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
+        $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
         $context = [
             'providers' => [],
