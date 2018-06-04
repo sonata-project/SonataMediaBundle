@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
 use FOS\RestBundle\Request\ParamFetcher;
-use FOS\RestBundle\View\View;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryInterface;

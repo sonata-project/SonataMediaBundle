@@ -18,7 +18,7 @@
         <parameter key="sonata.media.admin.gallery_item.translation_domain">%sonata.media.admin.media.translation_domain%</parameter>
     </parameters>
     <services>
-        <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%">
+        <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%" public="true">
             <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.media.translation_domain%" label="media" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>
             <argument>%sonata.media.admin.media.entity%</argument>
@@ -40,10 +40,10 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.admin.media.manager" class="Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager">
+        <service id="sonata.media.admin.media.manager" class="Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager" public="true">
             <argument type="service" id="doctrine_mongodb"/>
         </service>
-        <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%">
+        <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%" public="true">
             <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.gallery.translation_domain%" label="gallery" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>
             <argument>%sonata.media.admin.gallery.entity%</argument>
@@ -58,7 +58,7 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.admin.gallery_item" class="%sonata.media.admin.gallery_item.class%">
+        <service id="sonata.media.admin.gallery_item" class="%sonata.media.admin.gallery_item.class%" public="true">
             <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.gallery_item.translation_domain%" label="gallery_item" show_in_dashboard="false" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>
             <argument>%sonata.media.admin.gallery_item.entity%</argument>

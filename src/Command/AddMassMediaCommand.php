@@ -50,7 +50,7 @@ class AddMassMediaCommand extends BaseCommand
         while (!feof($fp)) {
             $data = fgetcsv($fp, null, $input->getOption('delimiter'), $input->getOption('enclosure'), $input->getOption('escape'));
 
-            if ($imported === -1) {
+            if (-1 === $imported) {
                 $this->setters = $data;
 
                 ++$imported;
