@@ -115,7 +115,7 @@ class MediaController extends Controller
     public function liipImagineFilterAction($path, $filter)
     {
         @trigger_error(
-            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            'The '.__METHOD__.' method is deprecated since 3.12, to be removed in 4.0.',
             E_USER_DEPRECATED
         );
 
