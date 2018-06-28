@@ -42,8 +42,12 @@ class DefaultGenerator implements GeneratorInterface
      */
     public function generatePath(MediaInterface $media)
     {
-        $rep_first_level = (int) ($media->getId() / $this->firstLevel);
-        $rep_second_level = (int) (($media->getId() - ($rep_first_level * $this->firstLevel)) / $this->secondLevel);
+        $mediaId = $media->getId();
+        if (preg_match("/^\{?[a-f\d]{8}-(?:[a-f\d]{4}-){3}[a-f\d]{12}\}?$/i", $mediaId)) {
+            $mediaId = (int) hexdec(implode("", array_slice(explode("-", $mediaId), 0, 2)));
+        }
+        $rep_first_level = (int) ($mediaId / $this->firstLevel);
+        $rep_second_level = (int) (($mediaId - ($rep_first_level * $this->firstLevel)) / $this->secondLevel);
 
         return sprintf('%s/%04s/%02s', $media->getContext(), $rep_first_level + 1, $rep_second_level + 1);
     }
