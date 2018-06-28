@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.14.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.13.1...3.14.0) - 2018-06-27
+### Changed
+- Make service alias `sonata.media.manager.category` public
+- Allow Gaufrette 0.6
+- Moved a code block from BaseProvider::postRemove to BaseProvider::preRemove
+
+### Fixed
+ - Make services public
+
 ## [3.13.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.13.0...3.13.1) - 2018-05-25
 
 ### Changed
