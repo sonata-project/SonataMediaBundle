@@ -89,6 +89,22 @@ class FileProvider extends BaseProvider
     }
 
     /**
+     * @return array
+     */
+    public function getAllowedExtensions()
+    {
+        return $this->allowedExtensions;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllowedMimeTypes()
+    {
+        return $this->allowedMimeTypes;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildEditForm(FormMapper $formMapper)
