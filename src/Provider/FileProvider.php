@@ -89,7 +89,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAllowedExtensions()
     {
@@ -97,7 +97,7 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAllowedMimeTypes()
     {
