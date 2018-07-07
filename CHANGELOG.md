@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.15.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.14.0...3.15.0) - 2018-07-06
+
+### Added
+- Added getters for `allowedExtensions` and  `allowedMimeTypes` properties
+
 ## [3.14.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.13.1...3.14.0) - 2018-06-27
 ### Changed
 - Make service alias `sonata.media.manager.category` public
