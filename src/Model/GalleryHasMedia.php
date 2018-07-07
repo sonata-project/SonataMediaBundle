@@ -14,12 +14,12 @@ namespace Sonata\MediaBundle\Model;
 abstract class GalleryHasMedia implements GalleryHasMediaInterface
 {
     /**
-     * @var MediaInterface
+     * @var MediaInterface|null
      */
     protected $media;
 
     /**
-     * @var GalleryInterface
+     * @var GalleryInterface|null
      */
     protected $gallery;
 
@@ -29,12 +29,12 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     protected $position = 0;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $createdAt;
 
