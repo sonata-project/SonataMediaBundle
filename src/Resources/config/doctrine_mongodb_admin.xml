@@ -8,10 +8,12 @@
         <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\ODM\MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.controller">SonataMediaBundle:MediaAdmin</parameter>
         <parameter key="sonata.media.admin.media.translation_domain">SonataMediaBundle</parameter>
+        <parameter key="sonata.media.admin.media.show_mosaic_button">true</parameter>
         <!-- GALLERY -->
         <parameter key="sonata.media.admin.gallery.class">Sonata\MediaBundle\Admin\GalleryAdmin</parameter>
         <parameter key="sonata.media.admin.gallery.controller">SonataMediaBundle:GalleryAdmin</parameter>
         <parameter key="sonata.media.admin.gallery.translation_domain">%sonata.media.admin.media.translation_domain%</parameter>
+        <parameter key="sonata.media.admin.gallery.show_mosaic_button">true</parameter>
         <!-- GALLERY HAS MEDIA -->
         <parameter key="sonata.media.admin.gallery_has_media.class">Sonata\MediaBundle\Admin\GalleryHasMediaAdmin</parameter>
         <parameter key="sonata.media.admin.gallery_has_media.controller">SonataAdminBundle:CRUD</parameter>
@@ -19,7 +21,7 @@
     </parameters>
     <services>
         <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%" public="true">
-            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.media.translation_domain%" label="media" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.media.translation_domain%" label="media" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%" show_mosaic_button="%sonata.media.admin.media.show_mosaic_button%"/>
             <argument/>
             <argument>%sonata.media.admin.media.entity%</argument>
             <argument>%sonata.media.admin.media.controller%</argument>
@@ -44,7 +46,7 @@
             <argument type="service" id="doctrine_mongodb"/>
         </service>
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%" public="true">
-            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.gallery.translation_domain%" label="gallery" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
+            <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.gallery.translation_domain%" label="gallery" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%" show_mosaic_button="%sonata.media.admin.gallery.show_mosaic_button%"/>
             <argument/>
             <argument>%sonata.media.admin.gallery.entity%</argument>
             <argument>%sonata.media.admin.gallery.controller%</argument>
