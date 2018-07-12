@@ -209,6 +209,69 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
+    /**
+     * @param $configs
+     * @param $args
+     *
+     * @dataProvider dataFilesystemConfiguration
+     */
+    public function testLoadWithFilesystemConfiguration($configs, $args): void
+    {
+        $this->load($configs);
+
+        $this->assertEquals(
+            $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0),
+            $args
+        );
+    }
+
+    public function dataFilesystemConfiguration()
+    {
+        return [
+            [
+                [
+                    'filesystem' => [
+                        's3' => [
+                            'bucket' => 'bucket_name',
+                            'sdk_version' => 3,
+                            'region' => 'region',
+                            'version' => 'version',
+                            'secretKey' => null,
+                            'accessKey' => 'null',
+                        ],
+                    ],
+                ],
+                [
+                    'credentials' => false,
+                    'region' => 'region',
+                    'version' => 'version',
+                ],
+            ],
+            [
+                [
+                    'filesystem' => [
+                        's3' => [
+                            'bucket' => 'bucket_name',
+                            'sdk_version' => 3,
+                            'region' => 'region',
+                            'version' => 'version',
+                            'secretKey' => 'secret',
+                            'accessKey' => 'access',
+                        ],
+                    ],
+                ],
+                [
+                    'credentials' => [
+                        'secret' => 'secret',
+                        'key' => 'access',
+                    ],
+                    'region' => 'region',
+                    'version' => 'version',
+                ],
+            ],
+        ];
+    }
+
     protected function getMinimalConfiguration()
     {
         return [

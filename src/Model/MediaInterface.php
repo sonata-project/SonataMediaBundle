@@ -277,42 +277,42 @@ interface MediaInterface
     /**
      * Set cdn_flush_at.
      *
-     * @param \Datetime $cdnFlushAt
+     * @param \DateTime $cdnFlushAt
      */
-    public function setCdnFlushAt(\Datetime $cdnFlushAt = null);
+    public function setCdnFlushAt(\DateTime $cdnFlushAt = null);
 
     /**
      * Get cdn_flush_at.
      *
-     * @return \Datetime $cdnFlushAt
+     * @return \DateTime $cdnFlushAt
      */
     public function getCdnFlushAt();
 
     /**
      * Set updated_at.
      *
-     * @param \Datetime $updatedAt
+     * @param \DateTime $updatedAt
      */
-    public function setUpdatedAt(\Datetime $updatedAt = null);
+    public function setUpdatedAt(\DateTime $updatedAt = null);
 
     /**
      * Get updated_at.
      *
-     * @return \Datetime $updatedAt
+     * @return \DateTime $updatedAt
      */
     public function getUpdatedAt();
 
     /**
      * Set created_at.
      *
-     * @param \Datetime $createdAt
+     * @param \DateTime $createdAt
      */
-    public function setCreatedAt(\Datetime $createdAt = null);
+    public function setCreatedAt(\DateTime $createdAt = null);
 
     /**
      * Get created_at.
      *
-     * @return \Datetime $createdAt
+     * @return \DateTime $createdAt
      */
     public function getCreatedAt();
 

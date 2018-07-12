@@ -307,8 +307,8 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function prePersist(MediaInterface $media): void
     {
-        $media->setCreatedAt(new \Datetime());
-        $media->setUpdatedAt(new \Datetime());
+        $media->setCreatedAt(new \DateTime());
+        $media->setUpdatedAt(new \DateTime());
     }
 
     /**
@@ -316,7 +316,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function preUpdate(MediaInterface $media): void
     {
-        $media->setUpdatedAt(new \Datetime());
+        $media->setUpdatedAt(new \DateTime());
     }
 
     /**

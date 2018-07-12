@@ -413,16 +413,22 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             ;
 
             if (3 === $config['filesystem']['s3']['sdk_version']) {
-                $container->getDefinition('sonata.media.adapter.service.s3')
-                ->replaceArgument(0, [
-                    'credentials' => [
-                        'secret' => $config['filesystem']['s3']['secretKey'],
-                        'key' => $config['filesystem']['s3']['accessKey'],
-                    ],
+                $arguments = [
+                    'credentials' => false,
                     'region' => $config['filesystem']['s3']['region'],
                     'version' => $config['filesystem']['s3']['version'],
-                ])
-            ;
+                ];
+
+                if (isset($config['filesystem']['s3']['secretKey'], $config['filesystem']['s3']['accessKey'])) {
+                    $arguments['credentials'] = [
+                        'secret' => $config['filesystem']['s3']['secretKey'],
+                        'key' => $config['filesystem']['s3']['accessKey'],
+                    ];
+                }
+
+                $container->getDefinition('sonata.media.adapter.service.s3')
+                    ->replaceArgument(0, $arguments)
+                ;
             } else {
                 $container->getDefinition('sonata.media.adapter.service.s3')
                     ->replaceArgument(0, [

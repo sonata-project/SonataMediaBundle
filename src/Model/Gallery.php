@@ -38,12 +38,12 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     protected $enabled;
 
     /**
-     * @var \Datetime
+     * @var \DateTime|null
      */
     protected $updatedAt;
 
     /**
-     * @var \Datetime
+     * @var \DateTime|null
      */
     protected $createdAt;
 

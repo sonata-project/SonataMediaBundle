@@ -68,28 +68,28 @@ interface GalleryInterface
     /**
      * Set updated_at.
      *
-     * @param \Datetime $updatedAt
+     * @param \DateTime|null $updatedAt
      */
     public function setUpdatedAt(\DateTime $updatedAt = null);
 
     /**
      * Get updated_at.
      *
-     * @return \Datetime $updatedAt
+     * @return \DateTime|null $updatedAt
      */
     public function getUpdatedAt();
 
     /**
      * Set created_at.
      *
-     * @param \Datetime $createdAt
+     * @param \DateTime|null $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt = null);
 
     /**
      * Get created_at.
      *
-     * @return \Datetime $createdAt
+     * @return \DateTime|null $createdAt
      */
     public function getCreatedAt();
 

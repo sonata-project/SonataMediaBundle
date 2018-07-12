@@ -193,8 +193,8 @@ The ``MediaAdmin`` delegates this management to the media provider.
         $media->setContentType('video/x-flv');
         $media->setProviderStatus(Media::STATUS_OK);
 
-        $media->setCreatedAt(new \Datetime());
-        $media->setUpdatedAt(new \Datetime());
+        $media->setCreatedAt(new \DateTime());
+        $media->setUpdatedAt(new \DateTime());
     }
 
 The update method should only update data that cannot be managed by the user.
@@ -217,7 +217,7 @@ The update method should only update data that cannot be managed by the user.
         $media->setWidth($metadata['width']);
         $media->setProviderStatus(Media::STATUS_OK);
 
-        $media->setUpdatedAt(new \Datetime());
+        $media->setUpdatedAt(new \DateTime());
     }
 
 At this point, the ``Media`` object is populated with data from the vimeo's
