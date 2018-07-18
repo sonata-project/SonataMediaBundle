@@ -237,12 +237,11 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                             'region' => 'region',
                             'version' => 'version',
                             'secretKey' => null,
-                            'accessKey' => 'null',
+                            'accessKey' => null,
                         ],
                     ],
                 ],
                 [
-                    'credentials' => false,
                     'region' => 'region',
                     'version' => 'version',
                 ],
