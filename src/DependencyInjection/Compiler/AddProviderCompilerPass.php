@@ -133,6 +133,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     private function getExtensionConfig(ContainerBuilder $container)
     {
         $config = $container->getExtensionConfig('sonata_media');
+        $config = $container->getParameterBag()->resolveValue($config);
         $processor = new Processor();
 
         return $processor->processConfiguration(new Configuration(), $config);
