@@ -132,17 +132,6 @@ class ImageProvider extends FileProvider
     /**
      * {@inheritdoc}
      */
-    public function getReferenceImage(MediaInterface $media)
-    {
-        return sprintf('%s/%s',
-            $this->generatePath($media),
-            $media->getProviderReference()
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = true): void
     {
         try {
