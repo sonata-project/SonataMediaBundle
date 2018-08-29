@@ -56,7 +56,7 @@ class AddMassMediaCommand extends BaseCommand
                 continue;
             }
 
-            if (!is_array($data)) {
+            if (!\is_array($data)) {
                 continue;
             }
 
@@ -85,7 +85,7 @@ class AddMassMediaCommand extends BaseCommand
             throw new \RuntimeException('Please provide a CSV file argument or CSV input stream');
         }
 
-        return fopen($input->getOption('file'), 'r');
+        return fopen($input->getOption('file'), 'rb');
     }
 
     /**
@@ -97,7 +97,7 @@ class AddMassMediaCommand extends BaseCommand
         $media = $this->getMediaManager()->create();
 
         foreach ($this->setters as $pos => $name) {
-            call_user_func([$media, 'set'.$name], $data[$pos]);
+            \call_user_func([$media, 'set'.$name], $data[$pos]);
         }
 
         try {

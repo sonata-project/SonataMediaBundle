@@ -213,8 +213,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
     public function getAdapterClassNames()
     {
         return [
-            get_class($this->master),
-            get_class($this->slave),
+            \get_class($this->master),
+            \get_class($this->slave),
         ];
     }
 

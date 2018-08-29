@@ -254,7 +254,7 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (11 === strlen($media->getBinaryContent())) {
+        if (11 === \strlen($media->getBinaryContent())) {
             return;
         }
 
