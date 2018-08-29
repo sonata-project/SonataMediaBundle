@@ -130,13 +130,13 @@ class CloudFront implements CDNInterface
             $result = $this->getClient()->createInvalidation([
                 'DistributionId' => $this->distributionId,
                 'Paths' => [
-                    'Quantity' => count($normalizedPaths),
+                    'Quantity' => \count($normalizedPaths),
                     'Items' => $normalizedPaths,
                 ],
                 'CallerReference' => $this->getCallerReference($normalizedPaths),
             ]);
 
-            if (!in_array($status = $result->get('Status'), ['Completed', 'InProgress'])) {
+            if (!\in_array($status = $result->get('Status'), ['Completed', 'InProgress'])) {
                 throw new \RuntimeException('Unable to flush : '.$status);
             }
 

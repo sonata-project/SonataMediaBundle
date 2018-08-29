@@ -74,7 +74,7 @@ class RefreshMetadataCommand extends BaseCommand
 
         $this->log(sprintf(
             'Loaded %s medias for generating thumbs (provider: %s, context: %s)',
-            count($medias),
+            \count($medias),
             $provider->getName(),
             $context
         ));

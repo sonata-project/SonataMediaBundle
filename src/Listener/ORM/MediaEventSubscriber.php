@@ -53,7 +53,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         $em = $args->getEntityManager();
 
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet(
-            $em->getClassMetadata(get_class($args->getEntity())),
+            $em->getClassMetadata(\get_class($args->getEntity())),
             $args->getEntity()
         );
     }
