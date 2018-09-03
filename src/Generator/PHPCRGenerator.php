@@ -22,10 +22,10 @@ class PHPCRGenerator implements GeneratorInterface
     {
         $segments = preg_split('#/#', $media->getId(), null, PREG_SPLIT_NO_EMPTY);
 
-        if (count($segments) > 1) {
+        if (\count($segments) > 1) {
             // remove last part from id
             array_pop($segments);
-            $path = implode($segments, '/');
+            $path = implode('/', $segments);
         } else {
             $path = '';
         }

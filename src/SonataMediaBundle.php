@@ -43,8 +43,8 @@ class SonataMediaBundle extends Bundle
     public function boot()
     {
         // this is required by the AWS SDK (see: https://github.com/knplabs/Gaufrette)
-        if (!defined('AWS_CERTIFICATE_AUTHORITY')) {
-            define('AWS_CERTIFICATE_AUTHORITY', true);
+        if (!\defined('AWS_CERTIFICATE_AUTHORITY')) {
+            \define('AWS_CERTIFICATE_AUTHORITY', true);
         }
 
         $this->registerFormMapping();
