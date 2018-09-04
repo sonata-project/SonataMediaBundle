@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sonata\MediaBundle\LiipImagine;
 
 use Liip\ImagineBundle\Imagine\Cache\Resolver\ResolverInterface;
@@ -30,13 +39,12 @@ class FilterResolverRegistry implements ResolverRegistryInterface
         $this->defaultResolver = $defaultResolver;
     }
 
-
     public function addResolver($name, ResolverInterface $resolver)
     {
         if (isset($this->resolvers[$name])) {
             throw new \LogicException(sprintf(
                 'There is already a resolver `%s` registered with name `%s`',
-                get_class($this->resolvers[$name]),
+                \get_class($this->resolvers[$name]),
                 $name
             ));
         }
