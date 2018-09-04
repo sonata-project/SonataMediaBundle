@@ -10,7 +10,7 @@
         </service>
         <service id="sonata.media.liip_imagine.filter_resolver_registry" class="Sonata\MediaBundle\LiipImagine\FilterResolverRegistry">
             <argument type="service" id="liip_imagine.filter.configuration" />
-            <argument type="string" id="%liip_imagine.cache.resolver.default%" />
+            <argument type="string">%liip_imagine.cache.resolver.default%</argument>
         </service>
     </services>
 </container>
