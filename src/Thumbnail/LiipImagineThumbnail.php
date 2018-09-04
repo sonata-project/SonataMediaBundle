@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Thumbnail;
 
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Sonata\MediaBundle\LiipImagine\ResolverRegistryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -23,19 +24,24 @@ class LiipImagineThumbnail implements ThumbnailInterface
     /**
      * @deprecated Since version 3.3, will be removed in 4.0.
      *
-     * @var RouterInterface
+     * @var RouterInterface|null
      */
     protected $router;
 
     /**
-     * @var CacheManager
+     * @var CacheManager|null
      */
     private $cacheManager;
+    /**
+     * @var ResolverRegistryInterface|null
+     */
+    private $resolverRegistry;
 
     /**
-     * @param RouterInterface|CacheManager $cacheManager
+     * @param RouterInterface|CacheManager   $cacheManager
+     * @param ResolverRegistryInterface|null $resolverRegistry
      */
-    public function __construct($cacheManager)
+    public function __construct($cacheManager, ResolverRegistryInterface $resolverRegistry = null)
     {
         if ($cacheManager instanceof RouterInterface) {
             @trigger_error(sprintf(
@@ -46,6 +52,14 @@ class LiipImagineThumbnail implements ThumbnailInterface
             $this->router = $cacheManager;
         }
         $this->cacheManager = $cacheManager;
+        if (!$resolverRegistry instanceof ResolverRegistryInterface) {
+            @trigger_error(sprintf(
+                'Using %s without a %s is deprecated since version 3.16 and will be removed in 4.0.',
+                __CLASS__,
+                ResolverRegistryInterface::class
+            ), E_USER_DEPRECATED);
+        }
+        $this->resolverRegistry = $resolverRegistry;
     }
 
     /**
@@ -78,13 +92,18 @@ class LiipImagineThumbnail implements ThumbnailInterface
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
-        if (MediaProviderInterface::FORMAT_REFERENCE !== $format) {
-            throw new \RuntimeException('No private url for LiipImagineThumbnail');
+        $path = $provider->getReferenceImage($media);
+        if (MediaProviderInterface::FORMAT_ADMIN === $format || MediaProviderInterface::FORMAT_REFERENCE === $format) {
+            return $path;
+        }
+        if (!$this->resolverRegistry instanceof ResolverRegistryInterface) {
+            throw new \RuntimeException(sprintf(
+                'Cannot generate private url for LiipImagine, use the in 3.16 added %s to add support.',
+                ResolverRegistryInterface::class
+            ));
         }
 
-        $path = $provider->getReferenceImage($media);
-
-        return $path;
+        return $this->resolverRegistry->getResolver($format)->resolve($path, $format);
     }
 
     /**
@@ -100,6 +119,9 @@ class LiipImagineThumbnail implements ThumbnailInterface
      */
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
-        // feature not available
+        $path = $provider->getReferenceImage($media);
+        foreach ((array) ($formats ?: array_keys($provider->getFormats())) as $format) {
+            $this->resolverRegistry->getResolver($format)->remove([$path], [$format]);
+        }
     }
 }

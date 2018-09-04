@@ -8,7 +8,6 @@
         <parameter key="sonata.media.provider.vimeo.class">Sonata\MediaBundle\Provider\VimeoProvider</parameter>
         <parameter key="sonata.media.thumbnail.format">Sonata\MediaBundle\Thumbnail\FormatThumbnail</parameter>
         <parameter key="sonata.media.thumbnail.format.default">jpg</parameter>
-        <parameter key="sonata.media.thumbnail.liip_imagine">Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail</parameter>
         <parameter key="sonata.media.pool.class">Sonata\MediaBundle\Provider\Pool</parameter>
     </parameters>
     <services>
@@ -18,9 +17,6 @@
         <service id="%sonata.media.pool.class%" alias="sonata.media.pool"/>
         <service id="sonata.media.thumbnail.format" class="%sonata.media.thumbnail.format%">
             <argument type="string">%sonata.media.thumbnail.format.default%</argument>
-        </service>
-        <service id="sonata.media.thumbnail.liip_imagine" class="%sonata.media.thumbnail.liip_imagine%">
-            <argument type="service" id="liip_imagine.cache.manager" on-invalid="null"/>
         </service>
         <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%" public="true">
             <tag name="sonata.media.provider"/>

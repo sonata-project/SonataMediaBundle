@@ -23,6 +23,7 @@ use Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType;
 use Sonata\MediaBundle\Form\Type\ApiGalleryType;
 use Sonata\MediaBundle\Form\Type\ApiMediaType;
 use Sonata\MediaBundle\Form\Type\MediaType;
+use SonataMediaBundle\DependencyInjection\Compiler\FilterResolverRegistryCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -37,6 +38,9 @@ class SonataMediaBundle extends Bundle
         $container->addCompilerPass(new GlobalVariablesCompilerPass());
         $container->addCompilerPass(new SecurityContextCompilerPass());
         $container->addCompilerPass(new ThumbnailCompilerPass());
+        if ($container->hasExtension('liip_imagine')) {
+            $container->addCompilerPass(new FilterResolverRegistryCompilerPass());
+        }
 
         $this->registerFormMapping();
     }

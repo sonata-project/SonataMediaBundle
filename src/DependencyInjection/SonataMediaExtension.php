@@ -127,8 +127,8 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $loader->load('seo_block.xml');
         }
 
-        if (!isset($bundles['LiipImagineBundle'])) {
-            $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
+        if (isset($bundles['LiipImagineBundle'])) {
+            $loader->load('liip_imagine.xml');
         }
 
         if ($this->isClassificationEnabled($config)) {
