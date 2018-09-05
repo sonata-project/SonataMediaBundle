@@ -105,7 +105,7 @@ class LiipImagineThumbnailTest extends TestCase
 
     /**
      * @group legacy
-     * @expectedDeprecation Using Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail without a Sonata\MediaBundle\LiipImagine\ResolverRegistryInterface is deprecated since version 3.16 and will be removed in 4.0.
+     * @expectedDeprecation Using Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail without a Sonata\MediaBundle\LiipImagine\ResolverRegistryInterface is deprecated since version 3.16 and will no longer be possible in 4.0.
      */
     public function testAnotherLegacyGenerate()
     {
