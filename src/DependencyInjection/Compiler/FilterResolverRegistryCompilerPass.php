@@ -11,11 +11,11 @@
 
 namespace SonataMediaBundle\DependencyInjection\Compiler;
 
-use Liip\ImagineBundle\DependencyInjection\Compiler\AbstractCompilerPass;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class FilterResolverRegistryCompilerPass extends AbstractCompilerPass
+final class FilterResolverRegistryCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,6 @@ class FilterResolverRegistryCompilerPass extends AbstractCompilerPass
 
             foreach ($tags as $id => $tag) {
                 $manager->addMethodCall('addResolver', [$tag[0]['resolver'], new Reference($id)]);
-                $this->log($container, 'Registered cache resolver: %s', $id);
             }
         }
     }

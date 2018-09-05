@@ -14,7 +14,7 @@ namespace Sonata\MediaBundle\LiipImagine;
 use Liip\ImagineBundle\Imagine\Cache\Resolver\ResolverInterface;
 use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
 
-class FilterResolverRegistry implements ResolverRegistryInterface
+final class FilterResolverRegistry implements ResolverRegistryInterface
 {
     /**
      * @var ResolverInterface[]
@@ -43,7 +43,7 @@ class FilterResolverRegistry implements ResolverRegistryInterface
     {
         if (isset($this->resolvers[$name])) {
             throw new \LogicException(sprintf(
-                'There is already a resolver `%s` registered with name `%s`',
+                'There is already a resolver "%s" registered with name "%s"',
                 \get_class($this->resolvers[$name]),
                 $name
             ));
@@ -58,7 +58,7 @@ class FilterResolverRegistry implements ResolverRegistryInterface
         $name = empty($config['cache']) ? $this->defaultResolver : $config['cache'];
         if (!isset($this->resolvers[$name])) {
             throw new \OutOfBoundsException(sprintf(
-                'No cache resolver `%s registered, verify your resolver tags configuration',
+                'No "%s" cache resolver registered, verify your resolver tags configuration',
                 $name
             ));
         }

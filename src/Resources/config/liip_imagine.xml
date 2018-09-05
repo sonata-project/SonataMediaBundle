@@ -6,7 +6,7 @@
     <services>
         <service id="sonata.media.thumbnail.liip_imagine" class="%sonata.media.thumbnail.liip_imagine%">
             <argument type="service" id="liip_imagine.cache.manager" on-invalid="null"/>
-            <argument type="service" id="inventis.media.liip_imagine.filter_resolver_registry" on-invalid="null"/>
+            <argument type="service" id="sonata.media.liip_imagine.filter_resolver_registry" on-invalid="null"/>
         </service>
         <service id="sonata.media.liip_imagine.filter_resolver_registry" class="Sonata\MediaBundle\LiipImagine\FilterResolverRegistry">
             <argument type="service" id="liip_imagine.filter.configuration" />

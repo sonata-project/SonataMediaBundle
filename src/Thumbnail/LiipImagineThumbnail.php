@@ -54,7 +54,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
         $this->cacheManager = $cacheManager;
         if (!$resolverRegistry instanceof ResolverRegistryInterface) {
             @trigger_error(sprintf(
-                'Using %s without a %s is deprecated since version 3.16 and will be removed in 4.0.',
+                'Using %s without a %s is deprecated since version 3.16 and will no longer be possible in 4.0.',
                 __CLASS__,
                 ResolverRegistryInterface::class
             ), E_USER_DEPRECATED);
@@ -98,7 +98,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
         }
         if (!$this->resolverRegistry instanceof ResolverRegistryInterface) {
             throw new \RuntimeException(sprintf(
-                'Cannot generate private url for LiipImagine, use the in 3.16 added %s to add support.',
+                'Cannot generate private url for LiipImagine, use the "%s" added in 3.16 to add support.',
                 ResolverRegistryInterface::class
             ));
         }
