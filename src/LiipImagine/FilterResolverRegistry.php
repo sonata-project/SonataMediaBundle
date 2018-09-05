@@ -30,8 +30,7 @@ final class FilterResolverRegistry implements ResolverRegistryInterface
     private $defaultResolver;
 
     /**
-     * @param FilterConfiguration $filterConfiguration
-     * @param string              $defaultResolver
+     * @param string $defaultResolver
      */
     public function __construct(FilterConfiguration $filterConfiguration, $defaultResolver = 'default')
     {
