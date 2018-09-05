@@ -131,7 +131,7 @@ class MediaBlockService extends AbstractAdminBlockService
                 ]],
                 [$this->getMediaBuilder($formMapper), null, []],
                 ['format', ChoiceType::class, [
-                    'required' => count($formatChoices) > 0,
+                    'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],
@@ -169,7 +169,7 @@ class MediaBlockService extends AbstractAdminBlockService
     {
         $media = $block->getSetting('mediaId', null);
 
-        if (is_int($media)) {
+        if (\is_int($media)) {
             $media = $this->mediaManager->findOneBy(['id' => $media]);
         }
 
@@ -181,7 +181,7 @@ class MediaBlockService extends AbstractAdminBlockService
      */
     public function prePersist(BlockInterface $block): void
     {
-        $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
 
     /**
@@ -189,7 +189,7 @@ class MediaBlockService extends AbstractAdminBlockService
      */
     public function preUpdate(BlockInterface $block): void
     {
-        $block->setSetting('mediaId', is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
 
     /**

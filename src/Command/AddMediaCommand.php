@@ -77,7 +77,7 @@ class AddMediaCommand extends BaseCommand
             $media->setAuthorName($input->getOption('author'));
         }
 
-        if (in_array($input->getOption('enabled'), [1, true, 'true'], true)) {
+        if (\in_array($input->getOption('enabled'), [1, true, 'true'], true)) {
             $media->setEnabled(true);
         } else {
             $media->setEnabled(false);

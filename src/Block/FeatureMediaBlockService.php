@@ -86,7 +86,7 @@ class FeatureMediaBlockService extends MediaBlockService
                 ]],
                 [$this->getMediaBuilder($formMapper), null, []],
                 ['format', ChoiceType::class, [
-                    'required' => count($formatChoices) > 0,
+                    'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],

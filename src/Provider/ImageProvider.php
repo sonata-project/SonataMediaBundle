@@ -87,7 +87,7 @@ class ImageProvider extends FileProvider
         if (MediaProviderInterface::FORMAT_ADMIN !== $format) {
             $srcSetFormats = $this->getFormats();
 
-            if (isset($options['srcset']) && is_array($options['srcset'])) {
+            if (isset($options['srcset']) && \is_array($options['srcset'])) {
                 $srcSetFormats = [];
                 foreach ($options['srcset'] as $srcSetFormat) {
                     $formatName = $this->getFormatName($media, $srcSetFormat);
@@ -202,8 +202,8 @@ class ImageProvider extends FileProvider
             return;
         }
 
-        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
-            || !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
+            || !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             return;
         }
 

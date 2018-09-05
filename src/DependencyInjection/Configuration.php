@@ -202,7 +202,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('port')->defaultValue(21)->end()
                                 ->scalarNode('passive')->defaultValue(false)->end()
                                 ->scalarNode('create')->defaultValue(false)->end()
-                                ->scalarNode('mode')->defaultValue(defined('FTP_BINARY') ? FTP_BINARY : false)->end()
+                                ->scalarNode('mode')->defaultValue(\defined('FTP_BINARY') ? FTP_BINARY : false)->end()
                             ->end()
                         ->end()
 

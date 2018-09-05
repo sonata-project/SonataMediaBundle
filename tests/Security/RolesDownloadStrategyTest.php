@@ -32,7 +32,7 @@ class RolesDownloadStrategyTest extends TestCase
         $security->expects($this->any())
             ->method('isGranted')
             ->will($this->returnCallback(function (array $roles) {
-                return in_array('ROLE_ADMIN', $roles);
+                return \in_array('ROLE_ADMIN', $roles);
             }));
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
@@ -49,7 +49,7 @@ class RolesDownloadStrategyTest extends TestCase
         $security->expects($this->any())
             ->method('isGranted')
             ->will($this->returnCallback(function (array $roles) {
-                return in_array('FOO', $roles);
+                return \in_array('FOO', $roles);
             }));
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);

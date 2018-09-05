@@ -63,7 +63,7 @@ class ServiceProviderDataTransformer implements DataTransformerInterface, Logger
             // An exception here would prevent us to provide meaningful errors through the Form
             // Error message taken from Monolog\ErrorHandler
             $this->logger->error(
-                sprintf('Caught Exception %s: "%s" at %s line %s', get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()),
+                sprintf('Caught Exception %s: "%s" at %s line %s', \get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()),
                 ['exception' => $e]
             );
         }

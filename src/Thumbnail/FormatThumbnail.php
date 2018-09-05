@@ -79,7 +79,7 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         foreach ($provider->getFormats() as $format => $settings) {
-            if (substr($format, 0, strlen($media->getContext())) == $media->getContext() ||
+            if (substr($format, 0, \strlen($media->getContext())) == $media->getContext() ||
                 MediaProviderInterface::FORMAT_ADMIN === $format) {
                 $provider->getResizer()->resize(
                     $media,
@@ -99,11 +99,11 @@ class FormatThumbnail implements ThumbnailInterface
     {
         if (null === $formats) {
             $formats = array_keys($provider->getFormats());
-        } elseif (is_string($formats)) {
+        } elseif (\is_string($formats)) {
             $formats = [$formats];
         }
 
-        if (!is_array($formats)) {
+        if (!\is_array($formats)) {
             throw new \InvalidArgumentException('"Formats" argument should be string or array');
         }
 
@@ -123,7 +123,7 @@ class FormatThumbnail implements ThumbnailInterface
     protected function getExtension(MediaInterface $media)
     {
         $ext = $media->getExtension();
-        if (!is_string($ext) || strlen($ext) < 3) {
+        if (!\is_string($ext) || \strlen($ext) < 3) {
             $ext = $this->defaultFormat;
         }
 

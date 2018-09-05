@@ -99,7 +99,6 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->checkAccess('create')->shouldBeCalled();
         $this->request->get('provider')->willReturn(true);
         $this->request->isMethod('get')->willReturn(true);
-
         $response = $this->controller->createAction($this->request->reveal());
 
         $this->assertInstanceOf(Response::class, $response);
@@ -177,13 +176,13 @@ class MediaAdminControllerTest extends TestCase
         $form = $this->prophesize(Form::class);
         $formView = $this->prophesize(FormView::class);
 
-        $this->configureSetFormTheme($formView->reveal(), 'formTheme');
+        $this->configureSetFormTheme($formView->reveal(), ['formTheme']);
         $this->admin->hasActiveSubClass()->willReturn(false);
         $this->admin->getClass()->willReturn($class);
         $this->admin->getNewInstance()->willReturn($object->reveal());
         $this->admin->setSubject($object->reveal())->shouldBeCalled();
         $this->admin->getForm()->willReturn($form->reveal());
-        $this->admin->getFormTheme()->willReturn('formTheme');
+        $this->admin->getFormTheme()->willReturn(['formTheme']);
         $this->admin->getTemplate('edit')->willReturn('template');
         $form->createView()->willReturn($formView->reveal());
         $form->setData($object->reveal())->shouldBeCalled();

@@ -23,16 +23,16 @@ class MediaManager extends BaseDocumentManager
     public function save($entity, $andFlush = true): void
     {
         // BC compatibility for $context parameter
-        if ($andFlush && is_string($andFlush)) {
+        if ($andFlush && \is_string($andFlush)) {
             $entity->setContext($andFlush);
         }
 
         // BC compatibility for $providerName parameter
-        if (3 == func_num_args()) {
+        if (3 == \func_num_args()) {
             $entity->setProviderName(func_get_arg(2));
         }
 
-        if ($andFlush && is_bool($andFlush)) {
+        if ($andFlush && \is_bool($andFlush)) {
             parent::save($entity, $andFlush);
         } else {
             // BC compatibility with previous signature

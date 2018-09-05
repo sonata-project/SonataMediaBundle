@@ -112,7 +112,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->load();
 
         $this->assertContainerBuilderHasService($serviceId);
-        if (extension_loaded($extension)) {
+        if (\extension_loaded($extension)) {
             $this->isInstanceOf($type, $this->container->get($serviceId));
         }
     }
@@ -131,7 +131,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->load();
 
         $this->assertContainerBuilderHasAlias('sonata.media.resizer.default', 'sonata.media.resizer.simple');
-        if (extension_loaded('gd')) {
+        if (\extension_loaded('gd')) {
             $this->assertContainerBuilderHasService(
                 'sonata.media.resizer.default',
                 SimpleResizer::class
@@ -150,7 +150,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->load();
 
         $this->assertContainerBuilderHasService($serviceId);
-        if (extension_loaded('gd')) {
+        if (\extension_loaded('gd')) {
             $this->isInstanceOf($type, $this->container->get($serviceId));
         }
     }

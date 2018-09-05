@@ -77,7 +77,7 @@ class UpdateCdnStatusCommand extends BaseCommand
             'cdnIsFlushable' => true,
         ]);
 
-        $this->log(sprintf('Loaded %s medias for updating CDN status (provider: %s, context: %s)', count($medias), $provider->getName(), $context));
+        $this->log(sprintf('Loaded %s medias for updating CDN status (provider: %s, context: %s)', \count($medias), $provider->getName(), $context));
 
         foreach ($medias as $media) {
             $cdn = $provider->getCdn();

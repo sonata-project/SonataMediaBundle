@@ -264,7 +264,7 @@ class FileProvider extends BaseProvider
             'Content-Disposition' => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
         ], $headers);
 
-        if (!in_array($mode, ['http', 'X-Sendfile', 'X-Accel-Redirect'])) {
+        if (!\in_array($mode, ['http', 'X-Sendfile', 'X-Accel-Redirect'])) {
             throw new \RuntimeException('Invalid mode provided');
         }
 
@@ -306,7 +306,7 @@ class FileProvider extends BaseProvider
         } elseif ($media->getBinaryContent() instanceof File) {
             $fileName = $media->getBinaryContent()->getFilename();
         } else {
-            throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent())));
+            throw new \RuntimeException(sprintf('Invalid binary content type: %s', \get_class($media->getBinaryContent())));
         }
 
         if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
@@ -316,14 +316,14 @@ class FileProvider extends BaseProvider
                ->end();
         }
 
-        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
+        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
             $errorElement
                 ->with('binaryContent')
                 ->addViolation('Invalid extensions')
                 ->end();
         }
 
-        if ('' != $media->getBinaryContent()->getFilename() && !in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+        if ('' != $media->getBinaryContent()->getFilename() && !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid mime type : %type%', ['%type%' => $media->getBinaryContent()->getMimeType()])

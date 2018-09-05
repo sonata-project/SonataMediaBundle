@@ -167,7 +167,7 @@ class GalleryBlockService extends AbstractAdminBlockService
                     'label' => 'form.label_context',
                 ]],
                 ['format', ChoiceType::class, [
-                    'required' => count($formatChoices) > 0,
+                    'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],
@@ -218,7 +218,7 @@ class GalleryBlockService extends AbstractAdminBlockService
      */
     public function prePersist(BlockInterface $block): void
     {
-        $block->setSetting('galleryId', is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
+        $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
     }
 
     /**
@@ -226,7 +226,7 @@ class GalleryBlockService extends AbstractAdminBlockService
      */
     public function preUpdate(BlockInterface $block): void
     {
-        $block->setSetting('galleryId', is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
+        $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
     }
 
     /**

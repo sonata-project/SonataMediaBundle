@@ -37,7 +37,7 @@ class ApiMediaFile extends File
      */
     public function __construct($handle)
     {
-        if (!is_resource($handle)) {
+        if (!\is_resource($handle)) {
             throw new \RuntimeException('handle is not a resource');
         }
 
