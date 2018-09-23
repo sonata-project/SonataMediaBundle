@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.16.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.15.0...3.16.0) - 2018-09-23
+
+### Added
+- S3 Connection without use of credentials (access and secret keys) but with
+  IAM roles (Amazon instances must have been configured with it).
+
+### Fixed
+- Fixed S3 credentials set to false when no credentials are provided
+- Bug where an extension config with unresolved parameters was processed in a compiler pass
+
 ## [3.15.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.14.0...3.15.0) - 2018-07-06
 
 ### Added
