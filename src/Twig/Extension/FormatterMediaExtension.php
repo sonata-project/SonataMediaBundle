@@ -11,23 +11,21 @@
 
 namespace Sonata\MediaBundle\Twig\Extension;
 
-use Sonata\FormatterBundle\Extension\BaseProxyExtension;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\ExtensionInterface;
 
-class FormatterMediaExtension extends BaseProxyExtension
+class FormatterMediaExtension extends AbstractExtension implements ExtensionInterface
 {
     /**
      * @var \Twig_Extension
      */
     protected $twigExtension;
 
-    /**
-     * @param \Twig_Extension $twigExtension
-     */
-    public function __construct(\Twig_Extension $twigExtension)
+    public function __construct(ExtensionInterface $twigExtension)
     {
         $this->twigExtension = $twigExtension;
     }
@@ -69,7 +67,7 @@ class FormatterMediaExtension extends BaseProxyExtension
     }
 
     /**
-     * {@inheritdoc}
+     * @return ExtensionInterface
      */
     public function getTwigExtension()
     {
@@ -109,5 +107,30 @@ class FormatterMediaExtension extends BaseProxyExtension
     public function path($media, $format)
     {
         return $this->getTwigExtension()->path($media, $format);
+    }
+
+    public function getNodeVisitors()
+    {
+        return $this->getTwigExtension()->getNodeVisitors();
+    }
+
+    public function getFilters()
+    {
+        return $this->getTwigExtension()->getFilters();
+    }
+
+    public function getTests()
+    {
+        return $this->getTwigExtension()->getTests();
+    }
+
+    public function getFunctions()
+    {
+        return $this->getTwigExtension()->getFunctions();
+    }
+
+    public function getOperators()
+    {
+        return $this->getTwigExtension()->getOperators();
     }
 }
