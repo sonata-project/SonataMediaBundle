@@ -138,7 +138,10 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function testTransformWithUrl()
+    /**
+     * @dataProvider dataTransformWithUrl
+     */
+    public function testTransformWithUrl($url)
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
@@ -151,7 +154,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
         $media = new Media();
-        $media->setBinaryContent('http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds');
+        $media->setBinaryContent($url);
         $media->setId(1023456);
 
         // pre persist the media
@@ -159,6 +162,17 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $this->assertSame('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
         $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
+    }
+
+    public function dataTransformWithUrl()
+    {
+        return [
+            ['http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds'],
+            ['http://www.dailymotion.com/video/x9wjql'],
+            ['https://www.dailymotion.com/video/x9wjql'],
+            ['www.dailymotion.com/video/x9wjql'],
+            ['x9wjql'],
+        ];
     }
 
     public function testForm()

@@ -183,6 +183,7 @@ class MediaAdminControllerTest extends TestCase
         $form->setData($object->reveal())->shouldBeCalled();
         $form->handleRequest($this->request->reveal())->shouldBeCalled();
         $form->isSubmitted()->willReturn(false);
+        $form->all()->willReturn(['field' => null]);
     }
 
     private function configureGetCurrentRequest($request)
