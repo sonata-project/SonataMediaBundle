@@ -133,4 +133,19 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
     {
         return $this->getTwigExtension()->getOperators();
     }
+
+    public function getAllowedFilters()
+    {
+        return [];
+    }
+
+    public function getAllowedFunctions()
+    {
+        return [];
+    }
+
+    public function getAllowedProperties()
+    {
+        return [];
+    }
 }
