@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.16.3](https://github.com/sonata-project/SonataMediaBundle/compare/3.16.2...3.16.3) - 2018-11-05
+### Fixed
+- Added missing methods to `FormatterMediaExtension`
+
 ## [3.16.2](https://github.com/sonata-project/SonataMediaBundle/compare/3.16.1...3.16.2) - 2018-10-17
 ### Fixed
  - Fix dailymotion regex to extract the video reference from the url.
