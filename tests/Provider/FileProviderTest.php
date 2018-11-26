@@ -365,7 +365,7 @@ class FileProviderTest extends AbstractProviderTest
         $errorElement->expects($this->once())->method('with')
             ->will($this->returnSelf());
         $errorElement->expects($this->once())->method('addViolation')
-            ->with($this->stringContains('Invalid mime type : %type%', ['type' => 'bar/baz']))
+            ->with('Invalid mime type : %type%', ['%type%' => 'bar/baz'])
             ->will($this->returnSelf());
         $errorElement->expects($this->once())->method('end')
             ->will($this->returnSelf());
