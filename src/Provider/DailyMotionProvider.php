@@ -151,7 +151,7 @@ class DailyMotionProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/www.dailymotion.com\/video\/([0-9a-zA-Z]*)_/", $media->getBinaryContent(), $matches)) {
+        if (preg_match("/^(?:https?:\/\/)?www.dailymotion.com\/video\/([0-9a-zA-Z]*)/", $media->getBinaryContent(), $matches)) {
             $media->setBinaryContent($matches[1]);
         }
     }
