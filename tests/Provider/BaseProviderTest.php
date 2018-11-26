@@ -39,10 +39,6 @@ class BaseProviderTest extends AbstractProviderTest
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
 
-        $filesystem->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($file));
-
         $cdn = new Server('/uploads/media');
 
         $generator = new DefaultGenerator();
