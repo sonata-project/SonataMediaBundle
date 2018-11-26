@@ -119,6 +119,9 @@ class FileProviderTest extends AbstractProviderTest
         $provider->buildEditForm($formMapper);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testThumbnail()
     {
         $provider = $this->getProvider();
@@ -313,6 +316,9 @@ class FileProviderTest extends AbstractProviderTest
         $setFileContents->invoke($provider, $media);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testValidate()
     {
         $errorElement = $this->getMockBuilder(ErrorElement::class)
