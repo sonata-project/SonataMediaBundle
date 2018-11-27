@@ -41,10 +41,6 @@ class BaseProviderTest extends AbstractProviderTest
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
 
-        $filesystem->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($file));
-
         $cdn = new Server('/uploads/media');
 
         $generator = new DefaultGenerator();
@@ -54,6 +50,7 @@ class BaseProviderTest extends AbstractProviderTest
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail, $metadata);
+        $this->assertInstanceOf(BaseProvider::class, $provider);
 
         return $provider;
     }

@@ -103,6 +103,9 @@ class ProviderDataTransformerTest extends TestCase
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testReverseTransformWithMediaAndUploadFileInstance(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);

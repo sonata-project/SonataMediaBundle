@@ -121,6 +121,9 @@ class FileProviderTest extends AbstractProviderTest
         $provider->buildEditForm($formMapper);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testThumbnail(): void
     {
         $provider = $this->getProvider();
@@ -316,6 +319,9 @@ class FileProviderTest extends AbstractProviderTest
         $setFileContents->invoke($provider, $media);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testValidate(): void
     {
         $errorElement = $this->getMockBuilder(ErrorElement::class)
@@ -368,7 +374,7 @@ class FileProviderTest extends AbstractProviderTest
         $errorElement->expects($this->once())->method('with')
             ->will($this->returnSelf());
         $errorElement->expects($this->once())->method('addViolation')
-            ->with($this->stringContains('Invalid mime type : %type%', ['type' => 'bar/baz']))
+            ->with('Invalid mime type : %type%', ['%type%' => 'bar/baz'])
             ->will($this->returnSelf());
         $errorElement->expects($this->once())->method('end')
             ->will($this->returnSelf());
