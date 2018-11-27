@@ -73,7 +73,7 @@
         "friendsofsymfony/rest-bundle": "^2.1",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
         "liip/imagine-bundle": "^1.9",
-        "matthiasnoback/symfony-dependency-injection-test": "^1.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.0",
         "nelmio/api-doc-bundle": "^2.11",
         "sonata-project/admin-bundle": "^3.31",
         "sonata-project/block-bundle": "^3.11",
