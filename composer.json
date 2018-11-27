@@ -40,9 +40,9 @@
         "symfony/console": "^2.8 || ^3.2 || ^4.0",
         "symfony/dependency-injection": "^2.8 || ^3.2 || ^4.0",
         "symfony/event-dispatcher": "^2.8 || ^3.2 || ^4.0",
-        "symfony/filesystem": "^2.8 || ^3.2 || ^4.0",
+        "symfony/filesystem": "^2.8.18 || ^3.2.5 || ^4.0",
         "symfony/finder": "^2.8 || ^3.2 || ^4.0",
-        "symfony/form": "^2.8 || ^3.2 || ^4.0",
+        "symfony/form": "^2.8.18 || ^3.2.5 || ^4.0",
         "symfony/framework-bundle": "^2.8 || ^3.2 || ^4.0",
         "symfony/http-foundation": "^2.8 || ^3.2 || ^4.0",
         "symfony/http-kernel": "^2.8 || ^3.2 || ^4.0",
@@ -82,7 +82,7 @@
         "sonata-project/formatter-bundle": "^3.4 || ^4.0",
         "sonata-project/notification-bundle": "^3.3",
         "sonata-project/seo-bundle": "^2.5",
-        "symfony/phpunit-bridge": "^4.0",
+        "symfony/phpunit-bridge": "^4.1.8",
         "symfony/security-csrf": "^2.8 || ^3.2 || ^4.0"
     },
     "suggest": {
