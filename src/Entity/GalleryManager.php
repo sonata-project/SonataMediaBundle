@@ -11,7 +11,7 @@
 
 namespace Sonata\MediaBundle\Entity;
 
-use Sonata\CoreBundle\Model\BaseEntityManager;
+use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\MediaBundle\Model\GalleryInterface;
