@@ -11,7 +11,7 @@
 
 namespace Sonata\ClassificationBundle\Model;
 
-use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\Doctrine\Model\ManagerInterface;
 
 interface ContextManagerInterface extends ManagerInterface
 {

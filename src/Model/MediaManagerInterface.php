@@ -11,8 +11,8 @@
 
 namespace Sonata\MediaBundle\Model;
 
-use Sonata\CoreBundle\Model\ManagerInterface;
-use Sonata\CoreBundle\Model\PageableManagerInterface;
+use Sonata\Doctrine\Model\ManagerInterface;
+use Sonata\Doctrine\Model\PageableManagerInterface;
 
 /**
  * NEXT_MAJOR: remove this class.
