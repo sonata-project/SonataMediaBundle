@@ -12,7 +12,7 @@ declare(strict_types=1);
  */
 
 use PHPUnit\Framework\TestCase;
-use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;

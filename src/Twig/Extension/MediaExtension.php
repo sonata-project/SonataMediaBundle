@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Twig\Extension;
 
-use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;

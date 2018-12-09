@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
-use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
