@@ -117,6 +117,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
                     $config['format'] = isset($config['format']) ? $config['format'] : 'jpg';
                     $config['height'] = isset($config['height']) ? $config['height'] : false;
                     $config['constraint'] = isset($config['constraint']) ? $config['constraint'] : true;
+                    $config['resizer'] = isset($config['resizer']) ? $config['resizer'] : false;
 
                     $formatName = sprintf('%s_%s', $name, $format);
                     $definition->addMethodCall('addFormat', [$formatName, $config]);
