@@ -200,7 +200,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      */
     private function getMedia($media)
     {
-        if (!$media instanceof MediaInterface && \strlen($media) > 0) {
+        if (!$media instanceof MediaInterface && \strlen((string) $media) > 0) {
             $media = $this->mediaManager->findOneBy([
                 'id' => $media,
             ]);
