@@ -365,6 +365,66 @@ class FileProviderTest extends AbstractProviderTest
         $provider->validate($errorElement, $media);
     }
 
+    public function testValidateUploadNullSize(): void
+    {
+        $errorElement = $this->createMock(ErrorElement::class);
+        $errorElement->expects($this->once())->method('with')
+            ->will($this->returnSelf());
+        $errorElement->expects($this->once())->method('addViolation')
+            ->with($this->stringContains('The file is too big, max size:'))
+            ->will($this->returnSelf());
+        $errorElement->expects($this->once())->method('end')
+            ->will($this->returnSelf());
+
+        $upload = $this->getMockBuilder(UploadedFile::class)
+            ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
+            ->getMock();
+        $upload->expects($this->any())->method('getClientSize')
+            ->will($this->returnValue(null));
+        $upload->expects($this->any())->method('getFilename')
+            ->will($this->returnValue('test.txt'));
+        $upload->expects($this->any())->method('getClientOriginalName')
+            ->will($this->returnValue('test.txt'));
+        $upload->expects($this->any())->method('getMimeType')
+            ->will($this->returnValue('foo/bar'));
+
+        $media = new Media();
+        $media->setBinaryContent($upload);
+
+        $provider = $this->getProvider();
+        $provider->validate($errorElement, $media);
+    }
+
+    public function testValidateUploadSizeOK(): void
+    {
+        $errorElement = $this->createMock(ErrorElement::class);
+        $errorElement->expects($this->never())->method('with')
+            ->will($this->returnSelf());
+        $errorElement->expects($this->never())->method('addViolation')
+            ->with($this->stringContains('The file is too big, max size:'))
+            ->will($this->returnSelf());
+        $errorElement->expects($this->never())->method('end')
+            ->will($this->returnSelf());
+
+        $upload = $this->getMockBuilder(UploadedFile::class)
+            ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
+            ->getMock();
+        $upload->expects($this->any())->method('getClientSize')
+            ->will($this->returnValue(1));
+        $upload->expects($this->any())->method('getFilename')
+            ->will($this->returnValue('test.txt'));
+        $upload->expects($this->any())->method('getClientOriginalName')
+            ->will($this->returnValue('test.txt'));
+        $upload->expects($this->any())->method('getMimeType')
+            ->will($this->returnValue('foo/bar'));
+
+        $media = new Media();
+        $media->setBinaryContent($upload);
+
+        $provider = $this->getProvider();
+        $provider->validate($errorElement, $media);
+    }
+
     public function testValidateUploadType(): void
     {
         $errorElement = $this->getMockBuilder(ErrorElement::class)
