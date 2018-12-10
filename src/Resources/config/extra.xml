@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="sonata.media.extra.pixlr" class="Sonata\MediaBundle\Extra\Pixlr">
+        <service id="sonata.media.extra.pixlr" class="Sonata\MediaBundle\Extra\Pixlr" public="true">
             <argument/>
             <argument/>
             <argument type="service" id="sonata.media.pool"/>
             <argument type="service" id="sonata.media.manager.media"/>
             <argument type="service" id="router"/>
             <argument type="service" id="sonata.templating"/>
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="sonata.admin.pool"/>
+            <argument type="service" id="sonata.media.admin.media"/>
+            <argument type="service" id="request_stack"/>
         </service>
     </services>
 </container>

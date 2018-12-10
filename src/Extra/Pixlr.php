@@ -11,13 +11,15 @@
 
 namespace Sonata\MediaBundle\Extra;
 
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Admin\Pool as AdminPool;
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -37,7 +39,7 @@ class Pixlr
     protected $secret;
 
     /**
-     * @var MediaManagerInterface
+     * @var ManagerInterface
      */
     protected $mediaManager;
 
@@ -57,11 +59,6 @@ class Pixlr
     protected $templating;
 
     /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
      * @var string[]
      */
     protected $validFormats;
@@ -72,15 +69,33 @@ class Pixlr
     protected $allowEreg;
 
     /**
-     * @param string                $referrer
-     * @param string                $secret
-     * @param Pool                  $pool
-     * @param MediaManagerInterface $mediaManager
-     * @param RouterInterface       $router
-     * @param EngineInterface       $templating
-     * @param ContainerInterface    $container
+     * @var AdminPool
      */
-    public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, ContainerInterface $container)
+    protected $adminPool;
+
+    /**
+     * @var AdminInterface
+     */
+    protected $mediaAdmin;
+
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * @param string           $referrer
+     * @param string           $secret
+     * @param Pool             $pool
+     * @param ManagerInterface $mediaManager
+     * @param RouterInterface  $router
+     * @param EngineInterface  $templating
+     * @param EngineInterface  $templating
+     * @param AdminPool        $templating
+     * @param AdminInterface   $mediaAdmin
+     * @param RequestStack     $requestStack
+     */
+    public function __construct($referrer, $secret, Pool $pool, ManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, AdminPool $adminPool, AdminInterface $mediaAdmin, RequestStack $requestStack)
     {
         $this->referrer = $referrer;
         $this->secret = $secret;
@@ -88,7 +103,9 @@ class Pixlr
         $this->router = $router;
         $this->pool = $pool;
         $this->templating = $templating;
-        $this->container = $container;
+        $this->adminPool = $adminPool;
+        $this->mediaAdmin = $mediaAdmin;
+        $this->requestStack = $requestStack;
 
         $this->validFormats = ['jpg', 'jpeg', 'png'];
         $this->allowEreg = '@https?://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
@@ -109,16 +126,13 @@ class Pixlr
         }
 
         $media = $this->getMedia($id);
-
-        $provider = $this->pool->getProvider($media->getProviderName());
-
         $hash = $this->generateHash($media);
 
         $parameters = [
             's' => 'c', // ??
             'referrer' => $this->referrer,
             'exit' => $this->router->generate('sonata_media_pixlr_exit', ['hash' => $hash, 'id' => $media->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-            'image' => $provider->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
+            'image' => $this->generateImageUrl($media),
             'title' => $media->getName(),
             'target' => $this->router->generate('sonata_media_pixlr_target', ['hash' => $hash, 'id' => $media->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'locktitle' => true,
@@ -185,7 +199,7 @@ class Pixlr
      */
     public function isEditable(MediaInterface $media)
     {
-        if (!$this->container->get('sonata.media.admin.media')->isGranted('EDIT', $media)) {
+        if (!$this->mediaAdmin->isGranted('EDIT', $media)) {
             return false;
         }
 
@@ -209,8 +223,29 @@ class Pixlr
 
         return new Response($this->templating->render('@SonataMedia/Extra/pixlr_editor.html.twig', [
             'media' => $media,
-            'admin_pool' => $this->container->get('sonata.admin.pool'),
+            'admin_pool' => $this->adminPool,
         ]));
+    }
+
+    /**
+     * @param MediaInterface $media
+     *
+     * @return string
+     */
+    protected function generateImageUrl(MediaInterface $media)
+    {
+        $provider = $this->pool->getProvider($media->getProviderName());
+        $imageUrl = $provider->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE);
+
+        if (false !== filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+            return $imageUrl;
+        }
+
+        if (null !== $request = $this->requestStack->getCurrentRequest()) {
+            return $request->getUriForPath($imageUrl);
+        }
+
+        return $imageUrl;
     }
 
     /**
