@@ -42,6 +42,7 @@ Register these bundles in your ``bundles.php`` file:
     ];
 
 .. note::
+
     If you are not using Symfony Flex, you should enable bundles in your
     ``AppKernel.php``.
 
@@ -81,6 +82,7 @@ Next, add the correct routing files:
             prefix: /media
 
 .. note::
+
     If you are not using Symfony Flex, routes should be added to ``app/config/routing.yml``.
 
 Then, you must configure the interaction with the persistence backend you picked:
@@ -105,6 +107,7 @@ If you picked Doctrine ORM:
                     json: Sonata\Doctrine\Types\JsonType
 
 .. note::
+
     If you are not using Symfony Flex, this configuration should be added
     to ``app/config/config.yml``.
 
@@ -124,6 +127,7 @@ If you picked Doctrine PHPCR:
                         prefix: Sonata\MediaBundle\PHPCR
 
 .. note::
+
     If you are not using Symfony Flex, this configuration should be added
     to ``app/config/config.yml``.
 
@@ -167,6 +171,7 @@ Once you have done that, you can configure the Media bundle itself:
                     create:     false
 
 .. note::
+
     If you are not using Symfony Flex, this configuration should be added
     to ``app/config/config.yml``.
 
@@ -190,6 +195,7 @@ Also, you can determine the resizer to use; the default value is
                     resizer: sonata.media.resizer.square
 
 .. note::
+
     If you are not using Symfony Flex, this configuration should be added
     to ``app/config/config.yml``.
 
@@ -205,6 +211,7 @@ entities for the media::
     bin/console sonata:easy-extends:generate --dest=src SonataMediaBundle --namespace_prefix=App
 
 .. note::
+
     If you are not using Symfony Flex, use command without ``--namespace_prefix=App``.
 
 .. note::
@@ -222,6 +229,7 @@ entities for the media::
     ``App\Application\Sonata\MediaBundle\Entity\Media``.
 
 .. note::
+
     If you are not using Symfony Flex, the namespace will be ``Application\Sonata\MediaBundle\Entity\Media``.
 
 Now, add the new ``Application`` Bundle into the ``bundles.php``:
@@ -238,6 +246,7 @@ Now, add the new ``Application`` Bundle into the ``bundles.php``:
     ];
 
 .. note::
+
     If you are not using Symfony Flex, add the new ``Application`` Bundle into your
     ``AppKernel.php``.
 
@@ -258,6 +267,7 @@ Now, add the new ``Application`` Bundle into the ``bundles.php``:
 Configure SonataMediaBundle to use the newly generated classes:
 
 .. note::
+
     If you are not using Symfony Flex, add classes without the ``App\``
     part.
 
@@ -278,6 +288,7 @@ Configure SonataMediaBundle to use the newly generated classes:
 
 
 .. note::
+
     If you are not using Symfony Flex, this configuration should be added
     to ``app/config/config.yml``.
 
@@ -299,6 +310,7 @@ too:
                             SonataMediaBundle: ~
 
 .. note::
+
     If you are not using Symfony Flex, this configuration should be added
     to ``app/config/config.yml``.
 
@@ -316,6 +328,7 @@ autowiring:
                 exclude: '../src/{Entity,Tests,Application}'
 
 .. note::
+
     If you are not using Symfony Flex, skip this part.
 
 Now, you can build up your database:
