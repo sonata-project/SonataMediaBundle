@@ -16,7 +16,6 @@ use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
-use Sonata\MediaBundle\Model\GalleryHasMedia;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
@@ -27,10 +26,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-class GalleryTest extends GalleryHasMedia
-{
-}
 
 /**
  * @author Hugo Briand <briand@ekino.com>
