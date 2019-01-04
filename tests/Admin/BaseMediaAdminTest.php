@@ -15,25 +15,14 @@ use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\ContextInterface;
-use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\Fixtures\EntityWithGetId;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-
-class TestMediaAdmin extends BaseMediaAdmin
-{
-}
-
-class EntityWithGetId
-{
-    public function getId()
-    {
-    }
-}
 
 class BaseMediaAdminTest extends TestCase
 {

@@ -13,7 +13,7 @@ namespace Sonata\MediaBundle\Tests\Entity;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
-use Sonata\MediaBundle\Tests\Controller\EntityWithGetId;
+use Sonata\MediaBundle\Tests\Fixtures\EntityWithGetId;
 
 class MediaTest extends TestCase
 {
