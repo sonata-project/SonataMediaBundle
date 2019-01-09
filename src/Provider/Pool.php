@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -80,7 +82,7 @@ class Pool
      * @param string                 $name
      * @param MediaProviderInterface $instance
      */
-    public function addProvider($name, MediaProviderInterface $instance)
+    public function addProvider($name, MediaProviderInterface $instance): void
     {
         $this->providers[$name] = $instance;
     }
@@ -93,7 +95,7 @@ class Pool
      * @param string                    $name
      * @param DownloadStrategyInterface $security
      */
-    public function addDownloadSecurity($name, DownloadStrategyInterface $security)
+    public function addDownloadSecurity($name, DownloadStrategyInterface $security): void
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.',
@@ -109,7 +111,7 @@ class Pool
      * @param string                    $name
      * @param DownloadStrategyInterface $security
      */
-    public function addDownloadStrategy($name, DownloadStrategyInterface $security)
+    public function addDownloadStrategy($name, DownloadStrategyInterface $security): void
     {
         $this->downloadStrategies[$name] = $security;
     }
@@ -117,7 +119,7 @@ class Pool
     /**
      * @param array $providers
      */
-    public function setProviders($providers)
+    public function setProviders($providers): void
     {
         $this->providers = $providers;
     }
@@ -136,7 +138,7 @@ class Pool
      * @param array  $formats
      * @param array  $download
      */
-    public function addContext($name, array $providers = [], array $formats = [], array $download = [])
+    public function addContext($name, array $providers = [], array $formats = [], array $download = []): void
     {
         if (!$this->hasContext($name)) {
             $this->contexts[$name] = [
@@ -317,7 +319,7 @@ class Pool
      * @param ErrorElement   $errorElement
      * @param MediaInterface $media
      */
-    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    public function validate(ErrorElement $errorElement, MediaInterface $media): void
     {
         if (!$media->getProviderName()) {
             return;

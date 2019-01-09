@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -51,7 +53,7 @@ class CreateThumbnailConsumer implements ConsumerInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ConsumerEvent $event)
+    public function process(ConsumerEvent $event): void
     {
         $media = $this->mediaManager->findOneBy([
             'id' => $event->getMessage()->getValue('mediaId'),

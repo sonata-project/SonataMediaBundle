@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -66,7 +68,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -82,7 +84,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): void
     {
         $this->enabled = $enabled;
     }
@@ -98,7 +100,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
+    public function setUpdatedAt(\DateTime $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -114,7 +116,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt(\DateTime $createdAt = null)
+    public function setCreatedAt(\DateTime $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }
@@ -130,7 +132,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setDefaultFormat($defaultFormat)
+    public function setDefaultFormat($defaultFormat): void
     {
         $this->defaultFormat = $defaultFormat;
     }
@@ -146,7 +148,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setGalleryHasMedias($galleryHasMedias)
+    public function setGalleryHasMedias($galleryHasMedias): void
     {
         $this->galleryHasMedias = new ArrayCollection();
 
@@ -166,7 +168,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
+    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia): void
     {
         $galleryHasMedia->setGallery($this);
 
@@ -176,7 +178,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function removeGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
+    public function removeGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia): void
     {
         $this->galleryHasMedias->removeElement($galleryHasMedia);
     }
@@ -187,7 +189,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
      * @deprecated use addGalleryHasMedia method instead
      * NEXT_MAJOR: remove this method with the next major release
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia): void
     {
         @trigger_error(
             'The '.__METHOD__.' is deprecated and will be removed with next major release.'
@@ -200,7 +202,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setContext($context)
+    public function setContext($context): void
     {
         $this->context = $context;
     }

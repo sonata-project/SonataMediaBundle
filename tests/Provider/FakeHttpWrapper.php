@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -37,35 +39,35 @@ class FakeHttpWrapper
     {
     }
 
-    public function dir_closedir()
+    public function dir_closedir(): void
     {
     }
 
-    public function dir_opendir($path, $options)
+    public function dir_opendir($path, $options): void
     {
     }
 
-    public function dir_readdir()
+    public function dir_readdir(): void
     {
     }
 
-    public function dir_rewinddir()
+    public function dir_rewinddir(): void
     {
     }
 
-    public function mkdir($path, $mode, $options)
+    public function mkdir($path, $mode, $options): void
     {
     }
 
-    public function rename($path_from, $path_to)
+    public function rename($path_from, $path_to): void
     {
     }
 
-    public function rmdir($path, $options)
+    public function rmdir($path, $options): void
     {
     }
 
-    public function stream_cast($cast_as)
+    public function stream_cast($cast_as): void
     {
     }
 
@@ -79,11 +81,11 @@ class FakeHttpWrapper
         return 0 == feof($this->fp);
     }
 
-    public function stream_flush()
+    public function stream_flush(): void
     {
     }
 
-    public function stream_lock($operation)
+    public function stream_lock($operation): void
     {
     }
 
@@ -105,31 +107,31 @@ class FakeHttpWrapper
         return fread($this->fp, $count);
     }
 
-    public function stream_seek($offset, $whence = SEEK_SET)
+    public function stream_seek($offset, $whence = SEEK_SET): void
     {
     }
 
-    public function stream_set_option($option, $arg1, $arg2)
+    public function stream_set_option($option, $arg1, $arg2): void
     {
     }
 
-    public function stream_stat()
+    public function stream_stat(): void
     {
     }
 
-    public function stream_tell()
+    public function stream_tell(): void
     {
     }
 
-    public function stream_write($data)
+    public function stream_write($data): void
     {
     }
 
-    public function unlink($path)
+    public function unlink($path): void
     {
     }
 
-    public function url_stat($path, $flags)
+    public function url_stat($path, $flags): void
     {
     }
 }

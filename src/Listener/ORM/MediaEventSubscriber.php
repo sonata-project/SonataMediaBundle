@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -40,7 +42,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         ];
     }
 
-    public function onClear()
+    public function onClear(): void
     {
         $this->rootCategories = null;
     }
@@ -48,7 +50,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     /**
      * {@inheritdoc}
      */
-    protected function recomputeSingleEntityChangeSet(EventArgs $args)
+    protected function recomputeSingleEntityChangeSet(EventArgs $args): void
     {
         $em = $args->getEntityManager();
 

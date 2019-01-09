@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -25,7 +27,7 @@ abstract class BaseGalleryHasMedia extends GalleryHasMedia
      *
      * @param string $nodename
      */
-    public function setNodename($nodename)
+    public function setNodename($nodename): void
     {
         $this->nodename = $nodename;
     }
@@ -40,13 +42,13 @@ abstract class BaseGalleryHasMedia extends GalleryHasMedia
         return $this->nodename;
     }
 
-    public function prePersist()
+    public function prePersist(): void
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->updatedAt = new \DateTime();
     }

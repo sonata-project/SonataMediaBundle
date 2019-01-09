@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -26,7 +28,7 @@ class GalleryManager extends BaseDocumentManager implements GalleryManagerInterf
      *
      * @param GalleryInterface $gallery
      */
-    public function update(GalleryInterface $gallery)
+    public function update(GalleryInterface $gallery): void
     {
         parent::save($gallery);
     }
@@ -34,7 +36,7 @@ class GalleryManager extends BaseDocumentManager implements GalleryManagerInterf
     /**
      * {@inheritdoc}
      */
-    public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = []): void
     {
         throw new \RuntimeException('Not Implemented yet');
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -28,7 +30,7 @@ class GalleryManager extends BaseEntityManager implements GalleryManagerInterfac
      *
      * @param GalleryInterface $gallery
      */
-    public function update(GalleryInterface $gallery)
+    public function update(GalleryInterface $gallery): void
     {
         parent::save($gallery);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -31,7 +33,7 @@ class MediaEventSubscriberTest extends TestCase
      * @see https://github.com/sonata-project/SonataClassificationBundle/issues/60
      * @see https://github.com/sonata-project/SonataMediaBundle/pull/780
      */
-    public function testRefetchCategoriesAfterClear()
+    public function testRefetchCategoriesAfterClear(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
 

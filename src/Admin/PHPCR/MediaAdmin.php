@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -27,7 +29,7 @@ class MediaAdmin extends Admin
     /**
      * @param string $root
      */
-    public function setRoot($root)
+    public function setRoot($root): void
     {
         $this->root = $root;
     }
@@ -57,7 +59,7 @@ class MediaAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         // TODO disabled filter due to no attached service for filter types: string, checkbox
 //        $datagridMapper
@@ -71,7 +73,7 @@ class MediaAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         // Allow path in id parameter
         $collection->add('view', $this->getRouterIdParameter().'/view', [], ['id' => '.+', '_method' => 'GET']);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -130,7 +132,7 @@ class ImageProvider extends FileProvider
     /**
      * {@inheritdoc}
      */
-    public function updateMetadata(MediaInterface $media, $force = true)
+    public function updateMetadata(MediaInterface $media, $force = true): void
     {
         try {
             if (!$media->getBinaryContent() instanceof \SplFileInfo) {
@@ -187,7 +189,7 @@ class ImageProvider extends FileProvider
     /**
      * {@inheritdoc}
      */
-    protected function doTransform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media): void
     {
         parent::doTransform($media);
 

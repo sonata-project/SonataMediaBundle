@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -55,7 +57,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    public function prePersist($media)
+    public function prePersist($media): void
     {
         $parameters = $this->getPersistentParameters();
         $media->setContext($parameters['context']);
@@ -158,7 +160,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('name')
@@ -171,7 +173,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $media = $this->getSubject();
 

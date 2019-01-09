@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -44,7 +46,7 @@ class MediaTest extends TestCase
     /**
      * @depends testSetMetadataValue
      */
-    public function testUnsetMetadataValue($media)
+    public function testUnsetMetadataValue($media): void
     {
         $metadataProperty = $this->getMediaPropertyReflection('providerMetadata');
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -42,13 +44,13 @@ abstract class AbstractProviderTest extends TestCase
      */
     protected $provider;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->formMapper = $this->createMock(FormMapper::class);
         $this->formMapper
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) {
+            ->will($this->returnCallback(function ($name, $type = null): void {
                 if (null !== $type) {
                     $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
@@ -58,7 +60,7 @@ abstract class AbstractProviderTest extends TestCase
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) {
+            ->will($this->returnCallback(function ($name, $type = null): void {
                 if (null !== $type) {
                     $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
@@ -74,17 +76,17 @@ abstract class AbstractProviderTest extends TestCase
      */
     abstract public function getProvider();
 
-    public function testBuildEditForm()
+    public function testBuildEditForm(): void
     {
         $this->provider->buildEditForm($this->formMapper);
     }
 
-    public function testBuildCreateForm()
+    public function testBuildCreateForm(): void
     {
         $this->provider->buildCreateForm($this->formMapper);
     }
 
-    public function testBuildMediaType()
+    public function testBuildMediaType(): void
     {
         $this->provider->buildMediaType($this->formBuilder);
     }

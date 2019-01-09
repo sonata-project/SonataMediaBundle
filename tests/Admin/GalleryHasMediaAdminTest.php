@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -19,7 +21,7 @@ class GalleryHasMediaAdminTest extends TestCase
 {
     private $mediaAdmin;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mediaAdmin = new GalleryHasMediaAdmin(
             null,
@@ -28,7 +30,7 @@ class GalleryHasMediaAdminTest extends TestCase
         );
     }
 
-    public function testItIsInstantiable()
+    public function testItIsInstantiable(): void
     {
         $this->assertNotNull($this->mediaAdmin);
     }

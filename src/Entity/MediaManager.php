@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -21,7 +23,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($media, $andFlush = true)
+    public function save($media, $andFlush = true): void
     {
         /*
          * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)

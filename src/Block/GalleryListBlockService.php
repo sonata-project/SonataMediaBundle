@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -55,7 +57,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
     /**
      * {@inheritdoc}
      */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $contextChoices = [];
 
@@ -149,7 +151,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
     /**
      * {@inheritdoc}
      */
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'number' => 15,

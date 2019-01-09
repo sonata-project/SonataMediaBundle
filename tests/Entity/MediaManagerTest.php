@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -22,11 +24,11 @@ use Sonata\MediaBundle\Entity\MediaManager;
  */
 class MediaManagerTest extends TestCase
 {
-    public function testGetPager()
+    public function testGetPager(): void
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self) {
+            ->getMediaManager(function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
@@ -34,23 +36,23 @@ class MediaManagerTest extends TestCase
             ->getPager([], 1);
     }
 
-    public function testGetPagerWithInvalidSort()
+    public function testGetPagerWithInvalidSort(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Invalid sort field \'invalid\' in \'Sonata\\MediaBundle\\Entity\\BaseMedia\' class');
 
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self) {
+            ->getMediaManager(function ($qb) use ($self): void {
             })
             ->getPager([], 1, 10, ['invalid' => 'ASC']);
     }
 
-    public function testGetPagerWithMultipleSort()
+    public function testGetPagerWithMultipleSort(): void
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self) {
+            ->getMediaManager(function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->exactly(2))->method('orderBy')->with(
@@ -71,11 +73,11 @@ class MediaManagerTest extends TestCase
             ]);
     }
 
-    public function testGetPagerWithEnabledMedia()
+    public function testGetPagerWithEnabledMedia(): void
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self) {
+            ->getMediaManager(function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => true]));
@@ -83,11 +85,11 @@ class MediaManagerTest extends TestCase
             ->getPager(['enabled' => true], 1);
     }
 
-    public function testGetPagerWithNoEnabledMedias()
+    public function testGetPagerWithNoEnabledMedias(): void
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self) {
+            ->getMediaManager(function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => false]));

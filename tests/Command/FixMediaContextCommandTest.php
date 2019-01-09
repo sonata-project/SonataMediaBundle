@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -62,7 +64,7 @@ class FixMediaContextCommandTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = $this->createMock(ContainerInterface::class);
 
@@ -94,7 +96,7 @@ class FixMediaContextCommandTest extends TestCase
             }));
     }
 
-    public function testExecuteWithDisabledClassfication()
+    public function testExecuteWithDisabledClassfication(): void
     {
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->will($this->returnValue(false));
@@ -104,7 +106,7 @@ class FixMediaContextCommandTest extends TestCase
         $this->tester->execute(['command' => $this->command->getName()]);
     }
 
-    public function testExecuteWithExisting()
+    public function testExecuteWithExisting(): void
     {
         $context = [
             'providers' => [],
@@ -132,7 +134,7 @@ class FixMediaContextCommandTest extends TestCase
         $this->assertSame(0, $output);
     }
 
-    public function testExecuteWithEmptyRoot()
+    public function testExecuteWithEmptyRoot(): void
     {
         $context = [
             'providers' => [],
@@ -162,7 +164,7 @@ class FixMediaContextCommandTest extends TestCase
         $this->assertSame(0, $output);
     }
 
-    public function testExecuteWithNew()
+    public function testExecuteWithNew(): void
     {
         $context = [
             'providers' => [],

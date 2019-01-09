@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -170,7 +172,7 @@ class YouTubeProvider extends BaseVideoProvider
             // The allowScriptAccess parameter in the code is needed to allow the player SWF to call
             // functions on the containing HTML page, since the player is hosted on a different domain
             // from the HTML page.
-            'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
+            'allowScriptAccess' => $options['allowScriptAccess'] ?? 'always',
 
             // Values: 'window' or 'opaque' or 'transparent'.
             // When wmode=window, the Flash movie is not rendered in the page.
@@ -179,11 +181,11 @@ class YouTubeProvider extends BaseVideoProvider
             'wmode' => $default_player_url_parameters['wmode'],
         ];
 
-        $player_url_parameters = array_merge($default_player_url_parameters, isset($options['player_url_parameters']) ? $options['player_url_parameters'] : []);
+        $player_url_parameters = array_merge($default_player_url_parameters, $options['player_url_parameters'] ?? []);
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
-        $player_parameters = array_merge($default_player_parameters, isset($options['player_parameters']) ? $options['player_parameters'] : [], [
+        $player_parameters = array_merge($default_player_parameters, $options['player_parameters'] ?? [], [
             'width' => $box->getWidth(),
             'height' => $box->getHeight(),
         ]);
@@ -200,7 +202,7 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function updateMetadata(MediaInterface $media, $force = false)
+    public function updateMetadata(MediaInterface $media, $force = false): void
     {
         $url = sprintf('https://www.youtube.com/oembed?url=%s&format=json', $this->getReferenceUrl($media));
 
@@ -248,7 +250,7 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * @param MediaInterface $media
      */
-    protected function fixBinaryContent(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -266,7 +268,7 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    protected function doTransform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media): void
     {
         $this->fixBinaryContent($media);
 

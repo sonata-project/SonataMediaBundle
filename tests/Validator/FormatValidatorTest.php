@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 
 class FormatValidatorTest extends TestCase
 {
-    public function testValidate()
+    public function testValidate(): void
     {
         $pool = new Pool('defaultContext');
         $pool->addContext('test', [], ['format1' => []]);
@@ -38,7 +40,7 @@ class FormatValidatorTest extends TestCase
         $validator->validate($gallery, new ValidMediaFormat());
     }
 
-    public function testValidateNotValidDefaultFormat()
+    public function testValidateNotValidDefaultFormat(): void
     {
         $pool = new Pool('defaultContext');
         $pool->addContext('test', [], ['format1' => []]);
@@ -56,7 +58,7 @@ class FormatValidatorTest extends TestCase
         $validator->validate($gallery, new ValidMediaFormat());
     }
 
-    public function testValidateOnlyReferenceIsAllowedIfNotFormats()
+    public function testValidateOnlyReferenceIsAllowedIfNotFormats(): void
     {
         $pool = new Pool('defaultContext');
         $pool->addContext('test');

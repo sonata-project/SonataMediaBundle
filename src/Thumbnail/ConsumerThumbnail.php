@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -84,12 +86,12 @@ class ConsumerThumbnail implements ThumbnailInterface
     /**
      * {@inheritdoc}
      */
-    public function generate(MediaProviderInterface $provider, MediaInterface $media)
+    public function generate(MediaProviderInterface $provider, MediaInterface $media): void
     {
         $backend = $this->backend;
         $id = $this->id;
 
-        $publish = function () use ($backend, $media, $id) {
+        $publish = function () use ($backend, $media, $id): void {
             $backend->createAndPublish('sonata.media.create_thumbnail', [
                 'thumbnailId' => $id,
                 'mediaId' => $media->getId(),

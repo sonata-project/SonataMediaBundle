@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -25,7 +27,7 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
     private $galleryManager;
     private $blockService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +42,7 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
         );
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $block = $this->prophesize(Block::class);
         $gallery = $this->prophesize(GalleryInterface::class);
@@ -61,7 +63,7 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
         $this->assertSame($block->reveal(), $this->templating->parameters['block']);
     }
 
-    public function testDefaultSettings()
+    public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);
 

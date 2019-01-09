@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -63,7 +65,7 @@ class FileProviderTest extends AbstractProviderTest
         return $provider;
     }
 
-    public function testProvider()
+    public function testProvider(): void
     {
         $provider = $this->getProvider();
 
@@ -81,7 +83,7 @@ class FileProviderTest extends AbstractProviderTest
         $this->assertSame('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
     }
 
-    public function testHelperProperies()
+    public function testHelperProperies(): void
     {
         $provider = $this->getProvider();
 
@@ -98,7 +100,7 @@ class FileProviderTest extends AbstractProviderTest
         $this->assertSame('test.png', $properties['title']);
     }
 
-    public function testForm()
+    public function testForm(): void
     {
         $provider = $this->getProvider();
 
@@ -122,7 +124,7 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @doesNotPerformAssertions
      */
-    public function testThumbnail()
+    public function testThumbnail(): void
     {
         $provider = $this->getProvider();
 
@@ -133,7 +135,7 @@ class FileProviderTest extends AbstractProviderTest
         $provider->generateThumbnails($media);
     }
 
-    public function testEvent()
+    public function testEvent(): void
     {
         $provider = $this->getProvider();
 
@@ -169,7 +171,7 @@ class FileProviderTest extends AbstractProviderTest
         $this->assertNotNull($provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
     }
 
-    public function testDownload()
+    public function testDownload(): void
     {
         $provider = $this->getProvider();
 
@@ -189,9 +191,9 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @dataProvider mediaProvider
      */
-    public function testTransform($expected, $media)
+    public function testTransform($expected, $media): void
     {
-        $closure = function () use ($expected, $media) {
+        $closure = function () use ($expected, $media): void {
             $provider = $this->getProvider();
 
             $provider->transform($media);
@@ -230,7 +232,7 @@ class FileProviderTest extends AbstractProviderTest
      *
      * @see https://github.com/sebastianbergmann/phpunit/issues/1409
      */
-    public function testBinaryContentWithRealPath()
+    public function testBinaryContentWithRealPath(): void
     {
         $media = $this->createMock(MediaInterface::class);
 
@@ -275,7 +277,7 @@ class FileProviderTest extends AbstractProviderTest
      *
      * @see https://github.com/sebastianbergmann/phpunit/issues/1409
      */
-    public function testBinaryContentStreamWrapped()
+    public function testBinaryContentStreamWrapped(): void
     {
         $media = $this->createMock(MediaInterface::class);
 
@@ -319,7 +321,7 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @doesNotPerformAssertions
      */
-    public function testValidate()
+    public function testValidate(): void
     {
         $errorElement = $this->getMockBuilder(ErrorElement::class)
             ->disableOriginalConstructor()
@@ -331,7 +333,7 @@ class FileProviderTest extends AbstractProviderTest
         $provider->validate($errorElement, $media);
     }
 
-    public function testValidateUploadSize()
+    public function testValidateUploadSize(): void
     {
         $errorElement = $this->getMockBuilder(ErrorElement::class)
             ->disableOriginalConstructor()
@@ -363,7 +365,7 @@ class FileProviderTest extends AbstractProviderTest
         $provider->validate($errorElement, $media);
     }
 
-    public function testValidateUploadType()
+    public function testValidateUploadType(): void
     {
         $errorElement = $this->getMockBuilder(ErrorElement::class)
             ->disableOriginalConstructor()

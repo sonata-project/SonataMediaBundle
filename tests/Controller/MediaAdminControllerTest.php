@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -40,7 +42,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EntityWithGetId
 {
-    public function getId()
+    public function getId(): void
     {
     }
 }
@@ -52,7 +54,7 @@ class MediaAdminControllerTest extends TestCase
     private $request;
     private $controller;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = $this->prophesize(ContainerInterface::class);
         $this->admin = $this->prophesize(BaseMediaAdmin::class);
@@ -64,7 +66,7 @@ class MediaAdminControllerTest extends TestCase
         $this->controller->setContainer($this->container->reveal());
     }
 
-    public function testCreateActionToSelectProvider()
+    public function testCreateActionToSelectProvider(): void
     {
         $pool = $this->prophesize(Pool::class);
 
@@ -87,7 +89,7 @@ class MediaAdminControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $this->configureCreateAction(Media::class);
         $this->configureRender('template', Argument::type('array'), 'renderResponse');
@@ -100,7 +102,7 @@ class MediaAdminControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    public function testListAction()
+    public function testListAction(): void
     {
         $datagrid = $this->prophesize(DatagridInterface::class);
         $pool = $this->prophesize(Pool::class);
@@ -144,7 +146,7 @@ class MediaAdminControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    private function configureCRUDController()
+    private function configureCRUDController(): void
     {
         $pool = $this->prophesize(AdminPool::class);
         $breadcrumbsBuilder = $this->prophesize(BreadcrumbsBuilderInterface::class);
@@ -165,7 +167,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->getCode()->willReturn('admin_code');
     }
 
-    private function configureCreateAction($class)
+    private function configureCreateAction($class): void
     {
         $object = $this->prophesize(Media::class);
         $form = $this->prophesize(Form::class);
@@ -186,7 +188,7 @@ class MediaAdminControllerTest extends TestCase
         $form->all()->willReturn(['field' => null]);
     }
 
-    private function configureGetCurrentRequest($request)
+    private function configureGetCurrentRequest($request): void
     {
         $requestStack = $this->prophesize(RequestStack::class);
 
@@ -195,7 +197,7 @@ class MediaAdminControllerTest extends TestCase
         $requestStack->getCurrentRequest()->willReturn($request);
     }
 
-    private function configureSetFormTheme($formView, $formTheme)
+    private function configureSetFormTheme($formView, $formTheme): void
     {
         $twig = $this->prophesize(\Twig_Environment::class);
 
@@ -224,7 +226,7 @@ class MediaAdminControllerTest extends TestCase
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
 
-    private function configureSetCsrfToken($intention)
+    private function configureSetCsrfToken($intention): void
     {
         $tokenManager = $this->prophesize(CsrfTokenManagerInterface::class);
         $token = $this->prophesize(CsrfToken::class);
@@ -235,7 +237,7 @@ class MediaAdminControllerTest extends TestCase
         $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
     }
 
-    private function configureRender($template, $data, $rendered)
+    private function configureRender($template, $data, $rendered): void
     {
         $templating = $this->prophesize(EngineInterface::class);
         $response = $this->prophesize(Response::class);

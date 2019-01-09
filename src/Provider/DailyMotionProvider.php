@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -70,14 +72,14 @@ class DailyMotionProvider extends BaseVideoProvider
             'highlight' => null,
         ];
 
-        $player_parameters = array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
+        $player_parameters = array_merge($defaults, $options['player_parameters'] ?? []);
 
         $box = $this->getBoxHelperProperties($media, $format, $options);
 
         $params = [
             'player_parameters' => http_build_query($player_parameters),
-            'allowFullScreen' => isset($options['allowFullScreen']) ? $options['allowFullScreen'] : 'true',
-            'allowScriptAccess' => isset($options['allowScriptAccess']) ? $options['allowScriptAccess'] : 'always',
+            'allowFullScreen' => $options['allowFullScreen'] ?? 'true',
+            'allowScriptAccess' => $options['allowScriptAccess'] ?? 'always',
             'width' => $box->getWidth(),
             'height' => $box->getHeight(),
         ];
@@ -96,7 +98,7 @@ class DailyMotionProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    public function updateMetadata(MediaInterface $media, $force = false)
+    public function updateMetadata(MediaInterface $media, $force = false): void
     {
         $url = sprintf('http://www.dailymotion.com/services/oembed?url=%s&format=json', $this->getReferenceUrl($media));
 
@@ -143,7 +145,7 @@ class DailyMotionProvider extends BaseVideoProvider
     /**
      * @param MediaInterface $media
      */
-    protected function fixBinaryContent(MediaInterface $media)
+    protected function fixBinaryContent(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -157,7 +159,7 @@ class DailyMotionProvider extends BaseVideoProvider
     /**
      * {@inheritdoc}
      */
-    protected function doTransform(MediaInterface $media)
+    protected function doTransform(MediaInterface $media): void
     {
         $this->fixBinaryContent($media);
 

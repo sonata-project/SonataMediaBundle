@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -62,7 +64,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -92,7 +94,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             }));
     }
 
-    public function testExecuteWithoutArguments()
+    public function testExecuteWithoutArguments(): void
     {
         $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_foo.ext');

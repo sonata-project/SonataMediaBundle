@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -156,7 +158,7 @@ abstract class Media implements MediaInterface
     }
 
     // NEXT_MAJOR: Remove this method
-    public function __set($property, $value)
+    public function __set($property, $value): void
     {
         if ('category' == $property) {
             if (null !== $value && !is_a($value, CategoryInterface::class)) {
@@ -170,20 +172,20 @@ abstract class Media implements MediaInterface
     }
 
     // NEXT_MAJOR: Remove this method
-    public function __call($method, $arguments)
+    public function __call($method, $arguments): void
     {
         if ('setCategory' == $method) {
             $this->__set('category', current($arguments));
         }
     }
 
-    public function prePersist()
+    public function prePersist(): void
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
     }
 
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->setUpdatedAt(new \DateTime());
     }
@@ -207,7 +209,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setBinaryContent($binaryContent)
+    public function setBinaryContent($binaryContent): void
     {
         $this->previousProviderReference = $this->providerReference;
         $this->providerReference = null;
@@ -217,7 +219,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function resetBinaryContent()
+    public function resetBinaryContent(): void
     {
         $this->binaryContent = null;
     }
@@ -237,13 +239,13 @@ abstract class Media implements MediaInterface
     {
         $metadata = $this->getProviderMetadata();
 
-        return isset($metadata[$name]) ? $metadata[$name] : $default;
+        return $metadata[$name] ?? $default;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setMetadataValue($name, $value)
+    public function setMetadataValue($name, $value): void
     {
         $metadata = $this->getProviderMetadata();
         $metadata[$name] = $value;
@@ -253,7 +255,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function unsetMetadataValue($name)
+    public function unsetMetadataValue($name): void
     {
         $metadata = $this->getProviderMetadata();
         unset($metadata[$name]);
@@ -263,7 +265,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -279,7 +281,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
     }
@@ -295,7 +297,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): void
     {
         $this->enabled = $enabled;
     }
@@ -311,7 +313,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setProviderName($providerName)
+    public function setProviderName($providerName): void
     {
         $this->providerName = $providerName;
     }
@@ -327,7 +329,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setProviderStatus($providerStatus)
+    public function setProviderStatus($providerStatus): void
     {
         $this->providerStatus = $providerStatus;
     }
@@ -343,7 +345,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setProviderReference($providerReference)
+    public function setProviderReference($providerReference): void
     {
         $this->providerReference = $providerReference;
     }
@@ -359,7 +361,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setProviderMetadata(array $providerMetadata = [])
+    public function setProviderMetadata(array $providerMetadata = []): void
     {
         $this->providerMetadata = $providerMetadata;
     }
@@ -375,7 +377,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setWidth($width)
+    public function setWidth($width): void
     {
         $this->width = $width;
     }
@@ -391,7 +393,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setHeight($height)
+    public function setHeight($height): void
     {
         $this->height = $height;
     }
@@ -407,7 +409,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setLength($length)
+    public function setLength($length): void
     {
         $this->length = $length;
     }
@@ -423,7 +425,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setCopyright($copyright)
+    public function setCopyright($copyright): void
     {
         $this->copyright = $copyright;
     }
@@ -439,7 +441,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setAuthorName($authorName)
+    public function setAuthorName($authorName): void
     {
         $this->authorName = $authorName;
     }
@@ -455,7 +457,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setContext($context)
+    public function setContext($context): void
     {
         $this->context = $context;
     }
@@ -471,7 +473,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setCdnIsFlushable($cdnIsFlushable)
+    public function setCdnIsFlushable($cdnIsFlushable): void
     {
         $this->cdnIsFlushable = $cdnIsFlushable;
     }
@@ -487,7 +489,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setCdnFlushIdentifier($cdnFlushIdentifier)
+    public function setCdnFlushIdentifier($cdnFlushIdentifier): void
     {
         $this->cdnFlushIdentifier = $cdnFlushIdentifier;
     }
@@ -503,7 +505,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setCdnFlushAt(\DateTime $cdnFlushAt = null)
+    public function setCdnFlushAt(\DateTime $cdnFlushAt = null): void
     {
         $this->cdnFlushAt = $cdnFlushAt;
     }
@@ -519,7 +521,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
+    public function setUpdatedAt(\DateTime $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -535,7 +537,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt(\DateTime $createdAt = null)
+    public function setCreatedAt(\DateTime $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }
@@ -551,7 +553,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setContentType($contentType)
+    public function setContentType($contentType): void
     {
         $this->contentType = $contentType;
     }
@@ -576,7 +578,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setSize($size)
+    public function setSize($size): void
     {
         $this->size = $size;
     }
@@ -592,7 +594,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setCdnStatus($cdnStatus)
+    public function setCdnStatus($cdnStatus): void
     {
         $this->cdnStatus = $cdnStatus;
     }
@@ -616,7 +618,7 @@ abstract class Media implements MediaInterface
     /**
      * {@inheritdoc}
      */
-    public function setGalleryHasMedias($galleryHasMedias)
+    public function setGalleryHasMedias($galleryHasMedias): void
     {
         $this->galleryHasMedias = $galleryHasMedias;
     }
@@ -642,7 +644,7 @@ abstract class Media implements MediaInterface
      *
      * @param ClassMetadata $metadata
      */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addConstraint(new Assert\Callback('isStatusErroneous'));
     }
@@ -650,7 +652,7 @@ abstract class Media implements MediaInterface
     /**
      * @param ExecutionContextInterface|LegacyExecutionContextInterface $context
      */
-    public function isStatusErroneous($context)
+    public function isStatusErroneous($context): void
     {
         if ($this->getBinaryContent() && self::STATUS_ERROR == $this->getProviderStatus()) {
             // NEXT_MAJOR: Restore type hint

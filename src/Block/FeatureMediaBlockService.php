@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -28,7 +30,7 @@ class FeatureMediaBlockService extends MediaBlockService
     /**
      * {@inheritdoc}
      */
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'media' => false,
@@ -48,7 +50,7 @@ class FeatureMediaBlockService extends MediaBlockService
     /**
      * {@inheritdoc}
      */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 

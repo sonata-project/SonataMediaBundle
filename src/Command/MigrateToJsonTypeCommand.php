@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:migrate-json');
         $this->addOption('table', null, InputOption::VALUE_OPTIONAL, 'Media table', 'media__media');
@@ -32,7 +34,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $count = 0;
         $table = $input->getOption('table');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -24,7 +26,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 final class SessionDownloadStrategyTest extends TestCase
 {
-    public function testIsGrantedFalseWithGreaterSessionTime()
+    public function testIsGrantedFalseWithGreaterSessionTime(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $media = $this->createMock(MediaInterface::class);
@@ -39,7 +41,7 @@ final class SessionDownloadStrategyTest extends TestCase
         $this->assertFalse($strategy->isGranted($media, $request));
     }
 
-    public function testIsGrantedTrue()
+    public function testIsGrantedTrue(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $media = $this->createMock(MediaInterface::class);
@@ -58,7 +60,7 @@ final class SessionDownloadStrategyTest extends TestCase
      * @group legacy
      * NEXT_MAJOR: remove this method
      */
-    public function testIsGrantedTrueWithContainer()
+    public function testIsGrantedTrueWithContainer(): void
     {
         $container = $this->createMock(ContainerInterface::class);
 
@@ -80,7 +82,7 @@ final class SessionDownloadStrategyTest extends TestCase
         $this->assertTrue($strategy->isGranted($media, $request));
     }
 
-    public function testInvalidArgumentException()
+    public function testInvalidArgumentException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

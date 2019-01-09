@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -43,7 +45,7 @@ class RefreshMetadataCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:media:refresh-metadata')
             ->setDescription('Refresh meta information')
@@ -57,7 +59,7 @@ class RefreshMetadataCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->quiet = $input->getOption('quiet');
 
@@ -107,7 +109,7 @@ class RefreshMetadataCommand extends BaseCommand
      *
      * @param string $message
      */
-    protected function log($message)
+    protected function log($message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

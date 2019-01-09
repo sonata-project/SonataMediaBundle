@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -22,7 +24,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class FormatThumbnailTest extends TestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $thumbnail = new FormatThumbnail('foo');
 

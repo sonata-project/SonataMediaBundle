@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -29,7 +31,7 @@ class SonataMediaBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new AddProviderCompilerPass());
         $container->addCompilerPass(new GlobalVariablesCompilerPass());
@@ -42,7 +44,7 @@ class SonataMediaBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function boot()
+    public function boot(): void
     {
         // this is required by the AWS SDK (see: https://github.com/knplabs/Gaufrette)
         if (!\defined('AWS_CERTIFICATE_AUTHORITY')) {
@@ -55,7 +57,7 @@ class SonataMediaBundle extends Bundle
     /**
      * Register form mapping information.
      */
-    public function registerFormMapping()
+    public function registerFormMapping(): void
     {
         FormHelper::registerFormTypeMapping([
             'sonata_media_type' => MediaType::class,

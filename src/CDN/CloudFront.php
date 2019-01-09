@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -151,7 +153,7 @@ class CloudFront implements CDNInterface
      *
      * @param CloudFrontClient $client
      */
-    public function setClient($client)
+    public function setClient($client): void
     {
         if (!$client instanceof CloudFrontClient) {
             @trigger_error('The '.__METHOD__.' expects a CloudFrontClient as parameter.', E_USER_DEPRECATED);

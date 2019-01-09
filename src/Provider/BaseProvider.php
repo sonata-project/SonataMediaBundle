@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -81,7 +83,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    final public function transform(MediaInterface $media)
+    final public function transform(MediaInterface $media): void
     {
         if (null === $media->getBinaryContent()) {
             return;
@@ -94,7 +96,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * @param MediaInterface $media
      */
-    public function flushCdn(MediaInterface $media)
+    public function flushCdn(MediaInterface $media): void
     {
         if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
             $flushPaths = [];
@@ -116,7 +118,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function addFormat($name, $format)
+    public function addFormat($name, $format): void
     {
         $this->formats[$name] = $format;
     }
@@ -140,7 +142,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function generateThumbnails(MediaInterface $media)
+    public function generateThumbnails(MediaInterface $media): void
     {
         $this->thumbnail->generate($this, $media);
     }
@@ -148,7 +150,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function removeThumbnails(MediaInterface $media, $formats = null)
+    public function removeThumbnails(MediaInterface $media, $formats = null): void
     {
         $this->thumbnail->delete($this, $media, $formats);
     }
@@ -185,7 +187,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function preRemove(MediaInterface $media)
+    public function preRemove(MediaInterface $media): void
     {
         if ($this->requireThumbnails()) {
             $this->thumbnail->delete($this, $media);
@@ -195,7 +197,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function postRemove(MediaInterface $media)
+    public function postRemove(MediaInterface $media): void
     {
         $path = $this->getReferenceImage($media);
 
@@ -223,7 +225,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -239,7 +241,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function setTemplates(array $templates)
+    public function setTemplates(array $templates): void
     {
         $this->templates = $templates;
     }
@@ -295,7 +297,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function setResizer(ResizerInterface $resizer)
+    public function setResizer(ResizerInterface $resizer): void
     {
         $this->resizer = $resizer;
     }
@@ -303,7 +305,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function prePersist(MediaInterface $media)
+    public function prePersist(MediaInterface $media): void
     {
         $media->setCreatedAt(new \DateTime());
         $media->setUpdatedAt(new \DateTime());
@@ -312,7 +314,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function preUpdate(MediaInterface $media)
+    public function preUpdate(MediaInterface $media): void
     {
         $media->setUpdatedAt(new \DateTime());
     }
@@ -320,7 +322,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    public function validate(ErrorElement $errorElement, MediaInterface $media): void
     {
     }
 

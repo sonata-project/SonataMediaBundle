@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -55,7 +57,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, [
             'provider' => $options['provider'],
@@ -67,7 +69,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
 
         $builder->addModelTransformer($dataTransformer);
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event): void {
             if ($event->getForm()->has('unlink') && $event->getForm()->get('unlink')->getData()) {
                 $event->setData(null);
             }
@@ -86,7 +88,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['provider'] = $options['provider'];
         $view->vars['context'] = $options['context'];
@@ -99,7 +101,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
      *
      * @deprecated Remove it when bumping requirements to Symfony >=2.7
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
@@ -107,7 +109,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([

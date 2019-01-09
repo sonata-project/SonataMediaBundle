@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -25,7 +27,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class LiipImagineThumbnailTest extends TestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $cacheManager = $this->prophesize(CacheManager::class);
         $cacheManager->getBrowserPath()->willReturn('cache/media/default/0011/24/ASDASDAS.png');
@@ -81,7 +83,7 @@ class LiipImagineThumbnailTest extends TestCase
      * @group legacy
      * @expectedDeprecation Using an instance of Symfony\Component\Routing\RouterInterface is deprecated since version 3.3 and will be removed in 4.0. Use Liip\ImagineBundle\Imagine\Cache\CacheManager.
      */
-    public function testLegacyGenerate()
+    public function testLegacyGenerate(): void
     {
         $router = $this->prophesize(RouterInterface::class);
         $router->generate(

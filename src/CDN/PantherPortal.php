@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -87,7 +89,7 @@ class PantherPortal implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function flushByString($string)
+    public function flushByString($string): void
     {
         $this->flushPaths([$string]);
     }
@@ -95,7 +97,7 @@ class PantherPortal implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function flush($string)
+    public function flush($string): void
     {
         $this->flushPaths([$string]);
     }
@@ -103,7 +105,7 @@ class PantherPortal implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function flushPaths(array $paths)
+    public function flushPaths(array $paths): void
     {
         $result = $this->getClient()->flush($this->username, $this->password, 'paths', $this->siteId, implode("\n", $paths), true, false);
 
@@ -117,7 +119,7 @@ class PantherPortal implements CDNInterface
      *
      * @param $client
      */
-    public function setClient($client)
+    public function setClient($client): void
     {
         $this->client = $client;
     }
@@ -125,7 +127,7 @@ class PantherPortal implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function getFlushStatus($identifier)
+    public function getFlushStatus($identifier): void
     {
         // nothing to do
     }

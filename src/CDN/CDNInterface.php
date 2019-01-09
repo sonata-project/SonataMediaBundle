@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -13,11 +15,11 @@ namespace Sonata\MediaBundle\CDN;
 
 interface CDNInterface
 {
-    const STATUS_OK = 1;
-    const STATUS_TO_SEND = 2;
-    const STATUS_TO_FLUSH = 3;
-    const STATUS_ERROR = 4;
-    const STATUS_WAITING = 5;
+    public const STATUS_OK = 1;
+    public const STATUS_TO_SEND = 2;
+    public const STATUS_TO_FLUSH = 3;
+    public const STATUS_ERROR = 4;
+    public const STATUS_WAITING = 5;
 
     /**
      * Return the base path.

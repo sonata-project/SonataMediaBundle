@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -35,7 +37,7 @@ class PathNode extends \Twig_Node
     /**
      * {@inheritdoc}
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)

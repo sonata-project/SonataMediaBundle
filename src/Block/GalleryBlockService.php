@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -85,7 +87,7 @@ class GalleryBlockService extends AbstractAdminBlockService
     /**
      * {@inheritdoc}
      */
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'gallery' => false,
@@ -106,7 +108,7 @@ class GalleryBlockService extends AbstractAdminBlockService
     /**
      * {@inheritdoc}
      */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $contextChoices = [];
 
@@ -205,7 +207,7 @@ class GalleryBlockService extends AbstractAdminBlockService
     /**
      * {@inheritdoc}
      */
-    public function load(BlockInterface $block)
+    public function load(BlockInterface $block): void
     {
         $gallery = $block->getSetting('galleryId');
 
@@ -219,7 +221,7 @@ class GalleryBlockService extends AbstractAdminBlockService
     /**
      * {@inheritdoc}
      */
-    public function prePersist(BlockInterface $block)
+    public function prePersist(BlockInterface $block): void
     {
         $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
     }
@@ -227,7 +229,7 @@ class GalleryBlockService extends AbstractAdminBlockService
     /**
      * {@inheritdoc}
      */
-    public function preUpdate(BlockInterface $block)
+    public function preUpdate(BlockInterface $block): void
     {
         $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
     }

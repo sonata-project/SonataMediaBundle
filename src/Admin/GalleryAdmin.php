@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -44,7 +46,7 @@ class GalleryAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    public function prePersist($gallery)
+    public function prePersist($gallery): void
     {
         $parameters = $this->getPersistentParameters();
 
@@ -84,7 +86,7 @@ class GalleryAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         // define group zoning
         $formMapper
@@ -132,7 +134,7 @@ class GalleryAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('name')
@@ -145,7 +147,7 @@ class GalleryAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('name')

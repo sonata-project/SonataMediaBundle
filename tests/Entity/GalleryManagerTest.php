@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -22,10 +24,10 @@ use Sonata\MediaBundle\Entity\GalleryManager;
  */
 class GalleryManagerTest extends TestCase
 {
-    public function testGetPager()
+    public function testGetPager(): void
     {
         $this
-            ->getGalleryManager(function ($qb) {
+            ->getGalleryManager(function ($qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
                 $qb->expects($this->never())->method('andWhere');
                 $qb->expects($this->once())->method('orderBy')->with(
@@ -37,21 +39,21 @@ class GalleryManagerTest extends TestCase
             ->getPager([], 1);
     }
 
-    public function testGetPagerWithInvalidSort()
+    public function testGetPagerWithInvalidSort(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Invalid sort field \'invalid\' in \'Sonata\\MediaBundle\\Entity\\BaseGallery\' class');
 
         $this
-            ->getGalleryManager(function ($qb) {
+            ->getGalleryManager(function ($qb): void {
             })
             ->getPager([], 1, 10, ['invalid' => 'ASC']);
     }
 
-    public function testGetPagerWithMultipleSort()
+    public function testGetPagerWithMultipleSort(): void
     {
         $this
-            ->getGalleryManager(function ($qb) {
+            ->getGalleryManager(function ($qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
                 $qb->expects($this->never())->method('andWhere');
                 $qb->expects($this->exactly(2))->method('orderBy')->with(
@@ -72,10 +74,10 @@ class GalleryManagerTest extends TestCase
             ]);
     }
 
-    public function testGetPagerWithEnabledGalleries()
+    public function testGetPagerWithEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function ($qb) {
+            ->getGalleryManager(function ($qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
                 $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
                 $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => true]));
@@ -83,10 +85,10 @@ class GalleryManagerTest extends TestCase
             ->getPager(['enabled' => true], 1);
     }
 
-    public function testGetPagerWithNoEnabledGalleries()
+    public function testGetPagerWithNoEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function ($qb) {
+            ->getGalleryManager(function ($qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
                 $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
                 $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => false]));

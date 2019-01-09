@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -37,7 +39,7 @@ class Server implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function flushByString($string)
+    public function flushByString($string): void
     {
         // nothing to do
     }
@@ -45,7 +47,7 @@ class Server implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function flush($string)
+    public function flush($string): void
     {
         // nothing to do
     }
@@ -53,7 +55,7 @@ class Server implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function flushPaths(array $paths)
+    public function flushPaths(array $paths): void
     {
         // nothing to do
     }
@@ -61,7 +63,7 @@ class Server implements CDNInterface
     /**
      * {@inheritdoc}
      */
-    public function getFlushStatus($identifier)
+    public function getFlushStatus($identifier): void
     {
         // nothing to do
     }
