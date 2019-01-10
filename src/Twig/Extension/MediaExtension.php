@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -194,7 +196,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     /**
      * @param mixed $media
      *
-     * @return MediaInterface|null|bool
+     * @return MediaInterface|bool|null
      */
     private function getMedia($media)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -448,7 +450,7 @@ class FileProvider extends BaseProvider
      */
     protected function generateMediaUniqId(MediaInterface $media)
     {
-        return sha1($media->getName().uniqid().rand(11111, 99999));
+        return sha1($media->getName().uniqid().random_int(11111, 99999));
     }
 
     /**
