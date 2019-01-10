@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.17.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.16.3...3.17.0) - 2019-01-10
+### Added
+- Added an alias for the pool
+- Possiblity to create custom resizers
+
+### Changed
+- Allow KnpLabs/Gaufrette 0.8
+
+### Removed
+- support for php 5 and php 7.0
+
+### Fixed
+- Fix deprecation for symfony/config 4.2+
+- Deprecations about `Sonata\CoreBundle\Model\BaseEntityManager`
+
+### Deprecated
+- Undeprecated `MediaManagerInterface`
+
 ## [3.16.3](https://github.com/sonata-project/SonataMediaBundle/compare/3.16.2...3.16.3) - 2018-11-05
 ### Fixed
 - Added missing methods to `FormatterMediaExtension`
