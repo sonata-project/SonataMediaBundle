@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -237,7 +239,7 @@ abstract class Media implements MediaInterface
     {
         $metadata = $this->getProviderMetadata();
 
-        return isset($metadata[$name]) ? $metadata[$name] : $default;
+        return $metadata[$name] ?? $default;
     }
 
     /**

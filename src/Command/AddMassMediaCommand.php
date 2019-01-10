@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -85,7 +87,7 @@ class AddMassMediaCommand extends BaseCommand
             throw new \RuntimeException('Please provide a CSV file argument or CSV input stream');
         }
 
-        return fopen($input->getOption('file'), 'rb');
+        return fopen($input->getOption('file'), 'r');
     }
 
     /**
