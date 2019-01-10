@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -25,7 +27,7 @@ class Configuration implements ConfigurationInterface
     /**
      * NEXT_MAJOR: make constant protected/private.
      */
-    const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'];
+    public const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'];
 
     /**
      * {@inheritdoc}
@@ -35,7 +37,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('sonata_media');
 
         // Keep compatibility with symfony/config < 4.2
-        if (!\method_exists($treeBuilder, 'getRootNode')) {
+        if (!method_exists($treeBuilder, 'getRootNode')) {
             $node = $treeBuilder->root('sonata_media');
         } else {
             $node = $treeBuilder->getRootNode();
@@ -428,7 +430,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('enabled')->defaultValue(false)->end()
-                        ->scalarNode('secret')->defaultValue(sha1(uniqid(rand(1, 9999), true)))->end()
+                        ->scalarNode('secret')->defaultValue(sha1(uniqid((string) random_int(1, 9999), true)))->end()
                         ->scalarNode('referrer')->defaultValue('Sonata Media')->end()
                     ->end()
                 ->end()

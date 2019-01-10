@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -100,7 +102,7 @@ abstract class BaseProvider implements MediaProviderInterface
             $flushPaths = [];
             foreach ($this->getFormats() as $format => $settings) {
                 if (MediaProviderInterface::FORMAT_ADMIN === $format ||
-                    substr($format, 0, \strlen($media->getContext())) === $media->getContext()) {
+                    substr($format, 0, \strlen((string) $media->getContext())) === $media->getContext()) {
                     $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
                 }
             }

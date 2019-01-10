@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -15,13 +17,13 @@ use Imagine\Image\Box;
 
 interface MediaInterface
 {
-    const STATUS_OK = 1;
-    const STATUS_SENDING = 2;
-    const STATUS_PENDING = 3;
-    const STATUS_ERROR = 4;
-    const STATUS_ENCODING = 5;
+    public const STATUS_OK = 1;
+    public const STATUS_SENDING = 2;
+    public const STATUS_PENDING = 3;
+    public const STATUS_ERROR = 4;
+    public const STATUS_ENCODING = 5;
 
-    const MISSING_BINARY_REFERENCE = 'missing_binary_content';
+    public const MISSING_BINARY_REFERENCE = 'missing_binary_content';
 
     /**
      * @param mixed $binaryContent

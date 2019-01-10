@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -20,7 +22,7 @@ class PHPCRGenerator implements GeneratorInterface
      */
     public function generatePath(MediaInterface $media)
     {
-        $segments = preg_split('#/#', $media->getId(), null, PREG_SPLIT_NO_EMPTY);
+        $segments = preg_split('#/#', $media->getId(), -1, PREG_SPLIT_NO_EMPTY);
 
         if (\count($segments) > 1) {
             // remove last part from id
