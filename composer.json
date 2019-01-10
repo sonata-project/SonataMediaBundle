@@ -73,7 +73,7 @@
         "friendsofsymfony/rest-bundle": "^2.1",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
         "liip/imagine-bundle": "^1.9",
-        "matthiasnoback/symfony-dependency-injection-test": "^1.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
         "nelmio/api-doc-bundle": "^2.11",
         "sonata-project/admin-bundle": "^3.31",
         "sonata-project/block-bundle": "^3.11",
@@ -82,7 +82,7 @@
         "sonata-project/formatter-bundle": "^3.4 || ^4.0",
         "sonata-project/notification-bundle": "^3.3",
         "sonata-project/seo-bundle": "^2.5",
-        "symfony/phpunit-bridge": "^4.0",
+        "symfony/phpunit-bridge": "^4.2",
         "symfony/security-csrf": "^2.8 || ^3.2 || ^4.0"
     },
     "suggest": {
