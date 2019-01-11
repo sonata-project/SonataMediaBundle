@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Admin\PHPCR;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MediaAdmin extends Admin
 {
@@ -61,13 +62,46 @@ class MediaAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        // TODO disabled filter due to no attached service for filter types: string, checkbox
-//        $datagridMapper
-//            ->add('name')
-//            ->add('providerReference')
-//            ->add('enabled')
-//            ->add('context')
-//        ;
+        $options = [
+            'choices' => [],
+            'required' => false,
+            'multiple' => false,
+            'expanded' => false,
+        ];
+
+        foreach ($this->pool->getContexts() as $name => $context) {
+            $options['choices'][$this->trans('media_context.'.$name)] = $name;
+        }
+
+        $datagridMapper
+            ->add('name')
+            ->add('providerReference')
+            ->add('enabled')
+            ->add('context', null, [
+                'show_filter' => true !== $this->getPersistentParameter('hide_context'),
+            ], ChoiceType::class, $options);
+        $datagridMapper
+            ->add('width')
+            ->add('height')
+            ->add('contentType')
+        ;
+
+        $providers = [];
+
+        $providerNames = (array) $this->pool->getProviderNamesByContext($this->getPersistentParameter('context', $this->pool->getDefaultContext()));
+        foreach ($providerNames as $name) {
+            $providers[$this->trans($name, [])] = $name;
+        }
+
+        $datagridMapper->add('providerName', null, [
+            'field_options' => [
+                'choices' => $providers,
+                'required' => false,
+                'multiple' => false,
+                'expanded' => false,
+            ],
+            'field_type' => ChoiceType::class,
+        ]);
     }
 
     /**

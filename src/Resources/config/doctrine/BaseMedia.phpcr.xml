@@ -9,8 +9,8 @@
         <field name="providerStatus" type="long"/>
         <field name="providerReference" type="string"/>
         <field name="providerMetadata" type="string" multivalue="true"/>
-        <field name="width" type="long"/>
-        <field name="height" type="long"/>
+        <field name="width" type="long" nullable="true"/>
+        <field name="height" type="long" nullable="true"/>
         <field name="length" type="double" nullable="true"/>
         <field name="contentType" type="string"/>
         <field name="size" type="long" nullable="true"/>
