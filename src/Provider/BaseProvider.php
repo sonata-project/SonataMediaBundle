@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
-use Sonata\CoreBundle\Model\Metadata;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;

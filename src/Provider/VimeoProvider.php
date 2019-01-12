@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
