@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\CoreBundle\Model\MetadataInterface;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;

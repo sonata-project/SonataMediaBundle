@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Imagine\Image\ImagineInterface;
-use Sonata\CoreBundle\Model\Metadata;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;

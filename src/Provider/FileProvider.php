@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\CoreBundle\Model\Metadata;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Extra\ApiMediaFile;
