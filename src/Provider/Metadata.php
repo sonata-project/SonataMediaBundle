@@ -26,7 +26,7 @@ final class Metadata implements MetadataInterface
     private $description;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $image;
 
@@ -67,7 +67,7 @@ final class Metadata implements MetadataInterface
         return $this->description;
     }
 
-    public function getImage(): ?string
+    public function getImage(): string
     {
         return $this->image;
     }
