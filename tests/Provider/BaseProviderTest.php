@@ -92,7 +92,7 @@ class BaseProviderTest extends AbstractProviderTest
 
         $this->assertSame('test', $provider->getProviderMetadata()->getTitle());
         $this->assertSame('test.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertNotNull($provider->getProviderMetadata()->getImage());
         $this->assertSame('fa fa-file', $provider->getProviderMetadata()->getOption('class'));
         $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
