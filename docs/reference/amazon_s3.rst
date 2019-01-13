@@ -1,7 +1,7 @@
 Amazon S3
 =========
 
-In order to use Amazon S3, you will need to add the following dependency to your composer.json:
+In order to use Amazon S3, you will need to require the following library:
 
 .. code-block:: bash
 
@@ -14,6 +14,8 @@ This is a sample config file to enable amazon S3 as a filesystem & provider:
 
 .. code-block:: yaml
 
+    # config/packages/sonata_media.yaml
+
     sonata_media:
         cdn:
             server:
@@ -22,7 +24,6 @@ This is a sample config file to enable amazon S3 as a filesystem & provider:
         providers:
             image:
                 filesystem: sonata.media.filesystem.s3
-
 
         filesystem:
             s3:
@@ -33,8 +34,7 @@ This is a sample config file to enable amazon S3 as a filesystem & provider:
                 version:     '%s3_version%' # latest by default (cf. https://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/configuration.html#version)
                 sdk_version: '%s3_sdk_version%' # 2 by default
 
-
 .. note:: 
 
-   This bundle is currently using KNP Gaufrette as S3 adapter and the default sdk used is version 2.
-   Changes have been made in the bundle to allow you to use version 3, simply update `sdk_version` parameter for this.
+   This bundle is currently using KNP Gaufrette as S3 adapter and the default SDK used is version 2.
+   Changes have been made in the bundle to allow you to use version 3, update `sdk_version` parameter for this.

@@ -14,9 +14,7 @@ You can define formats per provider type, there is something important that you 
 
 For example, let's suppose you got a format called hq, and you want to set 1920 as the width value in your format, then the quality should be 100 as maximun value. Don't make the mistake of setting 1080 in the quality value.
 
-Please take a look at how the images are compressed by this function in the image class:
-
-.. code-block:: php
+Please take a look at how the images are compressed by this function in the image class::
 
     /**
      * Internal
@@ -41,7 +39,7 @@ Please take a look at how the images are compressed by this function in the imag
         }
 
         $save = 'image'.$format;
-        $args = array(&$this->resource, $filename);
+        $args = [&$this->resource, $filename];
 
         if (($format === 'jpeg' || $format === 'png') &&
             isset($options['quality'])) {
@@ -76,7 +74,8 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/packages/sonata_media.yaml
+
     sonata_media:
         # if you don't use default namespace configuration
         #class:
@@ -109,5 +108,5 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
 
         filesystem:
             local:
-                directory:  "%kernel.root_dir%/../web/uploads/media"
+                directory:  '%kernel.root_dir%/../web/uploads/media'
                 create:     false

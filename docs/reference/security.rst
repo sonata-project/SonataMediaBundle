@@ -31,13 +31,14 @@ the HTTP server you used:
     If you use ``X-Sendfile`` or ``X-Accel-Redirect`` download mode, don't forget to specify that you trust this
     header by adding ``BinaryFileResponse::trustXSendfileTypeHeader();`` in your app controller.
 
-
 Configuration Example
 ---------------------
 
 For the context ``default`` the user need to be a Super Admin to retrieve the file in ``http`` mode.
 
 .. code-block:: yaml
+
+    # config/packages/sonata_media.yaml
 
     sonata_media:
         db_driver: doctrine_orm
@@ -66,12 +67,7 @@ The Strategy class must implement the ``DownloadStrategyInterface`` which contai
 * isGranted : return true or false depends on the strategy logic
 * getDescription : explains the strategy
 
-Let's create the following strategy : a media can be downloaded only by the given users
-
-
-.. code-block:: php
-
-    <?php
+Let's create the following strategy : a media can be downloaded only by the given users::
 
     namespace Sonata\MediaBundle\Security;
 
@@ -97,34 +93,23 @@ Let's create the following strategy : a media can be downloaded only by the give
          */
         protected $users;
 
-        /**
-         * @param TokenStorageInterface $tokenStorage
-         * @param TranslatorInterface   $translator
-         * @param array                 $users
-         */
-        public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, array $users = array())
+        public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, array $users = [])
         {
             $this->tokenStorage = $tokenStorage;
             $this->translator = $translator;
             $this->users = $users;
         }
 
-        /**
-         * {@inheritdoc}
-         */
         public function isGranted(MediaInterface $media, Request $request)
         {
             return in_array($this->tokenStorage->getToken()->getUsername(), $this->users);
         }
 
-        /**
-         * {@inheritdoc}
-         */
         public function getDescription()
         {
             return $this->translator->trans(
                 'description.users_download_strategy',
-                array('%users%' => '<code>'.implode('</code>, <code>', $this->users).'</code>'),
+                ['%users%' => '<code>'.implode('</code>, <code>', $this->users).'</code>'],
                 'SonataMediaBundle'
             );
         }
@@ -135,38 +120,40 @@ Let's explain a bit :
 * ``isGranted`` : the method test if granted user exists in allowed users for download
 * ``getDescription`` : return a translated message to explain what the current strategy does
 
-
 The last important part is declaring the service.
 
-Open the ``service.xml`` file and add the following lines.
+.. configuration-block::
 
-.. code-block:: xml
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
 
         <service id="sonata.media.security.users_strategy" class="Sonata\MediaBundle\Security\'UsersDownloadStrategy">
-            <argument type="service" id="security.token_storage" />
-            <argument type="service" id="translator" />
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="translator"/>
             <argument  type="collection">
                 <argument>mozart</argument>
                 <argument>chopin</argument>
             </argument>
         </service>
 
+    .. code-block:: yaml
 
-Or open the ``service.yml`` file and add the following lines.
+        # config/services.yaml
 
-.. code-block:: yaml
-
-    services:
-        sonata.media.security.users_strategy:
-            class:     Sonata\MediaBundle\Security\UsersDownloadStrategy
-            arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
+        services:
+            sonata.media.security.users_strategy:
+                class:     Sonata\MediaBundle\Security\UsersDownloadStrategy
+                arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
 
 Now the service can be used with a context:
 
 .. code-block:: yaml
 
+    # config/packages/sonata_media.yaml
+
     sonata_media:
-        db_driver:  doctrine_orm
+        db_driver: doctrine_orm
         contexts:
             contents:
                 download:

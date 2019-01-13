@@ -102,8 +102,6 @@ And like this for the request body:
     Content-Disposition: form-data; name="binaryContent"; filename="my-awesome-image.jpg"
     Content-Type: image/jpeg
 
-
     ------WebKitFormBoundaryFhX9k2FPT3sQos00--
-
 
 You may of course still use JSON body for creating a video media (you only have to set the ``binaryContent`` argument to the video URL).
