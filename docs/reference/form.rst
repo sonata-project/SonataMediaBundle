@@ -20,34 +20,34 @@ And optionals parameters:
 
 .. code-block:: php
 
-    <?php
-    // create the target object
     $post = new Post();
 
     // create the form
     $builder = $this->createFormBuilder($post);
-    $builder->add('media', 'sonata_media_type', array(
+    $builder->add('media', 'sonata_media_type', [
          'provider' => 'sonata.media.provider.youtube',
-         'context'  => 'default'
-    ));
+         'context'  => 'default',
+    ]);
 
     $form = $builder->getForm();
 
     // bind and transform the media's binary content into real content
-    if ($request->getMethod() == 'POST') {
+    if ($request->getMethod() == 'POST')
+    {
         $form->bindRequest($request);
 
         // do stuff ...
     }
 
-
 You also need to add a new form theme template to twig configuration:
 
 .. code-block:: yaml
 
+    # config/packages/twig.yaml
+
     twig:
-        debug:            "%kernel.debug%"
-        strict_variables: "%kernel.debug%"
+        debug:            '%kernel.debug%'
+        strict_variables: '%kernel.debug%'
 
         form_themes:
             - '@SonataMedia/Form/media_widgets.html.twig'

@@ -10,20 +10,20 @@ Edit the ``sonata_media`` configuration:
 
 .. code-block:: yaml
 
-    # app/config/sonata_media.yml
+    # config/packages/sonata_media.yaml
+
     sonata_media:
-        # ...
         pixlr:
             enabled:  true
             secret:   theSecretHash
             referrer: Application Name
 
-
 Add the pixlr routing file
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
+    # config/routes.yaml
+
     sonata_media_pixlr:
         resource: '@SonataMediaBundle/Resources/config/routing/pixlr.xml'
         prefix: /admin/media
@@ -41,10 +41,10 @@ for each provider:
 
 .. code-block:: yaml
 
+    # config/packages/sonata_media.yaml
+
     sonata_media:
-        # ...
         providers:
-            # ...
             image:
                 thumbnail:  sonata.media.thumbnail.consumer.format
             vimeo:
@@ -53,7 +53,6 @@ for each provider:
                 thumbnail:  sonata.media.thumbnail.consumer.format
             dailymotion:
                 thumbnail:  sonata.media.thumbnail.consumer.format
-
 
 Liip Imagine Bundle Integration
 ===============================
@@ -66,8 +65,9 @@ The first step is to install the LiipImagineBundle, then you need to configure i
 Each set name must be composed of CONTEXTNAME_FORMATNAME, so for the context: default and the format: small, you must
 have a set named default_small.
 
-
 .. code-block:: yaml
+
+    # config/packages/liip_imagine.yaml
 
     liip_imagine:
         filter_sets:
@@ -75,7 +75,6 @@ have a set named default_small.
                 quality: 75
                 filters:
                     thumbnail: { size: [100, 70], mode: outbound }
-
 
             default_big:
                 quality: 75
@@ -86,10 +85,10 @@ You also need to alter the ``sonata_media`` configuration to use the ``sonata.me
 
 .. code-block:: yaml
 
+    # config/packages/sonata_media.yaml
+
     sonata_media:
-        # ...
         providers:
-            # ...
             image:
                 thumbnail:  sonata.media.thumbnail.liip_imagine
                 allowed_extensions: ['jpg', 'png', 'gif', 'jpeg'] # Optional
@@ -101,13 +100,11 @@ You also need to alter the ``sonata_media`` configuration to use the ``sonata.me
             dailymotion:
                 thumbnail:  sonata.media.thumbnail.liip_imagine
 
-
         cdn:
             # The CDN part must point to the base root of your application with a valid htaccess to match non existant
             # file. The non existant image will be send to the SonataMediaBundle:Media:liipImagineFilter controller.
             server:
-                path:      http://mydomain.com
-
+                path: 'http://mydomain.com'
 
 .. note::
 
@@ -126,47 +123,59 @@ Medias in CKEditor with CoopTilleulsCKEditorSonataMediaBundle
 
 To use this feature, follow `CoopTilleulsCKEditorSonataMediaBundle installation instructions <https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle/blob/master/docs/install.md>`.
 
-Now, just create a field with ckeditor as type and your done:
-
-.. code-block:: php
+Now, just create a field with ckeditor as type and your done::
 
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('mytext', 'ckeditor', array(
-                'config' => array(
-                    'toolbar' => array(
-                        array(
+            ->add('mytext', 'ckeditor', [
+                'config' => [
+                    'toolbar' => [
+                        [
                             'name' => 'links',
-                            'items' => array('Link','Unlink'),
-                        ),
-                        array(
+                            'items' => ['Link', 'Unlink'],
+                        ],
+                        [
                             'name' => 'insert',
-                            'items' => array('Image'),
-                        ),
-                    ),
-                ),
-            ));
+                            'items' => ['Image'],
+                        ],
+                    ],
+                ],
+            ]);
     }
 
 Medias in CKEditor with SonataFormatterBundle
 ---------------------------------------------
 
-`SonataFormatterBundle <https://github.com/sonata-project/SonataFormatterBundle>`_ allows to browse and upload files managed by SonataMedia directly from the UI of the `CKEditor <http://ckeditor.com/>`_ WYSIWYG editor too.
+`SonataFormatterBundle <https://github.com/sonata-project/SonataFormatterBundle>`_ allows to
+browse and upload files managed by SonataMedia directly from the UI of the
+`CKEditor <http://ckeditor.com/>`_ WYSIWYG editor too.
 
-First of all, you have to define your ``IvoryCKEditorBundle`` (already embedded in ``SonataFormatterBundle``) configurations like this:
+First of all, you have to define your ``FOSCKEditorBundle`` (already embedded in
+``SonataFormatterBundle``) configurations like this:
 
 .. code-block:: yaml
 
-    ivory_ck_editor:
+    # config/packages/fos_ck_editor.yaml
+
+    fos_ck_editor:
         default_config: default
         configs:
             default:
+                # default toolbar plus Format button
+                toolbar:
+                - [Bold, Italic, Underline, -, Cut, Copy, Paste,
+                  PasteText, PasteFromWord, -, Undo, Redo, -,
+                  NumberedList, BulletedList, -, Outdent, Indent, -,
+                  Blockquote, -, Image, Link, Unlink, Table]
+                - [Format, Maximize, Source]
+
                 filebrowserBrowseRoute: admin_sonata_media_media_ckeditor_browser
                 filebrowserImageBrowseRoute: admin_sonata_media_media_ckeditor_browser
                 # Display images by default when clicking the image dialog browse button
                 filebrowserImageBrowseRouteParameters:
                     provider: sonata.media.provider.image
+                filebrowserUploadMethod: form
                 filebrowserUploadRoute: admin_sonata_media_media_ckeditor_upload
                 filebrowserUploadRouteParameters:
                     provider: sonata.media.provider.file
@@ -175,6 +184,7 @@ First of all, you have to define your ``IvoryCKEditorBundle`` (already embedded 
                 filebrowserImageUploadRouteParameters:
                     provider: sonata.media.provider.image
                     context: my-context # Optional, to upload in a custom context
+                    format: my-big # Optional, media format or original size returned to editor
 
 You can provide custom routes and a custom context to match your needs.
 
@@ -182,30 +192,30 @@ Second step is optional but you can also define some custom browsing and upload 
 
 .. code-block:: yaml
 
-  # app/config/config.yml
+    # config/packages/sonata_formatter.yaml
 
-  sonata_formatter:
-      ckeditor:
-          templates:
-              browser: '@SonataFormatter/Ckeditor/browser.html.twig'
-              upload: '@SonataFormatter/Ckeditor/upload.html.twig'
+    sonata_formatter:
+        ckeditor:
+            templates:
+                browser: '@SonataFormatter/Ckeditor/browser.html.twig'
+                upload: '@SonataFormatter/Ckeditor/upload.html.twig'
 
-Last step takes place in your admin class, you just have to specify the ``ckeditor_context`` parameter.
+Last step takes place in your admin class, you just have to specify the ``ckeditor_context`` parameter::
 
-Here is an example:
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            ->add('shortDescription', 'sonata_formatter_type', [
+                'source_field' => 'rawDescription',
+                'source_field_options' => ['attr' => ['class' => 'span10', 'rows' => 20]],
+                'format_field' => 'descriptionFormatter',
+                'target_field' => 'description',
+                'ckeditor_context' => 'default',
+                'event_dispatcher' => $formMapper->getFormBuilder()->getEventDispatcher()
+            ]);
+    }
 
-.. code-block:: php
-
-    $formMapper->add('shortDescription', 'sonata_formatter_type', array(
-        'source_field'         => 'rawDescription',
-        'source_field_options' => array('attr' => array('class' => 'span10', 'rows' => 20)),
-        'format_field'         => 'descriptionFormatter',
-        'target_field'         => 'description',
-        'ckeditor_context'     => 'default',
-        'event_dispatcher'     => $formMapper->getFormBuilder()->getEventDispatcher()
-    ));
-
-And that's it, enjoy browsing and uploading your medias using ``SonataMediaBundle``.
+Afterwards you can browse and upload your medias using ``SonataMediaBundle``.
 
 Sonata Multiupload Bundle
 =========================
