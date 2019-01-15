@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\PHPCR;
 
-use Sonata\CoreBundle\Model\BaseDocumentManager;
+use Sonata\Doctrine\Document\BaseDocumentManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
