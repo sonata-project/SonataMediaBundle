@@ -4,7 +4,7 @@
         <!-- NEXT_MAJOR: Uncomment Following line
         <constraint name="Callback">isStatusErroneous</constraint>
         -->
-        <constraint name="Sonata\CoreBundle\Validator\Constraints\InlineConstraint">
+        <constraint name="Sonata\Form\Validator\Constraints\InlineConstraint">
             <option name="service">sonata.media.pool</option>
             <option name="method">validate</option>
         </constraint>
