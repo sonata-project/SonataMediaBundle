@@ -206,3 +206,18 @@ Here is an example:
     ));
 
 And that's it, enjoy browsing and uploading your medias using ``SonataMediaBundle``.
+
+Sonata Multiupload Bundle
+======================================
+
+This bundle allows you to upload a stack of Media's. It provides JS
+side mimetype and file extension validation.
+
+Take a look:
+
+.. figure:: ../images/multiupload-bundle.gif
+   :align: center
+   :alt: Multiupload Bundle
+
+If you like it check it out
+`silasjoisten/sonata-multiupload-bundle <https://github.com/silasjoisten/sonata-multiupload-bundle>`_
