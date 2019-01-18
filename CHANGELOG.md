@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.18.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.17.1...3.18.0) - 2019-01-18
+
+### Added
+- Added alias for providers to use autoconfigure via DependencyInjection
+- Added `Sonata\MediaBundle\Provider\Metadata` class
+
+### Changed
+- Changed `MediaProviderInterface::getProviderMetadata` return type in PHPDoc
+- block classes will use the block specific Metadata class
+
+### Removed
+- Removed CoreBundle deprecations
+
 ## [3.17.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.17.0...3.17.1) - 2019-01-12
 
 ### Fixes
