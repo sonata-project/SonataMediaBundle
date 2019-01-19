@@ -102,10 +102,6 @@ If you picked Doctrine ORM:
                         mappings:
                             SonataMediaBundle: ~
 
-            dbal:
-                types:
-                    json: Sonata\Doctrine\Types\JsonType
-
 .. note::
 
     If you are not using Symfony Flex, this configuration should be added
