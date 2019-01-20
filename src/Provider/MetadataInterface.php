@@ -22,7 +22,7 @@ interface MetadataInterface extends \Sonata\CoreBundle\Model\MetadataInterface
 
     public function getDescription(): ?string;
 
-    public function getImage(): string;
+    public function getImage(): ?string;
 
     public function getDomain(): ?string;
 
