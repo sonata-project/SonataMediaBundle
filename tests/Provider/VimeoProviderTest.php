@@ -233,7 +233,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $this->assertSame('vimeo', $provider->getProviderMetadata()->getTitle());
         $this->assertSame('vimeo.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertNotNull($provider->getProviderMetadata()->getImage());
         $this->assertSame('fa fa-vimeo-square', $provider->getProviderMetadata()->getOption('class'));
         $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }

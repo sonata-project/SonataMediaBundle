@@ -220,7 +220,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $this->assertSame('image', $provider->getProviderMetadata()->getTitle());
         $this->assertSame('image.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertNotNull($provider->getProviderMetadata()->getImage());
         $this->assertSame('fa fa-picture-o', $provider->getProviderMetadata()->getOption('class'));
         $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }

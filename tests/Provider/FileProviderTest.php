@@ -403,7 +403,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $this->assertSame('file', $provider->getProviderMetadata()->getTitle());
         $this->assertSame('file.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertNotNull($provider->getProviderMetadata()->getImage());
         $this->assertSame('fa fa-file-text-o', $provider->getProviderMetadata()->getOption('class'));
         $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }

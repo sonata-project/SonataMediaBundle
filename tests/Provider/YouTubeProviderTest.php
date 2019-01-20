@@ -236,7 +236,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $this->assertSame('youtube', $provider->getProviderMetadata()->getTitle());
         $this->assertSame('youtube.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertNotNull($provider->getProviderMetadata()->getImage());
         $this->assertSame('fa fa-youtube', $provider->getProviderMetadata()->getOption('class'));
         $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
