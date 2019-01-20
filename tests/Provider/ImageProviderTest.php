@@ -67,7 +67,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new ImageProvider('file', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
+        $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -212,5 +212,16 @@ class ImageProviderTest extends AbstractProviderTest
 
         $this->assertNull($provider->transform($media));
         $this->assertNull($media->getWidth(), 'Width staid null');
+    }
+
+    public function testMetadata()
+    {
+        $provider = $this->getProvider();
+
+        $this->assertSame('image', $provider->getProviderMetadata()->getTitle());
+        $this->assertSame('image.description', $provider->getProviderMetadata()->getDescription());
+        $this->assertNotNull($provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa fa-picture-o', $provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 }
