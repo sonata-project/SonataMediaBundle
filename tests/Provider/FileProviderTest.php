@@ -396,4 +396,15 @@ class FileProviderTest extends AbstractProviderTest
         $provider = $this->getProvider();
         $provider->validate($errorElement, $media);
     }
+
+    public function testMetadata()
+    {
+        $provider = $this->getProvider();
+
+        $this->assertSame('file', $provider->getProviderMetadata()->getTitle());
+        $this->assertSame('file.description', $provider->getProviderMetadata()->getDescription());
+        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa-file-text-o', $provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+    }
 }

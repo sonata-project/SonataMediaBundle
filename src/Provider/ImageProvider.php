@@ -53,7 +53,13 @@ class ImageProvider extends FileProvider
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-picture-o']);
+        return new Metadata(
+            $this->getName(),
+            $this->getName().'.description',
+            null,
+            'SonataMediaBundle',
+            ['class' => 'fa fa-picture-o']
+        );
     }
 
     /**

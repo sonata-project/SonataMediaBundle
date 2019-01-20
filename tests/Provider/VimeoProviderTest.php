@@ -61,7 +61,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new VimeoProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
+        $provider = new VimeoProvider('vimeo', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -225,5 +225,16 @@ class VimeoProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setProviderReference('123456');
         $this->assertEquals('https://vimeo.com/123456', $this->getProvider()->getReferenceUrl($media));
+    }
+
+    public function testMetadata()
+    {
+        $provider = $this->getProvider();
+
+        $this->assertSame('vimeo', $provider->getProviderMetadata()->getTitle());
+        $this->assertSame('vimeo.description', $provider->getProviderMetadata()->getDescription());
+        $this->assertNull($provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa fa-vimeo-square', $provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 }
