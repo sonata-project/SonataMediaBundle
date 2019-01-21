@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.18.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.18.0...3.18.1) - 2019-01-21
+### Fixed
+- crash about wrong provider argument type when trying to upload a media
+
 ## [3.18.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.17.1...3.18.0) - 2019-01-18
 
 ### Added
