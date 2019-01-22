@@ -11,10 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Form\Type;
+namespace Sonata\MediaBundle\Tests\Admin;
 
-use Sonata\Form\Type\BaseDoctrineORMSerializationType;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 
-class ApiGalleryType extends BaseDoctrineORMSerializationType
+class TestMediaAdmin extends BaseMediaAdmin
 {
 }

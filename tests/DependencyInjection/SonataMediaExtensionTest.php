@@ -271,6 +271,14 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
+    public function testMediaPool()
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasService('sonata.media.pool');
+        $this->assertContainerBuilderHasAlias('%sonata.media.pool.class%', 'sonata.media.pool');
+    }
+
     protected function getMinimalConfiguration()
     {
         return [

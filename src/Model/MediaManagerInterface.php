@@ -16,11 +16,6 @@ namespace Sonata\MediaBundle\Model;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Doctrine\Model\PageableManagerInterface;
 
-/**
- * NEXT_MAJOR: remove this class.
- *
- * @deprecated Use Sonata\CoreBundle\Model\ManagerInterface instead
- */
 interface MediaManagerInterface extends ManagerInterface, PageableManagerInterface
 {
 }

@@ -87,7 +87,7 @@ class AddMassMediaCommand extends BaseCommand
             throw new \RuntimeException('Please provide a CSV file argument or CSV input stream');
         }
 
-        return fopen($input->getOption('file'), 'rb');
+        return fopen($input->getOption('file'), 'r');
     }
 
     /**

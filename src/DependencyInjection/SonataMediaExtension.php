@@ -558,6 +558,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                 '%sonata.media.resizer.simple.adapter.mode%',
                 new Reference('sonata.media.metadata.proxy'),
             ]);
+            $definition->addTag('sonata.media.resizer');
             $container->setDefinition('sonata.media.resizer.simple', $definition);
         }
 
@@ -568,6 +569,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                 '%sonata.media.resizer.square.adapter.mode%',
                 new Reference('sonata.media.metadata.proxy'),
             ]);
+            $definition->addTag('sonata.media.resizer');
             $container->setDefinition('sonata.media.resizer.square', $definition);
         }
 

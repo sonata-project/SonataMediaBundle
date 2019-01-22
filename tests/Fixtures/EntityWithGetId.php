@@ -11,10 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Form\Type;
+namespace Sonata\MediaBundle\Tests\Fixtures;
 
-use Sonata\Form\Type\BaseDoctrineORMSerializationType;
-
-class ApiGalleryType extends BaseDoctrineORMSerializationType
+class EntityWithGetId
 {
+    protected $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

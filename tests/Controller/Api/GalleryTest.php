@@ -11,10 +11,20 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Form\Type;
+namespace Sonata\MediaBundle\Tests\Controller\Api;
 
-use Sonata\Form\Type\BaseDoctrineORMSerializationType;
-
-class ApiGalleryType extends BaseDoctrineORMSerializationType
+class GalleryTest
 {
+    private $id;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->id = random_int(0, getrandmax());
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

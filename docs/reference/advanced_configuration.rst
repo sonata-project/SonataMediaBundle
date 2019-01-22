@@ -31,7 +31,7 @@ Full configuration options:
 
                 formats:
                     small: { width: 100 , quality: 70}
-                    big:   { width: 500 , quality: 70}
+                    big:   { width: 500 , quality: 70, resizer: sonata.media.resizer.square}
 
             tv:
                 download:

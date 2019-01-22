@@ -25,6 +25,7 @@ use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Tests\Fixtures\EntityWithGetId;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Command\DebugCommand;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -39,16 +40,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-
-class EntityWithGetId
-{
-    protected $id;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-}
 
 class MediaAdminControllerTest extends TestCase
 {

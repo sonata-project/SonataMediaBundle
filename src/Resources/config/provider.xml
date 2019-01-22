@@ -15,6 +15,7 @@
         <service id="sonata.media.pool" class="%sonata.media.pool.class%" public="true">
             <argument/>
         </service>
+        <service id="%sonata.media.pool.class%" alias="sonata.media.pool"/>
         <service id="sonata.media.thumbnail.format" class="%sonata.media.thumbnail.format%">
             <argument type="string">%sonata.media.thumbnail.format.default%</argument>
         </service>
@@ -110,5 +111,10 @@
         <service id="sonata.media.buzz.browser" class="Buzz\Browser">
             <argument/>
         </service>
+        <service id="%sonata.media.provider.image.class%" alias="sonata.media.provider.image"/>
+        <service id="%sonata.media.provider.file.class%" alias="sonata.media.provider.file"/>
+        <service id="%sonata.media.provider.youtube.class%" alias="sonata.media.provider.youtube"/>
+        <service id="%sonata.media.provider.dailymotion.class%" alias="sonata.media.provider.dailymotion"/>
+        <service id="%sonata.media.provider.vimeo.class%" alias="sonata.media.provider.vimeo"/>
     </services>
 </container>

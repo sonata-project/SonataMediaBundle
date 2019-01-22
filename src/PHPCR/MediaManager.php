@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\PHPCR;
 
-use Sonata\CoreBundle\Model\BasePHPCRManager;
+use Sonata\Doctrine\Document\BasePHPCRManager;
 
 class MediaManager extends BasePHPCRManager
 {

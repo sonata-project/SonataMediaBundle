@@ -8,7 +8,11 @@ features: resize, cdn and database relationship with entities.
 The ``MediaBundle`` tries to solve this situation by introducing ``context``:
 a context has its own set of media providers and its own set of formats.
 That means you can have a ``small`` user picture format and a ``small`` news
-picture format with different sizes and providers. For example:
+picture format with different sizes and providers. 
+Also each format allows to use a custom resizer instead of the default one 
+configured in the provider,
+
+For example:
 
 .. code-block:: yaml
 
@@ -22,7 +26,7 @@ picture format with different sizes and providers. For example:
 
             formats:
                 small: { width: 100 , quality: 70}
-                big:   { width: 500 , quality: 70}
+                big:   { width: 500 , quality: 70, resizer: sonata.media.resizer.square}
 
         news:
             providers:

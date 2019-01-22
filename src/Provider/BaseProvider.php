@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
-use Sonata\CoreBundle\Model\Metadata;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -102,7 +101,7 @@ abstract class BaseProvider implements MediaProviderInterface
             $flushPaths = [];
             foreach ($this->getFormats() as $format => $settings) {
                 if (MediaProviderInterface::FORMAT_ADMIN === $format ||
-                    substr($format, 0, \strlen($media->getContext())) === $media->getContext()) {
+                    substr($format, 0, \strlen((string) $media->getContext())) === $media->getContext()) {
                     $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
                 }
             }
@@ -181,7 +180,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', ['class' => 'fa fa-file']);
+        return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-file']);
     }
 
     /**

@@ -61,7 +61,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new YouTubeProvider('file', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
+        $provider = new YouTubeProvider('youtube', $filesystem, $cdn, $generator, $thumbnail, $browser, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -230,5 +230,16 @@ class YouTubeProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setProviderReference('123456');
         $this->assertEquals('https://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
+    }
+
+    public function testMetadata()
+    {
+        $provider = $this->getProvider();
+
+        $this->assertSame('youtube', $provider->getProviderMetadata()->getTitle());
+        $this->assertSame('youtube.description', $provider->getProviderMetadata()->getDescription());
+        $this->assertNotNull($provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa fa-youtube', $provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 }

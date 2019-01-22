@@ -17,29 +17,12 @@ use FOS\RestBundle\Request\ParamFetcher;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryInterface;
-use Sonata\MediaBundle\Model\GalleryItem;
 use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-class GalleryTest extends GalleryItem
-{
-    private $id;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->id = random_int(0, getrandmax());
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-}
 
 /**
  * @author Hugo Briand <briand@ekino.com>

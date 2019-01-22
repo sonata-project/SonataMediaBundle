@@ -11,10 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Form\Type;
+namespace Sonata\MediaBundle\Tests\Block\Breadcrumb;
 
-use Sonata\Form\Type\BaseDoctrineORMSerializationType;
+use Sonata\MediaBundle\Block\Breadcrumb\BaseGalleryBreadcrumbBlockService;
 
-class ApiGalleryType extends BaseDoctrineORMSerializationType
+class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockService
 {
 }

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Document;
 
-use Sonata\CoreBundle\Model\BaseDocumentManager;
+use Sonata\Doctrine\Document\BaseDocumentManager;
 
 class MediaManager extends BaseDocumentManager
 {
