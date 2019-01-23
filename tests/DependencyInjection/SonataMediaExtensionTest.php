@@ -167,7 +167,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        $this->assertEquals(
+        $this->assertSame(
             $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
             ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
         );
@@ -203,7 +203,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
             $extension->load($configs, $this->container);
         }
 
-        $this->assertEquals(
+        $this->assertSame(
             $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
             ['ROLE_FOO', 'ROLE_BAR']
         );
@@ -219,7 +219,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load($configs);
 
-        $this->assertEquals(
+        $this->assertSame(
             $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0),
             $args
         );

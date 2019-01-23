@@ -142,7 +142,7 @@ class FileProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder)
     {
-        if ('api' == $formBuilder->getOption('context')) {
+        if ('api' === $formBuilder->getOption('context')) {
             $formBuilder->add('binaryContent', FileType::class);
             $formBuilder->add('contentType');
         } else {
@@ -268,11 +268,11 @@ class FileProvider extends BaseProvider
             'Content-Disposition' => sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
         ], $headers);
 
-        if (!\in_array($mode, ['http', 'X-Sendfile', 'X-Accel-Redirect'])) {
+        if (!\in_array($mode, ['http', 'X-Sendfile', 'X-Accel-Redirect'], true)) {
             throw new \RuntimeException('Invalid mode provided');
         }
 
-        if ('http' == $mode) {
+        if ('http' === $mode) {
             if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
                 $file = $this->getReferenceFile($media);
             } else {
@@ -320,14 +320,14 @@ class FileProvider extends BaseProvider
                ->end();
         }
 
-        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
+        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions, true)) {
             $errorElement
                 ->with('binaryContent')
                 ->addViolation('Invalid extensions')
                 ->end();
         }
 
-        if ('' != $media->getBinaryContent()->getFilename() && !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+        if ('' !== $media->getBinaryContent()->getFilename() && !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes, true)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid mime type : %type%', ['%type%' => $media->getBinaryContent()->getMimeType()])

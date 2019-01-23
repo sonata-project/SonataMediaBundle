@@ -207,8 +207,8 @@ class ImageProvider extends FileProvider
             return;
         }
 
-        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)
-            || !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes)) {
+        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions, true)
+            || !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes, true)) {
             return;
         }
 

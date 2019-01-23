@@ -83,7 +83,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     {
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
             foreach ($settings['providers'] as $name => $config) {
-                if ($config['service'] == $id) {
+                if ($config['service'] === $id) {
                     $definition = $container->getDefinition($id);
 
                     $definition
