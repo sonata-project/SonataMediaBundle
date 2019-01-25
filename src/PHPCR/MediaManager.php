@@ -28,7 +28,7 @@ class MediaManager extends BasePHPCRManager
         }
 
         // BC compatibility for $providerName parameter
-        if (3 == \func_num_args()) {
+        if (3 === \func_num_args()) {
             $entity->setProviderName(func_get_arg(2));
         }
 

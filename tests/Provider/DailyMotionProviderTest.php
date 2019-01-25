@@ -222,6 +222,6 @@ class DailyMotionProviderTest extends AbstractProviderTest
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertEquals('http://www.dailymotion.com/video/123456', $this->getProvider()->getReferenceUrl($media));
+        $this->assertSame('http://www.dailymotion.com/video/123456', $this->getProvider()->getReferenceUrl($media));
     }
 }

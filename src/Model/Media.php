@@ -160,7 +160,7 @@ abstract class Media implements MediaInterface
     // NEXT_MAJOR: Remove this method
     public function __set($property, $value)
     {
-        if ('category' == $property) {
+        if ('category' === $property) {
             if (null !== $value && !is_a($value, CategoryInterface::class)) {
                 throw new \InvalidArgumentException(
                     '$category should be an instance of Sonata\ClassificationBundle\Model\CategoryInterface or null'
@@ -174,7 +174,7 @@ abstract class Media implements MediaInterface
     // NEXT_MAJOR: Remove this method
     public function __call($method, $arguments)
     {
-        if ('setCategory' == $method) {
+        if ('setCategory' === $method) {
             $this->__set('category', current($arguments));
         }
     }
@@ -654,7 +654,7 @@ abstract class Media implements MediaInterface
      */
     public function isStatusErroneous($context)
     {
-        if ($this->getBinaryContent() && self::STATUS_ERROR == $this->getProviderStatus()) {
+        if ($this->getBinaryContent() && self::STATUS_ERROR === $this->getProviderStatus()) {
             // NEXT_MAJOR: Restore type hint
             if (!$context instanceof ExecutionContextInterface) {
                 throw new \InvalidArgumentException('Argument 1 should be an instance of Symfony\Component\Validator\ExecutionContextInterface');

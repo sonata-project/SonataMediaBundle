@@ -106,7 +106,7 @@ class Pixlr
      */
     public function editAction($id, $mode)
     {
-        if (!\in_array($mode, ['express', 'editor'])) {
+        if (!\in_array($mode, ['express', 'editor'], true)) {
             throw new NotFoundHttpException('Invalid mode');
         }
 
@@ -191,7 +191,7 @@ class Pixlr
             return false;
         }
 
-        return \in_array(strtolower($media->getExtension()), $this->validFormats);
+        return \in_array(strtolower($media->getExtension()), $this->validFormats, true);
     }
 
     /**
@@ -251,7 +251,7 @@ class Pixlr
      */
     private function checkMedia($hash, MediaInterface $media)
     {
-        if ($hash != $this->generateHash($media)) {
+        if ($hash !== $this->generateHash($media)) {
             throw new NotFoundHttpException('Invalid hash');
         }
 

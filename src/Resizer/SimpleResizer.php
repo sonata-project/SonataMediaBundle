@@ -75,15 +75,15 @@ class SimpleResizer implements ResizerInterface
     {
         $size = $media->getBox();
 
-        if (null == $settings['width'] && null == $settings['height']) {
+        if (null === $settings['width'] && null === $settings['height']) {
             throw new \RuntimeException(sprintf('Width/Height parameter is missing in context "%s" for provider "%s". Please add at least one parameter.', $media->getContext(), $media->getProviderName()));
         }
 
-        if (null == $settings['height']) {
+        if (null === $settings['height']) {
             $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
         }
 
-        if (null == $settings['width']) {
+        if (null === $settings['width']) {
             $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
         }
 
