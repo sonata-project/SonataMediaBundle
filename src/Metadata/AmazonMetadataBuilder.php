@@ -80,9 +80,9 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
 
         //merge storage
         if (isset($this->settings['storage'])) {
-            if ('standard' == $this->settings['storage']) {
+            if ('standard' === $this->settings['storage']) {
                 $output['storage'] = static::STORAGE_STANDARD;
-            } elseif ('reduced' == $this->settings['storage']) {
+            } elseif ('reduced' === $this->settings['storage']) {
                 $output['storage'] = static::STORAGE_REDUCED;
             }
         }
@@ -99,7 +99,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
 
         //merge encryption
         if (isset($this->settings['encryption']) && !empty($this->settings['encryption'])) {
-            if ('aes256' == $this->settings['encryption']) {
+            if ('aes256' === $this->settings['encryption']) {
                 $output['encryption'] = 'AES256';
             }
         }

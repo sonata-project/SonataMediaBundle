@@ -100,7 +100,7 @@ class UpdateCdnStatusCommand extends BaseCommand
                 $media->setCdnStatus($cdnStatus);
 
                 if (OutputInterface::VERBOSITY_VERBOSE <= $this->output->getVerbosity()) {
-                    if ($previousStatus == $cdnStatus) {
+                    if ($previousStatus === $cdnStatus) {
                         $this->log(sprintf('No changes (%d)', $cdnStatus));
                     } elseif (CDNInterface::STATUS_OK === $cdnStatus) {
                         $this->log(sprintf('<info>Flush completed</info> (%d => %d)', $previousStatus, $cdnStatus));

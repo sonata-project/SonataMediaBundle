@@ -85,7 +85,7 @@ class SquareResizer implements ResizerInterface
         $image = $this->adapter->load($in->getContent());
         $size = $media->getBox();
 
-        if (null != $settings['height']) {
+        if (null !== $settings['height']) {
             if ($size->getHeight() > $size->getWidth()) {
                 $higher = $size->getHeight();
                 $lower = $size->getWidth();
@@ -97,7 +97,7 @@ class SquareResizer implements ResizerInterface
             $crop = $higher - $lower;
 
             if ($crop > 0) {
-                $point = $higher == $size->getHeight() ? new Point(0, 0) : new Point($crop / 2, 0);
+                $point = $higher === $size->getHeight() ? new Point(0, 0) : new Point($crop / 2, 0);
                 $image->crop($point, new Box($lower, $lower));
                 $size = $image->getSize();
             }
@@ -123,7 +123,7 @@ class SquareResizer implements ResizerInterface
     {
         $size = $media->getBox();
 
-        if (null != $settings['height']) {
+        if (null !== $settings['height']) {
             if ($size->getHeight() > $size->getWidth()) {
                 $higher = $size->getHeight();
                 $lower = $size->getWidth();

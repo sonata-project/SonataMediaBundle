@@ -35,7 +35,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
         }
 
         // BC compatibility for $providerName parameter
-        if (3 == \func_num_args()) {
+        if (3 === \func_num_args()) {
             $media->setProviderName(func_get_arg(2));
         }
 
@@ -58,7 +58,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
 
         $fields = $this->getEntityManager()->getClassMetadata($this->class)->getFieldNames();
         foreach ($sort as $field => $direction) {
-            if (!\in_array($field, $fields)) {
+            if (!\in_array($field, $fields, true)) {
                 throw new \RuntimeException(sprintf("Invalid sort field '%s' in '%s' class", $field, $this->class));
             }
         }
