@@ -80,11 +80,11 @@ class SimpleResizer implements ResizerInterface
         }
 
         if (null === $settings['height']) {
-            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
+            $settings['height'] = (int) round($settings['width'] * $size->getHeight() / $size->getWidth());
         }
 
         if (null === $settings['width']) {
-            $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
+            $settings['width'] = (int) round($settings['height'] * $size->getWidth() / $size->getHeight());
         }
 
         return $this->computeBox($media, $settings);
@@ -117,6 +117,11 @@ class SimpleResizer implements ResizerInterface
             $ratio = max($ratios);
         }
 
-        return $size->scale($ratio);
+        $scaledBox = $size->scale($ratio);
+
+        return new Box(
+            min($scaledBox->getWidth(), $settings['width']),
+            min($scaledBox->getHeight(), $settings['height'])
+        );
     }
 }
