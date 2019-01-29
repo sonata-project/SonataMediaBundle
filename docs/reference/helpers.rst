@@ -85,6 +85,21 @@ helper. The option expects either a string or an array of formats.
 
     {% media media, 'large' with {'srcset': ['small', 'big']} %}
 
+To render the image as ``<picture>`` element instead of ``<img>``, pass a ``picture`` key instead of ``srcset`` above:
+
+.. code-block:: jinja
+
+    {% media media, 'large' with {'picture': ['small', 'big']} %}
+
+Media queries for ``<source>`` tags will default to a ``max-width`` equal to the image size.
+If you need to specify media queries explicitly, do so with an object as follows:
+
+.. code-block:: jinja
+
+    {% media media, 'large' with {'srcset': {'(max-width: 500px)': 'small', '(max-width: 1200px)': 'big', 'fallback': 'huge'}} %}
+
+The ``fallback`` option determines which size is going to be rendered as ``<img>`` inside the ``<picture>`` element.
+If omitted, it defaults to ``'reference'``.
 
 Thumbnails for files
 --------------------

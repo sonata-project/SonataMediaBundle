@@ -9,4 +9,13 @@ file that was distributed with this source code.
 
 #}
 
-<img {% for name, value in options %}{{ name }}="{{ value }}" {% endfor %} />
+{% if options.picture is defined %}
+    <picture>
+        {% for source in options.picture.source %}
+            <source {% for name, value in source %}{{ name }}="{{ value }}" {% endfor %} />
+        {% endfor %}
+        <img {% for name, value in options.picture.img %}{{ name }}="{{ value }}" {% endfor %} />
+    </picture>
+{% else %}
+    <img {% for name, value in options %}{{ name }}="{{ value }}" {% endfor %} />
+{% endif %}

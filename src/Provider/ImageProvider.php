@@ -131,7 +131,34 @@ class ImageProvider extends FileProvider
             $params['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);
         }
 
-        return array_merge($params, $options);
+        $properties = array_merge($params, $options);
+
+        if (isset($options['picture'])) {
+            unset($properties['picture'], $properties['srcset'], $properties['sizes']);
+            $pictureProperties = [];
+            foreach ($options['picture'] as $key => $format) {
+                $formatName = $this->getFormatName($media, $format);
+                $settings = $this->getFormat($formatName);
+                $src = $this->generatePublicUrl($media, $formatName);
+                $mediaQuery = \is_string($key)
+                    ? $key
+                    : '(max-width: '.$this->resizer->getBox($media, $settings)->getWidth().'px)';
+                if ('fallback' === $mediaQuery) {
+                    $pictureProperties['img'] = compact('src') + $properties;
+                } else {
+                    $pictureProperties['source'][] = ['media' => $mediaQuery, 'srcset' => $src];
+                }
+            }
+
+            if (!isset($pictureProperties['img'])) {
+                $src = $this->generatePublicUrl($media, self::FORMAT_REFERENCE);
+                $pictureProperties['img'] = ['src' => $src] + $properties;
+            }
+
+            $properties['picture'] = $pictureProperties;
+        }
+
+        return $properties;
     }
 
     /**
