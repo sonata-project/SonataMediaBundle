@@ -96,10 +96,9 @@ If you need to specify media queries explicitly, do so with an object as follows
 
 .. code-block:: jinja
 
-    {% media media, 'large' with {'srcset': {'(max-width: 500px)': 'small', '(max-width: 1200px)': 'big', 'fallback': 'huge'}} %}
+    {% media media, 'large' with {'srcset': {'(max-width: 500px)': 'small', '(max-width: 1200px)': 'big'}} %}
 
-The ``fallback`` option determines which size is going to be rendered as ``<img>`` inside the ``<picture>`` element.
-If omitted, it defaults to ``'reference'``.
+The format parameter (``'large'`` above) determines which size is going to be rendered as ``<img>`` inside the ``<picture>`` element.
 
 Thumbnails for files
 --------------------
