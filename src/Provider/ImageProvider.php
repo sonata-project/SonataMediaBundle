@@ -67,6 +67,10 @@ class ImageProvider extends FileProvider
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
+        if (isset($options['srcset'], $options['picture'])) {
+            throw new \LogicException("The 'srcset' and 'picture' options must not be used simultaneously.");
+        }
+
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $box = $media->getBox();
         } else {
