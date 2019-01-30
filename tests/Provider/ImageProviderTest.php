@@ -93,6 +93,16 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
+    public function testHelperOptions()
+    {
+        $this->expectException(\LogicException::class);
+
+        $provider = $this->getProvider([], [], $this->returnValue(new Box(50, 50)));
+        $media = new Media();
+
+        $provider->getHelperProperties($media, 'any_format', ['srcset' => [], 'picture' => []]);
+    }
+
     public function testHelperProperties()
     {
         $adminBox = new Box(100, 100);
