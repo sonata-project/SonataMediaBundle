@@ -93,7 +93,23 @@ class ImageProvider extends FileProvider
             'height' => $box->getHeight(),
         ];
 
-        if (MediaProviderInterface::FORMAT_ADMIN !== $format) {
+        if (isset($options['picture'])) {
+            $pictureParams = [];
+            foreach ($options['picture'] as $key => $pictureFormat) {
+                $formatName = $this->getFormatName($media, $pictureFormat);
+                $settings = $this->getFormat($formatName);
+                $src = $this->generatePublicUrl($media, $formatName);
+                $mediaQuery = \is_string($key)
+                    ? $key
+                    : '(max-width: '.$this->resizer->getBox($media, $settings)->getWidth().'px)';
+
+                $pictureParams['source'][] = ['media' => $mediaQuery, 'srcset' => $src];
+            }
+
+            $pictureParams['img'] = $params;
+            $params = ['picture' => $pictureParams];
+            unset($options['picture']);
+        } elseif (MediaProviderInterface::FORMAT_ADMIN !== $format) {
             $srcSetFormats = $this->getFormats();
 
             if (isset($options['srcset']) && \is_array($options['srcset'])) {
@@ -135,30 +151,7 @@ class ImageProvider extends FileProvider
             $params['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);
         }
 
-        $properties = array_merge($params, $options);
-
-        if (isset($options['picture'])) {
-            unset($properties['picture'], $properties['srcset'], $properties['sizes']);
-
-            $pictureProperties = [];
-            foreach ($options['picture'] as $key => $pictureFormat) {
-                $formatName = $this->getFormatName($media, $pictureFormat);
-                $settings = $this->getFormat($formatName);
-                $src = $this->generatePublicUrl($media, $formatName);
-                $mediaQuery = \is_string($key)
-                    ? $key
-                    : '(max-width: '.$this->resizer->getBox($media, $settings)->getWidth().'px)';
-
-                $pictureProperties['source'][] = ['media' => $mediaQuery, 'srcset' => $src];
-            }
-
-            $src = $this->generatePublicUrl($media, $format);
-            $pictureProperties['img'] = ['src' => $src] + $properties;
-
-            $properties['picture'] = $pictureProperties;
-        }
-
-        return $properties;
+        return array_merge($params, $options);
     }
 
     /**

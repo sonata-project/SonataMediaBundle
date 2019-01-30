@@ -119,7 +119,10 @@ class ImageProviderTest extends AbstractProviderTest
                 $mediumBox, // second call
                 $mediumBox,
                 $largeBox,
-                $adminBox // Third call
+                $adminBox, // Third call
+                $largeBox, // Fourth call
+                $mediumBox,
+                $largeBox
             ));
 
         $provider->addFormat('admin', ['width' => 100]);
@@ -163,6 +166,13 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertArrayNotHasKey('srcset', $properties);
 
         $this->assertSame(150, $properties['width']);
+
+        $properties = $provider->getHelperProperties($media, 'default_large', ['picture' => ['default_medium', 'default_large']]);
+        $this->assertArrayHasKey('picture', $properties);
+        $this->assertArrayNotHasKey('srcset', $properties);
+        $this->assertArrayNotHasKey('sizes', $properties);
+        $this->assertArrayHasKey('source', $properties['picture']);
+        $this->assertArrayHasKey('img', $properties['picture']);
     }
 
     public function testThumbnail()
