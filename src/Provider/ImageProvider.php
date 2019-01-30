@@ -106,9 +106,9 @@ class ImageProvider extends FileProvider
                 $pictureParams['source'][] = ['media' => $mediaQuery, 'srcset' => $src];
             }
 
-            $pictureParams['img'] = $params;
-            $params = ['picture' => $pictureParams];
             unset($options['picture']);
+            $pictureParams['img'] = $params + $options;
+            $params = ['picture' => $pictureParams];
         } elseif (MediaProviderInterface::FORMAT_ADMIN !== $format) {
             $srcSetFormats = $this->getFormats();
 

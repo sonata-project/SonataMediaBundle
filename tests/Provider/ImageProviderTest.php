@@ -122,6 +122,9 @@ class ImageProviderTest extends AbstractProviderTest
                 $adminBox, // Third call
                 $largeBox, // Fourth call
                 $mediumBox,
+                $largeBox,
+                $largeBox, // Fifth call
+                $mediumBox,
                 $largeBox
             ));
 
@@ -167,12 +170,25 @@ class ImageProviderTest extends AbstractProviderTest
 
         $this->assertSame(150, $properties['width']);
 
-        $properties = $provider->getHelperProperties($media, 'default_large', ['picture' => ['default_medium', 'default_large']]);
+        $properties = $provider->getHelperProperties($media, 'default_large', ['picture' => ['default_medium', 'default_large'], 'class' => 'some-class']);
         $this->assertArrayHasKey('picture', $properties);
         $this->assertArrayNotHasKey('srcset', $properties);
         $this->assertArrayNotHasKey('sizes', $properties);
         $this->assertArrayHasKey('source', $properties['picture']);
         $this->assertArrayHasKey('img', $properties['picture']);
+        $this->assertArrayHasKey('class', $properties['picture']['img']);
+        $this->assertArrayHasKey('media', $properties['picture']['source'][0]);
+        $this->assertSame('(max-width: 500px)', $properties['picture']['source'][0]['media']);
+
+        $properties = $provider->getHelperProperties($media, 'default_large', ['picture' => ['(max-width: 200px)' => 'default_medium', 'default_large'], 'class' => 'some-class']);
+        $this->assertArrayHasKey('picture', $properties);
+        $this->assertArrayNotHasKey('srcset', $properties);
+        $this->assertArrayNotHasKey('sizes', $properties);
+        $this->assertArrayHasKey('source', $properties['picture']);
+        $this->assertArrayHasKey('img', $properties['picture']);
+        $this->assertArrayHasKey('class', $properties['picture']['img']);
+        $this->assertArrayHasKey('media', $properties['picture']['source'][0]);
+        $this->assertSame('(max-width: 200px)', $properties['picture']['source'][0]['media']);
     }
 
     public function testThumbnail()
