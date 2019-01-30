@@ -101,7 +101,7 @@ class ImageProvider extends FileProvider
                 $src = $this->generatePublicUrl($media, $formatName);
                 $mediaQuery = \is_string($key)
                     ? $key
-                    : '(max-width: '.$this->resizer->getBox($media, $settings)->getWidth().'px)';
+                    : sprintf('(max-width: %dpx)', $this->resizer->getBox($media, $settings)->getWidth());
 
                 $pictureParams['source'][] = ['media' => $mediaQuery, 'srcset' => $src];
             }
