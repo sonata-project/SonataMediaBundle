@@ -82,7 +82,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    final public function transform(MediaInterface $media)
+    final public function transform(MediaInterface $media): void
     {
         if (null === $media->getBinaryContent()) {
             return;
