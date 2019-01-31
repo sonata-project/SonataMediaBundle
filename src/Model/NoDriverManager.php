@@ -37,12 +37,12 @@ final class NoDriverManager implements ManagerInterface
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): void
     {
         throw new NoDriverException();
     }
 
-    public function findOneBy(array $criteria, array $orderBy = null)
+    public function findOneBy(array $criteria, array $orderBy = null): void
     {
         throw new NoDriverException();
     }
@@ -50,21 +50,12 @@ final class NoDriverManager implements ManagerInterface
     /**
      * @param mixed $id
      */
-    public function find($id)
+    public function find($id): void
     {
         throw new NoDriverException();
     }
 
-    public function create()
-    {
-        throw new NoDriverException();
-    }
-
-    /**
-     * @param object $entity
-     * @param bool   $andFlush
-     */
-    public function save($entity, $andFlush = true)
+    public function create(): void
     {
         throw new NoDriverException();
     }
@@ -73,17 +64,26 @@ final class NoDriverManager implements ManagerInterface
      * @param object $entity
      * @param bool   $andFlush
      */
-    public function delete($entity, $andFlush = true)
+    public function save($entity, $andFlush = true): void
     {
         throw new NoDriverException();
     }
 
-    public function getTableName()
+    /**
+     * @param object $entity
+     * @param bool   $andFlush
+     */
+    public function delete($entity, $andFlush = true): void
     {
         throw new NoDriverException();
     }
 
-    public function getConnection()
+    public function getTableName(): void
+    {
+        throw new NoDriverException();
+    }
+
+    public function getConnection(): void
     {
         throw new NoDriverException();
     }

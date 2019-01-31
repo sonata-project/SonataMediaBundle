@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface as ManagerInterface;
+use Sonata\MediaBundle\Tests\fixtures\SonataClassificationBundle\Model\CategoryInterface;
 
 /**
  * @author Joao Albuquerque <albuquerque.joao.filipe@gmail.com>
@@ -37,7 +38,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getRootCategory($context)
+    public function getRootCategory($context): CategoryInterface
     {
         return $this->categoryManager->getRootCategory($context);
     }
@@ -45,7 +46,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getRootCategories($loadChildren = true)
+    public function getRootCategories($loadChildren = true): iterable
     {
         return $this->categoryManager->getRootCategories($loadChildren);
     }
@@ -53,7 +54,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function find($categoryId)
+    public function find($categoryId): iterable
     {
         return $this->categoryManager->find($categoryId);
     }
@@ -61,7 +62,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function findBy(array $criteria)
+    public function findBy(array $criteria): iterable
     {
         return $this->categoryManager->findBy($criteria);
     }
@@ -69,7 +70,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function findOneBy(array $criteria)
+    public function findOneBy(array $criteria): ?CategoryInterface
     {
         return $this->categoryManager->findOneBy($criteria);
     }
@@ -77,7 +78,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function create()
+    public function create(): CategoryInterface
     {
         return $this->categoryManager->create();
     }
@@ -85,7 +86,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($category)
+    public function save($category): void
     {
         $this->categoryManager->save($category);
     }
