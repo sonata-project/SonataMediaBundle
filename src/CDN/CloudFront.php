@@ -210,12 +210,7 @@ class CloudFront implements CDNInterface
         return md5(implode(',', $paths));
     }
 
-    /**
-     * Return a CloudFrontClient.
-     *
-     * @return CloudFrontClient
-     */
-    private function getClient()
+    private function getClient(): CloudFrontClient
     {
         if (!$this->client) {
             $this->client = CloudFrontClient::factory([

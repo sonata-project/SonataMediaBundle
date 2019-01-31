@@ -149,7 +149,7 @@ class MediaTypeTest extends AbstractTypeTest
         return new MediaType($this->mediaPool, 'testclass');
     }
 
-    private function getFormType()
+    private function getFormType(): string
     {
         return MediaType::class;
     }

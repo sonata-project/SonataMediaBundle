@@ -88,10 +88,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addContextsSection(ArrayNodeDefinition $node)
+    private function addContextsSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -131,10 +128,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addCdnSection(ArrayNodeDefinition $node)
+    private function addCdnSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -183,10 +177,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addFilesystemSection(ArrayNodeDefinition $node)
+    private function addFilesystemSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -307,10 +298,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addProvidersSection(ArrayNodeDefinition $node)
+    private function addProvidersSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -418,10 +406,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addExtraSection(ArrayNodeDefinition $node)
+    private function addExtraSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -438,10 +423,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addModelSection(ArrayNodeDefinition $node)
+    private function addModelSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -458,10 +440,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addBuzzSection(ArrayNodeDefinition $node)
+    private function addBuzzSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -484,10 +463,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addResizerSection(ArrayNodeDefinition $node)
+    private function addResizerSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -518,10 +494,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @param ArrayNodeDefinition $node
-     */
-    private function addAdapterSection(ArrayNodeDefinition $node)
+    private function addAdapterSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()

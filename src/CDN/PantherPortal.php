@@ -132,12 +132,7 @@ class PantherPortal implements CDNInterface
         // nothing to do
     }
 
-    /**
-     * Return a SoapClient.
-     *
-     * @return \SoapClient
-     */
-    private function getClient()
+    private function getClient(): \SoapClient
     {
         if (!$this->client) {
             $this->client = new \SoapClient($this->wsdl);
