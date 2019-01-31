@@ -34,7 +34,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
      */
     protected $pool;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -42,7 +42,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
         $this->pool = $this->createMock(Pool::class);
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $pager = $this->createMock(PagerInterface::class);
         $this->galleryManager->expects($this->once())->method('getPager')->will($this->returnValue($pager));
@@ -69,7 +69,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
         $this->assertSame($pager, $this->templating->parameters['pager']);
     }
 
-    public function testDefaultSettings()
+    public function testDefaultSettings(): void
     {
         $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
         $blockContext = $this->getBlockContext($blockService);

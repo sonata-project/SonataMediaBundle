@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
  */
 class BreadcrumbTest extends AbstractBlockServiceTestCase
 {
-    public function testBlockService()
+    public function testBlockService(): void
     {
         $blockService = new BreadcrumbGalleryBlockService_Test(
             'context',

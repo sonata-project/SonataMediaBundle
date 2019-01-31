@@ -23,7 +23,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConsumerThumbnailTest extends TestCase
 {
-    public function testGenerateDispatchesEvents()
+    public function testGenerateDispatchesEvents(): void
     {
         $thumbnail = $this->createMock(ThumbnailInterface::class);
         $backend = $this->createMock(BackendInterface::class);

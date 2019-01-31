@@ -73,7 +73,7 @@ class ImageProviderTest extends AbstractProviderTest
         return $provider;
     }
 
-    public function testProvider()
+    public function testProvider(): void
     {
         $provider = $this->getProvider();
 
@@ -93,7 +93,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testHelperOptions()
+    public function testHelperOptions(): void
     {
         $this->expectException(\LogicException::class);
 
@@ -103,7 +103,7 @@ class ImageProviderTest extends AbstractProviderTest
         $provider->getHelperProperties($media, 'any_format', ['srcset' => [], 'picture' => []]);
     }
 
-    public function testHelperProperties()
+    public function testHelperProperties(): void
     {
         $adminBox = new Box(100, 100);
         $mediumBox = new Box(500, 250);
@@ -191,7 +191,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('(max-width: 200px)', $properties['picture']['source'][0]['media']);
     }
 
-    public function testThumbnail()
+    public function testThumbnail(): void
     {
         $provider = $this->getProvider();
 
@@ -212,7 +212,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testEvent()
+    public function testEvent(): void
     {
         $provider = $this->getProvider();
 
@@ -237,7 +237,7 @@ class ImageProviderTest extends AbstractProviderTest
         $provider->postRemove($media);
     }
 
-    public function testTransformFormatNotSupported()
+    public function testTransformFormatNotSupported(): void
     {
         $provider = $this->getProvider();
 
@@ -250,7 +250,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertNull($media->getWidth(), 'Width staid null');
     }
 
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $provider = $this->getProvider();
 

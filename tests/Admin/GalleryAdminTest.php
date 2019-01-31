@@ -25,7 +25,7 @@ class GalleryAdminTest extends TestCase
     protected $categoryManager;
     protected $mediaAdmin;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pool = $this->prophesize(Pool::class);
         $this->categoryManager = $this->prophesize(CategoryManager::class);
@@ -39,7 +39,7 @@ class GalleryAdminTest extends TestCase
         );
     }
 
-    public function testItIsInstantiable()
+    public function testItIsInstantiable(): void
     {
         $this->assertNotNull($this->mediaAdmin);
     }

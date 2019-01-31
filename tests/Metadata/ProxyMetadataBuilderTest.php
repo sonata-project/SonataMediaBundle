@@ -28,7 +28,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProxyMetadataBuilderTest extends TestCase
 {
-    public function testProxyAmazon()
+    public function testProxyAmazon(): void
     {
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
@@ -74,7 +74,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyLocal()
+    public function testProxyLocal(): void
     {
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
@@ -113,7 +113,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyNoProvider()
+    public function testProxyNoProvider(): void
     {
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
@@ -152,7 +152,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame([], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyReplicateWithAmazon()
+    public function testProxyReplicateWithAmazon(): void
     {
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
@@ -200,7 +200,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    public function testProxyReplicateWithoutAmazon()
+    public function testProxyReplicateWithoutAmazon(): void
     {
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())

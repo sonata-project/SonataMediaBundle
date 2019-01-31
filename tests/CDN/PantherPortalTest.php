@@ -18,7 +18,7 @@ use Sonata\MediaBundle\CDN\PantherPortal;
 
 class PantherPortalTest extends TestCase
 {
-    public function testPortal()
+    public function testPortal(): void
     {
         $client = $this->createMock(
             ClientSpy::class,
@@ -41,7 +41,7 @@ class PantherPortalTest extends TestCase
         $panther->flushPaths([$path]);
     }
 
-    public function testException()
+    public function testException(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to flush : Failed!!');
@@ -64,7 +64,7 @@ class PantherPortalTest extends TestCase
 
 class ClientSpy
 {
-    public function flush()
+    public function flush(): void
     {
     }
 }

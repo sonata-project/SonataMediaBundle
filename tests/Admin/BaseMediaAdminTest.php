@@ -34,7 +34,7 @@ class BaseMediaAdminTest extends TestCase
     private $modelManager;
     private $mediaAdmin;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pool = $this->prophesize(Pool::class);
         $this->categoryManager = $this->prophesize(CategoryManagerInterface::class);
@@ -53,7 +53,7 @@ class BaseMediaAdminTest extends TestCase
         $this->mediaAdmin->setUniqid('uniqid');
     }
 
-    public function testGetNewInstance()
+    public function testGetNewInstance(): void
     {
         $media = $this->prophesize(Media::class);
         $category = $this->prophesize();
@@ -78,7 +78,7 @@ class BaseMediaAdminTest extends TestCase
         $this->assertSame($media->reveal(), $this->mediaAdmin->getNewInstance());
     }
 
-    private function configureGetPersistentParameters()
+    private function configureGetPersistentParameters(): void
     {
         $provider = $this->prophesize(MediaProviderInterface::class);
         $category = $this->prophesize();
@@ -98,7 +98,7 @@ class BaseMediaAdminTest extends TestCase
         $category->getId()->willReturn(1);
     }
 
-    private function configureGetProviderName($media)
+    private function configureGetProviderName($media): void
     {
         $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
         $media->setProviderName('providerName')->shouldBeCalled();

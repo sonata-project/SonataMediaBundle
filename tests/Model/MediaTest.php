@@ -46,7 +46,7 @@ class MediaTest extends TestCase
     /**
      * @depends testSetMetadataValue
      */
-    public function testUnsetMetadataValue($media)
+    public function testUnsetMetadataValue($media): void
     {
         $metadataProperty = $this->getMediaPropertyReflection('providerMetadata');
 

@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class AddProviderCompilerPassTest extends TestCase
 {
-    public function testProcess()
+    public function testProcess(): void
     {
         // Create ContainerBuilder and set up basic sonata_media config with formats
         $container = new ContainerBuilder();

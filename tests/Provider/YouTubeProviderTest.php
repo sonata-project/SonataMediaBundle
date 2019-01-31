@@ -67,7 +67,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         return $provider;
     }
 
-    public function testProvider()
+    public function testProvider(): void
     {
         $provider = $this->getProvider();
 
@@ -86,7 +86,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
-    public function testThumbnail()
+    public function testThumbnail(): void
     {
         $response = $this->createMock(AbstractMessage::class);
         $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
@@ -116,7 +116,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testTransformWithSig()
+    public function testTransformWithSig(): void
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
@@ -142,7 +142,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     /**
      * @dataProvider getUrls
      */
-    public function testTransformWithUrl($url)
+    public function testTransformWithUrl($url): void
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
@@ -182,7 +182,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         ];
     }
 
-    public function testForm()
+    public function testForm(): void
     {
         $provider = $this->getProvider();
 
@@ -204,7 +204,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $provider->buildEditForm($formMapper);
     }
 
-    public function testHelperProperties()
+    public function testHelperProperties(): void
     {
         $provider = $this->getProvider();
 
@@ -223,14 +223,14 @@ class YouTubeProviderTest extends AbstractProviderTest
         $this->assertSame(100, $properties['player_parameters']['width']);
     }
 
-    public function testGetReferenceUrl()
+    public function testGetReferenceUrl(): void
     {
         $media = new Media();
         $media->setProviderReference('123456');
         $this->assertSame('https://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
     }
 
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $provider = $this->getProvider();
 

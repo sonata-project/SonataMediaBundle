@@ -22,7 +22,7 @@ class NoDriverManagerTest extends TestCase
     /**
      * @dataProvider providerMethods
      */
-    public function testException($method, array $arguments)
+    public function testException($method, array $arguments): void
     {
         $this->expectException(NoDriverException::class);
 

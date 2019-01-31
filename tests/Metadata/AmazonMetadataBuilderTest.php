@@ -20,7 +20,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class AmazonMetadataBuilderTest extends TestCase
 {
-    public function testAmazon()
+    public function testAmazon(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $filename = '/test/folder/testfile.png';

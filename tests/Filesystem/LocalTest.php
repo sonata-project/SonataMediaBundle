@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Filesystem\Local;
 
 class LocalTest extends TestCase
 {
-    public function testReplicate()
+    public function testReplicate(): void
     {
         $local = new Local('/tmp');
 

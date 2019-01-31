@@ -34,7 +34,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class GalleryControllerTest extends TestCase
 {
-    public function testGetGalleriesAction()
+    public function testGetGalleriesAction(): void
     {
         $gManager = $this->createMock(GalleryManagerInterface::class);
         $mediaManager = $this->createMock(MediaManagerInterface::class);
@@ -51,7 +51,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame([], $gController->getGalleriesAction($paramFetcher));
     }
 
-    public function testGetGalleryAction()
+    public function testGetGalleryAction(): void
     {
         $gManager = $this->createMock(GalleryManagerInterface::class);
         $mediaManager = $this->createMock(MediaManagerInterface::class);
@@ -65,7 +65,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame($gallery, $gController->getGalleryAction(1));
     }
 
-    public function testGetGalleryNotFoundAction()
+    public function testGetGalleryNotFoundAction(): void
     {
         $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('Gallery (42) not found');
@@ -82,7 +82,7 @@ class GalleryControllerTest extends TestCase
         $gController->getGalleryAction(42);
     }
 
-    public function testGetGalleryGalleryhasmediasAction()
+    public function testGetGalleryGalleryhasmediasAction(): void
     {
         $gManager = $this->createMock(GalleryManagerInterface::class);
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
@@ -100,7 +100,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame([$galleryHasMedia], $gController->getGalleryGalleryhasmediasAction(1));
     }
 
-    public function testGetGalleryMediaAction()
+    public function testGetGalleryMediaAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
@@ -124,7 +124,7 @@ class GalleryControllerTest extends TestCase
     /**
      * @group legacy
      */
-    public function testPostGalleryMediaGalleryhasmediaAction()
+    public function testPostGalleryMediaGalleryhasmediaAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
 
@@ -158,7 +158,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(200, $view->getResponse()->getStatusCode(), 'Should return 200');
     }
 
-    public function testPostGalleryMediaGalleryhasmediaInvalidAction()
+    public function testPostGalleryMediaGalleryhasmediaInvalidAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
@@ -187,7 +187,7 @@ class GalleryControllerTest extends TestCase
     /**
      * @group legacy
      */
-    public function testPutGalleryMediaGalleryhasmediaAction()
+    public function testPutGalleryMediaGalleryhasmediaAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
@@ -219,7 +219,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(200, $view->getResponse()->getStatusCode(), 'Should return 200');
     }
 
-    public function testPutGalleryMediaGalleryhasmediaInvalidAction()
+    public function testPutGalleryMediaGalleryhasmediaInvalidAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
@@ -249,7 +249,7 @@ class GalleryControllerTest extends TestCase
         $this->assertInstanceOf(FormInterface::class, $view);
     }
 
-    public function testDeleteGalleryMediaGalleryhasmediaAction()
+    public function testDeleteGalleryMediaGalleryhasmediaAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())->method('getId')->will($this->returnValue(1));
@@ -274,7 +274,7 @@ class GalleryControllerTest extends TestCase
         $this->assertSame(['deleted' => true], $view);
     }
 
-    public function testDeleteGalleryMediaGalleryhasmediaInvalidAction()
+    public function testDeleteGalleryMediaGalleryhasmediaInvalidAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
 

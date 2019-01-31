@@ -23,7 +23,7 @@ use Sonata\MediaBundle\Resizer\SquareResizer;
 
 class SquareResizerTest extends TestCase
 {
-    public function testResizeWithNoWidth()
+    public function testResizeWithNoWidth(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -39,7 +39,7 @@ class SquareResizerTest extends TestCase
     /**
      * @dataProvider getBoxSettings
      */
-    public function testGetBox($settings, Box $mediaSize, Box $expected)
+    public function testGetBox($settings, Box $mediaSize, Box $expected): void
     {
         $adapter = $this->createMock(ImagineInterface::class);
 

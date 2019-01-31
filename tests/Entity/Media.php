@@ -19,7 +19,7 @@ class Media extends BaseMedia
 {
     protected $id;
 
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }

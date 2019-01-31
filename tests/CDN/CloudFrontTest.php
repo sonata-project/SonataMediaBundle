@@ -24,7 +24,7 @@ class CloudFrontTest extends TestCase
     /**
      * @group legacy
      */
-    public function testLegacyCloudFront()
+    public function testLegacyCloudFront(): void
     {
         $client = $this->getMockBuilder(CloudFrontClientSpy::class)
             ->setMethods(['createInvalidation'])
@@ -51,7 +51,7 @@ class CloudFrontTest extends TestCase
     /**
      * @group legacy
      */
-    public function testLegacyException()
+    public function testLegacyException(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to flush : ');
