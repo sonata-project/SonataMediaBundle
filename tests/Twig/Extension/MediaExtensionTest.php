@@ -44,7 +44,7 @@ class MediaExtensionTest extends TestCase
      */
     private $media;
 
-    public function testThumbnailHasAllNecessaryAttributes()
+    public function testThumbnailHasAllNecessaryAttributes(): void
     {
         $mediaExtension = new MediaExtension($this->getMediaService(), $this->getMediaManager());
         $mediaExtension->initRuntime($this->getEnvironment());

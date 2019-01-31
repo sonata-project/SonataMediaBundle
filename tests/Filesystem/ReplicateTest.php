@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Filesystem\Replicate;
 
 class ReplicateTest extends TestCase
 {
-    public function testReplicate()
+    public function testReplicate(): void
     {
         $master = $this->createMock(Adapter::class);
         $slave = $this->createMock(Adapter::class);

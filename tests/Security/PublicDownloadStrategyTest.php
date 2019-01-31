@@ -21,7 +21,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class PublicDownloadStrategyTest extends TestCase
 {
-    public function testIsGranted()
+    public function testIsGranted(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $request = $this->createMock(Request::class);

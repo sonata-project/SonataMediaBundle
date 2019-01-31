@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 
 class PHPCRGeneratorTest extends TestCase
 {
-    public function testPHPCRGenerator()
+    public function testPHPCRGenerator(): void
     {
         $generator = new PHPCRGenerator();
 

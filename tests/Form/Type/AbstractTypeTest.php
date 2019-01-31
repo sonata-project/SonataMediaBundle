@@ -39,7 +39,7 @@ abstract class AbstractTypeTest extends TypeTestCase
      */
     protected $mediaPool;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $provider = $this->getMockBuilder(MediaProviderInterface::class)
             ->disableOriginalConstructor()
@@ -52,7 +52,7 @@ abstract class AbstractTypeTest extends TypeTestCase
         $this->formBuilder
             ->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function ($name, $type = null) {
+            ->will($this->returnCallback(function ($name, $type = null): void {
                 if (null !== $type) {
                     $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
                 }
@@ -61,7 +61,7 @@ abstract class AbstractTypeTest extends TypeTestCase
         $this->formType = $this->getTestedInstance();
     }
 
-    public function testBuildForm()
+    public function testBuildForm(): void
     {
         $this->formType->buildForm($this->formBuilder, [
             'provider_name' => 'sonata.media.provider.image',
@@ -72,7 +72,7 @@ abstract class AbstractTypeTest extends TypeTestCase
         ]);
     }
 
-    public function testGetParent()
+    public function testGetParent(): void
     {
         $parentRef = $this->formType->getParent();
         $this->assertTrue(class_exists($parentRef), sprintf('Unable to ensure %s is a FQCN', $parentRef));

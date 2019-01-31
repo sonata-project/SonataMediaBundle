@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class NoopMetadataBuilderTest extends TestCase
 {
-    public function testNoop()
+    public function testNoop(): void
     {
         $media = $this->createMock(MediaInterface::class);
         $filename = '/test/folder/testfile.png';

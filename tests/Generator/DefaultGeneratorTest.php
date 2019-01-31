@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 
 class DefaultGeneratorTest extends TestCase
 {
-    public function testProvider()
+    public function testProvider(): void
     {
         $generator = new DefaultGenerator();
 

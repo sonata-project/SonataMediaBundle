@@ -24,7 +24,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class FormatThumbnailTest extends TestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $thumbnail = new FormatThumbnail('foo');
 

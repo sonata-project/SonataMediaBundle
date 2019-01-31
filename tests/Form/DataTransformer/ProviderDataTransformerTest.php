@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProviderDataTransformerTest extends TestCase
 {
-    public function testReverseTransformFakeValue()
+    public function testReverseTransformFakeValue(): void
     {
         $pool = $this->createMock(Pool::class);
 
@@ -31,7 +31,7 @@ class ProviderDataTransformerTest extends TestCase
         $this->assertSame('foo', $transformer->reverseTransform('foo'));
     }
 
-    public function testReverseTransformUnknownProvider()
+    public function testReverseTransformUnknownProvider(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -48,7 +48,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformValidProvider()
+    public function testReverseTransformValidProvider(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('transform');
@@ -67,7 +67,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithNewMediaAndNoBinaryContent()
+    public function testReverseTransformWithNewMediaAndNoBinaryContent(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
 
@@ -88,7 +88,7 @@ class ProviderDataTransformerTest extends TestCase
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
 
-    public function testReverseTransformWithMediaAndNoBinaryContent()
+    public function testReverseTransformWithMediaAndNoBinaryContent(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
 
@@ -106,7 +106,7 @@ class ProviderDataTransformerTest extends TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testReverseTransformWithMediaAndUploadFileInstance()
+    public function testReverseTransformWithMediaAndUploadFileInstance(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
 
@@ -124,7 +124,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithThrowingProviderNoThrow()
+    public function testReverseTransformWithThrowingProviderNoThrow(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('transform')->will($this->throwException(new \Exception()));
@@ -143,7 +143,7 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithThrowingProviderLogsException()
+    public function testReverseTransformWithThrowingProviderLogsException(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('transform')->will($this->throwException(new \Exception()));

@@ -23,7 +23,7 @@ use Symfony\Component\Form\FormBuilder;
  */
 class ApiMediaTypeTest extends AbstractTypeTest
 {
-    public function testBuildForm()
+    public function testBuildForm(): void
     {
         parent::testBuildForm();
         $provider = $this->createMock(MediaProviderInterface::class);

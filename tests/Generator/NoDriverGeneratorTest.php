@@ -20,7 +20,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class NoDriverGeneratorTest extends TestCase
 {
-    public function testException()
+    public function testException(): void
     {
         $this->expectException(NoDriverException::class);
 
