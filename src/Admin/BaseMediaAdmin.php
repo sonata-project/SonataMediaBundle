@@ -86,7 +86,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         // if the context has only one provider, set it into the request
         // so the intermediate provider selection is skipped
-        if (1 == \count($providers) && null === $provider) {
+        if (1 === \count($providers) && null === $provider) {
             $provider = array_shift($providers)->getName();
             $this->getRequest()->query->set('provider', $provider);
         }
@@ -124,7 +124,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             if (null !== $this->categoryManager && $categoryId = $this->getPersistentParameter('category')) {
                 $category = $this->categoryManager->find($categoryId);
 
-                if ($category && $category->getContext()->getId() == $context) {
+                if ($category && $category->getContext()->getId() === $context) {
                     $media->setCategory($category);
                 }
             }

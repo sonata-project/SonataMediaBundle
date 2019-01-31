@@ -83,7 +83,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         }
 
         //for amazon s3
-        if ((!\in_array(AmazonS3::class, $adapterClassNames) && !\in_array(AwsS3::class, $adapterClassNames)) || !$this->container->has('sonata.media.metadata.amazon')) {
+        if ((!\in_array(AmazonS3::class, $adapterClassNames, true) && !\in_array(AwsS3::class, $adapterClassNames, true)) || !$this->container->has('sonata.media.metadata.amazon')) {
             return false;
         }
 

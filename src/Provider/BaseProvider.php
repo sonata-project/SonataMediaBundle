@@ -168,7 +168,7 @@ abstract class BaseProvider implements MediaProviderInterface
         }
 
         $baseName = $media->getContext().'_';
-        if (substr($format, 0, \strlen($baseName)) == $baseName) {
+        if (substr($format, 0, \strlen($baseName)) === $baseName) {
             return $format;
         }
 

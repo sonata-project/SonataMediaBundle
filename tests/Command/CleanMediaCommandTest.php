@@ -237,7 +237,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
-            ->will($this->returnValue([]));
+            ->will($this->returnValue(null));
         $this->mediaManager->expects($this->once())->method('findBy')
             ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
             ->will($this->returnValue([]));
@@ -275,7 +275,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
-            ->will($this->returnValue([]));
+            ->will($this->returnValue(null));
         $this->mediaManager->expects($this->once())->method('findBy')
             ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
             ->will($this->returnValue([]));

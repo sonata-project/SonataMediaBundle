@@ -128,7 +128,7 @@ class RemoveThumbsCommand extends BaseCommand
                 $provider->getFilesystem()->clearFileRegister();
             }
 
-            if ($batchesLimit > 0 && $batchCounter == $batchesLimit) {
+            if ($batchesLimit > 0 && $batchCounter === $batchesLimit) {
                 break;
             }
         } while (true);

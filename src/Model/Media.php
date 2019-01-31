@@ -617,7 +617,7 @@ abstract class Media implements MediaInterface
      */
     public function isStatusErroneous(ExecutionContextInterface $context): void
     {
-        if ($this->getBinaryContent() && self::STATUS_ERROR == $this->getProviderStatus()) {
+        if ($this->getBinaryContent() && self::STATUS_ERROR === $this->getProviderStatus()) {
             $context->buildViolation('invalid')->atPath('binaryContent')->addViolation();
         }
     }

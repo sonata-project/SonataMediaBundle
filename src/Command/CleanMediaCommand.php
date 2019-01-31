@@ -121,8 +121,8 @@ class CleanMediaCommand extends ContainerAwareCommand
 
         $fileParts = explode('_', $filename);
 
-        if (\count($fileParts) > 1 && 'thumb' == $fileParts[0]) {
-            return null != $mediaManager->findOneBy([
+        if (\count($fileParts) > 1 && 'thumb' === $fileParts[0]) {
+            return null !== $mediaManager->findOneBy([
                 'id' => $fileParts[1],
                 'context' => $context,
             ]);

@@ -302,7 +302,7 @@ class GalleryController
         $media = $this->getMedia($mediaId);
 
         foreach ($gallery->getGalleryItems() as $galleryItem) {
-            if ($galleryItem->getMedia()->getId() == $media->getId()) {
+            if ($galleryItem->getMedia()->getId() === $media->getId()) {
                 return FOSRestView::create([
                     'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
                 ], 400);
@@ -342,7 +342,7 @@ class GalleryController
         $media = $this->getMedia($mediaId);
 
         foreach ($gallery->getGalleryItems() as $galleryItem) {
-            if ($galleryItem->getMedia()->getId() == $media->getId()) {
+            if ($galleryItem->getMedia()->getId() === $media->getId()) {
                 return $this->handleWriteGalleryItem($gallery, $media, $galleryItem, $request);
             }
         }
@@ -378,7 +378,7 @@ class GalleryController
         $media = $this->getMedia($mediaId);
 
         foreach ($gallery->getGalleryItems() as $key => $galleryItem) {
-            if ($galleryItem->getMedia()->getId() == $media->getId()) {
+            if ($galleryItem->getMedia()->getId() === $media->getId()) {
                 $gallery->getGalleryItems()->remove($key);
                 $this->getGalleryManager()->save($gallery);
 

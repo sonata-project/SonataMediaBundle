@@ -138,7 +138,7 @@ class CloudFront implements CDNInterface
                 'CallerReference' => $this->getCallerReference($normalizedPaths),
             ]);
 
-            if (!\in_array($status = $result->get('Status'), ['Completed', 'InProgress'])) {
+            if (!\in_array($status = $result->get('Status'), ['Completed', 'InProgress'], true)) {
                 throw new \RuntimeException('Unable to flush : '.$status);
             }
 
@@ -169,7 +169,7 @@ class CloudFront implements CDNInterface
                 'Id' => $identifier,
             ]);
 
-            return array_search($result->get('Status'), self::getStatusList());
+            return array_search($result->get('Status'), self::getStatusList(), true);
         } catch (CloudFrontException $ex) {
             throw new \RuntimeException('Unable to retrieve flush status : '.$ex->getMessage());
         }

@@ -75,16 +75,16 @@ class SimpleResizer implements ResizerInterface
     {
         $size = $media->getBox();
 
-        if (null == $settings['width'] && null == $settings['height']) {
+        if (null === $settings['width'] && null === $settings['height']) {
             throw new \RuntimeException(sprintf('Width/Height parameter is missing in context "%s" for provider "%s". Please add at least one parameter.', $media->getContext(), $media->getProviderName()));
         }
 
-        if (null == $settings['height']) {
-            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
+        if (null === $settings['height']) {
+            $settings['height'] = (int) round($settings['width'] * $size->getHeight() / $size->getWidth());
         }
 
-        if (null == $settings['width']) {
-            $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
+        if (null === $settings['width']) {
+            $settings['width'] = (int) round($settings['height'] * $size->getWidth() / $size->getHeight());
         }
 
         return $this->computeBox($media, $settings);
@@ -117,6 +117,11 @@ class SimpleResizer implements ResizerInterface
             $ratio = max($ratios);
         }
 
-        return $size->scale($ratio);
+        $scaledBox = $size->scale($ratio);
+
+        return new Box(
+            min($scaledBox->getWidth(), $settings['width']),
+            min($scaledBox->getHeight(), $settings['height'])
+        );
     }
 }

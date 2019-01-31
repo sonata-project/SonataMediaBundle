@@ -60,7 +60,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         if (isset($bundles['FOSRestBundle'], $bundles['NelmioApiDocBundle'])) {
             $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
 
-            if ('doctrine_orm' == $config['db_driver']) {
+            if ('doctrine_orm' === $config['db_driver']) {
                 $loader->load('api_controllers.xml');
             }
         }
@@ -148,7 +148,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $pool->addMethodCall('addDownloadStrategy', [$strategyId, new Reference($strategyId)]);
         }
 
-        if ('doctrine_orm' == $config['db_driver']) {
+        if ('doctrine_orm' === $config['db_driver']) {
             $this->registerDoctrineMapping($config);
         }
 
