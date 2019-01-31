@@ -62,9 +62,10 @@ class PantherPortalTest extends TestCase
     }
 }
 
-class ClientSpy
+class ClientSpy extends \SoapClient
 {
-    public function flush(): void
+    public function flush(): string
     {
+        return 'hello';
     }
 }

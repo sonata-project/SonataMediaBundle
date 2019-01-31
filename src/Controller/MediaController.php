@@ -158,10 +158,8 @@ class MediaController extends Controller
     /**
      * NEXT_MAJOR: Remove this method when bumping Symfony requirement to 2.8+.
      * Inject the Symfony\Component\HttpFoundation\Request into the actions instead.
-     *
-     * @return Request
      */
-    private function getCurrentRequest()
+    private function getCurrentRequest(): Request
     {
         if ($this->has('request_stack')) {
             return $this->get('request_stack')->getCurrentRequest();

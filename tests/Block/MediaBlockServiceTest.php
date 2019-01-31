@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
+use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
@@ -88,7 +89,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
         ], $blockContext);
     }
 
-    private function configureGetFormatChoices($media, $choices): void
+    private function configureGetFormatChoices(ObjectProphecy $media, array $choices): void
     {
         $mediaAdmin = $this->prophesize(BaseMediaAdmin::class);
         $pool = $this->prophesize(Pool::class);

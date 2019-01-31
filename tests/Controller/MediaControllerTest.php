@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Controller\MediaController;
 use Sonata\MediaBundle\Model\Media;
@@ -138,15 +139,19 @@ class MediaControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
-    private function configureDownloadSecurity($pool, $media, $request, $isGranted): void
-    {
+    private function configureDownloadSecurity(
+        ObjectProphecy $pool,
+        Media $media,
+        Request $request,
+        bool $isGranted
+    ): void {
         $strategy = $this->prophesize(DownloadStrategyInterface::class);
 
         $pool->getDownloadSecurity($media)->willReturn($strategy->reveal());
         $strategy->isGranted($media, $request)->willReturn($isGranted);
     }
 
-    private function configureGetMedia($id, $media): void
+    private function configureGetMedia(int $id, ?Media $media): void
     {
         $mediaManager = $this->prophesize(BaseEntityManager::class);
 
@@ -154,13 +159,16 @@ class MediaControllerTest extends TestCase
         $mediaManager->find($id)->willReturn($media);
     }
 
-    private function configureGetProvider($pool, $media, $provider): void
-    {
+    private function configureGetProvider(
+        ObjectProphecy $pool,
+        ObjectProphecy $media,
+        MediaProviderInterface $provider
+    ): void {
         $pool->getProvider('provider')->willReturn($provider);
         $media->getProviderName()->willReturn('provider');
     }
 
-    private function configureGetCurrentRequest($request): void
+    private function configureGetCurrentRequest(Request $request): void
     {
         $requestStack = $this->prophesize(RequestStack::class);
 
@@ -169,8 +177,11 @@ class MediaControllerTest extends TestCase
         $requestStack->getCurrentRequest()->willReturn($request);
     }
 
-    private function configureRender($template, $data, $rendered): void
-    {
+    private function configureRender(
+        string $template,
+        array $data,
+        string $rendered
+    ): void {
         $templating = $this->prophesize(EngineInterface::class);
         $response = $this->prophesize(Response::class);
         $pool = $this->prophesize(Pool::class);

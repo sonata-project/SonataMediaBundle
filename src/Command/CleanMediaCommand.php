@@ -92,7 +92,7 @@ class CleanMediaCommand extends ContainerAwareCommand
     /**
      * @return string[]
      */
-    private function getProviders()
+    private function getProviders(): array
     {
         if (!$this->providers) {
             $this->providers = [];
@@ -109,13 +109,7 @@ class CleanMediaCommand extends ContainerAwareCommand
         return $this->providers;
     }
 
-    /**
-     * @param $filename
-     * @param $context
-     *
-     * @return bool
-     */
-    private function mediaExists($filename, $context = null)
+    private function mediaExists(string $filename, string $context = null): bool
     {
         $mediaManager = $this->getContainer()->get('sonata.media.manager.media');
 

@@ -300,8 +300,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
      * @param array  $expected Excerpts of text expected to be found in the output
      * @param string $output   Searched output
      */
-    private function assertOutputFoundInContext($extractor, $expected, $output): void
-    {
+    private function assertOutputFoundInContext(
+        string $extractor,
+        array $expected,
+        string $output
+    ): void {
         preg_match_all($extractor, $output, $matches);
 
         $found = false;
@@ -324,10 +327,9 @@ class CleanMediaCommandTest extends FilesystemTestCase
     /**
      * Returns whether every needle can be found as a substring of the haystack.
      *
-     * @param string $haystack
-     * @param array  $needles  Array of (potential) substrings of the haystack
+     * @param array $needles Array of (potential) substrings of the haystack
      */
-    private function containsAll($haystack, $needles)
+    private function containsAll(string $haystack, array $needles)
     {
         foreach ($needles as $needle) {
             if (false === strpos($haystack, $needle)) {

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\CDN;
 
+use Aws\CloudFront\CloudFrontClient;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\CDN\CloudFront;
 
@@ -69,7 +70,7 @@ class CloudFrontTest extends TestCase
     }
 }
 
-class CloudFrontClientSpy
+class CloudFrontClientSpy extends CloudFrontClient
 {
     public function createInvalidation()
     {

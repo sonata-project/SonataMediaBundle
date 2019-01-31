@@ -143,10 +143,7 @@ class UpdateCdnStatusCommand extends BaseCommand
         }
     }
 
-    /**
-     * @return MediaProviderInterface
-     */
-    private function getProvider()
+    private function getProvider(): MediaProviderInterface
     {
         $providerName = $this->input->getArgument('providerName');
 
@@ -161,10 +158,7 @@ class UpdateCdnStatusCommand extends BaseCommand
         return $this->getMediaPool()->getProvider($providerName);
     }
 
-    /**
-     * @return string
-     */
-    private function getContext()
+    private function getContext(): string
     {
         $context = $this->input->getArgument('context');
 
@@ -179,10 +173,7 @@ class UpdateCdnStatusCommand extends BaseCommand
         return $context;
     }
 
-    /**
-     * @return QuestionHelper
-     */
-    private function getQuestionHelper()
+    private function getQuestionHelper(): QuestionHelper
     {
         return $this->getHelper('question');
     }

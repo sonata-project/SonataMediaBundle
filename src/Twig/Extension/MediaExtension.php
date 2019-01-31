@@ -83,7 +83,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     {
         $media = $this->getMedia($media);
 
-        if (!$media) {
+        if (null === $media) {
             return '';
         }
 
@@ -115,7 +115,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     {
         $media = $this->getMedia($media);
 
-        if (!$media) {
+        if (null === $media) {
             return '';
         }
 
@@ -195,10 +195,8 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
 
     /**
      * @param mixed $media
-     *
-     * @return MediaInterface|bool|null
      */
-    private function getMedia($media)
+    private function getMedia($media): ?MediaInterface
     {
         if (!$media instanceof MediaInterface && \strlen((string) $media) > 0) {
             $media = $this->mediaManager->findOneBy([
@@ -207,11 +205,11 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
         }
 
         if (!$media instanceof MediaInterface) {
-            return false;
+            return null;
         }
 
         if (MediaInterface::STATUS_OK !== $media->getProviderStatus()) {
-            return false;
+            return null;
         }
 
         return $media;

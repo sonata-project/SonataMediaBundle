@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\ContextInterface;
@@ -98,7 +99,7 @@ class BaseMediaAdminTest extends TestCase
         $category->getId()->willReturn(1);
     }
 
-    private function configureGetProviderName($media): void
+    private function configureGetProviderName(ObjectProphecy $media): void
     {
         $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
         $media->setProviderName('providerName')->shouldBeCalled();
