@@ -17,8 +17,7 @@ php:
 services:
   - mongodb
 
-sudo: false
-dist: trusty
+dist: xenial
 
 addons:
   apt:
