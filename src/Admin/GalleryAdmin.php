@@ -58,16 +58,7 @@ class GalleryAdmin extends AbstractAdmin
      */
     public function postUpdate($gallery)
     {
-        if (false === $gallery->getGalleryHasMedias() instanceof \IteratorAggregate) {
-            return;
-        }
-
-        $iterator = $gallery->getGalleryHasMedias()->getIterator();
-        $iterator->uasort(function ($a, $b) {
-            return ($a->getPosition() < $b->getPosition()) ? -1 : 1;
-        });
-
-        $gallery->setGalleryHasMedias($iterator);
+        $gallery->reorderGalleryHasMedia();
     }
 
     /**
