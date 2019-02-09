@@ -56,6 +56,14 @@ class GalleryAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
+    public function postUpdate($gallery)
+    {
+        $gallery->reorderGalleryHasMedia();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getPersistentParameters()
     {
         $parameters = parent::getPersistentParameters();
