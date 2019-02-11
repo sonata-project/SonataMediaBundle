@@ -86,6 +86,7 @@ class AddProviderCompilerPassTest extends TestCase
                 'format' => 'jpg',
                 'constraint' => true,
                 'resizer' => false,
+                'resizer_options' => [],
             ],
         ];
         foreach ($calls as $call) {
