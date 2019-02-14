@@ -139,7 +139,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $categoryManager->setPublic(true);
         }
 
-        if (!array_key_exists($config['default_context'], $config['contexts'])) {
+        if (!\array_key_exists($config['default_context'], $config['contexts'])) {
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid default context : %s, available : %s', $config['default_context'], json_encode(array_keys($config['contexts']))));
         }
 
