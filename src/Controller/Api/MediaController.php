@@ -19,7 +19,9 @@ use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
@@ -72,10 +74,44 @@ class MediaController
     /**
      * Retrieves the list of medias (paginated).
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"={"sonata_api_read"}}
+     * @Operation(
+     *     tags={""},
+     *     summary="Retrieves the list of medias (paginated).",
+     *     @SWG\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page for media list pagination",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of medias by page",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="enabled",
+     *         in="query",
+     *         description="Enabled/Disabled medias filter",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="orderBy",
+     *         in="query",
+     *         description="Order by array (key is field, value is direction)",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref=@Model(type="Sonata\DatagridBundle\Pager\PagerInterface",groups={"sonata_api_read"}))
+     *     )
      * )
+     *
      *
      * @QueryParam(name="page", requirements="\d+", default="1", description="Page for media list pagination")
      * @QueryParam(name="count", requirements="\d+", default="10", description="Number of medias by page")
@@ -117,16 +153,27 @@ class MediaController
     /**
      * Retrieves a specific media.
      *
-     * @ApiDoc(
-     *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="media id"}
-     *  },
-     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      404="Returned when media is not found"
-     *  }
+     * @Operation(
+     *     tags={""},
+     *     summary="Retrieves a specific media.",
+     *     @SWG\Parameter(
+     *          type="integer",
+     *          name="id",
+     *          in="path",
+     *          description="media id",
+     *          required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref=@Model(type="Sonata\MediaBundle\Model\Media",groups={"sonata_api_read"}))
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Returned when media is not found"
+     *     )
      * )
+     *
      *
      * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
@@ -142,15 +189,26 @@ class MediaController
     /**
      * Returns media urls for each format.
      *
-     * @ApiDoc(
-     *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="media id"}
-     *  },
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      404="Returned when media is not found"
-     *  }
+     * @Operation(
+     *     tags={""},
+     *     summary="Returns media urls for each format.",
+     *     @SWG\Parameter(
+     *          type="integer",
+     *          name="id",
+     *          in="path",
+     *          description="media id",
+     *          required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Returned when media is not found"
+     *     )
      * )
+     *
      *
      * @param $id
      *
@@ -177,16 +235,33 @@ class MediaController
     /**
      * Returns media binary content for each format.
      *
-     * @ApiDoc(
-     *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="media id"},
-     *      {"name"="format", "dataType"="string", "description"="media format"}
-     *  },
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      404="Returned when media is not found"
-     *  }
+     * @Operation(
+     *     tags={""},
+     *     summary="Returns media binary content for each format.",
+     *     @SWG\Parameter(
+     *          type="integer",
+     *          name="id",
+     *          in="path",
+     *          description="media id",
+     *          required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *          type="string",
+     *          name="format",
+     *          in="path",
+     *          description="media format",
+     *          required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Returned when media is not found"
+     *     )
      * )
+     *
      *
      * @param int     $id      The media id
      * @param string  $format  The format
@@ -210,16 +285,30 @@ class MediaController
     /**
      * Deletes a medium.
      *
-     * @ApiDoc(
-     *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="medium identifier"}
-     *  },
-     *  statusCodes={
-     *      200="Returned when medium is successfully deleted",
-     *      400="Returned when an error has occurred while deleting the medium",
-     *      404="Returned when unable to find medium"
-     *  }
+     * @Operation(
+     *     tags={""},
+     *     summary="Deletes a medium.",
+     *     @SWG\Parameter(
+     *          type="integer",
+     *          name="id",
+     *          in="path",
+     *          description="media id",
+     *          required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when medium is successfully deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Returned when an error has occurred while deleting the medium"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Returned when unable to find medium"
+     *     )
      * )
+     *
      *
      * @param int $id A medium identifier
      *
@@ -241,18 +330,39 @@ class MediaController
      * If you need to upload a file (depends on the provider) you will need to do so by sending content as a multipart/form-data HTTP Request
      * See documentation for more details.
      *
-     * @ApiDoc(
-     *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="medium identifier"}
-     *  },
-     *  input={"class"="sonata_media_api_form_media", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      400="Returned when an error has occurred while medium update",
-     *      404="Returned when unable to find medium"
-     *  }
+     * @Operation(
+     *     tags={""},
+     *     summary="Updates a medium",
+     *     @SWG\Parameter(
+     *          type="integer",
+     *          name="id",
+     *          in="path",
+     *          description="media id",
+     *          required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *          type="object",
+     *          name="",
+     *          in="body",
+     *          description="Media data",
+     *          required=true,
+     *          @Model(type="Sonata\MediaBundle\Form\Type\ApiMediaType",groups={"sonata_api_write"})
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref=@Model(type="Sonata\MediaBundle\Model\Media",groups={"sonata_api_read"}))
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Returned when an error has occurred while medium update"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Returned when unable to find medium"
+     *     )
      * )
+     *
      *
      * @param int     $id      A Medium identifier
      * @param Request $request A Symfony request
@@ -281,16 +391,39 @@ class MediaController
      * If you need to upload a file (depends on the provider) you will need to do so by sending content as a multipart/form-data HTTP Request
      * See documentation for more details.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  input={"class"="sonata_media_api_form_media", "name"="", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      400="Returned when an error has occurred while medium creation",
-     *      404="Returned when unable to find medium"
-     *  }
+     * @Operation(
+     *     tags={""},
+     *     summary="Adds a medium of given provider",
+     *     @SWG\Parameter(
+     *          type="string",
+     *          name="provider",
+     *          in="path",
+     *          description="provider id",
+     *          required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *          type="object",
+     *          name="",
+     *          in="body",
+     *          description="Media data",
+     *          required=true,
+     *          @Model(type="Sonata\MediaBundle\Form\Type\ApiMediaType",groups={"sonata_api_write"})
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref=@Model(type="Sonata\MediaBundle\Model\Media",groups={"sonata_api_read"}))
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Returned when an error has occurred while medium creation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Returned when unable to find medium"
+     *     )
      * )
+     *
      *
      * @Route(requirements={"provider"="[A-Za-z0-9.]*"})
      *
@@ -320,14 +453,34 @@ class MediaController
     /**
      * Set Binary content for a specific media.
      *
-     * @ApiDoc(
-     *  input={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_write"}},
-     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      404="Returned when media is not found"
-     *  }
+     * @Operation(
+     *     tags={""},
+     *     summary="Set Binary content for a specific media.",
+     *     @SWG\Parameter(
+     *          type="integer",
+     *          name="id",
+     *          in="path",
+     *          description="media id",
+     *          required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="binaryContent",
+     *         in="body",
+     *         description="Binary content of media",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref=@Model(type="Sonata\MediaBundle\Model\Media",groups={"sonata_api_read"}))
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Returned when media is not found"
+     *     )
      * )
+     *
      *
      * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
