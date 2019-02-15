@@ -73,7 +73,7 @@ class MediaAdminController extends Controller
         $filters = $request->get('filter');
 
         // set the default context
-        if (!$filters || !array_key_exists('context', $filters)) {
+        if (!$filters || !\array_key_exists('context', $filters)) {
             $context = $this->admin->getPersistentParameter('context', $this->get('sonata.media.pool')->getDefaultContext());
         } else {
             $context = $filters['context']['value'];
@@ -117,11 +117,8 @@ class MediaAdminController extends Controller
 
     /**
      * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
-     *
-     * @param FormView $formView
-     * @param string   $theme
      */
-    private function setFormTheme(FormView $formView, $theme): void
+    private function setFormTheme(FormView $formView, string $theme): void
     {
         $twig = $this->get('twig');
 

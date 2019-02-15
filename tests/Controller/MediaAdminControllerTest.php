@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\Argument\Token\TypeToken;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
@@ -161,7 +162,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->getCode()->willReturn('admin_code');
     }
 
-    private function configureCreateAction($class): void
+    private function configureCreateAction(string $class): void
     {
         $object = $this->prophesize(Media::class);
         $form = $this->prophesize(Form::class);
@@ -182,7 +183,7 @@ class MediaAdminControllerTest extends TestCase
         $form->all()->willReturn(['field' => null]);
     }
 
-    private function configureGetCurrentRequest($request): void
+    private function configureGetCurrentRequest(Request $request): void
     {
         $requestStack = $this->prophesize(RequestStack::class);
 
@@ -191,7 +192,7 @@ class MediaAdminControllerTest extends TestCase
         $requestStack->getCurrentRequest()->willReturn($request);
     }
 
-    private function configureSetFormTheme($formView, $formTheme): void
+    private function configureSetFormTheme(FormView $formView, $formTheme): void
     {
         $twig = $this->prophesize(\Twig_Environment::class);
 
@@ -220,7 +221,7 @@ class MediaAdminControllerTest extends TestCase
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
 
-    private function configureSetCsrfToken($intention): void
+    private function configureSetCsrfToken(string $intention): void
     {
         $tokenManager = $this->prophesize(CsrfTokenManagerInterface::class);
         $token = $this->prophesize(CsrfToken::class);
@@ -231,7 +232,7 @@ class MediaAdminControllerTest extends TestCase
         $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
     }
 
-    private function configureRender($template, $data, $rendered): void
+    private function configureRender(string $template, TypeToken $data, string $rendered): void
     {
         $templating = $this->prophesize(EngineInterface::class);
         $response = $this->prophesize(Response::class);

@@ -93,7 +93,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
-    public function testHelperProperies(): void
+    public function testHelperProperties(): void
     {
         $adminBox = new Box(100, 100);
         $mediumBox = new Box(500, 250);
@@ -241,7 +241,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertNull($media->getWidth(), 'Width staid null');
     }
 
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $provider = $this->getProvider();
 

@@ -232,7 +232,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $this->assertSame('https://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
     }
 
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $provider = $this->getProvider();
 

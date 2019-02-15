@@ -398,7 +398,7 @@ class FileProviderTest extends AbstractProviderTest
         $provider->validate($errorElement, $media);
     }
 
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $provider = $this->getProvider();
 

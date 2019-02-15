@@ -91,7 +91,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
             $this->rootCategories = $this->container->get('sonata.media.manager.category')->getRootCategories(false);
         }
 
-        if (!array_key_exists($media->getContext(), $this->rootCategories)) {
+        if (!\array_key_exists($media->getContext(), $this->rootCategories)) {
             throw new \RuntimeException(sprintf('There is no main category related to context: %s', $media->getContext()));
         }
 

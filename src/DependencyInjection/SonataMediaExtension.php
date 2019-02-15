@@ -93,7 +93,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $categoryManager->setPublic(true);
         }
 
-        if (!array_key_exists($config['default_context'], $config['contexts'])) {
+        if (!\array_key_exists($config['default_context'], $config['contexts'])) {
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid default context : %s, available : %s', $config['default_context'], json_encode(array_keys($config['contexts']))));
         }
 
@@ -520,35 +520,26 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
     /**
      * Checks if the classification of media is enabled.
-     *
-     * @param array $config
-     *
-     * @return bool
      */
-    private function isClassificationEnabled(array $config)
+    private function isClassificationEnabled(array $config): bool
     {
         return interface_exists(CategoryInterface::class)
             && !$config['force_disable_category'];
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
     private function configureAdapters(ContainerBuilder $container, array $config): void
     {
         foreach (['gd', 'imagick', 'gmagick'] as $adapter) {
             if ($container->hasParameter('sonata.media.adapter.image.'.$adapter.'.class')) {
-                $container->register('sonata.media.adapter.image.'.$adapter, $container->getParameter('sonata.media.adapter.image.'.$adapter.'.class'));
+                $container->register(
+                    'sonata.media.adapter.image.'.$adapter,
+                    $container->getParameter('sonata.media.adapter.image.'.$adapter.'.class')
+                );
             }
         }
         $container->setAlias('sonata.media.adapter.image.default', $config['adapters']['default']);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
     private function configureResizers(ContainerBuilder $container, array $config): void
     {
         if ($container->hasParameter('sonata.media.resizer.simple.class')) {

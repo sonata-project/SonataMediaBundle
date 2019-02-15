@@ -79,11 +79,8 @@ The metadata contains all information we want.
 Initialize the class
 --------------------
 
-Let's initialize the ``VimeoProvider`` class.
+Let's initialize the ``VimeoProvider`` class::
 
-.. code-block:: php
-
-    <?php
     namespace Sonata\MediaBundle\Provider;
 
     use Sonata\MediaBundle\Provider\BaseProvider;
@@ -91,7 +88,7 @@ Let's initialize the ``VimeoProvider`` class.
     use Sonata\MediaBundle\Model\MediaInterface;
     use Symfony\Component\Form\Form;
 
-    class VimeoProvider extends BaseProvider
+    final class VimeoProvider extends BaseProvider
     {
     }
 
@@ -106,14 +103,11 @@ the workflow is not the same:
 
 The ``MediaAdmin`` class, used by the ``AdminBundle``, does not know how
 to create the form as the form is unique per provider. So the ``MediaAdmin``
-delegates this definition to the related provider.
+delegates this definition to the related provider::
 
-.. code-block:: php
-
-    <?php
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', array(), array('type' => 'string'));
+        $formMapper->add('binaryContent', [], ['type' => 'string']);
     }
 
     public function buildEditForm(FormMapper $formMapper)
@@ -124,19 +118,15 @@ delegates this definition to the related provider.
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('description');
         $formMapper->add('copyright');
-        $formMapper->add('binaryContent', array(), array('type' => 'string'));
+        $formMapper->add('binaryContent', [], ['type' => 'string']);
     }
 
 Once the form is submitted, we retrieve the video metadata. The metadata
-is going to be used to store ``Media`` information :
+is going to be used to store ``Media`` information::
 
-.. code-block:: php
-
-    <?php
     public function getMetadata(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -144,13 +134,13 @@ is going to be used to store ``Media`` information :
         $metadata = @file_get_contents($url);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to retrieve vimeo video information for :' . $url);
+            throw new \RuntimeException('Unable to retrieve vimeo video information for :'.$url);
         }
 
         $metadata = json_decode($metadata, true);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to decode vimeo video information for :' . $url);
+            throw new \RuntimeException('Unable to decode vimeo video information for :'.$url);
         }
 
         return $metadata;
@@ -163,15 +153,11 @@ while saving an object :
 * ``prePersist`` / ``postPersist``
 * ``preUpdate`` / ``postUpdate``
 
-The ``MediaAdmin`` delegates this management to the media provider.
+The ``MediaAdmin`` delegates this management to the media provider::
 
-.. code-block:: php
-
-    <?php
     public function prePersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -197,15 +183,11 @@ The ``MediaAdmin`` delegates this management to the media provider.
         $media->setUpdatedAt(new \DateTime());
     }
 
-The update method should only update data that cannot be managed by the user.
+The update method should only update data that cannot be managed by the user::
 
-.. code-block:: php
-
-    <?php
     public function preUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
@@ -225,11 +207,8 @@ JSON definition and is ready to be saved. However once saved, the provider
 needs to generate the correct thumbnails.
 
 The ``postPersist`` and ``postUpdate`` must be implemented to generate valid
-thumbnails.
+thumbnails::
 
-.. code-block:: php
-
-    <?php
     public function postUpdate(MediaInterface $media)
     {
         $this->postPersist($media);
@@ -238,21 +217,16 @@ thumbnails.
     public function postPersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
-
             return;
         }
 
         $this->generateThumbnails($media);
     }
 
-
 The ``generateThumbnails`` method is defined in the ``BaseProvider`` class.
 This method required a ``getReferenceImage`` method that returns the reference
-image.
+image::
 
-.. code-block:: php
-
-    <?php
     public function getReferenceImage(MediaInterface $media)
     {
         return $media->getMetadataValue('thumbnail_url');
@@ -266,11 +240,8 @@ Video Provider
 ^^^^^^^^^^^^^^
 
 When creating a video provider by extending the  ``BaseVideoProvider`` class, you have to implement the
-``getReferenceUrl`` method. This method contains the external url to the video media.
+``getReferenceUrl`` method. This method contains the external url to the video media::
 
-.. code-block:: php
-
-    <?php
     public function getReferenceUrl(MediaInterface $media)
     {
         return sprintf('http://foobar.com/%s', $media->getProviderReference());
@@ -284,15 +255,16 @@ added to the provider pool.
 
 .. code-block:: xml
 
+    <!-- config/services.xml -->
+
     <service id="sonata.media.provider.vimeo" class="Sonata\MediaBundle\Provider\VimeoProvider">
-        <tag name="sonata.media.provider" />
         <argument>sonata.media.provider.vimeo</argument>
-        <argument type="service" id="sonata.media.filesystem.local" />
-        <argument type="service" id="sonata.media.cdn.server" />
-        <argument type="service" id="sonata.media.generator.default" />
-        <argument type="service" id="sonata.media.thumbnail.format" />
-        <argument type="service" id="sonata.media.buzz.browser" />
-        <argument type="service" id="sonata.media.metadata.proxy" />
+        <argument type="service" id="sonata.media.filesystem.local"/>
+        <argument type="service" id="sonata.media.cdn.server"/>
+        <argument type="service" id="sonata.media.generator.default"/>
+        <argument type="service" id="sonata.media.thumbnail.format"/>
+        <argument type="service" id="sonata.media.buzz.browser"/>
+        <argument type="service" id="sonata.media.metadata.proxy"/>
         <call method="setTemplates">
             <argument type="collection">
                 <argument key='helper_thumbnail'>@SonataMedia/Provider/thumbnail.html.twig</argument>
@@ -300,8 +272,9 @@ added to the provider pool.
             </argument>
         </call>
         <call method="setResizer">
-            <argument type="service" id="sonata.media.resizer.simple" />
+            <argument type="service" id="sonata.media.resizer.simple"/>
         </call>
+        <tag name="sonata.media.provider"/>
     </service>
 
 The last important part is how the vimeo media should be displayed.
@@ -324,20 +297,17 @@ The thumbnail template is common to all media and it is quite simple:
 
 .. code-block:: html+jinja
 
-    <img {% for name, value in options %}{{ name ~ '="' ~ value ~ '"' }} {% endfor %} />
+    <img {% for name, value in options %}{{ name ~ '="' ~ value ~ '"' }} {% endfor %}/>
 
 The media template and media helper are a bit more tricky. Each provider might
 provide a rich set of options to embed the media. The
 ``VideoProvider::getHelperProperties()`` method generates the correct set
-of options that need to be passed to the ``view_vimeo.html.twig`` template file.
+of options that need to be passed to the ``view_vimeo.html.twig`` template file::
 
-.. code-block:: php
-
-    <?php
-    public function getHelperProperties(Media $media, $format, $options = array())
+    public function getHelperProperties(Media $media, $format, $options = [])
     {
         // documentation : http://vimeo.com/api/docs/moogaloop
-        $defaults = array(
+        $defaults = [
             // (optional) Flash Player version of app. Defaults to 9 .NEW!
             // 10 - New Moogaloop. 9 - Old Moogaloop without newest features.
             'fp_version'      => 10,
@@ -368,17 +338,17 @@ of options that need to be passed to the ``view_vimeo.html.twig`` template file.
 
             // Unique id that is passed into all player events as the ending parameter.
             'js_swf_id' => uniqid('vimeo_player_'),
-        );
+        ];
 
-        $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
+        $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
 
-        $params = array(
+        $params = [
             'src'         => http_build_query($player_parameters),
             'id'          => $player_parameters['js_swf_id'],
             'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
-            'width'       => isset($options['width'])             ? $options['width']  : $media->getWidth(),
-            'height'      => isset($options['height'])            ? $options['height'] : $media->getHeight(),
-        );
+            'width'       => isset($options['width']) ? $options['width'] : $media->getWidth(),
+            'height'      => isset($options['height']) ? $options['height'] : $media->getHeight(),
+        ];
 
         return $params;
     }
@@ -395,6 +365,8 @@ From the vimeo's documentation, a video can be included like this:
         frameborder="{{ options.frameborder }}">
     </iframe>
 
-Et voilà! Of course you should test the provider class. There are many examples
-in the ``Tests`` folder. The source code is available in the class
-``Sonata\MediaBundle\Provider\VimeoProvider``.
+.. tip::
+
+    You should test the provider class. There are many examples
+    in the ``tests`` folder. The source code is available in the class
+    ``Sonata\MediaBundle\Provider\VimeoProvider``.

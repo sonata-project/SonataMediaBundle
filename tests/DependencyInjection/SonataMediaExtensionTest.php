@@ -271,7 +271,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    public function testMediaPool()
+    public function testMediaPool(): void
     {
         $this->load();
 

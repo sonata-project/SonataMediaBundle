@@ -230,7 +230,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $this->assertSame('https://vimeo.com/123456', $this->getProvider()->getReferenceUrl($media));
     }
 
-    public function testMetadata()
+    public function testMetadata(): void
     {
         $provider = $this->getProvider();
 

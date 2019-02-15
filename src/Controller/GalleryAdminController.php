@@ -73,11 +73,8 @@ class GalleryAdminController extends Controller
 
     /**
      * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
-     *
-     * @param FormView $formView
-     * @param string   $theme
      */
-    private function setFormTheme(FormView $formView, $theme): void
+    private function setFormTheme(FormView $formView, string $theme): void
     {
         $twig = $this->get('twig');
 

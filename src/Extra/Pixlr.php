@@ -215,24 +215,15 @@ class Pixlr
         ]));
     }
 
-    /**
-     * @param MediaInterface $media
-     *
-     * @return string
-     */
-    private function generateHash(MediaInterface $media)
+    private function generateHash(MediaInterface $media): string
     {
         return sha1($media->getId().$media->getCreatedAt()->format('u').$this->secret);
     }
 
     /**
-     * @param string $id
-     *
      * @throws NotFoundHttpException
-     *
-     * @return MediaInterface
      */
-    private function getMedia($id)
+    private function getMedia(string $id): MediaInterface
     {
         $media = $this->mediaManager->findOneBy(['id' => $id]);
 
@@ -244,12 +235,9 @@ class Pixlr
     }
 
     /**
-     * @param string         $hash
-     * @param MediaInterface $media
-     *
      * @throws NotFoundHttpException
      */
-    private function checkMedia($hash, MediaInterface $media): void
+    private function checkMedia(string $hash, MediaInterface $media): void
     {
         if ($hash !== $this->generateHash($media)) {
             throw new NotFoundHttpException('Invalid hash');
@@ -260,12 +248,7 @@ class Pixlr
         }
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
-    private function buildQuery(array $parameters = [])
+    private function buildQuery(array $parameters = []): string
     {
         $query = [];
         foreach ($parameters as $name => $value) {

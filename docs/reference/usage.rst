@@ -1,5 +1,5 @@
-Usages
-======
+Usage
+=====
 
 Saving a media file
 -------------------
@@ -10,25 +10,21 @@ Saving a media file required at least 3 informations :
 - the ``provider name`` : the provider code which handles the media processing while saving
 - the ``binary content`` : the provider information source : the unique id for a video, a File instance, etc ...
 
-For instance, a youtube video can be created and saved like this :
+For instance, a Youtube video can be created and saved like this::
 
-.. code-block:: php
-
-    <?php
-
-    $media = new Media;
+    $media = new Media();
     $media->setBinaryContent('13142153');
     $media->setContext('user'); // video related to the user
     $media->setProviderName('sonata.media.provider.youtube');
 
     $mediaManager->save($media);
 
-    // or
-    $media = new Media;
+or this::
+
+    $media = new Media();
     $media->setBinaryContent('13142153');
 
     $mediaManager->save($media, 'user', 'sonata.media.provider.youtube');
-
 
 Retrieving metadata information
 -------------------------------
@@ -37,15 +33,10 @@ The providers has a dedicated field where extra information can be saved : the p
 
 You can retrieve a value very easily with the ``getMetadataValue`` method.
 
-For instance you can retrieve the original youtube video title with :
+For instance you can retrieve the original Youtube video title with::
 
 .. code-block:: php
 
-    <?php
-
-    $media = $mediaManager->findOneBy(array('id' => 132));
+    $media = $mediaManager->find(132);
 
     echo $media->getMetadataValue('title', 'if none use this string');
-
-
-

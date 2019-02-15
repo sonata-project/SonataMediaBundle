@@ -239,12 +239,7 @@ class GalleryBlockService extends AbstractAdminBlockService
         ]);
     }
 
-    /**
-     * @param GalleryInterface $gallery
-     *
-     * @return array
-     */
-    private function buildElements(GalleryInterface $gallery)
+    private function buildElements(GalleryInterface $gallery): array
     {
         $elements = [];
         foreach ($gallery->getGalleryItems() as $galleryItem) {
@@ -254,7 +249,7 @@ class GalleryBlockService extends AbstractAdminBlockService
 
             $type = $this->getMediaType($galleryItem->getMedia());
 
-            if (!$type) {
+            if (null === $type) {
                 continue;
             }
 
@@ -269,19 +264,15 @@ class GalleryBlockService extends AbstractAdminBlockService
         return $elements;
     }
 
-    /**
-     * @param MediaInterface $media
-     *
-     * @return false|string
-     */
-    private function getMediaType(MediaInterface $media)
+    private function getMediaType(MediaInterface $media): ?string
     {
         if ('video/x-flv' === $media->getContentType()) {
             return 'video';
-        } elseif ('image' === substr($media->getContentType(), 0, 5)) {
+        }
+        if ('image' === substr($media->getContentType(), 0, 5)) {
             return 'image';
         }
 
-        return false;
+        return null;
     }
 }

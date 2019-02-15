@@ -10,32 +10,33 @@ a context has its own set of media providers and its own set of formats.
 That means you can have a ``small`` user picture format and a ``small`` news
 picture format with different sizes and providers. 
 Also each format allows to use a custom resizer instead of the default one 
-configured in the provider,
-
-For example:
+configured in the provider:
 
 .. code-block:: yaml
 
-    contexts:
-        default:  # the default context is mandatory
-            providers:
-                - sonata.media.provider.dailymotion
-                - sonata.media.provider.youtube
-                - sonata.media.provider.image
-                - sonata.media.provider.file
+    # config/packages/sonata_media.yaml
 
-            formats:
-                small: { width: 100 , quality: 70}
-                big:   { width: 500 , quality: 70, resizer: sonata.media.resizer.square}
+    sonata_media:
+        contexts:
+            default:  # the default context is mandatory
+                providers:
+                    - sonata.media.provider.dailymotion
+                    - sonata.media.provider.youtube
+                    - sonata.media.provider.image
+                    - sonata.media.provider.file
 
-        news:
-            providers:
-                - sonata.media.provider.youtube
-                - sonata.media.provider.image
+                formats:
+                    small: { width: 100 , quality: 70}
+                    big:   { width: 500 , quality: 70, resizer: sonata.media.resizer.square}
 
-            formats:
-                small: { width: 150 , quality: 95}
-                big:   { width: 500 , quality: 90}
+            news:
+                providers:
+                    - sonata.media.provider.youtube
+                    - sonata.media.provider.image
+
+                formats:
+                    small: { width: 150 , quality: 95}
+                    big:   { width: 500 , quality: 90}
 
 ``AdminBundle`` Integration
 ---------------------------
@@ -63,20 +64,16 @@ Doctrine PHPCR:
             fieldName="media"
             strategy="weak"
             target-document="Application\Sonata\MediaBundle\Document\Media"
-        />
+       />
 
 In the ``PostAdmin``, you can add a new field ``image`` with a ``link_parameters``
 option. This option will add an extra parameter into the ``add`` link. This
-parameter will be used by the related controller.
+parameter will be used by the related controller::
 
-.. code-block:: php
-
-    <?php
     public function configureFormFields(FormMapper $form)
     {
-        // ...
-        $form->add('image', 'sonata_type_model_list', array(), array('link_parameters' => array('context' => 'news')));
-        // ...
+        $form
+        ->add('image', 'sonata_type_model_list', [], ['link_parameters' =>['context' => 'news']]);
     }
 
 If you look in the ``MediaAdmin`` class, the class defined a ``getPersistentParameters``
@@ -90,15 +87,14 @@ the Admin behaviors:
 
 .. code-block:: php
 
-    <?php
     public function getPersistentParameters()
     {
         if (!$this->getRequest()) {
-            return array();
+            return [];
         }
 
-        return array(
+        return [
             'provider' => $this->getRequest()->get('provider'),
             'context'  => $this->getRequest()->get('context'),
-        );
+        ];
     }

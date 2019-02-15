@@ -150,7 +150,7 @@ class MediaBlockService extends AbstractAdminBlockService
         if ($media instanceof MediaInterface) {
             $choices = $this->getFormatChoices($media);
 
-            if (!array_key_exists($blockContext->getSetting('format'), $choices)) {
+            if (!\array_key_exists($blockContext->getSetting('format'), $choices)) {
                 $blockContext->setSetting('format', key($choices));
             }
         }

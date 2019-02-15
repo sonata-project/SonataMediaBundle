@@ -242,10 +242,7 @@ class RemoveThumbsCommand extends BaseCommand
         }
     }
 
-    /**
-     * @return QuestionHelper
-     */
-    private function getQuestionHelper()
+    private function getQuestionHelper(): QuestionHelper
     {
         return $this->getHelper('question');
     }

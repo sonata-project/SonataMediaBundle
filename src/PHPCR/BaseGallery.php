@@ -82,25 +82,4 @@ abstract class BaseGallery extends Gallery
 
         $this->reorderGalleryItems();
     }
-
-    /**
-     * Reorders gallery items based on their position.
-     */
-    public function reorderGalleryItems(): void
-    {
-        if ($this->getGalleryItems() && $this->getGalleryItems() instanceof \IteratorAggregate) {
-            // reorder
-            $iterator = $this->getGalleryItems()->getIterator();
-
-            $iterator->uasort(function ($a, $b) {
-                if ($a->getPosition() === $b->getPosition()) {
-                    return 0;
-                }
-
-                return $a->getPosition() > $b->getPosition() ? 1 : -1;
-            });
-
-            $this->setGalleryItems($iterator);
-        }
-    }
 }
