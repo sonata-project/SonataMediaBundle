@@ -120,7 +120,7 @@ Once you have done that, you can configure the Media bundle itself:
 
             filesystem:
                 local:
-                    directory:  '%kernel.root_dir%/../public/uploads/media"
+                    directory:  '%kernel.root_dir%/../public/uploads/media'
                     create:     false
 
 .. note::
