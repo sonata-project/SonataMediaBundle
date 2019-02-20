@@ -108,7 +108,7 @@ class MediaAdminControllerTest extends TestCase
         $form = $this->prophesize(Form::class);
         $formView = $this->prophesize(FormView::class);
 
-        $this->configureSetFormTheme($formView->reveal(), 'filterTheme');
+        $this->configureSetFormTheme($formView->reveal(), ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', Argument::type('array'), 'renderResponse');
         $datagrid->setValue('context', null, 'another_context')->shouldBeCalled();
@@ -129,7 +129,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->setListMode('mosaic')->shouldBeCalled();
         $this->admin->getDatagrid()->willReturn($datagrid->reveal());
         $this->admin->getPersistentParameter('context', 'context')->willReturn('another_context');
-        $this->admin->getFilterTheme()->willReturn('filterTheme');
+        $this->admin->getFilterTheme()->willReturn(['filterTheme']);
         $this->admin->getTemplate('list')->willReturn('templateList');
         $this->request->get('_list_mode', 'mosaic')->willReturn('mosaic');
         $this->request->get('filter')->willReturn([]);
