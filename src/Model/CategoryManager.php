@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface as ManagerInterface;
-use Sonata\MediaBundle\Tests\fixtures\SonataClassificationBundle\Model\CategoryInterface;
 
 /**
  * @author Joao Albuquerque <albuquerque.joao.filipe@gmail.com>
@@ -54,7 +54,7 @@ final class CategoryManager implements CategoryManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function find($categoryId): iterable
+    public function find($categoryId): ?CategoryInterface
     {
         return $this->categoryManager->find($categoryId);
     }
