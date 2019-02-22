@@ -128,7 +128,7 @@ class GalleryAdminControllerTest extends TestCase
         $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
     }
 
-    private function configureSetFormTheme(FormView $formView, string $formTheme): void
+    private function configureSetFormTheme(FormView $formView, array $formTheme): void
     {
         $twig = $this->prophesize(\Twig_Environment::class);
 
