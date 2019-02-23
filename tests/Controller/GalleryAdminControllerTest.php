@@ -69,7 +69,7 @@ class GalleryAdminControllerTest extends TestCase
         $formView = $this->prophesize(FormView::class);
         $pool = $this->prophesize(Pool::class);
 
-        $this->configureSetFormTheme($formView->reveal(), 'filterTheme');
+        $this->configureSetFormTheme($formView->reveal(), ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', Argument::type('array'), 'renderResponse');
         $datagrid->setValue('context', null, 'context')->shouldBeCalled();
@@ -79,7 +79,7 @@ class GalleryAdminControllerTest extends TestCase
         $this->admin->setListMode('list')->shouldBeCalled();
         $this->admin->getDatagrid()->willReturn($datagrid->reveal());
         $this->admin->getPersistentParameter('context')->willReturn('context');
-        $this->admin->getFilterTheme()->willReturn('filterTheme');
+        $this->admin->getFilterTheme()->willReturn(['filterTheme']);
         $this->admin->getTemplate('list')->willReturn('templateList');
         $this->request->get('_list_mode')->willReturn('list');
         $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
@@ -128,7 +128,7 @@ class GalleryAdminControllerTest extends TestCase
         $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
     }
 
-    private function configureSetFormTheme(FormView $formView, string $formTheme): void
+    private function configureSetFormTheme(FormView $formView, array $formTheme): void
     {
         $twig = $this->prophesize(\Twig_Environment::class);
 
