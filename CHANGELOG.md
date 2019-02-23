@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.19.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.19.0...3.19.1) - 2019-02-23
+
+### Fixed
+- return type for `CategoryManager::find()`
+- Crash about `setFormTheme` when viewing the gallery list
+
 ## [3.19.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.18.1...3.19.0) - 2019-02-21
 
 ### Added
