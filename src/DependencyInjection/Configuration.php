@@ -119,7 +119,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('constraint')->defaultValue(true)->end()
                                         ->scalarNode('resizer')->defaultNull()->end()
                                         ->arrayNode('resizer_options')
-                                            ->info('options directly pass to selected resizer. e.g. {use_crop: true, crop_gravity: center}')
+                                            ->info('options directly passed to selected resizer. e.g. {use_crop: true, crop_gravity: center}')
                                             ->defaultValue([])
                                             ->useAttributeAsKey('name')
                                             ->prototype('scalar')
