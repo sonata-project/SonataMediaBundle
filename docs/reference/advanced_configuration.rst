@@ -32,7 +32,8 @@ Full configuration options:
                 formats:
                     small: { width: 100 , quality: 70}
                     big:   { width: 500 , quality: 70, resizer: sonata.media.resizer.square}
-                    icon: { width: 32, quality: 70, resizer: your.custom.resizer, resizer_options: {custom_crop: true} } # You can pass through any custom option to resizer by using the resizer_options
+                    # You can pass through any custom option to resizer by using the resizer_options
+                    icon:  { width: 32, quality: 70, resizer: your.custom.resizer, resizer_options: { custom_crop: true } } 
 
             tv:
                 download:
