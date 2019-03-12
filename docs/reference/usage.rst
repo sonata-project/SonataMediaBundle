@@ -35,8 +35,6 @@ You can retrieve a value very easily with the ``getMetadataValue`` method.
 
 For instance you can retrieve the original Youtube video title with::
 
-.. code-block:: php
-
     $media = $mediaManager->find(132);
 
     echo $media->getMetadataValue('title', 'if none use this string');
