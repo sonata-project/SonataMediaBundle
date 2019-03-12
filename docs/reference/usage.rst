@@ -33,7 +33,7 @@ The providers has a dedicated field where extra information can be saved : the p
 
 You can retrieve a value very easily with the ``getMetadataValue`` method.
 
-For instance you can retrieve the original Youtube video title with::
+For instance you can retrieve the original Youtube video title with:
 
 .. code-block:: php
 
