@@ -124,6 +124,15 @@ The last important part is declaring the service.
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        # config/services.yaml
+
+        services:
+            sonata.media.security.users_strategy:
+                class:     Sonata\MediaBundle\Security\UsersDownloadStrategy
+                arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
+
     .. code-block:: xml
 
         <!-- config/services.xml -->
@@ -136,15 +145,6 @@ The last important part is declaring the service.
                 <argument>chopin</argument>
             </argument>
         </service>
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-
-        services:
-            sonata.media.security.users_strategy:
-                class:     Sonata\MediaBundle\Security\UsersDownloadStrategy
-                arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
 
 Now the service can be used with a context:
 
