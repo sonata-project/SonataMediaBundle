@@ -98,6 +98,16 @@ If you need to specify media queries explicitly, do so with an object as follows
 
 The format parameter (``'large'`` above) determines which size is going to be rendered as ``<img>`` inside the ``<picture>`` element.
 
+To make the ``<img>`` or ``<picture>`` lazy-loadable, add the parameter ``lazy: true``. ``src`` and ``srcset`` attributes
+will then become ``data-src`` and ``data-srcset``, respectively. You can define a loader or placeholder image through
+the ``src`` option if desired, otherwise ``src`` will default to ``#``. Please note that this will only prevent the image
+from loading, you will need to add code or a library that performs actual lazy-loading yourself.
+
+.. code-block:: jinja
+
+    {% media media, 'large' with {'lazy': true} %}
+
+
 Thumbnails for files
 --------------------
 

@@ -71,6 +71,8 @@ class ImageProvider extends FileProvider
             throw new \LogicException("The 'srcset' and 'picture' options must not be used simultaneously.");
         }
 
+        $attrPrefix = isset($options['lazy']) && true === $options['lazy'] ? 'data-' : '';
+
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $box = $media->getBox();
         } else {
@@ -88,7 +90,8 @@ class ImageProvider extends FileProvider
         $params = [
             'alt' => $media->getName(),
             'title' => $media->getName(),
-            'src' => $this->generatePublicUrl($media, $format),
+            'src' => $options['src'] ?? '#',
+            $attrPrefix.'src' => $this->generatePublicUrl($media, $format),
             'width' => $mediaWidth,
             'height' => $box->getHeight(),
         ];
@@ -103,7 +106,7 @@ class ImageProvider extends FileProvider
                     ? $key
                     : sprintf('(max-width: %dpx)', $this->resizer->getBox($media, $settings)->getWidth());
 
-                $pictureParams['source'][] = ['media' => $mediaQuery, 'srcset' => $src];
+                $pictureParams['source'][] = ['media' => $mediaQuery, $attrPrefix.'srcset' => $src];
             }
 
             unset($options['picture']);
@@ -145,7 +148,10 @@ class ImageProvider extends FileProvider
                     $media->getBox()->getWidth()
                 );
 
-                $params['srcset'] = implode(', ', $srcSet);
+                $params[$attrPrefix.'srcset'] = implode(', ', $srcSet);
+            } elseif ($attrPrefix) {
+                $options[$attrPrefix.'srcset'] = $options['srcset'];
+                unset($options['srcset']);
             }
 
             $params['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);

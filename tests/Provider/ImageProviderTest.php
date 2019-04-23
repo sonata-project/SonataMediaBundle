@@ -124,6 +124,12 @@ class ImageProviderTest extends AbstractProviderTest
                 $mediumBox,
                 $largeBox,
                 $largeBox, // Fifth call
+                $largeBox,
+                $largeBox, // Sixth call
+                $mediumBox,
+                $largeBox,
+                $largeBox, // Seventh call
+                $largeBox, // Eighth call
                 $mediumBox,
                 $largeBox
             ));
@@ -189,6 +195,32 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertArrayHasKey('class', $properties['picture']['img']);
         $this->assertArrayHasKey('media', $properties['picture']['source'][0]);
         $this->assertSame('(max-width: 200px)', $properties['picture']['source'][0]['media']);
+
+        $properties = $provider->getHelperProperties($media, 'default_large', ['lazy' => true]);
+        $this->assertArrayHasKey('data-src', $properties);
+        $this->assertArrayHasKey('data-srcset', $properties);
+        $this->assertSame('#', $properties['src']);
+        $this->assertArrayNotHasKey('srcset', $properties);
+
+        $properties = $provider->getHelperProperties($media, 'default_large', ['src' => 'scalar src', 'srcset' => 'scalar srcset', 'lazy' => true]);
+        $this->assertArrayHasKey('data-src', $properties);
+        $this->assertSame('scalar src', $properties['src']);
+        $this->assertSame('scalar srcset', $properties['data-srcset']);
+        $this->assertArrayNotHasKey('srcset', $properties);
+
+        $properties = $provider->getHelperProperties($media, 'default_large', ['picture' => ['default_medium', 'default_large'], 'class' => 'some-class', 'lazy' => true]);
+        $this->assertArrayHasKey('picture', $properties);
+        $this->assertArrayNotHasKey('srcset', $properties);
+        $this->assertArrayNotHasKey('sizes', $properties);
+        $this->assertArrayHasKey('source', $properties['picture']);
+        $this->assertArrayHasKey('img', $properties['picture']);
+        $this->assertArrayHasKey('data-src', $properties['picture']['img']);
+        $this->assertSame('#', $properties['picture']['img']['src']);
+        $this->assertArrayHasKey('class', $properties['picture']['img']);
+        $this->assertArrayHasKey('media', $properties['picture']['source'][0]);
+        $this->assertArrayHasKey('data-srcset', $properties['picture']['source'][0]);
+        $this->assertArrayNotHasKey('srcset', $properties['picture']['source'][0]);
+        $this->assertSame('(max-width: 500px)', $properties['picture']['source'][0]['media']);
     }
 
     public function testThumbnail(): void
