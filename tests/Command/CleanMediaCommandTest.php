@@ -92,7 +92,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->container->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function ($id) use ($pool, $mediaManager, $fileSystemLocal) {
+            ->will($this->returnCallback(static function ($id) use ($pool, $mediaManager, $fileSystemLocal) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $pool;

@@ -279,7 +279,7 @@ class FileProvider extends BaseProvider
                 $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
             }
 
-            return new StreamedResponse(function () use ($file) {
+            return new StreamedResponse(static function () use ($file) {
                 echo $file->getContent();
             }, 200, $headers);
         }
