@@ -84,7 +84,7 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->container->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function ($id) use ($pool, $contextManager, $categoryManager) {
+            ->will($this->returnCallback(static function ($id) use ($pool, $contextManager, $categoryManager) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $pool;

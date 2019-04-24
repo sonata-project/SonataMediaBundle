@@ -224,7 +224,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
             // reorder
             $iterator = $this->getGalleryHasMedias()->getIterator();
 
-            $iterator->uasort(function ($a, $b) {
+            $iterator->uasort(static function ($a, $b) {
                 if ($a->getPosition() === $b->getPosition()) {
                     return 0;
                 }

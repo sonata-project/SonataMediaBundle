@@ -254,14 +254,14 @@ class ProxyMetadataBuilderTest extends TestCase
         $container
             ->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function ($service) use ($services) {
+            ->will($this->returnCallback(static function ($service) use ($services) {
                 return $services[$service];
             }))
         ;
         $container
             ->expects($this->any())
             ->method('has')
-            ->will($this->returnCallback(function ($service) use ($services) {
+            ->will($this->returnCallback(static function ($service) use ($services) {
                 if (isset($services[$service])) {
                     return true;
                 }
