@@ -124,7 +124,7 @@ class CloudFront implements CDNInterface
         }
         // Normalizes paths due possible typos since all the CloudFront's
         // objects starts with a leading slash
-        $normalizedPaths = array_map(function ($path) {
+        $normalizedPaths = array_map(static function ($path) {
             return '/'.ltrim($path, '/');
         }, $paths);
 

@@ -91,7 +91,7 @@ class ConsumerThumbnail implements ThumbnailInterface
         $backend = $this->backend;
         $id = $this->id;
 
-        $publish = function () use ($backend, $media, $id) {
+        $publish = static function () use ($backend, $media, $id) {
             $backend->createAndPublish('sonata.media.create_thumbnail', [
                 'thumbnailId' => $id,
                 'mediaId' => $media->getId(),
