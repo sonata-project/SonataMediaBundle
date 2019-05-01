@@ -149,7 +149,7 @@ class ImageProvider extends FileProvider
                 );
 
                 $params[$attrPrefix.'srcset'] = implode(', ', $srcSet);
-            } elseif ($attrPrefix) {
+            } elseif ($attrPrefix !== '') {
                 $options[$attrPrefix.'srcset'] = $options['srcset'];
                 unset($options['srcset']);
             }
