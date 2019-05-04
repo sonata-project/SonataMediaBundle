@@ -28,7 +28,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self): void {
+            ->getMediaManager(static function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
@@ -43,7 +43,7 @@ class MediaManagerTest extends TestCase
 
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self): void {
+            ->getMediaManager(static function ($qb) use ($self): void {
             })
             ->getPager([], 1, 10, ['invalid' => 'ASC']);
     }
@@ -52,7 +52,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self): void {
+            ->getMediaManager(static function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->exactly(2))->method('orderBy')->with(
@@ -77,7 +77,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self): void {
+            ->getMediaManager(static function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => true]));
@@ -89,7 +89,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(function ($qb) use ($self): void {
+            ->getMediaManager(static function ($qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => false]));

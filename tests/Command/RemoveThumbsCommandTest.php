@@ -146,7 +146,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         $media->setName('bar');
         $medias[] = $media;
 
-        $findByReturnCallback = function (
+        $findByReturnCallback = static function (
             array $criteria,
             array $orderBy = null,
             $limit = null,

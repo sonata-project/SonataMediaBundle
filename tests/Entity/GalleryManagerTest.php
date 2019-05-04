@@ -45,7 +45,7 @@ class GalleryManagerTest extends TestCase
         $this->expectExceptionMessage('Invalid sort field \'invalid\' in \'Sonata\\MediaBundle\\Entity\\BaseGallery\' class');
 
         $this
-            ->getGalleryManager(function ($qb): void {
+            ->getGalleryManager(static function ($qb): void {
             })
             ->getPager([], 1, 10, ['invalid' => 'ASC']);
     }
