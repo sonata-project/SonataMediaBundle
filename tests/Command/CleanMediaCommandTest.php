@@ -88,11 +88,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->mediaManager = $mediaManager = $this->createMock(MediaManagerInterface::class);
 
         $this->fileSystemLocal = $fileSystemLocal = $this->createMock(Local::class);
-        $this->fileSystemLocal->expects($this->once())->method('getDirectory')->will($this->returnValue($this->workspace));
+        $this->fileSystemLocal->expects($this->once())->method('getDirectory')->willReturn($this->workspace);
 
         $this->container->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(static function ($id) use ($pool, $mediaManager, $fileSystemLocal) {
+            ->willReturnCallback(static function ($id) use ($pool, $mediaManager, $fileSystemLocal) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $pool;
@@ -101,7 +101,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
                     case 'sonata.media.adapter.filesystem.local':
                         return $fileSystemLocal;
                 }
-            }));
+            });
     }
 
     public function testExecuteDirectoryNotExists(): void
@@ -112,7 +112,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $this->pool->expects($this->once())->method('getContexts')->will($this->returnValue(['foo' => $context]));
+        $this->pool->expects($this->once())->method('getContexts')->willReturn(['foo' => $context]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
@@ -131,7 +131,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $this->pool->expects($this->once())->method('getContexts')->will($this->returnValue(['foo' => $context]));
+        $this->pool->expects($this->once())->method('getContexts')->willReturn(['foo' => $context]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
@@ -153,19 +153,19 @@ class CleanMediaCommandTest extends FilesystemTestCase
         ];
 
         $provider = $this->createMock(FileProvider::class);
-        $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
+        $provider->expects($this->any())->method('getName')->willReturn('fooprovider');
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
+        $this->pool->expects($this->any())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->expects($this->any())->method('getProviders')->willReturn([$provider]);
 
         $media = $this->createMock(MediaInterface::class);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
-            ->will($this->returnValue([$media]));
+            ->willReturn([$media]);
         $this->mediaManager->expects($this->once())->method('findBy')
             ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
-            ->will($this->returnValue([$media]));
+            ->willReturn([$media]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
@@ -187,19 +187,19 @@ class CleanMediaCommandTest extends FilesystemTestCase
         ];
 
         $provider = $this->createMock(FileProvider::class);
-        $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
+        $provider->expects($this->any())->method('getName')->willReturn('fooprovider');
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
+        $this->pool->expects($this->any())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->expects($this->any())->method('getProviders')->willReturn([$provider]);
 
         $media = $this->createMock(MediaInterface::class);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
-            ->will($this->returnValue([$media]));
+            ->willReturn([$media]);
         $this->mediaManager->expects($this->once())->method('findBy')
             ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
-            ->will($this->returnValue([$media]));
+            ->willReturn([$media]);
 
         $output = $this->tester->execute(
             ['command' => $this->command->getName()],
@@ -230,17 +230,17 @@ class CleanMediaCommandTest extends FilesystemTestCase
         ];
 
         $provider = $this->createMock(FileProvider::class);
-        $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
+        $provider->expects($this->any())->method('getName')->willReturn('fooprovider');
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
+        $this->pool->expects($this->any())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->expects($this->any())->method('getProviders')->willReturn([$provider]);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
-            ->will($this->returnValue(null));
+            ->willReturn(null);
         $this->mediaManager->expects($this->once())->method('findBy')
             ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $output = $this->tester->execute(['command' => $this->command->getName(), '--dry-run' => true]);
 
@@ -268,17 +268,17 @@ class CleanMediaCommandTest extends FilesystemTestCase
         ];
 
         $provider = $this->createMock(FileProvider::class);
-        $provider->expects($this->any())->method('getName')->will($this->returnValue('fooprovider'));
+        $provider->expects($this->any())->method('getName')->willReturn('fooprovider');
 
-        $this->pool->expects($this->any())->method('getContexts')->will($this->returnValue(['foo' => $context]));
-        $this->pool->expects($this->any())->method('getProviders')->will($this->returnValue([$provider]));
+        $this->pool->expects($this->any())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->expects($this->any())->method('getProviders')->willReturn([$provider]);
 
         $this->mediaManager->expects($this->once())->method('findOneBy')
             ->with($this->equalTo(['id' => 1, 'context' => 'foo']))
-            ->will($this->returnValue(null));
+            ->willReturn(null);
         $this->mediaManager->expects($this->once())->method('findBy')
             ->with($this->equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 

@@ -39,8 +39,8 @@ class YouTubeProviderTest extends AbstractProviderTest
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
-        $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
+        $resizer->expects($this->any())->method('resize')->willReturn(true);
+        $resizer->expects($this->any())->method('getBox')->willReturn(new Box(100, 100));
 
         $adapter = $this->createMock(Adapter::class);
 
@@ -51,7 +51,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
+        $filesystem->expects($this->any())->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -89,11 +89,11 @@ class YouTubeProviderTest extends AbstractProviderTest
     public function testThumbnail(): void
     {
         $response = $this->createMock(AbstractMessage::class);
-        $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
+        $response->expects($this->once())->method('getContent')->willReturn('content');
 
         $browser = $this->createMock(Browser::class);
 
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $browser->expects($this->once())->method('get')->willReturn($response);
 
         $provider = $this->getProvider($browser);
 
@@ -122,7 +122,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
 
         $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $browser->expects($this->once())->method('get')->willReturn($response);
 
         $provider = $this->getProvider($browser);
 
@@ -149,7 +149,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
 
         $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $browser->expects($this->once())->method('get')->willReturn($response);
 
         $provider = $this->getProvider($browser);
 
@@ -191,7 +191,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $admin = $this->createMock(AdminInterface::class);
         $admin->expects($this->any())
             ->method('trans')
-            ->will($this->returnValue('message'));
+            ->willReturn('message');
 
         $formMapper = $this->getMockBuilder(FormMapper::class)
             ->setMethods(['add', 'getAdmin'])
@@ -199,7 +199,7 @@ class YouTubeProviderTest extends AbstractProviderTest
             ->getMock();
         $formMapper->expects($this->exactly(8))
             ->method('add')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $provider->buildCreateForm($formMapper);
 

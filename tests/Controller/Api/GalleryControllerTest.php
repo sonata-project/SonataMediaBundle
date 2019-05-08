@@ -35,7 +35,7 @@ class GalleryControllerTest extends TestCase
         $mediaManager = $this->createMock(MediaManagerInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $galleryManager->expects($this->once())->method('getPager')->will($this->returnValue([]));
+        $galleryManager->expects($this->once())->method('getPager')->willReturn([]);
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
@@ -44,11 +44,11 @@ class GalleryControllerTest extends TestCase
         $paramFetcher
             ->expects($this->once())
             ->method('all')
-            ->will($this->returnValue([
+            ->willReturn([
                 'page' => 1,
                 'count' => 10,
                 'orderBy' => ['id' => 'ASC'],
-            ]));
+            ]);
 
         $this->assertSame([], $gController->getGalleriesAction($paramFetcher));
     }
@@ -60,7 +60,7 @@ class GalleryControllerTest extends TestCase
         $gallery = $this->createMock(GalleryInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
+        $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
@@ -91,9 +91,9 @@ class GalleryControllerTest extends TestCase
         $gallery = $this->createMock(GalleryInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
+        $gallery->expects($this->once())->method('getGalleryItems')->willReturn([$galleryItem]);
 
-        $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
+        $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
         $mediaManager = $this->createMock(MediaManagerInterface::class);
 
@@ -111,9 +111,9 @@ class GalleryControllerTest extends TestCase
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $mediaManager = $this->createMock(MediaManagerInterface::class);
 
-        $galleryItem->expects($this->once())->method('getMedia')->will($this->returnValue($media));
-        $gallery->expects($this->once())->method('getGalleryItems')->will($this->returnValue([$galleryItem]));
-        $galleryManager->expects($this->once())->method('findOneBy')->will($this->returnValue($gallery));
+        $galleryItem->expects($this->once())->method('getMedia')->willReturn($media);
+        $gallery->expects($this->once())->method('getGalleryItems')->willReturn([$galleryItem]);
+        $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 

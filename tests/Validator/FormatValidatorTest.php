@@ -28,8 +28,8 @@ class FormatValidatorTest extends TestCase
         $pool->addContext('test', [], ['format1' => []]);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format1'));
-        $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
+        $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('format1');
+        $gallery->expects($this->once())->method('getContext')->willReturn('test');
 
         $context = $this->createMock(ExecutionContext::class);
         $context->expects($this->never())->method('addViolation');
@@ -46,8 +46,8 @@ class FormatValidatorTest extends TestCase
         $pool->addContext('test', [], ['format1' => []]);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('non_existing_format'));
-        $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
+        $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('non_existing_format');
+        $gallery->expects($this->once())->method('getContext')->willReturn('test');
 
         $context = $this->createMock(ExecutionContext::class);
         $context->expects($this->once())->method('addViolation');
@@ -64,8 +64,8 @@ class FormatValidatorTest extends TestCase
         $pool->addContext('test');
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getDefaultFormat')->will($this->returnValue('format_that_is_not_reference'));
-        $gallery->expects($this->once())->method('getContext')->will($this->returnValue('test'));
+        $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('format_that_is_not_reference');
+        $gallery->expects($this->once())->method('getContext')->willReturn('test');
 
         $context = $this->createMock(ExecutionContext::class);
         $context->expects($this->once())->method('addViolation');

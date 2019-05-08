@@ -22,7 +22,7 @@ class PantherPortalTest extends TestCase
     {
         $client = $this->createMock(ClientSpy::class);
         $client->expects($this->any())->method('flush')
-            ->will($this->returnValue('Flush successfully submitted.'));
+            ->willReturn('Flush successfully submitted.');
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);
@@ -42,7 +42,7 @@ class PantherPortalTest extends TestCase
         $this->expectExceptionMessage('Unable to flush : Failed!!');
 
         $client = $this->createMock(ClientSpy::class);
-        $client->expects($this->exactly(1))->method('flush')->will($this->returnValue('Failed!!'));
+        $client->expects($this->exactly(1))->method('flush')->willReturn('Failed!!');
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);
