@@ -44,7 +44,7 @@ class SquareResizerTest extends TestCase
         $adapter = $this->createMock(ImagineInterface::class);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->once())->method('getBox')->will($this->returnValue($mediaSize));
+        $media->expects($this->once())->method('getBox')->willReturn($mediaSize);
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 

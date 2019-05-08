@@ -42,14 +42,14 @@ class SimpleResizerTest extends TestCase
     public function testResize(): void
     {
         $image = $this->createMock(ImageInterface::class);
-        $image->expects($this->once())->method('thumbnail')->will($this->returnValue($image));
-        $image->expects($this->once())->method('get')->will($this->returnValue(file_get_contents(__DIR__.'/../fixtures/logo.png')));
+        $image->expects($this->once())->method('thumbnail')->willReturn($image);
+        $image->expects($this->once())->method('get')->willReturn(file_get_contents(__DIR__.'/../fixtures/logo.png'));
 
         $adapter = $this->createMock(ImagineInterface::class);
-        $adapter->expects($this->any())->method('load')->will($this->returnValue($image));
+        $adapter->expects($this->any())->method('load')->willReturn($image);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(2))->method('getBox')->will($this->returnValue(new Box(535, 132)));
+        $media->expects($this->exactly(2))->method('getBox')->willReturn(new Box(535, 132));
 
         $filesystem = new Filesystem(new InMemory());
         $in = $filesystem->get('in', true);
@@ -58,7 +58,7 @@ class SimpleResizerTest extends TestCase
         $out = $filesystem->get('out', true);
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
-        $metadata->expects($this->once())->method('get')->will($this->returnValue([]));
+        $metadata->expects($this->once())->method('get')->willReturn([]);
 
         $resizer = new SimpleResizer($adapter, 'outbound', $metadata);
         $resizer->resize($media, $in, $out, 'bar', ['height' => null, 'width' => 90, 'quality' => 100]);
@@ -72,7 +72,7 @@ class SimpleResizerTest extends TestCase
         $adapter = $this->createMock(ImagineInterface::class);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(2))->method('getBox')->will($this->returnValue($mediaSize));
+        $media->expects($this->exactly(2))->method('getBox')->willReturn($mediaSize);
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 

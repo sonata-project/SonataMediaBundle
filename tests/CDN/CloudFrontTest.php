@@ -32,7 +32,7 @@ class CloudFrontTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $client->expects($this->exactly(3))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy()));
+        $client->expects($this->exactly(3))->method('createInvalidation')->willReturn(new CloudFrontResultSpy());
 
         $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
@@ -62,7 +62,7 @@ class CloudFrontTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $client->expects($this->exactly(1))->method('createInvalidation')->will($this->returnValue(new CloudFrontResultSpy(true)));
+        $client->expects($this->exactly(1))->method('createInvalidation')->willReturn(new CloudFrontResultSpy(true));
         $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
             ->setMethods(null)
