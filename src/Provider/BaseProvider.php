@@ -64,6 +64,11 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $name;
 
     /**
+     * @var array
+     */
+    protected $clones = [];
+
+    /**
      * @param string             $name
      * @param Filesystem         $filesystem
      * @param CDNInterface       $cdn
@@ -188,6 +193,9 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function preRemove(MediaInterface $media)
     {
+        $hash = spl_object_hash($media);
+        $this->clones[$hash] = clone $media;
+
         if ($this->requireThumbnails()) {
             $this->thumbnail->delete($this, $media);
         }
@@ -198,6 +206,13 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     public function postRemove(MediaInterface $media)
     {
+        $hash = spl_object_hash($media);
+
+        if (array_key_exists($hash, $this->clones)) {
+            $media = $this->clones[$hash];
+            unset($this->clones[$hash]);
+        }
+
         $path = $this->getReferenceImage($media);
 
         if ($this->getFilesystem()->has($path)) {
