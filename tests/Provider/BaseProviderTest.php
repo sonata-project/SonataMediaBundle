@@ -96,6 +96,14 @@ class BaseProviderTest extends AbstractProviderTest
         $this->assertSame('fa fa-file', $provider->getProviderMetadata()->getOption('class'));
         $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
+
+    public function testPostRemove(): void
+    {
+        $provider = $this->getProvider();
+        $media = new Media();
+        $provider->preRemove($media);
+        $provider->postRemove($media);
+    }
 }
 
 class TestProvider extends BaseProvider
@@ -193,7 +201,8 @@ class TestProvider extends BaseProvider
      */
     public function postRemove(MediaInterface $media): void
     {
-        // TODO: Implement postRemove() method.
+        $hash = spl_object_hash($media);
+        AbstractProviderTest::assertArrayHasKey($hash, $this->clones);
     }
 
     /**
