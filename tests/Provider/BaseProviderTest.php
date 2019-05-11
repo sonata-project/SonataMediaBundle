@@ -159,9 +159,9 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getReferenceImage(MediaInterface $media): void
+    public function getReferenceImage(MediaInterface $media)
     {
-        // TODO: Implement getReferenceImage() method.
+        return '/any/image/path.ext';
     }
 
     /**
@@ -203,6 +203,8 @@ class TestProvider extends BaseProvider
     {
         $hash = spl_object_hash($media);
         AbstractProviderTest::assertArrayHasKey($hash, $this->clones);
+        parent::postRemove($media);
+        AbstractProviderTest::assertArrayNotHasKey($hash, $this->clones);
     }
 
     /**
