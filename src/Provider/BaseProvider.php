@@ -66,7 +66,7 @@ abstract class BaseProvider implements MediaProviderInterface
     /**
      * @var array
      */
-    protected $clones = [];
+    private $clones = [];
 
     /**
      * @param string             $name
