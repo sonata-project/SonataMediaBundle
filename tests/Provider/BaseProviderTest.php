@@ -201,10 +201,16 @@ class TestProvider extends BaseProvider
      */
     public function postRemove(MediaInterface $media): void
     {
+        $reflect = new \ReflectionClass(BaseProvider::class);
+        $prop = $reflect->getProperty('clones');
+        $prop->setAccessible(true);
+
         $hash = spl_object_hash($media);
-        AbstractProviderTest::assertArrayHasKey($hash, $this->clones);
+        AbstractProviderTest::assertArrayHasKey($hash, $prop->getValue($this));
         parent::postRemove($media);
-        AbstractProviderTest::assertArrayNotHasKey($hash, $this->clones);
+        AbstractProviderTest::assertArrayNotHasKey($hash, $prop->getValue($this));
+
+        $prop->setAccessible(false);
     }
 
     /**
