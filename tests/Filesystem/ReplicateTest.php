@@ -25,27 +25,27 @@ class ReplicateTest extends TestCase
         $slave = $this->createMock(Adapter::class);
         $replicate = new Replicate($master, $slave);
 
-        $master->expects($this->once())->method('mtime')->will($this->returnValue('master'));
+        $master->expects($this->once())->method('mtime')->willReturn('master');
         $slave->expects($this->never())->method('mtime');
         $this->assertSame('master', $replicate->mtime('foo'));
 
-        $master->expects($this->once())->method('delete')->will($this->returnValue('master'));
-        $slave->expects($this->once())->method('delete')->will($this->returnValue('master'));
+        $master->expects($this->once())->method('delete')->willReturn('master');
+        $slave->expects($this->once())->method('delete')->willReturn('master');
         $replicate->delete('foo');
 
-        $master->expects($this->once())->method('keys')->will($this->returnValue([]));
-        $slave->expects($this->never())->method('keys')->will($this->returnValue([]));
+        $master->expects($this->once())->method('keys')->willReturn([]);
+        $slave->expects($this->never())->method('keys')->willReturn([]);
         $this->assertInternalType('array', $replicate->keys());
 
-        $master->expects($this->once())->method('exists')->will($this->returnValue(true));
+        $master->expects($this->once())->method('exists')->willReturn(true);
         $slave->expects($this->never())->method('exists');
         $this->assertTrue($replicate->exists('foo'));
 
-        $master->expects($this->once())->method('write')->will($this->returnValue(123));
-        $slave->expects($this->once())->method('write')->will($this->returnValue(123));
+        $master->expects($this->once())->method('write')->willReturn(123);
+        $slave->expects($this->once())->method('write')->willReturn(123);
         $this->assertTrue($replicate->write('foo', 'contents'));
 
-        $master->expects($this->once())->method('read')->will($this->returnValue('master content'));
+        $master->expects($this->once())->method('read')->willReturn('master content');
         $slave->expects($this->never())->method('read');
         $this->assertSame('master content', $replicate->read('foo'));
 

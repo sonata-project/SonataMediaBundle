@@ -77,7 +77,7 @@ class MediaManagerTest extends TestCase
 
         $dm->expects($this->any())->method('persist');
         $dm->expects($this->any())->method('flush');
-        $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($dm));
+        $registry->expects($this->any())->method('getManagerForClass')->willReturn($dm);
 
         return $registry;
     }

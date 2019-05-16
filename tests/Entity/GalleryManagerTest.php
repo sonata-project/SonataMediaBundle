@@ -28,7 +28,7 @@ class GalleryManagerTest extends TestCase
     {
         $this
             ->getGalleryManager(function ($qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->never())->method('andWhere');
                 $qb->expects($this->once())->method('orderBy')->with(
                     $this->equalTo('g.name'),
@@ -54,7 +54,7 @@ class GalleryManagerTest extends TestCase
     {
         $this
             ->getGalleryManager(function ($qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->never())->method('andWhere');
                 $qb->expects($this->exactly(2))->method('orderBy')->with(
                     $this->logicalOr(
@@ -78,7 +78,7 @@ class GalleryManagerTest extends TestCase
     {
         $this
             ->getGalleryManager(function ($qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
                 $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => true]));
             })
@@ -89,7 +89,7 @@ class GalleryManagerTest extends TestCase
     {
         $this
             ->getGalleryManager(function ($qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->will($this->returnValue(['g']));
+                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
                 $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => false]));
             })
@@ -105,7 +105,7 @@ class GalleryManagerTest extends TestCase
         ]);
 
         $registry = $this->createMock(ManagerRegistry::class);
-        $registry->expects($this->any())->method('getManagerForClass')->will($this->returnValue($em));
+        $registry->expects($this->any())->method('getManagerForClass')->willReturn($em);
 
         return new GalleryManager(BaseGallery::class, $registry);
     }

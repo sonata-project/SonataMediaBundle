@@ -29,7 +29,7 @@ class ApiMediaTypeTest extends AbstractTypeTest
         $provider = $this->createMock(MediaProviderInterface::class);
 
         $mediaPool = $this->createMock(Pool::class);
-        $mediaPool->expects($this->once())->method('getProvider')->will($this->returnValue($provider));
+        $mediaPool->expects($this->once())->method('getProvider')->willReturn($provider);
 
         $type = new ApiMediaType($mediaPool, 'testclass');
 

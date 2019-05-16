@@ -33,12 +33,12 @@ class ProxyMetadataBuilderTest extends TestCase
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(['key' => 'amazon']));
+            ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(['key' => 'noop']));
+            ->willReturn(['key' => 'noop']);
 
         //adapter cannot be mocked
         $amazonclient = S3Client::factory([
@@ -51,15 +51,15 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new AwsS3($amazonclient, '');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
+        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
+        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
-            ->will($this->returnValue('sonata.media.provider.image'));
+            ->willReturn('sonata.media.provider.image');
 
         $filename = '/test/folder/testfile.png';
 
@@ -79,26 +79,26 @@ class ProxyMetadataBuilderTest extends TestCase
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(['key' => 'amazon']));
+            ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(['key' => 'noop']));
+            ->willReturn(['key' => 'noop']);
 
         //adapter cannot be mocked
         $adapter = new Local('');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
+        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
+        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
-            ->will($this->returnValue('sonata.media.provider.image'));
+            ->willReturn('sonata.media.provider.image');
 
         $filename = '/test/folder/testfile.png';
 
@@ -118,26 +118,26 @@ class ProxyMetadataBuilderTest extends TestCase
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(['key' => 'amazon']));
+            ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(['key' => 'noop']));
+            ->willReturn(['key' => 'noop']);
 
         //adapter cannot be mocked
         $adapter = new Local('');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
+        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
+        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
-            ->will($this->returnValue('wrongprovider'));
+            ->willReturn('wrongprovider');
 
         $filename = '/test/folder/testfile.png';
 
@@ -157,12 +157,12 @@ class ProxyMetadataBuilderTest extends TestCase
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(['key' => 'amazon']));
+            ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(['key' => 'noop']));
+            ->willReturn(['key' => 'noop']);
 
         //adapter cannot be mocked
         $amazonclient = S3Client::factory([
@@ -177,15 +177,15 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Replicate($adapter1, $adapter2);
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
+        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
+        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
-            ->will($this->returnValue('sonata.media.provider.image'));
+            ->willReturn('sonata.media.provider.image');
 
         $filename = '/test/folder/testfile.png';
 
@@ -205,12 +205,12 @@ class ProxyMetadataBuilderTest extends TestCase
         $amazon = $this->createMock(AmazonMetadataBuilder::class);
         $amazon->expects($this->never())
             ->method('get')
-            ->will($this->returnValue(['key' => 'amazon']));
+            ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(NoopMetadataBuilder::class);
         $noop->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(['key' => 'noop']));
+            ->willReturn(['key' => 'noop']);
 
         //adapter cannot be mocked
         $adapter1 = new Local('');
@@ -218,15 +218,15 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Replicate($adapter1, $adapter2);
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->will($this->returnValue($adapter));
+        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->will($this->returnValue($filesystem));
+        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->any())
             ->method('getProviderName')
-            ->will($this->returnValue('sonata.media.provider.image'));
+            ->willReturn('sonata.media.provider.image');
 
         $filename = '/test/folder/testfile.png';
 
@@ -254,20 +254,20 @@ class ProxyMetadataBuilderTest extends TestCase
         $container
             ->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(static function ($service) use ($services) {
+            ->willReturnCallback(static function ($service) use ($services) {
                 return $services[$service];
-            }))
+            })
         ;
         $container
             ->expects($this->any())
             ->method('has')
-            ->will($this->returnCallback(static function ($service) use ($services) {
+            ->willReturnCallback(static function ($service) use ($services) {
                 if (isset($services[$service])) {
                     return true;
                 }
 
                 return false;
-            }))
+            })
         ;
 
         return $container;

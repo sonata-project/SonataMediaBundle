@@ -38,19 +38,19 @@ class FormatThumbnailTest extends TestCase
         ];
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->exactly(2))->method('resize')->will($this->returnValue(true));
+        $resizer->expects($this->exactly(2))->method('resize')->willReturn(true);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->once())->method('requireThumbnails')->will($this->returnValue(true));
-        $provider->expects($this->once())->method('getReferenceFile')->will($this->returnValue($referenceFile));
-        $provider->expects($this->once())->method('getFormats')->will($this->returnValue($formats));
-        $provider->expects($this->exactly(2))->method('getResizer')->will($this->returnValue($resizer));
-        $provider->expects($this->exactly(2))->method('generatePrivateUrl')->will($this->returnValue('/my/private/path'));
-        $provider->expects($this->exactly(2))->method('getFilesystem')->will($this->returnValue($filesystem));
+        $provider->expects($this->once())->method('requireThumbnails')->willReturn(true);
+        $provider->expects($this->once())->method('getReferenceFile')->willReturn($referenceFile);
+        $provider->expects($this->once())->method('getFormats')->willReturn($formats);
+        $provider->expects($this->exactly(2))->method('getResizer')->willReturn($resizer);
+        $provider->expects($this->exactly(2))->method('generatePrivateUrl')->willReturn('/my/private/path');
+        $provider->expects($this->exactly(2))->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(6))->method('getContext')->will($this->returnValue('mycontext'));
-        $media->expects($this->exactly(2))->method('getExtension')->will($this->returnValue('png'));
+        $media->expects($this->exactly(6))->method('getContext')->willReturn('mycontext');
+        $media->expects($this->exactly(2))->method('getExtension')->willReturn('png');
 
         $thumbnail->generate($provider, $media);
     }

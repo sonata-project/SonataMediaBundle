@@ -84,14 +84,14 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $this->container->expects($this->any())
             ->method('get')
-            ->will($this->returnCallback(function ($id) {
+            ->willReturnCallback(function ($id) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $this->pool;
                     case 'sonata.media.manager.media':
                         return $this->mediaManager;
                 }
-            }));
+            });
     }
 
     public function testExecuteWithoutArguments(): void
@@ -114,25 +114,25 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $fileProvider->expects($this->any())
             ->method('getName')
-            ->will($this->returnValue('fooprovider'));
+            ->willReturn('fooprovider');
         $fileProvider->expects($this->once())
             ->method('getFormats')
-            ->will($this->returnValue($formats));
+            ->willReturn($formats);
         $fileProvider->expects($this->exactly(2))
             ->method('removeThumbnails');
         $fileProvider->expects($this->exactly(2))
             ->method('getFilesystem')
-            ->will($this->returnValue($this->createMock(Filesystem::class)));
+            ->willReturn($this->createMock(Filesystem::class));
 
         $this->pool->expects($this->once())
             ->method('getContexts')
-            ->will($this->returnValue(['foo' => $context]));
+            ->willReturn(['foo' => $context]);
         $this->pool->expects($this->once())
             ->method('getProviders')
-            ->will($this->returnValue(['fooprovider' => $fileProvider]));
+            ->willReturn(['fooprovider' => $fileProvider]);
         $this->pool->expects($this->once())
             ->method('getProvider')
-            ->will($this->returnValue($fileProvider));
+            ->willReturn($fileProvider);
 
         $medias = [];
 
@@ -161,7 +161,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $this->mediaManager->expects($this->exactly(2))
             ->method('findBy')
-            ->will($this->returnCallback($findByReturnCallback));
+            ->willReturnCallback($findByReturnCallback);
 
         $this->tester->setInputs(['fooprovider', 'foo', 'small']);
 

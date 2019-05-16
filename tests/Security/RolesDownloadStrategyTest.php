@@ -31,9 +31,9 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnCallback(static function (array $roles) {
+            ->willReturnCallback(static function (array $roles) {
                 return \in_array('ROLE_ADMIN', $roles, true);
-            }));
+            });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
         $this->assertTrue($strategy->isGranted($media, $request));
@@ -48,9 +48,9 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnCallback(static function (array $roles) {
+            ->willReturnCallback(static function (array $roles) {
                 return \in_array('FOO', $roles, true);
-            }));
+            });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
         $this->assertFalse($strategy->isGranted($media, $request));
