@@ -37,10 +37,10 @@ class FileProviderTest extends AbstractProviderTest
     public function getProvider()
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
+        $resizer->expects($this->any())->method('resize')->willReturn(true);
 
         $adapter = $this->createMock(Local::class);
-        $adapter->expects($this->any())->method('getDirectory')->will($this->returnValue(realpath(__DIR__).'/../fixtures'));
+        $adapter->expects($this->any())->method('getDirectory')->willReturn(realpath(__DIR__).'/../fixtures');
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->setMethods(['get'])
@@ -49,7 +49,7 @@ class FileProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(GaufretteFile::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
+        $filesystem->expects($this->any())->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -107,7 +107,7 @@ class FileProviderTest extends AbstractProviderTest
         $admin = $this->createMock(AdminInterface::class);
         $admin->expects($this->any())
             ->method('trans')
-            ->will($this->returnValue('message'));
+            ->willReturn('message');
 
         $formMapper = $this->getMockBuilder(FormMapper::class)
             ->setMethods(['add', 'getAdmin'])
@@ -115,7 +115,7 @@ class FileProviderTest extends AbstractProviderTest
             ->getMock();
         $formMapper->expects($this->exactly(8))
             ->method('add')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $provider->buildCreateForm($formMapper);
         $provider->buildEditForm($formMapper);
@@ -339,24 +339,24 @@ class FileProviderTest extends AbstractProviderTest
             ->disableOriginalConstructor()
             ->getMock();
         $errorElement->expects($this->once())->method('with')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->once())->method('addViolation')
             ->with($this->stringContains('The file is too big, max size:'))
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->once())->method('end')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')
-            ->will($this->returnValue(0));
+            ->willReturn(0);
         $upload->expects($this->any())->method('getFilename')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getClientOriginalName')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getMimeType')
-            ->will($this->returnValue('foo/bar'));
+            ->willReturn('foo/bar');
 
         $media = new Media();
         $media->setBinaryContent($upload);
@@ -369,24 +369,24 @@ class FileProviderTest extends AbstractProviderTest
     {
         $errorElement = $this->createMock(ErrorElement::class);
         $errorElement->expects($this->once())->method('with')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->once())->method('addViolation')
             ->with($this->stringContains('The file is too big, max size:'))
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->once())->method('end')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
         $upload->expects($this->any())->method('getFilename')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getClientOriginalName')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getMimeType')
-            ->will($this->returnValue('foo/bar'));
+            ->willReturn('foo/bar');
 
         $media = new Media();
         $media->setBinaryContent($upload);
@@ -399,24 +399,24 @@ class FileProviderTest extends AbstractProviderTest
     {
         $errorElement = $this->createMock(ErrorElement::class);
         $errorElement->expects($this->never())->method('with')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->never())->method('addViolation')
             ->with($this->stringContains('The file is too big, max size:'))
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->never())->method('end')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
         $upload->expects($this->any())->method('getFilename')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getClientOriginalName')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getMimeType')
-            ->will($this->returnValue('foo/bar'));
+            ->willReturn('foo/bar');
 
         $media = new Media();
         $media->setBinaryContent($upload);
@@ -431,24 +431,24 @@ class FileProviderTest extends AbstractProviderTest
             ->disableOriginalConstructor()
             ->getMock();
         $errorElement->expects($this->once())->method('with')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->once())->method('addViolation')
             ->with('Invalid mime type : %type%', ['%type%' => 'bar/baz'])
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $errorElement->expects($this->once())->method('end')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
         $upload->expects($this->any())->method('getClientSize')
-            ->will($this->returnValue(23));
+            ->willReturn(23);
         $upload->expects($this->any())->method('getFilename')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getClientOriginalName')
-            ->will($this->returnValue('test.txt'));
+            ->willReturn('test.txt');
         $upload->expects($this->any())->method('getMimeType')
-            ->will($this->returnValue('bar/baz'));
+            ->willReturn('bar/baz');
 
         $media = new Media();
         $media->setBinaryContent($upload);

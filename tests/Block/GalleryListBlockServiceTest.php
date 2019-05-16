@@ -45,7 +45,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
     public function testExecute(): void
     {
         $pager = $this->createMock(PagerInterface::class);
-        $this->galleryManager->expects($this->once())->method('getPager')->will($this->returnValue($pager));
+        $this->galleryManager->expects($this->once())->method('getPager')->willReturn($pager);
 
         $block = new Block();
 
