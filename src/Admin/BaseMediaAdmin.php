@@ -91,6 +91,12 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $this->getRequest()->query->set('provider', $provider);
         }
 
+        // if there is a post server error, provider is not posted and in case of
+        // multiple providers, it has to be persistent to not being lost
+        if (1 < \count($providers) && null !== $provider) {
+            $parameters['provider'] = $provider;
+        }
+
         $categoryId = $this->getRequest()->get('category');
 
         if (null !== $this->categoryManager && !$categoryId) {

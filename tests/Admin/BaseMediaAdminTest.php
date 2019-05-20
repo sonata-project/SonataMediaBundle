@@ -79,7 +79,32 @@ class BaseMediaAdminTest extends TestCase
         $this->assertSame($media->reveal(), $this->mediaAdmin->getNewInstance());
     }
 
-    private function configureGetPersistentParameters(): void
+    public function testGetPersistentParametersWithMultipleProvidersInContext()
+    {
+        $category = $this->prophesize();
+        $category->willExtend(EntityWithGetId::class);
+        $category->willImplement(CategoryInterface::class);
+        $category->getId()->willReturn(1);
+        $this->categoryManager->getRootCategory('context')->willReturn($category->reveal());
+        $this->request->isMethod('POST')->willReturn(true);
+        $this->request->get('filter')->willReturn([]);
+        $this->request->get('context', 'default_context')->willReturn('context');
+        $this->request->get('provider')->willReturn('providerName');
+        $this->request->get('category')->willReturn(null);
+        $this->request->get('hide_context')->willReturn(true);
+        $provider = $this->prophesize(MediaProviderInterface::class);
+        $this->pool->getDefaultContext()->willReturn('default_context');
+        $this->pool->getProvidersByContext('context')->willReturn([$provider->reveal(), $provider->reveal()]);
+        $this->assertSame(
+            [
+                'provider' => 'providerName',
+                'context' => 'context',
+                'category' => 1,
+                'hide_context' => true,
+            ], $this->mediaAdmin->getPersistentParameters());
+    }
+
+    private function configureGetPersistentParameters()
     {
         $provider = $this->prophesize(MediaProviderInterface::class);
         $category = $this->prophesize();
@@ -87,6 +112,7 @@ class BaseMediaAdminTest extends TestCase
         $category->willImplement(CategoryInterface::class);
         $query = $this->prophesize(ParameterBag::class);
         $this->request->query = $query->reveal();
+        $query->set('provider', null)->shouldBeCalled();
 
         $this->pool->getDefaultContext()->willReturn('default_context');
         $this->pool->getProvidersByContext('context')->willReturn([$provider->reveal()]);

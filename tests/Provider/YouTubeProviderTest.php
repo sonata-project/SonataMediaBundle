@@ -184,6 +184,32 @@ class YouTubeProviderTest extends AbstractProviderTest
         ];
     }
 
+    public function testGetMetadataException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to retrieve the video information for :BDYAbAtaDzA');
+        $this->expectExceptionCode(12);
+
+        $response = new Response();
+        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
+
+        $browser = $this->createMock(Browser::class);
+        $browser->expects($this->once())->method('get')->will($this->throwException(new \RuntimeException('First error on get', 12)));
+
+        $provider = $this->getProvider($browser);
+
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+
+        $media = new Media();
+        $media->setBinaryContent('BDYAbAtaDzA');
+        $media->setId(1023456);
+
+        $method = new \ReflectionMethod($provider, 'getMetadata');
+        $method->setAccessible(true);
+
+        $method->invokeArgs($provider, [$media, 'BDYAbAtaDzA']);
+    }
+
     public function testForm(): void
     {
         $provider = $this->getProvider();
