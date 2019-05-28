@@ -19,7 +19,7 @@ namespace Sonata\MediaBundle\Model;
  */
 interface GalleryMediaCollectionInterface
 {
-    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia);
+    public function addGalleryHasMedia(GalleryItemInterface $galleryItem);
 
-    public function removeGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia);
+    public function removeGalleryHasMedia(GalleryItemInterface $galleryItem);
 }
