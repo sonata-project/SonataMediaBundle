@@ -6,15 +6,15 @@
         <parameter key="sonata.media.admin.groupicon"><![CDATA[<i class='fa fa-image'></i>]]></parameter>
         <!-- MEDIA -->
         <parameter key="sonata.media.admin.media.class">Sonata\MediaBundle\Admin\ODM\MediaAdmin</parameter>
-        <parameter key="sonata.media.admin.media.controller">SonataMediaBundle:MediaAdmin</parameter>
+        <parameter key="sonata.media.admin.media.controller">Sonata\MediaBundle\Controller\MediaAdminController</parameter>
         <parameter key="sonata.media.admin.media.translation_domain">SonataMediaBundle</parameter>
         <!-- GALLERY -->
         <parameter key="sonata.media.admin.gallery.class">Sonata\MediaBundle\Admin\GalleryAdmin</parameter>
-        <parameter key="sonata.media.admin.gallery.controller">SonataMediaBundle:GalleryAdmin</parameter>
+        <parameter key="sonata.media.admin.gallery.controller">Sonata\MediaBundle\Controller\GalleryAdminController</parameter>
         <parameter key="sonata.media.admin.gallery.translation_domain">%sonata.media.admin.media.translation_domain%</parameter>
         <!-- GALLERY HAS MEDIA -->
         <parameter key="sonata.media.admin.gallery_has_media.class">Sonata\MediaBundle\Admin\GalleryHasMediaAdmin</parameter>
-        <parameter key="sonata.media.admin.gallery_has_media.controller">SonataAdminBundle:CRUD</parameter>
+        <parameter key="sonata.media.admin.gallery_has_media.controller">Sonata\AdminBundle\Controller\CRUDController</parameter>
         <parameter key="sonata.media.admin.gallery_has_media.translation_domain">%sonata.media.admin.media.translation_domain%</parameter>
     </parameters>
     <services>
