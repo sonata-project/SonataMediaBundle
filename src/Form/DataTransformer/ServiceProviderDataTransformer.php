@@ -29,9 +29,6 @@ class ServiceProviderDataTransformer implements DataTransformerInterface, Logger
      */
     protected $provider;
 
-    /**
-     * @param MediaProviderInterface $provider
-     */
     public function __construct(MediaProviderInterface $provider)
     {
         $this->provider = $provider;

@@ -646,8 +646,6 @@ abstract class Media implements MediaInterface
 
     /**
      * NEXT_MAJOR: Remove this method when bumping Symfony requirement to 2.8+.
-     *
-     * @param ClassMetadata $metadata
      */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {

@@ -52,7 +52,6 @@ interface CDNInterface
     /**
      * Flush a set of resources matching the paths in provided array.
      *
-     * @param array $paths
      *
      * @return void|string
      */

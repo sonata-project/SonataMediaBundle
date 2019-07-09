@@ -43,15 +43,11 @@ interface CategoryManagerInterface
     public function find($categoryId);
 
     /**
-     * @param array $criteria
-     *
      * @return CategoryInterface[]
      */
     public function findBy(array $criteria);
 
     /**
-     * @param array $criteria
-     *
      * @return CategoryInterface|null
      */
     public function findOneBy(array $criteria);
