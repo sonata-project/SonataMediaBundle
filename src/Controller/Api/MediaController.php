@@ -57,10 +57,6 @@ class MediaController
 
     /**
      * Constructor.
-     *
-     * @param MediaManagerInterface $mediaManager
-     * @param Pool                  $mediaPool
-     * @param FormFactoryInterface  $formFactory
      */
     public function __construct(MediaManagerInterface $mediaManager, Pool $mediaPool, FormFactoryInterface $formFactory)
     {
@@ -83,8 +79,6 @@ class MediaController
      * @QueryParam(name="orderBy", map=true, requirements="ASC|DESC", nullable=true, strict=true, description="Order by array (key is field, value is direction)")
      *
      * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
-     *
-     * @param ParamFetcherInterface $paramFetcher
      *
      * @return PagerInterface
      */
@@ -188,9 +182,8 @@ class MediaController
      *  }
      * )
      *
-     * @param int     $id      The media id
-     * @param string  $format  The format
-     * @param Request $request
+     * @param int    $id     The media id
+     * @param string $format The format
      *
      * @return Response
      */
@@ -373,9 +366,6 @@ class MediaController
     /**
      * Write a medium, this method is used by both POST and PUT action methods.
      *
-     * @param Request                $request
-     * @param MediaInterface         $media
-     * @param MediaProviderInterface $provider
      *
      * @return View|FormInterface
      */

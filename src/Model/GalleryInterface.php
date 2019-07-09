@@ -62,8 +62,6 @@ interface GalleryInterface
 
     /**
      * Set updated_at.
-     *
-     * @param \DateTime|null $updatedAt
      */
     public function setUpdatedAt(\DateTime $updatedAt = null);
 
@@ -76,8 +74,6 @@ interface GalleryInterface
 
     /**
      * Set created_at.
-     *
-     * @param \DateTime|null $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt = null);
 
@@ -109,8 +105,6 @@ interface GalleryInterface
     public function getGalleryHasMedias();
 
     /**
-     * @param GalleryHasMediaInterface $galleryHasMedia
-     *
      * @deprecated implement addGalleryHasMedia method instead, it will be provided with the next major release
      * NEXT_MAJOR: remove this method
      */

@@ -46,9 +46,6 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
     ];
 
-    /**
-     * @param array $settings
-     */
     public function __construct(array $settings)
     {
         $this->settings = $settings;

@@ -31,11 +31,6 @@ class YouTubeProvider extends BaseVideoProvider
 
     /**
      * @param string                   $name
-     * @param Filesystem               $filesystem
-     * @param CDNInterface             $cdn
-     * @param GeneratorInterface       $pathGenerator
-     * @param ThumbnailInterface       $thumbnail
-     * @param Browser                  $browser
      * @param MetadataBuilderInterface $metadata
      * @param bool                     $html5
      */
@@ -243,7 +238,6 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * Get provider reference url.
      *
-     * @param MediaInterface $media
      *
      * @return string
      */
@@ -252,9 +246,6 @@ class YouTubeProvider extends BaseVideoProvider
         return sprintf('https://www.youtube.com/watch?v=%s', $media->getProviderReference());
     }
 
-    /**
-     * @param MediaInterface $media
-     */
     protected function fixBinaryContent(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {

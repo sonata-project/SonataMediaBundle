@@ -25,8 +25,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MediaController extends Controller
 {
     /**
-     * @param MediaInterface $media
-     *
      * @return MediaProviderInterface
      */
     public function getProvider(MediaInterface $media)

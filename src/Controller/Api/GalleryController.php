@@ -59,10 +59,7 @@ class GalleryController
     /**
      * Constructor.
      *
-     * @param GalleryManagerInterface $galleryManager
-     * @param MediaManagerInterface   $mediaManager
-     * @param FormFactoryInterface    $formFactory
-     * @param string                  $galleryHasMediaClass
+     * @param string $galleryHasMediaClass
      */
     public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryHasMediaClass)
     {
@@ -86,8 +83,6 @@ class GalleryController
      * @QueryParam(name="orderBy", map=true, requirements="ASC|DESC", nullable=true, strict=true, description="Order by array (key is field, value is direction)")
      *
      * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
-     *
-     * @param ParamFetcherInterface $paramFetcher
      *
      * @return PagerInterface
      */
@@ -401,10 +396,7 @@ class GalleryController
     /**
      * Write a GalleryHasMedia, this method is used by both POST and PUT action methods.
      *
-     * @param GalleryInterface         $gallery
-     * @param MediaInterface           $media
      * @param GalleryHasMediaInterface $galleryHasMedia
-     * @param Request                  $request
      *
      * @return FormInterface
      */

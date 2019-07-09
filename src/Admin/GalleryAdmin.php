@@ -34,7 +34,6 @@ class GalleryAdmin extends AbstractAdmin
      * @param string $code
      * @param string $class
      * @param string $baseControllerName
-     * @param Pool   $pool
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
     {

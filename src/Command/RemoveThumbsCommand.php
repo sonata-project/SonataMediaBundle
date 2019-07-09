@@ -173,8 +173,7 @@ class RemoveThumbsCommand extends BaseCommand
     }
 
     /**
-     * @param MediaProviderInterface $provider
-     * @param string                 $context
+     * @param string $context
      *
      * @return string
      */
@@ -203,10 +202,8 @@ class RemoveThumbsCommand extends BaseCommand
     }
 
     /**
-     * @param MediaInterface         $media
-     * @param MediaProviderInterface $provider
-     * @param string                 $context
-     * @param string                 $format
+     * @param string $context
+     * @param string $format
      *
      * @return bool
      */

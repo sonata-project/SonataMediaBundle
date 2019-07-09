@@ -38,11 +38,6 @@ class CreateThumbnailConsumer implements ConsumerInterface
      */
     protected $container;
 
-    /**
-     * @param ManagerInterface   $mediaManager
-     * @param Pool               $pool
-     * @param ContainerInterface $container
-     */
     public function __construct(ManagerInterface $mediaManager, Pool $pool, ContainerInterface $container)
     {
         $this->mediaManager = $mediaManager;
@@ -78,8 +73,6 @@ class CreateThumbnailConsumer implements ConsumerInterface
     }
 
     /**
-     * @param ConsumerEvent $event
-     *
      * @return ThumbnailInterface
      */
     protected function getThumbnail(ConsumerEvent $event)

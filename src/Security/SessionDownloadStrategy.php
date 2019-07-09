@@ -53,7 +53,6 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     private $session;
 
     /**
-     * @param TranslatorInterface                 $translator
      * @param ContainerInterface|SessionInterface $session
      * @param int                                 $times
      */
