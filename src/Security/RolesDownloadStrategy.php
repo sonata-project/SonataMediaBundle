@@ -38,7 +38,6 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     protected $translator;
 
     /**
-     * @param TranslatorInterface                                    $translator
      * @param AuthorizationCheckerInterface|SecurityContextInterface $security
      * @param string[]                                               $roles
      */

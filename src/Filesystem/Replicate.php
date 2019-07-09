@@ -36,9 +36,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     protected $logger;
 
     /**
-     * @param \Gaufrette\Adapter $master
-     * @param \Gaufrette\Adapter $slave
-     * @param LoggerInterface    $logger
+     * @param LoggerInterface $logger
      */
     public function __construct(AdapterInterface $master, AdapterInterface $slave, LoggerInterface $logger = null)
     {

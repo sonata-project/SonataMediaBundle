@@ -18,8 +18,6 @@ use Sonata\MediaBundle\Model\MediaInterface;
 interface GeneratorInterface
 {
     /**
-     * @param MediaInterface $media
-     *
      * @return string
      */
     public function generatePath(MediaInterface $media);

@@ -39,10 +39,6 @@ class MediaHelper extends Helper
      */
     protected $templating = null;
 
-    /**
-     * @param Pool            $pool
-     * @param EngineInterface $templating
-     */
     public function __construct(Pool $pool, EngineInterface $templating)
     {
         $this->pool = $pool;
@@ -139,8 +135,6 @@ class MediaHelper extends Helper
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @return MediaProviderInterface
      */
     private function getProvider(MediaInterface $media)

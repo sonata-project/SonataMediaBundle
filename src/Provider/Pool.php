@@ -79,8 +79,7 @@ class Pool
     }
 
     /**
-     * @param string                 $name
-     * @param MediaProviderInterface $instance
+     * @param string $name
      */
     public function addProvider($name, MediaProviderInterface $instance)
     {
@@ -92,8 +91,7 @@ class Pool
      *
      * @deprecated Deprecated since version 3.1, to be removed in 4.0
      *
-     * @param string                    $name
-     * @param DownloadStrategyInterface $security
+     * @param string $name
      */
     public function addDownloadSecurity($name, DownloadStrategyInterface $security)
     {
@@ -108,8 +106,7 @@ class Pool
     }
 
     /**
-     * @param string                    $name
-     * @param DownloadStrategyInterface $security
+     * @param string $name
      */
     public function addDownloadStrategy($name, DownloadStrategyInterface $security)
     {
@@ -134,9 +131,6 @@ class Pool
 
     /**
      * @param string $name
-     * @param array  $providers
-     * @param array  $formats
-     * @param array  $download
      */
     public function addContext($name, array $providers = [], array $formats = [], array $download = [])
     {
@@ -257,8 +251,6 @@ class Pool
      *
      * @deprecated Deprecated since version 3.1, to be removed in 4.0
      *
-     * @param MediaInterface $media
-     *
      * @throws \RuntimeException
      *
      * @return DownloadStrategyInterface
@@ -271,8 +263,6 @@ class Pool
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @throws \RuntimeException
      *
      * @return DownloadStrategyInterface
@@ -296,8 +286,6 @@ class Pool
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @return string
      */
     public function getDownloadMode(MediaInterface $media)
@@ -315,10 +303,6 @@ class Pool
         return $this->defaultContext;
     }
 
-    /**
-     * @param ErrorElement   $errorElement
-     * @param MediaInterface $media
-     */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
         if (!$media->getProviderName()) {
