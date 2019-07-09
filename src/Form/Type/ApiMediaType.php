@@ -41,7 +41,6 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
     protected $class;
 
     /**
-     * @param Pool   $mediaPool
      * @param string $class
      */
     public function __construct(Pool $mediaPool, $class)

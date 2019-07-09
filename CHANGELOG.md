@@ -2,6 +2,25 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.20.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.20.0...3.20.1) - 2019-06-13
+
+### Fixed
+- Value of code to throw RuntimeException when url of video throw an exception
+
+### Changed
+- Updated `_controller` attribute for routes which were using deprecated syntax.
+
+## [3.20.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.19.1...3.20.0) - 2019-05-16
+
+### Added
+- Added compatibility with `jms/serializer-bundle:^3.0`
+- In context settings right now you can add the custom array named `resizer_options`.
+
+### Fixed
+- Fix error 500 when max post size is exceeded on multi providers context
+- Fix file too big message not displayed when
+  `$media->getBinaryContent()->getClientSize()` return `null`
+
 ## [3.19.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.19.0...3.19.1) - 2019-02-23
 
 ### Fixed

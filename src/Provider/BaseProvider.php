@@ -69,11 +69,7 @@ abstract class BaseProvider implements MediaProviderInterface
     private $clones = [];
 
     /**
-     * @param string             $name
-     * @param Filesystem         $filesystem
-     * @param CDNInterface       $cdn
-     * @param GeneratorInterface $pathGenerator
-     * @param ThumbnailInterface $thumbnail
+     * @param string $name
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
     {
@@ -97,9 +93,6 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->flushCdn($media);
     }
 
-    /**
-     * @param MediaInterface $media
-     */
     public function flushCdn(MediaInterface $media)
     {
         if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
@@ -340,8 +333,5 @@ abstract class BaseProvider implements MediaProviderInterface
     {
     }
 
-    /**
-     * @param MediaInterface $media
-     */
     abstract protected function doTransform(MediaInterface $media);
 }

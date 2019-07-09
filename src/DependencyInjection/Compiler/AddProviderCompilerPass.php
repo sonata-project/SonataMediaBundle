@@ -50,7 +50,6 @@ class AddProviderCompilerPass implements CompilerPassInterface
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @param ContainerBuilder $container
      *
      * @return array
      */
@@ -64,9 +63,6 @@ class AddProviderCompilerPass implements CompilerPassInterface
         return $this->getExtensionConfig($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     public function attachProviders(ContainerBuilder $container)
     {
         $pool = $container->getDefinition('sonata.media.pool');
@@ -75,10 +71,6 @@ class AddProviderCompilerPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $settings
-     */
     public function attachArguments(ContainerBuilder $container, array $settings)
     {
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
@@ -103,9 +95,6 @@ class AddProviderCompilerPass implements CompilerPassInterface
 
     /**
      * Define the default settings to the config array.
-     *
-     * @param ContainerBuilder $container
-     * @param array            $settings
      */
     public function applyFormats(ContainerBuilder $container, array $settings)
     {

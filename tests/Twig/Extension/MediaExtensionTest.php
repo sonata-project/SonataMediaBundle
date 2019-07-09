@@ -98,7 +98,7 @@ class MediaExtensionTest extends TestCase
     {
         if (null === $this->provider) {
             $this->provider = $this->createMock(MediaProviderInterface::class);
-            $this->provider->method('getFormatName')->will($this->returnArgument(1));
+            $this->provider->method('getFormatName')->willReturnArgument(1);
         }
 
         return $this->provider;

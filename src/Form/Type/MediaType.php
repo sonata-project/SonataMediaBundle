@@ -44,7 +44,6 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     protected $class;
 
     /**
-     * @param Pool   $pool
      * @param string $class
      */
     public function __construct(Pool $pool, $class)

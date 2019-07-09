@@ -210,10 +210,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $this->configureClassesToCompile();
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
     public function configureProviders(ContainerBuilder $container, array $config)
     {
         $container->getDefinition('sonata.media.provider.image')
@@ -230,10 +226,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(7, $config['providers']['youtube']['html5']);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
     public function configureBuzz(ContainerBuilder $container, array $config)
     {
         $container->getDefinition('sonata.media.buzz.browser')
@@ -252,10 +244,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
     public function configureParameterClass(ContainerBuilder $container, array $config)
     {
         $container->setParameter('sonata.media.admin.media.entity', $config['class']['media']);
@@ -268,9 +256,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $container->getDefinition('sonata.media.form.type.media')->replaceArgument(1, $config['class']['media']);
     }
 
-    /**
-     * @param array $config
-     */
     public function registerDoctrineMapping(array $config)
     {
         $collector = DoctrineCollector::getInstance();
@@ -357,9 +342,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
     /**
      * Inject CDN dependency to default provider.
-     *
-     * @param ContainerBuilder $container
-     * @param array            $config
      */
     public function configureCdnAdapter(ContainerBuilder $container, array $config)
     {
@@ -406,9 +388,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
     /**
      * Inject filesystem dependency to default provider.
-     *
-     * @param ContainerBuilder $container
-     * @param array            $config
      */
     public function configureFilesystemAdapter(ContainerBuilder $container, array $config)
     {
@@ -534,10 +513,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     */
     public function configureExtra(ContainerBuilder $container, array $config)
     {
         if ($config['pixlr']['enabled']) {
@@ -611,8 +586,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
     /**
      * Allow an extension to prepend the extension configurations.
-     *
-     * @param ContainerBuilder $container
      */
     public function prepend(ContainerBuilder $container)
     {

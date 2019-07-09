@@ -45,12 +45,6 @@ class FileProvider extends BaseProvider
 
     /**
      * @param string                   $name
-     * @param Filesystem               $filesystem
-     * @param CDNInterface             $cdn
-     * @param GeneratorInterface       $pathGenerator
-     * @param ThumbnailInterface       $thumbnail
-     * @param array                    $allowedExtensions
-     * @param array                    $allowedMimeTypes
      * @param MetadataBuilderInterface $metadata
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = [], array $allowedMimeTypes = [], MetadataBuilderInterface $metadata = null)
@@ -335,9 +329,6 @@ class FileProvider extends BaseProvider
         }
     }
 
-    /**
-     * @param MediaInterface $media
-     */
     protected function fixBinaryContent(MediaInterface $media)
     {
         if (null === $media->getBinaryContent() || $media->getBinaryContent() instanceof File) {
@@ -361,8 +352,6 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @throws \RuntimeException
      */
     protected function fixFilename(MediaInterface $media)
@@ -414,8 +403,7 @@ class FileProvider extends BaseProvider
     /**
      * Set the file contents for an image.
      *
-     * @param MediaInterface $media
-     * @param string         $contents path to contents, defaults to MediaInterface BinaryContent
+     * @param string $contents path to contents, defaults to MediaInterface BinaryContent
      */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
@@ -438,8 +426,6 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @return string
      */
     protected function generateReferenceName(MediaInterface $media)
@@ -448,8 +434,6 @@ class FileProvider extends BaseProvider
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @return string
      */
     protected function generateMediaUniqId(MediaInterface $media)
@@ -459,8 +443,6 @@ class FileProvider extends BaseProvider
 
     /**
      * Set media binary content according to request content.
-     *
-     * @param MediaInterface $media
      */
     protected function generateBinaryFromRequest(MediaInterface $media)
     {

@@ -55,7 +55,7 @@
         "symfony/twig-bridge": "^2.8 || ^3.2 || ^4.0",
         "symfony/twig-bundle": "^2.8 || ^3.2 || ^4.0",
         "symfony/validator": "^2.8 || ^3.2 || ^4.0",
-        "twig/twig": "^1.35 || ^2.0"
+        "twig/twig": "^2.9"
     },
     "conflict": {
         "doctrine/dbal": "<2.6.0",
@@ -83,7 +83,7 @@
         "sonata-project/formatter-bundle": "^3.4 || ^4.0",
         "sonata-project/notification-bundle": "^3.3",
         "sonata-project/seo-bundle": "^2.5",
-        "symfony/phpunit-bridge": "^4.2",
+        "symfony/phpunit-bridge": "^4.3",
         "symfony/security-csrf": "^2.8 || ^3.2 || ^4.0"
     },
     "suggest": {

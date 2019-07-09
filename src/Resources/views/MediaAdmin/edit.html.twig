@@ -12,7 +12,7 @@ file that was distributed with this source code.
 {% import _self as macros %}
 
 {% macro bytesToSize(bytes) %}
-{% spaceless %}
+{% apply spaceless %}
     {% set kilobyte = 1024 %}
     {% set megabyte = kilobyte * 1024 %}
 
@@ -23,7 +23,7 @@ file that was distributed with this source code.
     {% else %}
         {{ (bytes / megabyte)|number_format(2) ~ ' MB' }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endmacro %}
 
 {% extends '@SonataAdmin/CRUD/base_edit.html.twig' %}

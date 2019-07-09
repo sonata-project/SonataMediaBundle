@@ -27,7 +27,6 @@ class GalleryAdminController extends Controller
 {
     /**
      * @param string   $view
-     * @param array    $parameters
      * @param Response $response
      *
      * @return Response

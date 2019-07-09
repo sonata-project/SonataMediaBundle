@@ -42,7 +42,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
      * @param string                   $code
      * @param string                   $class
      * @param string                   $baseControllerName
-     * @param Pool                     $pool
      * @param CategoryManagerInterface $categoryManager
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool, CategoryManagerInterface $categoryManager = null)
@@ -89,6 +88,12 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         if (1 === \count($providers) && null === $provider) {
             $provider = array_shift($providers)->getName();
             $this->getRequest()->query->set('provider', $provider);
+        }
+
+        // if there is a post server error, provider is not posted and in case of
+        // multiple providers, it has to be persistent to not being lost
+        if (1 < \count($providers) && null !== $provider) {
+            $parameters['provider'] = $provider;
         }
 
         $categoryId = $this->getRequest()->get('category');

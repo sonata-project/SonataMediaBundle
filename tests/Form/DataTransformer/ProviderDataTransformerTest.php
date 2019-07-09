@@ -38,9 +38,9 @@ class ProviderDataTransformerTest extends TestCase
         $pool = new Pool('default');
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('unknown'));
-        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
+        $media->expects($this->exactly(3))->method('getProviderName')->willReturn('unknown');
+        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->expects($this->any())->method('getBinaryContent')->willReturn('xcs');
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', [
             'new_on_update' => false,
@@ -57,9 +57,9 @@ class ProviderDataTransformerTest extends TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
-        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue('xcs'));
+        $media->expects($this->exactly(3))->method('getProviderName')->willReturn('default');
+        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->expects($this->any())->method('getBinaryContent')->willReturn('xcs');
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', [
             'new_on_update' => false,
@@ -75,9 +75,9 @@ class ProviderDataTransformerTest extends TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())->method('getId')->will($this->returnValue(null));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(null));
-        $media->expects($this->any())->method('getProviderName')->will($this->returnValue('default'));
+        $media->expects($this->any())->method('getId')->willReturn(null);
+        $media->expects($this->any())->method('getBinaryContent')->willReturn(null);
+        $media->expects($this->any())->method('getProviderName')->willReturn('default');
         $media->expects($this->once())->method('setProviderReference')->with(MediaInterface::MISSING_BINARY_REFERENCE);
         $media->expects($this->once())->method('setProviderStatus')->with(MediaInterface::STATUS_PENDING);
 
@@ -96,8 +96,8 @@ class ProviderDataTransformerTest extends TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(null));
+        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->expects($this->any())->method('getBinaryContent')->willReturn(null);
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass');
         $this->assertSame($media, $transformer->reverseTransform($media));
@@ -114,9 +114,9 @@ class ProviderDataTransformerTest extends TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())->method('getProviderName')->will($this->returnValue('default'));
-        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
+        $media->expects($this->any())->method('getProviderName')->willReturn('default');
+        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->expects($this->any())->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', [
             'new_on_update' => false,
@@ -133,9 +133,9 @@ class ProviderDataTransformerTest extends TestCase
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
-        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
+        $media->expects($this->exactly(3))->method('getProviderName')->willReturn('default');
+        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->expects($this->any())->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', [
             'new_on_update' => false,
@@ -155,9 +155,9 @@ class ProviderDataTransformerTest extends TestCase
         $logger->expects($this->once())->method('error');
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(3))->method('getProviderName')->will($this->returnValue('default'));
-        $media->expects($this->any())->method('getId')->will($this->returnValue(1));
-        $media->expects($this->any())->method('getBinaryContent')->will($this->returnValue(new UploadedFile(__FILE__, 'ProviderDataTransformerTest')));
+        $media->expects($this->exactly(3))->method('getProviderName')->willReturn('default');
+        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->expects($this->any())->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 
         $transformer = new ProviderDataTransformer($pool, 'stdClass', [
             'new_on_update' => false,

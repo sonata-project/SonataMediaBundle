@@ -72,9 +72,6 @@ class AddMassMediaCommand extends BaseCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return resource
      */
     protected function getFilePointer(InputInterface $input, OutputInterface $output)
@@ -90,10 +87,6 @@ class AddMassMediaCommand extends BaseCommand
         return fopen($input->getOption('file'), 'r');
     }
 
-    /**
-     * @param array           $data
-     * @param OutputInterface $output
-     */
     protected function insertMedia(array $data, OutputInterface $output)
     {
         $media = $this->getMediaManager()->create();

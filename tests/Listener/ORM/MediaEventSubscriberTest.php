@@ -42,7 +42,7 @@ class MediaEventSubscriberTest extends TestCase
             ->setConstructorArgs(['default'])
             ->getMock();
 
-        $pool->method('getProvider')->will($this->returnValueMap([['provider', $provider]]));
+        $pool->method('getProvider')->willReturnMap([['provider', $provider]]);
 
         $category = $this->createMock(CategoryInterface::class);
 
@@ -50,14 +50,14 @@ class MediaEventSubscriberTest extends TestCase
 
         $container = $this->createMock(ContainerInterface::class);
 
-        $container->method('get')->will($this->returnValueMap([
+        $container->method('get')->willReturnMap([
             ['sonata.media.pool', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool],
             ['sonata.media.manager.category', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $catManager],
-        ]));
+        ]);
 
         $container->method('has')
             ->with($this->equalTo('sonata.media.manager.category'))
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $catManager->expects($this->exactly(2))
             ->method('getRootCategories')

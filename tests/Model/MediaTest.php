@@ -79,7 +79,7 @@ class MediaTest extends TestCase
         $media = $this->getMockForAbstractClass(Media::class);
         $media->expects($this->any())
             ->method('getId')
-            ->will($this->returnValue($id));
+            ->willReturn($id);
 
         return $media;
     }

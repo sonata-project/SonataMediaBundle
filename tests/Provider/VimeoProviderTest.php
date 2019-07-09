@@ -39,8 +39,8 @@ class VimeoProviderTest extends AbstractProviderTest
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->will($this->returnValue(true));
-        $resizer->expects($this->any())->method('getBox')->will($this->returnValue(new Box(100, 100)));
+        $resizer->expects($this->any())->method('resize')->willReturn(true);
+        $resizer->expects($this->any())->method('getBox')->willReturn(new Box(100, 100));
 
         $adapter = $this->createMock(Adapter::class);
 
@@ -51,7 +51,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->will($this->returnValue($file));
+        $filesystem->expects($this->any())->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -88,11 +88,11 @@ class VimeoProviderTest extends AbstractProviderTest
     public function testThumbnail(): void
     {
         $response = $this->createMock(AbstractMessage::class);
-        $response->expects($this->once())->method('getContent')->will($this->returnValue('content'));
+        $response->expects($this->once())->method('getContent')->willReturn('content');
 
         $browser = $this->createMock(Browser::class);
 
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $browser->expects($this->once())->method('get')->willReturn($response);
 
         $provider = $this->getProvider($browser);
 
@@ -122,7 +122,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
 
         $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $browser->expects($this->once())->method('get')->willReturn($response);
 
         $provider = $this->getProvider($browser);
 
@@ -149,7 +149,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
 
         $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('get')->will($this->returnValue($response));
+        $browser->expects($this->once())->method('get')->willReturn($response);
 
         $provider = $this->getProvider($browser);
 
@@ -179,6 +179,32 @@ class VimeoProviderTest extends AbstractProviderTest
         ];
     }
 
+    public function testGetMetadataException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to retrieve the video information for :012341231');
+        $this->expectExceptionCode(12);
+
+        $response = new Response();
+        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
+
+        $browser = $this->createMock(Browser::class);
+        $browser->expects($this->once())->method('get')->will($this->throwException(new \RuntimeException('First error on get', 12)));
+
+        $provider = $this->getProvider($browser);
+
+        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+
+        $media = new Media();
+        $media->setBinaryContent('https://vimeo.com/012341231');
+        $media->setId(1023456);
+
+        $method = new \ReflectionMethod($provider, 'getMetadata');
+        $method->setAccessible(true);
+
+        $method->invokeArgs($provider, [$media, '012341231']);
+    }
+
     public function testForm(): void
     {
         $provider = $this->getProvider();
@@ -186,7 +212,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $admin = $this->createMock(AdminInterface::class);
         $admin->expects($this->any())
             ->method('trans')
-            ->will($this->returnValue('message'));
+            ->willReturn('message');
 
         $formMapper = $this->getMockBuilder(FormMapper::class)
             ->setMethods(['add', 'getAdmin'])
@@ -194,7 +220,7 @@ class VimeoProviderTest extends AbstractProviderTest
             ->getMock();
         $formMapper->expects($this->exactly(8))
             ->method('add')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $provider->buildCreateForm($formMapper);
 
