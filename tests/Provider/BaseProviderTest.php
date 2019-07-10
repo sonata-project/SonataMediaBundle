@@ -159,7 +159,7 @@ class TestProvider extends BaseProvider
     /**
      * {@inheritdoc}
      */
-    public function getReferenceImage(MediaInterface $media)
+    public function getReferenceImage(MediaInterface $media): string
     {
         return '/any/image/path.ext';
     }
