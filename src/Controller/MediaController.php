@@ -25,8 +25,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MediaController extends Controller
 {
     /**
-     * @param MediaInterface $media
-     *
      * @return MediaProviderInterface
      */
     public function getProvider(MediaInterface $media)
@@ -45,9 +43,8 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param string  $id
-     * @param string  $format
+     * @param string $id
+     * @param string $format
      *
      * @throws NotFoundHttpException
      *
@@ -75,9 +72,8 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param string  $id
-     * @param string  $format
+     * @param string $id
+     * @param string $format
      *
      * @throws NotFoundHttpException
      *
@@ -109,9 +105,8 @@ class MediaController extends Controller
      * optionally saves the image and
      * outputs it to the browser at the same time.
      *
-     * @param Request $request
-     * @param string  $path
-     * @param string  $filter
+     * @param string $path
+     * @param string $filter
      *
      * @return Response
      *

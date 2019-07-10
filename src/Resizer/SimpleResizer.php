@@ -39,9 +39,7 @@ class SimpleResizer implements ResizerInterface
     protected $metadata;
 
     /**
-     * @param ImagineInterface         $adapter
-     * @param string                   $mode
-     * @param MetadataBuilderInterface $metadata
+     * @param string $mode
      */
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
@@ -91,9 +89,6 @@ class SimpleResizer implements ResizerInterface
     }
 
     /**
-     * @param MediaInterface $media
-     * @param array          $settings
-     *
      * @throws InvalidArgumentException
      *
      * @return Box

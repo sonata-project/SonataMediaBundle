@@ -25,10 +25,6 @@ class Fallback implements CDNInterface
      */
     protected $fallback;
 
-    /**
-     * @param CDNInterface $cdn
-     * @param CDNInterface $fallback
-     */
     public function __construct(CDNInterface $cdn, CDNInterface $fallback)
     {
         $this->cdn = $cdn;

@@ -37,9 +37,7 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     protected $translator;
 
     /**
-     * @param TranslatorInterface           $translator
-     * @param AuthorizationCheckerInterface $security
-     * @param string[]                      $roles
+     * @param string[] $roles
      */
     public function __construct(TranslatorInterface $translator, AuthorizationCheckerInterface $security, array $roles = [])
     {

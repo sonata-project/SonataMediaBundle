@@ -68,9 +68,6 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
         ];
     }
 
-    /**
-     * @return ExtensionInterface
-     */
     public function getTwigExtension(): ExtensionInterface
     {
         return $this->twigExtension;

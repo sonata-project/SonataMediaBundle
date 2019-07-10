@@ -25,8 +25,6 @@ class GalleryManager extends BaseDocumentManager implements GalleryManagerInterf
      * NEXT_MAJOR: remove this method.
      *
      * @deprecated Please use save() from now
-     *
-     * @param GalleryInterface $gallery
      */
     public function update(GalleryInterface $gallery): void
     {

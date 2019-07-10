@@ -32,13 +32,6 @@ class ImageProvider extends FileProvider
 
     /**
      * @param string                   $name
-     * @param Filesystem               $filesystem
-     * @param CDNInterface             $cdn
-     * @param GeneratorInterface       $pathGenerator
-     * @param ThumbnailInterface       $thumbnail
-     * @param array                    $allowedExtensions
-     * @param array                    $allowedMimeTypes
-     * @param ImagineInterface         $adapter
      * @param MetadataBuilderInterface $metadata
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions, array $allowedMimeTypes, ImagineInterface $adapter, MetadataBuilderInterface $metadata = null)

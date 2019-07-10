@@ -44,8 +44,6 @@ class ConsumerThumbnail implements ThumbnailInterface
      * NEXT_MAJOR: remove optional null for EventDispatcherInterface.
      *
      * @param string                   $id
-     * @param ThumbnailInterface       $thumbnail
-     * @param BackendInterface         $backend
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher = null)

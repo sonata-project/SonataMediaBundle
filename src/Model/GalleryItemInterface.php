@@ -35,9 +35,6 @@ interface GalleryItemInterface
      */
     public function getEnabled();
 
-    /**
-     * @param GalleryInterface|null $gallery
-     */
     public function setGallery(GalleryInterface $gallery = null);
 
     /**
@@ -45,9 +42,6 @@ interface GalleryItemInterface
      */
     public function getGallery();
 
-    /**
-     * @param MediaInterface|null $media
-     */
     public function setMedia(MediaInterface $media = null);
 
     /**
@@ -67,9 +61,6 @@ interface GalleryItemInterface
      */
     public function getPosition();
 
-    /**
-     * @param \DateTime|null $updatedAt
-     */
     public function setUpdatedAt(\DateTime $updatedAt = null);
 
     /**
@@ -77,9 +68,6 @@ interface GalleryItemInterface
      */
     public function getUpdatedAt();
 
-    /**
-     * @param \DateTime|null $createdAt
-     */
     public function setCreatedAt(\DateTime $createdAt = null);
 
     /**

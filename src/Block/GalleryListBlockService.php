@@ -41,10 +41,7 @@ class GalleryListBlockService extends AbstractAdminBlockService
     protected $pool;
 
     /**
-     * @param string                  $name
-     * @param EngineInterface         $templating
-     * @param GalleryManagerInterface $galleryManager
-     * @param Pool                    $pool
+     * @param string $name
      */
     public function __construct($name, EngineInterface $templating, GalleryManagerInterface $galleryManager, Pool $pool)
     {

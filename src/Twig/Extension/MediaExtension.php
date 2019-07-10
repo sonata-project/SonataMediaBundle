@@ -42,10 +42,6 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
      */
     protected $environment;
 
-    /**
-     * @param Pool             $mediaService
-     * @param ManagerInterface $mediaManager
-     */
     public function __construct(Pool $mediaService, ManagerInterface $mediaManager)
     {
         $this->mediaService = $mediaService;
@@ -150,7 +146,6 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
 
     /**
      * @param string $template
-     * @param array  $parameters
      *
      * @return mixed
      */

@@ -74,13 +74,8 @@ class Pixlr
     protected $allowEreg;
 
     /**
-     * @param string                $referrer
-     * @param string                $secret
-     * @param Pool                  $pool
-     * @param MediaManagerInterface $mediaManager
-     * @param RouterInterface       $router
-     * @param EngineInterface       $templating
-     * @param ContainerInterface    $container
+     * @param string $referrer
+     * @param string $secret
      */
     public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, ContainerInterface $container)
     {
@@ -148,9 +143,8 @@ class Pixlr
     }
 
     /**
-     * @param Request $request
-     * @param string  $hash
-     * @param string  $id
+     * @param string $hash
+     * @param string $id
      *
      * @return Response
      */
@@ -181,8 +175,6 @@ class Pixlr
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @return bool
      */
     public function isEditable(MediaInterface $media)

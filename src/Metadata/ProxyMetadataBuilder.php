@@ -29,8 +29,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     /**
      * NEXT_MAJOR: remove the second parameter $map.
      *
-     * @param ContainerInterface $container
-     * @param array              $map
+     * @param array $map
      */
     public function __construct(ContainerInterface $container, array $map = null)
     {
@@ -66,8 +65,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * @param MediaInterface $media
-     * @param string         $filename
+     * @param string $filename
      *
      * @return array|bool
      */

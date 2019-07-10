@@ -151,8 +151,6 @@ class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @return string the file extension for the $media, or the $defaultExtension if not available
      */
     protected function getExtension(MediaInterface $media)

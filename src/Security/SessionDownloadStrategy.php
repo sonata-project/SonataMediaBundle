@@ -44,9 +44,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     private $session;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param SessionInterface    $session
-     * @param int                 $times
+     * @param int $times
      */
     public function __construct(TranslatorInterface $translator, SessionInterface $session, $times)
     {

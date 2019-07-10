@@ -21,11 +21,9 @@ class PathNode extends \Twig_Node
     protected $extensionName;
 
     /**
-     * @param string                $extensionName
-     * @param \Twig_Node_Expression $media
-     * @param \Twig_Node_Expression $format
-     * @param int                   $lineno
-     * @param string                $tag
+     * @param string $extensionName
+     * @param int    $lineno
+     * @param string $tag
      */
     public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $format, $lineno, $tag = null)
     {

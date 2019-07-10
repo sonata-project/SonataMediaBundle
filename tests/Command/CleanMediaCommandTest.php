@@ -296,7 +296,6 @@ class CleanMediaCommandTest extends FilesystemTestCase
     /**
      * Asserts whether all expected texts can be found in the output within a given context.
      *
-     * @param string $extract  PCRE regex expected to have a single matching group, extracting the content of a context
      * @param array  $expected Excerpts of text expected to be found in the output
      * @param string $output   Searched output
      */

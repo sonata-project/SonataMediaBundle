@@ -49,10 +49,7 @@ class MediaBlockService extends AbstractAdminBlockService
     protected $mediaManager;
 
     /**
-     * @param string             $name
-     * @param EngineInterface    $templating
-     * @param ContainerInterface $container
-     * @param ManagerInterface   $mediaManager
+     * @param string $name
      */
     public function __construct($name, EngineInterface $templating, ContainerInterface $container, ManagerInterface $mediaManager)
     {
@@ -203,8 +200,6 @@ class MediaBlockService extends AbstractAdminBlockService
     }
 
     /**
-     * @param MediaInterface|null $media
-     *
      * @return array
      */
     protected function getFormatChoices(MediaInterface $media = null)
@@ -225,8 +220,6 @@ class MediaBlockService extends AbstractAdminBlockService
     }
 
     /**
-     * @param FormMapper $formMapper
-     *
      * @return FormBuilder
      */
     protected function getMediaBuilder(FormMapper $formMapper)

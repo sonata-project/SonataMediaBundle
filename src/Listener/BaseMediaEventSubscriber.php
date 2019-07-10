@@ -27,9 +27,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
      */
     protected $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -43,9 +40,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         return $this->container->get('sonata.media.pool');
     }
 
-    /**
-     * @param EventArgs $args
-     */
     public function postUpdate(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
@@ -55,9 +49,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->postUpdate($this->getMedia($args));
     }
 
-    /**
-     * @param EventArgs $args
-     */
     public function postRemove(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
@@ -67,9 +58,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->postRemove($this->getMedia($args));
     }
 
-    /**
-     * @param EventArgs $args
-     */
     public function postPersist(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
@@ -79,9 +67,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->postPersist($this->getMedia($args));
     }
 
-    /**
-     * @param EventArgs $args
-     */
     public function preUpdate(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
@@ -94,9 +79,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->recomputeSingleEntityChangeSet($args);
     }
 
-    /**
-     * @param EventArgs $args
-     */
     public function preRemove(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
@@ -106,9 +88,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->preRemove($this->getMedia($args));
     }
 
-    /**
-     * @param EventArgs $args
-     */
     public function prePersist(EventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
@@ -119,21 +98,14 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->prePersist($this->getMedia($args));
     }
 
-    /**
-     * @param EventArgs $args
-     */
     abstract protected function recomputeSingleEntityChangeSet(EventArgs $args);
 
     /**
-     * @param EventArgs $args
-     *
      * @return MediaInterface
      */
     abstract protected function getMedia(EventArgs $args);
 
     /**
-     * @param EventArgs $args
-     *
      * @return MediaProviderInterface
      */
     protected function getProvider(EventArgs $args)

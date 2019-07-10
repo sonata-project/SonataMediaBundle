@@ -79,8 +79,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
     }
 
     /**
-     * @param MediaInterface $media
-     *
      * @throws \RuntimeException
      *
      * @return CategoryInterface

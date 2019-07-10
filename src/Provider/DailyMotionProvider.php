@@ -132,7 +132,6 @@ class DailyMotionProvider extends BaseVideoProvider
     /**
      * Get provider reference url.
      *
-     * @param MediaInterface $media
      *
      * @return string
      */
@@ -141,9 +140,6 @@ class DailyMotionProvider extends BaseVideoProvider
         return sprintf('http://www.dailymotion.com/video/%s', $media->getProviderReference());
     }
 
-    /**
-     * @param MediaInterface $media
-     */
     protected function fixBinaryContent(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {

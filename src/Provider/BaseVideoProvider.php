@@ -40,13 +40,7 @@ abstract class BaseVideoProvider extends BaseProvider
     protected $metadata;
 
     /**
-     * @param string                        $name
-     * @param Filesystem                    $filesystem
-     * @param CDNInterface                  $cdn
-     * @param GeneratorInterface            $pathGenerator
-     * @param ThumbnailInterface            $thumbnail
-     * @param Browser                       $browser
-     * @param MetadataBuilderInterface|null $metadata
+     * @param string $name
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, MetadataBuilderInterface $metadata = null)
     {
@@ -197,8 +191,7 @@ abstract class BaseVideoProvider extends BaseProvider
     // abstract public function getReferenceUrl(MediaInterface $media);
 
     /**
-     * @param MediaInterface $media
-     * @param string         $url
+     * @param string $url
      *
      * @throws \RuntimeException
      *
@@ -222,9 +215,8 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @param MediaInterface $media
-     * @param string         $format
-     * @param array          $options
+     * @param string $format
+     * @param array  $options
      *
      * @return Box
      */

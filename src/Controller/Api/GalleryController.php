@@ -58,10 +58,7 @@ class GalleryController
     /**
      * Constructor.
      *
-     * @param GalleryManagerInterface $galleryManager
-     * @param MediaManagerInterface   $mediaManager
-     * @param FormFactoryInterface    $formFactory
-     * @param string                  $galleryItemClass
+     * @param string $galleryItemClass
      */
     public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryItemClass)
     {
@@ -108,8 +105,6 @@ class GalleryController
      * )
      *
      * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
-     *
-     * @param ParamFetcherInterface $paramFetcher
      *
      * @return PagerInterface
      */
@@ -422,11 +417,6 @@ class GalleryController
 
     /**
      * Write a GalleryItem, this method is used by both POST and PUT action methods.
-     *
-     * @param GalleryInterface     $gallery
-     * @param MediaInterface       $media
-     * @param GalleryItemInterface $galleryItem
-     * @param Request              $request
      *
      * @return FormInterface
      */

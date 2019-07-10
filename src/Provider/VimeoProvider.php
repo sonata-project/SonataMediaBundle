@@ -131,7 +131,6 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * Get provider reference url.
      *
-     * @param MediaInterface $media
      *
      * @return string
      */
@@ -140,9 +139,6 @@ class VimeoProvider extends BaseVideoProvider
         return sprintf('https://vimeo.com/%s', $media->getProviderReference());
     }
 
-    /**
-     * @param MediaInterface $media
-     */
     protected function fixBinaryContent(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {

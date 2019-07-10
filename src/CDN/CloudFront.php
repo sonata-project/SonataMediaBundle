@@ -150,8 +150,6 @@ class CloudFront implements CDNInterface
 
     /**
      * For testing only.
-     *
-     * @param CloudFrontClient $client
      */
     public function setClient(CloudFrontClient $client): void
     {
@@ -195,7 +193,6 @@ class CloudFront implements CDNInterface
     /**
      * Generates a valid caller reference from given paths regardless its order.
      *
-     * @param array $paths
      *
      * @return string a md5 representation
      */

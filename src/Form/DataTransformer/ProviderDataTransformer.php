@@ -35,9 +35,7 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
     protected $options;
 
     /**
-     * @param Pool   $pool
      * @param string $class
-     * @param array  $options
      */
     public function __construct(Pool $pool, $class, array $options = [])
     {
@@ -121,7 +119,6 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
     /**
      * Define the default options for the DataTransformer.
      *
-     * @param array $options
      *
      * @return array
      */
