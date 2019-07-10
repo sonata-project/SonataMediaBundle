@@ -201,7 +201,7 @@ abstract class BaseProvider implements MediaProviderInterface
     {
         $hash = spl_object_hash($media);
 
-        if (array_key_exists($hash, $this->clones)) {
+        if (isset($this->clones[$hash])) {
             $media = $this->clones[$hash];
             unset($this->clones[$hash]);
         }
