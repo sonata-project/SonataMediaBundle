@@ -59,8 +59,6 @@ class BaseProviderThisVerOrBelowTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
         $media = new Media();
-        
-        //The ID is more than a thousand, the bug manifests itself under this condition.
         $media->setId(1399);
         $media->setProviderReference('1f981a048e7d8b671415d17e9633abc0059df394.png');
         
