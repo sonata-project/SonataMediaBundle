@@ -99,15 +99,34 @@ class BaseProviderTest extends AbstractProviderTest
 
     public function testPostRemove(): void
     {
+        $reflect = new \ReflectionClass(BaseProvider::class);
+        $prop = $reflect->getProperty('clones');
+        $prop->setAccessible(true);
+        
         $provider = $this->getProvider();
         $media = new Media();
+        $media->setId(1399);
+        $media->setProviderReference('1f981a048e7d8b671415d17e9633abc0059df394.png');
+        $hash = spl_object_hash($media);
+        
         $provider->preRemove($media);
+        
+        $this->assertArrayHasKey($hash, $prop->getValue($provider));
+        
+        $media->setId(null); // Emulate an object detached from the EntityManager.
         $provider->postRemove($media);
+        
+        $this->assertArrayNotHasKey($hash, $prop->getValue($provider));
+        $this->assertSame('/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
+
+        $prop->setAccessible(false);
     }
 }
 
 class TestProvider extends BaseProvider
 {
+    public $prevReferenceImage;
+    
     /**
      * {@inheritdoc}
      */
@@ -161,7 +180,13 @@ class TestProvider extends BaseProvider
      */
     public function getReferenceImage(MediaInterface $media): string
     {
-        return '/any/image/path.ext';
+        // A copy of the code from \Sonata\MediaBundle\Provider\FileProvider::getReferenceImage()
+        $this->prevReferenceImage = sprintf('%s/%s',
+            $this->generatePath($media),
+            $media->getProviderReference()
+        );
+        
+        return $this->prevReferenceImage;
     }
 
     /**
@@ -194,23 +219,6 @@ class TestProvider extends BaseProvider
     public function preUpdate(MediaInterface $media): void
     {
         // TODO: Implement preUpdate() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postRemove(MediaInterface $media): void
-    {
-        $reflect = new \ReflectionClass(BaseProvider::class);
-        $prop = $reflect->getProperty('clones');
-        $prop->setAccessible(true);
-
-        $hash = spl_object_hash($media);
-        AbstractProviderTest::assertArrayHasKey($hash, $prop->getValue($this));
-        parent::postRemove($media);
-        AbstractProviderTest::assertArrayNotHasKey($hash, $prop->getValue($this));
-
-        $prop->setAccessible(false);
     }
 
     /**
