@@ -125,6 +125,9 @@ class BaseProviderTest extends AbstractProviderTest
 
 class TestProvider extends BaseProvider
 {
+    /**
+     * @var string
+     */
     public $prevReferenceImage;
     
     /**
