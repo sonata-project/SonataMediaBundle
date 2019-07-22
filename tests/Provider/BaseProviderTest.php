@@ -102,20 +102,20 @@ class BaseProviderTest extends AbstractProviderTest
         $reflect = new \ReflectionClass(BaseProvider::class);
         $prop = $reflect->getProperty('clones');
         $prop->setAccessible(true);
-        
+
         $provider = $this->getProvider();
         $media = new Media();
         $media->setId(1399);
         $media->setProviderReference('1f981a048e7d8b671415d17e9633abc0059df394.png');
         $hash = spl_object_hash($media);
-        
+
         $provider->preRemove($media);
-        
+
         $this->assertArrayHasKey($hash, $prop->getValue($provider));
-        
+
         $media->setId(null); // Emulate an object detached from the EntityManager.
         $provider->postRemove($media);
-        
+
         $this->assertArrayNotHasKey($hash, $prop->getValue($provider));
         $this->assertSame('/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
 
@@ -129,7 +129,7 @@ class TestProvider extends BaseProvider
      * @var string
      */
     public $prevReferenceImage;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -188,7 +188,7 @@ class TestProvider extends BaseProvider
             $this->generatePath($media),
             $media->getProviderReference()
         );
-        
+
         return $this->prevReferenceImage;
     }
 
