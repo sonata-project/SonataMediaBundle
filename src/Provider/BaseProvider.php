@@ -64,16 +64,12 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $name;
 
     /**
-     * @var array
+     * @var MediaInterface[]
      */
-    protected $clones = [];
+    private $clones = [];
 
     /**
-     * @param string             $name
-     * @param Filesystem         $filesystem
-     * @param CDNInterface       $cdn
-     * @param GeneratorInterface $pathGenerator
-     * @param ThumbnailInterface $thumbnail
+     * @param string $name
      */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
     {
