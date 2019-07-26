@@ -55,7 +55,7 @@
         "symfony/twig-bridge": "^2.8 || ^3.2 || ^4.0",
         "symfony/twig-bundle": "^2.8 || ^3.2 || ^4.0",
         "symfony/validator": "^2.8 || ^3.2 || ^4.0",
-        "twig/twig": "^2.9"
+        "twig/twig": "^2.10"
     },
     "conflict": {
         "doctrine/dbal": "<2.6.0",
