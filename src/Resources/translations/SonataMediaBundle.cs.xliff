@@ -80,7 +80,7 @@
             </trans-unit>
             <trans-unit id="description.session_download_strategy">
                 <source>description.session_download_strategy</source>
-                <target>The media can be retrieved one time per session.|The media can be retrieved %times% times per session.</target>
+                <target>Médium smí být za sezení staženo pouze jednou.|Médium smí být za sezení staženo pouze %times%x.</target>
             </trans-unit>
             <trans-unit id="filter.label_name">
                 <source>filter.label_name</source>
@@ -252,7 +252,7 @@
             </trans-unit>
             <trans-unit id="label.select_provider">
                 <source>label.select_provider</source>
-                <target>Typ : </target>
+                <target>Typ: </target>
             </trans-unit>
             <trans-unit id="label.protected_download_url">
                 <source>label.protected_download_url</source>
@@ -269,22 +269,22 @@
             <trans-unit id="label.pixlr_warning">
                 <source>label.pixlr_warning</source>
                 <target><![CDATA[
-                        <span class="label label-warning">Important</span> you are going to expose the media to an <strong>external service</strong>. <br />
-                        If you are working on confidentiel materials, please do not use this service.
+                        <span class="label label-warning">Důležité</span> tímto zpřístupníte médium <strong>externí službě</strong>. <br />
+                        Nepoužívejte prosím tuto funkci, pokud se jedná o důvěrná data.
                     ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_express_editor">
                 <source>label.pixlr_express_editor</source>
                 <target><![CDATA[
                         <strong>Pixlr Express Editor</strong> <br />
-                        Simple interface for quick editing
+                        Jednoduché rozhraní pro rychlé úpravy
                     ]]></target>
             </trans-unit>
             <trans-unit id="label.pixlr_advanced_editor">
                 <source>label.pixlr_advanced_editor</source>
                 <target><![CDATA[
                         <strong>Pixlr Advanced Editor</strong> <br />
-                        Experimented users only
+                        Pouze pro pokročilé uživatele
                     ]]></target>
             </trans-unit>
             <trans-unit id="link.all_providers">
@@ -293,7 +293,7 @@
             </trans-unit>
             <trans-unit id="link.test_protected_url">
                 <source>link.test_protected_url</source>
-                <target>Link Preview</target>
+                <target>Preview odkazu</target>
             </trans-unit>
             <trans-unit id="list.label_enabled">
                 <source>list.label_enabled</source>
@@ -317,7 +317,7 @@
             </trans-unit>
             <trans-unit id="list.label__action">
                 <source>list.label__action</source>
-                <target>Action</target>
+                <target>Akce</target>
             </trans-unit>
             <trans-unit id="list.label_custom">
                 <source>list.label_custom</source>
@@ -329,7 +329,7 @@
             </trans-unit>
             <trans-unit id="sidemenu.link_edit_media">
                 <source>sidemenu.link_edit_media</source>
-                <target>Edit</target>
+                <target>Upravit</target>
             </trans-unit>
             <trans-unit id="sidemenu.link_media_view">
                 <source>sidemenu.link_media_view</source>
@@ -357,23 +357,23 @@
             </trans-unit>
             <trans-unit id="sonata.media.provider.dailymotion.description">
                 <source>sonata.media.provider.dailymotion.description</source>
-                <target>Add a video hosted on DailyMotion</target>
+                <target>Přidat video z DailyMotion</target>
             </trans-unit>
             <trans-unit id="sonata.media.provider.youtube.description">
                 <source>sonata.media.provider.youtube.description</source>
-                <target>Add a video hosted on YouTube</target>
+                <target>Přidat video z YouTube</target>
             </trans-unit>
             <trans-unit id="sonata.media.provider.vimeo.description">
                 <source>sonata.media.provider.vimeo.description</source>
-                <target>Add a video hosted on Vimeo</target>
+                <target>Přidat video z Vimeo</target>
             </trans-unit>
             <trans-unit id="sonata.media.provider.image.description">
                 <source>sonata.media.provider.image.description</source>
-                <target>Add an image</target>
+                <target>Přidat obrázek</target>
             </trans-unit>
             <trans-unit id="sonata.media.provider.file.description">
                 <source>sonata.media.provider.file.description</source>
-                <target>Add any type of file</target>
+                <target>Přidat jakýkoliv typ souboru</target>
             </trans-unit>
             <trans-unit id="title.media_preview">
                 <source>title.media_preview</source>
@@ -381,11 +381,11 @@
             </trans-unit>
             <trans-unit id="title.media_thumbnail">
                 <source>title.media_thumbnail</source>
-                <target>Thumbnail</target>
+                <target>Náhled</target>
             </trans-unit>
             <trans-unit id="title.informations">
                 <source>title.informations</source>
-                <target>Information</target>
+                <target>Informace</target>
             </trans-unit>
             <trans-unit id="title.formats">
                 <source>title.formats</source>
@@ -393,11 +393,11 @@
             </trans-unit>
             <trans-unit id="link_media">
                 <source>link_media</source>
-                <target>Link the object to a new media</target>
+                <target>Navázat objekt na nové médium</target>
             </trans-unit>
             <trans-unit id="no_linked_media">
                 <source>no_linked_media</source>
-                <target>No media linked to the object</target>
+                <target>Žádné navázené médium</target>
             </trans-unit>
             <trans-unit id="widget_label_type">
                 <source>widget_label_type</source>
@@ -409,11 +409,11 @@
             </trans-unit>
             <trans-unit id="widget_headline_information">
                 <source>widget_headline_information</source>
-                <target>Information</target>
+                <target>Informace</target>
             </trans-unit>
             <trans-unit id="widget_label_unlink">
                 <source>widget_label_unlink</source>
-                <target>Remove</target>
+                <target>Odstranit</target>
             </trans-unit>
             <trans-unit id="widget_label_binary_content">
                 <source>widget_label_binary_content</source>
@@ -449,7 +449,7 @@
             </trans-unit>
             <trans-unit id="sonata.media.block.feature_media">
                 <source>sonata.media.block.feature_media</source>
-                <target>Feature media</target>
+                <target>Média</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery">
                 <source>sonata.media.block.gallery</source>
@@ -477,11 +477,11 @@
             </trans-unit>
             <trans-unit id="form.label_pause_time">
                 <source>form.label_pause_time</source>
-                <target>Pause time</target>
+                <target>Čas pozastavení</target>
             </trans-unit>
             <trans-unit id="form.label_start_paused">
                 <source>form.label_start_paused</source>
-                <target>Start paused</target>
+                <target>Pozastavit na začátku</target>
             </trans-unit>
             <trans-unit id="form.label_wrap">
                 <source>form.label_wrap</source>
@@ -561,7 +561,7 @@
             </trans-unit>
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
-                <target>CSS class</target>
+                <target>CSS třída</target>
             </trans-unit>
             <trans-unit id="form.label_translation_domain">
                 <source>form.label_translation_domain</source>
