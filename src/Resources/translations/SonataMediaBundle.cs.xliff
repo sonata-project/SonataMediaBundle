@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="default">
+                <source>default</source>
+                <target>Výchozí</target>
+            </trans-unit>
+            <trans-unit id="media">
+                <source>media</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="gallery">
+                <source>gallery</source>
+                <target>Galerie</target>
+            </trans-unit>
+            <trans-unit id="sonata_media">
+                <source>sonata_media</source>
+                <target>Knihovna médií</target>
+            </trans-unit>
+            <trans-unit id="no_provider_available">
+                <source>no_provider_available</source>
+                <target>Žádný zdroj médií nenalezen</target>
+            </trans-unit>
+            <trans-unit id="title_select_provider">
+                <source>title_select_provider</source>
+                <target>Vyberte zdroj médií</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_create">
+                <source>breadcrumb.link_media_create</source>
+                <target>Vytvořit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_list">
+                <source>breadcrumb.link_media_list</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_edit">
+                <source>breadcrumb.link_media_edit</source>
+                <target>Upravit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_view">
+                <source>breadcrumb.link_media_view</source>
+                <target>Zobrazit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_delete">
+                <source>breadcrumb.link_media_delete</source>
+                <target>Odstranit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_create">
+                <source>breadcrumb.link_gallery_create</source>
+                <target>Vytvořit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_media_show">
+                <source>breadcrumb.link_media_show</source>
+                <target>Zobrazit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_list">
+                <source>breadcrumb.link_gallery_list</source>
+                <target>Galerie</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_edit">
+                <source>breadcrumb.link_gallery_edit</source>
+                <target>Upravit</target>
+            </trans-unit>
+            <trans-unit id="breadcrumb.link_gallery_delete">
+                <source>breadcrumb.link_gallery_delete</source>
+                <target>Odstranit</target>
+            </trans-unit>
+            <trans-unit id="description.roles_download_strategy">
+                <source>description.roles_download_strategy</source>
+                <target>Médium smí být staženo pouze uživateli s těmito rolemi: %roles%.</target>
+            </trans-unit>
+            <trans-unit id="description.public_download_strategy">
+                <source>description.public_download_strategy</source>
+                <target>Médium smí být staženo kýmkoliv.</target>
+            </trans-unit>
+            <trans-unit id="description.forbidden_download_strategy">
+                <source>description.forbidden_download_strategy</source>
+                <target>Médium nemůže být nikým staženo.</target>
+            </trans-unit>
+            <trans-unit id="description.session_download_strategy">
+                <source>description.session_download_strategy</source>
+                <target>Médium smí být za sezení staženo pouze jednou.|Médium smí být za sezení staženo pouze %times%x.</target>
+            </trans-unit>
+            <trans-unit id="filter.label_name">
+                <source>filter.label_name</source>
+                <target>Název</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_reference">
+                <source>filter.label_provider_reference</source>
+                <target>Provider Reference</target>
+            </trans-unit>
+            <trans-unit id="filter.label_enabled">
+                <source>filter.label_enabled</source>
+                <target>Aktivováno</target>
+            </trans-unit>
+            <trans-unit id="filter.label_context">
+                <source>filter.label_context</source>
+                <target>Kontext</target>
+            </trans-unit>
+            <trans-unit id="filter.label_provider_name">
+                <source>filter.label_provider_name</source>
+                <target>Název zdroje</target>
+            </trans-unit>
+            <trans-unit id="filter.label_category">
+                <source>filter.label_category</source>
+                <target>Název kategorie</target>
+            </trans-unit>
+            <trans-unit id="filter.label_author_name">
+                <source>filter.label_author_name</source>
+                <target>Jméno autora</target>
+            </trans-unit>
+            <trans-unit id="filter.label_width">
+                <source>filter.label_width</source>
+                <target>Šířka</target>
+            </trans-unit>
+            <trans-unit id="filter.label_height">
+                <source>filter.label_height</source>
+                <target>Výška</target>
+            </trans-unit>
+            <trans-unit id="filter.label_content_type">
+                <source>filter.label_content_type</source>
+                <target>Typ obsahu</target>
+            </trans-unit>
+            <trans-unit id="form.label_enabled">
+                <source>form.label_enabled</source>
+                <target>Aktivováno</target>
+            </trans-unit>
+            <trans-unit id="form.label_media">
+                <source>form.label_media</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="form.label_position">
+                <source>form.label_position</source>
+                <target>Pozice</target>
+            </trans-unit>
+            <trans-unit id="form.label_context">
+                <source>form.label_context</source>
+                <target>Kontext</target>
+            </trans-unit>
+            <trans-unit id="form.label_name">
+                <source>form.label_name</source>
+                <target>Název</target>
+            </trans-unit>
+            <trans-unit id="form.label_default_format">
+                <source>form.label_default_format</source>
+                <target>Formát</target>
+            </trans-unit>
+            <trans-unit id="form.label_gallery_has_medias">
+                <source>form.label_gallery_has_medias</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="form.label_author_name">
+                <source>form.label_author_name</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="form.label_cdn_is_flushable">
+                <source>form.label_cdn_is_flushable</source>
+                <target>Flush CDN</target>
+            </trans-unit>
+            <trans-unit id="form.label_description">
+                <source>form.label_description</source>
+                <target>Popis</target>
+            </trans-unit>
+            <trans-unit id="form.label_copyright">
+                <source>form.label_copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
+            <trans-unit id="form.label_binary_content">
+                <source>form.label_binary_content</source>
+                <target>Soubor</target>
+            </trans-unit>
+            <trans-unit id="label.size">
+                <source>label.size</source>
+                <target>Velikost</target>
+            </trans-unit>
+            <trans-unit id="label.length">
+                <source>label.length</source>
+                <target>Délka</target>
+            </trans-unit>
+            <trans-unit id="label.width">
+                <source>label.width</source>
+                <target>Šířka</target>
+            </trans-unit>
+            <trans-unit id="label.height">
+                <source>label.height</source>
+                <target>Výška</target>
+            </trans-unit>
+            <trans-unit id="label.content_type">
+                <source>label.content_type</source>
+                <target>Typ obsahu</target>
+            </trans-unit>
+            <trans-unit id="label.copyright">
+                <source>label.copyright</source>
+                <target>Copyright</target>
+            </trans-unit>
+            <trans-unit id="label.author_name">
+                <source>label.author_name</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="label.cdn">
+                <source>label.cdn</source>
+                <target>CDN</target>
+            </trans-unit>
+            <trans-unit id="label.to_be_flushed">
+                <source>label.to_be_flushed</source>
+                <target>Možné vyprázdnit cache</target>
+            </trans-unit>
+            <trans-unit id="label.flushed_at">
+                <source>label.flushed_at</source>
+                <target>Datum vyprázdnění cache</target>
+            </trans-unit>
+            <trans-unit id="label.public_url">
+                <source>label.public_url</source>
+                <target>Veřejná URL</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Název</target>
+            </trans-unit>
+            <trans-unit id="label.file">
+                <source>label.file</source>
+                <target>Soubor</target>
+            </trans-unit>
+            <trans-unit id="label.author">
+                <source>label.author</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="label.enabled">
+                <source>label.enabled</source>
+                <target>Aktivováno</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_is_flushable">
+                <source>label.cdn_is_flushable</source>
+                <target>Vyprázdnit cache</target>
+            </trans-unit>
+            <trans-unit id="label.cdn_flush_identifier">
+                <source>label.cdn_flush_identifier</source>
+                <target>Identifikátor vyprázdnění cache</target>
+            </trans-unit>
+            <trans-unit id="label.video_reference">
+                <source>label.video_reference</source>
+                <target>Změnit video</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                <source>label.description</source>
+                <target>Popis</target>
+            </trans-unit>
+            <trans-unit id="label.select_context">
+                <source>label.select_context</source>
+                <target>Kontext: </target>
+            </trans-unit>
+            <trans-unit id="label.select_provider">
+                <source>label.select_provider</source>
+                <target>Typ: </target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url">
+                <source>label.protected_download_url</source>
+                <target>URL pro stažení</target>
+            </trans-unit>
+            <trans-unit id="label.protected_download_url_notice">
+                <source>label.protected_download_url_notice</source>
+                <target>Varování</target>
+            </trans-unit>
+            <trans-unit id="label.edit_with_pixlr">
+                <source>label.edit_with_pixlr</source>
+                <target>Upravit pomocí Pixlr</target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_warning">
+                <source>label.pixlr_warning</source>
+                <target><![CDATA[
+                        <span class="label label-warning">Důležité</span> tímto zpřístupníte médium <strong>externí službě</strong>. <br />
+                        Nepoužívejte prosím tuto funkci, pokud se jedná o důvěrná data.
+                    ]]></target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_express_editor">
+                <source>label.pixlr_express_editor</source>
+                <target><![CDATA[
+                        <strong>Pixlr Express Editor</strong> <br />
+                        Jednoduché rozhraní pro rychlé úpravy
+                    ]]></target>
+            </trans-unit>
+            <trans-unit id="label.pixlr_advanced_editor">
+                <source>label.pixlr_advanced_editor</source>
+                <target><![CDATA[
+                        <strong>Pixlr Advanced Editor</strong> <br />
+                        Pouze pro pokročilé uživatele
+                    ]]></target>
+            </trans-unit>
+            <trans-unit id="link.all_providers">
+                <source>link.all_providers</source>
+                <target>Vše</target>
+            </trans-unit>
+            <trans-unit id="link.test_protected_url">
+                <source>link.test_protected_url</source>
+                <target>Preview odkazu</target>
+            </trans-unit>
+            <trans-unit id="list.label_enabled">
+                <source>list.label_enabled</source>
+                <target>Aktivováno</target>
+            </trans-unit>
+            <trans-unit id="list.label_name">
+                <source>list.label_name</source>
+                <target>Název</target>
+            </trans-unit>
+            <trans-unit id="list.label_author_name">
+                <source>list.label_author_name</source>
+                <target>Jméno autora</target>
+            </trans-unit>
+            <trans-unit id="list.label_context">
+                <source>list.label_context</source>
+                <target>Kontext</target>
+            </trans-unit>
+            <trans-unit id="list.label_default_format">
+                <source>list.label_default_format</source>
+                <target>Formát</target>
+            </trans-unit>
+            <trans-unit id="list.label__action">
+                <source>list.label__action</source>
+                <target>Akce</target>
+            </trans-unit>
+            <trans-unit id="list.label_custom">
+                <source>list.label_custom</source>
+                <target>Custom</target>
+            </trans-unit>
+            <trans-unit id="list.label_author">
+                <source>list.label_author</source>
+                <target>list.label_author</target>
+            </trans-unit>
+            <trans-unit id="sidemenu.link_edit_media">
+                <source>sidemenu.link_edit_media</source>
+                <target>Upravit</target>
+            </trans-unit>
+            <trans-unit id="sidemenu.link_media_view">
+                <source>sidemenu.link_media_view</source>
+                <target>Zobrazit</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion">
+                <source>sonata.media.provider.dailymotion</source>
+                <target>DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube">
+                <source>sonata.media.provider.youtube</source>
+                <target>YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo">
+                <source>sonata.media.provider.vimeo</source>
+                <target>Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image">
+                <source>sonata.media.provider.image</source>
+                <target>Obrázek</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file">
+                <source>sonata.media.provider.file</source>
+                <target>Soubor</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>Přidat video z DailyMotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>Přidat video z YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Přidat video z Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Přidat obrázek</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Přidat jakýkoliv typ souboru</target>
+            </trans-unit>
+            <trans-unit id="title.media_preview">
+                <source>title.media_preview</source>
+                <target>Preview</target>
+            </trans-unit>
+            <trans-unit id="title.media_thumbnail">
+                <source>title.media_thumbnail</source>
+                <target>Náhled</target>
+            </trans-unit>
+            <trans-unit id="title.informations">
+                <source>title.informations</source>
+                <target>Informace</target>
+            </trans-unit>
+            <trans-unit id="title.formats">
+                <source>title.formats</source>
+                <target>Formáty</target>
+            </trans-unit>
+            <trans-unit id="link_media">
+                <source>link_media</source>
+                <target>Navázat objekt na nové médium</target>
+            </trans-unit>
+            <trans-unit id="no_linked_media">
+                <source>no_linked_media</source>
+                <target>Žádné navázené médium</target>
+            </trans-unit>
+            <trans-unit id="widget_label_type">
+                <source>widget_label_type</source>
+                <target>Typ</target>
+            </trans-unit>
+            <trans-unit id="widget_label_context">
+                <source>widget_label_context</source>
+                <target>Kontext</target>
+            </trans-unit>
+            <trans-unit id="widget_headline_information">
+                <source>widget_headline_information</source>
+                <target>Informace</target>
+            </trans-unit>
+            <trans-unit id="widget_label_unlink">
+                <source>widget_label_unlink</source>
+                <target>Odstranit</target>
+            </trans-unit>
+            <trans-unit id="widget_label_binary_content">
+                <source>widget_label_binary_content</source>
+                <target>Soubor</target>
+            </trans-unit>
+            <trans-unit id="sonata_media_gallery_index">
+                <source>sonata_media_gallery_index</source>
+                <target>Galerie</target>
+            </trans-unit>
+            <trans-unit id="list.label_description">
+                <source>list.label_description</source>
+                <target>Popis</target>
+            </trans-unit>
+            <trans-unit id="list.label_size">
+                <source>list.label_size</source>
+                <target>Velikost</target>
+            </trans-unit>
+            <trans-unit id="warning_no_category">
+                <source>warning_no_category</source>
+                <target>Kategorie není vyplněna</target>
+            </trans-unit>
+            <trans-unit id="form.label_category">
+                <source>form.label_category</source>
+                <target>Kategorie</target>
+            </trans-unit>
+            <trans-unit id="form.label_provider_reference">
+                <source>form.label_provider_reference</source>
+                <target>Provider Reference</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.media">
+                <source>sonata.media.block.media</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.feature_media">
+                <source>sonata.media.block.feature_media</source>
+                <target>Média</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery">
+                <source>sonata.media.block.gallery</source>
+                <target>Galerie médií</target>
+            </trans-unit>
+            <trans-unit id="form.label_title">
+                <source>form.label_title</source>
+                <target>Titulek</target>
+            </trans-unit>
+            <trans-unit id="form.label_content">
+                <source>form.label_content</source>
+                <target>Obsah</target>
+            </trans-unit>
+            <trans-unit id="form.label_orientation">
+                <source>form.label_orientation</source>
+                <target>Orientace</target>
+            </trans-unit>
+            <trans-unit id="form.label_gallery">
+                <source>form.label_gallery</source>
+                <target>Galerie</target>
+            </trans-unit>
+            <trans-unit id="form.label_format">
+                <source>form.label_format</source>
+                <target>Formát</target>
+            </trans-unit>
+            <trans-unit id="form.label_pause_time">
+                <source>form.label_pause_time</source>
+                <target>Čas pozastavení</target>
+            </trans-unit>
+            <trans-unit id="form.label_start_paused">
+                <source>form.label_start_paused</source>
+                <target>Pozastavit na začátku</target>
+            </trans-unit>
+            <trans-unit id="form.label_wrap">
+                <source>form.label_wrap</source>
+                <target>Wrap</target>
+            </trans-unit>
+            <trans-unit id="form.label_orientation_left">
+                <source>form.label_orientation_left</source>
+                <target>Vlevo</target>
+            </trans-unit>
+            <trans-unit id="form.label_orientation_right">
+                <source>form.label_orientation_right</source>
+                <target>Vpravo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.block.gallery_list">
+                <source>sonata.media.block.gallery_list</source>
+                <target>Seznam galerií</target>
+            </trans-unit>
+            <trans-unit id="label_gallery_enabled">
+                <source>label_gallery_enabled</source>
+                <target>Aktivováno</target>
+            </trans-unit>
+            <trans-unit id="label_gallery_disabled">
+                <source>label_gallery_disabled</source>
+                <target>Deaktivováno</target>
+            </trans-unit>
+            <trans-unit id="no_galleries_found">
+                <source>no_galleries_found</source>
+                <target>Žádná galerie nenalezena</target>
+            </trans-unit>
+            <trans-unit id="view_all_galleries">
+                <source>view_all_galleries</source>
+                <target>Zobrazit všechny galerie</target>
+            </trans-unit>
+            <trans-unit id="form.label_mode">
+                <source>form.label_mode</source>
+                <target>Mód</target>
+            </trans-unit>
+            <trans-unit id="form.label_number">
+                <source>form.label_number</source>
+                <target>Číslo</target>
+            </trans-unit>
+            <trans-unit id="form.label_order">
+                <source>form.label_order</source>
+                <target>Pořadí</target>
+            </trans-unit>
+            <trans-unit id="form.label_order_name">
+                <source>form.label_order_name</source>
+                <target>Název</target>
+            </trans-unit>
+            <trans-unit id="form.label_order_created_at">
+                <source>form.label_order_created_at</source>
+                <target>Datum vytvoření</target>
+            </trans-unit>
+            <trans-unit id="form.label_order_updated_at">
+                <source>form.label_order_updated_at</source>
+                <target>Datum poslední úpravy</target>
+            </trans-unit>
+            <trans-unit id="form.label_sort">
+                <source>form.label_sort</source>
+                <target>Pořadí</target>
+            </trans-unit>
+            <trans-unit id="form.label_sort_asc">
+                <source>form.label_sort_asc</source>
+                <target>Od nejmenšího</target>
+            </trans-unit>
+            <trans-unit id="form.label_sort_desc">
+                <source>form.label_sort_desc</source>
+                <target>Od největšího</target>
+            </trans-unit>
+            <trans-unit id="form.label_mode_public">
+                <source>form.label_mode_public</source>
+                <target>Veřejný</target>
+            </trans-unit>
+            <trans-unit id="form.label_mode_admin">
+                <source>form.label_mode_admin</source>
+                <target>Admin</target>
+            </trans-unit>
+            <trans-unit id="form.label_class">
+                <source>form.label_class</source>
+                <target>CSS třída</target>
+            </trans-unit>
+            <trans-unit id="form.label_translation_domain">
+                <source>form.label_translation_domain</source>
+                <target>Translation domain</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form.label_icon</source>
+                <target>Ikona</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
