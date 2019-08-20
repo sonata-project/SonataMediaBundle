@@ -25,6 +25,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Form\FormBuilder;
 
 class BaseProviderTest extends AbstractProviderTest
@@ -120,6 +121,20 @@ class BaseProviderTest extends AbstractProviderTest
         $this->assertSame('/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
 
         $prop->setAccessible(false);
+    }
+
+    public function testTransform(): void
+    {
+        $provider = $this->getProvider();
+
+        $image = new SplFileInfo(__DIR__.'/../fixtures/logo.jpg', '', 'logo.jpg');
+        $media = new Media();
+        $media->setBinaryContent($image);
+        $media->setEnabled(true);
+        $media->setName($image->getFilename());
+        $media->setContext('default');
+        $media->setProviderName('sonata.media.provider.image');
+        $provider->transform($media);
     }
 }
 

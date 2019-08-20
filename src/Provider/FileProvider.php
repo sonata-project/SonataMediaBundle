@@ -342,6 +342,14 @@ class FileProvider extends BaseProvider
             return;
         }
 
+        // if the binary content is a \SplFileInfo => convert to a valid File
+        if ($media->getBinaryContent() instanceof \SplFileInfo) {
+            $binaryContent = new File($media->getBinaryContent()->getPathName());
+            $media->setBinaryContent($binaryContent);
+
+            return;
+        }
+
         // if the binary content is a filename => convert to a valid File
         if (!is_file($media->getBinaryContent())) {
             throw new \RuntimeException('The file does not exist : '.$media->getBinaryContent());
