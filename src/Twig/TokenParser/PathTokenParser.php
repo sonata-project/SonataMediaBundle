@@ -35,7 +35,7 @@ class PathTokenParser extends AbstractTokenParser
     /**
      * {@inheritdoc}
      */
-    public function parse(\Twig_Token $token)
+    public function parse(Token $token)
     {
         $media = $this->parser->getExpressionParser()->parseExpression();
 
