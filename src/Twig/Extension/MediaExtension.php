@@ -57,9 +57,9 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
     public function getTokenParsers()
     {
         return [
-            new MediaTokenParser(\get_called_class()),
-            new ThumbnailTokenParser(\get_called_class()),
-            new PathTokenParser(\get_called_class()),
+            new MediaTokenParser(static::class),
+            new ThumbnailTokenParser(static::class),
+            new PathTokenParser(static::class),
         ];
     }
 

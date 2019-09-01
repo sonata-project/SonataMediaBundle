@@ -92,7 +92,7 @@ class AddMassMediaCommand extends BaseCommand
         $media = $this->getMediaManager()->create();
 
         foreach ($this->setters as $pos => $name) {
-            \call_user_func([$media, 'set'.$name], $data[$pos]);
+            $media->{'set'.$name}($data[$pos]);
         }
 
         try {
