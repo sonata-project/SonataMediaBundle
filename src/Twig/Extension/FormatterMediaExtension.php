@@ -23,7 +23,7 @@ use Twig\Extension\ExtensionInterface;
 class FormatterMediaExtension extends AbstractExtension implements ExtensionInterface
 {
     /**
-     * @var \Twig_Extension
+     * @var AbstractExtension
      */
     protected $twigExtension;
 

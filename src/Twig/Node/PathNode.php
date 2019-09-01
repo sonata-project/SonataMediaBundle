@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Twig\Node;
 
-class PathNode extends \Twig_Node
+use Twig\Node\Expression\AbstractExpression;
+use Twig\Node\Node;
+
+class PathNode extends Node
 {
     /**
      * @var string
@@ -25,7 +28,7 @@ class PathNode extends \Twig_Node
      * @param int    $lineno
      * @param string $tag
      */
-    public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $format, $lineno, $tag = null)
+    public function __construct($extensionName, AbstractExpression $media, AbstractExpression $format, $lineno, $tag = null)
     {
         $this->extensionName = $extensionName;
 

@@ -14,8 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Twig\TokenParser;
 
 use Sonata\MediaBundle\Twig\Node\MediaNode;
+use Twig\Node\Expression\ArrayExpression;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
 
-class MediaTokenParser extends \Twig_TokenParser
+class MediaTokenParser extends AbstractTokenParser
 {
     /**
      * @var string
@@ -42,15 +45,15 @@ class MediaTokenParser extends \Twig_TokenParser
         $format = $this->parser->getExpressionParser()->parseExpression();
 
         // attributes
-        if ($this->parser->getStream()->test(\Twig_Token::NAME_TYPE, 'with')) {
+        if ($this->parser->getStream()->test(Token::NAME_TYPE, 'with')) {
             $this->parser->getStream()->next();
 
             $attributes = $this->parser->getExpressionParser()->parseExpression();
         } else {
-            $attributes = new \Twig_Node_Expression_Array([], $token->getLine());
+            $attributes = new ArrayExpression([], $token->getLine());
         }
 
-        $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
+        $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
 
         return new MediaNode($this->extensionName, $media, $format, $attributes, $token->getLine(), $this->getTag());
     }
