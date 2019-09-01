@@ -128,12 +128,12 @@ file that was distributed with this source code.
     </div>
 
     {% if sonata_media.pixlr and sonata_media.pixlr.isEditable(object) %}
-        <div class="modal fade" id="pixlr-modal" tabindex="-1" role="dialog" aria-labelledby="{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}" aria-hidden="true">
+        <div class="modal fade" id="pixlr-modal" tabindex="-1" role="dialog" aria-labelledby="{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle") }}" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle")}}</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ "label.edit_with_pixlr"|trans({}, "SonataMediaBundle") }}</h4>
                     </div>
                     <div class="modal-body" id="pixlr-modal-body">
                     </div>
