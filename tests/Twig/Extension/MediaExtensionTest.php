@@ -18,6 +18,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
+use Twig\Environment;
+use Twig\Template;
 
 /**
  * @author Geza Buza <bghome@gmail.com>
@@ -30,12 +32,12 @@ class MediaExtensionTest extends TestCase
     private $provider;
 
     /**
-     * @var Twig_Template
+     * @var Template
      */
     private $template;
 
     /**
-     * @var Twig_Environment
+     * @var Environment
      */
     private $environment;
 
@@ -107,7 +109,7 @@ class MediaExtensionTest extends TestCase
     public function getTemplate()
     {
         if (null === $this->template) {
-            $this->template = $this->getMockBuilder('Twig_Template')
+            $this->template = $this->getMockBuilder(Template::class)
                                    ->disableOriginalConstructor()
                                    ->setMethods(['render'])
                                    ->getMockForAbstractClass();
@@ -119,7 +121,7 @@ class MediaExtensionTest extends TestCase
     public function getEnvironment()
     {
         if (null === $this->environment) {
-            $this->environment = $this->getMockBuilder('Twig_Environment')
+            $this->environment = $this->getMockBuilder(Environment::class)
                 ->disableOriginalConstructor()
                 ->getMock();
             $this->environment->method('loadTemplate')->willReturn($this->getTemplate());

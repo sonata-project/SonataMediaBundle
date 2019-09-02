@@ -19,8 +19,11 @@ use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\InitRuntimeInterface;
 
-class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRuntimeInterface
+class MediaExtension extends AbstractExtension implements InitRuntimeInterface
 {
     /**
      * @var Pool
@@ -38,7 +41,7 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     protected $mediaManager;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $environment;
 
@@ -54,9 +57,9 @@ class MediaExtension extends \Twig_Extension implements \Twig_Extension_InitRunt
     public function getTokenParsers()
     {
         return [
-            new MediaTokenParser(\get_called_class()),
-            new ThumbnailTokenParser(\get_called_class()),
-            new PathTokenParser(\get_called_class()),
+            new MediaTokenParser(static::class),
+            new ThumbnailTokenParser(static::class),
+            new PathTokenParser(static::class),
         ];
     }
 

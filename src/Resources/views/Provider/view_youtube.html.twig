@@ -21,7 +21,7 @@ file that was distributed with this source code.
         <param name="movie" value="//www.youtube.com/v/{{ media.providerreference }}?{{ options.player_url_parameters }}"></param>
         <param name="allowFullScreen" value="{{ allowFullScreen }}"></param>
         <param name="allowscriptaccess" value="{{ options.player_parameters.allowScriptAccess }}"></param>
-        <param name="wmode" value="{{ options.player_parameters.wmode}}">
+        <param name="wmode" value="{{ options.player_parameters.wmode }}">
 
         <embed
             src="//www.youtube.com/v/{{ media.providerreference }}?{{ options.player_url_parameters }}"
@@ -30,7 +30,7 @@ file that was distributed with this source code.
             allowfullscreen="{{ allowFullScreen }}"
             width="{{ options.player_parameters.width }}"
             height="{{ options.player_parameters.height }}"
-            wmode="{{options.player_parameters.wmode}}">
+            wmode="{{ options.player_parameters.wmode }}">
         </embed>
     </object>
 {% endif %}

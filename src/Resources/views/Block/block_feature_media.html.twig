@@ -15,7 +15,7 @@ file that was distributed with this source code.
     <div class="sonata-media-block-feature-media-container {{ settings.class }}">
 
         <div class="sonata-media-block-feature-media-container-{{ settings.orientation }}">
-            {% if media and settings.format%}
+            {% if media and settings.format %}
                 {% media media, settings.format %}
             {% else %}
                 {# no media selected or format defined... #}

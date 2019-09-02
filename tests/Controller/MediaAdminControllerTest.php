@@ -41,6 +41,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Twig\Environment;
+use Twig\Error\RuntimeError;
 
 class MediaAdminControllerTest extends TestCase
 {
@@ -194,7 +196,7 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureSetFormTheme(FormView $formView, $formTheme): void
     {
-        $twig = $this->prophesize(\Twig_Environment::class);
+        $twig = $this->prophesize(Environment::class);
 
         // Remove this trick when bumping Symfony requirement to 3.4+
         if (method_exists(DebugCommand::class, 'getLoaderPaths')) {
@@ -215,7 +217,7 @@ class MediaAdminControllerTest extends TestCase
             $formExtension->renderer = $twigRenderer->reveal();
 
             // This Throw is for the CRUDController::setFormTheme()
-            $twig->getRuntime($rendererClass)->willThrow(\Twig_Error_Runtime::class);
+            $twig->getRuntime($rendererClass)->willThrow(RuntimeError::class);
             $twig->getExtension(FormExtension::class)->willReturn($formExtension->reveal());
         }
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();

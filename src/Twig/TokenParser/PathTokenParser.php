@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Twig\TokenParser;
 
 use Sonata\MediaBundle\Twig\Node\PathNode;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
 
-class PathTokenParser extends \Twig_TokenParser
+class PathTokenParser extends AbstractTokenParser
 {
     /**
      * @var string
@@ -41,7 +43,7 @@ class PathTokenParser extends \Twig_TokenParser
 
         $format = $this->parser->getExpressionParser()->parseExpression();
 
-        $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
+        $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
 
         return new PathNode($this->extensionName, $media, $format, $token->getLine(), $this->getTag());
     }

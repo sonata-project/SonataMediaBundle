@@ -37,6 +37,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Twig\Environment;
 
 class GalleryAdminControllerTest extends TestCase
 {
@@ -130,7 +131,7 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureSetFormTheme(FormView $formView, array $formTheme): void
     {
-        $twig = $this->prophesize(\Twig_Environment::class);
+        $twig = $this->prophesize(Environment::class);
 
         // Remove this trick when bumping Symfony requirement to 3.4+
         if (method_exists(DebugCommand::class, 'getLoaderPaths')) {
