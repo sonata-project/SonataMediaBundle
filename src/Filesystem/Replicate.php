@@ -18,6 +18,9 @@ use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Filesystem;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class Replicate implements AdapterInterface, MetadataSupporter
 {
     /**

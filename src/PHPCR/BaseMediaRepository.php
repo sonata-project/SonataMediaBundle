@@ -16,6 +16,9 @@ namespace Sonata\MediaBundle\PHPCR;
 use Doctrine\ODM\PHPCR\DocumentRepository;
 use Doctrine\ODM\PHPCR\Id\RepositoryIdInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class BaseMediaRepository extends DocumentRepository implements RepositoryIdInterface
 {
     /**

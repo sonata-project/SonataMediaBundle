@@ -19,6 +19,9 @@ use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**

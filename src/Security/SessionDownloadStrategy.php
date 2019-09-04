@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
  */
 class SessionDownloadStrategy implements DownloadStrategyInterface
@@ -61,8 +63,8 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
         // NEXT_MAJOR : remove this block and set session from parameter.
         if ($session instanceof ContainerInterface) {
             @trigger_error(
-                'Using an instance of Symfony\Component\DependencyInjection\ContainerInterface is deprecated since 
-                version 3.1 and will be removed in 4.0. 
+                'Using an instance of Symfony\Component\DependencyInjection\ContainerInterface is deprecated since
+                version 3.1 and will be removed in 4.0.
                 Use Symfony\Component\HttpFoundation\Session\SessionInterface instead.',
                 E_USER_DEPRECATED
             );

@@ -20,6 +20,9 @@ use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundE
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class RolesDownloadStrategy implements DownloadStrategyInterface
 {
     /**

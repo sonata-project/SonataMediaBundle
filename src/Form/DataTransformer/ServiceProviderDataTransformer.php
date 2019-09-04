@@ -20,6 +20,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class ServiceProviderDataTransformer implements DataTransformerInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;

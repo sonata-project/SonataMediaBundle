@@ -19,6 +19,9 @@ use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
     /**

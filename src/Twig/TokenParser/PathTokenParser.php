@@ -17,6 +17,9 @@ use Sonata\MediaBundle\Twig\Node\PathNode;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class PathTokenParser extends AbstractTokenParser
 {
     /**

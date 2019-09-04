@@ -16,6 +16,9 @@ namespace Sonata\MediaBundle\Metadata;
 use GuzzleHttp\Psr7;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
     public const PRIVATE_ACCESS = 'private';

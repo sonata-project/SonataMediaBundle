@@ -18,6 +18,9 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class ValidMediaFormat extends Constraint
 {
     public $message = 'The format is not valid';

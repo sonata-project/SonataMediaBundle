@@ -21,6 +21,9 @@ use Sonata\NotificationBundle\Consumer\ConsumerInterface;
 use Sonata\NotificationBundle\Exception\HandlingException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class CreateThumbnailConsumer implements ConsumerInterface
 {
     /**

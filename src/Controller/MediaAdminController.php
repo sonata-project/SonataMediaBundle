@@ -23,6 +23,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaAdminController extends Controller
 {
     /**

@@ -19,6 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * BlockService for view gallery.
  *
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
 class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService

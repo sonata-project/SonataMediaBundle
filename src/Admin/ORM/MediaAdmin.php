@@ -18,6 +18,9 @@ use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaAdmin extends Admin
 {
     /**

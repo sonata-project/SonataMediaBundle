@@ -22,6 +22,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class Configuration implements ConfigurationInterface
 {
     /**

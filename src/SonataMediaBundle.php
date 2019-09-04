@@ -26,6 +26,9 @@ use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class SonataMediaBundle extends Bundle
 {
     /**

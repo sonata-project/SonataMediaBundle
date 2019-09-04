@@ -16,6 +16,9 @@ namespace Sonata\MediaBundle\Admin\ODM;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaAdmin extends Admin
 {
     /**
