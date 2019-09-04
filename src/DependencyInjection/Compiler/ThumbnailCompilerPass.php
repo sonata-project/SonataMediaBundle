@@ -17,6 +17,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class ThumbnailCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)

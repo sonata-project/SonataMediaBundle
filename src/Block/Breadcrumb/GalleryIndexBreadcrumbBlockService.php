@@ -18,6 +18,8 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 /**
  * BlockService for view gallery.
  *
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
 class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService

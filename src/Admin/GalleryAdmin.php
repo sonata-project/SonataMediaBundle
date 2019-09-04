@@ -21,6 +21,9 @@ use Sonata\Form\Type\CollectionType;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class GalleryAdmin extends AbstractAdmin
 {
     /**

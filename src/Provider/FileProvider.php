@@ -35,6 +35,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class FileProvider extends BaseProvider
 {
     protected $allowedExtensions;

@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaController extends Controller
 {
     /**

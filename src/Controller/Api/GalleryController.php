@@ -32,6 +32,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @author Hugo Briand <briand@ekino.com>
  */
 class GalleryController

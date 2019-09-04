@@ -17,6 +17,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class FormatThumbnail implements ThumbnailInterface
 {
     /**

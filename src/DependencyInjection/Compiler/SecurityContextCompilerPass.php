@@ -23,6 +23,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * and 2.6+ security.authorization_checker service. This pass may be removed when support
  * for Symfony < 2.6 is dropped.
  */
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class SecurityContextCompilerPass implements CompilerPassInterface
 {
     /**

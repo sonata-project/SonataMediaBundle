@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\Metadata;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class NoopMetadataBuilder implements MetadataBuilderInterface
 {
     /**
