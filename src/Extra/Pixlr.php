@@ -26,6 +26,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class Pixlr
 {
     /**

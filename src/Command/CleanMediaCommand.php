@@ -23,6 +23,9 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class CleanMediaCommand extends ContainerAwareCommand
 {
     /**

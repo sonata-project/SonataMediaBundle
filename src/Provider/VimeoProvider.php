@@ -16,6 +16,9 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class VimeoProvider extends BaseVideoProvider
 {
     /**

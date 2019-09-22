@@ -19,6 +19,9 @@ use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {
     /**

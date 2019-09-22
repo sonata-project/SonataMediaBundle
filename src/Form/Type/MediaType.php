@@ -28,6 +28,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaType extends AbstractType implements LoggerAwareInterface
 {
     use LoggerAwareTrait;

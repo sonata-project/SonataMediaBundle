@@ -22,6 +22,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class YouTubeProvider extends BaseVideoProvider
 {
     /**

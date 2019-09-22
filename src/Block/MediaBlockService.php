@@ -34,6 +34,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class MediaBlockService extends AbstractAdminBlockService

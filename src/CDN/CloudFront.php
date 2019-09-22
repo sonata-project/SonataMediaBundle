@@ -41,6 +41,8 @@ use Aws\CloudFront\Exception\CloudFrontException;
  * to the new distribution. For more information about the charges for
  * invalidation, see Paying for Object Invalidation.
  *
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @uses \CloudFrontClient for stablish connection with CloudFront service
  *
  * @see http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.htmlInvalidating Objects (Web Distributions Only)

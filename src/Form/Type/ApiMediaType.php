@@ -23,6 +23,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @author Hugo Briand <briand@ekino.com>
  */
 class ApiMediaType extends AbstractType implements LoggerAwareInterface

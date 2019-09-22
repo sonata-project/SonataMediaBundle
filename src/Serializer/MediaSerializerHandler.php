@@ -16,6 +16,8 @@ namespace Sonata\MediaBundle\Serializer;
 use Sonata\Serializer\BaseSerializerHandler;
 
 /**
+ * @final since sonata-project/media-bundle 3.x
+ *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
 class MediaSerializerHandler extends BaseSerializerHandler

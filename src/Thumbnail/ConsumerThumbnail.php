@@ -18,6 +18,9 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\NotificationBundle\Backend\BackendInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class ConsumerThumbnail implements ThumbnailInterface
 {
     /**

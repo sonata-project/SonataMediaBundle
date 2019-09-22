@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\Doctrine\Document\BasePHPCRManager;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaManager extends BasePHPCRManager
 {
     /**

@@ -17,6 +17,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class PublicDownloadStrategy implements DownloadStrategyInterface
 {
     /**

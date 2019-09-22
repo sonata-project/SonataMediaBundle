@@ -21,6 +21,9 @@ use Imagine\Image\ImagineInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class SimpleResizer implements ResizerInterface
 {
     /**

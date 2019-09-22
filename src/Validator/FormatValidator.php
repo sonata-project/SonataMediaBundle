@@ -20,6 +20,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class FormatValidator extends ConstraintValidator
 {
     /**

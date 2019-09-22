@@ -18,6 +18,9 @@ use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
     /**

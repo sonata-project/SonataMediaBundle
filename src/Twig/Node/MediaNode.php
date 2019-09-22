@@ -16,6 +16,9 @@ namespace Sonata\MediaBundle\Twig\Node;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaNode extends Node
 {
     /**

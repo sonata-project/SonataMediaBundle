@@ -23,6 +23,9 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class ImageProvider extends FileProvider
 {
     /**

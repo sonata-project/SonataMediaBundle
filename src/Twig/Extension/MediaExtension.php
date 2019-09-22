@@ -23,6 +23,9 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\InitRuntimeInterface;
 
+/**
+ * @final since sonata-project/media-bundle 3.x
+ */
 class MediaExtension extends AbstractExtension implements InitRuntimeInterface
 {
     /**
