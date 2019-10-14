@@ -26,6 +26,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
  */
 class SimpleResizer implements ResizerInterface
 {
+    use ImagineCompatibleResizerTrait;
+
     /**
      * @var ImagineInterface
      */
@@ -47,7 +49,7 @@ class SimpleResizer implements ResizerInterface
     public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
-        $this->mode = $mode;
+        $this->mode = $this->convertMode($mode);
         $this->metadata = $metadata;
     }
 
