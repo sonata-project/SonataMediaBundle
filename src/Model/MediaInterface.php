@@ -261,7 +261,7 @@ interface MediaInterface
     /**
      * Set cdn_flush_identifier.
      *
-     * @param bool $cdnFlushIdentifier
+     * @param string $cdnFlushIdentifier
      */
     public function setCdnFlushIdentifier($cdnFlushIdentifier);
 
