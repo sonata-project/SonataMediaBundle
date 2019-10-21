@@ -18,7 +18,7 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 /**
  * BlockService for view gallery.
  *
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */

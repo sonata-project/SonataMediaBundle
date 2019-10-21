@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraint;
  * @Annotation
  */
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class ValidMediaFormat extends Constraint
 {

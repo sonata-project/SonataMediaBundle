@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Form\Type;
 use Sonata\Form\Type\BaseDoctrineORMSerializationType;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class ApiGalleryType extends BaseDoctrineORMSerializationType
 {

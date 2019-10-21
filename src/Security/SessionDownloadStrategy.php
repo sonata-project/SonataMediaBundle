@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
  */

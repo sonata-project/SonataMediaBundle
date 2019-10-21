@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class Pool
 {

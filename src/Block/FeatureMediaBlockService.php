@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */

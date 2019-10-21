@@ -25,7 +25,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  * This command can be used to update CDN status for medias that are currently
  * in status flushing.
  *
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Javier Spagnoletti <phansys@gmail.com>
  */

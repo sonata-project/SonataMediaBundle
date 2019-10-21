@@ -41,7 +41,7 @@ use Aws\CloudFront\Exception\CloudFrontException;
  * to the new distribution. For more information about the charges for
  * invalidation, see Paying for Object Invalidation.
  *
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  *
  * @uses \CloudFrontClient for stablish connection with CloudFront service
  *

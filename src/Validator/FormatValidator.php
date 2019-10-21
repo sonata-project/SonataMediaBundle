@@ -21,7 +21,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class FormatValidator extends ConstraintValidator
 {

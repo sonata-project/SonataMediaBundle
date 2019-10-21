@@ -2,6 +2,128 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.21.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.20.1...3.21.0) - 2019-10-21
+### Added
+- Add missing translation for admin menu
+
+### Changed
+- Changed parameter type in `MediaInterface::setCdnFlushIdentifier`
+- Add `breadcrumb` as default context for seo blocks
+- the alt tag of media picture elements to the media description, falling back
+  to the name when no description is present
+- Bumped "twig/twig" dependency to "^2.9";
+- Changed usages of `{% spaceless %}` tag, which is deprecated as of Twig 1.38
+  with `{% apply spaceless %}` filter;
+- Changed usages of `{% for .. if .. %}`, which is deprecated as of Twig 2.10
+  with `filter` filter'.
+
+### Fixed
+- Using deprecated `\Twig_` classes without namespace.
+- Respect "field_description.options.route.name" value at
+  `list_image.html.twig` instead of using hardcoded "edit".
+- Possibility to resolve Twig dependency to versions that don't support arrow
+  functions on Twig filters.
+
+### Deprecated
+- Extending classes marked as final:
+ * `Sonata\MediaBundle\Admin\GalleryAdmin`
+ * `Sonata\MediaBundle\Admin\GalleryHasMediaAdmin`
+ * `Sonata\MediaBundle\Admin\ODM\MediaAdmin`
+ * `Sonata\MediaBundle\Admin\ORM\MediaAdmin`
+ * `Sonata\MediaBundle\Admin\PHPCR\GalleryAdmin`
+ * `Sonata\MediaBundle\Admin\PHPCR\MediaAdmin`
+ * `Sonata\MediaBundle\Block\Breadcrumb\GalleryIndexBreadcrumbBlockService`
+ * `Sonata\MediaBundle\Block\Breadcrumb\GalleryViewBreadcrumbBlockService`
+ * `Sonata\MediaBundle\Block\Breadcrumb\MediaViewBreadcrumbBlockService`
+ * `Sonata\MediaBundle\Block\FeatureMediaBlockService`
+ * `Sonata\MediaBundle\Block\GalleryBlockService`
+ * `Sonata\MediaBundle\Block\GalleryListBlockService`
+ * `Sonata\MediaBundle\Block\MediaBlockService`
+ * `Sonata\MediaBundle\CDN\CloudFront`
+ * `Sonata\MediaBundle\CDN\Fallback`
+ * `Sonata\MediaBundle\CDN\PantherPortal`
+ * `Sonata\MediaBundle\CDN\Server`
+ * `Sonata\MediaBundle\Command\AddMassMediaCommand`
+ * `Sonata\MediaBundle\Command\AddMediaCommand`
+ * `Sonata\MediaBundle\Command\CleanMediaCommand`
+ * `Sonata\MediaBundle\Command\FixMediaContextCommand`
+ * `Sonata\MediaBundle\Command\MigrateToJsonTypeCommand`
+ * `Sonata\MediaBundle\Command\RefreshMetadataCommand`
+ * `Sonata\MediaBundle\Command\RemoveThumbsCommand`
+ * `Sonata\MediaBundle\Command\SyncThumbsCommand`
+ * `Sonata\MediaBundle\Command\UpdateCdnStatusCommand`
+ * `Sonata\MediaBundle\Consumer\CreateThumbnailConsumer`
+ * `Sonata\MediaBundle\Controller\Api\GalleryController`
+ * `Sonata\MediaBundle\Controller\Api\MediaController`
+ * `Sonata\MediaBundle\Controller\GalleryAdminController`
+ * `Sonata\MediaBundle\Controller\GalleryController`
+ * `Sonata\MediaBundle\Controller\MediaAdminController`
+ * `Sonata\MediaBundle\Controller\MediaController`
+ * `Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass`
+ * `Sonata\MediaBundle\DependencyInjection\Compiler\GlobalVariablesCompilerPass`
+ * `Sonata\MediaBundle\DependencyInjection\Compiler\SecurityContextCompilerPass`
+ * `Sonata\MediaBundle\DependencyInjection\Compiler\ThumbnailCompilerPass`
+ * `Sonata\MediaBundle\DependencyInjection\Configuration`
+ * `Sonata\MediaBundle\DependencyInjection\SonataMediaExtension`
+ * `Sonata\MediaBundle\Document\GalleryManager`
+ * `Sonata\MediaBundle\Document\MediaManager`
+ * `Sonata\MediaBundle\Entity\GalleryManager`
+ * `Sonata\MediaBundle\Entity\MediaManager`
+ * `Sonata\MediaBundle\Extra\ApiMediaFile`
+ * `Sonata\MediaBundle\Extra\Pixlr`
+ * `Sonata\MediaBundle\Filesystem\Local`
+ * `Sonata\MediaBundle\Filesystem\Replicate`
+ * `Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer`
+ * `Sonata\MediaBundle\Form\DataTransformer\ServiceProviderDataTransformer`
+ * `Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType`
+ * `Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType`
+ * `Sonata\MediaBundle\Form\Type\ApiGalleryType`
+ * `Sonata\MediaBundle\Form\Type\ApiMediaType`
+ * `Sonata\MediaBundle\Form\Type\MediaType`
+ * `Sonata\MediaBundle\Generator\DefaultGenerator`
+ * `Sonata\MediaBundle\Generator\ODMGenerator`
+ * `Sonata\MediaBundle\Generator\PHPCRGenerator`
+ * `Sonata\MediaBundle\Listener\ODM\MediaEventSubscriber`
+ * `Sonata\MediaBundle\Listener\ORM\MediaEventSubscriber`
+ * `Sonata\MediaBundle\Listener\PHPCR\MediaEventSubscriber`
+ * `Sonata\MediaBundle\Metadata\AmazonMetadataBuilder`
+ * `Sonata\MediaBundle\Metadata\NoopMetadataBuilder`
+ * `Sonata\MediaBundle\Metadata\ProxyMetadataBuilder`
+ * `Sonata\MediaBundle\PHPCR\BaseGalleryHasMediaRepository`
+ * `Sonata\MediaBundle\PHPCR\BaseGalleryRepository`
+ * `Sonata\MediaBundle\PHPCR\BaseMediaRepository`
+ * `Sonata\MediaBundle\PHPCR\GalleryManager`
+ * `Sonata\MediaBundle\PHPCR\MediaManager`
+ * `Sonata\MediaBundle\Provider\DailyMotionProvider`
+ * `Sonata\MediaBundle\Provider\FileProvider`
+ * `Sonata\MediaBundle\Provider\ImageProvider`
+ * `Sonata\MediaBundle\Provider\Pool`
+ * `Sonata\MediaBundle\Provider\VimeoProvider`
+ * `Sonata\MediaBundle\Provider\YouTubeProvider`
+ * `Sonata\MediaBundle\Resizer\SimpleResizer`
+ * `Sonata\MediaBundle\Resizer\SquareResizer`
+ * `Sonata\MediaBundle\Security\ForbiddenDownloadStrategy`
+ * `Sonata\MediaBundle\Security\PublicDownloadStrategy`
+ * `Sonata\MediaBundle\Security\RolesDownloadStrategy`
+ * `Sonata\MediaBundle\Security\SessionDownloadStrategy`
+ * `Sonata\MediaBundle\Serializer\GallerySerializerHandler`
+ * `Sonata\MediaBundle\Serializer\MediaSerializerHandler`
+ * `Sonata\MediaBundle\SonataMediaBundle`
+ * `Sonata\MediaBundle\Thumbnail\ConsumerThumbnail`
+ * `Sonata\MediaBundle\Thumbnail\FormatThumbnail`
+ * `Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail`
+ * `Sonata\MediaBundle\Twig\Extension\FormatterMediaExtension`
+ * `Sonata\MediaBundle\Twig\Extension\MediaExtension`
+ * `Sonata\MediaBundle\Twig\GlobalVariables`
+ * `Sonata\MediaBundle\Twig\Node\MediaNode`
+ * `Sonata\MediaBundle\Twig\Node\PathNode`
+ * `Sonata\MediaBundle\Twig\Node\ThumbnailNode`
+ * `Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser`
+ * `Sonata\MediaBundle\Twig\TokenParser\PathTokenParser`
+ * `Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser`
+ * `Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat`
+ * `Sonata\MediaBundle\Validator\FormatValidator`
+
 ## [3.20.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.20.0...3.20.1) - 2019-06-13
 
 ### Fixed

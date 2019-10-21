@@ -36,7 +36,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator).
  *
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Hugo Briand <briand@ekino.com>
  */

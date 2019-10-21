@@ -17,7 +17,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class MediaAdmin extends Admin
 {

@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * for Symfony < 2.6 is dropped.
  */
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class SecurityContextCompilerPass implements CompilerPassInterface
 {

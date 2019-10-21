@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class RolesDownloadStrategy implements DownloadStrategyInterface
 {
