@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class LiipImagineThumbnail implements ThumbnailInterface
 {

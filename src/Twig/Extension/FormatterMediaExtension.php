@@ -21,7 +21,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class FormatterMediaExtension extends AbstractExtension implements ExtensionInterface
 {

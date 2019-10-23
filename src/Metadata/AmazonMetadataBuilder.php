@@ -17,7 +17,7 @@ use GuzzleHttp\Psr7;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class AmazonMetadataBuilder implements MetadataBuilderInterface
 {

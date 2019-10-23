@@ -19,7 +19,7 @@ use Gaufrette\Filesystem;
 use Psr\Log\LoggerInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class Replicate implements AdapterInterface, MetadataSupporter
 {

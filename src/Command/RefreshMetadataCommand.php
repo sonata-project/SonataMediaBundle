@@ -26,7 +26,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  * Useful if you have existing media content and added new formats.
  */
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class RefreshMetadataCommand extends BaseCommand
 {

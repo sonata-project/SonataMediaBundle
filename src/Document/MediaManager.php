@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Document;
 use Sonata\Doctrine\Document\BaseDocumentManager;
 
 /**
- * @final since sonata-project/media-bundle 3.x
+ * @final since sonata-project/media-bundle 3.21.0
  */
 class MediaManager extends BaseDocumentManager
 {
