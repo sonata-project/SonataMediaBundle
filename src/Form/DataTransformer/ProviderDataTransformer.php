@@ -122,7 +122,6 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
     /**
      * Define the default options for the DataTransformer.
      *
-     *
      * @return array
      */
     protected function getOptions(array $options)

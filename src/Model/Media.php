@@ -162,9 +162,7 @@ abstract class Media implements MediaInterface
     {
         if ('category' === $property) {
             if (null !== $value && !is_a($value, CategoryInterface::class)) {
-                throw new \InvalidArgumentException(
-                    '$category should be an instance of Sonata\ClassificationBundle\Model\CategoryInterface or null'
-                );
+                throw new \InvalidArgumentException('$category should be an instance of Sonata\ClassificationBundle\Model\CategoryInterface or null');
             }
 
             $this->category = $value;

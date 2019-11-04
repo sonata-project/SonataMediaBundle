@@ -73,9 +73,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
         } elseif ($session instanceof SessionInterface) {
             $this->session = $session;
         } else {
-            throw new \InvalidArgumentException(
-                '$session should be an instance of Symfony\Component\HttpFoundation\Session\SessionInterface'
-            );
+            throw new \InvalidArgumentException('$session should be an instance of Symfony\Component\HttpFoundation\Session\SessionInterface');
         }
 
         $this->times = $times;

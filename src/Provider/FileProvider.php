@@ -450,9 +450,7 @@ class FileProvider extends BaseProvider
     protected function generateBinaryFromRequest(MediaInterface $media)
     {
         if (!$media->getContentType()) {
-            throw new \RuntimeException(
-                'You must provide the content type value for your media before setting the binary content'
-            );
+            throw new \RuntimeException('You must provide the content type value for your media before setting the binary content');
         }
 
         $request = $media->getBinaryContent();
@@ -468,9 +466,7 @@ class FileProvider extends BaseProvider
         $extension = $guesser->guess($media->getContentType());
 
         if (!$extension) {
-            throw new \RuntimeException(
-                sprintf('Unable to guess extension for content type %s', $media->getContentType())
-            );
+            throw new \RuntimeException(sprintf('Unable to guess extension for content type %s', $media->getContentType()));
         }
 
         $handle = tmpfile();

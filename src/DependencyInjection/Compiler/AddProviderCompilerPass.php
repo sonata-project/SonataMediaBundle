@@ -52,7 +52,6 @@ class AddProviderCompilerPass implements CompilerPassInterface
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     *
      * @return array
      */
     public function fixSettings(ContainerBuilder $container)
