@@ -368,7 +368,6 @@ class MediaController
     /**
      * Write a medium, this method is used by both POST and PUT action methods.
      *
-     *
      * @return View|FormInterface
      */
     protected function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
