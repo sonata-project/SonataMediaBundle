@@ -80,7 +80,6 @@ interface MediaProviderInterface
     /**
      * return the reference image of the media, can be the video thumbnail or the original uploaded picture.
      *
-     *
      * @return string to the reference image
      */
     public function getReferenceImage(MediaInterface $media);
@@ -115,7 +114,6 @@ interface MediaProviderInterface
 
     /**
      * Generate the media path.
-     *
      *
      * @return string
      */
