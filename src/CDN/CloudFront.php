@@ -195,7 +195,6 @@ class CloudFront implements CDNInterface
     /**
      * Generates a valid caller reference from given paths regardless its order.
      *
-     *
      * @return string a md5 representation
      */
     protected function getCallerReference(array $paths)

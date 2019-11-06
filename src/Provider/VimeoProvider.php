@@ -134,7 +134,6 @@ class VimeoProvider extends BaseVideoProvider
     /**
      * Get provider reference url.
      *
-     *
      * @return string
      */
     public function getReferenceUrl(MediaInterface $media)
