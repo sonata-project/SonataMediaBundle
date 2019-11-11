@@ -481,6 +481,15 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
+     */
+    public function configureClassesToCompile()
+    {
+    }
+
+    /**
      * Allow an extension to prepend the extension configurations.
      */
     public function prepend(ContainerBuilder $container)

@@ -27,10 +27,6 @@ use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Tests\Fixtures\EntityWithGetId;
-use Symfony\Bridge\Twig\AppVariable;
-use Symfony\Bridge\Twig\Command\DebugCommand;
-use Symfony\Bridge\Twig\Extension\FormExtension;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
@@ -42,7 +38,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
-use Twig\Error\RuntimeError;
 
 class MediaAdminControllerTest extends TestCase
 {
@@ -198,28 +193,14 @@ class MediaAdminControllerTest extends TestCase
     {
         $twig = $this->prophesize(Environment::class);
 
-        // Remove this trick when bumping Symfony requirement to 3.4+
-        if (method_exists(DebugCommand::class, 'getLoaderPaths')) {
-            $rendererClass = FormRenderer::class;
-        } else {
-            $rendererClass = TwigRenderer::class;
-        }
+        $rendererClass = FormRenderer::class;
 
         $twigRenderer = $this->prophesize($rendererClass);
 
         $this->container->get('twig')->willReturn($twig->reveal());
 
-        // Remove this trick when bumping Symfony requirement to 3.2+.
-        if (method_exists(AppVariable::class, 'getToken')) {
-            $twig->getRuntime($rendererClass)->willReturn($twigRenderer->reveal());
-        } else {
-            $formExtension = $this->prophesize(FormExtension::class);
-            $formExtension->renderer = $twigRenderer->reveal();
+        $twig->getRuntime($rendererClass)->willReturn($twigRenderer->reveal());
 
-            // This Throw is for the CRUDController::setFormTheme()
-            $twig->getRuntime($rendererClass)->willThrow(RuntimeError::class);
-            $twig->getExtension(FormExtension::class)->willReturn($formExtension->reveal());
-        }
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
 
