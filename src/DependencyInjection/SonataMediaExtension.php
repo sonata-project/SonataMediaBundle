@@ -15,52 +15,6 @@ namespace Sonata\MediaBundle\DependencyInjection;
 
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
-use Sonata\MediaBundle\CDN\CDNInterface;
-use Sonata\MediaBundle\CDN\CloudFront;
-use Sonata\MediaBundle\CDN\Fallback;
-use Sonata\MediaBundle\CDN\PantherPortal;
-use Sonata\MediaBundle\CDN\Server;
-use Sonata\MediaBundle\Extra\Pixlr;
-use Sonata\MediaBundle\Filesystem\Local;
-use Sonata\MediaBundle\Filesystem\Replicate;
-use Sonata\MediaBundle\Generator\DefaultGenerator;
-use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Generator\ODMGenerator;
-use Sonata\MediaBundle\Generator\PHPCRGenerator;
-use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
-use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
-use Sonata\MediaBundle\Model\Gallery;
-use Sonata\MediaBundle\Model\GalleryHasMedia;
-use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
-use Sonata\MediaBundle\Model\GalleryInterface;
-use Sonata\MediaBundle\Model\GalleryManager;
-use Sonata\MediaBundle\Model\GalleryManagerInterface;
-use Sonata\MediaBundle\Model\Media;
-use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\MediaBundle\Provider\BaseProvider;
-use Sonata\MediaBundle\Provider\BaseVideoProvider;
-use Sonata\MediaBundle\Provider\DailyMotionProvider;
-use Sonata\MediaBundle\Provider\FileProvider;
-use Sonata\MediaBundle\Provider\ImageProvider;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Provider\VimeoProvider;
-use Sonata\MediaBundle\Provider\YouTubeProvider;
-use Sonata\MediaBundle\Resizer\ResizerInterface;
-use Sonata\MediaBundle\Resizer\SimpleResizer;
-use Sonata\MediaBundle\Resizer\SquareResizer;
-use Sonata\MediaBundle\Security\DownloadStrategyInterface;
-use Sonata\MediaBundle\Security\ForbiddenDownloadStrategy;
-use Sonata\MediaBundle\Security\PublicDownloadStrategy;
-use Sonata\MediaBundle\Security\RolesDownloadStrategy;
-use Sonata\MediaBundle\Security\SessionDownloadStrategy;
-use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
-use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -209,7 +163,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $this->configureProviders($container, $config);
         $this->configureAdapters($container, $config);
         $this->configureResizers($container, $config);
-        $this->configureClassesToCompile();
     }
 
     public function configureProviders(ContainerBuilder $container, array $config)
@@ -525,65 +478,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         } else {
             $container->removeDefinition('sonata.media.extra.pixlr');
         }
-    }
-
-    /**
-     * Add class to compile.
-     */
-    public function configureClassesToCompile()
-    {
-        if (\PHP_VERSION_ID >= 70000) {
-            return;
-        }
-
-        $this->addClassesToCompile([
-            CDNInterface::class,
-            CloudFront::class,
-            Fallback::class,
-            PantherPortal::class,
-            Server::class,
-            Pixlr::class,
-            Local::class,
-            Replicate::class,
-            DefaultGenerator::class,
-            GeneratorInterface::class,
-            ODMGenerator::class,
-            PHPCRGenerator::class,
-            AmazonMetadataBuilder::class,
-            MetadataBuilderInterface::class,
-            NoopMetadataBuilder::class,
-            ProxyMetadataBuilder::class,
-            Gallery::class,
-            GalleryHasMedia::class,
-            GalleryHasMediaInterface::class,
-            GalleryInterface::class,
-            GalleryManager::class,
-            GalleryManagerInterface::class,
-            Media::class,
-            MediaInterface::class,
-            MediaManagerInterface::class,
-            BaseProvider::class,
-            BaseVideoProvider::class,
-            DailyMotionProvider::class,
-            FileProvider::class,
-            ImageProvider::class,
-            MediaProviderInterface::class,
-            Pool::class,
-            VimeoProvider::class,
-            YouTubeProvider::class,
-            ResizerInterface::class,
-            SimpleResizer::class,
-            SquareResizer::class,
-            DownloadStrategyInterface::class,
-            ForbiddenDownloadStrategy::class,
-            PublicDownloadStrategy::class,
-            RolesDownloadStrategy::class,
-            SessionDownloadStrategy::class,
-            ConsumerThumbnail::class,
-            FormatThumbnail::class,
-            ThumbnailInterface::class,
-            MediaExtension::class,
-        ]);
     }
 
     /**
