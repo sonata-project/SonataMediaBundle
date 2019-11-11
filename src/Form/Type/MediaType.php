@@ -97,9 +97,7 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * NEXT_MAJOR: remove this method.
+     * NEXT_MAJOR: Remove this method.
      *
      * @deprecated Remove it when bumping requirements to Symfony >=2.7
      */
@@ -144,7 +142,9 @@ class MediaType extends AbstractType implements LoggerAwareInterface
     }
 
     /**
-     * {@inheritdoc}
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
      */
     public function getName()
     {

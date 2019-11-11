@@ -106,7 +106,7 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
 
         try {
             $provider->transform($newMedia);
-        } catch (\Exception $e) { // NEXT_MAJOR: When switching to PHP 7+, change this to \Throwable
+        } catch (\Throwable $e) {
             // #1107 We must never throw an exception here.
             // An exception here would prevent us to provide meaningful errors through the Form
             // Error message inspired from Monolog\ErrorHandler

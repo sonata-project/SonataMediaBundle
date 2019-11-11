@@ -16,7 +16,6 @@ namespace Sonata\MediaBundle;
 use Sonata\CoreBundle\Form\FormHelper;
 use Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass;
 use Sonata\MediaBundle\DependencyInjection\Compiler\GlobalVariablesCompilerPass;
-use Sonata\MediaBundle\DependencyInjection\Compiler\SecurityContextCompilerPass;
 use Sonata\MediaBundle\DependencyInjection\Compiler\ThumbnailCompilerPass;
 use Sonata\MediaBundle\Form\Type\ApiDoctrineMediaType;
 use Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType;
@@ -38,7 +37,6 @@ class SonataMediaBundle extends Bundle
     {
         $container->addCompilerPass(new AddProviderCompilerPass());
         $container->addCompilerPass(new GlobalVariablesCompilerPass());
-        $container->addCompilerPass(new SecurityContextCompilerPass());
         $container->addCompilerPass(new ThumbnailCompilerPass());
 
         $this->registerFormMapping();

@@ -172,7 +172,6 @@ class MediaControllerTest extends TestCase
     {
         $requestStack = $this->prophesize(RequestStack::class);
 
-        $this->container->has('request_stack')->willReturn(true);
         $this->container->get('request_stack')->willReturn($requestStack->reveal());
         $requestStack->getCurrentRequest()->willReturn($request);
     }
