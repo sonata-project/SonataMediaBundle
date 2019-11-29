@@ -95,7 +95,9 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
     }
 
     /**
-     * {@inheritdoc}
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
      */
     public function getName()
     {

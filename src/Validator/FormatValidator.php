@@ -18,7 +18,6 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\ExecutionContextInterface as LegacyExecutionContextInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -43,14 +42,9 @@ class FormatValidator extends ConstraintValidator
         $formats = $this->pool->getFormatNamesByContext($value->getContext());
 
         if (!$value instanceof GalleryInterface) {
-            // Interface compatibility, support for LegacyExecutionContextInterface can be removed when support for Symfony <2.5 is dropped
-            if ($this->context instanceof LegacyExecutionContextInterface) {
-                $this->context->addViolationAt('defaultFormat', 'Invalid instance, expected GalleryInterface');
-            } else {
-                $this->context->buildViolation('Invalid instance, expected GalleryInterface')
-                   ->atPath('defaultFormat')
-                   ->addViolation();
-            }
+            $this->context->buildViolation('Invalid instance, expected GalleryInterface')
+               ->atPath('defaultFormat')
+               ->addViolation();
         }
 
         $galleryDefaultFormat = $value->getDefaultFormat();

@@ -23,10 +23,6 @@ use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Bridge\Twig\AppVariable;
-use Symfony\Bridge\Twig\Command\DebugCommand;
-use Symfony\Bridge\Twig\Extension\FormExtension;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
@@ -132,27 +128,10 @@ class GalleryAdminControllerTest extends TestCase
     private function configureSetFormTheme(FormView $formView, array $formTheme): void
     {
         $twig = $this->prophesize(Environment::class);
-
-        // Remove this trick when bumping Symfony requirement to 3.4+
-        if (method_exists(DebugCommand::class, 'getLoaderPaths')) {
-            $rendererClass = FormRenderer::class;
-        } else {
-            $rendererClass = TwigRenderer::class;
-        }
-
-        $twigRenderer = $this->prophesize($rendererClass);
+        $twigRenderer = $this->prophesize(FormRenderer::class);
 
         $this->container->get('twig')->willReturn($twig->reveal());
-
-        // Remove this trick when bumping Symfony requirement to 3.2+.
-        if (method_exists(AppVariable::class, 'getToken')) {
-            $twig->getRuntime($rendererClass)->willReturn($twigRenderer->reveal());
-        } else {
-            $formExtension = $this->prophesize(FormExtension::class);
-            $formExtension->renderer = $twigRenderer->reveal();
-
-            $twig->getExtension(FormExtension::class)->willReturn($formExtension->reveal());
-        }
+        $twig->getRuntime(FormRenderer::class)->willReturn($twigRenderer->reveal());
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
 
