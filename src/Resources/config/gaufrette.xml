@@ -60,6 +60,7 @@
             <argument type="service" id="service_container"/>
         </service>
         <service id="sonata.media.metadata.amazon" class="%sonata.media.metadata.amazon.class%" public="true">
+            <argument type="collection"/>
         </service>
         <service id="sonata.media.metadata.noop" class="%sonata.media.metadata.noop.class%" public="true">
         </service>
