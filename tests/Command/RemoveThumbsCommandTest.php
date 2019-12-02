@@ -19,10 +19,10 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Entity\Media;
+use Sonata\MediaBundle\Tests\Fixtures\FilesystemTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Filesystem\Tests\FilesystemTestCase;
 
 /**
  * @author Anton Dyshkant <vyshkant@gmail.com>
