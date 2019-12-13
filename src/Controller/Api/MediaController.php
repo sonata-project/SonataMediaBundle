@@ -21,6 +21,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\DatagridBundle\Pager\PagerInterface;
+use Sonata\MediaBundle\Form\Type\ApiMediaType;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -372,7 +373,7 @@ class MediaController
      */
     protected function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
     {
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_media', $media, [
+        $form = $this->formFactory->createNamed(null, ApiMediaType::class, $media, [
             'provider_name' => $provider->getName(),
             'csrf_protection' => false,
         ]);

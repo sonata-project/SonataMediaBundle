@@ -20,6 +20,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\DatagridBundle\Pager\PagerInterface;
+use Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType;
+use Sonata\MediaBundle\Form\Type\ApiGalleryType;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
@@ -404,7 +406,7 @@ class GalleryController
      */
     protected function handleWriteGalleryhasmedia(GalleryInterface $gallery, MediaInterface $media, GalleryHasMediaInterface $galleryHasMedia = null, Request $request)
     {
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery_has_media', $galleryHasMedia, [
+        $form = $this->formFactory->createNamed(null, ApiGalleryHasMediaType::class, $galleryHasMedia, [
             'csrf_protection' => false,
         ]);
 
@@ -503,7 +505,7 @@ class GalleryController
     {
         $gallery = $id ? $this->getGallery($id) : null;
 
-        $form = $this->formFactory->createNamed(null, 'sonata_media_api_form_gallery', $gallery, [
+        $form = $this->formFactory->createNamed(null, ApiGalleryType::class, $gallery, [
             'csrf_protection' => false,
         ]);
 
