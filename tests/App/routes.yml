@@ -1,4 +1,4 @@
 sonata_api_media:
-    type:         rest
-    prefix:       /api
-    resource:     "@SonataMediaBundle/Resources/config/routing/api.xml"
+    type: rest
+    prefix: /api
+    resource: "@SonataMediaBundle/Resources/config/routing/api.xml"
