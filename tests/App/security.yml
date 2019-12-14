@@ -1,0 +1,10 @@
+
+security: 
+
+    role_hierarchy: ~ 
+
+    firewalls:
+        test:
+            security: false 
+            
+    access_control: ~   

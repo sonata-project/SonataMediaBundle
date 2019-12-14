@@ -84,7 +84,8 @@
         "sonata-project/notification-bundle": "^3.3",
         "sonata-project/seo-bundle": "^2.5",
         "symfony/phpunit-bridge": "^5.0",
-        "symfony/security-csrf": "^3.4 || ^4.2"
+        "symfony/security-csrf": "^3.4 || ^4.2",
+        "symfony/browser-kit": "^3.4 || ^4.2"
     },
     "suggest": {
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...)",

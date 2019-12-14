@@ -1,0 +1,51 @@
+framework:
+    secret: secret
+
+twig:
+    paths:
+        - '%kernel.project_dir%/templates'
+
+sonata_media:   
+    db_driver: doctrine_orm 
+    default_context: default
+    contexts:
+        default:
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+                - sonata.media.provider.vimeo
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+
+    cdn:
+        server:
+            path: /uploads/media
+
+    filesystem:
+        local:
+            directory:  '%kernel.root_dir%/../public/uploads/media'
+            create:     false
+
+fos_rest:
+    param_fetcher_listener: false
+    body_listener:          false
+    format_listener:        true
+    view:
+        view_response_listener: force
+    body_converter:
+        enabled: false
+        validate: false
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        path:     "%kernel.root_dir%/db/sonata_media_test.db3" 
+        
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
