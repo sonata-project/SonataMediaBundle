@@ -33,7 +33,7 @@ class CloudFrontTest extends TestCase
 
         $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
         $cloudFront->setClient($client);
 
@@ -57,7 +57,7 @@ class CloudFrontTest extends TestCase
         $client->expects($this->once())->method('createInvalidation')->willReturn(new CloudFrontResultSpy(true));
         $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
         $cloudFront->setClient($client);
         $cloudFront->flushPaths(['boom']);

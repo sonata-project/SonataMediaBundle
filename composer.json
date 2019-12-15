@@ -77,11 +77,7 @@
         "matthiasnoback/symfony-dependency-injection-test": "^4.0",
         "nelmio/api-doc-bundle": "^2.11",
         "sonata-project/admin-bundle": "^3.31",
-<<<<<<< HEAD
         "sonata-project/block-bundle": "^3.16.1",
-=======
-        "sonata-project/block-bundle": "^3.18",
->>>>>>> a60157c1... Use PHPUnit 8
         "sonata-project/datagrid-bundle": "^2.3",
         "sonata-project/doctrine-orm-admin-bundle": "^3.4",
         "sonata-project/formatter-bundle": "^3.4 || ^4.0",

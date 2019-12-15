@@ -38,7 +38,7 @@ class MediaEventSubscriberTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
 
         $pool = $this->getMockBuilder(Pool::class)
-            ->setMethods(['getProvider'])
+            ->onlyMethods(['getProvider'])
             ->setConstructorArgs(['default'])
             ->getMock();
 

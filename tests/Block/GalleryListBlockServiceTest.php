@@ -17,13 +17,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
+use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Block\GalleryListBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
-class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
+class GalleryListBlockServiceTest extends BlockServiceTestCase
 {
     /**
      * @var MockObject|GalleryManagerInterface
@@ -59,7 +59,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
             'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
         ]);
 
-        $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
+        $blockService = new GalleryListBlockService($this->templating, $this->templating, $this->galleryManager, $this->pool);
         $blockService->execute($blockContext);
 
         $this->assertSame('@SonataMedia/Block/block_gallery_list.html.twig', $this->templating->view);
@@ -72,7 +72,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
 
     public function testDefaultSettings(): void
     {
-        $blockService = new GalleryListBlockService('block.service', $this->templating, $this->galleryManager, $this->pool);
+        $blockService = new GalleryListBlockService($this->templating, $this->templating, $this->galleryManager, $this->pool);
         $blockContext = $this->getBlockContext($blockService);
 
         $this->assertSettings([

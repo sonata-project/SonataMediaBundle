@@ -79,7 +79,7 @@ class BaseMediaAdminTest extends TestCase
         $this->assertSame($media->reveal(), $this->mediaAdmin->getNewInstance());
     }
 
-    public function testGetPersistentParametersWithMultipleProvidersInContext()
+    public function testGetPersistentParametersWithMultipleProvidersInContext(): void
     {
         $category = $this->prophesize();
         $category->willExtend(EntityWithGetId::class);
@@ -104,7 +104,7 @@ class BaseMediaAdminTest extends TestCase
             ], $this->mediaAdmin->getPersistentParameters());
     }
 
-    private function configureGetPersistentParameters()
+    private function configureGetPersistentParameters(): void
     {
         $provider = $this->prophesize(MediaProviderInterface::class);
         $category = $this->prophesize();
