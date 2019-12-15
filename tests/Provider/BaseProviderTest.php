@@ -44,9 +44,7 @@ class BaseProviderTest extends AbstractProviderTest
 
         $thumbnail = $this->createMock(ThumbnailInterface::class);
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-
-        $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail, $metadata);
+        $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail);
         $this->assertInstanceOf(BaseProvider::class, $provider);
 
         return $provider;

@@ -113,7 +113,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService($serviceId);
         if (\extension_loaded($extension)) {
-            $this->isInstanceOf($type, $this->container->get($serviceId));
+            $this->assertInstanceOf($type, $this->container->get($serviceId));
         }
     }
 
@@ -151,7 +151,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService($serviceId);
         if (\extension_loaded('gd')) {
-            $this->isInstanceOf($type, $this->container->get($serviceId));
+            $this->assertInstanceOf($type, $this->container->get($serviceId));
         }
     }
 

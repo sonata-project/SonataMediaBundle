@@ -106,7 +106,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $media->setId(1023458);
 
-        $this->assertTrue($provider->requireThumbnails($media));
+        $this->assertTrue($provider->requireThumbnails());
 
         $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
