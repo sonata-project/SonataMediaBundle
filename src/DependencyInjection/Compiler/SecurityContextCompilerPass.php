@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * NEXT_MAJOR: Remove this class
  *
- * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
+ * @deprecated since sonata-project/media-bundle 3.22, to be removed in version 4.0.
  *
  * @final since sonata-project/media-bundle 3.21.0
  */

@@ -2,6 +2,22 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.22.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.21.0...3.22.0) - 2019-12-15
+### Added
+- Imagine `^1.0` support
+
+### Changed
+- `SimpleResizer` and `SquareResizer` resizers now use `ImagineCompatibleResizerTrait`
+
+### Fixed
+- Fixed using old string types to create forms
+- Add the `addResizer` method call on the thumbnail service only if the method exists.
+- Add missing default service argument for `AmazonMetadataBuilder`
+
+### Removed
+- Support for Symfony < 3.4
+- Support for Symfony >= 4, < 4.2
+
 ## [3.21.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.20.1...3.21.0) - 2019-10-21
 ### Added
 - Add missing translation for admin menu
