@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Test\Entity;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
-use Sonata\CoreBundle\Test\EntityManagerMockFactory;
+use Sonata\Doctrine\Test\EntityManagerMockFactoryTrait;
 use Sonata\MediaBundle\Entity\BaseGallery;
 use Sonata\MediaBundle\Entity\GalleryManager;
 
@@ -24,6 +24,8 @@ use Sonata\MediaBundle\Entity\GalleryManager;
  */
 class GalleryManagerTest extends TestCase
 {
+    use EntityManagerMockFactoryTrait;
+
     public function testGetPager(): void
     {
         $this
@@ -96,9 +98,9 @@ class GalleryManagerTest extends TestCase
             ->getPager(['enabled' => false], 1);
     }
 
-    protected function getGalleryManager($qbCallback)
+    protected function getGalleryManager(\Closure $qbCallback)
     {
-        $em = EntityManagerMockFactory::create($this, $qbCallback, [
+        $em = $this->createEntityManagerMock($qbCallback, [
             'name',
             'context',
             'enabled',
