@@ -109,10 +109,7 @@ class FileProviderTest extends AbstractProviderTest
             ->method('trans')
             ->willReturn('message');
 
-        $formMapper = $this->getMockBuilder(FormMapper::class)
-            ->setMethods(['add', 'getAdmin'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $formMapper = $this->createMock(FormMapper::class);
         $formMapper->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
@@ -248,10 +245,7 @@ class FileProviderTest extends AbstractProviderTest
             ->method('getContext')
             ->willReturn('context');
 
-        $binaryContent = $this->getMockBuilder(File::class)
-            ->setMethods(['getRealPath', 'getPathname'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $binaryContent = $this->createMock(File::class);
 
         $binaryContent->expects($this->atLeastOnce())
             ->method('getRealPath')
@@ -293,10 +287,7 @@ class FileProviderTest extends AbstractProviderTest
             ->method('getContext')
             ->willReturn('context');
 
-        $binaryContent = $this->getMockBuilder(File::class)
-            ->setMethods(['getRealPath', 'getPathname'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $binaryContent = $this->createMock(File::class);
 
         $binaryContent->expects($this->atLeastOnce())
             ->method('getRealPath')
@@ -323,9 +314,7 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testValidate(): void
     {
-        $errorElement = $this->getMockBuilder(ErrorElement::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $errorElement = $this->createMock(ErrorElement::class);
 
         $media = new Media();
 
@@ -335,9 +324,7 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadSize(): void
     {
-        $errorElement = $this->getMockBuilder(ErrorElement::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $errorElement = $this->createMock(ErrorElement::class);
         $errorElement->expects($this->once())->method('with')
             ->willReturnSelf();
         $errorElement->expects($this->once())->method('addViolation')
@@ -427,9 +414,7 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadType(): void
     {
-        $errorElement = $this->getMockBuilder(ErrorElement::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $errorElement = $this->createMock(ErrorElement::class);
         $errorElement->expects($this->once())->method('with')
             ->willReturnSelf();
         $errorElement->expects($this->once())->method('addViolation')

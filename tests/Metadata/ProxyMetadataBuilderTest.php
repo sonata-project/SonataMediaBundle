@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Metadata;
 use Aws\S3\S3Client;
 use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Filesystem;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
@@ -246,7 +247,7 @@ class ProxyMetadataBuilderTest extends TestCase
      *
      * @param array $services A key-value list of services the container contains
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function getContainerMock(array $services)
     {
