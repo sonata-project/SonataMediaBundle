@@ -60,7 +60,7 @@ class CloudFrontTest extends TestCase
             ->setMethods(['createInvalidation'])
             ->disableOriginalConstructor()
             ->getMock();
-        $client->expects($this->exactly(1))->method('createInvalidation')->willReturn(new CloudFrontResultSpy(true));
+        $client->expects($this->once())->method('createInvalidation')->willReturn(new CloudFrontResultSpy(true));
         $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
             ->setMethods(null)

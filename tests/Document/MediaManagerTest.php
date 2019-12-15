@@ -75,9 +75,9 @@ class MediaManagerTest extends TestCase
             ->getMock();
         $registry = $this->createMock(ManagerRegistry::class);
 
-        $dm->expects($this->any())->method('persist');
-        $dm->expects($this->any())->method('flush');
-        $registry->expects($this->any())->method('getManagerForClass')->willReturn($dm);
+        $dm->method('persist');
+        $dm->method('flush');
+        $registry->method('getManagerForClass')->willReturn($dm);
 
         return $registry;
     }

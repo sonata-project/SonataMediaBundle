@@ -107,7 +107,7 @@ class GalleryManagerTest extends TestCase
         ]);
 
         $registry = $this->createMock(ManagerRegistry::class);
-        $registry->expects($this->any())->method('getManagerForClass')->willReturn($em);
+        $registry->method('getManagerForClass')->willReturn($em);
 
         return new GalleryManager(BaseGallery::class, $registry);
     }

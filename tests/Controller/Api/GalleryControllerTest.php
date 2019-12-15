@@ -129,7 +129,7 @@ class GalleryControllerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
 
         $media2 = $this->createMock(MediaInterface::class);
-        $media2->expects($this->any())->method('getId')->willReturn(1);
+        $media2->method('getId')->willReturn(1);
 
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media2);
@@ -161,7 +161,7 @@ class GalleryControllerTest extends TestCase
     public function testPostGalleryMediaGalleryhasmediaInvalidAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->method('getId')->willReturn(1);
 
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
@@ -190,7 +190,7 @@ class GalleryControllerTest extends TestCase
     public function testPutGalleryMediaGalleryhasmediaAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->method('getId')->willReturn(1);
 
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
@@ -222,7 +222,7 @@ class GalleryControllerTest extends TestCase
     public function testPutGalleryMediaGalleryhasmediaInvalidAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->method('getId')->willReturn(1);
 
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
@@ -252,13 +252,13 @@ class GalleryControllerTest extends TestCase
     public function testDeleteGalleryMediaGalleryhasmediaAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())->method('getId')->willReturn(1);
+        $media->method('getId')->willReturn(1);
 
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->any())->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
+        $gallery->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
 
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
@@ -279,13 +279,13 @@ class GalleryControllerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
 
         $media2 = $this->createMock(MediaInterface::class);
-        $media2->expects($this->any())->method('getId')->willReturn(2);
+        $media2->method('getId')->willReturn(2);
 
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media2);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->any())->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
+        $gallery->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
 
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);

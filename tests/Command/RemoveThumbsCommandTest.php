@@ -82,7 +82,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
 
-        $this->container->expects($this->any())
+        $this->container
             ->method('get')
             ->willReturnCallback(function ($id) {
                 switch ($id) {
@@ -112,7 +112,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $fileProvider = $this->createMock(FileProvider::class);
 
-        $fileProvider->expects($this->any())
+        $fileProvider
             ->method('getName')
             ->willReturn('fooprovider');
         $fileProvider->expects($this->once())

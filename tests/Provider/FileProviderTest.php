@@ -37,10 +37,10 @@ class FileProviderTest extends AbstractProviderTest
     public function getProvider()
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->willReturn(true);
+        $resizer->method('resize')->willReturn(true);
 
         $adapter = $this->createMock(Local::class);
-        $adapter->expects($this->any())->method('getDirectory')->willReturn(realpath(__DIR__).'/../fixtures');
+        $adapter->method('getDirectory')->willReturn(realpath(__DIR__).'/../fixtures');
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->setMethods(['get'])
@@ -49,7 +49,7 @@ class FileProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(GaufretteFile::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->willReturn($file);
+        $filesystem->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -105,7 +105,7 @@ class FileProviderTest extends AbstractProviderTest
         $provider = $this->getProvider();
 
         $admin = $this->createMock(AdminInterface::class);
-        $admin->expects($this->any())
+        $admin
             ->method('trans')
             ->willReturn('message');
 
@@ -236,15 +236,15 @@ class FileProviderTest extends AbstractProviderTest
     {
         $media = $this->createMock(MediaInterface::class);
 
-        $media->expects($this->any())
+        $media
             ->method('getProviderReference')
             ->willReturn('provider');
 
-        $media->expects($this->any())
+        $media
             ->method('getId')
             ->willReturn(10000);
 
-        $media->expects($this->any())
+        $media
             ->method('getContext')
             ->willReturn('context');
 
@@ -260,7 +260,7 @@ class FileProviderTest extends AbstractProviderTest
         $binaryContent->expects($this->never())
             ->method('getPathname');
 
-        $media->expects($this->any())
+        $media
             ->method('getBinaryContent')
             ->willReturn($binaryContent);
 
@@ -281,15 +281,15 @@ class FileProviderTest extends AbstractProviderTest
     {
         $media = $this->createMock(MediaInterface::class);
 
-        $media->expects($this->any())
+        $media
             ->method('getProviderReference')
             ->willReturn('provider');
 
-        $media->expects($this->any())
+        $media
             ->method('getId')
             ->willReturn(10000);
 
-        $media->expects($this->any())
+        $media
             ->method('getContext')
             ->willReturn('context');
 
@@ -306,7 +306,7 @@ class FileProviderTest extends AbstractProviderTest
             ->method('getPathname')
             ->willReturn(__DIR__.'/../fixtures/file.txt');
 
-        $media->expects($this->any())
+        $media
             ->method('getBinaryContent')
             ->willReturn($binaryContent);
 
@@ -349,13 +349,13 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->expects($this->any())->method('getClientSize')
+        $upload->method('getClientSize')
             ->willReturn(0);
-        $upload->expects($this->any())->method('getFilename')
+        $upload->method('getFilename')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getClientOriginalName')
+        $upload->method('getClientOriginalName')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getMimeType')
+        $upload->method('getMimeType')
             ->willReturn('foo/bar');
 
         $media = new Media();
@@ -379,13 +379,13 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->expects($this->any())->method('getClientSize')
+        $upload->method('getClientSize')
             ->willReturn(null);
-        $upload->expects($this->any())->method('getFilename')
+        $upload->method('getFilename')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getClientOriginalName')
+        $upload->method('getClientOriginalName')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getMimeType')
+        $upload->method('getMimeType')
             ->willReturn('foo/bar');
 
         $media = new Media();
@@ -409,13 +409,13 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->expects($this->any())->method('getClientSize')
+        $upload->method('getClientSize')
             ->willReturn(1);
-        $upload->expects($this->any())->method('getFilename')
+        $upload->method('getFilename')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getClientOriginalName')
+        $upload->method('getClientOriginalName')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getMimeType')
+        $upload->method('getMimeType')
             ->willReturn('foo/bar');
 
         $media = new Media();
@@ -441,13 +441,13 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->expects($this->any())->method('getClientSize')
+        $upload->method('getClientSize')
             ->willReturn(23);
-        $upload->expects($this->any())->method('getFilename')
+        $upload->method('getFilename')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getClientOriginalName')
+        $upload->method('getClientOriginalName')
             ->willReturn('test.txt');
-        $upload->expects($this->any())->method('getMimeType')
+        $upload->method('getMimeType')
             ->willReturn('bar/baz');
 
         $media = new Media();

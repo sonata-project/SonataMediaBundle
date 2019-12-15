@@ -33,7 +33,7 @@ final class SessionDownloadStrategyTest extends TestCase
         $request = $this->createMock(Request::class);
         $session = $this->createMock(Session::class);
 
-        $session->expects($this->any())
+        $session
             ->method('get')
             ->willReturn(1);
 
@@ -48,7 +48,7 @@ final class SessionDownloadStrategyTest extends TestCase
         $request = $this->createMock(Request::class);
         $session = $this->createMock(Session::class);
 
-        $session->expects($this->any())
+        $session
             ->method('get')
             ->willReturn(0);
 
@@ -69,7 +69,7 @@ final class SessionDownloadStrategyTest extends TestCase
         $request = $this->createMock(Request::class);
         $session = $this->createMock(Session::class);
 
-        $session->expects($this->any())
+        $session
             ->method('get')
             ->willReturn(0);
 

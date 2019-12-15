@@ -46,11 +46,10 @@ abstract class AbstractTypeTest extends TypeTestCase
             ->getMock();
 
         $this->mediaPool = $this->createMock(Pool::class);
-        $this->mediaPool->expects($this->any())->method('getProvider')->willReturn($provider);
+        $this->mediaPool->method('getProvider')->willReturn($provider);
 
         $this->formBuilder = $this->createMock(FormBuilder::class);
         $this->formBuilder
-            ->expects($this->any())
             ->method('add')
             ->willReturnCallback(function ($name, $type = null): void {
                 if (null !== $type) {

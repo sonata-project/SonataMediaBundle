@@ -31,7 +31,7 @@ class MediaManagerTest extends TestCase
         $self = $this;
         $this
             ->getMediaManager(static function ($qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
+                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
             })
@@ -55,7 +55,7 @@ class MediaManagerTest extends TestCase
         $self = $this;
         $this
             ->getMediaManager(static function ($qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
+                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->exactly(2))->method('orderBy')->with(
                     $self->logicalOr(
@@ -80,7 +80,7 @@ class MediaManagerTest extends TestCase
         $self = $this;
         $this
             ->getMediaManager(static function ($qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
+                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => true]));
             })
@@ -92,7 +92,7 @@ class MediaManagerTest extends TestCase
         $self = $this;
         $this
             ->getMediaManager(static function ($qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->will($self->returnValue(['g']));
+                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => false]));
             })
@@ -108,7 +108,7 @@ class MediaManagerTest extends TestCase
         ]);
 
         $registry = $this->createMock(ManagerRegistry::class);
-        $registry->expects($this->any())->method('getManagerForClass')->willReturn($em);
+        $registry->method('getManagerForClass')->willReturn($em);
 
         return new MediaManager(BaseMedia::class, $registry);
     }

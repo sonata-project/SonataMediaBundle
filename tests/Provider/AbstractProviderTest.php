@@ -48,7 +48,6 @@ abstract class AbstractProviderTest extends TestCase
     {
         $this->formMapper = $this->createMock(FormMapper::class);
         $this->formMapper
-            ->expects($this->any())
             ->method('add')
             ->willReturnCallback(function ($name, $type = null): void {
                 if (null !== $type) {
@@ -58,7 +57,6 @@ abstract class AbstractProviderTest extends TestCase
 
         $this->formBuilder = $this->createMock(FormBuilder::class);
         $this->formBuilder
-            ->expects($this->any())
             ->method('add')
             ->willReturnCallback(function ($name, $type = null): void {
                 if (null !== $type) {
@@ -66,7 +64,7 @@ abstract class AbstractProviderTest extends TestCase
                 }
             });
 
-        $this->formBuilder->expects($this->any())->method('getOption')->willReturn('api');
+        $this->formBuilder->method('getOption')->willReturn('api');
 
         $this->provider = $this->getProvider();
     }

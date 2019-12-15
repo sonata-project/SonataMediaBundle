@@ -79,7 +79,7 @@ class MediaControllerTest extends TestCase
         $provider->expects($this->exactly(2))->method('getHelperProperties')->willReturn(['foo' => 'bar']);
 
         $pool = $this->createMock(Pool::class);
-        $pool->expects($this->any())->method('getProvider')->willReturn($provider);
+        $pool->method('getProvider')->willReturn($provider);
         $pool->expects($this->once())->method('getFormatNamesByContext')->willReturn(['format_name1' => 'value1']);
 
         $controller = $this->createMediaController($manager, $pool);

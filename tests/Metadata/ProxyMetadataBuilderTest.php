@@ -51,13 +51,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new AwsS3($amazonclient, '');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -90,13 +90,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Local('');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -129,13 +129,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Local('');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('wrongprovider');
 
@@ -177,13 +177,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Replicate($adapter1, $adapter2);
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -218,13 +218,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Replicate($adapter1, $adapter2);
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -252,14 +252,12 @@ class ProxyMetadataBuilderTest extends TestCase
     {
         $container = $this->createMock(ContainerInterface::class);
         $container
-            ->expects($this->any())
             ->method('get')
             ->willReturnCallback(static function ($service) use ($services) {
                 return $services[$service];
             })
         ;
         $container
-            ->expects($this->any())
             ->method('has')
             ->willReturnCallback(static function ($service) use ($services) {
                 if (isset($services[$service])) {

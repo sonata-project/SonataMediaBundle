@@ -33,9 +33,9 @@ class ImageProviderTest extends AbstractProviderTest
     public function getProvider($allowedExtensions = [], $allowedMimeTypes = [], $box = false)
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->willReturn(true);
+        $resizer->method('resize')->willReturn(true);
         if ($box) {
-            $resizer->expects($this->any())->method('getBox')->will($box);
+            $resizer->method('getBox')->will($box);
         }
 
         $adapter = $this->createMock(Adapter::class);
@@ -47,7 +47,7 @@ class ImageProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->willReturn($file);
+        $filesystem->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -56,14 +56,14 @@ class ImageProviderTest extends AbstractProviderTest
         $thumbnail = new FormatThumbnail('jpg');
 
         $size = $this->createMock(BoxInterface::class);
-        $size->expects($this->any())->method('getWidth')->willReturn(100);
-        $size->expects($this->any())->method('getHeight')->willReturn(100);
+        $size->method('getWidth')->willReturn(100);
+        $size->method('getHeight')->willReturn(100);
 
         $image = $this->createMock(ImageInterface::class);
-        $image->expects($this->any())->method('getSize')->willReturn($size);
+        $image->method('getSize')->willReturn($size);
 
         $adapter = $this->createMock(ImagineInterface::class);
-        $adapter->expects($this->any())->method('open')->willReturn($image);
+        $adapter->method('open')->willReturn($image);
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
