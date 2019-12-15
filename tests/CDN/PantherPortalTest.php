@@ -53,7 +53,7 @@ class PantherPortalTest extends TestCase
             '',
             false
         );
-        $client->expects($this->exactly(1))->method('flush')->willReturn('Failed!!');
+        $client->expects($this->once())->method('flush')->willReturn('Failed!!');
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
         $panther->setClient($client);

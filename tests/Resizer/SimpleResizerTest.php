@@ -46,7 +46,7 @@ class SimpleResizerTest extends TestCase
         $image->expects($this->once())->method('get')->willReturn(file_get_contents(__DIR__.'/../fixtures/logo.png'));
 
         $adapter = $this->createMock(ImagineInterface::class);
-        $adapter->expects($this->any())->method('load')->willReturn($image);
+        $adapter->method('load')->willReturn($image);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->exactly(2))->method('getBox')->willReturn(new Box(535, 132));

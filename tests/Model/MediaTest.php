@@ -77,7 +77,7 @@ class MediaTest extends TestCase
     protected function getMedia($id)
     {
         $media = $this->getMockForAbstractClass(Media::class);
-        $media->expects($this->any())
+        $media
             ->method('getId')
             ->willReturn($id);
 
