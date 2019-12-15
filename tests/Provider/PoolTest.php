@@ -35,7 +35,7 @@ class PoolTest extends TestCase
         $mediaPool = $this
             ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock()
         ;
 
@@ -50,7 +50,7 @@ class PoolTest extends TestCase
         $mediaPool = $this
             ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock()
         ;
 
@@ -65,7 +65,7 @@ class PoolTest extends TestCase
         $mediaPool = $this
             ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock()
         ;
         $mediaPool->setProviders([

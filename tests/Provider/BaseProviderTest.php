@@ -14,13 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Gaufrette\Adapter;
-use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
@@ -34,7 +32,7 @@ class BaseProviderTest extends AbstractProviderTest
         $adapter = $this->createMock(Adapter::class);
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
 

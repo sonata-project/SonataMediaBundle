@@ -43,7 +43,7 @@ class FileProviderTest extends AbstractProviderTest
         $adapter->method('getDirectory')->willReturn(realpath(__DIR__).'/../fixtures');
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder(GaufretteFile::class)
