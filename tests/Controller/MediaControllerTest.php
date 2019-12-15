@@ -183,7 +183,6 @@ class MediaControllerTest extends TestCase
     ): void {
         $templating = $this->prophesize(EngineInterface::class);
         $response = $this->prophesize(Response::class);
-        $pool = $this->prophesize(Pool::class);
 
         $this->container->has('templating')->willReturn(true);
         $this->container->get('templating')->willReturn($templating->reveal());
