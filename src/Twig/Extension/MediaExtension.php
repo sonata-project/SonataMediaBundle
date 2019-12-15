@@ -133,10 +133,10 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
             'alt' => $media->getName(),
         ];
 
-        if ($format_definition['width']) {
+        if (\is_array($format_definition) && $format_definition['width']) {
             $defaultOptions['width'] = $format_definition['width'];
         }
-        if ($format_definition['height']) {
+        if (\is_array($format_definition) && $format_definition['height']) {
             $defaultOptions['height'] = $format_definition['height'];
         }
 
