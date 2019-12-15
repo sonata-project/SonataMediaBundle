@@ -34,11 +34,11 @@ fos_rest:
     format_listener:
         rules:
             - {
-                  path: ^/,
-                  priorities: [json],
-                  fallback_format: ~,
-                  prefer_extension: true,
-              }
+                path: ^/,
+                priorities: [json],
+                fallback_format: ~,
+                prefer_extension: true,
+            }
     view:
         view_response_listener: force
     body_converter:
