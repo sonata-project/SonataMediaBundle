@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\ClassificationBundle\Entity\CategoryManager;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 use Sonata\MediaBundle\Entity\BaseGallery;
 use Sonata\MediaBundle\Provider\Pool;
@@ -22,20 +21,17 @@ use Sonata\MediaBundle\Provider\Pool;
 class GalleryAdminTest extends TestCase
 {
     protected $pool;
-    protected $categoryManager;
     protected $mediaAdmin;
 
     protected function setUp(): void
     {
         $this->pool = $this->prophesize(Pool::class);
-        $this->categoryManager = $this->prophesize(CategoryManager::class);
 
         $this->mediaAdmin = new GalleryAdmin(
             null,
             BaseGallery::class,
             'SonataMediaBundle:GalleryAdmin',
-            $this->pool->reveal(),
-            $this->categoryManager->reveal()
+            $this->pool->reveal()
         );
     }
 

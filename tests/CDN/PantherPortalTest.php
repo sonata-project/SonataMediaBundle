@@ -20,13 +20,7 @@ class PantherPortalTest extends TestCase
 {
     public function testPortal(): void
     {
-        $client = $this->createMock(
-            ClientSpy::class,
-            ['flush'],
-            [],
-            '',
-            false
-        );
+        $client = $this->createMock(ClientSpy::class);
         $client->expects($this->exactly(3))->method('flush')->willReturn('Flush successfully submitted.');
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
@@ -46,13 +40,7 @@ class PantherPortalTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to flush : Failed!!');
 
-        $client = $this->createMock(
-            ClientSpy::class,
-            ['flush'],
-            [],
-            '',
-            false
-        );
+        $client = $this->createMock(ClientSpy::class);
         $client->expects($this->once())->method('flush')->willReturn('Failed!!');
 
         $panther = new PantherPortal('/foo', 'login', 'pass', 42);
