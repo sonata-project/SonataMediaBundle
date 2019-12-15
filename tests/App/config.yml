@@ -1,12 +1,10 @@
 framework:
     secret: secret
 
-twig:
-    paths:
-        - "%kernel.project_dir%/templates"
-
 sonata_media:
     db_driver: doctrine_orm
+    class:
+        media: Sonata\MediaBundle\Tests\App\Entity\Media
     default_context: default
     contexts:
         default:
@@ -18,8 +16,8 @@ sonata_media:
                 - sonata.media.provider.vimeo
 
             formats:
-                small: { width: 100, quality: 70 }
-                big: { width: 500, quality: 70 }
+                small: {width: 100, quality: 70}
+                big: {width: 500, quality: 70}
 
     cdn:
         server:
@@ -31,19 +29,40 @@ sonata_media:
             create: false
 
 fos_rest:
-    param_fetcher_listener: false
-    body_listener: false
-    format_listener: true
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        rules:
+            - {
+                  path: ^/,
+                  priorities: [json],
+                  fallback_format: ~,
+                  prefer_extension: true,
+              }
     view:
         view_response_listener: force
     body_converter:
-        enabled: false
-        validate: false
+        enabled: true
+        validate: true
+
+sensio_framework_extra:
+    router: {annotations: true}
+    request: {converters: true}
 
 doctrine:
     dbal:
         driver: pdo_sqlite
-        path: "%kernel.root_dir%/db/sonata_media_test.db3"
+        path: "%app.base_dir%sonata_media_test.db3"
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    SonataMediaBundle: ~
+                    SonataMediaTest:
+                        type: annotation
+                        dir: "%kernel.project_dir%/Entity"
+                        is_bundle: false
+                        prefix: Sonata\MediaBundle\Tests\App\Entity
 
 services:
     _defaults:

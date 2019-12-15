@@ -13,19 +13,20 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\App;
 
-use Symfony\Component\Yaml\Yaml;
-use FOS\RestBundle\FOSRestBundle;
-use Symfony\Component\HttpKernel\Kernel;
-use Sonata\MediaBundle\SonataMediaBundle;
-use Symfony\Bundle\TwigBundle\TwigBundle;
-use JMS\SerializerBundle\JMSSerializerBundle;
-use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use FOS\RestBundle\FOSRestBundle;
+use JMS\SerializerBundle\JMSSerializerBundle;
+use Nelmio\ApiDocBundle\NelmioApiDocBundle;
+use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
+use Sonata\MediaBundle\SonataMediaBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Routing\RouteCollectionBuilder;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\RouteCollectionBuilder;
 
 final class AppKernel extends Kernel
 {
@@ -45,7 +46,9 @@ final class AppKernel extends Kernel
             new FOSRestBundle(),
             new SonataMediaBundle(),
             new JMSSerializerBundle(),
-            new DoctrineBundle()
+            new DoctrineBundle(),
+            new NelmioApiDocBundle(),
+            new SensioFrameworkExtraBundle(),
         ];
     }
 
@@ -72,10 +75,8 @@ final class AppKernel extends Kernel
     protected function configureContainer(ContainerBuilder $containerBuilder, LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config.yml');
-        $config = Yaml::parse(file_get_contents(__DIR__.'/security.yml'));
-
-        $containerBuilder->prependExtensionConfig('security', $config['security']);
-        
+        $loader->load(__DIR__.'/security.yml');
+        $containerBuilder->setParameter('app.base_dir', $this->getBaseDir());
     }
 
     private function getBaseDir(): string
