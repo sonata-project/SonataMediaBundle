@@ -41,9 +41,7 @@ abstract class AbstractTypeTest extends TypeTestCase
 
     protected function setUp(): void
     {
-        $provider = $this->getMockBuilder(MediaProviderInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $provider = $this->createMock(MediaProviderInterface::class);
 
         $this->mediaPool = $this->createMock(Pool::class);
         $this->mediaPool->method('getProvider')->willReturn($provider);

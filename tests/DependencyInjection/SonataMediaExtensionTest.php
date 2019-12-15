@@ -175,9 +175,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     public function testLoadWithSonataAdminCustomConfiguration(): void
     {
-        $fakeContainer = $this->getMockBuilder(ContainerBuilder::class)
-            ->setMethods(['getParameter', 'getExtensionConfig'])
-            ->getMock();
+        $fakeContainer = $this->createMock(ContainerBuilder::class);
 
         $fakeContainer->expects($this->once())
             ->method('getParameter')

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Listener\ORM;
 
-use Doctrine\Common\EventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
@@ -67,30 +67,20 @@ class MediaEventSubscriberTest extends TestCase
 
         $this->assertContains(Events::onClear, $subscriber->getSubscribedEvents());
 
-        $media1 = $this->getMockBuilder(Media::class)
-            ->setMethods(['getId', 'getCategory', 'getProvider', 'getContext'])
-            ->getMock();
-        $media1->method('getProvider')->willReturn('provider');
+        $media1 = $this->createMock(Media::class);
         $media1->method('getContext')->willReturn('context');
 
-        $args1 = $this->getMockBuilder(EventArgs::class)
-            ->setMethods(['getEntity'])
-            ->getMock();
+        $args1 = $this->createMock(LifecycleEventArgs::class);
         $args1->method('getEntity')->willReturn($media1);
 
         $subscriber->prePersist($args1);
 
         $subscriber->onClear();
 
-        $media2 = $this->getMockBuilder(Media::class)
-            ->setMethods(['getId', 'getCategory', 'getProvider', 'getContext'])
-            ->getMock();
-        $media2->method('getProvider')->willReturn('provider');
+        $media2 = $this->createMock(Media::class);
         $media2->method('getContext')->willReturn('context');
 
-        $args2 = $this->getMockBuilder(EventArgs::class)
-            ->setMethods(['getEntity'])
-            ->getMock();
+        $args2 = $this->createMock(LifecycleEventArgs::class);
         $args2->method('getEntity')->willReturn($media2);
 
         $subscriber->prePersist($args2);
