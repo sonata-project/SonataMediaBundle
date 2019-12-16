@@ -23,6 +23,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -32,7 +33,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaControllerTest extends TestCase
 {
+    /**
+     * @var ObjectProphecy|ContainerInterface
+     */
     protected $container;
+
+    /**
+     * @var MediaController
+     */
     protected $controller;
 
     protected function setUp(): void

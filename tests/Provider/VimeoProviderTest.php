@@ -25,6 +25,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
@@ -32,7 +33,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends AbstractProviderTest
 {
-    public function getProvider(Browser $browser = null)
+    public function getProvider(Browser $browser = null): MediaProviderInterface
     {
         if (!$browser) {
             $browser = $this->createMock(Browser::class);
@@ -143,7 +144,7 @@ class VimeoProviderTest extends AbstractProviderTest
     /**
      * @dataProvider getTransformWithUrlMedia
      */
-    public function testTransformWithUrl($media): void
+    public function testTransformWithUrl(Media $media): void
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
@@ -163,7 +164,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $this->assertSame('012341231', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function getTransformWithUrlMedia()
+    public function getTransformWithUrlMedia(): array
     {
         $mediaWebsite = new Media();
         $mediaWebsite->setBinaryContent('https://vimeo.com/012341231');

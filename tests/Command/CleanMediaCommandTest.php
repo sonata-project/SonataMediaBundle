@@ -93,7 +93,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->container
             ->method('get')
-            ->willReturnCallback(static function ($id) use ($pool, $mediaManager, $fileSystemLocal) {
+            ->willReturnCallback(static function (string $id) use ($pool, $mediaManager, $fileSystemLocal) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $pool;
@@ -296,9 +296,6 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     /**
      * Asserts whether all expected texts can be found in the output within a given context.
-     *
-     * @param array  $expected Excerpts of text expected to be found in the output
-     * @param string $output   Searched output
      */
     private function assertOutputFoundInContext(
         string $extractor,
@@ -326,10 +323,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     /**
      * Returns whether every needle can be found as a substring of the haystack.
-     *
-     * @param array $needles Array of (potential) substrings of the haystack
      */
-    private function containsAll(string $haystack, array $needles)
+    private function containsAll(string $haystack, array $needles): bool
     {
         foreach ($needles as $needle) {
             if (false === strpos($haystack, $needle)) {

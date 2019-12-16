@@ -67,7 +67,7 @@ class SimpleResizerTest extends TestCase
     /**
      * @dataProvider getBoxSettings
      */
-    public function testGetBox($mode, $settings, Box $mediaSize, Box $result): void
+    public function testGetBox(string $mode, array $settings, Box $mediaSize, Box $result): void
     {
         $adapter = $this->createMock(ImagineInterface::class);
 
@@ -86,7 +86,7 @@ class SimpleResizerTest extends TestCase
         $this->assertSame($result->getHeight(), $box->getHeight());
     }
 
-    public static function getBoxSettings()
+    public static function getBoxSettings(): array
     {
         return [
             ['inset', ['width' => 90, 'height' => 90], new Box(100, 120), new Box(75, 90)],

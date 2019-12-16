@@ -32,10 +32,7 @@ class AmazonMetadataBuilderTest extends TestCase
         }
     }
 
-    /**
-     * @return array
-     */
-    public function provider()
+    public function provider(): array
     {
         return [
             [['acl' => 'private'], ['ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png']],

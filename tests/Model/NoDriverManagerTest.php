@@ -22,14 +22,14 @@ class NoDriverManagerTest extends TestCase
     /**
      * @dataProvider providerMethods
      */
-    public function testException($method, array $arguments): void
+    public function testException(string $method, array $arguments): void
     {
         $this->expectException(NoDriverException::class);
 
         \call_user_func_array([new NoDriverManager(), $method], $arguments);
     }
 
-    public function providerMethods()
+    public function providerMethods(): array
     {
         return [
             ['getClass', []],

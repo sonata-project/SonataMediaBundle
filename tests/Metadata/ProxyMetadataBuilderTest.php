@@ -242,30 +242,19 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    /**
-     * Return a mock object for the DI ContainerInterface.
-     *
-     * @param array $services A key-value list of services the container contains
-     *
-     * @return MockObject
-     */
-    protected function getContainerMock(array $services)
+    protected function getContainerMock(array $services): MockObject
     {
         $container = $this->createMock(ContainerInterface::class);
         $container
             ->method('get')
-            ->willReturnCallback(static function ($service) use ($services) {
+            ->willReturnCallback(static function (string $service) use ($services) {
                 return $services[$service];
             })
         ;
         $container
             ->method('has')
-            ->willReturnCallback(static function ($service) use ($services) {
-                if (isset($services[$service])) {
-                    return true;
-                }
-
-                return false;
+            ->willReturnCallback(static function (string $service) use ($services): bool {
+                return isset($services[$service]);
             })
         ;
 

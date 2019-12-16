@@ -62,12 +62,7 @@ class MediaManagerTest extends TestCase
         $this->manager->delete(null);
     }
 
-    /**
-     * Returns mock of doctrine document manager.
-     *
-     * @return \Sonata\DoctrinePHPCRAdminBundle\Model\ModelManager
-     */
-    protected function createRegistryMock()
+    protected function createRegistryMock(): ManagerRegistry
     {
         $dm = $this->getMockBuilder(DocumentManager::class)
             ->setMethods(['persist', 'flush'])
