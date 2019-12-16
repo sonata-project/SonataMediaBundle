@@ -85,7 +85,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $this->container
             ->method('get')
-            ->willReturnCallback(function ($id) {
+            ->willReturnCallback(function (string $id) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $this->pool;

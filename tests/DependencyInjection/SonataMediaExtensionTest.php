@@ -101,13 +101,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @param string $serviceId
-     * @param string $extension
-     * @param string $type
-     *
      * @dataProvider dataAdapter
      */
-    public function testAdapter($serviceId, $extension, $type): void
+    public function testAdapter(string $serviceId, string $extension, string $type): void
     {
         $this->load();
 
@@ -117,7 +113,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         }
     }
 
-    public function dataAdapter()
+    public function dataAdapter(): array
     {
         return [
             ['sonata.media.adapter.image.gd', 'gd', GdImagine::class],
@@ -140,12 +136,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @param $serviceId
-     * @param $type
-     *
      * @dataProvider dataResizer
      */
-    public function testResizer($serviceId, $type): void
+    public function testResizer(string $serviceId, string $type): void
     {
         $this->load();
 
@@ -155,7 +148,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         }
     }
 
-    public function dataResizer()
+    public function dataResizer(): array
     {
         return [
             ['sonata.media.resizer.simple', SimpleResizer::class],
@@ -208,12 +201,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @param $configs
-     * @param $args
-     *
      * @dataProvider dataFilesystemConfiguration
      */
-    public function testLoadWithFilesystemConfiguration($configs, $args): void
+    public function testLoadWithFilesystemConfiguration(array $configs, array $args): void
     {
         $this->load($configs);
 
@@ -223,7 +213,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
-    public function dataFilesystemConfiguration()
+    public function dataFilesystemConfiguration(): array
     {
         return [
             [

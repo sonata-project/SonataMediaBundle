@@ -24,6 +24,7 @@ use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
@@ -34,7 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FileProviderTest extends AbstractProviderTest
 {
-    public function getProvider()
+    public function getProvider(): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('resize')->willReturn(true);
@@ -83,7 +84,7 @@ class FileProviderTest extends AbstractProviderTest
         $this->assertSame('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
     }
 
-    public function testHelperProperies(): void
+    public function testHelperProperties(): void
     {
         $provider = $this->getProvider();
 
@@ -188,7 +189,7 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @dataProvider mediaProvider
      */
-    public function testTransform($expected, $media): void
+    public function testTransform(string $expected, Media $media): void
     {
         $closure = function () use ($expected, $media): void {
             $provider = $this->getProvider();
@@ -201,7 +202,7 @@ class FileProviderTest extends AbstractProviderTest
         $closure();
     }
 
-    public function mediaProvider()
+    public function mediaProvider(): array
     {
         $file = new File(realpath(__DIR__.'/../fixtures/file.txt'));
         $content = file_get_contents(realpath(__DIR__.'/../fixtures/file.txt'));
@@ -224,11 +225,6 @@ class FileProviderTest extends AbstractProviderTest
         ];
     }
 
-    /**
-     * @requires PHP 5.6
-     *
-     * @see https://github.com/sebastianbergmann/phpunit/issues/1409
-     */
     public function testBinaryContentWithRealPath(): void
     {
         $media = $this->createMock(MediaInterface::class);
@@ -266,11 +262,6 @@ class FileProviderTest extends AbstractProviderTest
         $setFileContents->invoke($provider, $media);
     }
 
-    /**
-     * @requires PHP 5.6
-     *
-     * @see https://github.com/sebastianbergmann/phpunit/issues/1409
-     */
     public function testBinaryContentStreamWrapped(): void
     {
         $media = $this->createMock(MediaInterface::class);

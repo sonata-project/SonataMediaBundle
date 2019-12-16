@@ -26,8 +26,19 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MediaBlockServiceTest extends BlockServiceTestCase
 {
+    /**
+     * @var ObjectProphecy|ContainerInterface
+     */
     protected $container;
+
+    /**
+     * @var ObjectProphecy|GalleryManagerInterface
+     */
     private $galleryManager;
+
+    /**
+     * @var MediaBlockService
+     */
     private $blockService;
 
     protected function setUp(): void

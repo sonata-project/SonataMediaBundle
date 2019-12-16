@@ -22,7 +22,7 @@ class ImagineCompatibleResizerTraitTest extends TestCase
     /**
      * @dataProvider getModes
      */
-    public function testModeConversion($mode, $result): void
+    public function testModeConversion(string $mode, $result): void
     {
         $objectWithTrait = $this->getObjectForTrait(ImagineCompatibleResizerTrait::class);
         $reflection = new \ReflectionObject($objectWithTrait);
@@ -34,7 +34,7 @@ class ImagineCompatibleResizerTraitTest extends TestCase
         $this->assertSame($result, $convertedMode);
     }
 
-    public static function getModes()
+    public static function getModes(): array
     {
         return [
             ['inset', ImageInterface::THUMBNAIL_INSET],

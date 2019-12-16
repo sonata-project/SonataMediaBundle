@@ -25,6 +25,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\YouTubeProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
@@ -32,7 +33,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class YouTubeProviderTest extends AbstractProviderTest
 {
-    public function getProvider(Browser $browser = null)
+    public function getProvider(Browser $browser = null): MediaProviderInterface
     {
         if (!$browser) {
             $browser = $this->createMock(Browser::class);
@@ -142,7 +143,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     /**
      * @dataProvider getUrls
      */
-    public function testTransformWithUrl($url): void
+    public function testTransformWithUrl(string $url): void
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_youtube.txt'));
@@ -165,7 +166,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $this->assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public static function getUrls()
+    public static function getUrls(): array
     {
         return [
         ['BDYAbAtaDzA'],

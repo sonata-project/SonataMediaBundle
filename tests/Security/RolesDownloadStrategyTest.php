@@ -48,7 +48,7 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (array $roles) {
+            ->willReturnCallback(static function (array $roles): bool {
                 return \in_array('FOO', $roles, true);
             });
 

@@ -38,7 +38,7 @@ class FixMediaContextCommandTest extends TestCase
     protected $application;
 
     /**
-     * @var ContainerAwareCommand
+     * @var FixMediaContextCommand
      */
     protected $command;
 
@@ -85,7 +85,7 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->container
             ->method('get')
-            ->willReturnCallback(static function ($id) use ($pool, $contextManager, $categoryManager) {
+            ->willReturnCallback(static function (string $id) use ($pool, $contextManager, $categoryManager) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $pool;
@@ -97,7 +97,7 @@ class FixMediaContextCommandTest extends TestCase
             });
     }
 
-    public function testExecuteWithDisabledClassfication(): void
+    public function testExecuteWithDisabledClassification(): void
     {
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->willReturn(false);

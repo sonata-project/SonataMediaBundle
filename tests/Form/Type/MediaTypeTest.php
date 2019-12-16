@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Form\Type;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
@@ -144,7 +145,7 @@ class MediaTypeTest extends AbstractTypeTest
         ]);
     }
 
-    protected function getTestedInstance()
+    protected function getTestedInstance(): FormTypeInterface
     {
         return new MediaType($this->mediaPool, 'testclass');
     }

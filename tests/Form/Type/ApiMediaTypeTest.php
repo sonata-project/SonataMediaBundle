@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Form\Type\ApiMediaType;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @author Hugo Briand <briand@ekino.com>
@@ -25,7 +26,6 @@ class ApiMediaTypeTest extends AbstractTypeTest
 {
     public function testBuildForm(): void
     {
-        parent::testBuildForm();
         $provider = $this->createMock(MediaProviderInterface::class);
 
         $mediaPool = $this->createMock(Pool::class);
@@ -39,7 +39,7 @@ class ApiMediaTypeTest extends AbstractTypeTest
         $type->buildForm($builder, ['provider_name' => 'sonata.media.provider.image']);
     }
 
-    protected function getTestedInstance()
+    protected function getTestedInstance(): FormTypeInterface
     {
         return new ApiMediaType($this->mediaPool, 'testclass');
     }

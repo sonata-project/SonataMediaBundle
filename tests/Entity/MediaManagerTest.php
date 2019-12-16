@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Test\Entity;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\Doctrine\Test\EntityManagerMockFactoryTrait;
 use Sonata\MediaBundle\Entity\BaseMedia;
@@ -30,7 +31,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(static function ($qb) use ($self): void {
+            ->getMediaManager(static function (MockObject $qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
@@ -53,7 +54,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(static function ($qb) use ($self): void {
+            ->getMediaManager(static function (MockObject $qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->never())->method('andWhere');
                 $qb->expects($self->exactly(2))->method('orderBy')->with(
@@ -78,7 +79,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(static function ($qb) use ($self): void {
+            ->getMediaManager(static function (MockObject $qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => true]));
@@ -90,7 +91,7 @@ class MediaManagerTest extends TestCase
     {
         $self = $this;
         $this
-            ->getMediaManager(static function ($qb) use ($self): void {
+            ->getMediaManager(static function (MockObject $qb) use ($self): void {
                 $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
                 $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => false]));
@@ -98,7 +99,7 @@ class MediaManagerTest extends TestCase
             ->getPager(['enabled' => false], 1);
     }
 
-    protected function getMediaManager($qbCallback)
+    protected function getMediaManager(\Closure $qbCallback): MediaManager
     {
         $em = $this->createEntityManagerMock($qbCallback, [
             'name',

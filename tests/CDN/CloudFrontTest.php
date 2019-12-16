@@ -66,25 +66,25 @@ class CloudFrontTest extends TestCase
 
 class CloudFrontClientSpy extends CloudFrontClient
 {
-    public function createInvalidation()
+    public function createInvalidation(): CloudFrontResultSpy
     {
         return new CloudFrontResultSpy();
     }
 }
 
-class CloudFrontResultSpy
+final class CloudFrontResultSpy
 {
-    protected $fail = false;
+    private $fail;
 
-    public function __construct($fail = false)
+    public function __construct(bool $fail = false)
     {
         $this->fail = $fail;
     }
 
-    public function get($data)
+    public function get($data): string
     {
         if ('Status' !== $data || $this->fail) {
-            return;
+            return '';
         }
 
         return 'InProgress';

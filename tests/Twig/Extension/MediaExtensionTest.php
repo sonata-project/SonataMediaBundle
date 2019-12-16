@@ -81,7 +81,7 @@ class MediaExtensionTest extends TestCase
         $mediaExtension->thumbnail($media, $format, $options);
     }
 
-    public function getMediaService()
+    public function getMediaService(): Pool
     {
         $mediaService = $this->createMock(Pool::class);
         $mediaService->method('getProvider')->willReturn($this->getProvider());
@@ -89,12 +89,12 @@ class MediaExtensionTest extends TestCase
         return $mediaService;
     }
 
-    public function getMediaManager()
+    public function getMediaManager(): ManagerInterface
     {
         return $this->createMock(ManagerInterface::class);
     }
 
-    public function getProvider()
+    public function getProvider(): MediaProviderInterface
     {
         if (null === $this->provider) {
             $this->provider = $this->createMock(MediaProviderInterface::class);
@@ -105,7 +105,7 @@ class MediaExtensionTest extends TestCase
         return $this->provider;
     }
 
-    public function getTemplate()
+    public function getTemplate(): Template
     {
         if (null === $this->template) {
             $this->template = $this->createMock(Template::class);
@@ -114,7 +114,7 @@ class MediaExtensionTest extends TestCase
         return $this->template;
     }
 
-    public function getEnvironment()
+    public function getEnvironment(): Environment
     {
         if (null === $this->environment) {
             $this->environment = $this->createMock(Environment::class);
@@ -124,7 +124,7 @@ class MediaExtensionTest extends TestCase
         return $this->environment;
     }
 
-    public function getMedia()
+    public function getMedia(): Media
     {
         if (null === $this->media) {
             $this->media = $this->createMock(Media::class);

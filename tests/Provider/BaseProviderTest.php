@@ -21,13 +21,14 @@ use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
 
 class BaseProviderTest extends AbstractProviderTest
 {
-    public function getProvider()
+    public function getProvider(): MediaProviderInterface
     {
         $adapter = $this->createMock(Adapter::class);
 
@@ -144,7 +145,7 @@ class TestProvider extends BaseProvider
      */
     public function buildEditForm(FormMapper $form): void
     {
-        // TODO: Implement buildEditForm() method.
+        $form->add('foo');
     }
 
     /**
@@ -152,7 +153,7 @@ class TestProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $form): void
     {
-        // TODO: Implement buildCreateForm() method.
+        $form->add('foo');
     }
 
     /**
@@ -238,7 +239,7 @@ class TestProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder): void
     {
-        // TODO: Implement buildMediaType() method.
+        $formBuilder->add('foo');
     }
 
     /**

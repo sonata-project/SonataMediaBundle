@@ -20,17 +20,19 @@ use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use PHPUnit\Framework\MockObject\Stub\Stub;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends AbstractProviderTest
 {
-    public function getProvider($allowedExtensions = [], $allowedMimeTypes = [], $box = false)
+    public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], Stub $box = null): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('resize')->willReturn(true);
@@ -231,7 +233,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('logo.png', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        // post persit the media
+        // post persist the media
         $provider->postPersist($media);
 
         $provider->postRemove($media);
