@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Test\Entity;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
-use Sonata\CoreBundle\Test\EntityManagerMockFactory;
+use Sonata\Doctrine\Test\EntityManagerMockFactoryTrait;
 use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Entity\MediaManager;
 
@@ -24,6 +24,8 @@ use Sonata\MediaBundle\Entity\MediaManager;
  */
 class MediaManagerTest extends TestCase
 {
+    use EntityManagerMockFactoryTrait;
+
     public function testGetPager(): void
     {
         $self = $this;
@@ -99,7 +101,7 @@ class MediaManagerTest extends TestCase
 
     protected function getMediaManager($qbCallback)
     {
-        $em = EntityManagerMockFactory::create($this, $qbCallback, [
+        $em = $this->createEntityManagerMock($qbCallback, [
             'name',
             'description',
             'enabled',
