@@ -1,5 +1,14 @@
 framework:
     secret: secret
+    templating:
+        engines: ['twig']
+    session:
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+
+twig:
+    paths:
+        - '%kernel.project_dir%/templates'
 
 sonata_media:
     db_driver: doctrine_orm
@@ -29,20 +38,21 @@ sonata_media:
             create: false
 
 fos_rest:
-    param_fetcher_listener: true
-    body_listener: true
+    param_fetcher_listener: false
+    body_listener: false
     format_listener:
         rules:
             - {path: ^/, priorities: [json], fallback_format: ~, prefer_extension: true}
     view:
-        view_response_listener: force
+        view_response_listener: false
     body_converter:
-        enabled: true
-        validate: true
+        enabled: false
+        validate: false
 
 sensio_framework_extra:
     router: {annotations: true}
     request: {converters: true}
+    view: { annotations: true }
 
 doctrine:
     dbal:

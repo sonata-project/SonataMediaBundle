@@ -1,6 +1,11 @@
 security:
     role_hierarchy: ~
 
+    providers: 
+        in_memory:
+             memory:
+                users: ~
+
     firewalls:
         test:
             security: false

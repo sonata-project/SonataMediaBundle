@@ -75,7 +75,7 @@
         "jackalope/jackalope-doctrine-dbal": "^1.1",
         "liip/imagine-bundle": "^1.9 || ^2.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.0",
-        "nelmio/api-doc-bundle": "^2.11",
+        "nelmio/api-doc-bundle": "^2.13.4",
         "sensio/framework-extra-bundle": "^5.0",
         "sonata-project/admin-bundle": "^3.31",
         "sonata-project/block-bundle": "^3.16.1",
