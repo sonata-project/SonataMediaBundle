@@ -1,9 +1,9 @@
 security:
     role_hierarchy: ~
 
-    providers: 
+    providers:
         in_memory:
-             memory:
+            memory:
                 users: ~
 
     firewalls:

@@ -52,7 +52,7 @@ fos_rest:
 sensio_framework_extra:
     router: {annotations: true}
     request: {converters: true}
-    view: { annotations: true }
+    view: {annotations: true}
 
 doctrine:
     dbal:
