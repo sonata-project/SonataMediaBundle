@@ -62,14 +62,14 @@ class BaseProviderTest extends AbstractProviderTest
             'edit' => 'edit.twig',
         ]);
 
-        $this->assertInternalType('array', $provider->getTemplates());
+        $this->assertIsArray($provider->getTemplates());
         $this->assertSame('edit.twig', $provider->getTemplate('edit'));
 
         $this->assertInstanceOf(CDNInterface::class, $provider->getCdn());
 
         $provider->addFormat('small', []);
 
-        $this->assertInternalType('array', $provider->getFormat('small'));
+        $this->assertIsArray($provider->getFormat('small'));
 
         $media = new Media();
         $media->setContext('test');

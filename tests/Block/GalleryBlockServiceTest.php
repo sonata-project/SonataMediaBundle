@@ -57,8 +57,8 @@ class GalleryBlockServiceTest extends AbstractBlockServiceTestCase
         $this->blockService->execute($blockContext->reveal());
 
         $this->assertSame('template', $this->templating->view);
-        $this->assertInternalType('array', $this->templating->parameters['settings']);
-        $this->assertInternalType('array', $this->templating->parameters['elements']);
+        $this->assertIsArray($this->templating->parameters['settings']);
+        $this->assertIsArray($this->templating->parameters['elements']);
         $this->assertSame($gallery->reveal(), $this->templating->parameters['gallery']);
         $this->assertSame($block->reveal(), $this->templating->parameters['block']);
     }
