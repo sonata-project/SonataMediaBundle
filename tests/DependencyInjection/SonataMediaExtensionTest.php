@@ -279,7 +279,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasAlias('%sonata.media.pool.class%', 'sonata.media.pool');
     }
 
-    protected function getMinimalConfiguration()
+    protected function getMinimalConfiguration(): array
     {
         return [
             'default_context' => 'default',
@@ -305,7 +305,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * {@inheritdoc}
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [
             new SonataMediaExtension(),
