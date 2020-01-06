@@ -246,7 +246,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $properties = $provider->getHelperProperties($media, 'admin');
 
-        $this->assertInternalType('array', $properties);
+        $this->assertIsArray($properties);
         $this->assertSame(100, $properties['player_parameters']['height']);
         $this->assertSame(100, $properties['player_parameters']['width']);
     }

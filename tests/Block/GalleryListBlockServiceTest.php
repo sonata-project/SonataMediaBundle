@@ -64,7 +64,7 @@ class GalleryListBlockServiceTest extends AbstractBlockServiceTestCase
         $this->assertSame('@SonataMedia/Block/block_gallery_list.html.twig', $this->templating->view);
 
         $this->assertSame($blockContext, $this->templating->parameters['context']);
-        $this->assertInternalType('array', $this->templating->parameters['settings']);
+        $this->assertIsArray($this->templating->parameters['settings']);
         $this->assertInstanceOf(BlockInterface::class, $this->templating->parameters['block']);
         $this->assertSame($pager, $this->templating->parameters['pager']);
     }

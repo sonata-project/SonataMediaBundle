@@ -241,7 +241,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $properties = $provider->getHelperProperties($media, 'admin');
 
-        $this->assertInternalType('array', $properties);
+        $this->assertIsArray($properties);
         $this->assertSame(100, $properties['height']);
         $this->assertSame(100, $properties['width']);
     }

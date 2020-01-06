@@ -35,7 +35,7 @@ class ReplicateTest extends TestCase
 
         $master->expects($this->once())->method('keys')->willReturn([]);
         $slave->expects($this->never())->method('keys')->willReturn([]);
-        $this->assertInternalType('array', $replicate->keys());
+        $this->assertIsArray($replicate->keys());
 
         $master->expects($this->once())->method('exists')->willReturn(true);
         $slave->expects($this->never())->method('exists');

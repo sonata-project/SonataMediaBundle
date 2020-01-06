@@ -134,7 +134,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $properties = $provider->getHelperProperties($media, 'default_large');
 
-        $this->assertInternalType('array', $properties);
+        $this->assertIsArray($properties);
         $this->assertSame('test.png', $properties['title']);
         $this->assertSame(1000, $properties['width']);
         $this->assertSame($srcSet, $properties['srcset']);

@@ -63,7 +63,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
         $this->blockService->execute($blockContext->reveal());
 
         $this->assertSame('template', $this->templating->view);
-        $this->assertInternalType('array', $this->templating->parameters['settings']);
+        $this->assertIsArray($this->templating->parameters['settings']);
         $this->assertSame($media->reveal(), $this->templating->parameters['media']);
         $this->assertSame($block->reveal(), $this->templating->parameters['block']);
     }

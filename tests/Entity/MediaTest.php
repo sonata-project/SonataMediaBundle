@@ -34,7 +34,7 @@ class MediaTest extends TestCase
     {
         $status = Media::getStatusList();
 
-        $this->assertInternalType('array', $status);
+        $this->assertIsArray($status);
     }
 
     public function testSetGet(): void
