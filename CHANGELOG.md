@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.23.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.22.0...3.23.0) - 2020-01-07
+### Added
+- Added support for "knplabs/gaufrette:0.9".
+
+### Fixed
+- Fixed passing the default values to the `sonata.media.metadata.amazon` service.
+
 ## [3.22.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.21.0...3.22.0) - 2019-12-15
 ### Added
 - Imagine `^1.0` support

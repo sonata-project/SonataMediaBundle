@@ -384,7 +384,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             ;
 
             $container->getDefinition('sonata.media.metadata.amazon')
-                ->addArgument([
+                ->replaceArgument(0, [
                         'acl' => $config['filesystem']['s3']['acl'],
                         'storage' => $config['filesystem']['s3']['storage'],
                         'encryption' => $config['filesystem']['s3']['encryption'],
