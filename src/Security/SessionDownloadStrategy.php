@@ -29,7 +29,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     /**
      * @var ContainerInterface
      *
-     * @deprecated Since version 3.1, will be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.1, will be removed in 4.0.
      * NEXT_MAJOR : remove this property
      */
     protected $container;

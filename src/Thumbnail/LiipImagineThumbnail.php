@@ -24,7 +24,7 @@ use Symfony\Component\Routing\RouterInterface;
 class LiipImagineThumbnail implements ThumbnailInterface
 {
     /**
-     * @deprecated Since version 3.3, will be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.3, will be removed in 4.0.
      *
      * @var RouterInterface
      */
