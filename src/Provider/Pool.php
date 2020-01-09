@@ -35,7 +35,7 @@ class Pool
     /**
      * NEXT_MAJOR: remove this property.
      *
-     * @deprecated Deprecated since version 3.1 and will be removed in 4.0. Use $downloadStrategies instead
+     * @deprecated since sonata-project/media-bundle 3.1 and will be removed in 4.0. Use $downloadStrategies instead
      *
      * @var DownloadStrategyInterface[]
      */
@@ -92,7 +92,7 @@ class Pool
     /**
      * NEXT_MAJOR: remove this method.
      *
-     * @deprecated Deprecated since version 3.1, to be removed in 4.0
+     * @deprecated since sonata-project/media-bundle 3.1, to be removed in 4.0
      *
      * @param string $name
      */
@@ -252,7 +252,7 @@ class Pool
     /**
      * NEXT_MAJOR: remove this method.
      *
-     * @deprecated Deprecated since version 3.1, to be removed in 4.0
+     * @deprecated since sonata-project/media-bundle 3.1, to be removed in 4.0
      *
      * @throws \RuntimeException
      *
