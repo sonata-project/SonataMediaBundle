@@ -113,7 +113,7 @@ class MediaController extends Controller
      *
      * @return Response
      *
-     * @deprecated since 3.12, to be removed in 4.0.
+     * @deprecated since  sonata-project/media-bundle 3.12, to be removed in 4.0.
      */
     public function liipImagineFilterAction(Request $request, $path, $filter)
     {

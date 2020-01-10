@@ -31,7 +31,7 @@ class AddMediaCommand extends BaseCommand
     /**
      * NEXT_MAJOR: remove this property.
      *
-     * @deprecated This property is deprecated since version 2.4 and will be removed in 4.0
+     * @deprecated This property is deprecated since sonata-project/media-bundle 2.4 and will be removed in 4.0
      */
     protected $output;
 
