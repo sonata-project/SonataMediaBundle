@@ -14,15 +14,14 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Functional;
 
 use Sonata\MediaBundle\Tests\App\AppKernel;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class MediaControllerTest extends WebTestCase
 {
     public function testGetMediaAction(): void
     {
-        $kernel = new AppKernel();
-        $client = new KernelBrowser($kernel);
+        $client = new Client(new AppKernel());
         $client->request('GET', '/api/media');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }

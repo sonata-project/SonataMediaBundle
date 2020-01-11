@@ -58,8 +58,16 @@ $kernel->boot();
 $doctrine = $kernel->getContainer()->get('doctrine');
 $application = new Application($kernel);
 $application->setAutoExit(false);
-$application->add(new DropDatabaseDoctrineCommand($doctrine));
-$application->add(new CreateDatabaseDoctrineCommand($doctrine));
+
+$interfaces = class_implements('Doctrine\Bundle\DoctrineBundle\Command\CreateDatabaseDoctrineCommand');
+
+if (isset($interfaces['Symfony\Component\DependencyInjection\ContainerAwareInterface'])) {
+    $application->add(new DropDatabaseDoctrineCommand());
+    $application->add(new CreateDatabaseDoctrineCommand());
+} else {
+    $application->add(new DropDatabaseDoctrineCommand($doctrine));
+    $application->add(new CreateDatabaseDoctrineCommand($doctrine));
+}
 
 $application->run(new ArrayInput([
     'command' => 'doctrine:database:drop',
