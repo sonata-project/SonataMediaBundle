@@ -33,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CleanMediaCommandTest extends FilesystemTestCase
 {
     /**
-     * @var MockObject|ContainerInterface
+     * @var MockObject&ContainerInterface
      */
     protected $container;
 
@@ -53,17 +53,17 @@ class CleanMediaCommandTest extends FilesystemTestCase
     protected $tester;
 
     /**
-     * @var MockObject|Pool
+     * @var MockObject&Pool
      */
     private $pool;
 
     /**
-     * @var MockObject|MediaManagerInterface
+     * @var MockObject&MediaManagerInterface
      */
     private $mediaManager;
 
     /**
-     * @var MockObject|Local
+     * @var MockObject&Local
      */
     private $fileSystemLocal;
 

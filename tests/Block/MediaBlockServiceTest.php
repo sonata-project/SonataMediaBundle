@@ -27,12 +27,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class MediaBlockServiceTest extends BlockServiceTestCase
 {
     /**
-     * @var ObjectProphecy|ContainerInterface
+     * @var ObjectProphecy&ContainerInterface
      */
     protected $container;
 
     /**
-     * @var ObjectProphecy|GalleryManagerInterface
+     * @var ObjectProphecy&GalleryManagerInterface
      */
     private $galleryManager;
 

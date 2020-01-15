@@ -34,7 +34,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class MediaControllerTest extends TestCase
 {
     /**
-     * @var ObjectProphecy|ContainerInterface
+     * @var ObjectProphecy&ContainerInterface
      */
     protected $container;
 

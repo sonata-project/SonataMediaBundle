@@ -39,22 +39,22 @@ use Twig\Environment;
 class GalleryAdminControllerTest extends TestCase
 {
     /**
-     * @var ObjectProphecy|ContainerInterface
+     * @var ObjectProphecy&ContainerInterface
      */
     private $container;
 
     /**
-     * @var ObjectProphecy|BaseMediaAdmin
+     * @var ObjectProphecy&BaseMediaAdmin
      */
     private $admin;
 
     /**
-     * @var ObjectProphecy|Request
+     * @var ObjectProphecy&Request
      */
     private $request;
 
     /**
-     * @var ObjectProphecy|GalleryAdminController
+     * @var ObjectProphecy&GalleryAdminController
      */
     private $controller;
 
