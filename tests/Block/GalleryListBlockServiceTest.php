@@ -26,12 +26,12 @@ use Sonata\MediaBundle\Provider\Pool;
 class GalleryListBlockServiceTest extends BlockServiceTestCase
 {
     /**
-     * @var MockObject|GalleryManagerInterface
+     * @var MockObject&GalleryManagerInterface
      */
     protected $galleryManager;
 
     /**
-     * @var MockObject|Pool
+     * @var MockObject&Pool
      */
     protected $pool;
 

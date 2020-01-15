@@ -28,7 +28,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FixMediaContextCommandTest extends TestCase
 {
     /**
-     * @var MockObject|ContainerInterface
+     * @var MockObject&ContainerInterface
      */
     protected $container;
 
@@ -48,17 +48,17 @@ class FixMediaContextCommandTest extends TestCase
     protected $tester;
 
     /**
-     * @var MockObject|Pool
+     * @var MockObject&Pool
      */
     private $pool;
 
     /**
-     * @var MockObject|ContextManagerInterface
+     * @var MockObject&ContextManagerInterface
      */
     private $contextManager;
 
     /**
-     * @var MockObject|CategoryManagerInterface
+     * @var MockObject&CategoryManagerInterface
      */
     private $categoryManager;
 
