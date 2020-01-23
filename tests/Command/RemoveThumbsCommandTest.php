@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Command;
 
 use Gaufrette\Filesystem;
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Command\RemoveThumbsCommand;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
@@ -32,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class RemoveThumbsCommandTest extends FilesystemTestCase
 {
     /**
-     * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ContainerInterface|MockObject
      */
     private $container;
 
@@ -52,12 +53,12 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
     private $tester;
 
     /**
-     * @var Pool|\PHPUnit_Framework_MockObject_MockObject
+     * @var Pool|MockObject
      */
     private $pool;
 
     /**
-     * @var MediaManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var MediaManagerInterface|MockObject
      */
     private $mediaManager;
 
@@ -82,9 +83,9 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
 
-        $this->container->expects($this->any())
+        $this->container
             ->method('get')
-            ->willReturnCallback(function ($id) {
+            ->willReturnCallback(function (string $id) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $this->pool;
@@ -112,7 +113,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $fileProvider = $this->createMock(FileProvider::class);
 
-        $fileProvider->expects($this->any())
+        $fileProvider
             ->method('getName')
             ->willReturn('fooprovider');
         $fileProvider->expects($this->once())

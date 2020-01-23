@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\ContextInterface;
@@ -27,7 +28,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FixMediaContextCommandTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
+     * @var MockObject&ContainerInterface
      */
     protected $container;
 
@@ -37,7 +38,7 @@ class FixMediaContextCommandTest extends TestCase
     protected $application;
 
     /**
-     * @var ContainerAwareCommand
+     * @var FixMediaContextCommand
      */
     protected $command;
 
@@ -47,17 +48,17 @@ class FixMediaContextCommandTest extends TestCase
     protected $tester;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Pool
+     * @var MockObject&Pool
      */
     private $pool;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ContextManagerInterface
+     * @var MockObject&ContextManagerInterface
      */
     private $contextManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|CategoryManagerInterface
+     * @var MockObject&CategoryManagerInterface
      */
     private $categoryManager;
 
@@ -82,9 +83,9 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->categoryManager = $categoryManager = $this->createMock(CategoryManagerInterface::class);
 
-        $this->container->expects($this->any())
+        $this->container
             ->method('get')
-            ->willReturnCallback(static function ($id) use ($pool, $contextManager, $categoryManager) {
+            ->willReturnCallback(static function (string $id) use ($pool, $contextManager, $categoryManager) {
                 switch ($id) {
                     case 'sonata.media.pool':
                         return $pool;
@@ -96,7 +97,7 @@ class FixMediaContextCommandTest extends TestCase
             });
     }
 
-    public function testExecuteWithDisabledClassfication(): void
+    public function testExecuteWithDisabledClassification(): void
     {
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->willReturn(false);
@@ -117,7 +118,7 @@ class FixMediaContextCommandTest extends TestCase
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->willReturn(true);
 
-        $this->pool->expects($this->any())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
         $contextModel = $this->createMock(ContextInterface::class);
 
@@ -145,7 +146,7 @@ class FixMediaContextCommandTest extends TestCase
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->willReturn(true);
 
-        $this->pool->expects($this->any())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
         $contextModel = $this->createMock(ContextInterface::class);
 
@@ -175,7 +176,7 @@ class FixMediaContextCommandTest extends TestCase
         $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
             ->willReturn(true);
 
-        $this->pool->expects($this->any())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
         $contextModel = $this->createMock(ContextInterface::class);
 

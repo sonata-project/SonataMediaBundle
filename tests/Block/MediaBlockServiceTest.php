@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Tests\Block;
 use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
-use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
+use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Block\MediaBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
@@ -24,10 +24,21 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class MediaBlockServiceTest extends AbstractBlockServiceTestCase
+class MediaBlockServiceTest extends BlockServiceTestCase
 {
+    /**
+     * @var ObjectProphecy&ContainerInterface
+     */
     protected $container;
+
+    /**
+     * @var ObjectProphecy&GalleryManagerInterface
+     */
     private $galleryManager;
+
+    /**
+     * @var MediaBlockService
+     */
     private $blockService;
 
     protected function setUp(): void
@@ -38,7 +49,7 @@ class MediaBlockServiceTest extends AbstractBlockServiceTestCase
         $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new MediaBlockService(
-            'block.service',
+            $this->templating,
             $this->templating,
             $this->container->reveal(),
             $this->galleryManager->reveal()

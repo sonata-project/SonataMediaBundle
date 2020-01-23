@@ -29,7 +29,7 @@ class RolesDownloadStrategyTest extends TestCase
         $translator = $this->createMock(TranslatorInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
 
-        $security->expects($this->any())
+        $security
             ->method('isGranted')
             ->willReturnCallback(static function (array $roles) {
                 return \in_array('ROLE_ADMIN', $roles, true);
@@ -46,9 +46,9 @@ class RolesDownloadStrategyTest extends TestCase
         $translator = $this->createMock(TranslatorInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
 
-        $security->expects($this->any())
+        $security
             ->method('isGranted')
-            ->willReturnCallback(static function (array $roles) {
+            ->willReturnCallback(static function (array $roles): bool {
                 return \in_array('FOO', $roles, true);
             });
 

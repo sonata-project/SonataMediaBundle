@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Model\Media;
 
 class MediaTest extends TestCase
 {
-    public function testSetMetadataValue()
+    public function testSetMetadataValue(): Media
     {
         $media = $this->getMedia(853);
         $metadataProperty = $this->getMediaPropertyReflection('providerMetadata');
@@ -46,7 +46,7 @@ class MediaTest extends TestCase
     /**
      * @depends testSetMetadataValue
      */
-    public function testUnsetMetadataValue($media): void
+    public function testUnsetMetadataValue(Media $media): void
     {
         $metadataProperty = $this->getMediaPropertyReflection('providerMetadata');
 
@@ -60,12 +60,12 @@ class MediaTest extends TestCase
 
         try {
             $media->unsetMetadataValue('bullshit');
-        } catch (InvalidArgumentException $expected) {
+        } catch (\InvalidArgumentException $expected) {
             $this->fail('an invalid key should be ignored');
         }
     }
 
-    protected function getMediaPropertyReflection($propertyName)
+    protected function getMediaPropertyReflection(string $propertyName): \ReflectionProperty
     {
         $rc = new \ReflectionClass(Media::class);
         $property = $rc->getProperty($propertyName);
@@ -74,10 +74,10 @@ class MediaTest extends TestCase
         return $property;
     }
 
-    protected function getMedia($id)
+    protected function getMedia($id): Media
     {
         $media = $this->getMockForAbstractClass(Media::class);
-        $media->expects($this->any())
+        $media
             ->method('getId')
             ->willReturn($id);
 

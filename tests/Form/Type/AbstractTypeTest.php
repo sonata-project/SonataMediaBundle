@@ -41,47 +41,13 @@ abstract class AbstractTypeTest extends TypeTestCase
 
     protected function setUp(): void
     {
-        $provider = $this->getMockBuilder(MediaProviderInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $provider = $this->createMock(MediaProviderInterface::class);
 
         $this->mediaPool = $this->createMock(Pool::class);
-        $this->mediaPool->expects($this->any())->method('getProvider')->willReturn($provider);
-
-        $this->formBuilder = $this->createMock(FormBuilder::class);
-        $this->formBuilder
-            ->expects($this->any())
-            ->method('add')
-            ->willReturnCallback(function ($name, $type = null): void {
-                if (null !== $type) {
-                    $this->assertTrue(class_exists($type), sprintf('Unable to ensure %s is a FQCN', $type));
-                }
-            });
+        $this->mediaPool->method('getProvider')->willReturn($provider);
 
         $this->formType = $this->getTestedInstance();
     }
 
-    public function testBuildForm(): void
-    {
-        $this->formType->buildForm($this->formBuilder, [
-            'provider_name' => 'sonata.media.provider.image',
-            'provider' => null,
-            'context' => null,
-            'empty_on_new' => true,
-            'new_on_update' => true,
-        ]);
-    }
-
-    public function testGetParent(): void
-    {
-        $parentRef = $this->formType->getParent();
-        $this->assertTrue(class_exists($parentRef), sprintf('Unable to ensure %s is a FQCN', $parentRef));
-    }
-
-    /**
-     * Get the tested form type instance.
-     *
-     * @return FormTypeInterface
-     */
-    abstract protected function getTestedInstance();
+    abstract protected function getTestedInstance(): FormTypeInterface;
 }

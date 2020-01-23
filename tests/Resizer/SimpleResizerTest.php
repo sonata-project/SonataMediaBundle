@@ -46,7 +46,7 @@ class SimpleResizerTest extends TestCase
         $image->expects($this->once())->method('get')->willReturn(file_get_contents(__DIR__.'/../fixtures/logo.png'));
 
         $adapter = $this->createMock(ImagineInterface::class);
-        $adapter->expects($this->any())->method('load')->willReturn($image);
+        $adapter->method('load')->willReturn($image);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->exactly(2))->method('getBox')->willReturn(new Box(535, 132));
@@ -67,7 +67,7 @@ class SimpleResizerTest extends TestCase
     /**
      * @dataProvider getBoxSettings
      */
-    public function testGetBox($mode, $settings, Box $mediaSize, Box $result): void
+    public function testGetBox(string $mode, array $settings, Box $mediaSize, Box $result): void
     {
         $adapter = $this->createMock(ImagineInterface::class);
 
@@ -86,7 +86,7 @@ class SimpleResizerTest extends TestCase
         $this->assertSame($result->getHeight(), $box->getHeight());
     }
 
-    public static function getBoxSettings()
+    public static function getBoxSettings(): array
     {
         return [
             ['inset', ['width' => 90, 'height' => 90], new Box(100, 120), new Box(75, 90)],

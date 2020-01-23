@@ -25,6 +25,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
@@ -32,26 +33,26 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends AbstractProviderTest
 {
-    public function getProvider(Browser $browser = null)
+    public function getProvider(Browser $browser = null): MediaProviderInterface
     {
         if (!$browser) {
             $browser = $this->createMock(Browser::class);
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->willReturn(true);
-        $resizer->expects($this->any())->method('getBox')->willReturn(new Box(100, 100));
+        $resizer->method('resize')->willReturn(true);
+        $resizer->method('getBox')->willReturn(new Box(100, 100));
 
         $adapter = $this->createMock(Adapter::class);
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->willReturn($file);
+        $filesystem->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -105,7 +106,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $media->setId(1023457);
 
-        $this->assertTrue($provider->requireThumbnails($media));
+        $this->assertTrue($provider->requireThumbnails());
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
@@ -144,7 +145,7 @@ class VimeoProviderTest extends AbstractProviderTest
     /**
      * @dataProvider getTransformWithUrlMedia
      */
-    public function testTransformWithUrl($media): void
+    public function testTransformWithUrl(Media $media): void
     {
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
@@ -164,7 +165,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $this->assertSame('012341231', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function getTransformWithUrlMedia()
+    public function getTransformWithUrlMedia(): array
     {
         $mediaWebsite = new Media();
         $mediaWebsite->setContext('default');
@@ -213,14 +214,11 @@ class VimeoProviderTest extends AbstractProviderTest
         $provider = $this->getProvider();
 
         $admin = $this->createMock(AdminInterface::class);
-        $admin->expects($this->any())
+        $admin
             ->method('trans')
             ->willReturn('message');
 
-        $formMapper = $this->getMockBuilder(FormMapper::class)
-            ->setMethods(['add', 'getAdmin'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $formMapper = $this->createMock(FormMapper::class);
         $formMapper->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);

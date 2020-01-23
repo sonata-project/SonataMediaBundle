@@ -26,32 +26,33 @@ use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\DailyMotionProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class DailyMotionProviderTest extends AbstractProviderTest
 {
-    public function getProvider(Browser $browser = null)
+    public function getProvider(Browser $browser = null): MediaProviderInterface
     {
         if (!$browser) {
             $browser = $this->createMock(Browser::class);
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->willReturn(true);
-        $resizer->expects($this->any())->method('getBox')->willReturn(new Box(100, 100));
+        $resizer->method('resize')->willReturn(true);
+        $resizer->method('getBox')->willReturn(new Box(100, 100));
 
         $adapter = $this->createMock(Adapter::class);
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->willReturn($file);
+        $filesystem->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -69,8 +70,6 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
     public function testProvider(): void
     {
-        $provider = $this->getProvider();
-
         $media = new Media();
         $media->setName('les tests fonctionnels - Symfony Live 2009');
         $media->setProviderName('dailymotion');
@@ -78,12 +77,12 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $media->setContext('default');
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Dailymotion","provider_url":"http:\/\/www.dailymotion.com","title":"Thomas Rabaix - les tests fonctionnels - Symfony Live 2009","author_name":"Guillaume Pon\u00e7on","author_url":"http:\/\/www.dailymotion.com\/phptv","width":480,"height":270,"html":"<iframe src=\"http:\/\/www.dailymotion.com\/embed\/video\/x9wjql\" width=\"480\" height=\"270\" frameborder=\"0\"><\/iframe>","thumbnail_url":"http:\/\/ak2.static.dailymotion.com\/static\/video\/711\/536\/16635117:jpeg_preview_large.jpg?20100801072241","thumbnail_width":426.666666667,"thumbnail_height":240}', true));
 
-        $this->assertSame('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $provider->getReferenceImage($media));
+        $this->assertSame('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $this->provider->getReferenceImage($media));
 
         $media->setId(1023458);
 
-        $this->assertSame('default/0011/24', $provider->generatePath($media));
-        $this->assertSame('/uploads/media/default/0011/24/thumb_1023458_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('default/0011/24', $this->provider->generatePath($media));
+        $this->assertSame('/uploads/media/default/0011/24/thumb_1023458_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail(): void
@@ -106,7 +105,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $media->setId(1023458);
 
-        $this->assertTrue($provider->requireThumbnails($media));
+        $this->assertTrue($provider->requireThumbnails());
 
         $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
@@ -168,7 +167,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function dataTransformWithUrl()
+    public function dataTransformWithUrl(): array
     {
         return [
             ['http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds'],
@@ -210,14 +209,11 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $provider = $this->getProvider();
 
         $admin = $this->createMock(AdminInterface::class);
-        $admin->expects($this->any())
+        $admin
             ->method('trans')
             ->willReturn('message');
 
-        $formMapper = $this->getMockBuilder(FormMapper::class)
-            ->setMethods(['add', 'getAdmin'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $formMapper = $this->createMock(FormMapper::class);
         $formMapper->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
@@ -227,11 +223,9 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $provider->buildEditForm($formMapper);
     }
 
-    public function testHelperProperies(): void
+    public function testHelperProperties(): void
     {
-        $provider = $this->getProvider();
-
-        $provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', ['width' => 100]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
@@ -239,7 +233,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $media->setHeight(100);
         $media->setWidth(100);
 
-        $properties = $provider->getHelperProperties($media, 'admin');
+        $properties = $this->provider->getHelperProperties($media, 'admin');
 
         $this->assertIsArray($properties);
         $this->assertSame(100, $properties['height']);
@@ -250,6 +244,6 @@ class DailyMotionProviderTest extends AbstractProviderTest
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertSame('http://www.dailymotion.com/video/123456', $this->getProvider()->getReferenceUrl($media));
+        $this->assertSame('http://www.dailymotion.com/video/123456', $this->provider->getReferenceUrl($media));
     }
 }

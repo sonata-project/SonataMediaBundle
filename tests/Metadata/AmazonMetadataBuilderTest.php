@@ -26,16 +26,13 @@ class AmazonMetadataBuilderTest extends TestCase
         $filename = '/test/folder/testfile.png';
 
         foreach ($this->provider() as $provider) {
-            list($a, $b) = $provider;
+            [$a, $b] = $provider;
             $amazonmetadatabuilder = new AmazonMetadataBuilder($a);
             $this->assertSame($b, $amazonmetadatabuilder->get($media, $filename));
         }
     }
 
-    /**
-     * @return array
-     */
-    public function provider()
+    public function provider(): array
     {
         return [
             [['acl' => 'private'], ['ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png']],

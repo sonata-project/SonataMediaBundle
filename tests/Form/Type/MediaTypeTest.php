@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Form\Type;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
@@ -47,11 +48,11 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testMissingFormOptions(): void
     {
-        $this->mediaPool->expects($this->any())->method('getProviderList')->willReturn([
+        $this->mediaPool->method('getProviderList')->willReturn([
             'provider_a' => 'provider_a',
             'provider_b' => 'provider_b',
         ]);
-        $this->mediaPool->expects($this->any())->method('getContexts')->willReturn([
+        $this->mediaPool->method('getContexts')->willReturn([
             'video' => [],
             'pic' => [],
         ]);
@@ -66,11 +67,11 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testMissingFormContextOption(): void
     {
-        $this->mediaPool->expects($this->any())->method('getProviderList')->willReturn([
+        $this->mediaPool->method('getProviderList')->willReturn([
             'provider_a' => 'provider_a',
             'provider_b' => 'provider_b',
         ]);
-        $this->mediaPool->expects($this->any())->method('getContexts')->willReturn([
+        $this->mediaPool->method('getContexts')->willReturn([
             'video' => [],
             'pic' => [],
         ]);
@@ -84,11 +85,11 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testMissingFormProviderOption(): void
     {
-        $this->mediaPool->expects($this->any())->method('getProviderList')->willReturn([
+        $this->mediaPool->method('getProviderList')->willReturn([
             'provider_a' => 'provider_a',
             'provider_b' => 'provider_b',
         ]);
-        $this->mediaPool->expects($this->any())->method('getContexts')->willReturn([
+        $this->mediaPool->method('getContexts')->willReturn([
             'video' => [],
             'pic' => [],
         ]);
@@ -102,11 +103,11 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testInvalidFormProviderOption(): void
     {
-        $this->mediaPool->expects($this->any())->method('getProviderList')->willReturn([
+        $this->mediaPool->method('getProviderList')->willReturn([
             'provider_a' => 'provider_a',
             'provider_b' => 'provider_b',
         ]);
-        $this->mediaPool->expects($this->any())->method('getContexts')->willReturn([
+        $this->mediaPool->method('getContexts')->willReturn([
             'video' => [],
             'pic' => [],
         ]);
@@ -124,11 +125,11 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testInvalidFormContextOption(): void
     {
-        $this->mediaPool->expects($this->any())->method('getProviderList')->willReturn([
+        $this->mediaPool->method('getProviderList')->willReturn([
             'provider_a' => 'provider_a',
             'provider_b' => 'provider_b',
         ]);
-        $this->mediaPool->expects($this->any())->method('getContexts')->willReturn([
+        $this->mediaPool->method('getContexts')->willReturn([
             'video' => [],
             'pic' => [],
         ]);
@@ -144,7 +145,7 @@ class MediaTypeTest extends AbstractTypeTest
         ]);
     }
 
-    protected function getTestedInstance()
+    protected function getTestedInstance(): FormTypeInterface
     {
         return new MediaType($this->mediaPool, 'testclass');
     }

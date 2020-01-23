@@ -27,16 +27,13 @@ class CloudFrontTest extends TestCase
      */
     public function testLegacyCloudFront(): void
     {
-        $client = $this->getMockBuilder(CloudFrontClient::class)
-            ->setMethods(['createInvalidation'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(CloudFrontClientSpy::class);
 
         $client->expects($this->exactly(3))->method('createInvalidation')->willReturn(new CloudFrontResultSpy());
 
         $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
         $cloudFront->setClient($client);
 
@@ -57,34 +54,38 @@ class CloudFrontTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to flush : ');
 
-        $client = $this->getMockBuilder(CloudFrontClient::class)
-            ->setMethods(['createInvalidation'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $client->expects($this->exactly(1))->method('createInvalidation')->willReturn(new CloudFrontResultSpy(true));
+        $client = $this->createMock(CloudFrontClientSpy::class);
+        $client->expects($this->once())->method('createInvalidation')->willReturn(new CloudFrontResultSpy(true));
         $cloudFront = $this->getMockBuilder(CloudFront::class)
             ->setConstructorArgs(['/foo', 'secret', 'key', 'xxxxxxxxxxxxxx'])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
         $cloudFront->setClient($client);
         $cloudFront->flushPaths(['boom']);
     }
 }
 
-class CloudFrontResultSpy
+class CloudFrontClientSpy extends CloudFrontClient
 {
-    protected $fail = false;
+    public function createInvalidation(): CloudFrontResultSpy
+    {
+        return new CloudFrontResultSpy();
+    }
+}
 
-    public function __construct($fail = false)
+final class CloudFrontResultSpy
+{
+    private $fail;
+
+    public function __construct(bool $fail = false)
     {
         $this->fail = $fail;
     }
 
-    public function get($data)
+    public function get($data): string
     {
         if ('Status' !== $data || $this->fail) {
-            return;
+            return '';
         }
 
         return 'InProgress';

@@ -14,31 +14,27 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Gaufrette\Adapter;
-use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\FormBuilder;
 
 class BaseProviderTest extends AbstractProviderTest
 {
-    public function getProvider()
+    public function getProvider(): MediaProviderInterface
     {
         $adapter = $this->createMock(Adapter::class);
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->setConstructorArgs([$adapter])
-            ->getMock();
-        $file = $this->getMockBuilder(File::class)
-            ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
 
         $cdn = new Server('/uploads/media');
@@ -47,9 +43,7 @@ class BaseProviderTest extends AbstractProviderTest
 
         $thumbnail = $this->createMock(ThumbnailInterface::class);
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-
-        $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail, $metadata);
+        $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail);
         $this->assertInstanceOf(BaseProvider::class, $provider);
 
         return $provider;
@@ -151,7 +145,7 @@ class TestProvider extends BaseProvider
      */
     public function buildEditForm(FormMapper $form): void
     {
-        // TODO: Implement buildEditForm() method.
+        $form->add('foo');
     }
 
     /**
@@ -159,7 +153,7 @@ class TestProvider extends BaseProvider
      */
     public function buildCreateForm(FormMapper $form): void
     {
-        // TODO: Implement buildCreateForm() method.
+        $form->add('foo');
     }
 
     /**
@@ -245,7 +239,7 @@ class TestProvider extends BaseProvider
      */
     public function buildMediaType(FormBuilder $formBuilder): void
     {
-        // TODO: Implement buildMediaType() method.
+        $formBuilder->add('foo');
     }
 
     /**

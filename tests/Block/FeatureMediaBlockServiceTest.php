@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
-use Sonata\BlockBundle\Test\AbstractBlockServiceTestCase;
+use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\FeatureMediaBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
+class FeatureMediaBlockServiceTest extends BlockServiceTestCase
 {
     protected $container;
     private $galleryManager;
@@ -32,7 +32,7 @@ class FeatureMediaBlockServiceTest extends AbstractBlockServiceTestCase
         $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new FeatureMediaBlockService(
-            'block.service',
+            $this->templating,
             $this->templating,
             $this->container->reveal(),
             $this->galleryManager->reveal()

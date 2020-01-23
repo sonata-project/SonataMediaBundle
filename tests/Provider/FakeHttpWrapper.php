@@ -71,12 +71,12 @@ class FakeHttpWrapper
     {
     }
 
-    public function stream_close()
+    public function stream_close(): bool
     {
         return true;
     }
 
-    public function stream_eof()
+    public function stream_eof(): bool
     {
         return 0 === feof($this->fp);
     }
@@ -89,7 +89,7 @@ class FakeHttpWrapper
     {
     }
 
-    public function stream_open($path, $mode, $options, &$opened_path)
+    public function stream_open($path, $mode, $options, &$opened_path): bool
     {
         $file = __DIR__.'/../fixtures/'.self::$ref[$path];
 

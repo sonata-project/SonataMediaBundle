@@ -20,34 +20,36 @@ use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use PHPUnit\Framework\MockObject\Stub\Stub;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\DefaultGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends AbstractProviderTest
 {
-    public function getProvider($allowedExtensions = [], $allowedMimeTypes = [], $box = false)
+    public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], Stub $box = null): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->any())->method('resize')->willReturn(true);
+        $resizer->method('resize')->willReturn(true);
         if ($box) {
-            $resizer->expects($this->any())->method('getBox')->will($box);
+            $resizer->method('getBox')->will($box);
         }
 
         $adapter = $this->createMock(Adapter::class);
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
         $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
-        $filesystem->expects($this->any())->method('get')->willReturn($file);
+        $filesystem->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');
 
@@ -56,14 +58,14 @@ class ImageProviderTest extends AbstractProviderTest
         $thumbnail = new FormatThumbnail('jpg');
 
         $size = $this->createMock(BoxInterface::class);
-        $size->expects($this->any())->method('getWidth')->willReturn(100);
-        $size->expects($this->any())->method('getHeight')->willReturn(100);
+        $size->method('getWidth')->willReturn(100);
+        $size->method('getHeight')->willReturn(100);
 
         $image = $this->createMock(ImageInterface::class);
-        $image->expects($this->any())->method('getSize')->willReturn($size);
+        $image->method('getSize')->willReturn($size);
 
         $adapter = $this->createMock(ImagineInterface::class);
-        $adapter->expects($this->any())->method('open')->willReturn($image);
+        $adapter->method('open')->willReturn($image);
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
@@ -191,7 +193,7 @@ class ImageProviderTest extends AbstractProviderTest
         $media->setId(1023456);
         $media->setContext('default');
 
-        $this->assertTrue($provider->requireThumbnails($media));
+        $this->assertTrue($provider->requireThumbnails());
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
@@ -222,7 +224,7 @@ class ImageProviderTest extends AbstractProviderTest
         $this->assertSame('logo.png', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        // post persit the media
+        // post persist the media
         $provider->postPersist($media);
 
         $provider->postRemove($media);

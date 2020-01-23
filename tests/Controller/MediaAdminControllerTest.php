@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Controller;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Argument\Token\TypeToken;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
@@ -41,9 +42,24 @@ use Twig\Environment;
 
 class MediaAdminControllerTest extends TestCase
 {
+    /**
+     * @var ObjectProphecy&ContainerInterface
+     */
     private $container;
+
+    /**
+     * @var ObjectProphecy&BaseMediaAdmin
+     */
     private $admin;
+
+    /**
+     * @var ObjectProphecy&Request
+     */
     private $request;
+
+    /**
+     * @var MediaAdminController
+     */
     private $controller;
 
     protected function setUp(): void

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Test\Entity;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\Doctrine\Test\EntityManagerMockFactoryTrait;
 use Sonata\MediaBundle\Entity\BaseGallery;
@@ -29,7 +30,7 @@ class GalleryManagerTest extends TestCase
     public function testGetPager(): void
     {
         $this
-            ->getGalleryManager(function ($qb): void {
+            ->getGalleryManager(function (MockObject $qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->never())->method('andWhere');
                 $qb->expects($this->once())->method('orderBy')->with(
@@ -47,7 +48,7 @@ class GalleryManagerTest extends TestCase
         $this->expectExceptionMessage('Invalid sort field \'invalid\' in \'Sonata\\MediaBundle\\Entity\\BaseGallery\' class');
 
         $this
-            ->getGalleryManager(static function ($qb): void {
+            ->getGalleryManager(static function (MockObject $qb): void {
             })
             ->getPager([], 1, 10, ['invalid' => 'ASC']);
     }
@@ -55,7 +56,7 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithMultipleSort(): void
     {
         $this
-            ->getGalleryManager(function ($qb): void {
+            ->getGalleryManager(function (MockObject $qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->never())->method('andWhere');
                 $qb->expects($this->exactly(2))->method('orderBy')->with(
@@ -79,7 +80,7 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function ($qb): void {
+            ->getGalleryManager(function (MockObject $qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
                 $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => true]));
@@ -90,7 +91,7 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithNoEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function ($qb): void {
+            ->getGalleryManager(function (MockObject $qb): void {
                 $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
                 $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => false]));
@@ -98,7 +99,7 @@ class GalleryManagerTest extends TestCase
             ->getPager(['enabled' => false], 1);
     }
 
-    protected function getGalleryManager(\Closure $qbCallback)
+    protected function getGalleryManager(\Closure $qbCallback): GalleryManager
     {
         $em = $this->createEntityManagerMock($qbCallback, [
             'name',
@@ -107,7 +108,7 @@ class GalleryManagerTest extends TestCase
         ]);
 
         $registry = $this->createMock(ManagerRegistry::class);
-        $registry->expects($this->any())->method('getManagerForClass')->willReturn($em);
+        $registry->method('getManagerForClass')->willReturn($em);
 
         return new GalleryManager(BaseGallery::class, $registry);
     }

@@ -23,6 +23,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MediaControllerTest extends TestCase
 {
+    /**
+     * @var ObjectProphecy&ContainerInterface
+     */
     protected $container;
+
+    /**
+     * @var MediaController
+     */
     protected $controller;
 
     protected function setUp(): void
@@ -174,7 +182,6 @@ class MediaControllerTest extends TestCase
     ): void {
         $templating = $this->prophesize(EngineInterface::class);
         $response = $this->prophesize(Response::class);
-        $pool = $this->prophesize(Pool::class);
 
         $this->container->has('templating')->willReturn(true);
         $this->container->get('templating')->willReturn($templating->reveal());

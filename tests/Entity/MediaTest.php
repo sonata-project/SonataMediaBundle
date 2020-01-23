@@ -27,7 +27,7 @@ class MediaTest extends TestCase
 
         $this->assertSame($media->getMetadataValue('thumbnail_url'), 'http://pasloin.com/thumb.png', '::getMetadataValue() return the good value');
         $this->assertSame($media->getMetadataValue('thumbnail_url1', 'default'), 'default', '::getMetadataValue() return the default');
-        $this->assertSame($media->getMetadataValue('thumbnail_url1'), null, '::getMetadataValue() return the null value');
+        $this->assertNull($media->getMetadataValue('thumbnail_url1'), '::getMetadataValue() return the null value');
     }
 
     public function testStatusList(): void

@@ -79,7 +79,7 @@ class MediaControllerTest extends TestCase
         $provider->expects($this->exactly(2))->method('getHelperProperties')->willReturn(['foo' => 'bar']);
 
         $pool = $this->createMock(Pool::class);
-        $pool->expects($this->any())->method('getProvider')->willReturn($provider);
+        $pool->method('getProvider')->willReturn($provider);
         $pool->expects($this->once())->method('getFormatNamesByContext')->willReturn(['format_name1' => 'value1']);
 
         $controller = $this->createMediaController($manager, $pool);
@@ -244,7 +244,10 @@ class MediaControllerTest extends TestCase
         $this->assertSame($media, $controller->putMediumBinaryContentAction(1, new Request()));
     }
 
-    protected function createMediaController($manager = null, $pool = null, $factory = null)
+    protected function createMediaController(
+        MediaManagerInterface $manager = null,
+        Pool $pool = null,
+        FormFactoryInterface $factory = null): MediaController
     {
         if (null === $manager) {
             $manager = $this->createMock(MediaManagerInterface::class);

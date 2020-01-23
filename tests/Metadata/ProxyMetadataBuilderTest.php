@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Metadata;
 use Aws\S3\S3Client;
 use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Filesystem;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
@@ -51,13 +52,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new AwsS3($amazonclient, '');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -90,13 +91,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Local('');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -129,13 +130,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Local('');
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('wrongprovider');
 
@@ -177,13 +178,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Replicate($adapter1, $adapter2);
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -218,13 +219,13 @@ class ProxyMetadataBuilderTest extends TestCase
         $adapter = new Replicate($adapter1, $adapter2);
 
         $filesystem = $this->createMock(Filesystem::class);
-        $filesystem->expects($this->any())->method('getAdapter')->willReturn($adapter);
+        $filesystem->method('getAdapter')->willReturn($adapter);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->any())->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->any())
+        $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
 
@@ -241,32 +242,19 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    /**
-     * Return a mock object for the DI ContainerInterface.
-     *
-     * @param array $services A key-value list of services the container contains
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getContainerMock(array $services)
+    protected function getContainerMock(array $services): MockObject
     {
         $container = $this->createMock(ContainerInterface::class);
         $container
-            ->expects($this->any())
             ->method('get')
-            ->willReturnCallback(static function ($service) use ($services) {
+            ->willReturnCallback(static function (string $service) use ($services) {
                 return $services[$service];
             })
         ;
         $container
-            ->expects($this->any())
             ->method('has')
-            ->willReturnCallback(static function ($service) use ($services) {
-                if (isset($services[$service])) {
-                    return true;
-                }
-
-                return false;
+            ->willReturnCallback(static function (string $service) use ($services): bool {
+                return isset($services[$service]);
             })
         ;
 

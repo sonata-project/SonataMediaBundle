@@ -29,10 +29,29 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BaseMediaAdminTest extends TestCase
 {
+    /**
+     * @var ObjectProphecy&Pool
+     */
     private $pool;
+
+    /**
+     * @var ObjectProphecy&CategoryManagerInterface
+     */
     private $categoryManager;
+
+    /**
+     * @var ObjectProphecy&Request
+     */
     private $request;
+
+    /**
+     * @var ObjectProphecy&ModelManagerInterface
+     */
     private $modelManager;
+
+    /**
+     * @var TestMediaAdmin
+     */
     private $mediaAdmin;
 
     protected function setUp(): void
@@ -79,7 +98,7 @@ class BaseMediaAdminTest extends TestCase
         $this->assertSame($media->reveal(), $this->mediaAdmin->getNewInstance());
     }
 
-    public function testGetPersistentParametersWithMultipleProvidersInContext()
+    public function testGetPersistentParametersWithMultipleProvidersInContext(): void
     {
         $category = $this->prophesize();
         $category->willExtend(EntityWithGetId::class);
@@ -104,7 +123,7 @@ class BaseMediaAdminTest extends TestCase
             ], $this->mediaAdmin->getPersistentParameters());
     }
 
-    private function configureGetPersistentParameters()
+    private function configureGetPersistentParameters(): void
     {
         $provider = $this->prophesize(MediaProviderInterface::class);
         $category = $this->prophesize();
