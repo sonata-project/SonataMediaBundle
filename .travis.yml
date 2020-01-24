@@ -56,10 +56,6 @@ matrix:
     - php: '7.3'
       env: DOCTRINE_ODM='dev-master as 1.x-dev'
     - php: '7.3'
-      env: SONATA_CORE=3.*
-    - php: '7.3'
-      env: SONATA_CORE='dev-master as 3.x-dev'
-    - php: '7.3'
       env: SONATA_ADMIN=3.*
     - php: '7.3'
       env: SONATA_ADMIN='dev-master as 3.x-dev'
@@ -77,7 +73,6 @@ matrix:
     - env: SYMFONY_DEPRECATIONS_HELPER=0
     - env: SYMFONY='dev-master as 3.4.x-dev'
     - env: DOCTRINE_ODM='dev-master as 1.x-dev'
-    - env: SONATA_CORE='dev-master as 3.x-dev'
     - env: SONATA_ADMIN='dev-master as 3.x-dev'
     - env: IMAGINE='dev-master as 1.x-dev'
 
