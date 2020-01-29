@@ -26,7 +26,7 @@ use Sonata\MediaBundle\Resizer\SimpleResizer;
 
 class SimpleResizerTest extends TestCase
 {
-    public function testResizeWithNoWidth(): void
+    public function testResizeWithNoWidthAndHeight(): void
     {
         $this->expectException(\RuntimeException::class);
 
