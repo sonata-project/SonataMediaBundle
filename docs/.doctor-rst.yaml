@@ -28,3 +28,8 @@ rules:
     no_composer_phar: ~
     no_config_yaml: ~
     no_inheritdoc: ~
+
+whitelist:
+    lines:
+        - 'resource: "@NelmioApiDocBundle/Resources/config/routing.yml"'
+        - 'copyright informations'
