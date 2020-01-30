@@ -41,12 +41,12 @@ In order to activate the API's, you'll also need to add this to your routing:
 
     NelmioApiDocBundle:
         resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-        prefix:   /api/doc
+        prefix:    /api/doc
 
     sonata_api_media:
-        type:         rest
-        prefix:       /api
-        resource:     "@SonataMediaBundle/Resources/config/routing/api.xml"
+        type:     rest
+        prefix:    /api
+        resource: "@SonataMediaBundle/Resources/config/routing/api.xml"
 
 Serialization
 -------------
@@ -70,9 +70,7 @@ This would look like this for the cURL call:
 
     curl 'http://demo.sonata-project.org/api/media/providers/sonata.media.provider.image/media.json' -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H 'Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryFhX9k2FPT3sQos00' -H 'Accept: */*' --compressed
 
-And like this for the request body:
-
-::
+And like this for the request body::
 
     ------WebKitFormBoundaryFhX9k2FPT3sQos00
     Content-Disposition: form-data; name="name"
