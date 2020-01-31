@@ -4,7 +4,7 @@ Usage
 Saving a media file
 -------------------
 
-Saving a media file required at least 3 informations :
+Saving a media file required at least 3 pieces of information:
 
 - the ``context`` which is used as a main category : user picture, news or any
 - the ``provider name`` : the provider code which handles the media processing while saving
