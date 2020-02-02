@@ -72,6 +72,8 @@ class AddMassMediaCommand extends BaseCommand
         }
 
         $output->writeln('Done!');
+
+        return 0;
     }
 
     /**

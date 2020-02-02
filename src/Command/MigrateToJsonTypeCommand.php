@@ -56,5 +56,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
         }
 
         $output->writeln("Migrated $count medias");
+
+        return 0;
     }
 }
