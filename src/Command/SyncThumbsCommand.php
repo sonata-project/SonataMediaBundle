@@ -154,6 +154,8 @@ class SyncThumbsCommand extends BaseCommand
         } while (true);
 
         $this->log("Done (total medias processed: {$totalMediasCount}).");
+
+        return 0;
     }
 
     /**
