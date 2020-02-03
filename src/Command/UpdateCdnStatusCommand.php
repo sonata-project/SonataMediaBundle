@@ -126,6 +126,8 @@ class UpdateCdnStatusCommand extends BaseCommand
         }
 
         $this->log('Done!');
+
+        return 0;
     }
 
     /**

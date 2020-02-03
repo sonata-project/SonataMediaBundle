@@ -89,5 +89,7 @@ class AddMediaCommand extends BaseCommand
         $this->getMediaManager()->save($media, $context, $provider);
 
         $output->writeln('done!');
+
+        return 0;
     }
 }

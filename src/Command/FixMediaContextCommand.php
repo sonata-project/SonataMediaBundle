@@ -76,5 +76,7 @@ class FixMediaContextCommand extends ContainerAwareCommand
         }
 
         $output->writeln('Done!');
+
+        return 0;
     }
 }

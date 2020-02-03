@@ -90,6 +90,8 @@ class CleanMediaCommand extends ContainerAwareCommand
         }
 
         $output->writeln('<info>done!</info>');
+
+        return 0;
     }
 
     /**
