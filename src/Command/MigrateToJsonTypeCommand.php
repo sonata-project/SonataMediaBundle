@@ -37,7 +37,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $count = 0;
         $table = $input->getOption('table');
