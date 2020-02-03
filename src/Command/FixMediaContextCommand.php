@@ -35,7 +35,7 @@ class FixMediaContextCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$this->getContainer()->has('sonata.media.manager.category')) {
             throw new \LogicException('The classification feature is disabled.');

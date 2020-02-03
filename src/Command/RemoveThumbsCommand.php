@@ -68,7 +68,7 @@ class RemoveThumbsCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = $output;
@@ -144,7 +144,7 @@ class RemoveThumbsCommand extends BaseCommand
     /**
      * @return MediaProviderInterface
      */
-    public function getProvider()
+    public function getProvider(): MediaProviderInterface
     {
         $providerName = $this->input->getArgument('providerName');
 
@@ -162,7 +162,7 @@ class RemoveThumbsCommand extends BaseCommand
     /**
      * @return string
      */
-    public function getContext()
+    public function getContext(): string
     {
         $context = $this->input->getArgument('context');
 
@@ -182,7 +182,7 @@ class RemoveThumbsCommand extends BaseCommand
      *
      * @return string
      */
-    public function getFormat(MediaProviderInterface $provider, $context)
+    public function getFormat(MediaProviderInterface $provider, $context): string
     {
         $format = $this->input->getArgument('format');
 
@@ -212,7 +212,7 @@ class RemoveThumbsCommand extends BaseCommand
      *
      * @return bool
      */
-    protected function processMedia(MediaInterface $media, MediaProviderInterface $provider, $context, $format)
+    protected function processMedia(MediaInterface $media, MediaProviderInterface $provider, $context, $format): bool
     {
         $this->log('Deleting thumbs for '.$media->getName().' - '.$media->getId());
 

@@ -61,7 +61,7 @@ class SyncThumbsCommand extends BaseCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -164,7 +164,7 @@ class SyncThumbsCommand extends BaseCommand
      *
      * @return bool
      */
-    protected function processMedia($media, $provider)
+    protected function processMedia($media, $provider): bool
     {
         $this->log('Generating thumbs for '.$media->getName().' - '.$media->getId());
 
