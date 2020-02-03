@@ -141,9 +141,6 @@ class RemoveThumbsCommand extends BaseCommand
         return 0;
     }
 
-    /**
-     * @return MediaProviderInterface
-     */
     public function getProvider(): MediaProviderInterface
     {
         $providerName = $this->input->getArgument('providerName');
@@ -159,9 +156,6 @@ class RemoveThumbsCommand extends BaseCommand
         return $this->getMediaPool()->getProvider($providerName);
     }
 
-    /**
-     * @return string
-     */
     public function getContext(): string
     {
         $context = $this->input->getArgument('context');
@@ -179,8 +173,6 @@ class RemoveThumbsCommand extends BaseCommand
 
     /**
      * @param string $context
-     *
-     * @return string
      */
     public function getFormat(MediaProviderInterface $provider, $context): string
     {
@@ -209,8 +201,6 @@ class RemoveThumbsCommand extends BaseCommand
     /**
      * @param string $context
      * @param string $format
-     *
-     * @return bool
      */
     protected function processMedia(MediaInterface $media, MediaProviderInterface $provider, $context, $format): bool
     {

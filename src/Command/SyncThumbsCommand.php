@@ -161,8 +161,6 @@ class SyncThumbsCommand extends BaseCommand
     /**
      * @param MediaInterface         $media
      * @param MediaProviderInterface $provider
-     *
-     * @return bool
      */
     protected function processMedia($media, $provider): bool
     {
