@@ -87,7 +87,7 @@ And like this for the request body::
     ------WebKitFormBoundaryFhX9k2FPT3sQos00
     Content-Disposition: form-data; name="copyright"
 
-    copyright informations
+    copyright information
     ------WebKitFormBoundaryFhX9k2FPT3sQos00
     Content-Disposition: form-data; name="authorName"
 

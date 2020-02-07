@@ -29,4 +29,23 @@ class ODMGeneratorTest extends TestCase
         $media->setId('550e8400-e29b-41d4-a716-446655440000');
         $this->assertSame('user/550e/84', $generator->generatePath($media));
     }
+
+    public function testWithValueObjectStringable(): void
+    {
+        $generator = new ODMGenerator();
+
+        $media = new Media();
+        $media->setContext('user');
+
+        // Dummy Value Object representing UUID
+        $vo = new class() {
+            public function __toString()
+            {
+                return '550e8400-e29b-41d4-a716-446655440000';
+            }
+        };
+        $media->setId($vo);
+
+        $this->assertSame('user/550e/84', $generator->generatePath($media));
+    }
 }

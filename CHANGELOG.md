@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.23.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.23.0...3.23.1) - 2020-02-06
+### Fixed
+- Generating path when using VO representing UUID
+- Deprecations about commands not returning an exit code
+
 ## [3.23.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.22.0...3.23.0) - 2020-01-07
 ### Added
 - Added support for "knplabs/gaufrette:0.9".
