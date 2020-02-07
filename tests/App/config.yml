@@ -38,13 +38,13 @@ sonata_media:
             create: false
 
 fos_rest:
-    param_fetcher_listener: false
+    param_fetcher_listener: true
     body_listener: false
     format_listener:
         rules:
             - {path: ^/, priorities: [json], fallback_format: ~, prefer_extension: true}
     view:
-        view_response_listener: false
+        view_response_listener: true
     body_converter:
         enabled: false
         validate: false
