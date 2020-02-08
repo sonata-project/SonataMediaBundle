@@ -13,41 +13,21 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Generator;
 
-use Sonata\MediaBundle\Model\MediaInterface;
+if (!class_exists(IdGenerator::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\DefaultGenerator class is deprecated since sonata/media-bundle 3.4 and will be removed in 4.0.'
+        .' Use \Sonata\MediaBundle\Generator\IdGenerator instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class DefaultGenerator implements GeneratorInterface
-{
-    /**
-     * @var int
-     */
-    protected $firstLevel;
+class_alias(IdGenerator::class, DefaultGenerator::class);
 
+if (false) {
     /**
-     * @var int
+     * @deprecated 3.4 Use Sonata\MediaBundle\Generator\IdGenerator
      */
-    protected $secondLevel;
-
-    /**
-     * @param int $firstLevel
-     * @param int $secondLevel
-     */
-    public function __construct($firstLevel = 100000, $secondLevel = 1000)
+    class DefaultGenerator extends IdGenerator implements GeneratorInterface
     {
-        $this->firstLevel = $firstLevel;
-        $this->secondLevel = $secondLevel;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function generatePath(MediaInterface $media)
-    {
-        $rep_first_level = (int) ($media->getId() / $this->firstLevel);
-        $rep_second_level = (int) (($media->getId() - ($rep_first_level * $this->firstLevel)) / $this->secondLevel);
-
-        return sprintf('%s/%04s/%02s', $media->getContext(), $rep_first_level + 1, $rep_second_level + 1);
     }
 }

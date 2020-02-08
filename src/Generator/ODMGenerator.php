@@ -13,20 +13,21 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Generator;
 
-use Sonata\MediaBundle\Model\MediaInterface;
+if (!class_exists(UuidGenerator::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\ODMGenerator class is deprecated since sonata/media-bundle 3.4 and will be removed in 4.0.'
+        .' Use \Sonata\MediaBundle\Generator\UuidGenerator instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class ODMGenerator implements GeneratorInterface
-{
+class_alias(UuidGenerator::class, ODMGenerator::class);
+
+if (false) {
     /**
-     * {@inheritdoc}
+     * @deprecated 3.4 Use Sonata\MediaBundle\Generator\UuidGenerator
      */
-    public function generatePath(MediaInterface $media)
+    class ODMGenerator extends UuidGenerator implements GeneratorInterface
     {
-        $id = (string) $media->getId();
-
-        return sprintf('%s/%04s/%02s', $media->getContext(), substr($id, 0, 4), substr($id, 4, 2));
     }
 }

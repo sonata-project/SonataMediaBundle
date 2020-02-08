@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Tests\Provider;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\CDN\Server;
-use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -80,7 +80,7 @@ class PoolTest extends TestCase
     {
         $filesystem = $this->createMock(Filesystem::class);
         $cdn = new Server('/uploads/media');
-        $generator = new DefaultGenerator();
+        $generator = new IdGenerator();
         $thumbnail = new FormatThumbnail('jpg');
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 

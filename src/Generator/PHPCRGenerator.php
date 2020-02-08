@@ -13,28 +13,21 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Generator;
 
-use Sonata\MediaBundle\Model\MediaInterface;
+if (!class_exists(PathGenerator::class, false)) {
+    @trigger_error(sprintf(
+        'The %s\PHPCRGenerator class is deprecated since sonata/media-bundle 3.4 and will be removed in 4.0.'
+        .' Use \Sonata\MediaBundle\Generator\PathGenerator instead.',
+        __NAMESPACE__
+    ), E_USER_DEPRECATED);
+}
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class PHPCRGenerator implements GeneratorInterface
-{
+class_alias(PathGenerator::class, PHPCRGenerator::class);
+
+if (false) {
     /**
-     * {@inheritdoc}
+     * @deprecated 3.4 Use Sonata\MediaBundle\Generator\PathGenerator
      */
-    public function generatePath(MediaInterface $media)
+    class PHPCRGenerator extends PathGenerator implements GeneratorInterface
     {
-        $segments = preg_split('#/#', $media->getId(), -1, PREG_SPLIT_NO_EMPTY);
-
-        if (\count($segments) > 1) {
-            // remove last part from id
-            array_pop($segments);
-            $path = implode('/', $segments);
-        } else {
-            $path = '';
-        }
-
-        return $path ? sprintf('%s/%s', $media->getContext(), $path) : $media->getContext();
     }
 }
