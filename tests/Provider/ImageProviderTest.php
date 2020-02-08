@@ -22,7 +22,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use PHPUnit\Framework\MockObject\Stub\Stub;
 use Sonata\MediaBundle\CDN\Server;
-use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -53,7 +53,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $cdn = new Server('/uploads/media');
 
-        $generator = new DefaultGenerator();
+        $generator = new IdGenerator();
 
         $thumbnail = new FormatThumbnail('jpg');
 

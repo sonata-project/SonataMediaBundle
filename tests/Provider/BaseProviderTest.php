@@ -18,7 +18,7 @@ use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\CDN\Server;
-use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -39,7 +39,7 @@ class BaseProviderTest extends AbstractProviderTest
 
         $cdn = new Server('/uploads/media');
 
-        $generator = new DefaultGenerator();
+        $generator = new IdGenerator();
 
         $thumbnail = $this->createMock(ThumbnailInterface::class);
 

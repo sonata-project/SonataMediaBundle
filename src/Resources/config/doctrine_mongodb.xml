@@ -15,7 +15,7 @@
             <argument type="service" id="doctrine_mongodb"/>
         </service>
         <!-- Path generator servive -->
-        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\ODMGenerator">
+        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\UuidGenerator">
 
         </service>
         <service id="sonata.media.doctrine.event_subscriber" class="Sonata\MediaBundle\Listener\ODM\MediaEventSubscriber">

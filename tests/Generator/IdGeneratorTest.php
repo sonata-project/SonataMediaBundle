@@ -14,17 +14,14 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Generator;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Tests\Entity\Media;
 
-/**
- * @group legacy
- */
-class DefaultGeneratorTest extends TestCase
+final class IdGeneratorTest extends TestCase
 {
-    public function testProvider(): void
+    public function testIdGenerator(): void
     {
-        $generator = new DefaultGenerator();
+        $generator = new IdGenerator();
 
         $media = new Media();
         $media->setContext('user');

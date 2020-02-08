@@ -20,7 +20,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
-use Sonata\MediaBundle\Generator\DefaultGenerator;
+use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
@@ -54,7 +54,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $cdn = new Server('/uploads/media');
 
-        $generator = new DefaultGenerator();
+        $generator = new IdGenerator();
 
         $thumbnail = new FormatThumbnail('jpg');
 

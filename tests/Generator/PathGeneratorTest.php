@@ -14,17 +14,14 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Generator;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Generator\PHPCRGenerator;
+use Sonata\MediaBundle\Generator\PathGenerator;
 use Sonata\MediaBundle\Tests\Entity\Media;
 
-/**
- * @group legacy
- */
-class PHPCRGeneratorTest extends TestCase
+final class PathGeneratorTest extends TestCase
 {
-    public function testPHPCRGenerator(): void
+    public function testPathGenerator(): void
     {
-        $generator = new PHPCRGenerator();
+        $generator = new PathGenerator();
 
         $media = new Media();
         $media->setContext('user');
