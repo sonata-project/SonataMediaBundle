@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Functional;
 
-use Doctrine\Bundle\DoctrineBundle\Command\CreateDatabaseDoctrineCommand;
-use Doctrine\Bundle\DoctrineBundle\Command\DropDatabaseDoctrineCommand;
 use Doctrine\Bundle\DoctrineBundle\Command\Proxy\CreateSchemaDoctrineCommand;
 use Sonata\MediaBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -22,7 +20,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 final class MediaControllerTest extends WebTestCase
 {
@@ -30,18 +27,9 @@ final class MediaControllerTest extends WebTestCase
     {
         $kernel = new AppKernel();
         $kernel->boot();
-        $doctrine = $kernel->getContainer()->get('doctrine');
+
         $application = new Application($kernel);
         $application->setAutoExit(false);
-
-        $interfaces = class_implements(CreateDatabaseDoctrineCommand::class);
-        if (isset($interfaces[ContainerAwareInterface::class])) {
-            $application->add(new DropDatabaseDoctrineCommand());
-            $application->add(new CreateDatabaseDoctrineCommand());
-        } else {
-            $application->add(new DropDatabaseDoctrineCommand($doctrine));
-            $application->add(new CreateDatabaseDoctrineCommand($doctrine));
-        }
 
         $application->run(new ArrayInput([
             'command' => 'doctrine:database:drop',
