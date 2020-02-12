@@ -28,10 +28,10 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -467,8 +467,9 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $content = $request->getContent();
 
         // create unique id for media reference
-        $guesser = ExtensionGuesser::getInstance();
-        $extension = $guesser->guess($media->getContentType());
+        $guesser = MimeTypes::getDefault();
+        $extensions = $guesser->getExtensions($media->getContentType());
+        $extension = $extensions[0] ?? null;
 
         if (!$extension) {
             throw new \RuntimeException(
