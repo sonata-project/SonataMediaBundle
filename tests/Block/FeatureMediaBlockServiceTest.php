@@ -32,8 +32,8 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
         $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new FeatureMediaBlockService(
-            $this->templating,
-            $this->templating,
+            $this->twig,
+            null,
             $this->container->reveal(),
             $this->galleryManager->reveal()
         );
