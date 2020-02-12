@@ -313,7 +313,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             throw new \RuntimeException(sprintf('Invalid binary content type: %s', \get_class($media->getBinaryContent())));
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getClientSize() ?: 0)) {
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getSize() ?: 0)) {
             $errorElement
                ->with('binaryContent')
                    ->addViolation('The file is too big, max size: '.ini_get('upload_max_filesize'))
@@ -384,7 +384,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
 
-        if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getClientSize()) {
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getSize()) {
             $media->setProviderReference(uniqid($media->getName(), true));
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
