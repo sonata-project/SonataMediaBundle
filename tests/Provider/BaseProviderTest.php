@@ -178,7 +178,8 @@ class TestProvider extends BaseProvider
     public function getReferenceImage(MediaInterface $media): string
     {
         // A copy of the code from \Sonata\MediaBundle\Provider\FileProvider::getReferenceImage()
-        $this->prevReferenceImage = sprintf('%s/%s',
+        $this->prevReferenceImage = sprintf(
+            '%s/%s',
             $this->generatePath($media),
             $media->getProviderReference()
         );

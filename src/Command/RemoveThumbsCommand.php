@@ -54,7 +54,8 @@ class RemoveThumbsCommand extends BaseCommand
     {
         $this->setName('sonata:media:remove-thumbnails')
             ->setDescription('Remove uploaded image thumbs')
-            ->setDefinition([
+            ->setDefinition(
+                [
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
                 new InputArgument('format', InputArgument::OPTIONAL, 'The format (pass `all` to delete all thumbs)'),
@@ -62,7 +63,7 @@ class RemoveThumbsCommand extends BaseCommand
                 new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
                 new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
             ]
-        );
+            );
     }
 
     /**
@@ -223,8 +224,11 @@ class RemoveThumbsCommand extends BaseCommand
 
             $provider->removeThumbnails($media, $format);
         } catch (\Exception $e) {
-            $this->log(sprintf('<error>Unable to remove thumbnails, media: %s - %s </error>',
-                $media->getId(), $e->getMessage()));
+            $this->log(sprintf(
+                '<error>Unable to remove thumbnails, media: %s - %s </error>',
+                $media->getId(),
+                $e->getMessage()
+            ));
 
             return false;
         }

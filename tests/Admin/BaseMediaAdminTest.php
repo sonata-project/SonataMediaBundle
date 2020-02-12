@@ -120,7 +120,9 @@ class BaseMediaAdminTest extends TestCase
                 'context' => 'context',
                 'category' => 1,
                 'hide_context' => true,
-            ], $this->mediaAdmin->getPersistentParameters());
+            ],
+            $this->mediaAdmin->getPersistentParameters()
+        );
     }
 
     private function configureGetPersistentParameters(): void
