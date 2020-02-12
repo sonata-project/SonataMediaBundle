@@ -78,7 +78,10 @@ class GalleryAdmin extends BaseGalleryAdmin
     {
         // Allow path in id parameter
         $collection->add('view', $this->getRouterIdParameter().'/view', [], ['id' => '.+', '_method' => 'GET']);
-        $collection->add('show', $this->getRouterIdParameter().'/show', [
+        $collection->add(
+            'show',
+            $this->getRouterIdParameter().'/show',
+            [
                 '_controller' => sprintf('%s:%s', $this->baseControllerName, 'view'),
             ],
             ['id' => '.+', '_method' => 'GET']

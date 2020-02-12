@@ -52,11 +52,12 @@ class RefreshMetadataCommand extends BaseCommand
     {
         $this->setName('sonata:media:refresh-metadata')
             ->setDescription('Refresh meta information')
-            ->setDefinition([
+            ->setDefinition(
+                [
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
             ]
-        );
+            );
     }
 
     /**

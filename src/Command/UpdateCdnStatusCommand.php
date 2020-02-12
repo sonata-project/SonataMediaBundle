@@ -53,11 +53,12 @@ class UpdateCdnStatusCommand extends BaseCommand
     {
         $this->setName('sonata:media:update-cdn-status')
             ->setDescription('Refresh CDN status for medias that are in status flushing')
-            ->setDefinition([
+            ->setDefinition(
+                [
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
             ]
-        );
+            );
     }
 
     /**
