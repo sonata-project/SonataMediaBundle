@@ -327,7 +327,7 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->method('getClientSize')
+        $upload->method('getSize')
             ->willReturn(0);
         $upload->method('getFilename')
             ->willReturn('test.txt');
@@ -357,7 +357,7 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->method('getClientSize')
+        $upload->method('getSize')
             ->willReturn(null);
         $upload->method('getFilename')
             ->willReturn('test.txt');
@@ -387,7 +387,7 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->method('getClientSize')
+        $upload->method('getSize')
             ->willReturn(1);
         $upload->method('getFilename')
             ->willReturn('test.txt');
@@ -417,7 +417,7 @@ class FileProviderTest extends AbstractProviderTest
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
-        $upload->method('getClientSize')
+        $upload->method('getSize')
             ->willReturn(23);
         $upload->method('getFilename')
             ->willReturn('test.txt');
