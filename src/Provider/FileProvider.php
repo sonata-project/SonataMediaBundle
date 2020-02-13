@@ -64,7 +64,8 @@ class FileProvider extends BaseProvider implements FileProviderInterface
      */
     public function getProviderMetadata()
     {
-        return new Metadata($this->getName(),
+        return new Metadata(
+            $this->getName(),
             $this->getName().'.description',
             null,
             'SonataMediaBundle',
@@ -77,7 +78,8 @@ class FileProvider extends BaseProvider implements FileProviderInterface
      */
     public function getReferenceImage(MediaInterface $media)
     {
-        return sprintf('%s/%s',
+        return sprintf(
+            '%s/%s',
             $this->generatePath($media),
             $media->getProviderReference()
         );
@@ -285,7 +287,8 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
         }
 
-        $filename = sprintf('%s/%s',
+        $filename = sprintf(
+            '%s/%s',
             $this->getFilesystem()->getAdapter()->getDirectory(),
             $this->generatePrivateUrl($media, $format)
         );

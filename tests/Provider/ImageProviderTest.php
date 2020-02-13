@@ -118,7 +118,8 @@ class ImageProviderTest extends AbstractProviderTest
                 $largeBox, // Fifth call
                 $mediumBox,
                 $largeBox
-            ));
+            )
+        );
 
         $provider->addFormat('admin', ['width' => 100]);
         $provider->addFormat('default_medium', ['width' => 500]);

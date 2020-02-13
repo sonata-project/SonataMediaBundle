@@ -44,7 +44,7 @@
         "symfony/finder": "^3.4 || ^4.2",
         "symfony/form": "^3.4.24 || ^4.2",
         "symfony/framework-bundle": "^3.4.31 || ^4.2",
-        "symfony/http-foundation": "^3.4 || ^4.2",
+        "symfony/http-foundation": "^3.4.35 || ^4.2.12",
         "symfony/http-kernel": "^3.4 || ^4.2",
         "symfony/options-resolver": "^3.4 || ^4.2",
         "symfony/routing": "^3.4 || ^4.2",
