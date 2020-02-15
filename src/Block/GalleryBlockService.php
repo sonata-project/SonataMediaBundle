@@ -18,7 +18,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
-use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
+use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
@@ -34,13 +34,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class GalleryBlockService extends AbstractAdminBlockService
+class GalleryBlockService extends AbstractBlockService
 {
     /**
      * @var ManagerInterface
@@ -53,11 +54,18 @@ class GalleryBlockService extends AbstractAdminBlockService
     protected $galleryManager;
 
     /**
-     * @param string $name
+     * @var ContainerInterface
      */
-    public function __construct($name, EngineInterface $templating, ContainerInterface $container, ManagerInterface $galleryManager)
+    private $container;
+
+    /**
+     * NEXT_MAJOR: Remove `$templating` argument.
+     *
+     * @param Environment|string $twigOrName
+     */
+    public function __construct($twigOrName, ?EngineInterface $templating, ContainerInterface $container, ManagerInterface $galleryManager)
     {
-        parent::__construct($name, $templating);
+        parent::__construct($twigOrName, $templating);
 
         $this->galleryManager = $galleryManager;
         $this->container = $container;

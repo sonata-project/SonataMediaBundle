@@ -39,12 +39,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('sonata_media');
 
-        // Keep compatibility with symfony/config < 4.2
-        if (!method_exists($treeBuilder, 'getRootNode')) {
-            $node = $treeBuilder->root('sonata_media');
-        } else {
-            $node = $treeBuilder->getRootNode();
-        }
+        $node = $treeBuilder->getRootNode();
 
         $node
             ->children()

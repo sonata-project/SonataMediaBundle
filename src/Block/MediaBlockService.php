@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
-use Sonata\BlockBundle\Block\Service\AbstractAdminBlockService;
+use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
@@ -25,20 +25,21 @@ use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaBlockService extends AbstractAdminBlockService
+class MediaBlockService extends AbstractBlockService
 {
     /**
      * @var BaseMediaAdmin
@@ -51,11 +52,22 @@ class MediaBlockService extends AbstractAdminBlockService
     protected $mediaManager;
 
     /**
-     * @param string $name
+     * @var ContainerInterface
      */
-    public function __construct($name, EngineInterface $templating, ContainerInterface $container, ManagerInterface $mediaManager)
-    {
-        parent::__construct($name, $templating);
+    private $container;
+
+    /**
+     * NEXT_MAJOR: Remove `$templating` argument.
+     *
+     * @param Environment|string $twigOrName
+     */
+    public function __construct(
+        $twigOrName,
+        ?EngineInterface $templating,
+        ContainerInterface $container,
+        ManagerInterface $mediaManager
+    ) {
+        parent::__construct($twigOrName, $templating);
 
         $this->mediaManager = $mediaManager;
         $this->container = $container;

@@ -49,8 +49,8 @@ class MediaBlockServiceTest extends BlockServiceTestCase
         $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new MediaBlockService(
-            $this->templating,
-            $this->templating,
+            $this->twig,
+            null,
             $this->container->reveal(),
             $this->galleryManager->reveal()
         );
@@ -71,12 +71,16 @@ class MediaBlockServiceTest extends BlockServiceTestCase
         $blockContext->getSetting('mediaId')->willReturn($media->reveal());
         $block->getSetting('mediaId')->willReturn($media->reveal());
 
-        $this->blockService->execute($blockContext->reveal());
+        $this->twig
+            ->expects($this->once())
+            ->method('render')
+            ->with('template', [
+                'media' => $media->reveal(),
+                'block' => $block->reveal(),
+                'settings' => [],
+            ]);
 
-        $this->assertSame('template', $this->templating->view);
-        $this->assertIsArray($this->templating->parameters['settings']);
-        $this->assertSame($media->reveal(), $this->templating->parameters['media']);
-        $this->assertSame($block->reveal(), $this->templating->parameters['block']);
+        $this->blockService->execute($blockContext->reveal());
     }
 
     public function testDefaultSettings(): void

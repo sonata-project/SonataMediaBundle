@@ -16,7 +16,6 @@ namespace Sonata\MediaBundle\Tests\Block;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
-use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Block\GalleryListBlockService;
@@ -50,29 +49,35 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
 
         $block = new Block();
 
-        $blockContext = new BlockContext($block, [
+        $settings = [
             'number' => 15,
             'mode' => 'public',
             'order' => 'createdAt',
             'sort' => 'desc',
             'context' => false,
             'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
-        ]);
+        ];
 
-        $blockService = new GalleryListBlockService($this->templating, $this->templating, $this->galleryManager, $this->pool);
+        $blockContext = new BlockContext($block, $settings);
+
+        $blockService = new GalleryListBlockService($this->twig, null, $this->galleryManager, $this->pool);
+
+        $this->twig
+            ->expects($this->once())
+            ->method('render')
+            ->with('@SonataMedia/Block/block_gallery_list.html.twig', [
+                'context' => $blockContext,
+                'pager' => $pager,
+                'block' => $block,
+                'settings' => $settings,
+            ]);
+
         $blockService->execute($blockContext);
-
-        $this->assertSame('@SonataMedia/Block/block_gallery_list.html.twig', $this->templating->view);
-
-        $this->assertSame($blockContext, $this->templating->parameters['context']);
-        $this->assertIsArray($this->templating->parameters['settings']);
-        $this->assertInstanceOf(BlockInterface::class, $this->templating->parameters['block']);
-        $this->assertSame($pager, $this->templating->parameters['pager']);
     }
 
     public function testDefaultSettings(): void
     {
-        $blockService = new GalleryListBlockService($this->templating, $this->templating, $this->galleryManager, $this->pool);
+        $blockService = new GalleryListBlockService($this->twig, null, $this->galleryManager, $this->pool);
         $blockContext = $this->getBlockContext($blockService);
 
         $this->assertSettings([

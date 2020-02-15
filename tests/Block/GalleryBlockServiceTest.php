@@ -47,8 +47,8 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
 
         $this->blockService = new GalleryBlockService(
-            $this->templating,
-            $this->templating,
+            $this->twig,
+            null,
             $this->container->reveal(),
             $this->galleryManager->reveal()
         );
@@ -66,13 +66,17 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         $block->getSetting('galleryId')->willReturn($gallery->reveal());
         $gallery->getGalleryItems()->willReturn([]);
 
-        $this->blockService->execute($blockContext->reveal());
+        $this->twig
+            ->expects($this->once())
+            ->method('render')
+            ->with('template', [
+                'gallery' => $gallery->reveal(),
+                'block' => $block->reveal(),
+                'elements' => [],
+                'settings' => ['settings'],
+            ]);
 
-        $this->assertSame('template', $this->templating->view);
-        $this->assertIsArray($this->templating->parameters['settings']);
-        $this->assertIsArray($this->templating->parameters['elements']);
-        $this->assertSame($gallery->reveal(), $this->templating->parameters['gallery']);
-        $this->assertSame($block->reveal(), $this->templating->parameters['block']);
+        $this->blockService->execute($blockContext->reveal());
     }
 
     public function testDefaultSettings(): void
