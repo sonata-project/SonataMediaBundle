@@ -33,7 +33,6 @@
         "knplabs/gaufrette": "^0.8 || ^0.9",
         "kriswallsmith/buzz": "^0.15 || ^0.16",
         "psr/log": "^1.0",
-        "sonata-project/core-bundle": "^3.14",
         "sonata-project/doctrine-extensions": "^1.5.1",
         "sonata-project/easy-extends-bundle": "^2.5",
         "symfony/config": "^4.3",
