@@ -17,6 +17,9 @@ use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Generator\ODMGenerator;
 use Sonata\MediaBundle\Tests\Entity\Media;
 
+/**
+ * @group legacy
+ */
 class ODMGeneratorTest extends TestCase
 {
     public function testODMGenerator(): void

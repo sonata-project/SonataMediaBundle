@@ -1,6 +1,18 @@
 UPGRADE 3.x
 ===========
 
+UPGRADE FROM 3.23 to 3.24
+=========================
+
+### Generators rename
+
+Some classes have been renamed, the old types are just aliases for the new ones.
+You should replace all references to them in your code.
+
+- `Sonata\MediaBundle\Command\DefaultGenerator` is deprecated in favor of `Sonata\MediaBundle\Generator\IdGenerator`
+- `Sonata\MediaBundle\Command\ODMGenerator` is deprecated in favor of `Sonata\MediaBundle\Generator\UuidGenerator`
+- `Sonata\MediaBundle\Command\PHPCRGenerator` is deprecated in favor of `Sonata\MediaBundle\Generator\PathGenerator`
+
 UPGRADE FROM 3.6 to 3.7
 =======================
 

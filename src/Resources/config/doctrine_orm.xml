@@ -13,8 +13,8 @@
             <argument>%sonata.media.gallery.class%</argument>
             <argument type="service" id="doctrine"/>
         </service>
-        <!-- Path generator servive -->
-        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\DefaultGenerator">
+        <!-- Path generator service -->
+        <service id="sonata.media.generator.default" class="Sonata\MediaBundle\Generator\IdGenerator">
 
         </service>
         <service id="sonata.media.doctrine.event_subscriber" class="Sonata\MediaBundle\Listener\ORM\MediaEventSubscriber">
