@@ -53,7 +53,7 @@ class MediaControllerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('findOneBy')->willReturn($media);
+        $manager->expects($this->once())->method('find')->willReturn($media);
 
         $controller = $this->createMediaController($manager);
 
@@ -73,7 +73,7 @@ class MediaControllerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('findOneBy')->willReturn($media);
+        $manager->expects($this->once())->method('find')->willReturn($media);
 
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->exactly(2))->method('getHelperProperties')->willReturn(['foo' => 'bar']);
@@ -108,7 +108,7 @@ class MediaControllerTest extends TestCase
         $binaryResponse = $this->createMock(BinaryFileResponse::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('findOneBy')->willReturn($media);
+        $manager->expects($this->once())->method('find')->willReturn($media);
 
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('getDownloadResponse')->willReturn($binaryResponse);
@@ -125,7 +125,7 @@ class MediaControllerTest extends TestCase
     {
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects($this->once())->method('delete');
-        $manager->expects($this->once())->method('findOneBy')->willReturn($this->createMock(MediaInterface::class));
+        $manager->expects($this->once())->method('find')->willReturn($this->createMock(MediaInterface::class));
 
         $controller = $this->createMediaController($manager);
 
@@ -139,7 +139,7 @@ class MediaControllerTest extends TestCase
         $medium = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('findOneBy')->willReturn($medium);
+        $manager->expects($this->once())->method('find')->willReturn($medium);
 
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('getName');
@@ -165,7 +165,7 @@ class MediaControllerTest extends TestCase
         $medium = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('findOneBy')->willReturn($medium);
+        $manager->expects($this->once())->method('find')->willReturn($medium);
 
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('getName');
@@ -235,7 +235,7 @@ class MediaControllerTest extends TestCase
         $media->expects($this->once())->method('setBinaryContent');
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('findOneBy')->willReturn($media);
+        $manager->expects($this->once())->method('find')->willReturn($media);
 
         $pool = $this->createMock(Pool::class);
 
