@@ -395,7 +395,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
             if (3 === $config['filesystem']['s3']['sdk_version']) {
                 $arguments = [
-                    'endpoint' => $config['filesystem']['s3']['endpoint'],
                     'region' => $config['filesystem']['s3']['region'],
                     'version' => $config['filesystem']['s3']['version'],
                 ];
@@ -421,6 +420,54 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.s3');
             $container->removeDefinition('sonata.media.filesystem.s3');
+        }
+
+        // add the default configuration for the Spaces filesystem
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.spaces') && isset($config['filesystem']['spaces'])) {
+            $container->getDefinition('sonata.media.adapter.filesystem.spaces')
+                ->replaceArgument(0, new Reference('sonata.media.adapter.service.spaces'))
+                ->replaceArgument(1, $config['filesystem']['spaces']['bucket'])
+                ->replaceArgument(2, ['create' => $config['filesystem']['spaces']['create'], 'region' => $config['filesystem']['spaces']['region'], 'directory' => $config['filesystem']['spaces']['directory'], 'ACL' => $config['filesystem']['spaces']['acl']])
+            ;
+
+            $container->getDefinition('sonata.media.metadata.amazon')
+                ->replaceArgument(0, [
+                    'acl' => $config['filesystem']['spaces']['acl'],
+                    'storage' => $config['filesystem']['spaces']['storage'],
+                    'encryption' => $config['filesystem']['spaces']['encryption'],
+                    'meta' => $config['filesystem']['spaces']['meta'],
+                    'cache_control' => $config['filesystem']['spaces']['cache_control'],
+                ])
+            ;
+
+            if (3 === $config['filesystem']['spaces']['sdk_version']) {
+                $arguments = [
+                    'endpoint' => $config['filesystem']['spaces']['endpoint'],
+                    'region' => $config['filesystem']['spaces']['region'],
+                    'version' => $config['filesystem']['spaces']['version'],
+                ];
+
+                if (isset($config['filesystem']['spaces']['secretKey'], $config['filesystem']['spaces']['accessKey'])) {
+                    $arguments['credentials'] = [
+                        'secret' => $config['filesystem']['spaces']['secretKey'],
+                        'key' => $config['filesystem']['spaces']['accessKey'],
+                    ];
+                }
+
+                $container->getDefinition('sonata.media.adapter.service.spaces')
+                    ->replaceArgument(0, $arguments)
+                ;
+            } else {
+                $container->getDefinition('sonata.media.adapter.service.spaces')
+                    ->replaceArgument(0, [
+                        'secret' => $config['filesystem']['spaces']['secretKey'],
+                        'key' => $config['filesystem']['spaces']['accessKey'],
+                    ])
+                ;
+            }
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.spaces');
+            $container->removeDefinition('sonata.media.filesystem.spaces');
         }
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
