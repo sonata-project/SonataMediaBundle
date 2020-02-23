@@ -18,6 +18,15 @@
             <argument/>
             <argument/>
         </service>
+        <service id="sonata.media.adapter.service.spaces" class="Aws\S3\S3Client">
+            <factory class="Aws\S3\S3Client" method="factory"/>
+            <argument type="collection"/>
+        </service>
+        <service id="sonata.media.adapter.filesystem.spaces" class="Gaufrette\Adapter\AwsS3">
+            <argument/>
+            <argument/>
+            <argument/>
+        </service>
         <service id="sonata.media.adapter.filesystem.replicate" class="Sonata\MediaBundle\Filesystem\Replicate">
             <argument/>
             <argument/>
