@@ -357,7 +357,7 @@ class MediaController
      */
     protected function getMedium($id = null)
     {
-        $media = $this->mediaManager->findOneBy(['id' => $id]);
+        $media = $this->mediaManager->find($id);
 
         if (null === $media) {
             throw new NotFoundHttpException(sprintf('Media (%d) was not found', $id));
