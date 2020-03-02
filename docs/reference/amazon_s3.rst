@@ -31,10 +31,11 @@ This is a sample config file to enable amazon S3 as a filesystem & provider:
                 accessKey:   '%s3_access_key%'
                 secretKey:   '%s3_secret_key%'
                 region:      '%s3_region%'
-                version:     '%s3_version%' # latest by default (cf. https://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/configuration.html#version)
+                version:     '%s3_version%' # latest by default (cf. https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_configuration.html#cfg-version)
+                endpoint:    '%s3_endpoint%' # null by default (cf. https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_configuration.html#endpoint)
                 sdk_version: '%s3_sdk_version%' # 2 by default
 
-.. note:: 
+.. note::
 
    This bundle is currently using KNP Gaufrette as S3 adapter and the default SDK used is version 2.
    Changes have been made in the bundle to allow you to use version 3, update `sdk_version` parameter for this.
