@@ -242,6 +242,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                             'sdk_version' => 3,
                             'region' => 'region',
                             'version' => 'version',
+                            'endpoint' => 'endpoint',
                             'secretKey' => 'secret',
                             'accessKey' => 'access',
                         ],
@@ -250,6 +251,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 [
                     'region' => 'region',
                     'version' => 'version',
+                    'endpoint' => 'endpoint',
                     'credentials' => [
                         'secret' => 'secret',
                         'key' => 'access',
