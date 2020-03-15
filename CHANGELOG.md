@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.24.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.23.1...3.24.0) - 2020-03-15
+### Fixed
+- BlockBundle deprecations
+- API routes config, made them public for the FOSRest routeloader.
+
+### Changed
+- Use Mime Component to guess extension
+- Renamed class `Sonata\MediaBundle\Command\DefaultGenerator` into `Sonata\MediaBundle\Command\IdGenerator`
+- Renamed class `Sonata\MediaBundle\Command\ODMGenerator` into `Sonata\MediaBundle\Command\UuidGenerator`
+- Renamed class `Sonata\MediaBundle\Command\PHPCRGenerator` into `Sonata\MediaBundle\Command\PathGenerator`
+- Made width setting non-mandatory but made width or height setting mandatory on the resizer.
+
+### Removed
+- support for Symfony < 4.3
+
 ## [3.23.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.23.0...3.23.1) - 2020-02-06
 ### Fixed
 - Generating path when using VO representing UUID
