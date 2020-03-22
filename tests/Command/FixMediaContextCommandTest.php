@@ -23,12 +23,12 @@ use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 class FixMediaContextCommandTest extends TestCase
 {
     /**
-     * @var MockObject&ContainerInterface
+     * @var Container
      */
     protected $container;
 
@@ -67,7 +67,7 @@ class FixMediaContextCommandTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->container = $this->createMock(ContainerInterface::class);
+        $this->container = new Container();
 
         $this->command = new FixMediaContextCommand();
         $this->command->setContainer($this->container);
@@ -83,24 +83,14 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->categoryManager = $categoryManager = $this->createMock(CategoryManagerInterface::class);
 
-        $this->container
-            ->method('get')
-            ->willReturnCallback(static function (string $id) use ($pool, $contextManager, $categoryManager) {
-                switch ($id) {
-                    case 'sonata.media.pool':
-                        return $pool;
-                    case 'sonata.classification.manager.context':
-                        return $contextManager;
-                    case 'sonata.media.manager.category':
-                        return $categoryManager;
-                }
-            });
+        $this->container->set('sonata.media.pool', $pool);
+        $this->container->set('sonata.classification.manager.context', $contextManager);
+        $this->container->set('sonata.media.manager.category', $categoryManager);
     }
 
     public function testExecuteWithDisabledClassification(): void
     {
-        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
-            ->willReturn(false);
+        $this->container->set('sonata.media.manager.category', null);
 
         $this->expectException(\LogicException::class);
 
@@ -114,9 +104,6 @@ class FixMediaContextCommandTest extends TestCase
             'formats' => [],
             'download' => [],
         ];
-
-        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
-            ->willReturn(true);
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
@@ -142,9 +129,6 @@ class FixMediaContextCommandTest extends TestCase
             'formats' => [],
             'download' => [],
         ];
-
-        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
-            ->willReturn(true);
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
@@ -172,9 +156,6 @@ class FixMediaContextCommandTest extends TestCase
             'formats' => [],
             'download' => [],
         ];
-
-        $this->container->method('has')->with($this->equalTo('sonata.media.manager.category'))
-            ->willReturn(true);
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
