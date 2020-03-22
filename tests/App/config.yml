@@ -6,8 +6,10 @@ framework:
         enabled: true
 
 twig:
+    exception_controller: null
     paths:
         - '%kernel.project_dir%/templates'
+    strict_variables: "%kernel.debug%"
 
 sonata_media:
     db_driver: doctrine_orm
@@ -49,7 +51,7 @@ fos_rest:
         validate: false
 
 sensio_framework_extra:
-    router: {annotations: true}
+    router: {annotations: false}
     request: {converters: true}
     view: {annotations: true}
 

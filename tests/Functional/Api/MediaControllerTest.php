@@ -15,8 +15,8 @@ namespace Sonata\MediaBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\Command\Proxy\CreateSchemaDoctrineCommand;
 use Sonata\MediaBundle\Tests\App\AppKernel;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -49,7 +49,7 @@ final class MediaControllerTest extends WebTestCase
 
         $command->run($input, new ConsoleOutput());
 
-        $client = new Client($kernel);
+        $client = new KernelBrowser($kernel);
         $client->request('GET', '/api/media');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }

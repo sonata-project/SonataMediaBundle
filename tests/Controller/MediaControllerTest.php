@@ -21,20 +21,19 @@ use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Twig\Environment;
 
 class MediaControllerTest extends TestCase
 {
     /**
-     * @var ObjectProphecy&ContainerInterface
+     * @var Container
      */
     protected $container;
 
@@ -45,10 +44,10 @@ class MediaControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->container = $this->prophesize(Container::class);
+        $this->container = new Container();
 
         $this->controller = new MediaController();
-        $this->controller->setContainer($this->container->reveal());
+        $this->controller->setContainer($this->container);
     }
 
     public function testDownloadActionWithNotFoundMedia(): void
@@ -71,7 +70,7 @@ class MediaControllerTest extends TestCase
         $this->configureGetCurrentRequest($request->reveal());
         $this->configureGetMedia(1, $media->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), false);
-        $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
+        $this->container->set('sonata.media.pool', $pool->reveal());
 
         $this->controller->downloadAction(1);
     }
@@ -88,7 +87,7 @@ class MediaControllerTest extends TestCase
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
         $this->configureGetProvider($pool, $media, $provider->reveal());
         $this->configureGetCurrentRequest($request->reveal());
-        $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
+        $this->container->set('sonata.media.pool', $pool->reveal());
         $pool->getDownloadMode($media->reveal())->willReturn('mode');
         $provider->getDownloadResponse($media->reveal(), 'format', 'mode')->willReturn($response->reveal());
         $response->prepare($request->reveal())->shouldBeCalled();
@@ -118,7 +117,7 @@ class MediaControllerTest extends TestCase
         $this->configureGetMedia(1, $media->reveal());
         $this->configureGetCurrentRequest($request->reveal());
         $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), false);
-        $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
+        $this->container->set('sonata.media.pool', $pool->reveal());
 
         $this->controller->viewAction(1);
     }
@@ -137,7 +136,7 @@ class MediaControllerTest extends TestCase
             'formats' => ['format'],
             'format' => 'format',
         ], 'renderResponse');
-        $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
+        $this->container->set('sonata.media.pool', $pool->reveal());
         $media->getContext()->willReturn('context');
         $pool->getFormatNamesByContext('context')->willReturn(['format']);
 
@@ -163,7 +162,7 @@ class MediaControllerTest extends TestCase
     {
         $mediaManager = $this->prophesize(BaseEntityManager::class);
 
-        $this->container->get('sonata.media.manager.media')->willReturn($mediaManager->reveal());
+        $this->container->set('sonata.media.manager.media', $mediaManager->reveal());
         $mediaManager->find($id)->willReturn($media);
     }
 
@@ -180,7 +179,7 @@ class MediaControllerTest extends TestCase
     {
         $requestStack = $this->prophesize(RequestStack::class);
 
-        $this->container->get('request_stack')->willReturn($requestStack->reveal());
+        $this->container->set('request_stack', $requestStack->reveal());
         $requestStack->getCurrentRequest()->willReturn($request);
     }
 
@@ -189,13 +188,11 @@ class MediaControllerTest extends TestCase
         array $data,
         string $rendered
     ): void {
-        $templating = $this->prophesize(EngineInterface::class);
+        $twig = $this->prophesize(Environment::class);
         $response = $this->prophesize(Response::class);
 
-        $this->container->has('templating')->willReturn(true);
-        $this->container->get('templating')->willReturn($templating->reveal());
+        $this->container->set('twig', $twig->reveal());
         $response->getContent()->willReturn($rendered);
-        $templating->renderResponse($template, $data, null)->willReturn($response->reveal());
-        $templating->render($template, $data)->willReturn($rendered);
+        $twig->render($template, $data)->willReturn($rendered);
     }
 }

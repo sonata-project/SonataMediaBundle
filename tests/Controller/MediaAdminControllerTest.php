@@ -28,8 +28,7 @@ use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Tests\Fixtures\EntityWithGetId;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Form\FormView;
@@ -43,7 +42,7 @@ use Twig\Environment;
 class MediaAdminControllerTest extends TestCase
 {
     /**
-     * @var ObjectProphecy&ContainerInterface
+     * @var Container
      */
     private $container;
 
@@ -62,16 +61,24 @@ class MediaAdminControllerTest extends TestCase
      */
     private $controller;
 
+    /**
+     * @var Environment&ObjectProphecy
+     */
+    private $twig;
+
     protected function setUp(): void
     {
-        $this->container = $this->prophesize(ContainerInterface::class);
+        $this->container = new Container();
         $this->admin = $this->prophesize(BaseMediaAdmin::class);
         $this->request = $this->prophesize(Request::class);
+        $this->twig = $this->prophesize(Environment::class);
+
+        $this->container->set('twig', $this->twig->reveal());
 
         $this->configureCRUDController();
 
         $this->controller = new MediaAdminController();
-        $this->controller->setContainer($this->container->reveal());
+        $this->controller->setContainer($this->container);
     }
 
     public function testCreateActionToSelectProvider(): void
@@ -86,7 +93,7 @@ class MediaAdminControllerTest extends TestCase
         $pool->getProvidersByContext('context')->willReturn(['provider']);
         $pool->getDefaultContext()->willReturn('default_context');
         $this->admin->checkAccess('create')->shouldBeCalled();
-        $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
+        $this->container->set('sonata.media.pool', $pool->reveal());
         $this->request->get('provider')->willReturn(false);
         $this->request->isMethod('get')->willReturn(true);
         $this->request->get('context', 'default_context')->willReturn('context');
@@ -135,9 +142,8 @@ class MediaAdminControllerTest extends TestCase
         ])->willReturn($category->reveal());
         $category->getId()->willReturn(1);
         $form->createView()->willReturn($formView->reveal());
-        $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
-        $this->container->has('sonata.media.manager.category')->willReturn(true);
-        $this->container->get('sonata.media.manager.category')->willReturn($categoryManager->reveal());
+        $this->container->set('sonata.media.pool', $pool->reveal());
+        $this->container->set('sonata.media.manager.category', $categoryManager->reveal());
         $this->admin->checkAccess('list')->shouldBeCalled();
         $this->admin->setListMode('mosaic')->shouldBeCalled();
         $this->admin->getDatagrid()->willReturn($datagrid->reveal());
@@ -166,9 +172,9 @@ class MediaAdminControllerTest extends TestCase
         $this->request->get('_xml_http_request')->willReturn(false);
         $this->request->get('_sonata_admin')->willReturn('admin_code');
         $this->request->get('uniqid')->shouldBeCalled();
-        $this->container->get('sonata.admin.pool')->willReturn($pool->reveal());
-        $this->container->get('sonata.admin.breadcrumbs_builder')->willReturn($breadcrumbsBuilder->reveal());
-        $this->container->get('admin_code.template_registry')->willReturn($templateRegistry);
+        $this->container->set('sonata.admin.pool', $pool->reveal());
+        $this->container->set('sonata.admin.breadcrumbs_builder', $breadcrumbsBuilder->reveal());
+        $this->container->set('admin_code.template_registry', $templateRegistry->reveal());
         $this->admin->getTemplate('layout')->willReturn('layout.html.twig');
         $this->admin->isChild()->willReturn(false);
         $this->admin->setRequest($this->request->reveal())->shouldBeCalled();
@@ -200,22 +206,17 @@ class MediaAdminControllerTest extends TestCase
     {
         $requestStack = $this->prophesize(RequestStack::class);
 
-        $this->container->has('request_stack')->willReturn(true);
-        $this->container->get('request_stack')->willReturn($requestStack->reveal());
+        $this->container->set('request_stack', $requestStack->reveal());
         $requestStack->getCurrentRequest()->willReturn($request);
     }
 
     private function configureSetFormTheme(FormView $formView, $formTheme): void
     {
-        $twig = $this->prophesize(Environment::class);
-
         $rendererClass = FormRenderer::class;
 
         $twigRenderer = $this->prophesize($rendererClass);
 
-        $this->container->get('twig')->willReturn($twig->reveal());
-
-        $twig->getRuntime($rendererClass)->willReturn($twigRenderer->reveal());
+        $this->twig->getRuntime($rendererClass)->willReturn($twigRenderer->reveal());
 
         $twigRenderer->setTheme($formView, $formTheme)->shouldBeCalled();
     }
@@ -227,22 +228,17 @@ class MediaAdminControllerTest extends TestCase
 
         $tokenManager->getToken($intention)->willReturn($token->reveal());
         $token->getValue()->willReturn('token');
-        $this->container->has('security.csrf.token_manager')->willReturn(true);
-        $this->container->get('security.csrf.token_manager')->willReturn($tokenManager->reveal());
+        $this->container->set('security.csrf.token_manager', $tokenManager->reveal());
     }
 
     private function configureRender(string $template, TypeToken $data, string $rendered): void
     {
-        $templating = $this->prophesize(EngineInterface::class);
         $response = $this->prophesize(Response::class);
         $pool = $this->prophesize(Pool::class);
 
         $this->admin->getPersistentParameters()->willReturn(['param' => 'param']);
-        $this->container->has('templating')->willReturn(true);
-        $this->container->get('templating')->willReturn($templating->reveal());
-        $this->container->get('sonata.media.pool')->willReturn($pool->reveal());
+        $this->container->set('sonata.media.pool', $pool->reveal());
         $response->getContent()->willReturn($rendered);
-        $templating->renderResponse($template, $data, null)->willReturn($response->reveal());
-        $templating->render($template, $data)->willReturn($rendered);
+        $this->twig->render($template, $data)->willReturn($rendered);
     }
 }
