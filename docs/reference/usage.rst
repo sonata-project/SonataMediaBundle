@@ -26,6 +26,19 @@ or this::
 
     $mediaManager->save($media, 'user', 'sonata.media.provider.youtube');
 
+``$mediaManager`` is an instance of ``Sonata\MediaBundle\Model\MediaManagerInterface``. In order to us it, inject it into constructor of a class::
+
+    public function __construct(MediaManagerInterface $mediaManager)
+    {
+        $this->mediaManager = $mediaManager;
+    }
+
+And create an alias so that Symfony understands what implementation to use::
+
+    // config/services.yaml
+
+    Sonata\MediaBundle\Model\MediaManagerInterface: '@sonata.media.manager.media'
+
 Retrieving metadata information
 -------------------------------
 
