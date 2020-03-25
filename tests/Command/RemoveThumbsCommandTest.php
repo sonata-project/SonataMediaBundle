@@ -23,7 +23,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Tests\Fixtures\FilesystemTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @author Anton Dyshkant <vyshkant@gmail.com>
@@ -33,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class RemoveThumbsCommandTest extends FilesystemTestCase
 {
     /**
-     * @var ContainerInterface|MockObject
+     * @var Container
      */
     private $container;
 
@@ -69,7 +69,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->container = $this->createMock(ContainerInterface::class);
+        $this->container = new Container();
 
         $this->command = new RemoveThumbsCommand();
         $this->command->setContainer($this->container);
@@ -83,16 +83,8 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
 
-        $this->container
-            ->method('get')
-            ->willReturnCallback(function (string $id) {
-                switch ($id) {
-                    case 'sonata.media.pool':
-                        return $this->pool;
-                    case 'sonata.media.manager.media':
-                        return $this->mediaManager;
-                }
-            });
+        $this->container->set('sonata.media.pool', $this->pool);
+        $this->container->set('sonata.media.manager.media', $this->mediaManager);
     }
 
     public function testExecuteWithoutArguments(): void

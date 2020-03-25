@@ -22,7 +22,7 @@ use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @author Mathieu Lemoine <mlemoine@mlemoine.name>
@@ -46,16 +46,11 @@ class MediaEventSubscriberTest extends TestCase
 
         $category = $this->createMock(CategoryInterface::class);
         $catManager = $this->createMock(CategoryManagerInterface::class);
-        $container = $this->createMock(ContainerInterface::class);
 
-        $container->method('get')->willReturnMap([
-            ['sonata.media.pool', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool],
-            ['sonata.media.manager.category', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $catManager],
-        ]);
+        $container = new Container();
 
-        $container->method('has')
-            ->with($this->equalTo('sonata.media.manager.category'))
-            ->willReturn(true);
+        $container->set('sonata.media.pool', $pool);
+        $container->set('sonata.media.manager.category', $catManager);
 
         $catManager->expects($this->exactly(2))
             ->method('getRootCategories')

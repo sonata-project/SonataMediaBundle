@@ -25,7 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
@@ -33,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CleanMediaCommandTest extends FilesystemTestCase
 {
     /**
-     * @var MockObject&ContainerInterface
+     * @var Container
      */
     protected $container;
 
@@ -74,7 +74,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->container = $this->createMock(ContainerInterface::class);
+        $this->container = new Container();
 
         $this->command = new CleanMediaCommand();
         $this->command->setContainer($this->container);
@@ -91,18 +91,9 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->fileSystemLocal = $fileSystemLocal = $this->createMock(Local::class);
         $this->fileSystemLocal->expects($this->once())->method('getDirectory')->willReturn($this->workspace);
 
-        $this->container
-            ->method('get')
-            ->willReturnCallback(static function (string $id) use ($pool, $mediaManager, $fileSystemLocal) {
-                switch ($id) {
-                    case 'sonata.media.pool':
-                        return $pool;
-                    case 'sonata.media.manager.media':
-                        return $mediaManager;
-                    case 'sonata.media.adapter.filesystem.local':
-                        return $fileSystemLocal;
-                }
-            });
+        $this->container->set('sonata.media.pool', $pool);
+        $this->container->set('sonata.media.manager.media', $mediaManager);
+        $this->container->set('sonata.media.adapter.filesystem.local', $fileSystemLocal);
     }
 
     public function testExecuteDirectoryNotExists(): void

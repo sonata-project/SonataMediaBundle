@@ -17,6 +17,7 @@ For instance, a Youtube video can be created and saved like this::
     $media->setContext('user'); // video related to the user
     $media->setProviderName('sonata.media.provider.youtube');
 
+    /** @var Sonata\MediaBundle\Model\MediaManagerInterface $mediaManager */
     $mediaManager->save($media);
 
 or this::
