@@ -8,6 +8,9 @@
             <tag name="console.command"/>
         </service>
         <service id="Sonata\MediaBundle\Command\CleanMediaCommand" class="Sonata\MediaBundle\Command\CleanMediaCommand" public="true">
+            <argument type="service" id="sonata.media.adapter.filesystem.local"/>
+            <argument type="service" id="sonata.media.pool"/>
+            <argument type="service" id="sonata.media.manager.media"/>
             <tag name="console.command"/>
         </service>
         <service id="Sonata\MediaBundle\Command\FixMediaContextCommand" class="Sonata\MediaBundle\Command\FixMediaContextCommand" public="true">
