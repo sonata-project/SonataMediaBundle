@@ -89,8 +89,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'providers' => [],
             'formats' => [],
             'download' => [],
-
         ];
+
         $this->pool->expects($this->once())->method('getContexts')->willReturn(['foo' => $context]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
