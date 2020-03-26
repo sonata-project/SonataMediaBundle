@@ -13,9 +13,13 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\MediaBundle\Filesystem\Local;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,12 +30,36 @@ use Symfony\Component\Finder\Finder;
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class CleanMediaCommand extends ContainerAwareCommand
+class CleanMediaCommand extends Command
 {
     /**
      * @var MediaProviderInterface[]|null
      */
     private $providers;
+
+    /**
+     * @var Pool
+     */
+    private $mediaPool;
+
+    /**
+     * @var Local
+     */
+    private $filesystemLocal;
+
+    /**
+     * @var MediaManagerInterface
+     */
+    private $mediaManager;
+
+    public function __construct(Local $filesystemLocal, Pool $mediaPool, MediaManagerInterface $mediaManager)
+    {
+        parent::__construct();
+
+        $this->filesystemLocal = $filesystemLocal;
+        $this->mediaPool = $mediaPool;
+        $this->mediaManager = $mediaManager;
+    }
 
     /**
      * {@inheritdoc}
@@ -51,14 +79,13 @@ class CleanMediaCommand extends ContainerAwareCommand
         $dryRun = (bool) $input->getOption('dry-run');
         $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
 
-        $pool = $this->getContainer()->get('sonata.media.pool');
         $finder = Finder::create();
         $filesystem = new Filesystem();
-        $baseDirectory = $this->getContainer()->get('sonata.media.adapter.filesystem.local')->getDirectory();
+        $baseDirectory = $this->filesystemLocal->getDirectory();
 
         $output->writeln(sprintf('<info>Scanning upload directory: %s</info>', $baseDirectory));
 
-        foreach ($pool->getContexts() as $contextName => $context) {
+        foreach ($this->mediaPool->getContexts() as $contextName => $context) {
             if (!$filesystem->exists($baseDirectory.'/'.$contextName)) {
                 $output->writeln(sprintf("<info>'%s' does not exist</info>", $baseDirectory.'/'.$contextName));
 
@@ -102,9 +129,7 @@ class CleanMediaCommand extends ContainerAwareCommand
         if (!$this->providers) {
             $this->providers = [];
 
-            $pool = $this->getContainer()->get('sonata.media.pool');
-
-            foreach ($pool->getProviders() as $provider) {
+            foreach ($this->mediaPool->getProviders() as $provider) {
                 if ($provider instanceof FileProvider) {
                     $this->providers[] = $provider->getName();
                 }
@@ -116,7 +141,7 @@ class CleanMediaCommand extends ContainerAwareCommand
 
     private function mediaExists(string $filename, string $context = null): bool
     {
-        $mediaManager = $this->getContainer()->get('sonata.media.manager.media');
+        $mediaManager = $this->mediaManager;
 
         $fileParts = explode('_', $filename);
 
