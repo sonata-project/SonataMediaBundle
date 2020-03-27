@@ -21,11 +21,10 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Fixtures\FilesystemTestCase;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
@@ -33,17 +32,12 @@ use Symfony\Component\DependencyInjection\Container;
 class CleanMediaCommandTest extends FilesystemTestCase
 {
     /**
-     * @var Container
-     */
-    protected $container;
-
-    /**
      * @var Application
      */
     protected $application;
 
     /**
-     * @var ContainerAwareCommand
+     * @var Command
      */
     protected $command;
 
@@ -74,16 +68,6 @@ class CleanMediaCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->container = new Container();
-
-        $this->command = new CleanMediaCommand();
-        $this->command->setContainer($this->container);
-
-        $this->application = new Application();
-        $this->application->add($this->command);
-
-        $this->tester = new CommandTester($this->application->find('sonata:media:clean-uploads'));
-
         $this->pool = $pool = $this->createMock(Pool::class);
 
         $this->mediaManager = $mediaManager = $this->createMock(MediaManagerInterface::class);
@@ -91,9 +75,12 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->fileSystemLocal = $fileSystemLocal = $this->createMock(Local::class);
         $this->fileSystemLocal->expects($this->once())->method('getDirectory')->willReturn($this->workspace);
 
-        $this->container->set('sonata.media.pool', $pool);
-        $this->container->set('sonata.media.manager.media', $mediaManager);
-        $this->container->set('sonata.media.adapter.filesystem.local', $fileSystemLocal);
+        $this->command = new CleanMediaCommand($this->fileSystemLocal, $this->pool, $this->mediaManager);
+
+        $this->application = new Application();
+        $this->application->add($this->command);
+
+        $this->tester = new CommandTester($this->application->find('sonata:media:clean-uploads'));
     }
 
     public function testExecuteDirectoryNotExists(): void
