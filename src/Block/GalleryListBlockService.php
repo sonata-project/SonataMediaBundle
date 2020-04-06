@@ -57,9 +57,6 @@ class GalleryListBlockService extends AbstractBlockService
         $this->pool = $pool;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
         $this->buildEditForm($formMapper, $block);

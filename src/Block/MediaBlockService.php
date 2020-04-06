@@ -111,9 +111,6 @@ class MediaBlockService extends AbstractBlockService
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
         $this->buildEditForm($formMapper, $block);
