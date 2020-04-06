@@ -62,7 +62,7 @@ class GalleryListBlockService extends AbstractBlockService
      */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {  
-       $this->buildEditForm($formMapper, $block);
+        $this->buildEditForm($formMapper, $block);
     }
 
     /**
