@@ -19,6 +19,7 @@ use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Form\Type\ImmutableArrayType;
+use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -125,6 +126,10 @@ class GalleryListBlockService extends AbstractBlockService
             ],
             'translation_domain' => 'SonataMediaBundle',
         ]);
+    }
+
+    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    {
     }
 
     /**

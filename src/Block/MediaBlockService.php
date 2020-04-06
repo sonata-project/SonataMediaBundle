@@ -22,6 +22,7 @@ use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
+use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -154,6 +155,10 @@ class MediaBlockService extends AbstractBlockService
             ],
             'translation_domain' => 'SonataMediaBundle',
         ]);
+    }
+
+    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    {
     }
 
     /**
