@@ -60,6 +60,14 @@ class GalleryListBlockService extends AbstractBlockService
     /**
      * {@inheritdoc}
      */
+    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    {  
+       $this->buildEditForm($formMapper, $block);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $contextChoices = [];
