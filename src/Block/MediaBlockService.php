@@ -14,12 +14,13 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Block;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\Service\EditableBlockService;
+use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
+use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
@@ -171,7 +172,14 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
         $this->configureEditForm($formMapper, $block);
     }
 
+    /**
+     * NEXT_MAJOR: delete it.
+     */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    {
+    }
+
+    public function validate(ErrorElement $errorElement, BlockInterface $block)
     {
     }
 
@@ -227,14 +235,19 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
         $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
 
+    public function getMetadata(): MetadataInterface
+    {
+        return new Metadata($this->getName(), null, null, 'SonataMediaBundle', [
+            'class' => 'fa fa-picture-o',
+        ]);
+    }
+
     /**
-     * {@inheritdoc}
+     * NEXT_MAJOR: delete it.
      */
     public function getBlockMetadata($code = null)
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
-            'class' => 'fa fa-picture-o',
-        ]);
+        return $this->getMetaData();
     }
 
     /**

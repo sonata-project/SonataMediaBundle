@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block;
 
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
+use Sonata\BlockBundle\Block\Service\EditableBlockService;
+use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
+use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
@@ -33,7 +35,7 @@ use Twig\Environment;
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class GalleryListBlockService extends AbstractBlockService
+class GalleryListBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
      * @var GalleryManagerInterface
@@ -58,15 +60,12 @@ class GalleryListBlockService extends AbstractBlockService
         $this->pool = $pool;
     }
 
-    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    public function configureCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
-        $this->buildEditForm($formMapper, $block);
+        $this->configureEditForm($formMapper, $block);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function configureEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $contextChoices = [];
 
@@ -128,7 +127,30 @@ class GalleryListBlockService extends AbstractBlockService
         ]);
     }
 
+    /**
+     * NEXT_MAJOR: delete it.
+     */    
+    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    {
+        $this->configureCreateForm($formMapper, $block);
+    }
+
+    /**
+     * NEXT_MAJOR: delete it.
+     */    
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    {
+        $this->configureEditForm($formMapper, $block);
+    }
+
+    /**
+     * NEXT_MAJOR: delete it.
+     */    
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    {
+    }
+
+    public function validate(ErrorElement $errorElement, BlockInterface $block)
     {
     }
 
@@ -183,10 +205,18 @@ class GalleryListBlockService extends AbstractBlockService
     /**
      * {@inheritdoc}
      */
-    public function getBlockMetadata($code = null)
+    public function getMetadata(): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata($this->getName(), null, null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
+    }
+
+    /**
+     * NEXT_MAJOR: delete it.
+     */    
+    public function getBlockMetadata($code = null)
+    {
+        return $this->getMetadata(); 
     }
 }
