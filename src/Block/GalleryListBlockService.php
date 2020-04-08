@@ -129,7 +129,7 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
 
     /**
      * NEXT_MAJOR: delete it.
-     */    
+     */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
         $this->configureCreateForm($formMapper, $block);
@@ -137,7 +137,7 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
 
     /**
      * NEXT_MAJOR: delete it.
-     */    
+     */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $this->configureEditForm($formMapper, $block);
@@ -145,7 +145,7 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
 
     /**
      * NEXT_MAJOR: delete it.
-     */    
+     */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
     }
@@ -214,7 +214,7 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
 
     /**
      * NEXT_MAJOR: delete it.
-     */    
+     */
     public function getBlockMetadata($code = null)
     {
         return $this->getMetadata(); 
