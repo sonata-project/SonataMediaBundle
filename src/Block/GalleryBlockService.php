@@ -243,7 +243,8 @@ class GalleryBlockService extends AbstractBlockService implements EditableBlockS
                 static::class,
             ), E_USER_DEPRECATED);
         }
-        $this->validate($errorElement,$block);
+
+        $this->validate($errorElement, $block);
     }
 
     public function validate(ErrorElement $errorElement, BlockInterface $block)

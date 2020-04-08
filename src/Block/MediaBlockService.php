@@ -276,6 +276,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
                 static::class,
             ), E_USER_DEPRECATED);
         }
+
         return $this->getMetaData();
     }
 

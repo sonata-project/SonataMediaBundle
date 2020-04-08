@@ -246,6 +246,7 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
                 static::class,
             ), E_USER_DEPRECATED);
         }
+
         return $this->getMetadata();
     }
 }
