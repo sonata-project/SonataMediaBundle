@@ -156,7 +156,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     }
 
     /**
-     * NEXT_MAJOR: delete it
+     * NEXT_MAJOR: delete it.
      */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
@@ -164,7 +164,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     }
 
     /**
-     * NEXT_MAJOR: delete it
+     * NEXT_MAJOR: delete it.
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
