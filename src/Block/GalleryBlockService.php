@@ -202,7 +202,7 @@ class GalleryBlockService extends AbstractBlockService implements EditableBlockS
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method. 
      */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
@@ -210,7 +210,7 @@ class GalleryBlockService extends AbstractBlockService implements EditableBlockS
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method.
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
@@ -218,7 +218,7 @@ class GalleryBlockService extends AbstractBlockService implements EditableBlockS
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method.
      */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
@@ -284,7 +284,7 @@ class GalleryBlockService extends AbstractBlockService implements EditableBlockS
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method. 
      */
     public function getBlockMetadata($code = null)
     {

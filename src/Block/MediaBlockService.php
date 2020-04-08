@@ -157,7 +157,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method.
      */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
@@ -165,7 +165,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method.
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
@@ -173,7 +173,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method.
      */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
@@ -243,7 +243,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     }
 
     /**
-     * NEXT_MAJOR: delete it.
+     * NEXT_MAJOR: Remove this method.
      */
     public function getBlockMetadata($code = null)
     {
