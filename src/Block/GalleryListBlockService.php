@@ -128,10 +128,17 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
     }
 
     /**
-     * NEXT_MAJOR: Remove this method. 
+     * NEXT_MAJOR: Remove this method.
      */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
+        if ('sonata_deprecation_mute' !== (\func_get_args()[2] ?? null)) {
+            @trigger_error(sprintf(
+                'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::configureCreateForm() instead.',
+                __METHOD__,
+                static::class,
+            ), E_USER_DEPRECATED);
+        }
         $this->configureCreateForm($formMapper, $block);
     }
 
@@ -140,6 +147,13 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
+        if ('sonata_deprecation_mute' !== (\func_get_args()[2] ?? null)) {
+            @trigger_error(sprintf(
+                'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::configureEditForm() instead.',
+                __METHOD__,
+                static::class,
+            ), E_USER_DEPRECATED);
+        }
         $this->configureEditForm($formMapper, $block);
     }
 
@@ -148,6 +162,14 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
      */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
+        if ('sonata_deprecation_mute' !== (\func_get_args()[2] ?? null)) {
+            @trigger_error(sprintf(
+                'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::validate() instead.',
+                __METHOD__,
+                static::class,
+            ), E_USER_DEPRECATED);
+        }
+        $this->validate($errorElement, $block);
     }
 
     public function validate(ErrorElement $errorElement, BlockInterface $block)
@@ -217,6 +239,13 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
      */
     public function getBlockMetadata($code = null)
     {
+        if ('sonata_deprecation_mute' !== (\func_get_args()[2] ?? null)) {
+            @trigger_error(sprintf(
+                'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::getMetadata() instead.',
+                __METHOD__,
+                static::class,
+            ), E_USER_DEPRECATED);
+        }
         return $this->getMetadata();
     }
 }
