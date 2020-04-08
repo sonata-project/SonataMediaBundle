@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
+use Sonata\BlockBundle\Block\Service\EditableBlockService;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
@@ -40,7 +41,7 @@ use Twig\Environment;
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaBlockService extends AbstractBlockService
+class MediaBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
      * @var BaseMediaAdmin
@@ -112,15 +113,12 @@ class MediaBlockService extends AbstractBlockService
         ]);
     }
 
-    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    public function configureCreateForm(FormMapper $formMapper, BlockInterface $block)
     {
-        $this->buildEditForm($formMapper, $block);
+        $this->configureEditForm($formMapper, $block);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function configureEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
             $this->load($block);
@@ -155,6 +153,22 @@ class MediaBlockService extends AbstractBlockService
             ],
             'translation_domain' => 'SonataMediaBundle',
         ]);
+    }
+
+    /**
+     * NEXT_MAJOR: delete it
+     */
+    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    {
+        $this->configureCreateForm($formMapper, $block);
+    }
+
+    /**
+     * NEXT_MAJOR: delete it
+     */
+    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    {
+        $this->configureEditForm($formMapper, $block);
     }
 
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
