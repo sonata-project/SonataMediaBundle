@@ -217,6 +217,6 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
      */
     public function getBlockMetadata($code = null)
     {
-        return $this->getMetadata(); 
+        return $this->getMetadata();
     }
 }
