@@ -165,7 +165,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
             @trigger_error(sprintf(
                 'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::configureCreateForm() instead.',
                 __METHOD__,
-                static::class,
+                static::class
             ), E_USER_DEPRECATED);
         }
         $this->configureCreateForm($formMapper, $block);
@@ -180,7 +180,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
             @trigger_error(sprintf(
                 'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::configureEditForm() instead.',
                 __METHOD__,
-                static::class,
+                static::class
             ), E_USER_DEPRECATED);
         }
         $this->configureEditForm($formMapper, $block);
@@ -195,7 +195,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
             @trigger_error(sprintf(
                 'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::validate() instead.',
                 __METHOD__,
-                static::class,
+                static::class
             ), E_USER_DEPRECATED);
         }
         $this->validate($errorElement, $block);
@@ -273,7 +273,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
             @trigger_error(sprintf(
                 'Method %s() is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use %s::getMetadata() instead.',
                 __METHOD__,
-                static::class,
+                static::class
             ), E_USER_DEPRECATED);
         }
 
