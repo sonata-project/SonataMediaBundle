@@ -247,6 +247,8 @@ class GalleryListBlockService extends AbstractBlockService implements EditableBl
             ), E_USER_DEPRECATED);
         }
 
-        return $this->getMetadata();
+        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+            'class' => 'fa fa-picture-o',
+        ]);
     }
 }
