@@ -32,7 +32,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class ImageProviderTest extends AbstractProviderTest
 {
-    public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], Stub $box = null): MediaProviderInterface
+    public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], ?Stub $box = null): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('resize')->willReturn(true);

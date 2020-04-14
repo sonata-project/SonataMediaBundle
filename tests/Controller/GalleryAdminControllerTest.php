@@ -16,7 +16,6 @@ namespace Sonata\MediaBundle\Tests\Controller;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Argument\Token\TypeToken;
-use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
@@ -42,24 +41,12 @@ class GalleryAdminControllerTest extends TestCase
      */
     private $container;
 
-    /**
-     * @var ObjectProphecy&BaseMediaAdmin
-     */
     private $admin;
 
-    /**
-     * @var ObjectProphecy&Request
-     */
     private $request;
 
-    /**
-     * @var ObjectProphecy&GalleryAdminController
-     */
     private $controller;
 
-    /**
-     * @var Environment&ObjectProphecy
-     */
     private $twig;
 
     protected function setUp(): void

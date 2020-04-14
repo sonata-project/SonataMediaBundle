@@ -245,9 +245,9 @@ class MediaControllerTest extends TestCase
     }
 
     protected function createMediaController(
-        MediaManagerInterface $manager = null,
-        Pool $pool = null,
-        FormFactoryInterface $factory = null
+        ?MediaManagerInterface $manager = null,
+        ?Pool $pool = null,
+        ?FormFactoryInterface $factory = null
     ): MediaController {
         if (null === $manager) {
             $manager = $this->createMock(MediaManagerInterface::class);

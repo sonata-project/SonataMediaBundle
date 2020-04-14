@@ -125,7 +125,7 @@ class GalleryListBlockService extends AbstractBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
     {
         $context = $blockContext->getBlock()->getSetting('context');
 
