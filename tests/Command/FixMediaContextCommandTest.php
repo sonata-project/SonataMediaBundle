@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\ContextInterface;
@@ -47,19 +46,10 @@ class FixMediaContextCommandTest extends TestCase
      */
     protected $tester;
 
-    /**
-     * @var MockObject&Pool
-     */
     private $pool;
 
-    /**
-     * @var MockObject&ContextManagerInterface
-     */
     private $contextManager;
 
-    /**
-     * @var MockObject&CategoryManagerInterface
-     */
     private $categoryManager;
 
     /**

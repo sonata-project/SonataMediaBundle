@@ -29,24 +29,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BaseMediaAdminTest extends TestCase
 {
-    /**
-     * @var ObjectProphecy&Pool
-     */
     private $pool;
 
-    /**
-     * @var ObjectProphecy&CategoryManagerInterface
-     */
     private $categoryManager;
 
-    /**
-     * @var ObjectProphecy&Request
-     */
     private $request;
 
-    /**
-     * @var ObjectProphecy&ModelManagerInterface
-     */
     private $modelManager;
 
     /**

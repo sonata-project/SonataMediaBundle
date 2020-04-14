@@ -34,7 +34,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
      *
      * @param array $map
      */
-    public function __construct(ContainerInterface $container, array $map = null)
+    public function __construct(ContainerInterface $container, ?array $map = null)
     {
         $this->container = $container;
 

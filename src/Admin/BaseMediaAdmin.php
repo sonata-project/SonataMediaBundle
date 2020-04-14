@@ -44,7 +44,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
      * @param string                   $baseControllerName
      * @param CategoryManagerInterface $categoryManager
      */
-    public function __construct($code, $class, $baseControllerName, Pool $pool, CategoryManagerInterface $categoryManager = null)
+    public function __construct($code, $class, $baseControllerName, Pool $pool, ?CategoryManagerInterface $categoryManager = null)
     {
         parent::__construct($code, $class, $baseControllerName);
 

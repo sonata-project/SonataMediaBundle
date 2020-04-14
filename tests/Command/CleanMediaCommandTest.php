@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Command\CleanMediaCommand;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -46,19 +45,10 @@ class CleanMediaCommandTest extends FilesystemTestCase
      */
     protected $tester;
 
-    /**
-     * @var MockObject&Pool
-     */
     private $pool;
 
-    /**
-     * @var MockObject&MediaManagerInterface
-     */
     private $mediaManager;
 
-    /**
-     * @var MockObject&Local
-     */
     private $fileSystemLocal;
 
     /**

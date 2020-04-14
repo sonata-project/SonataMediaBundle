@@ -33,7 +33,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends AbstractProviderTest
 {
-    public function getProvider(Browser $browser = null): MediaProviderInterface
+    public function getProvider(?Browser $browser = null): MediaProviderInterface
     {
         if (!$browser) {
             $browser = $this->createMock(Browser::class);
