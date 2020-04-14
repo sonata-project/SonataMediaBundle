@@ -49,7 +49,7 @@ class ConsumerThumbnail implements ThumbnailInterface
      * @param string                   $id
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher = null)
+    public function __construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, ?EventDispatcherInterface $dispatcher = null)
     {
         /*
          * NEXT_MAJOR: remove this check

@@ -37,12 +37,12 @@ final class NoDriverManager implements ManagerInterface
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): void
+    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): void
     {
         throw new NoDriverException();
     }
 
-    public function findOneBy(array $criteria, array $orderBy = null): void
+    public function findOneBy(array $criteria, ?array $orderBy = null): void
     {
         throw new NoDriverException();
     }

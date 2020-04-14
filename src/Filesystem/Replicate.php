@@ -41,7 +41,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * @param LoggerInterface $logger
      */
-    public function __construct(AdapterInterface $master, AdapterInterface $slave, LoggerInterface $logger = null)
+    public function __construct(AdapterInterface $master, AdapterInterface $slave, ?LoggerInterface $logger = null)
     {
         $this->master = $master;
         $this->slave = $slave;
@@ -105,7 +105,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * {@inheritdoc}
      */
-    public function write($key, $content, array $metadata = null)
+    public function write($key, $content, ?array $metadata = null)
     {
         $ok = true;
         $return = false;
