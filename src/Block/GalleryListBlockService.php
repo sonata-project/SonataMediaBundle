@@ -18,6 +18,7 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -178,5 +179,73 @@ class GalleryListBlockService extends AbstractBlockService
         return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
+    }
+
+    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    {
+        $this->buildEditForm($formMapper, $block);
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function prePersist(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function postPersist(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function preUpdate(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function postUpdate(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function preRemove(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function postRemove(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    {
     }
 }
