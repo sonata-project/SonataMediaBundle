@@ -56,7 +56,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt(\DateTime $createdAt = null): void
+    public function setCreatedAt(?\DateTime $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }
@@ -88,7 +88,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setGallery(GalleryInterface $gallery = null): void
+    public function setGallery(?GalleryInterface $gallery = null): void
     {
         $this->gallery = $gallery;
     }
@@ -104,7 +104,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setMedia(MediaInterface $media = null): void
+    public function setMedia(?MediaInterface $media = null): void
     {
         $this->media = $media;
     }
@@ -136,7 +136,7 @@ abstract class GalleryItem implements GalleryItemInterface
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null): void
+    public function setUpdatedAt(?\DateTime $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }

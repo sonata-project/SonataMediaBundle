@@ -26,7 +26,7 @@ final class ThumbnailCompilerPassTest extends TestCase
     /**
      * @dataProvider processProvider
      */
-    public function testProcess(bool $expected, string $class, ParameterBagInterface $parameterBag = null): void
+    public function testProcess(bool $expected, string $class, ?ParameterBagInterface $parameterBag = null): void
     {
         $container = new ContainerBuilder($parameterBag);
         $container

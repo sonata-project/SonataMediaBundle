@@ -68,7 +68,7 @@ interface GalleryInterface
     /**
      * Set updated_at.
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null);
+    public function setUpdatedAt(?\DateTime $updatedAt = null);
 
     /**
      * Get updated_at.
@@ -80,7 +80,7 @@ interface GalleryInterface
     /**
      * Set created_at.
      */
-    public function setCreatedAt(\DateTime $createdAt = null);
+    public function setCreatedAt(?\DateTime $createdAt = null);
 
     /**
      * Get created_at.

@@ -138,7 +138,7 @@ class CleanMediaCommand extends Command
         return $this->providers;
     }
 
-    private function mediaExists(string $filename, string $context = null): bool
+    private function mediaExists(string $filename, ?string $context = null): bool
     {
         $mediaManager = $this->mediaManager;
 

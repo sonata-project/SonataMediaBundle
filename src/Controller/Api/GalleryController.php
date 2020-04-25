@@ -424,7 +424,7 @@ class GalleryController
      *
      * @return FormInterface
      */
-    protected function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, GalleryItemInterface $galleryItem = null, Request $request)
+    protected function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, ?GalleryItemInterface $galleryItem = null, Request $request)
     {
         $form = $this->formFactory->createNamed(null, ApiGalleryHasMediaType::class, $galleryItem, [
             'csrf_protection' => false,

@@ -27,7 +27,7 @@ class MediaAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function createAction(Request $request = null)
+    public function createAction(?Request $request = null)
     {
         $this->admin->checkAccess('create');
 
@@ -48,7 +48,7 @@ class MediaAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function render($view, array $parameters = [], Response $response = null)
+    public function render($view, array $parameters = [], ?Response $response = null)
     {
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
@@ -59,7 +59,7 @@ class MediaAdminController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function listAction(Request $request = null)
+    public function listAction(?Request $request = null)
     {
         $this->admin->checkAccess('list');
 

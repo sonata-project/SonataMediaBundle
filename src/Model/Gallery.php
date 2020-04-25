@@ -100,7 +100,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedAt(\DateTime $updatedAt = null): void
+    public function setUpdatedAt(?\DateTime $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -116,7 +116,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt(\DateTime $createdAt = null): void
+    public function setCreatedAt(?\DateTime $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }

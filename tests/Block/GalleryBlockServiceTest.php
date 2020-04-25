@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
-use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
@@ -24,14 +23,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GalleryBlockServiceTest extends BlockServiceTestCase
 {
-    /**
-     * @var ObjectProphecy&ContainerInterface
-     */
     protected $container;
 
-    /**
-     * @var ObjectProphecy&GalleryManagerInterface
-     */
     private $galleryManager;
 
     /**

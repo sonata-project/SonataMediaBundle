@@ -154,7 +154,7 @@ class MediaBlockService extends AbstractBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
     {
         // make sure we have a valid format
         $media = $blockContext->getBlock()->getSetting('mediaId');
@@ -216,7 +216,7 @@ class MediaBlockService extends AbstractBlockService
     /**
      * @return array
      */
-    protected function getFormatChoices(MediaInterface $media = null)
+    protected function getFormatChoices(?MediaInterface $media = null)
     {
         $formatChoices = [];
 
