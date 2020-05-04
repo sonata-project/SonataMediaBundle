@@ -122,7 +122,10 @@ class GalleryAdmin extends AbstractAdmin
 
         $formMapper
             ->with('Options')
-                ->add('context', ChoiceType::class, ['choices' => $contexts])
+                ->add('context', ChoiceType::class, [
+                    'choices' => $contexts,
+                    'choice_translation_domain' => 'SonataMediaBundle',
+                ])
                 ->add('enabled', null, ['required' => false])
                 ->add('name')
                 ->ifTrue($formats)
