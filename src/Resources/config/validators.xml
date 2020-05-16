@@ -5,5 +5,10 @@
             <argument type="service" id="sonata.media.pool"/>
             <tag name="validator.constraint_validator" alias="sonata.media.validator.format"/>
         </service>
+        <service id="Sonata\MediaBundle\Validator\Constraints\ImageUploadDimensionValidator">
+            <tag name="validator.constraint_validator"/>
+            <argument type="service" id="sonata.media.adapter.image.default"/>
+            <argument type="service" id="sonata.media.provider.image"/>
+        </service>
     </services>
 </container>

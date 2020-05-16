@@ -9,6 +9,10 @@ The ``MediaBundle`` tries to solve this situation by introducing ``context``:
 a context has its own set of media providers and its own set of formats.
 That means you can have a ``small`` user picture format and a ``small`` news
 picture format with different sizes and providers.
+
+By setting ``constraint`` to ``false``, the uploaded picture can be smaller than
+the defined size(s).
+
 Also each format allows to use a custom resizer instead of the default one
 configured in the provider:
 
@@ -36,7 +40,7 @@ configured in the provider:
 
                 formats:
                     small: { width: 150 , quality: 95}
-                    big:   { width: 500 , quality: 90}
+                    big:   { width: 500 , quality: 90, constraint: false}
 
 ``AdminBundle`` Integration
 ---------------------------
