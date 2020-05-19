@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Serializer;
 
-use Sonata\Serializer\BaseSerializerHandler;
+use Sonata\Form\Serializer\BaseSerializerHandler;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
