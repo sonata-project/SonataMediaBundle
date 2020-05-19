@@ -30,9 +30,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class SonataMediaBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new AddProviderCompilerPass());
@@ -42,9 +39,6 @@ class SonataMediaBundle extends Bundle
         $this->registerFormMapping();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function boot()
     {
         // this is required by the AWS SDK (see: https://github.com/knplabs/Gaufrette)
@@ -57,15 +51,19 @@ class SonataMediaBundle extends Bundle
 
     /**
      * Register form mapping information.
+     *
+     * NEXT_MAJOR: remove this method
      */
     public function registerFormMapping()
     {
-        FormHelper::registerFormTypeMapping([
-            'sonata_media_type' => MediaType::class,
-            'sonata_media_api_form_media' => ApiMediaType::class,
-            'sonata_media_api_form_doctrine_media' => ApiDoctrineMediaType::class,
-            'sonata_media_api_form_gallery' => ApiGalleryType::class,
-            'sonata_media_api_form_gallery_has_media' => ApiGalleryHasMediaType::class,
-        ]);
+        if (class_exists(FormHelper::class)) {
+            FormHelper::registerFormTypeMapping([
+                'sonata_media_type' => MediaType::class,
+                'sonata_media_api_form_media' => ApiMediaType::class,
+                'sonata_media_api_form_doctrine_media' => ApiDoctrineMediaType::class,
+                'sonata_media_api_form_gallery' => ApiGalleryType::class,
+                'sonata_media_api_form_gallery_has_media' => ApiGalleryHasMediaType::class,
+            ]);
+        }
     }
 }

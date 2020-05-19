@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 

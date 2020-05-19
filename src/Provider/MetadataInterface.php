@@ -13,16 +13,26 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-/**
- * NEXT_MAJOR: Remove CoreBundle dependency.
- */
-interface MetadataInterface extends \Sonata\CoreBundle\Model\MetadataInterface
+use Sonata\CoreBundle\Model\MetadataInterface as CoreMetadataInterface;
+
+// NEXT_MAJOR: Remove CoreBundle dependency.
+if (interface_exists(CoreMetadataInterface::class)) {
+    interface InternalMetadataInterface extends CoreMetadataInterface
+    {
+    }
+} else {
+    interface InternalMetadataInterface
+    {
+    }
+}
+
+interface MetadataInterface extends InternalMetadataInterface
 {
     public function getTitle(): string;
 
     public function getDescription(): ?string;
 
-    public function getImage(): string;
+    public function getImage(): ?string;
 
     public function getDomain(): ?string;
 
@@ -34,6 +44,8 @@ interface MetadataInterface extends \Sonata\CoreBundle\Model\MetadataInterface
     /**
      * @param string $name    The option key
      * @param mixed  $default The default value if option not found
+     *
+     * @return mixed
      */
     public function getOption($name, $default = null);
 }
