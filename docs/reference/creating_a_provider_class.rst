@@ -253,29 +253,31 @@ Register the Class with the Service Container
 If you use the tag ``sonata.media.provider``, the provider service will be
 added to the provider pool.
 
-.. code-block:: xml
+.. code-block:: yaml
 
-    <!-- config/services.xml -->
+    # config/services.yaml
 
-    <service id="sonata.media.provider.vimeo" class="Sonata\MediaBundle\Provider\VimeoProvider">
-        <argument>sonata.media.provider.vimeo</argument>
-        <argument type="service" id="sonata.media.filesystem.local"/>
-        <argument type="service" id="sonata.media.cdn.server"/>
-        <argument type="service" id="sonata.media.generator.default"/>
-        <argument type="service" id="sonata.media.thumbnail.format"/>
-        <argument type="service" id="sonata.media.buzz.browser"/>
-        <argument type="service" id="sonata.media.metadata.proxy"/>
-        <call method="setTemplates">
-            <argument type="collection">
-                <argument key='helper_thumbnail'>@SonataMedia/Provider/thumbnail.html.twig</argument>
-                <argument key='helper_view'>@SonataMedia/Provider/view_vimeo.html.twig</argument>
-            </argument>
-        </call>
-        <call method="setResizer">
-            <argument type="service" id="sonata.media.resizer.simple"/>
-        </call>
-        <tag name="sonata.media.provider"/>
-    </service>
+    sonata.media.provider.vimeo:
+        class: Sonata\MediaBundle\Provider\VimeoProvider
+        arguments:
+            - sonata.media.provider.vimeo
+            - '@sonata.media.filesystem.local'
+            - '@sonata.media.cdn.server'
+            - '@sonata.media.generator.default'
+            - '@sonata.media.thumbnail.format'
+            - '@sonata.media.buzz.browser'
+            - '@sonata.media.metadata.proxy'
+        calls:
+            -
+                - setTemplates
+                - - helper_thumbnail: '@@SonataMedia/Provider/thumbnail.html.twig'
+                    helper_view: '@@SonataMedia/Provider/view_vimeo.html.twig'
+            -
+                - setResizer
+                - ['@sonata.media.resizer.simple']
+        tags:
+            - { name: sonata.media.provider }
+        public: true
 
 The last important part is how the vimeo media should be displayed.
 
