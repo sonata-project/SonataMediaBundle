@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\DependencyInjection;
 
 use Sonata\ClassificationBundle\Model\CategoryInterface;
-use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
+use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
+use Sonata\Doctrine\Mapper\DoctrineCollector;
+use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector as DeprecatedDoctrineCollector;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -148,7 +150,12 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         if ('doctrine_orm' === $config['db_driver']) {
-            $this->registerDoctrineMapping($config);
+            if (isset($bundles['SonataDoctrineBundle'])) {
+                $this->registerSonataDoctrineMapping($config);
+            } else {
+                // NEXT MAJOR: Remove next line and throw error when not registering SonataDoctrineBundle
+                $this->registerDoctrineMapping($config);
+            }
         }
 
         $container->setParameter('sonata.media.resizer.simple.adapter.mode', $config['resizer']['simple']['mode']);
@@ -208,9 +215,17 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $container->getDefinition('sonata.media.form.type.media')->replaceArgument(1, $config['class']['media']);
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function registerDoctrineMapping(array $config)
     {
-        $collector = DoctrineCollector::getInstance();
+        @trigger_error(
+            'Using SonataEasyExtendsBundle is deprecated since sonata-project/media-bundle 3.x. Please register SonataDoctrineBundle as a bundle instead.',
+            E_USER_DEPRECATED
+        );
+
+        $collector = DeprecatedDoctrineCollector::getInstance();
 
         $collector->addAssociation($config['class']['media'], 'mapOneToMany', [
             'fieldName' => 'galleryHasMedias',
@@ -546,5 +561,68 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         $container->setAlias('sonata.media.resizer.default', $config['resizers']['default']);
+    }
+
+    private function registerSonataDoctrineMapping(array $config): void
+    {
+        $collector = DoctrineCollector::getInstance();
+
+        $collector->addAssociation(
+            $config['class']['media'],
+            'mapOneToMany',
+            OptionsBuilder::createOneToMany('galleryHasMedias', $config['class']['gallery_has_media'])
+                ->cascade(['persist'])
+                ->mappedBy('media')
+        );
+
+        $collector->addAssociation(
+            $config['class']['gallery_has_media'],
+            'mapManyToOne',
+            OptionsBuilder::createManyToOne('gallery', $config['class']['gallery'])
+                ->cascade(['persist'])
+                ->inversedBy('galleryHasMedias')
+                ->addJoin([
+                    'name' => 'gallery_id',
+                    'referencedColumnName' => 'id',
+                    'onDelete' => 'CASCADE',
+                ])
+        );
+
+        $collector->addAssociation(
+            $config['class']['gallery_has_media'],
+            'mapManyToOne',
+            OptionsBuilder::createManyToOne('media', $config['class']['media'])
+                ->cascade(['persist'])
+                ->inversedBy('galleryHasMedias')
+                ->addJoin([
+                    'name' => 'media_id',
+                    'referencedColumnName' => 'id',
+                    'onDelete' => 'CASCADE',
+                ])
+        );
+
+        $collector->addAssociation(
+            $config['class']['gallery'],
+            'mapOneToMany',
+            OptionsBuilder::createOneToMany('galleryHasMedias', $config['class']['gallery_has_media'])
+                ->cascade(['persist'])
+                ->mappedBy('gallery')
+                ->orphanRemoval()
+                ->addOrder('position', 'ASC')
+        );
+
+        if ($this->isClassificationEnabled($config)) {
+            $collector->addAssociation(
+                $config['class']['media'],
+                'mapManyToOne',
+                OptionsBuilder::createManyToOne('category', $config['class']['category'])
+                    ->cascade(['persist'])
+                    ->addJoin([
+                        'name' => 'category_id',
+                        'referencedColumnName' => 'id',
+                        'onDelete' => 'SET NULL',
+                    ])
+            );
+        }
     }
 }

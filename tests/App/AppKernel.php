@@ -18,6 +18,7 @@ use FOS\RestBundle\FOSRestBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Nelmio\ApiDocBundle\NelmioApiDocBundle;
 use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
+use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -44,6 +45,7 @@ final class AppKernel extends Kernel
             new SecurityBundle(),
             new TwigBundle(),
             new FOSRestBundle(),
+            new SonataDoctrineBundle(),
             new SonataMediaBundle(),
             new JMSSerializerBundle(),
             new DoctrineBundle(),
