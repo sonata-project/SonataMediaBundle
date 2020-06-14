@@ -8,10 +8,10 @@ Full configuration options:
     sonata_media:
         db_driver: doctrine_orm
         class:
-            media:              Application\Sonata\MediaBundle\Entity\Media
-            gallery:            Application\Sonata\MediaBundle\Entity\Gallery
-            gallery_has_media:  Application\Sonata\MediaBundle\Entity\GalleryHasMedia
-            category:           null # Application\Sonata\ClassificationBundle\Entity\Category if exists
+            media: App\Entity\SonataMediaMedia
+            gallery: App\Entity\SonataMediaGallery
+            gallery_has_media: App\Entity\SonataMediaGalleryHasMedia
+            category: null # App\Entity\SonataClassificationCategory if exists
 
         force_disable_category: false # true, if you really want to disable the relation with category
         category_manager:       null  # null or "sonata.media.manager.category.default" if classification bundle exists
@@ -33,7 +33,7 @@ Full configuration options:
                     small: { width: 100 , quality: 70}
                     big:   { width: 500 , quality: 70, resizer: sonata.media.resizer.square}
                     # You can pass through any custom option to resizer by using the resizer_options key
-                    icon:  { width: 32, quality: 70, resizer: your.custom.resizer, resizer_options: { custom_crop: true } } 
+                    icon:  { width: 32, quality: 70, resizer: your.custom.resizer, resizer_options: { custom_crop: true } }
 
             tv:
                 download:

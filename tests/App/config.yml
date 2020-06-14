@@ -15,6 +15,9 @@ sonata_media:
     db_driver: doctrine_orm
     class:
         media: Sonata\MediaBundle\Tests\App\Entity\Media
+        gallery: Sonata\MediaBundle\Tests\App\Entity\Gallery
+        gallery_has_media: Sonata\MediaBundle\Tests\App\Entity\GalleryHasMedia
+    force_disable_category: true
     default_context: default
     contexts:
         default:
