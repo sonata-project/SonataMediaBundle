@@ -17,7 +17,7 @@ use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\IdGenerator;
