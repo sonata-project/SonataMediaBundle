@@ -22,6 +22,7 @@ use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
+use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -112,7 +113,10 @@ class MediaBlockService extends AbstractBlockService
     }
 
     /**
-     * {@inheritdoc}
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
@@ -204,13 +208,73 @@ class MediaBlockService extends AbstractBlockService
     }
 
     /**
-     * {@inheritdoc}
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
     public function getBlockMetadata($code = null)
     {
         return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
+     */
+    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    {
+        $this->buildEditForm($formMapper, $block);
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function postPersist(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function postUpdate(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function preRemove(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
+    public function postRemove(BlockInterface $block)
+    {
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
+     */
+    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    {
     }
 
     /**
