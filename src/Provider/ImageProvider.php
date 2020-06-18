@@ -208,6 +208,16 @@ class ImageProvider extends FileProvider
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    public function getFormatsForContext(string $context): array
+    {
+        return array_filter($this->getFormats(), static function (string $providerFormat) use ($context): bool {
+            return 0 === strpos($providerFormat, $context);
+        }, ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function doTransform(MediaInterface $media): void

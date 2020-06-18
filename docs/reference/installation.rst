@@ -17,8 +17,37 @@ This bundle has optional dependencies of:
 
 So be sure you have installed those bundles before starting
 
-Installation
-------------
+Installation with Symfony Flex
+------------------------------
+
+If you are not using the DoctrineORM or MongoAdmin packages, retrieve the bundle directly with composer:
+
+.. code-block:: bash
+
+    composer require sonata-project/media-bundle
+
+If you picked Doctrine ORM, install the Sonata Media ORM pack:
+
+.. code-block:: bash
+
+    composer require sonata-project/media-orm-pack
+
+If you picked MongoAdmin, install the Sonata Media ODM pack:
+
+.. code-block:: bash
+
+    composer require sonata-project/media-odm-pack
+
+Now, you can build up your database:
+
+.. code-block:: bash
+
+    bin/console doctrine:schema:[create|update]
+
+Then you can visit your admin dashboard on http://my-server/admin/dashboard
+
+Installation without Symfony Flex
+---------------------------------
 
 Retrieve the bundle with composer:
 

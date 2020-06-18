@@ -18,6 +18,7 @@
             <constraint name="NotNull"/>
             <constraint name="NotBlank"/>
         </property>
+        <constraint name="Sonata\MediaBundle\Validator\Constraints\ImageUploadDimension"/>
     </class>
     <class name="Sonata\MediaBundle\Model\Gallery">
         <constraint name="Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat"/>

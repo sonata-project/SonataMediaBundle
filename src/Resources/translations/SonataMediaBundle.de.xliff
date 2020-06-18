@@ -579,6 +579,10 @@
                 <source>form.label_icon</source>
                 <target>Icon</target>
             </trans-unit>
+            <trans-unit id="error.image_too_small">
+                <source>error.image_too_small</source>
+                <target>Bild erfordert eine Mindestgröße von %min_width% x %min_height%</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
