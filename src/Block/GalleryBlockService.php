@@ -116,7 +116,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
@@ -232,7 +232,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
      */
     public function prePersist(BlockInterface $block)
     {
@@ -242,7 +242,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
      */
     public function preUpdate(BlockInterface $block)
     {
@@ -252,7 +252,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
     public function getBlockMetadata($code = null)
@@ -265,7 +265,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
     public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
@@ -276,7 +276,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
      */
     public function postPersist(BlockInterface $block)
     {
@@ -285,7 +285,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
      */
     public function postUpdate(BlockInterface $block)
     {
@@ -294,7 +294,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
      */
     public function preRemove(BlockInterface $block)
     {
@@ -303,7 +303,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
      */
     public function postRemove(BlockInterface $block)
     {
@@ -312,7 +312,7 @@ class GalleryBlockService extends AbstractBlockService
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0. You should use
+     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
