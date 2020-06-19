@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Exception\NoDriverException;
 
 /**
@@ -21,7 +20,7 @@ use Sonata\MediaBundle\Exception\NoDriverException;
  *
  * @author Andrey F. Mindubaev <covex.mobile@gmail.com>
  */
-final class NoDriverManager implements ManagerInterface
+final class NoDriverManager implements GalleryManagerInterface
 {
     public function getClass(): void
     {
@@ -84,6 +83,11 @@ final class NoDriverManager implements ManagerInterface
     }
 
     public function getConnection(): void
+    {
+        throw new NoDriverException();
+    }
+
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         throw new NoDriverException();
     }
