@@ -57,7 +57,8 @@
         "symfony/twig-bridge": "^4.3",
         "symfony/twig-bundle": "^4.3",
         "symfony/validator": "^4.3",
-        "twig/twig": "^2.10"
+        "twig/string-extra": "^3.0",
+        "twig/twig": "^2.12.1"
     },
     "conflict": {
         "doctrine/dbal": "<2.6.0",
@@ -99,7 +100,8 @@
         "sonata-project/notification-bundle": "If you want to generate thumbnails asynchronously.",
         "sonata-project/seo-bundle": "^2.1",
         "symfony/monolog-bundle": "If you want to log exceptions produced when dealing with images.",
-        "tilleuls/ckeditor-sonata-media-bundle": "^1.0"
+        "tilleuls/ckeditor-sonata-media-bundle": "^1.0",
+        "twig/extra-bundle": "Auto configures the Twig Intl extension"
     },
     "config": {
         "sort-packages": true
