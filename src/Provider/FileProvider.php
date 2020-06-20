@@ -315,9 +315,12 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
         if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getSize() ?: 0)) {
             $errorElement
-               ->with('binaryContent')
-                   ->addViolation('The file is too big, max size: '.ini_get('upload_max_filesize'))
-               ->end();
+                ->with('binaryContent')
+                    ->addViolation(
+                        'The file is too big, max size: %maxFileSize%',
+                        ['%maxFileSize%' => ini_get('upload_max_filesize')]
+                    )
+                ->end();
         }
 
         if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions, true)) {

@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.25.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.24.0...3.25.0) - 2020-06-19
+### Added
+- Add image size validation
+- Added support for `symfony/mime:^5.0`
+- adding `maxFileSize` as a parameter in the validation message
+
+### Changed
+- Changed the validation message for the validation rule
+
+### Fixed
+- Fix missing translation of gallery context
+- Removed all calls to container inside the `CleanMediaCommand`
+- Fix `bin/console lint:container` command and pass an object of class
+  `NoDriverManager` of the expected `GalleryManagerInterface` interface
+
+### Removed
+- remove SonataCoreBundle dependencies
+
 ## [3.24.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.23.1...3.24.0) - 2020-03-15
 ### Fixed
 - BlockBundle deprecations
