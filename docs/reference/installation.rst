@@ -64,6 +64,7 @@ Register these bundles in your ``bundles.php`` file::
         Sonata\MediaBundle\SonataMediaBundle::class => ['all' => true],
         Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['all' => true],
         JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
+        Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     ];
 
 Next, add the correct routing files:
