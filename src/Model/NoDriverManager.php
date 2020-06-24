@@ -20,7 +20,7 @@ use Sonata\MediaBundle\Exception\NoDriverException;
  *
  * @author Andrey F. Mindubaev <covex.mobile@gmail.com>
  */
-final class NoDriverManager implements GalleryManagerInterface
+final class NoDriverManager implements GalleryManagerInterface, MediaManagerInterface
 {
     public function getClass()
     {
