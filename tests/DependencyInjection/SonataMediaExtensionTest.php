@@ -23,7 +23,6 @@ use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Twig\Extra\String\StringExtension;
 
 class SonataMediaExtensionTest extends AbstractExtensionTestCase
 {
@@ -266,13 +265,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService('sonata.media.pool');
         $this->assertContainerBuilderHasAlias('%sonata.media.pool.class%', 'sonata.media.pool');
-    }
-
-    public function testLoadTwigStringExtension(): void
-    {
-        $this->load();
-
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(StringExtension::class, 'twig.extension');
     }
 
     protected function getMinimalConfiguration(): array
