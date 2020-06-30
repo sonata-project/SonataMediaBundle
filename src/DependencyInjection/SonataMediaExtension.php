@@ -23,7 +23,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Twig\Extra\String\StringExtension;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -123,8 +122,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $container->getDefinition('sonata.media.security.superadmin_strategy')
                 ->replaceArgument(2, $sonataRoles);
         }
-
-        $this->configureStringExtension($container);
 
         $this->configureFilesystemAdapter($container, $config);
         $this->configureCdnAdapter($container, $config);
@@ -543,15 +540,5 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         $container->setAlias('sonata.media.resizer.default', $config['resizers']['default']);
-    }
-
-    private function configureStringExtension(ContainerBuilder $container): void
-    {
-        if (!$container->hasDefinition('twig.extension.string') || !is_a($container->getDefinition('twig.extension.string')->getClass(), StringExtension::class)) {
-            $definition = new Definition(StringExtension::class);
-            $definition->addTag('twig.extension');
-
-            $container->setDefinition(StringExtension::class, $definition);
-        }
     }
 }
