@@ -23,6 +23,7 @@ use Sonata\MediaBundle\Form\Type\ApiGalleryItemType;
 use Sonata\MediaBundle\Form\Type\ApiGalleryType;
 use Sonata\MediaBundle\Form\Type\ApiMediaType;
 use Sonata\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -36,7 +37,7 @@ class SonataMediaBundle extends Bundle
         $container->addCompilerPass(new AddProviderCompilerPass());
         $container->addCompilerPass(new GlobalVariablesCompilerPass());
         $container->addCompilerPass(new ThumbnailCompilerPass());
-        $container->addCompilerPass(new TwigStringExtensionCompilerPass());
+        $container->addCompilerPass(new TwigStringExtensionCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
 
         $this->registerFormMapping();
     }

@@ -2,3 +2,7 @@ sonata_api_media:
     type: rest
     prefix: /api
     resource: "@SonataMediaBundle/Resources/config/routing/api.xml"
+
+test_page:
+    path: /u_truncate_test
+    controller: Sonata\MediaBundle\Tests\App\Controller\TruncateController:test
