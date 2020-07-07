@@ -8,10 +8,12 @@
             <argument type="service" id="form.factory"/>
             <argument>%sonata.media.admin.gallery_item.entity%</argument>
         </service>
+        <service id="Sonata\MediaBundle\Controller\Api\GalleryController" alias="sonata.media.controller.api.gallery" public="true"/>
         <service id="sonata.media.controller.api.media" class="Sonata\MediaBundle\Controller\Api\MediaController">
             <argument type="service" id="sonata.media.manager.media"/>
             <argument type="service" id="sonata.media.pool"/>
             <argument type="service" id="form.factory"/>
         </service>
+        <service id="Sonata\MediaBundle\Controller\Api\MediaController" alias="sonata.media.controller.api.media" public="true"/>
     </services>
 </container>
