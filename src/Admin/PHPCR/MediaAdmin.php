@@ -37,9 +37,6 @@ class MediaAdmin extends Admin
         $this->root = $root;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createQuery($context = 'list')
     {
         $query = $this->getModelManager()->createQuery($this->getClass(), 'a', $this->root);
@@ -51,17 +48,11 @@ class MediaAdmin extends Admin
         return $query;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function id($object)
     {
         return $this->getUrlsafeIdentifier($object);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         // TODO disabled filter due to no attached service for filter types: string, checkbox
@@ -73,9 +64,6 @@ class MediaAdmin extends Admin
 //        ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureRoutes(RouteCollection $collection)
     {
         // Allow path in id parameter

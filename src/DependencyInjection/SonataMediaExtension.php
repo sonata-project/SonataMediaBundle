@@ -36,9 +36,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
      */
     private $bundleConfigs;
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $processor = new Processor();

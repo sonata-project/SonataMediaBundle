@@ -23,18 +23,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FixMediaContextCommand extends ContainerAwareCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configure()
     {
         $this->setName('sonata:media:fix-media-context');
         $this->setDescription('Generate the default category for each media context');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         if (!$this->getContainer()->has('sonata.media.manager.category')) {

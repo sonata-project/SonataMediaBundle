@@ -41,9 +41,6 @@ class SyncThumbsCommand extends BaseCommand
      */
     protected $output;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure()
     {
         $this->setName('sonata:media:sync-thumbnails')
@@ -59,9 +56,6 @@ class SyncThumbsCommand extends BaseCommand
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');

@@ -36,9 +36,6 @@ class ThumbnailTokenParser extends AbstractTokenParser
         $this->extensionName = $extensionName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(Token $token)
     {
         $media = $this->parser->getExpressionParser()->parseExpression();
@@ -61,9 +58,6 @@ class ThumbnailTokenParser extends AbstractTokenParser
         return new ThumbnailNode($this->extensionName, $media, $format, $attributes, $token->getLine(), $this->getTag());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTag()
     {
         return 'thumbnail';

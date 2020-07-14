@@ -27,9 +27,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class AddProviderCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container)
     {
         $config = $this->getExtensionConfig($container);

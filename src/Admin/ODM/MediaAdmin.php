@@ -21,9 +21,6 @@ use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
  */
 class MediaAdmin extends Admin
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper

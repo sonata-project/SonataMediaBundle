@@ -60,9 +60,6 @@ class CleanMediaCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure()
     {
         $this->setName('sonata:media:clean-uploads')
@@ -70,9 +67,6 @@ class CleanMediaCommand extends Command
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Execute the cleanup as a dry run. This doesn\'t remove any files');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dryRun = (bool) $input->getOption('dry-run');

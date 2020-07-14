@@ -54,9 +54,6 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         $this->settings = $settings;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get(MediaInterface $media, $filename)
     {
         return array_replace_recursive(

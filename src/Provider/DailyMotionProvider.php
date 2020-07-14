@@ -21,9 +21,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class DailyMotionProvider extends BaseVideoProvider
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         // documentation : http://www.dailymotion.com/en/doc/api/player
@@ -89,17 +86,11 @@ class DailyMotionProvider extends BaseVideoProvider
         return $params;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderMetadata()
     {
         return new Metadata($this->getName(), $this->getName().'.description', 'bundles/sonatamedia/dailymotion-icon.png', 'SonataMediaBundle');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = false)
     {
         $url = sprintf('http://www.dailymotion.com/services/oembed?url=%s&format=json', $this->getReferenceUrl($media));
@@ -124,9 +115,6 @@ class DailyMotionProvider extends BaseVideoProvider
         $media->setWidth($metadata['width']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
@@ -153,9 +141,6 @@ class DailyMotionProvider extends BaseVideoProvider
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doTransform(MediaInterface $media)
     {
         $this->fixBinaryContent($media);

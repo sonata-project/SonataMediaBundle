@@ -29,9 +29,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     protected $rootCategories;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents()
     {
         return [
@@ -50,9 +47,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         $this->rootCategories = null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
         $em = $args->getEntityManager();
@@ -63,9 +57,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getMedia(EventArgs $args)
     {
         $media = $args->getEntity();

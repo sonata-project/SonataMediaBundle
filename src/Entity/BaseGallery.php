@@ -21,9 +21,6 @@ use Sonata\MediaBundle\Model\Gallery;
  */
 abstract class BaseGallery extends Gallery
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __construct()
     {
         $this->galleryHasMedias = new ArrayCollection();

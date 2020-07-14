@@ -30,9 +30,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class SecurityContextCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container)
     {
         // Prefer the security.authorization_checker service

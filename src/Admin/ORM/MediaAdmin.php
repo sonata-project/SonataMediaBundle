@@ -23,9 +23,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class MediaAdmin extends Admin
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $options = [

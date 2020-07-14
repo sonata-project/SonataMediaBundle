@@ -22,9 +22,6 @@ use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
  */
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents()
     {
         return [
@@ -37,9 +34,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
         /* @var $args \Doctrine\Common\Persistence\Event\LifecycleEventArgs */
@@ -51,9 +45,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getMedia(EventArgs $args)
     {
         return $args->getObject();

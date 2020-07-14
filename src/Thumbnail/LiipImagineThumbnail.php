@@ -51,9 +51,6 @@ class LiipImagineThumbnail implements ThumbnailInterface
         $this->cacheManager = $cacheManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         $path = $provider->getReferenceImage($media);
@@ -76,9 +73,6 @@ class LiipImagineThumbnail implements ThumbnailInterface
         return $path;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_REFERENCE !== $format) {
@@ -90,17 +84,11 @@ class LiipImagineThumbnail implements ThumbnailInterface
         return $path;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(MediaProviderInterface $provider, MediaInterface $media)
     {
         // nothing to generate, as generated on demand
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
         // feature not available

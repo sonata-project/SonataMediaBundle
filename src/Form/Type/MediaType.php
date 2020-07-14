@@ -56,9 +56,6 @@ class MediaType extends AbstractType implements LoggerAwareInterface
         $this->logger = new NullLogger();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, [
@@ -87,9 +84,6 @@ class MediaType extends AbstractType implements LoggerAwareInterface
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['provider'] = $options['provider'];
@@ -106,9 +100,6 @@ class MediaType extends AbstractType implements LoggerAwareInterface
         $this->configureOptions($resolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -125,17 +116,11 @@ class MediaType extends AbstractType implements LoggerAwareInterface
             ->setAllowedValues('context', array_keys($this->pool->getContexts()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return FormType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'sonata_media_type';
