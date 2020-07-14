@@ -4,6 +4,11 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Commands
+
+Command classes were updated to inherit from `Command` instead of deprecated `ContainerAwareCommand`. Direct access to container will
+no longer be possible. Services that were retrieved from the DIC MUST be injected instead.
+
 ### SonataEasyExtends is deprecated
 
 Registering `SonataEasyExtendsBundle` bundle is deprecated, it SHOULD NOT be registered.
@@ -25,6 +30,7 @@ UPGRADE FROM 3.6 to 3.7
 =======================
 
 ### Doctrine schema update for GalleryHasMedia
+
 Doctrine ORM join columns from GalleryHasMedia entity towards both Gallery and Media entities has been changed. Now
 they include the `onDelete="CASCADE"` option: this allows to delete a media if included in a gallery (and vice-versa).
 You should upgrade your database in a safe way after upgrading your vendors.

@@ -14,15 +14,42 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Command;
 
 use Sonata\ClassificationBundle\Model\ContextInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Sonata\ClassificationBundle\Model\ContextManagerInterface;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class FixMediaContextCommand extends ContainerAwareCommand
+class FixMediaContextCommand extends Command
 {
+    /**
+     * @var Pool
+     */
+    private $mediaPool;
+
+    /**
+     * @var CategoryManagerInterface|null
+     */
+    private $categoryManager;
+
+    /**
+     * @var ContextManagerInterface|null
+     */
+    private $contextManager;
+
+    public function __construct(Pool $mediaPool, ?CategoryManagerInterface $categoryManager = null, ?ContextManagerInterface $contextManager = null)
+    {
+        parent::__construct();
+
+        $this->mediaPool = $mediaPool;
+        $this->categoryManager = $categoryManager;
+        $this->contextManager = $contextManager;
+    }
+
     public function configure()
     {
         $this->setName('sonata:media:fix-media-context');
@@ -31,41 +58,40 @@ class FixMediaContextCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->getContainer()->has('sonata.media.manager.category')) {
-            throw new \LogicException('The classification feature is disabled.');
+        if (null === $this->categoryManager || null === $this->contextManager) {
+            throw new \LogicException(
+                'This command could not be executed since some of its dependencies is missing.'
+                .' Are the services "sonata.media.manager.category" and "sonata.classification.manager.context" available?'
+            );
         }
 
-        $pool = $this->getContainer()->get('sonata.media.pool');
-        $contextManager = $this->getContainer()->get('sonata.classification.manager.context');
-        $categoryManager = $this->getContainer()->get('sonata.media.manager.category');
-
-        foreach ($pool->getContexts() as $context => $contextAttrs) {
+        foreach ($this->mediaPool->getContexts() as $context => $contextAttrs) {
             /** @var ContextInterface $defaultContext */
-            $defaultContext = $contextManager->findOneBy([
+            $defaultContext = $this->contextManager->findOneBy([
                 'id' => $context,
             ]);
 
             if (!$defaultContext) {
                 $output->writeln(sprintf(" > default context for '%s' is missing, creating one", $context));
-                $defaultContext = $contextManager->create();
+                $defaultContext = $this->contextManager->create();
                 $defaultContext->setId($context);
                 $defaultContext->setName(ucfirst($context));
                 $defaultContext->setEnabled(true);
 
-                $contextManager->save($defaultContext);
+                $this->contextManager->save($defaultContext);
             }
 
-            $defaultCategory = $categoryManager->getRootCategory($defaultContext);
+            $defaultCategory = $this->categoryManager->getRootCategory($defaultContext);
 
             if (!$defaultCategory) {
                 $output->writeln(sprintf(" > default category for '%s' is missing, creating one", $context));
-                $defaultCategory = $categoryManager->create();
+                $defaultCategory = $this->categoryManager->create();
                 $defaultCategory->setContext($defaultContext);
                 $defaultCategory->setName(ucfirst($context));
                 $defaultCategory->setEnabled(true);
                 $defaultCategory->setPosition(0);
 
-                $categoryManager->save($defaultCategory);
+                $this->categoryManager->save($defaultCategory);
             }
         }
 

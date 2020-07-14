@@ -25,8 +25,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  * This command can be used to re-generate the thumbnails for all uploaded medias.
  *
  * Useful if you have existing media content and added new formats.
- */
-/**
+ *
  * @final since sonata-project/media-bundle 3.21.0
  */
 class SyncThumbsCommand extends BaseCommand
