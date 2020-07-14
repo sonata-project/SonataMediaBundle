@@ -46,9 +46,6 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get(MediaInterface $media, $filename)
     {
         //get adapter for current media

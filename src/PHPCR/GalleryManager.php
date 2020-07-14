@@ -34,9 +34,6 @@ class GalleryManager extends BaseDocumentManager implements GalleryManagerInterf
         parent::save($gallery);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         throw new \RuntimeException('Not Implemented yet');

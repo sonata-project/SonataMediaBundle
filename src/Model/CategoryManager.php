@@ -32,57 +32,36 @@ final class CategoryManager implements CategoryManagerInterface
         $this->categoryManager = $categoryManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRootCategory($context): CategoryInterface
     {
         return $this->categoryManager->getRootCategory($context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRootCategories($loadChildren = true): iterable
     {
         return $this->categoryManager->getRootCategories($loadChildren);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function find($categoryId): ?CategoryInterface
     {
         return $this->categoryManager->find($categoryId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findBy(array $criteria): iterable
     {
         return $this->categoryManager->findBy($criteria);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findOneBy(array $criteria): ?CategoryInterface
     {
         return $this->categoryManager->findOneBy($criteria);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(): CategoryInterface
     {
         return $this->categoryManager->create();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save($category): void
     {
         $this->categoryManager->save($category);

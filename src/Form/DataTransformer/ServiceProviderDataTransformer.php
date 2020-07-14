@@ -39,17 +39,11 @@ class ServiceProviderDataTransformer implements DataTransformerInterface, Logger
         $this->logger = new NullLogger();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform($value)
     {
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform($media)
     {
         if (!$media instanceof MediaInterface) {

@@ -35,9 +35,6 @@ class PathTokenParser extends AbstractTokenParser
         $this->extensionName = $extensionName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(Token $token)
     {
         $media = $this->parser->getExpressionParser()->parseExpression();
@@ -51,9 +48,6 @@ class PathTokenParser extends AbstractTokenParser
         return new PathNode($this->extensionName, $media, $format, $token->getLine(), $this->getTag());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTag()
     {
         return 'path';

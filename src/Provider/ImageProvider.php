@@ -44,9 +44,6 @@ class ImageProvider extends FileProvider
         $this->imagineAdapter = $adapter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderMetadata()
     {
         return new Metadata(
@@ -58,9 +55,6 @@ class ImageProvider extends FileProvider
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         if (isset($options['srcset'], $options['picture'])) {
@@ -150,9 +144,6 @@ class ImageProvider extends FileProvider
         return array_merge($params, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = true)
     {
         try {
@@ -180,9 +171,6 @@ class ImageProvider extends FileProvider
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
@@ -199,9 +187,6 @@ class ImageProvider extends FileProvider
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
@@ -217,9 +202,6 @@ class ImageProvider extends FileProvider
         }, ARRAY_FILTER_USE_KEY);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doTransform(MediaInterface $media)
     {
         parent::doTransform($media);

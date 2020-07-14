@@ -48,9 +48,6 @@ class Replicate implements AdapterInterface, MetadataSupporter
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function delete($key)
     {
         $ok = true;
@@ -78,33 +75,21 @@ class Replicate implements AdapterInterface, MetadataSupporter
         return $ok;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function mtime($key)
     {
         return $this->master->mtime($key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function keys()
     {
         return $this->master->keys();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function exists($key)
     {
         return $this->master->exists($key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function write($key, $content, ?array $metadata = null)
     {
         $ok = true;
@@ -133,17 +118,11 @@ class Replicate implements AdapterInterface, MetadataSupporter
         return $ok && $return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read($key)
     {
         return $this->master->read($key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rename($key, $new)
     {
         $ok = true;
@@ -181,9 +160,6 @@ class Replicate implements AdapterInterface, MetadataSupporter
         return $this->master instanceof MetadataSupporter || $this->slave instanceof MetadataSupporter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setMetadata($key, $metadata)
     {
         if ($this->master instanceof MetadataSupporter) {
@@ -194,9 +170,6 @@ class Replicate implements AdapterInterface, MetadataSupporter
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMetadata($key)
     {
         if ($this->master instanceof MetadataSupporter) {
@@ -221,33 +194,21 @@ class Replicate implements AdapterInterface, MetadataSupporter
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createFile($key, Filesystem $filesystem)
     {
         return $this->master->createFile($key, $filesystem);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createFileStream($key, Filesystem $filesystem)
     {
         return $this->master->createFileStream($key, $filesystem);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function listDirectory($directory = '')
     {
         return $this->master->listDirectory($directory);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isDirectory($key)
     {
         return $this->master->isDirectory($key);

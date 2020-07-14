@@ -23,9 +23,6 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
  */
 class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function save($media, $andFlush = true)
     {
         /*
@@ -50,9 +47,6 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         $query = $this->getRepository()

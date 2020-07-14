@@ -124,57 +124,36 @@ class TestProvider extends BaseProvider
      */
     public $prevReferenceImage;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHelperProperties(MediaInterface $media, $format, $options = []): void
     {
         // TODO: Implement getHelperProperties() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postPersist(MediaInterface $media): void
     {
         // TODO: Implement postPersist() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildEditForm(FormMapper $form): void
     {
         $form->add('foo');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCreateForm(FormMapper $form): void
     {
         $form->add('foo');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postUpdate(MediaInterface $media): void
     {
         // TODO: Implement postUpdate() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAbsolutePath(MediaInterface $media): void
     {
         // TODO: Implement getAbsolutePath() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReferenceImage(MediaInterface $media): string
     {
         // A copy of the code from \Sonata\MediaBundle\Provider\FileProvider::getReferenceImage()
@@ -187,73 +166,46 @@ class TestProvider extends BaseProvider
         return $this->prevReferenceImage;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePrivateUrl(MediaInterface $media, $format): void
     {
         // TODO: Implement generatePrivateUrl() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePublicUrl(MediaInterface $media, $format): void
     {
         // TODO: Implement generatePublicUrl() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReferenceFile(MediaInterface $media): void
     {
         // TODO: Implement getReferenceFile() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function preUpdate(MediaInterface $media): void
     {
         // TODO: Implement preUpdate() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prePersist(MediaInterface $media): void
     {
         // TODO: Implement prePersist() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = []): void
     {
         // TODO: Implement getDownloadResponse() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildMediaType(FormBuilder $formBuilder): void
     {
         $formBuilder->add('foo');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = false): void
     {
         // TODO: Implement updateMetadata() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doTransform(MediaInterface $media): void
     {
         // TODO: Implement doTransform() method.

@@ -82,9 +82,6 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isGranted(MediaInterface $media, Request $request)
     {
         $times = $this->session->get($this->sessionKey, 0);
@@ -100,9 +97,6 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription()
     {
         return $this->translator->transChoice(

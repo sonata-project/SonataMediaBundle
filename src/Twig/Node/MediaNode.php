@@ -39,9 +39,6 @@ class MediaNode extends Node
         parent::__construct(['media' => $media, 'format' => $format, 'attributes' => $attributes], [], $lineno, $tag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function compile(Compiler $compiler)
     {
         $compiler

@@ -94,9 +94,6 @@ class MediaBlockService extends AbstractBlockService
         return $this->mediaAdmin;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -155,9 +152,6 @@ class MediaBlockService extends AbstractBlockService
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(BlockContextInterface $blockContext, ?Response $response = null)
     {
         // make sure we have a valid format
@@ -177,9 +171,6 @@ class MediaBlockService extends AbstractBlockService
         ], $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(BlockInterface $block)
     {
         $media = $block->getSetting('mediaId', null);
@@ -191,17 +182,11 @@ class MediaBlockService extends AbstractBlockService
         $block->setSetting('mediaId', $media);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prePersist(BlockInterface $block)
     {
         $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function preUpdate(BlockInterface $block)
     {
         $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);

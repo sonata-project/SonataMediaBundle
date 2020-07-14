@@ -35,9 +35,6 @@ class ApiMediaFile extends File
      */
     protected $resource;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct($handle)
     {
         if (!\is_resource($handle)) {
@@ -51,9 +48,6 @@ class ApiMediaFile extends File
         parent::__construct($meta['uri']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExtension()
     {
         return $this->extension ?: parent::getExtension();
@@ -67,9 +61,6 @@ class ApiMediaFile extends File
         $this->extension = $extension;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMimetype()
     {
         return $this->mimetype ?: parent::getMimeType();
@@ -83,9 +74,6 @@ class ApiMediaFile extends File
         $this->mimetype = $mimetype;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function guessExtension()
     {
         return $this->extension ?: parent::guessExtension();

@@ -51,9 +51,6 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     private $fileSystemLocal;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

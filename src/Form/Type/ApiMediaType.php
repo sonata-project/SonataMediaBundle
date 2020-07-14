@@ -52,9 +52,6 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
         $this->logger = new NullLogger();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $dataTransformer = new ProviderDataTransformer($this->mediaPool, $this->class, [
@@ -78,9 +75,6 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
         $this->configureOptions($resolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -89,17 +83,11 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ApiDoctrineMediaType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'sonata_media_api_form_media';

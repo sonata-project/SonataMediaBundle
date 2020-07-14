@@ -59,9 +59,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $this->metadata = $metadata;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderMetadata()
     {
         return new Metadata(
@@ -73,9 +70,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReferenceImage(MediaInterface $media)
     {
         return sprintf(
@@ -85,9 +79,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReferenceFile(MediaInterface $media)
     {
         return $this->getFilesystem()->get($this->getReferenceImage($media), true);
@@ -109,9 +100,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return $this->allowedMimeTypes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('name');
@@ -123,9 +111,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $formMapper->add('binaryContent', FileType::class, ['required' => false]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCreateForm(FormMapper $formMapper)
     {
         $formMapper->add('binaryContent', FileType::class, [
@@ -136,9 +121,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildMediaType(FormBuilder $formBuilder)
     {
         if ('api' === $formBuilder->getOption('context')) {
@@ -152,9 +134,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postPersist(MediaInterface $media)
     {
         if (null === $media->getBinaryContent()) {
@@ -168,9 +147,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $media->resetBinaryContent();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postUpdate(MediaInterface $media)
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
@@ -200,9 +176,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $media->resetBinaryContent();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = true)
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
@@ -217,9 +190,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $media->setSize($fileObject->getSize());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
@@ -232,9 +202,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         return array_merge([
@@ -244,9 +211,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         ], $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
@@ -256,9 +220,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         // build the default headers
@@ -296,9 +257,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return new BinaryFileResponse($filename, 200, $headers);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
@@ -379,9 +337,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doTransform(MediaInterface $media)
     {
         $this->fixBinaryContent($media);

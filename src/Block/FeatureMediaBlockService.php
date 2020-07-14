@@ -29,9 +29,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FeatureMediaBlockService extends MediaBlockService
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -49,9 +46,6 @@ class FeatureMediaBlockService extends MediaBlockService
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
@@ -97,9 +91,6 @@ class FeatureMediaBlockService extends MediaBlockService
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getStylesheets($media)
     {
         return [
@@ -107,9 +98,6 @@ class FeatureMediaBlockService extends MediaBlockService
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockMetadata($code = null)
     {
         return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [

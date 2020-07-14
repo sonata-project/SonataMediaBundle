@@ -27,9 +27,6 @@ abstract class BaseGallery extends Gallery
      */
     private $uuid;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct()
     {
         $this->galleryHasMedias = new ArrayCollection();
@@ -45,9 +42,6 @@ abstract class BaseGallery extends Gallery
         return $this->uuid;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);

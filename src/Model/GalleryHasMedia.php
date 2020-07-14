@@ -45,105 +45,66 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
      */
     protected $enabled = false;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString()
     {
         return $this->getGallery().' | '.$this->getMedia();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setCreatedAt(?\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEnabled()
     {
         return $this->enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setGallery(?GalleryInterface $gallery = null)
     {
         $this->gallery = $gallery;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGallery()
     {
         return $this->gallery;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setMedia(?MediaInterface $media = null)
     {
         $this->media = $media;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMedia()
     {
         return $this->media;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPosition($position)
     {
         $this->position = $position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPosition()
     {
         return $this->position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUpdatedAt(?\DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;

@@ -35,9 +35,6 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
         $this->twigExtension = $twigExtension;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAllowedTags()
     {
         return [
@@ -47,9 +44,6 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAllowedMethods()
     {
         return [
@@ -59,9 +53,6 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTokenParsers()
     {
         return [

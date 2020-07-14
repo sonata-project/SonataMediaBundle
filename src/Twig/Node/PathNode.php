@@ -39,9 +39,6 @@ class PathNode extends Node
         parent::__construct(['media' => $media, 'format' => $format], [], $lineno, $tag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function compile(Compiler $compiler)
     {
         $compiler

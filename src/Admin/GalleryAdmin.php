@@ -45,9 +45,6 @@ class GalleryAdmin extends AbstractAdmin
         $this->pool = $pool;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prePersist($gallery)
     {
         $parameters = $this->getPersistentParameters();
@@ -55,17 +52,11 @@ class GalleryAdmin extends AbstractAdmin
         $gallery->setContext($parameters['context']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postUpdate($gallery)
     {
         $gallery->reorderGalleryHasMedia();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPersistentParameters()
     {
         $parameters = parent::getPersistentParameters();
@@ -79,9 +70,6 @@ class GalleryAdmin extends AbstractAdmin
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNewInstance()
     {
         $gallery = parent::getNewInstance();
@@ -93,9 +81,6 @@ class GalleryAdmin extends AbstractAdmin
         return $gallery;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         // define group zoning
@@ -144,9 +129,6 @@ class GalleryAdmin extends AbstractAdmin
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -157,9 +139,6 @@ class GalleryAdmin extends AbstractAdmin
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
