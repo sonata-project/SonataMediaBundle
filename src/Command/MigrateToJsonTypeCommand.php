@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Sonata\Doctrine\Model\ManagerInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,6 +25,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MigrateToJsonTypeCommand extends BaseCommand
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(ManagerInterface $mediaManager, Pool $pool, ?EntityManagerInterface $entityManager = null)
+    {
+        parent::__construct($mediaManager, $pool);
+
+        $this->entityManager = $entityManager;
+    }
+
     public function configure()
     {
         $this->setName('sonata:media:migrate-json');
@@ -33,18 +48,24 @@ class MigrateToJsonTypeCommand extends BaseCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        if (null === $this->entityManager) {
+            throw new \LogicException(
+                'This command could not be executed since one of its dependencies is missing.'
+                .' Is the service "doctrine.orm.entity_manager" available?'
+            );
+        }
+
         $count = 0;
         $table = $input->getOption('table');
         $column = $input->getOption('column');
         $columnId = $input->getOption('column_id');
-        $connection = $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection();
-        $medias = $connection->fetchAll("SELECT * FROM $table");
+        $medias = $this->entityManager->getConnection()->fetchAll("SELECT * FROM $table");
 
         foreach ($medias as $media) {
             // if the row need to migrate
             if (0 !== strpos($media[$column], '{') && '[]' !== $media[$column]) {
                 $media[$column] = json_encode(unserialize($media[$column]));
-                $connection->update($table, [$column => $media[$column]], [$columnId => $media[$columnId]]);
+                $this->entityManager->getConnection()->update($table, [$column => $media[$column]], [$columnId => $media[$columnId]]);
                 ++$count;
             }
         }

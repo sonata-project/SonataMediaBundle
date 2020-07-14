@@ -66,22 +66,15 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->container = new Container();
+        $this->mediaManager = $this->createStub(MediaManagerInterface::class);
+        $this->pool = $this->createStub(Pool::class);
 
-        $this->command = new RemoveThumbsCommand();
-        $this->command->setContainer($this->container);
+        $this->command = new RemoveThumbsCommand($this->mediaManager, $this->pool);
 
         $this->application = new Application();
         $this->application->add($this->command);
 
         $this->tester = new CommandTester($this->application->find('sonata:media:remove-thumbnails'));
-
-        $this->pool = $this->createMock(Pool::class);
-
-        $this->mediaManager = $this->createMock(MediaManagerInterface::class);
-
-        $this->container->set('sonata.media.pool', $this->pool);
-        $this->container->set('sonata.media.manager.media', $this->mediaManager);
     }
 
     public function testExecuteWithoutArguments(): void

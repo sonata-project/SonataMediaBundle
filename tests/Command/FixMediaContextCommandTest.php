@@ -54,34 +54,32 @@ class FixMediaContextCommandTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->container = new Container();
+        $this->pool = $this->createMock(Pool::class);
+        $this->contextManager = $this->createMock(ContextManagerInterface::class);
+        $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
 
-        $this->command = new FixMediaContextCommand();
-        $this->command->setContainer($this->container);
+        $this->command = new FixMediaContextCommand($this->pool, $this->categoryManager, $this->contextManager);
 
         $this->application = new Application();
         $this->application->add($this->command);
 
         $this->tester = new CommandTester($this->application->find('sonata:media:fix-media-context'));
-
-        $this->pool = $pool = $this->createMock(Pool::class);
-
-        $this->contextManager = $contextManager = $this->createMock(ContextManagerInterface::class);
-
-        $this->categoryManager = $categoryManager = $this->createMock(CategoryManagerInterface::class);
-
-        $this->container->set('sonata.media.pool', $pool);
-        $this->container->set('sonata.classification.manager.context', $contextManager);
-        $this->container->set('sonata.media.manager.category', $categoryManager);
     }
 
     public function testExecuteWithDisabledClassification(): void
     {
-        $this->container->set('sonata.media.manager.category', null);
+        $pool = $this->createStub(Pool::class);
+
+        $command = new FixMediaContextCommand($pool, null, null);
+
+        $application = new Application();
+        $application->add($command);
 
         $this->expectException(\LogicException::class);
 
-        $this->tester->execute(['command' => $this->command->getName()]);
+        $tester = new CommandTester($application->find('sonata:media:fix-media-context'));
+
+        $tester->execute(['command' => $command->getName()]);
     }
 
     public function testExecuteWithExisting(): void

@@ -27,7 +27,7 @@ final class CategoryManager implements CategoryManagerInterface
      */
     private $categoryManager;
 
-    public function __construct(ManagerInterface $categoryManager)
+    public function __construct(?ManagerInterface $categoryManager = null)
     {
         $this->categoryManager = $categoryManager;
     }
