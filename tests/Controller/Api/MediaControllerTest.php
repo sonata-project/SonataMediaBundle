@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
-use FOS\RestBundle\Request\ParamFetcher;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\Api\MediaController;
@@ -41,7 +41,7 @@ class MediaControllerTest extends TestCase
 
         $mController = $this->createMediaController($mManager);
 
-        $paramFetcher = $this->createMock(ParamFetcher::class);
+        $paramFetcher = $this->createMock(ParamFetcherInterface::class);
         $paramFetcher->expects($this->exactly(3))->method('get');
         $paramFetcher->expects($this->once())->method('all')->willReturn([]);
 

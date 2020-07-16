@@ -17,7 +17,6 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use FOS\RestBundle\FOSRestBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Nelmio\ApiDocBundle\NelmioApiDocBundle;
-use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -50,7 +49,6 @@ final class AppKernel extends Kernel
             new JMSSerializerBundle(),
             new DoctrineBundle(),
             new NelmioApiDocBundle(),
-            new SensioFrameworkExtraBundle(),
         ];
     }
 
