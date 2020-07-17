@@ -69,7 +69,7 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createStub(MediaInterface::class);
@@ -108,7 +108,7 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createStub(MediaInterface::class);
@@ -147,7 +147,7 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createStub(MediaInterface::class);
@@ -209,7 +209,7 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createStub(MediaInterface::class);
@@ -250,7 +250,7 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createStub(MediaInterface::class);

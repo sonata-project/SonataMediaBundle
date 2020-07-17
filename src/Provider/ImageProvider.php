@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class ImageProvider extends FileProvider
+class ImageProvider extends FileProvider implements ImageProviderInterface
 {
     /**
      * @var ImagineInterface
