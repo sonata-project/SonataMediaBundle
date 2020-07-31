@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns="http://symfony.com/schema/routing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
+    <route id="get_galleries" path="/galleries.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\GalleryController::getGalleriesAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="get_gallery" path="/galleries/{id}.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\GalleryController::getGalleryAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="get_gallery_medias" path="/galleries/{id}/medias.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\GalleryController::getGalleryMediasAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="get_gallery_galleryhasmedias" path="/galleries/{id}/galleryhasmedias.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\GalleryController::getGalleryGalleryhasmediasAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="post_gallery" path="/galleries.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\GalleryController::postGalleryAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="put_gallery" path="/galleries/{id}.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putGalleryAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="post_gallery_media_galleryhasmedia" path="/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\GalleryController::postGalleryMediaGalleryhasmediaAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="put_gallery_media_galleryhasmedia" path="/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putGalleryMediaGalleryhasmediaAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="delete_gallery_media_galleryhasmedia" path="/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\GalleryController::deleteGalleryMediaGalleryhasmediaAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="delete_gallery" path="/galleries/{id}.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\GalleryController::deleteGalleryAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+</routes>
