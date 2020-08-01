@@ -221,7 +221,7 @@ Configure SonataMediaBundle to use the newly generated classes:
             class:
                 media: App\Application\Sonata\MediaBundle\Entity\Media
                 gallery: App\Application\Sonata\MediaBundle\Entity\Gallery
-                gallery_has_media: App\Application\Sonata\MediaBundle\Entity\GalleryHasMedia
+                gallery_item: App\Application\Sonata\MediaBundle\Entity\GalleryItem
 
 If you are not using auto-mapping in doctrine you will have to add it there
 too:

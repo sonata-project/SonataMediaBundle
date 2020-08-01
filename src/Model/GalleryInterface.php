@@ -110,8 +110,7 @@ interface GalleryInterface
     public function getGalleryItems();
 
     /**
-     * @deprecated implement addGalleryHasMedia method instead, it will be provided with the next major release
-     * NEXT_MAJOR: remove this method
+     * @return void
      */
     public function addGalleryItem(GalleryItemInterface $galleryItem);
 }
