@@ -26,12 +26,12 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * @var AdapterInterface
      */
-    protected $master;
+    protected $primary;
 
     /**
      * @var AdapterInterface
      */
-    protected $slave;
+    protected $secondary;
 
     /**
      * @var LoggerInterface
@@ -41,10 +41,10 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * @param LoggerInterface $logger
      */
-    public function __construct(AdapterInterface $master, AdapterInterface $slave, ?LoggerInterface $logger = null)
+    public function __construct(AdapterInterface $primary, AdapterInterface $secondary, ?LoggerInterface $logger = null)
     {
-        $this->master = $master;
-        $this->slave = $slave;
+        $this->primary = $primary;
+        $this->secondary = $secondary;
         $this->logger = $logger;
     }
 
@@ -53,7 +53,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
         $ok = true;
 
         try {
-            $this->slave->delete($key);
+            $this->secondary->delete($key);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
@@ -63,7 +63,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
         }
 
         try {
-            $this->master->delete($key);
+            $this->primary->delete($key);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
@@ -77,17 +77,17 @@ class Replicate implements AdapterInterface, MetadataSupporter
 
     public function mtime($key)
     {
-        return $this->master->mtime($key);
+        return $this->primary->mtime($key);
     }
 
     public function keys()
     {
-        return $this->master->keys();
+        return $this->primary->keys();
     }
 
     public function exists($key)
     {
-        return $this->master->exists($key);
+        return $this->primary->exists($key);
     }
 
     public function write($key, $content, ?array $metadata = null)
@@ -96,7 +96,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
         $return = false;
 
         try {
-            $return = $this->master->write($key, $content, $metadata);
+            $return = $this->primary->write($key, $content, $metadata);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
@@ -106,7 +106,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
         }
 
         try {
-            $return = $this->slave->write($key, $content, $metadata);
+            $return = $this->secondary->write($key, $content, $metadata);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
@@ -120,7 +120,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
 
     public function read($key)
     {
-        return $this->master->read($key);
+        return $this->primary->read($key);
     }
 
     public function rename($key, $new)
@@ -128,7 +128,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
         $ok = true;
 
         try {
-            $this->master->rename($key, $new);
+            $this->primary->rename($key, $new);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to rename %s, error: %s', $key, $e->getMessage()));
@@ -138,7 +138,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
         }
 
         try {
-            $this->slave->rename($key, $new);
+            $this->secondary->rename($key, $new);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to rename %s, error: %s', $key, $e->getMessage()));
@@ -157,25 +157,25 @@ class Replicate implements AdapterInterface, MetadataSupporter
      */
     public function supportsMetadata()
     {
-        return $this->master instanceof MetadataSupporter || $this->slave instanceof MetadataSupporter;
+        return $this->primary instanceof MetadataSupporter || $this->secondary instanceof MetadataSupporter;
     }
 
     public function setMetadata($key, $metadata)
     {
-        if ($this->master instanceof MetadataSupporter) {
-            $this->master->setMetadata($key, $metadata);
+        if ($this->primary instanceof MetadataSupporter) {
+            $this->primary->setMetadata($key, $metadata);
         }
-        if ($this->slave instanceof MetadataSupporter) {
-            $this->slave->setMetadata($key, $metadata);
+        if ($this->secondary instanceof MetadataSupporter) {
+            $this->secondary->setMetadata($key, $metadata);
         }
     }
 
     public function getMetadata($key)
     {
-        if ($this->master instanceof MetadataSupporter) {
-            return $this->master->getMetadata($key);
-        } elseif ($this->slave instanceof MetadataSupporter) {
-            return $this->slave->getMetadata($key);
+        if ($this->primary instanceof MetadataSupporter) {
+            return $this->primary->getMetadata($key);
+        } elseif ($this->secondary instanceof MetadataSupporter) {
+            return $this->secondary->getMetadata($key);
         }
 
         return [];
@@ -189,28 +189,28 @@ class Replicate implements AdapterInterface, MetadataSupporter
     public function getAdapterClassNames()
     {
         return [
-            \get_class($this->master),
-            \get_class($this->slave),
+            \get_class($this->primary),
+            \get_class($this->secondary),
         ];
     }
 
     public function createFile($key, Filesystem $filesystem)
     {
-        return $this->master->createFile($key, $filesystem);
+        return $this->primary->createFile($key, $filesystem);
     }
 
     public function createFileStream($key, Filesystem $filesystem)
     {
-        return $this->master->createFileStream($key, $filesystem);
+        return $this->primary->createFileStream($key, $filesystem);
     }
 
     public function listDirectory($directory = '')
     {
-        return $this->master->listDirectory($directory);
+        return $this->primary->listDirectory($directory);
     }
 
     public function isDirectory($key)
     {
-        return $this->master->isDirectory($key);
+        return $this->primary->isDirectory($key);
     }
 }
