@@ -144,13 +144,13 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * Reorders $galleryHasMedia items based on their position.
+     * Reorders $galleryItems based on their position.
      */
-    public function reorderGalleryHasMedia()
+    public function reorderGalleryItems()
     {
-        if ($this->getGalleryHasMedias() && $this->getGalleryHasMedias() instanceof \IteratorAggregate) {
+        if ($this->getGalleryItems() && $this->getGalleryItems() instanceof \IteratorAggregate) {
             // reorder
-            $iterator = $this->getGalleryHasMedias()->getIterator();
+            $iterator = $this->getGalleryItems()->getIterator();
 
             $iterator->uasort(static function ($a, $b) {
                 if ($a->getPosition() === $b->getPosition()) {
@@ -160,7 +160,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
                 return $a->getPosition() > $b->getPosition() ? 1 : -1;
             });
 
-            $this->setGalleryHasMedias($iterator);
+            $this->setGalleryItems($iterator);
         }
     }
 }

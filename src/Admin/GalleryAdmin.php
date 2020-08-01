@@ -54,7 +54,7 @@ class GalleryAdmin extends AbstractAdmin
 
     public function postUpdate($gallery)
     {
-        $gallery->reorderGalleryHasMedia();
+        $gallery->reorderGalleryItems();
     }
 
     public function getPersistentParameters()
