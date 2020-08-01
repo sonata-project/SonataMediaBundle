@@ -45,9 +45,6 @@ class MediaHelper extends Helper
         $this->templating = $templating;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'sonata_media';

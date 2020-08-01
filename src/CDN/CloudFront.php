@@ -90,25 +90,16 @@ class CloudFront implements CDNInterface
         $this->distributionId = $distributionId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath($relativePath, $isFlushable = false)
     {
         return sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flushByString($string)
     {
         return $this->flushPaths([$string]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flush($string)
     {
         return $this->flushPaths([$string]);

@@ -25,17 +25,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'Breadcrumb View: Media Gallery';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureSettings(OptionsResolver $resolver): void
     {
         parent::configureSettings($resolver);
@@ -45,9 +39,6 @@ class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockServic
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getMenu(BlockContextInterface $blockContext)
     {
         $menu = $this->getRootMenu($blockContext);

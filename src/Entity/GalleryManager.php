@@ -36,9 +36,6 @@ class GalleryManager extends BaseEntityManager implements GalleryManagerInterfac
         parent::save($gallery);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         $query = $this->getRepository()

@@ -25,17 +25,11 @@ class ValidMediaFormat extends Constraint
 {
     public $message = 'The format is not valid';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return 'sonata.media.validator.format';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;

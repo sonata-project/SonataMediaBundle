@@ -66,9 +66,6 @@ class FormatThumbnail implements ThumbnailInterface
         return $this->resizers[$id];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
@@ -80,9 +77,6 @@ class FormatThumbnail implements ThumbnailInterface
         return $path;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
@@ -98,9 +92,6 @@ class FormatThumbnail implements ThumbnailInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(MediaProviderInterface $provider, MediaInterface $media): void
     {
         if (!$provider->requireThumbnails()) {
@@ -130,9 +121,6 @@ class FormatThumbnail implements ThumbnailInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void
     {
         if (null === $formats) {

@@ -92,9 +92,6 @@ class GalleryBlockService extends AbstractBlockService
         return $this->galleryAdmin;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -195,9 +192,6 @@ class GalleryBlockService extends AbstractBlockService
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(BlockContextInterface $blockContext, ?Response $response = null)
     {
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
@@ -210,9 +204,6 @@ class GalleryBlockService extends AbstractBlockService
         ], $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(BlockInterface $block): void
     {
         $gallery = $block->getSetting('galleryId');

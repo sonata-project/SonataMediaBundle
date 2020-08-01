@@ -52,9 +52,6 @@ class FixMediaContextCommandTest extends TestCase
 
     private $categoryManager;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->container = new Container();

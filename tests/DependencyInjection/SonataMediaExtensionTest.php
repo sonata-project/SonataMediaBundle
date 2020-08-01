@@ -26,9 +26,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class SonataMediaExtensionTest extends AbstractExtensionTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -290,9 +287,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getContainerExtensions(): array
     {
         return [

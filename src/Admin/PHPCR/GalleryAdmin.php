@@ -37,9 +37,6 @@ class GalleryAdmin extends BaseGalleryAdmin
         $this->root = $root;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createQuery($context = 'list')
     {
         $query = $this->getModelManager()->createQuery($this->getClass(), 'a', $this->root);
@@ -51,17 +48,11 @@ class GalleryAdmin extends BaseGalleryAdmin
         return $query;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function id($object)
     {
         return $this->getUrlsafeIdentifier($object);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         // TODO disabled filter due to no attached service for filter types: string, checkbox
@@ -71,9 +62,6 @@ class GalleryAdmin extends BaseGalleryAdmin
 //            ->add('context')
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureRoutes(RouteCollection $collection): void
     {
         // Allow path in id parameter

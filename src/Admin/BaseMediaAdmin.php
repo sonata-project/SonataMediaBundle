@@ -53,18 +53,12 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $this->categoryManager = $categoryManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prePersist($media): void
     {
         $parameters = $this->getPersistentParameters();
         $media->setContext($parameters['context']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPersistentParameters()
     {
         $parameters = parent::getPersistentParameters();
@@ -109,9 +103,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNewInstance()
     {
         $media = parent::getNewInstance();
@@ -146,9 +137,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return $this->pool;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getObjectMetadata($object)
     {
         $provider = $this->pool->getProvider($object->getProviderName());
@@ -161,9 +149,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
@@ -174,9 +159,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $media = $this->getSubject();

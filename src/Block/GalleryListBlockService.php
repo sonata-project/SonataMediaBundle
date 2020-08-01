@@ -126,9 +126,6 @@ class GalleryListBlockService extends AbstractBlockService
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(BlockContextInterface $blockContext, ?Response $response = null)
     {
         $context = $blockContext->getBlock()->getSetting('context');
@@ -155,9 +152,6 @@ class GalleryListBlockService extends AbstractBlockService
         ], $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -32,18 +32,12 @@ abstract class BaseMedia extends Media
         return $this->uuid;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prePersist(): void
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function preUpdate(): void
     {
         $this->updatedAt = new \DateTime();

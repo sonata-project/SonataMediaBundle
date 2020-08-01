@@ -54,9 +54,6 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
         $this->mediaManager = $mediaManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTokenParsers()
     {
         return [
@@ -66,9 +63,6 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function initRuntime(Environment $environment): void
     {
         $this->environment = $environment;

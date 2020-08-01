@@ -48,9 +48,6 @@ class CreateThumbnailConsumer implements ConsumerInterface
         $this->container = $container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(ConsumerEvent $event): void
     {
         $media = $this->mediaManager->findOneBy([

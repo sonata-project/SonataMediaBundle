@@ -23,9 +23,6 @@ use Sonata\SeoBundle\Block\Breadcrumb\BaseBreadcrumbMenuBlockService;
  */
 abstract class BaseGalleryBreadcrumbBlockService extends BaseBreadcrumbMenuBlockService
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getRootMenu(BlockContextInterface $blockContext)
     {
         $menu = parent::getRootMenu($blockContext);

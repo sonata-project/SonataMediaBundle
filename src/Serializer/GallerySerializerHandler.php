@@ -22,9 +22,6 @@ use Sonata\Form\Serializer\BaseSerializerHandler;
  */
 class GallerySerializerHandler extends BaseSerializerHandler
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getType()
     {
         return 'sonata_media_gallery_id';

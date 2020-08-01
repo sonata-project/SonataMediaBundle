@@ -62,9 +62,6 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
      */
     private $mediaManager;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
