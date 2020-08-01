@@ -49,9 +49,6 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
         $this->logger = new NullLogger();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform($value)
     {
         if (null === $value) {
@@ -61,9 +58,6 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform($media)
     {
         if (!$media instanceof MediaInterface) {

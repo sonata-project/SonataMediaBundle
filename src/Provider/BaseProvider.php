@@ -80,9 +80,6 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->thumbnail = $thumbnail;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     final public function transform(MediaInterface $media): void
     {
         if (null === $media->getBinaryContent()) {
@@ -112,49 +109,31 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addFormat($name, $format): void
     {
         $this->formats[$name] = $format;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormat($name)
     {
         return isset($this->formats[$name]) ? $this->formats[$name] : false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requireThumbnails()
     {
         return null !== $this->getResizer();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generateThumbnails(MediaInterface $media): void
     {
         $this->thumbnail->generate($this, $media);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function removeThumbnails(MediaInterface $media, $formats = null): void
     {
         $this->thumbnail->delete($this, $media, $formats);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormatName(MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_ADMIN === $format) {
@@ -173,17 +152,11 @@ abstract class BaseProvider implements MediaProviderInterface
         return $baseName.$format;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderMetadata()
     {
         return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-file']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function preRemove(MediaInterface $media): void
     {
         $hash = spl_object_hash($media);
@@ -194,9 +167,6 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postRemove(MediaInterface $media): void
     {
         $hash = spl_object_hash($media);
@@ -213,122 +183,77 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePath(MediaInterface $media)
     {
         return $this->pathGenerator->generatePath($media);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormats()
     {
         return $this->formats;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTemplates(array $templates): void
     {
         $this->templates = $templates;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTemplates()
     {
         return $this->templates;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTemplate($name)
     {
         return isset($this->templates[$name]) ? $this->templates[$name] : null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getResizer()
     {
         return $this->resizer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilesystem()
     {
         return $this->filesystem;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCdn()
     {
         return $this->cdn;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCdnPath($relativePath, $isFlushable)
     {
         return $this->getCdn()->getPath($relativePath, $isFlushable);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setResizer(ResizerInterface $resizer): void
     {
         $this->resizer = $resizer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prePersist(MediaInterface $media): void
     {
         $media->setCreatedAt(new \DateTime());
         $media->setUpdatedAt(new \DateTime());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function preUpdate(MediaInterface $media): void
     {
         $media->setUpdatedAt(new \DateTime());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(ErrorElement $errorElement, MediaInterface $media): void
     {
     }

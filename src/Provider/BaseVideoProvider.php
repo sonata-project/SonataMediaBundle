@@ -55,25 +55,16 @@ abstract class BaseVideoProvider extends BaseProvider
         $this->metadata = $metadata;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderMetadata()
     {
         return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-video-camera']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReferenceImage(MediaInterface $media)
     {
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReferenceFile(MediaInterface $media)
     {
         $key = $this->generatePrivateUrl($media, MediaProviderInterface::FORMAT_REFERENCE);
@@ -90,9 +81,6 @@ abstract class BaseVideoProvider extends BaseProvider
         return $referenceFile;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
         return $this->getCdn()->getPath(sprintf(
@@ -103,9 +91,6 @@ abstract class BaseVideoProvider extends BaseProvider
         ), $media->getCdnIsFlushable());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
         return sprintf(
@@ -116,9 +101,6 @@ abstract class BaseVideoProvider extends BaseProvider
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildEditForm(FormMapper $formMapper): void
     {
         $formMapper->add('name');
@@ -130,9 +112,6 @@ abstract class BaseVideoProvider extends BaseProvider
         $formMapper->add('binaryContent', TextType::class, ['required' => false]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCreateForm(FormMapper $formMapper): void
     {
         $formMapper->add('binaryContent', TextType::class, [
@@ -143,9 +122,6 @@ abstract class BaseVideoProvider extends BaseProvider
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildMediaType(FormBuilder $formBuilder): void
     {
         $formBuilder->add('binaryContent', TextType::class, [
@@ -153,17 +129,11 @@ abstract class BaseVideoProvider extends BaseProvider
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postUpdate(MediaInterface $media): void
     {
         $this->postPersist($media);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postPersist(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
@@ -175,9 +145,6 @@ abstract class BaseVideoProvider extends BaseProvider
         $media->resetBinaryContent();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function postRemove(MediaInterface $media): void
     {
     }

@@ -34,9 +34,6 @@ class FormatValidator extends ConstraintValidator
         $this->pool = $pool;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint): void
     {
         $formats = $this->pool->getFormatNamesByContext($value->getContext());

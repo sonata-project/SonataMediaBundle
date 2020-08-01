@@ -20,9 +20,6 @@ use Sonata\Doctrine\Document\BasePHPCRManager;
  */
 class MediaManager extends BasePHPCRManager
 {
-    /**
-     * {@inheritdoc}
-     */
     public function save($entity, $andFlush = true): void
     {
         // BC compatibility for $context parameter
@@ -43,9 +40,6 @@ class MediaManager extends BasePHPCRManager
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPager(array $criteria, $page, $limit = 10, array $sort = []): void
     {
         throw new \RuntimeException('Not Implemented yet');

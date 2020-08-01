@@ -27,9 +27,6 @@ class AddMassMediaCommand extends BaseCommand
      */
     protected $setters;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this->setName('sonata:media:add-multiple')
@@ -42,9 +39,6 @@ class AddMassMediaCommand extends BaseCommand
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $fp = $this->getFilePointer($input, $output);

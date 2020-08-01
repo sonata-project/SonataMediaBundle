@@ -53,9 +53,6 @@ class SimpleResizer implements ResizerInterface
         $this->metadata = $metadata;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resize(MediaInterface $media, File $in, File $out, $format, array $settings): void
     {
         if (!isset($settings['width']) && !isset($settings['height'])) {
@@ -71,9 +68,6 @@ class SimpleResizer implements ResizerInterface
         $out->setContent($content, $this->metadata->get($media, $out->getName()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBox(MediaInterface $media, array $settings)
     {
         $size = $media->getBox();

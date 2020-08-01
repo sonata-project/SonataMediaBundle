@@ -24,9 +24,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
  */
 class GalleryItemAdmin extends AbstractAdmin
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $link_parameters = [];
@@ -52,9 +49,6 @@ class GalleryItemAdmin extends AbstractAdmin
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper

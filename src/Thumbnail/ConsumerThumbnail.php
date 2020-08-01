@@ -68,25 +68,16 @@ class ConsumerThumbnail implements ThumbnailInterface
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         return $this->thumbnail->generatePrivateUrl($provider, $media, $format);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
     {
         return $this->thumbnail->generatePrivateUrl($provider, $media, $format);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(MediaProviderInterface $provider, MediaInterface $media): void
     {
         $backend = $this->backend;
@@ -114,9 +105,6 @@ class ConsumerThumbnail implements ThumbnailInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
         return $this->thumbnail->delete($provider, $media, $formats);

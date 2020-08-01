@@ -81,33 +81,21 @@ class PantherPortal implements CDNInterface
         $this->wsdl = $wsdl;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath($relativePath, $isFlushable)
     {
         return sprintf('%s/%s', $this->path, $relativePath);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flushByString($string): void
     {
         $this->flushPaths([$string]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flush($string): void
     {
         $this->flushPaths([$string]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flushPaths(array $paths): void
     {
         $result = $this->getClient()->flush($this->username, $this->password, 'paths', $this->siteId, implode("\n", $paths), true, false);
@@ -127,9 +115,6 @@ class PantherPortal implements CDNInterface
         $this->client = $client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFlushStatus($identifier): void
     {
         // nothing to do

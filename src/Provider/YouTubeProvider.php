@@ -43,9 +43,6 @@ class YouTubeProvider extends BaseVideoProvider
         $this->html5 = $html5;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderMetadata()
     {
         return new Metadata(
@@ -57,9 +54,6 @@ class YouTubeProvider extends BaseVideoProvider
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         // Override html5 value if $options['html5'] is a boolean
@@ -202,9 +196,6 @@ class YouTubeProvider extends BaseVideoProvider
         return $params;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = false): void
     {
         $url = sprintf('https://www.youtube.com/oembed?url=%s&format=json', $this->getReferenceUrl($media));
@@ -230,9 +221,6 @@ class YouTubeProvider extends BaseVideoProvider
         $media->setContentType('video/x-flv');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
@@ -263,9 +251,6 @@ class YouTubeProvider extends BaseVideoProvider
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doTransform(MediaInterface $media): void
     {
         $this->fixBinaryContent($media);

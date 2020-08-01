@@ -45,9 +45,6 @@ class RefreshMetadataCommand extends BaseCommand
      */
     private $input;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this->setName('sonata:media:refresh-metadata')
@@ -60,9 +57,6 @@ class RefreshMetadataCommand extends BaseCommand
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->quiet = $input->getOption('quiet');

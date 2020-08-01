@@ -46,9 +46,6 @@ class UpdateCdnStatusCommand extends BaseCommand
      */
     private $input;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this->setName('sonata:media:update-cdn-status')
@@ -61,9 +58,6 @@ class UpdateCdnStatusCommand extends BaseCommand
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->quiet = $input->getOption('quiet');

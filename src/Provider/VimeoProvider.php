@@ -21,9 +21,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class VimeoProvider extends BaseVideoProvider
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {
         // documentation : http://vimeo.com/api/docs/moogaloop
@@ -77,9 +74,6 @@ class VimeoProvider extends BaseVideoProvider
         return $params;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderMetadata()
     {
         return new Metadata(
@@ -91,9 +85,6 @@ class VimeoProvider extends BaseVideoProvider
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMetadata(MediaInterface $media, $force = false): void
     {
         $url = sprintf('https://vimeo.com/api/oembed.json?url=%s', $this->getReferenceUrl($media));
@@ -123,9 +114,6 @@ class VimeoProvider extends BaseVideoProvider
         $media->setContentType('video/x-flv');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
@@ -152,9 +140,6 @@ class VimeoProvider extends BaseVideoProvider
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doTransform(MediaInterface $media): void
     {
         $this->fixBinaryContent($media);

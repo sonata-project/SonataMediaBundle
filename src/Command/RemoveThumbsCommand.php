@@ -47,9 +47,6 @@ class RemoveThumbsCommand extends BaseCommand
      */
     protected $output;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this->setName('sonata:media:remove-thumbnails')
@@ -66,9 +63,6 @@ class RemoveThumbsCommand extends BaseCommand
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;

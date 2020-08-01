@@ -59,25 +59,16 @@ class SquareResizer implements ResizerInterface
         $this->metadata = $metadata;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAdapter()
     {
         return $this->adapter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAdapter(ImagineInterface $adapter): void
     {
         $this->adapter = $adapter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resize(MediaInterface $media, File $in, File $out, $format, array $settings): void
     {
         if (!isset($settings['width'])) {
@@ -118,9 +109,6 @@ class SquareResizer implements ResizerInterface
         $out->setContent($content, $this->metadata->get($media, $out->getName()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBox(MediaInterface $media, array $settings)
     {
         $size = $media->getBox();
