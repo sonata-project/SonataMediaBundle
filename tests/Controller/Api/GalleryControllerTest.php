@@ -99,7 +99,7 @@ class GalleryControllerTest extends TestCase
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertSame([$galleryItem], $gController->getGalleryGalleryItemAction(1));
+        $this->assertSame([$galleryItem], $gController->getGalleryGalleryItemsAction(1));
     }
 
     public function testGetGalleryMediaAction(): void

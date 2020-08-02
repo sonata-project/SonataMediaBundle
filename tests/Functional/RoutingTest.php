@@ -82,12 +82,12 @@ final class RoutingTest extends WebTestCase
         yield ['sonata_api_media_gallery_get_galleries', '/api/media/galleries.{_format}', ['GET']];
         yield ['sonata_api_media_gallery_get_gallery', '/api/media/galleries/{id}.{_format}', ['GET']];
         yield ['sonata_api_media_gallery_get_gallery_medias', '/api/media/galleries/{id}/medias.{_format}', ['GET']];
-        yield ['sonata_api_media_gallery_get_gallery_galleryhasmedias', '/api/media/galleries/{id}/galleryhasmedias.{_format}', ['GET']];
+        yield ['sonata_api_media_gallery_get_gallery_galleryitems', '/api/media/galleries/{id}/galleryitems.{_format}', ['GET']];
         yield ['sonata_api_media_gallery_post_gallery', '/api/media/galleries.{_format}', ['POST']];
         yield ['sonata_api_media_gallery_put_gallery', '/api/media/galleries/{id}.{_format}', ['PUT']];
-        yield ['sonata_api_media_gallery_post_gallery_media_galleryhasmedia', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}', ['POST']];
-        yield ['sonata_api_media_gallery_put_gallery_media_galleryhasmedia', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}', ['PUT']];
-        yield ['sonata_api_media_gallery_delete_gallery_media_galleryhasmedia', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}', ['DELETE']];
+        yield ['sonata_api_media_gallery_post_gallery_media_galleryitem', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryitem.{_format}', ['POST']];
+        yield ['sonata_api_media_gallery_put_gallery_media_galleryitem', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryitem.{_format}', ['PUT']];
+        yield ['sonata_api_media_gallery_delete_gallery_media_galleryitem', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryitem.{_format}', ['DELETE']];
         yield ['sonata_api_media_gallery_delete_gallery', '/api/media/galleries/{id}.{_format}', ['DELETE']];
         yield ['sonata_api_media_media_get_media', '/api/media/media.{_format}', ['GET']];
         yield ['sonata_api_media_media_get_medium', '/api/media/media/{id}.{_format}', ['GET']];

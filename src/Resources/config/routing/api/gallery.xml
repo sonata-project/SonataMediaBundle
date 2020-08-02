@@ -9,7 +9,7 @@
     <route id="get_gallery_medias" path="/galleries/{id}/medias.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\GalleryController::getGalleryMediasAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
-    <route id="get_gallery_galleryhasmedias" path="/galleries/{id}/galleryhasmedias.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\GalleryController::getGalleryGalleryhasmediasAction" format="json">
+    <route id="get_gallery_galleryitems" path="/galleries/{id}/galleryitems.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\GalleryController::getGalleryGalleryItemsAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
     <route id="post_gallery" path="/galleries.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\GalleryController::postGalleryAction" format="json">
@@ -18,13 +18,13 @@
     <route id="put_gallery" path="/galleries/{id}.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putGalleryAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
-    <route id="post_gallery_media_galleryhasmedia" path="/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\GalleryController::postGalleryMediaGalleryhasmediaAction" format="json">
+    <route id="post_gallery_media_galleryitem" path="/galleries/{galleryId}/media/{mediaId}/galleryitem.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\GalleryController::postGalleryMediaGalleryItemAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
-    <route id="put_gallery_media_galleryhasmedia" path="/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putGalleryMediaGalleryhasmediaAction" format="json">
+    <route id="put_gallery_media_galleryitem" path="/galleries/{galleryId}/media/{mediaId}/galleryitem.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putGalleryMediaGalleryItemAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
-    <route id="delete_gallery_media_galleryhasmedia" path="/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\GalleryController::deleteGalleryMediaGalleryhasmediaAction" format="json">
+    <route id="delete_gallery_media_galleryitem" path="/galleries/{galleryId}/media/{mediaId}/galleryitem.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\GalleryController::deleteGalleryMediaGalleryItemAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
     <route id="delete_gallery" path="/galleries/{id}.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\GalleryController::deleteGalleryAction" format="json">

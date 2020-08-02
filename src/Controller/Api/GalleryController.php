@@ -212,7 +212,7 @@ class GalleryController
      *
      * @return GalleryItemInterface[]
      */
-    public function getGalleryGalleryItemAction($id)
+    public function getGalleryGalleryItemsAction($id)
     {
         return $this->getGallery($id)->getGalleryItems();
     }
