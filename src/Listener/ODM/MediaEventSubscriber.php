@@ -44,9 +44,6 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getMedia(EventArgs $args)
     {
         return $args->getDocument();

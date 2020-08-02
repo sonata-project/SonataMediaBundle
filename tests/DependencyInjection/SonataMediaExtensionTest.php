@@ -30,7 +30,10 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         parent::setUp();
 
-        $this->container->setParameter('kernel.bundles', ['SonataAdminBundle' => true]);
+        $this->container->setParameter('kernel.bundles', [
+            'SonataDoctrineBundle' => true,
+            'SonataAdminBundle' => true,
+        ]);
     }
 
     public function testLoadWithDefaultAndCustomCategoryManager(): void

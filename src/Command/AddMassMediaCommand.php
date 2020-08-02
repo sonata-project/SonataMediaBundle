@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Sonata\Doctrine\Model\ManagerInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,9 +26,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 class AddMassMediaCommand extends BaseCommand
 {
     /**
+     * @var ManagerRegistry|null
+     */
+    protected $managerRegistry;
+
+    /**
      * @var string[]
      */
     protected $setters;
+
+    public function __construct(ManagerInterface $mediaManager, Pool $pool, ?ManagerRegistry $managerRegistry = null)
+    {
+        parent::__construct($mediaManager, $pool);
+
+        $this->managerRegistry = $managerRegistry;
+    }
 
     public function configure(): void
     {
@@ -104,8 +119,8 @@ class AddMassMediaCommand extends BaseCommand
 
     protected function optimize(): void
     {
-        if ($this->getContainer()->has('doctrine')) {
-            $this->getContainer()->get('doctrine')->getManager()->getUnitOfWork()->clear();
+        if (null !== $this->managerRegistry) {
+            $this->managerRegistry->getManager()->getUnitOfWork()->clear();
         }
     }
 }

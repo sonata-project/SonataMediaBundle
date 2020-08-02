@@ -1,157 +1,105 @@
+.. index::
+    single: Installation
+    single: Configuration
+
 Installation
 ============
 
-Base bundles
-------------
+Prerequisites
+-------------
 
-This bundle is mainly dependant of:
+PHP ^7.2 and Symfony ^4.4 are needed to make this bundle work, there are
+also some Sonata dependencies that need to be installed and configured beforehand.
 
-* Core: https://sonata-project.org/bundles/core
+Optional dependencies:
 
-This bundle has optional dependencies of:
+* `SonataAdminBundle <https://sonata-project.org/bundles/admin>`_
+* `SonataClassificationBundle <https://sonata-project.org/bundles/classification>`_
 
- * Admin: https://sonata-project.org/bundles/admin
- * DoctrineOrm: https://sonata-project.org/bundles/doctrine-orm-admin
- * MongoAdmin: https://sonata-project.org/bundles/mongo-admin
- * Classification: https://sonata-project.org/bundles/classification
+And the persistence bundle (choose one):
 
-So be sure you have installed those bundles before starting
+* `SonataDoctrineOrmAdminBundle <https://sonata-project.org/bundles/doctrine-orm-admin>`_
+* `SonataDoctrinePHPCRAdminBundle <https://sonata-project.org/bundles/doctrine-phpcr-admin>`_
+* `SonataDoctrineMongoDBAdminBundle <https://sonata-project.org/bundles/mongo-admin>`_
 
-Installation with Symfony Flex
-------------------------------
+Follow also their configuration step; you will find everything you need in
+their own installation chapter.
 
-If you are not using the DoctrineORM or MongoAdmin packages, retrieve the bundle directly with composer:
+.. note::
 
-.. code-block:: bash
+    If a dependency is already installed somewhere in your project or in
+    another dependency, you won't need to install it again.
 
-    composer require sonata-project/media-bundle
+Install Symfony Flex packs
+--------------------------
 
-If you picked Doctrine ORM, install the Sonata Media ORM pack:
+With this method you can directly setup all the entities required to make this bundle work
+with the different persistence bundles supported.
 
-.. code-block:: bash
+If you picked ``SonataDoctrineOrmAdminBundle``, install the Sonata Media ORM pack::
 
     composer require sonata-project/media-orm-pack
 
-If you picked MongoAdmin, install the Sonata Media ODM pack:
-
-.. code-block:: bash
+If you picked ``SonataDoctrineMongoDBAdminBundle``, install the Sonata Media ODM pack::
 
     composer require sonata-project/media-odm-pack
 
-Now, you can build up your database:
+Install without Symfony Flex packs
+----------------------------------
 
-.. code-block:: bash
-
-    bin/console doctrine:schema:[create|update]
-
-Then you can visit your admin dashboard on http://my-server/admin/dashboard
-
-Installation without Symfony Flex
----------------------------------
-
-Retrieve the bundle with composer:
-
-.. code-block:: bash
+Add ``SonataMediaBundle`` via composer::
 
     composer require sonata-project/media-bundle
 
-Register these bundles in your ``bundles.php`` file::
+If you want to use the REST API, you also need ``friendsofsymfony/rest-bundle`` and ``nelmio/api-doc-bundle``::
+
+    composer require friendsofsymfony/rest-bundle nelmio/api-doc-bundle
+
+Next, be sure to enable the bundles in your ``config/bundles.php`` file if they
+are not already enabled::
 
     // config/bundles.php
 
     return [
         // ...
         Sonata\MediaBundle\SonataMediaBundle::class => ['all' => true],
-        Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['all' => true],
-        JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
-        Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     ];
 
-Next, add the correct routing files:
+Configuration
+=============
 
-.. configuration-block::
+SonataMediaBundle Configuration
+-------------------------------
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        # config/routes.yaml
+    # config/packages/sonata_media.yaml
 
-        gallery:
-            resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
-            prefix: /media/gallery
-
-        media:
-            resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
-            prefix: /media
-
-Then, you must configure the interaction with the persistence backend you picked:
-
-If you picked Doctrine ORM:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/doctrine.yaml
-
-        doctrine:
-            orm:
-                entity_managers:
-                    default:
-                        mappings:
-                            SonataMediaBundle: ~
-
-If you picked Doctrine PHPCR:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/doctrine_phpcr.yaml
-
-        doctrine_phpcr:
-            odm:
-                auto_mapping: true
-                mappings:
-                    SonataMediaBundle:
-                        prefix: Sonata\MediaBundle\PHPCR
-
-Once you have done that, you can configure the Media bundle itself:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/sonata_media.yaml
-
-        sonata_media:
-            # if you don't use default namespace configuration
-            #class:
-            #    media:        MyVendor\MediaBundle\Entity\Media
-            #    gallery:      MyVendor\MediaBundle\Entity\Gallery
-            #    gallery_item: MyVendor\MediaBundle\Entity\GalleryItem
-            db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
-            default_context: default # you need to set a context
-            contexts:
-                default:  # the default context is mandatory
-                    providers:
-                        - sonata.media.provider.dailymotion
-                        - sonata.media.provider.youtube
-                        - sonata.media.provider.image
-                        - sonata.media.provider.file
-                        - sonata.media.provider.vimeo
-
-                    formats:
-                        small: { width: 100 , quality: 70}
-                        big:   { width: 500 , quality: 70}
-
-            cdn:
-                server:
-                    path: /uploads/media # http://media.sonata-project.org/
-
-            filesystem:
-                local:
-                    directory:  '%kernel.root_dir%/../public/uploads/media'
-                    create:     false
+    sonata_media:
+        class:
+            media: App\Entity\SonataMediaMedia
+            gallery: App\Entity\SonataMediaGallery
+            gallery_item: App\Entity\SonataMediaGalleryItem
+        db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
+        default_context: default # you need to set a context
+        contexts:
+            default:  # the default context is mandatory
+                providers:
+                    - sonata.media.provider.dailymotion
+                    - sonata.media.provider.youtube
+                    - sonata.media.provider.image
+                    - sonata.media.provider.file
+                    - sonata.media.provider.vimeo
+                formats:
+                    small: { width: 100 , quality: 70}
+                    big: { width: 500 , quality: 70}
+        cdn:
+            server:
+                path: /uploads/media # http://media.sonata-project.org/
+        filesystem:
+            local:
+                directory: '%kernel.root_dir%/../public/uploads/media'
+                create: false
 
 .. note::
 
@@ -161,16 +109,14 @@ Once you have done that, you can configure the Media bundle itself:
 Also, you can determine the resizer to use; the default value is
 ``sonata.media.resizer.simple`` but you can change it to ``sonata.media.resizer.square``
 
-.. configuration-block::
+.. code-block:: yaml
 
-    .. code-block:: yaml
+    # config/packages/sonata_media.yaml
 
-        # config/packages/sonata_media.yaml
-
-        sonata_media:
-            providers:
-                image:
-                    resizer: sonata.media.resizer.square
+    sonata_media:
+        providers:
+            image:
+                resizer: sonata.media.resizer.square
 
 .. note::
 
@@ -178,87 +124,259 @@ Also, you can determine the resizer to use; the default value is
     only the width. But if you specify the height the resizer crop the image in
     the lower size.
 
-At this point, the bundle is not yet ready. You need to generate the correct
-entities for the media:
+Doctrine ORM Configuration
+--------------------------
 
-.. code-block:: bash
+Add the bundle in the config mapping definition (or enable `auto_mapping`_)::
 
-    bin/console sonata:easy-extends:generate --dest=src SonataMediaBundle --namespace_prefix=App
+    # config/packages/doctrine.yaml
 
-.. note::
+    doctrine:
+        orm:
+            entity_managers:
+                default:
+                    mappings:
+                        SonataMediaBundle: ~
 
-    To be able to generate domain objects, you need to have a database driver configure in your project.
-    If it's not the case, just follow this:
-    http://symfony.com/doc/current/book/doctrine.html#configuring-the-database
+And then create the corresponding entities, ``src/Entity/SonataMediaMedia``::
 
-.. note::
+    // src/Entity/SonataMediaMedia.php
 
-    The command will generate domain objects in an ``App\Application`` namespace.
-    So you can point entities' associations to a global and common namespace.
-    This will make Entities sharing very easier as your models will allow to
-    point to a global namespace. For instance the media will be
-    ``App\Application\Sonata\MediaBundle\Entity\Media``.
+    use Doctrine\ORM\Mapping as ORM;
+    use Sonata\MediaBundle\Entity\BaseMedia;
 
-Now, add the new ``Application`` Bundle into the ``bundles.php``::
+    /**
+     * @ORM\Entity
+     * @ORM\Table(name="media__media")
+     */
+    class SonataMediaMedia extends BaseMedia
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(type="integer")
+         */
+        protected $id;
+    }
 
-    // config/bundles.php
+``src/Entity/SonataMediaGallery``::
 
-    return [
-        // ...
-        App\Application\Sonata\MediaBundle\ApplicationSonataMediaBundle::class => ['all' => true],
-    ];
+    // src/Entity/SonataMediaGallery.php
 
-Configure SonataMediaBundle to use the newly generated classes:
+    use Doctrine\ORM\Mapping as ORM;
+    use Sonata\MediaBundle\Entity\BaseGallery;
 
-.. configuration-block::
+    /**
+     * @ORM\Entity
+     * @ORM\Table(name="media__gallery")
+     */
+    class SonataMediaGallery extends BaseGallery
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(type="integer")
+         */
+        protected $id;
+    }
 
-    .. code-block:: yaml
+and ``src/Entity/SonataMediaGalleryItem``::
 
-        # config/packages/sonata_media.yaml
+    // src/Entity/SonataMediaGalleryItem.php
 
-        sonata_media:
-            # if you don't use default namespace configuration
-            class:
-                media: App\Application\Sonata\MediaBundle\Entity\Media
-                gallery: App\Application\Sonata\MediaBundle\Entity\Gallery
-                gallery_item: App\Application\Sonata\MediaBundle\Entity\GalleryItem
+    use Doctrine\ORM\Mapping as ORM;
+    use Sonata\MediaBundle\Entity\BaseGalleryItem;
 
-If you are not using auto-mapping in doctrine you will have to add it there
-too:
+    /**
+     * @ORM\Entity
+     * @ORM\Table(name="media__gallery_item")
+     */
+    class SonataMediaGalleryItem extends BaseGalleryItem
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(type="integer")
+         */
+        protected $id;
+    }
 
-.. configuration-block::
+The only thing left is to update your schema::
 
-    .. code-block:: yaml
+    bin/console doctrine:schema:update --force
 
-        # config/packages/doctrine.yaml
+Doctrine PHPCR Configuration
+----------------------------
 
-        doctrine:
-            orm:
-                entity_managers:
-                    default:
-                        mappings:
-                            ApplicationSonataMediaBundle: ~
-                            SonataMediaBundle: ~
+Add the bundle in the config mapping definition (or enable `auto_mapping`_)::
 
-You will have to exclude your ``Application`` folder from Symfony service
-autowiring:
+    # config/packages/doctrine_phpcr.yaml
 
-.. configuration-block::
+    doctrine_phpcr:
+        odm:
+            mappings:
+                SonataMediaBundle:
+                    prefix: Sonata\MediaBundle\PHPCR
 
-    .. code-block:: yaml
+Then you have to create the corresponding documents, ``src/PHPCR/SonataMediaMedia``::
 
-        # config/services.yaml
+    // src/PHPCR/SonataMediaMedia.php
 
-        services:
-            App\:
-                resource: '../src/*'
-                exclude: '../src/{Entity,Tests,Application}'
+    use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
+    use Sonata\MediaBundle\PHPCR\BaseMedia;
 
-Now, you can build up your database:
+    /**
+     * @PHPCR\Document
+     */
+    class SonataMediaMedia extends BaseMedia
+    {
+        /**
+         * @PHPCR\Id
+         */
+        protected $id;
+    }
 
-.. code-block:: bash
+``src/PHPCR/SonataMediaGallery``::
 
-    bin/console doctrine:schema:[create|update]
+    // src/PHPCR/SonataMediaGallery.php
+
+    use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
+    use Sonata\MediaBundle\PHPCR\BaseGallery;
+
+    /**
+     * @PHPCR\Document
+     */
+    class SonataMediaGallery extends BaseGallery
+    {
+        /**
+         * @PHPCR\Id
+         */
+        protected $id;
+    }
+
+and ``src/PHPCR/SonataMediaGalleryItem``::
+
+    // src/PHPCR/SonataMediaGalleryItem.php
+
+    use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
+    use Sonata\MediaBundle\PHPCR\BaseGalleryItem;
+
+    /**
+     * @PHPCR\Document
+     */
+    class SonataMediaGalleryItem extends BaseGalleryItem
+    {
+        /**
+         * @PHPCR\Id
+         */
+        protected $id;
+    }
+
+And then configure ``SonataMediaBundle`` to use the newly generated classes::
+
+    # config/packages/sonata_media.yaml
+
+    sonata_media:
+        db_driver: doctrine_phpcr
+        class:
+            media: App\PHPCR\SonataMediaMedia
+            gallery: App\PHPCR\SonataMediaGallery
+            gallery_item: App\PHPCR\SonataMediaGalleryItem
+
+Doctrine MongoDB Configuration
+------------------------------
+
+Add the bundle in the config mapping definition (or enable `auto_mapping`_)::
+
+    # config/packages/doctrine_mongodb.yaml
+
+    doctrine_mongodb:
+        odm:
+            mappings:
+                SonataMediaBundle: ~
+
+Then you have to create the corresponding documents, ``src/Document/SonataMediaMedia``::
+
+    // src/Document/SonataMediaMedia.php
+
+    use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+    use Sonata\MediaBundle\Document\BaseMedia;
+
+    /**
+     * @MongoDB\Document
+     */
+    class SonataMediaMedia extends BaseMedia
+    {
+        /**
+         * @MongoDB\Id
+         */
+        protected $id;
+    }
+
+``src/Document/SonataMediaGallery``::
+
+    // src/Document/SonataMediaGallery.php
+
+    use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+    use Sonata\MediaBundle\Document\BaseGallery;
+
+    /**
+     * @MongoDB\Document
+     */
+    class SonataMediaGallery extends BaseGallery
+    {
+        /**
+         * @MongoDB\Id
+         */
+        protected $id;
+    }
+
+and ``src/Document/SonataMediaGalleryItem``::
+
+    // src/Document/SonataMediaGalleryItem.php
+
+    use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+    use Sonata\MediaBundle\Document\BaseGalleryItem;
+
+    /**
+     * @MongoDB\Document
+     */
+    class SonataMediaGalleryItem extends BaseGalleryItem
+    {
+        /**
+         * @MongoDB\Id
+         */
+        protected $id;
+    }
+
+And then configure ``SonataMediaBundle`` to use the newly generated classes::
+
+    # config/packages/sonata_media.yaml
+
+    sonata_media:
+        db_driver: doctrine_mongodb
+        class:
+            media: App\Document\SonataMediaMedia
+            gallery: App\Document\SonataMediaGallery
+            gallery_item: App\Document\SonataMediaGalleryItem
+
+Add SonataMediaBundle routes
+----------------------------
+
+.. code-block:: yaml
+
+    # config/routes.yaml
+
+    gallery:
+        resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+        prefix: /media/gallery
+
+    media:
+        resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+        prefix: /media
+
+Create uploads folder
+---------------------
 
 If they are not already created, you need to add specific folder to allow uploads from users,
 make sure your http user can write to this directory:
@@ -267,4 +385,17 @@ make sure your http user can write to this directory:
 
     mkdir -p public/uploads/media
 
-Then you can visit your admin dashboard on http://my-server/admin/dashboard
+Next Steps
+----------
+
+At this point, your Symfony installation should be fully functional, without errors
+showing up from SonataMediaBundle. If, at this point or during the installation,
+you come across any errors, don't panic:
+
+    - Read the error message carefully. Try to find out exactly which bundle is causing the error.
+      Is it SonataMediaBundle or one of the dependencies?
+    - Make sure you followed all the instructions correctly, for both SonataMediaBundle and its dependencies.
+    - Still no luck? Try checking the project's `open issues on GitHub`_.
+
+.. _`open issues on GitHub`: https://github.com/sonata-project/SonataMediaBundle/issues
+.. _`auto_mapping`: http://symfony.com/doc/4.4/reference/configuration/doctrine.html#configuration-overviews

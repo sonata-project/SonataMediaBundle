@@ -1,4 +1,5 @@
 framework:
+    test: true
     secret: secret
     form:
         enabled: true
@@ -15,6 +16,9 @@ sonata_media:
     db_driver: doctrine_orm
     class:
         media: Sonata\MediaBundle\Tests\App\Entity\Media
+        gallery: Sonata\MediaBundle\Tests\App\Entity\Gallery
+        gallery_has_media: Sonata\MediaBundle\Tests\App\Entity\GalleryHasMedia
+    force_disable_category: true
     default_context: default
     contexts:
         default:
@@ -40,20 +44,13 @@ sonata_media:
 
 fos_rest:
     param_fetcher_listener: true
-    body_listener: false
-    format_listener:
-        rules:
-            - {path: ^/, priorities: [json], fallback_format: ~, prefer_extension: true}
+    body_listener: true
+    format_listener: true
     view:
-        view_response_listener: true
+        view_response_listener: force
     body_converter:
         enabled: false
-        validate: false
-
-sensio_framework_extra:
-    router: {annotations: false}
-    request: {converters: true}
-    view: {annotations: true}
+        validate: true
 
 doctrine:
     dbal:
@@ -69,8 +66,3 @@ doctrine:
                         dir: "%kernel.project_dir%/Entity"
                         is_bundle: false
                         prefix: Sonata\MediaBundle\Tests\App\Entity
-
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true

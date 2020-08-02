@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
-use FOS\RestBundle\Request\ParamFetcher;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryInterface;
@@ -39,7 +39,7 @@ class GalleryControllerTest extends TestCase
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
-        $paramFetcher = $this->createMock(ParamFetcher::class);
+        $paramFetcher = $this->createMock(ParamFetcherInterface::class);
         $paramFetcher->expects($this->exactly(3))->method('get');
         $paramFetcher
             ->expects($this->once())

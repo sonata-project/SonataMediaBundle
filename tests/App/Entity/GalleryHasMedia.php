@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Sonata\MediaBundle\Entity\BaseMedia;
+use Sonata\MediaBundle\Entity\BaseGalleryHasMedia;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="media__media")
+ * @ORM\Table(name="media__gallery_has_media")
  */
-class Media extends BaseMedia
+class GalleryHasMedia extends BaseGalleryHasMedia
 {
     /**
      * @ORM\Id

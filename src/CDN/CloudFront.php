@@ -149,9 +149,6 @@ class CloudFront implements CDNInterface
         $this->client = $client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFlushStatus($identifier)
     {
         try {

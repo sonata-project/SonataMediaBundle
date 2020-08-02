@@ -14,8 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Controller\Api;
 
 use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -60,8 +59,6 @@ class GalleryController
     protected $galleryItemClass;
 
     /**
-     * Constructor.
-     *
      * @param string $galleryItemClass
      */
     public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryItemClass)
@@ -80,26 +77,26 @@ class GalleryController
      *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"={"sonata_api_read"}}
      * )
      *
-     * @QueryParam(
+     * @Rest\QueryParam(
      *     name="page",
      *     requirements="\d+",
      *     default="1",
      *     description="Page for gallery list pagination"
      * )
-     * @QueryParam(
+     * @Rest\QueryParam(
      *     name="count",
      *     requirements="\d+",
      *     default="10",
      *     description="Number of galleries by page"
      * )
-     * @QueryParam(
+     * @Rest\QueryParam(
      *     name="enabled",
      *     requirements="0|1",
      *     nullable=true,
      *     strict=true,
      *     description="Enabled/Disabled galleries filter"
      * )
-     * @QueryParam(
+     * @Rest\QueryParam(
      *     name="orderBy",
      *     map=true,
      *     requirements="ASC|DESC",
@@ -108,7 +105,7 @@ class GalleryController
      *     description="Order by array (key is field, value is direction)"
      * )
      *
-     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
+     * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
      * @return PagerInterface
      */
@@ -143,7 +140,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"}
      *  },
      *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
@@ -152,9 +149,9 @@ class GalleryController
      *  }
      * )
      *
-     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
+     * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param $id
+     * @param int $id Gallery identifier
      *
      * @return GalleryInterface
      */
@@ -168,7 +165,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"}
      *  },
      *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
      *  statusCodes={
@@ -177,9 +174,9 @@ class GalleryController
      *  }
      * )
      *
-     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
+     * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param $id
+     * @param int $id Gallery identifier
      *
      * @return MediaInterface[]
      */
@@ -200,7 +197,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery id"}
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"}
      *  },
      *  output={"class"="Sonata\MediaBundle\Model\GalleryItem", "groups"={"sonata_api_read"}},
      *  statusCodes={
@@ -209,9 +206,9 @@ class GalleryController
      *  }
      * )
      *
-     * @View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
+     * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param $id
+     * @param int $id Gallery identifier
      *
      * @return GalleryItemInterface[]
      */
@@ -248,7 +245,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"}
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
      *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
@@ -259,8 +256,8 @@ class GalleryController
      *  }
      * )
      *
-     * @param int     $id      User id
-     * @param Request $request A Symfony request
+     * @param int     $id      User identifier
+     * @param Request $request Symfony request
      *
      * @throws NotFoundHttpException
      *
@@ -272,12 +269,12 @@ class GalleryController
     }
 
     /**
-     * Adds a media to a gallery.
+     * Adds a medium to a gallery.
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"},
-     *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
+     *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"},
+     *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery_item", "name"="", "groups"={"sonata_api_write"}},
      *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
@@ -287,9 +284,9 @@ class GalleryController
      *  }
      * )
      *
-     * @param int     $galleryId A gallery identifier
-     * @param int     $mediaId   A media identifier
-     * @param Request $request   A Symfony request
+     * @param int     $galleryId Gallery identifier
+     * @param int     $mediaId   Medium identifier
+     * @param Request $request   Symfony request
      *
      * @throws NotFoundHttpException
      *
@@ -312,24 +309,24 @@ class GalleryController
     }
 
     /**
-     * Updates a media to a gallery.
+     * Updates a medium to a gallery.
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"},
-     *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
+     *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"},
+     *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_gallery_item", "name"="", "groups"={"sonata_api_write"}},
      *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
-     *      404="Returned when an error if media cannot be found in gallery",
+     *      404="Returned when an error if medium cannot be found in gallery",
      *  }
      * )
      *
-     * @param int     $galleryId A gallery identifier
-     * @param int     $mediaId   A media identifier
-     * @param Request $request   A Symfony request
+     * @param int     $galleryId Gallery identifier
+     * @param int     $mediaId   Medium identifier
+     * @param Request $request   Symfony request
      *
      * @throws NotFoundHttpException
      *
@@ -350,16 +347,16 @@ class GalleryController
     }
 
     /**
-     * Deletes a media association to a gallery.
+     * Deletes a medium association to a gallery.
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"},
-     *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="media identifier"}
+     *      {"name"="galleryId", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"},
+     *      {"name"="mediaId", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"}
      *  },
      *  statusCodes={
-     *      200="Returned when media is successfully deleted from gallery",
-     *      400="Returned when an error has occurred while media deletion of gallery",
+     *      200="Returned when medium is successfully deleted from gallery",
+     *      400="Returned when an error has occurred while medium deletion of gallery",
      *      404="Returned when unable to find gallery or media"
      *  }
      * )
@@ -369,7 +366,7 @@ class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return View
+     * @return Rest\View
      */
     public function deleteGalleryMediaGalleryItemAction($galleryId, $mediaId)
     {
@@ -395,7 +392,7 @@ class GalleryController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="gallery identifier"}
+     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Gallery identifier"}
      *  },
      *  statusCodes={
      *      200="Returned when gallery is successfully deleted",
@@ -408,7 +405,7 @@ class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return View
+     * @return Rest\View
      */
     public function deleteGalleryAction($id)
     {
@@ -454,9 +451,7 @@ class GalleryController
     }
 
     /**
-     * Retrieves gallery with id $id or throws an exception if it doesn't exist.
-     *
-     * @param $id
+     * Retrieves gallery with identifier $id or throws an exception if it doesn't exist.
      *
      * @throws NotFoundHttpException
      *
@@ -474,9 +469,7 @@ class GalleryController
     }
 
     /**
-     * Retrieves media with id $id or throws an exception if it doesn't exist.
-     *
-     * @param $id
+     * Retrieves media with identifier $id or throws an exception if it doesn't exist.
      *
      * @throws NotFoundHttpException
      *
@@ -515,7 +508,7 @@ class GalleryController
      * @param Request  $request Symfony request
      * @param int|null $id      A Gallery identifier
      *
-     * @return View|FormInterface
+     * @return Rest\View|FormInterface
      */
     protected function handleWriteGallery($request, $id = null)
     {
