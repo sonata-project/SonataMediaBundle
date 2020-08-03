@@ -129,7 +129,7 @@ class GalleryController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param int $id Gallery identifier
+     * @param $id
      *
      * @return GalleryInterface
      */
@@ -154,7 +154,7 @@ class GalleryController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param int $id Gallery identifier
+     * @param $id
      *
      * @return MediaInterface[]
      */
@@ -186,7 +186,7 @@ class GalleryController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param int $id Gallery identifier
+     * @param $id
      *
      * @return GalleryHasMediaInterface[]
      */
@@ -207,7 +207,7 @@ class GalleryController
      *  }
      * )
      *
-     * @param Request $request A Symfony request
+     * @param Request $request Symfony request
      *
      * @throws NotFoundHttpException
      *
@@ -339,8 +339,8 @@ class GalleryController
      *  }
      * )
      *
-     * @param int $galleryId A gallery identifier
-     * @param int $mediaId   A media identifier
+     * @param int $galleryId Gallery identifier
+     * @param int $mediaId   Media identifier
      *
      * @throws NotFoundHttpException
      *
@@ -379,7 +379,7 @@ class GalleryController
      *  }
      * )
      *
-     * @param int $id A Gallery identifier
+     * @param int $id Gallery identifier
      *
      * @throws NotFoundHttpException
      *
@@ -488,7 +488,7 @@ class GalleryController
      * Write a Gallery, this method is used by both POST and PUT action methods.
      *
      * @param Request  $request Symfony request
-     * @param int|null $id      A Gallery identifier
+     * @param int|null $id      Gallery identifier
      *
      * @return Rest\View|FormInterface
      */
