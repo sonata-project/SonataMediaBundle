@@ -221,7 +221,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
     public function registerDoctrineMapping(array $config)
     {
         @trigger_error(
-            'Using SonataEasyExtendsBundle is deprecated since sonata-project/media-bundle 3.x. Please register SonataDoctrineBundle as a bundle instead.',
+            'Using SonataEasyExtendsBundle is deprecated since sonata-project/media-bundle 3.26. Please register SonataDoctrineBundle as a bundle instead.',
             E_USER_DEPRECATED
         );
 
