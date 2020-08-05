@@ -148,7 +148,7 @@ class MediaController
      *  }
      * )
      *
-     * @param int $id Medium identifier
+     * @param $id
      *
      * @return array
      */
@@ -326,7 +326,7 @@ class MediaController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param int     $id      Media identifier
+     * @param $id
      * @param Request $request Symfony request
      *
      * @throws NotFoundHttpException

@@ -2,6 +2,61 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.26.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.25.0...3.26.0) - 2020-08-04
+### Added
+- [[#1761](https://github.com/sonata-project/SonataMediaBundle/pull/1761)]
+  Added public alias `Sonata\MediaBundle\Controller\Api\GalleryController` for
+`sonata.media.controller.api.gallery` service
+([@wbloszyk](https://github.com/wbloszyk))
+- [[#1761](https://github.com/sonata-project/SonataMediaBundle/pull/1761)]
+  Added public alias `Sonata\MediaBundle\Controller\Api\MediaController` for
+`sonata.media.controller.api.media` service
+([@wbloszyk](https://github.com/wbloszyk))
+- [[#1767](https://github.com/sonata-project/SonataMediaBundle/pull/1767)]
+  Added support for `friendsofsymfony/rest-bundle:^3.0`
+([@wbloszyk](https://github.com/wbloszyk))
+- [[#1771](https://github.com/sonata-project/SonataMediaBundle/pull/1771)]
+  Added french translation for `image_too_small` error message
+([@romainjanvier](https://github.com/romainjanvier))
+- [[#1756](https://github.com/sonata-project/SonataMediaBundle/pull/1756)]
+  Added `twig/string-extra` dependency.
+([@franmomu](https://github.com/franmomu))
+- [[#1757](https://github.com/sonata-project/SonataMediaBundle/pull/1757)] Add
+  missing `MediaManagerInterface` to `NoDriverManager`
+([@core23](https://github.com/core23))
+
+### Change
+- [[#1767](https://github.com/sonata-project/SonataMediaBundle/pull/1767)]
+  Support for deprecated `rest` routing type in favor for xml
+([@wbloszyk](https://github.com/wbloszyk))
+
+### Changed
+- [[#1765](https://github.com/sonata-project/SonataMediaBundle/pull/1765)]
+  Change based command class from `ContainerAwareCommand` to `Command` and
+inject services instead container ([@wbloszyk](https://github.com/wbloszyk))
+- [[#1753](https://github.com/sonata-project/SonataMediaBundle/pull/1753)]
+  SonataEasyExtendsBundle is now optional, using SonataDoctrineBundle is
+preferred ([@jordisala1991](https://github.com/jordisala1991))
+- [[#1756](https://github.com/sonata-project/SonataMediaBundle/pull/1756)]
+  Changed use of `truncate` filter with `u` filter.
+([@franmomu](https://github.com/franmomu))
+
+### Deprecated
+- [[#1753](https://github.com/sonata-project/SonataMediaBundle/pull/1753)]
+  Using SonataEasyExtendsBundle to add Doctrine mapping information
+([@jordisala1991](https://github.com/jordisala1991))
+
+### Fixed
+- [[#1761](https://github.com/sonata-project/SonataMediaBundle/pull/1761)] Fix
+  RestFul API - `Class could not be determined for Controller identified` Error
+([@wbloszyk](https://github.com/wbloszyk))
+
+### Removed
+- [[#1763](https://github.com/sonata-project/SonataMediaBundle/pull/1763)]
+  Support for PHP < 7.2 ([@wbloszyk](https://github.com/wbloszyk))
+- [[#1763](https://github.com/sonata-project/SonataMediaBundle/pull/1763)]
+  Support for Symfony < 4.4 ([@wbloszyk](https://github.com/wbloszyk))
+
 ## [3.25.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.24.0...3.25.0) - 2020-06-19
 ### Added
 - Add image size validation
