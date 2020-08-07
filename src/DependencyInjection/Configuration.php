@@ -235,6 +235,7 @@ class Configuration implements ConfigurationInterface
                                     ->end()
                                 ->end()
                                 ->scalarNode('region')->defaultValue('s3.amazonaws.com')->end()
+                                ->scalarNode('endpoint')->defaultNull()->end()
                                 ->scalarNode('version')->defaultValue('latest')->end()
                                 ->enumNode('sdk_version')
                                     ->values([2, 3])
