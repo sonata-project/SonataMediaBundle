@@ -36,22 +36,17 @@ matrix:
     - php: '7.2'
       env: COMPOSER_FLAGS="--prefer-lowest"
     - php: '7.3'
-      env: SYMFONY=4.4.*
-    - php: '7.3'
+      env: SYMFONY=4.4.*    - php: '7.3'
       env: SYMFONY='dev-master as 4.4.x-dev'
     - php: '7.3'
-      env: DOCTRINE_ODM=1.*
-    - php: '7.3'
+      env: DOCTRINE_ODM=1.*    - php: '7.3'
       env: DOCTRINE_ODM='dev-master as 1.x-dev'
     - php: '7.3'
-      env: SONATA_ADMIN=3.*
-    - php: '7.3'
+      env: SONATA_ADMIN=3.*    - php: '7.3'
       env: SONATA_ADMIN='dev-master as 3.x-dev'
     - php: '7.3'
-      env: IMAGINE=0.7.*
-    - php: '7.3'
-      env: IMAGINE=1.*
-    - php: '7.3'
+      env: IMAGINE=0.7.*    - php: '7.3'
+      env: IMAGINE=1.*    - php: '7.3'
       env: IMAGINE='dev-master as 1.x-dev'
     - php: '7.3'
       env: SYMFONY_DEPRECATIONS_HELPER=0
