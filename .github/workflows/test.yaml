@@ -90,6 +90,9 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ matrix.variant }}
           restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
 
+      - name: Install mongo compatibility layer
+        run: composer require alcaeus/mongo-php-adapter --no-update
+
       - name: Install variant
         if: matrix.variant != 'normal'
         run: composer require ${{ matrix.variant }} --no-update
