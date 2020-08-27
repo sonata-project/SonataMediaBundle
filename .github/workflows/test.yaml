@@ -21,6 +21,10 @@ jobs:
 
     continue-on-error: ${{ matrix.allowed_to_fail }}
 
+    services:
+      mongo:
+        image: mongo
+
     strategy:
       matrix:
         php-version:
@@ -69,7 +73,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           coverage: pcov
-          tools: composer:v2
+          tools: composer:v2, pecl
+          extensions: mongodb
 
       - name: Add PHPUnit matcher
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
@@ -84,6 +89,9 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ matrix.variant }}
           restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
+
+      - name: Install mongo compatibility layer
+        run: composer require alcaeus/mongo-php-adapter --no-update
 
       - name: Install variant
         if: matrix.variant != 'normal'
