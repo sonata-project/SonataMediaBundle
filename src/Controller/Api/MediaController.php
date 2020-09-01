@@ -72,7 +72,7 @@ class MediaController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"}
+     *      {"name"="id", "dataType"="string", "description"="Medium identifier"}
      *  },
      *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
      *  statusCodes={
@@ -83,7 +83,7 @@ class MediaController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param int $id Medium identifier
+     * @param string $id Medium identifier
      *
      * @return MediaInterface
      */
@@ -140,7 +140,7 @@ class MediaController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"}
+     *      {"name"="id", "dataType"="string", "description"="Medium identifier"}
      *  },
      *  statusCodes={
      *      200="Returned when successful",
@@ -148,7 +148,7 @@ class MediaController
      *  }
      * )
      *
-     * @param $id
+     * @param string $id Medium identifier
      *
      * @return array
      */
@@ -175,7 +175,7 @@ class MediaController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"},
+     *      {"name"="id", "dataType"="string", "description"="Medium identifier"},
      *      {"name"="format", "dataType"="string", "description"="Medium format"}
      *  },
      *  statusCodes={
@@ -184,7 +184,7 @@ class MediaController
      *  }
      * )
      *
-     * @param int    $id     Medium identifier
+     * @param string $id     Medium identifier
      * @param string $format Format
      *
      * @return Response
@@ -207,7 +207,7 @@ class MediaController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"}
+     *      {"name"="id", "dataType"="string", "description"="Medium identifier"}
      *  },
      *  statusCodes={
      *      200="Returned when medium is successfully deleted",
@@ -216,7 +216,7 @@ class MediaController
      *  }
      * )
      *
-     * @param int $id Medium identifier
+     * @param string $id Medium identifier
      *
      * @throws NotFoundHttpException
      *
@@ -239,7 +239,7 @@ class MediaController
      *
      * @ApiDoc(
      *  requirements={
-     *      {"name"="id", "dataType"="integer", "requirement"="\d+", "description"="Medium identifier"}
+     *      {"name"="id", "dataType"="string", "description"="Medium identifier"}
      *  },
      *  input={"class"="sonata_media_api_form_media", "name"="", "groups"={"sonata_api_write"}},
      *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
@@ -250,7 +250,7 @@ class MediaController
      *  }
      * )
      *
-     * @param int     $id      Medium identifier
+     * @param string  $id      Medium identifier
      * @param Request $request Symfony request
      *
      * @throws NotFoundHttpException
@@ -326,7 +326,7 @@ class MediaController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param $id
+     * @param string  $id      Medium identifier
      * @param Request $request Symfony request
      *
      * @throws NotFoundHttpException
@@ -347,7 +347,7 @@ class MediaController
     /**
      * Retrieves media with identifier $id or throws an exception if not found.
      *
-     * @param int $id Media identifier
+     * @param string $id Media identifier
      *
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
