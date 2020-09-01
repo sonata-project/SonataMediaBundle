@@ -456,7 +456,6 @@ class GalleryController
     /**
      * Retrieves media with identifier $id or throws an exception if it doesn't exist.
      *
-     *
      * @param string $id Media identifier
      *
      * @throws NotFoundHttpException
