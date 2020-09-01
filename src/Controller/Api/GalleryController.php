@@ -435,7 +435,6 @@ class GalleryController
     /**
      * Retrieves gallery with identifier $id or throws an exception if it doesn't exist.
      *
-     *
      * @param string $id Gallery identifier
      *
      * @throws NotFoundHttpException
