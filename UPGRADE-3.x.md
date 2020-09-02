@@ -43,6 +43,10 @@ are required when aws/aws-sdk-php 3.x is installed.
 
 The `Guzzle` and `Buzz` dependencies are deprecated and will be replaced with the abstract `http-client` interface, so you can choose your preferred client implementation. You should adapt to the new `BaseVideoProvider::__construct()` signature.
 
+### Support for NelmioApiDocBundle > 3.6 is added
+
+Controllers for NelmioApiDocBundle v2 were moved under `Sonata\MediaBundle\Controller\Api\Legacy\` namespace and controllers for NelmioApiDocBundle v3 were added as replacement. If you extend them, you must ensure they are using the corresponding inheritance.
+
 UPGRADE FROM 3.25 to 3.26
 =========================
 
@@ -88,7 +92,6 @@ is deprecated. Please avoid using this method, use ``getExtensionConfig($contain
 Sonata\MediaBundle\Controller\Controller\MediaController::liipImagineFilterAction($path, $filter)
 is deprecated. Please avoid using this method.
 If you define controller_action in liip_imagine configs please remove it.
-
 
 UPGRADE FROM 3.2 to 3.3
 =======================

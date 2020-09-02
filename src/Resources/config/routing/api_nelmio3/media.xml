@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns="http://symfony.com/schema/routing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
+    <route id="get_medium" path="/media/{id}.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\MediaController::getMediumAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="get_media" path="/media.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\MediaController::getMediaAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="get_medium_formats" path="/media/{id}/formats.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\MediaController::getMediumFormatsAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="get_medium_binary" path="/media/{id}/binaries/{format}.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\MediaController::getMediumBinaryAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="delete_medium" path="/media/{id}.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\GalleryController::deleteMediumAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="put_medium" path="/media/{id}.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putMediumAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+    <route id="post_provider_medium" path="/media/providers/{provider}/media.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\GalleryController::postProviderMediumAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+        <requirement key="provider">[A-Za-z0-9.]*</requirement>
+    </route>
+    <route id="put_medium_binary_content" path="/media/{id}/binary/content.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putMediumBinaryContentAction" format="json">
+        <requirement key="_format">json|xml|html</requirement>
+    </route>
+</routes>

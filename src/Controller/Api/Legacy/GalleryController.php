@@ -11,14 +11,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Controller\Api;
+namespace Sonata\MediaBundle\Controller\Api\Legacy;
 
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType;
 use Sonata\MediaBundle\Form\Type\ApiGalleryType;
@@ -28,14 +27,13 @@ use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\GalleryMediaCollectionInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Swagger\Annotations as SWG;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
+ * @deprecated since sonata-project/media-bundle 3.21, to be removed in 4.0.
  *
  * @author Hugo Briand <briand@ekino.com>
  */
@@ -75,42 +73,9 @@ class GalleryController
     /**
      * Retrieves the list of galleries (paginated).
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Retrieves the list of galleries (paginated).",
-     *     @SWG\Parameter(
-     *         name="page",
-     *         in="query",
-     *         description="Page for gallery list pagination",
-     *         required=false,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="count",
-     *         in="query",
-     *         description="Number of galleries per page",
-     *         required=false,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="enabled",
-     *         in="query",
-     *         description="Enables or disables the galleries filter",
-     *         required=false,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="orderBy",
-     *         in="query",
-     *         description="Order by array (key is field, value is direction)",
-     *         required=false,
-     *         type="string"
-     *     ),
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="Sonata\DatagridBundle\Pager\PagerInterface"))
-     *     )
+     * @ApiDoc(
+     *  resource=true,
+     *  output={"class"="Sonata\DatagridBundle\Pager\PagerInterface", "groups"={"sonata_api_read"}}
      * )
      *
      * @Rest\QueryParam(name="page", requirements="\d+", default="1", description="Page for gallery list pagination")
@@ -149,18 +114,15 @@ class GalleryController
     /**
      * Retrieves a specific gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Retrieves a specific gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="sonata_media_api_form_gallery"))
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Returned when gallery is not found"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "description"="Gallery identifier"}
+     *  },
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when gallery is not found"
+     *  }
      * )
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
@@ -177,18 +139,15 @@ class GalleryController
     /**
      * Retrieves the medias of specified gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Retrieves the medias of specified gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="Sonata\MediaBundle\Model\Media"))
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Returned when gallery is not found"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "description"="Gallery identifier"}
+     *  },
+     *  output={"class"="Sonata\MediaBundle\Model\Media", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when gallery is not found"
+     *  }
      * )
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
@@ -201,29 +160,23 @@ class GalleryController
     {
         $ghms = $this->getGallery($id)->getGalleryHasMedias();
 
-        $media = [];
-        foreach ($ghms as $ghm) {
-            $media[] = $ghm->getMedia();
-        }
-
-        return $media;
+        return array_map(static function (GalleryHasMediaInterface $ghm): ?MediaInterface {
+            return $ghm->getMedia();
+        }, $ghms);
     }
 
     /**
      * Retrieves the galleryhasmedias of specified gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Retrieves the galleryhasmedias of specified gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="Sonata\MediaBundle\Model\GalleryHasMedia"))
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Returned when gallery is not found"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "description"="Gallery identifier"}
+     *  },
+     *  output={"class"="Sonata\MediaBundle\Model\GalleryHasMedia", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when gallery is not found"
+     *  }
      * )
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
@@ -240,18 +193,13 @@ class GalleryController
     /**
      * Adds a gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Adds a gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="sonata_media_api_form_gallery"))
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Returned when an error has occurred while gallery creation"
-     *     )
+     * @ApiDoc(
+     *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when an error has occurred while gallery creation",
+     *  }
      * )
      *
      * @param Request $request Symfony request
@@ -268,22 +216,17 @@ class GalleryController
     /**
      * Updates a gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Updates a gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="sonata_media_api_form_gallery"))
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Returned when an error has occurred while gallery creation"
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Returned when unable to find gallery"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "description"="Gallery identifier"}
+     *  },
+     *  input={"class"="sonata_media_api_form_gallery", "name"="", "groups"={"sonata_api_write"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when an error has occurred while gallery creation",
+     *      404="Returned when unable to find gallery"
+     *  }
      * )
      *
      * @param string  $id      Gallery identifier
@@ -301,18 +244,17 @@ class GalleryController
     /**
      * Adds a medium to a gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Adds a medium to a gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="sonata_media_api_form_gallery"))
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Returned when an error has occurred while gallery/media attachment"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="galleryId", "dataType"="string", "description"="Gallery identifier"},
+     *      {"name"="mediaId", "dataType"="string", "description"="Medium identifier"}
+     *  },
+     *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when an error has occurred while gallery/media attachment",
+     *  }
      * )
      *
      * @param string  $galleryId Gallery identifier
@@ -327,14 +269,13 @@ class GalleryController
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
-        $galleryHasMediaExists = $gallery->getGalleryHasMedias()->exists(static function ($key, GalleryHasMediaInterface $element) use ($media): bool {
-            return $element->getMedia()->getId() === $media->getId();
-        });
 
-        if ($galleryHasMediaExists) {
-            return FOSRestView::create([
-                'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
-            ], 400);
+        foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
+            if ($galleryHasMedia->getMedia()->getId() === $media->getId()) {
+                return FOSRestView::create([
+                    'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
+                ], 400);
+            }
         }
 
         return $this->handleWriteGalleryhasmedia($gallery, $media, null, $request);
@@ -343,18 +284,17 @@ class GalleryController
     /**
      * Updates a medium to a gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Updates a medium to a gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="sonata_media_api_form_gallery"))
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Returned when an error if medium cannot be found in gallery"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="galleryId", "dataType"="string", "description"="Gallery identifier"},
+     *      {"name"="mediaId", "dataType"="string", "description"="Medium identifier"}
+     *  },
+     *  input={"class"="sonata_media_api_form_gallery_has_media", "name"="", "groups"={"sonata_api_write"}},
+     *  output={"class"="sonata_media_api_form_gallery", "groups"={"sonata_api_read"}},
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      404="Returned when an error if medium cannot be found in gallery",
+     *  }
      * )
      *
      * @param string  $galleryId Gallery identifier
@@ -382,21 +322,16 @@ class GalleryController
     /**
      * Deletes a medium association to a gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Deletes a medium association to a gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when medium is successfully deleted from gallery"
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Returned when an error has occurred while medium deletion of gallery"
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Returned when unable to find gallery or media"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="galleryId", "dataType"="string", "description"="Gallery identifier"},
+     *      {"name"="mediaId", "dataType"="string", "description"="Medium identifier"}
+     *  },
+     *  statusCodes={
+     *      200="Returned when medium is successfully deleted from gallery",
+     *      400="Returned when an error has occurred while medium deletion of gallery",
+     *      404="Returned when unable to find gallery or media"
+     *  }
      * )
      *
      * @param string $galleryId Gallery identifier
@@ -428,21 +363,15 @@ class GalleryController
     /**
      * Deletes a gallery.
      *
-     * @Operation(
-     *     tags={"/api/media/galleries"},
-     *     summary="Deletes a gallery.",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when gallery is successfully deleted"
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Returned when an error has occurred while gallery deletion"
-     *     ),
-     *     @SWG\Response(
-     *         response="404",
-     *         description="Returned when unable to find gallery"
-     *     )
+     * @ApiDoc(
+     *  requirements={
+     *      {"name"="id", "dataType"="string", "description"="Gallery identifier"}
+     *  },
+     *  statusCodes={
+     *      200="Returned when gallery is successfully deleted",
+     *      400="Returned when an error has occurred while gallery deletion",
+     *      404="Returned when unable to find gallery"
+     *  }
      * )
      *
      * @param string $id Gallery identifier

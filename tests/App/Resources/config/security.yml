@@ -1,13 +1,13 @@
 security:
-    role_hierarchy: ~
+    role_hierarchy: null
 
     providers:
         in_memory:
             memory:
-                users: ~
+                users: null
 
     firewalls:
         test:
             security: false
 
-    access_control: ~
+    access_control: null

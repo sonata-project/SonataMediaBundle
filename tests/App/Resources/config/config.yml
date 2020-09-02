@@ -5,11 +5,13 @@ framework:
         enabled: true
     translator:
         enabled: true
+    templating:
+        engines: ['twig']
 
 twig:
     exception_controller: null
     paths:
-        - '%kernel.project_dir%/templates'
+        - '%kernel.project_dir%/Resources/views'
     strict_variables: "%kernel.debug%"
 
 sonata_media:
@@ -60,9 +62,14 @@ sonata_media:
 fos_rest:
     param_fetcher_listener: true
     body_listener: true
-    format_listener: true
+    format_listener:
+        enabled: true
+        rules:
+            priorities: 'json'
+            fallback_format: 'json'
+            prefer_extension: false
     view:
-        view_response_listener: force
+        view_response_listener: true
     body_converter:
         enabled: false
         validate: true

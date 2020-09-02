@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\DependencyInjection;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\S3\S3Client;
 use Aws\Sdk;
+use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
@@ -67,7 +68,12 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
 
             if ('doctrine_orm' === $config['db_driver']) {
-                $loader->load('api_controllers.xml');
+                // NEXT_MAJOR: remove legacy part
+                if (class_exists(Operation::class)) {
+                    $loader->load('api_controllers.xml');
+                } else {
+                    $loader->load('api_controllers_legacy.xml');
+                }
             }
         }
 

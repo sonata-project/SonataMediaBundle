@@ -65,10 +65,13 @@ class GalleryControllerTest extends TestCase
         $this->assertSame($gallery, $gController->getGalleryAction(1));
     }
 
-    public function testGetGalleryNotFoundAction(): void
+    /**
+     * @dataProvider getIdsForNotFound
+     */
+    public function testGetGalleryNotFoundAction($identifier, string $message): void
     {
         $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('Gallery (42) not found');
+        $this->expectExceptionMessage($message);
 
         $gManager = $this->createMock(GalleryManagerInterface::class);
         $mediaManager = $this->createMock(MediaManagerInterface::class);
@@ -79,7 +82,20 @@ class GalleryControllerTest extends TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $gController->getGalleryAction(42);
+        $gController->getGalleryAction($identifier);
+    }
+
+    /**
+     * @phpstan-return list<array{mixed, string}>
+     */
+    public function getIdsForNotFound(): array
+    {
+        return [
+            [42, 'Gallery not found for identifier 42.'],
+            ['42', 'Gallery not found for identifier \'42\'.'],
+            [null, 'Gallery not found for identifier NULL.'],
+            ['', 'Gallery not found for identifier \'\'.'],
+        ];
     }
 
     public function testGetGalleryGalleryhasmediasAction(): void

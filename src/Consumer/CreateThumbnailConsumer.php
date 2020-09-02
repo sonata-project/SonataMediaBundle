@@ -55,7 +55,7 @@ class CreateThumbnailConsumer implements ConsumerInterface
         ]);
 
         if (!$media) {
-            throw new HandlingException(sprintf('Media not found - id: %s', $event->getMessage()->getValue('mediaId')));
+            throw new HandlingException(sprintf('Media not found for identifier %s.', $event->getMessage()->getValue('mediaId')));
         }
 
         // solve race condition between message queue and database transaction
