@@ -2,6 +2,28 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.27.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.26.0...3.27.0) - 2020-09-02
+### Added
+- [[#1786](https://github.com/sonata-project/SonataMediaBundle/pull/1786)]
+  Added support for symfony/filesystem:^5.1
+([@phansys](https://github.com/phansys))
+- [[#1786](https://github.com/sonata-project/SonataMediaBundle/pull/1786)]
+  Added support for symfony/options-resolver:^5.1
+([@phansys](https://github.com/phansys))
+- [[#1774](https://github.com/sonata-project/SonataMediaBundle/pull/1774)]
+  Added configuration option filesystem.s3.endpoint
+([@michalpicpauer](https://github.com/michalpicpauer))
+
+### Fixed
+- [[#1800](https://github.com/sonata-project/SonataMediaBundle/pull/1800)]
+  Fixed support for string model identifiers at Open API definitions
+([@wbloszyk](https://github.com/wbloszyk))
+
+### Removed
+- [[#1800](https://github.com/sonata-project/SonataMediaBundle/pull/1800)]
+  Removed requirements that were only allowing integers for model identifiers
+at Open API definitions ([@wbloszyk](https://github.com/wbloszyk))
+
 ## [3.26.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.25.0...3.26.0) - 2020-08-04
 ### Added
 - [[#1761](https://github.com/sonata-project/SonataMediaBundle/pull/1761)]
