@@ -169,16 +169,14 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
      */
     public function reorderGalleryHasMedia()
     {
-        if ($this->getGalleryHasMedias() && $this->getGalleryHasMedias() instanceof \IteratorAggregate) {
+        $galleryHasMedias = $this->getGalleryHasMedias();
+
+        if ($galleryHasMedias instanceof \IteratorAggregate) {
             // reorder
-            $iterator = $this->getGalleryHasMedias()->getIterator();
+            $iterator = $galleryHasMedias->getIterator();
 
-            $iterator->uasort(static function ($a, $b) {
-                if ($a->getPosition() === $b->getPosition()) {
-                    return 0;
-                }
-
-                return $a->getPosition() > $b->getPosition() ? 1 : -1;
+            $iterator->uasort(static function (GalleryHasMediaInterface $a, GalleryHasMediaInterface $b): int {
+                return $a->getPosition() <=> $b->getPosition();
             });
 
             $this->setGalleryHasMedias($iterator);
