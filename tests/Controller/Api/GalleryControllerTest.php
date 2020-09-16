@@ -88,8 +88,9 @@ class GalleryControllerTest extends TestCase
         $galleryHasMedia = $this->createMock(GalleryHasMediaInterface::class);
         $gallery = $this->createMock(GalleryInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
+        $galleryHasMedias = new ArrayCollection([$galleryHasMedia]);
 
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn([$galleryHasMedia]);
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn($galleryHasMedias);
 
         $gManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
@@ -97,7 +98,7 @@ class GalleryControllerTest extends TestCase
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
-        $this->assertSame([$galleryHasMedia], $gController->getGalleryGalleryhasmediasAction(1));
+        $this->assertSame($galleryHasMedias, $gController->getGalleryGalleryhasmediasAction(1));
     }
 
     public function testGetGalleryMediaAction(): void
@@ -109,7 +110,7 @@ class GalleryControllerTest extends TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn([$galleryHasMedia]);
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
 
         $gManager = $this->createMock(GalleryManagerInterface::class);
         $gManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
@@ -135,7 +136,7 @@ class GalleryControllerTest extends TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media2);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn([$galleryHasMedia]);
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
 
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
@@ -167,7 +168,7 @@ class GalleryControllerTest extends TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn([$galleryHasMedia]);
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
 
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
@@ -196,7 +197,7 @@ class GalleryControllerTest extends TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn([$galleryHasMedia]);
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
 
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
@@ -228,7 +229,7 @@ class GalleryControllerTest extends TestCase
         $galleryHasMedia->expects($this->once())->method('getMedia')->willReturn($media);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn([$galleryHasMedia]);
+        $gallery->expects($this->once())->method('getGalleryHasMedias')->willReturn(new ArrayCollection([$galleryHasMedia]));
 
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
