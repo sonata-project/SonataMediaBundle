@@ -43,7 +43,7 @@ class MediaNode extends Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write(sprintf("echo \$this->env->getExtension('%s')->media(", $this->extensionName))
+            ->write(sprintf("echo \$this->env->getExtension('%s')->media(\$this->env, ", $this->extensionName))
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))

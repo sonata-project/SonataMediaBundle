@@ -43,7 +43,7 @@ class ThumbnailNode extends Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write(sprintf("echo \$this->env->getExtension('%s')->thumbnail(", $this->extensionName))
+            ->write(sprintf("echo \$this->env->getExtension('%s')->thumbnail(\$this->env, ", $this->extensionName))
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))

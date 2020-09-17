@@ -20,6 +20,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 use Twig\Environment;
 use Twig\Template;
+use Twig\TemplateWrapper;
 
 /**
  * @author Geza Buza <bghome@gmail.com>
@@ -49,7 +50,6 @@ class MediaExtensionTest extends TestCase
     public function testThumbnailHasAllNecessaryAttributes(): void
     {
         $mediaExtension = new MediaExtension($this->getMediaService(), $this->getMediaManager());
-        $mediaExtension->initRuntime($this->getEnvironment());
 
         $media = $this->getMedia();
         $format = 'png';
@@ -76,9 +76,10 @@ class MediaExtensionTest extends TestCase
                         ],
                     ]
                 )
-            );
+            )
+            ->willReturn('');
 
-        $mediaExtension->thumbnail($media, $format, $options);
+        $mediaExtension->thumbnail($this->getEnvironment(), $media, $format, $options);
     }
 
     public function getMediaService(): Pool
@@ -118,7 +119,9 @@ class MediaExtensionTest extends TestCase
     {
         if (null === $this->environment) {
             $this->environment = $this->createMock(Environment::class);
-            $this->environment->method('loadTemplate')->willReturn($this->getTemplate());
+            $this->environment->method('load')->willReturnCallback(function () {
+                return new TemplateWrapper($this->getEnvironment(), $this->getTemplate());
+            });
         }
 
         return $this->environment;

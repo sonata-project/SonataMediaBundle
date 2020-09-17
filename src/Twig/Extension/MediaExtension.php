@@ -21,12 +21,11 @@ use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\InitRuntimeInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class MediaExtension extends AbstractExtension implements InitRuntimeInterface
+class MediaExtension extends AbstractExtension
 {
     /**
      * @var Pool
@@ -43,11 +42,6 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
      */
     protected $mediaManager;
 
-    /**
-     * @var Environment
-     */
-    protected $environment;
-
     public function __construct(Pool $mediaService, ManagerInterface $mediaManager)
     {
         $this->mediaService = $mediaService;
@@ -63,11 +57,6 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
         ];
     }
 
-    public function initRuntime(Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
     /**
      * @param MediaInterface $media
      * @param string         $format
@@ -75,7 +64,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
      *
      * @return string
      */
-    public function media($media, $format, $options = [])
+    public function media(Environment $environment, $media, $format, $options = [])
     {
         $media = $this->getMedia($media);
 
@@ -91,7 +80,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
 
         $options = $provider->getHelperProperties($media, $format, $options);
 
-        return $this->render($provider->getTemplate('helper_view'), [
+        return $this->render($environment, $provider->getTemplate('helper_view'), [
             'media' => $media,
             'format' => $format,
             'options' => $options,
@@ -107,7 +96,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
      *
      * @return string
      */
-    public function thumbnail($media, $format, $options = [])
+    public function thumbnail(Environment $environment, $media, $format, $options = [])
     {
         $media = $this->getMedia($media);
 
@@ -138,7 +127,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
 
         $options['src'] = $provider->generatePublicUrl($media, $format);
 
-        return $this->render($provider->getTemplate('helper_thumbnail'), [
+        return $this->render($environment, $provider->getTemplate('helper_thumbnail'), [
             'media' => $media,
             'options' => $options,
         ]);
@@ -149,10 +138,10 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
      *
      * @return mixed
      */
-    public function render($template, array $parameters = [])
+    public function render(Environment $environment, $template, array $parameters = [])
     {
         if (!isset($this->resources[$template])) {
-            $this->resources[$template] = $this->environment->loadTemplate($template);
+            $this->resources[$template] = $environment->load($template);
         }
 
         return $this->resources[$template]->render($parameters);

@@ -43,7 +43,7 @@ class PathNode extends Node
     {
         $compiler
             ->addDebugInfo($this)
-            ->write(sprintf("echo \$this->env->getExtension('%s')->path(", $this->extensionName))
+            ->write(sprintf("echo \$this->env->getExtension('%s')->path(\$this->env, ", $this->extensionName))
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))
