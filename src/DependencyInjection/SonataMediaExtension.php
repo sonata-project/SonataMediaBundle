@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use Aws\S3\S3Client;
+use Aws\Sdk;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
@@ -339,6 +341,18 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                 ->replaceArgument(2, $config['cdn']['cloudfront']['secret'])
                 ->replaceArgument(3, $config['cdn']['cloudfront']['distribution_id'])
             ;
+
+            if (isset($config['cdn']['cloudfront']['region'])) {
+                // @todo: Perform this replacenent unconditionally when support for aws/aws-sdk-php < 3.0 is dropped.
+                $container->getDefinition('sonata.media.cdn.cloudfront')
+                    ->replaceArgument(4, $config['cdn']['cloudfront']['region']);
+            }
+
+            if (isset($config['cdn']['cloudfront']['version'])) {
+                // @todo: Perform this replacenent unconditionally when support for aws/aws-sdk-php < 3.0 is dropped.
+                $container->getDefinition('sonata.media.cdn.cloudfront')
+                    ->replaceArgument(5, $config['cdn']['cloudfront']['version']);
+            }
         } else {
             $container->removeDefinition('sonata.media.cdn.cloudfront');
         }
@@ -389,6 +403,23 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
         // add the default configuration for the S3 filesystem
         if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['s3'])) {
+            // @todo: Remove the following conditional block when support for aws/aws-sdk-php < 3.0 is dropped.
+            if (isset($config['filesystem']['s3']['sdk_version'])) {
+                if (3 === $config['filesystem']['s3']['sdk_version'] && !class_exists(Sdk::class)) {
+                    throw new \UnexpectedValueException(
+                        'The configuration "sonata_media.filesystem.s3.sdk_version" can not contain the value 3 since'.
+                        ' the installed version of aws/aws-sdk-php is not 3.x.'
+                    );
+                }
+
+                if (2 === $config['filesystem']['s3']['sdk_version'] && class_exists(Sdk::class)) {
+                    throw new \UnexpectedValueException(
+                        'The configuration "sonata_media.filesystem.s3.sdk_version" can not contain the value 2 since'.
+                        ' the installed version of aws/aws-sdk-php is not 2.x.'
+                    );
+                }
+            }
+
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
@@ -405,7 +436,8 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                 ])
             ;
 
-            if (3 === $config['filesystem']['s3']['sdk_version']) {
+            // @todo: Remove the following check and the `else` block when support for aws/aws-sdk-php < 3.0 is dropped.
+            if (class_exists(Sdk::class)) {
                 $arguments = [
                     'region' => $config['filesystem']['s3']['region'],
                     'version' => $config['filesystem']['s3']['version'],
@@ -421,18 +453,30 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                         'key' => $config['filesystem']['s3']['accessKey'],
                     ];
                 }
+            } else {
+                $arguments = [];
+
+                if (isset($config['filesystem']['s3']['region'])) {
+                    $arguments['region'] = $config['filesystem']['s3']['region'];
+                }
+
+                if (isset($config['filesystem']['s3']['version'])) {
+                    $arguments['version'] = $config['filesystem']['s3']['version'];
+                }
+
+                if (isset($config['filesystem']['s3']['endpoint'])) {
+                    $arguments['endpoint'] = $config['filesystem']['s3']['endpoint'];
+                }
+
+                $arguments['secret'] = $config['filesystem']['s3']['secretKey'];
+                $arguments['key'] = $config['filesystem']['s3']['accessKey'];
 
                 $container->getDefinition('sonata.media.adapter.service.s3')
-                    ->replaceArgument(0, $arguments)
-                ;
-            } else {
-                $container->getDefinition('sonata.media.adapter.service.s3')
-                    ->replaceArgument(0, [
-                        'secret' => $config['filesystem']['s3']['secretKey'],
-                        'key' => $config['filesystem']['s3']['accessKey'],
-                    ])
-                ;
+                    ->setFactory([S3Client::class, 'factory']);
             }
+
+            $container->getDefinition('sonata.media.adapter.service.s3')
+                ->replaceArgument(0, $arguments);
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.s3');
             $container->removeDefinition('sonata.media.filesystem.s3');

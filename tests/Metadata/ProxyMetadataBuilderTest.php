@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Metadata;
 
 use Aws\S3\S3Client;
+use Aws\Sdk;
 use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\TestCase;
@@ -25,8 +26,9 @@ use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ProxyMetadataBuilderTest extends TestCase
+final class ProxyMetadataBuilderTest extends TestCase
 {
     public function testProxyAmazon(): void
     {
@@ -40,23 +42,37 @@ class ProxyMetadataBuilderTest extends TestCase
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        //adapter cannot be mocked
-        $amazonclient = S3Client::factory([
-            'credentials' => [
-                'key' => 'XXXXXXXXXXXX',
-                'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            ],
-            'region' => 'us-west-1',
-        ]);
+        if (class_exists(Sdk::class)) {
+            // AWS v3.x
+            $amazonclient = new S3Client([
+                'credentials' => [
+                    'key' => 'XXXXXXXXXXXX',
+                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                ],
+                'region' => 'us-west-1',
+                'version' => '2006-03-01',
+            ]);
+        } else {
+            // AWS v2.x. Remove this condition when the support for this version is dropped.
+            $amazonclient = S3Client::factory([
+                'credentials' => [
+                    'key' => 'XXXXXXXXXXXX',
+                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                ],
+                'region' => 'us-west-1',
+            ]);
+        }
+
+        // adapter cannot be mocked
         $adapter = new AwsS3($amazonclient, '');
 
-        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = $this->createStub(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
-        $media = $this->createMock(MediaInterface::class);
+        $media = $this->createStub(MediaInterface::class);
         $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
@@ -89,13 +105,13 @@ class ProxyMetadataBuilderTest extends TestCase
         //adapter cannot be mocked
         $adapter = new Local('');
 
-        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = $this->createStub(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
-        $media = $this->createMock(MediaInterface::class);
+        $media = $this->createStub(MediaInterface::class);
         $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
@@ -125,16 +141,16 @@ class ProxyMetadataBuilderTest extends TestCase
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        //adapter cannot be mocked
+        // adapter cannot be mocked
         $adapter = new Local('');
 
-        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = $this->createStub(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
-        $media = $this->createMock(MediaInterface::class);
+        $media = $this->createStub(MediaInterface::class);
         $media
             ->method('getProviderName')
             ->willReturn('wrongprovider');
@@ -164,25 +180,39 @@ class ProxyMetadataBuilderTest extends TestCase
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        //adapter cannot be mocked
-        $amazonclient = S3Client::factory([
-            'credentials' => [
-                'key' => 'XXXXXXXXXXXX',
-                'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-            ],
-            'region' => 'us-west-1',
-        ]);
+        if (class_exists(Sdk::class)) {
+            // AWS v3.x
+            $amazonclient = new S3Client([
+                'credentials' => [
+                    'key' => 'XXXXXXXXXXXX',
+                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                ],
+                'region' => 'us-west-1',
+                'version' => '2006-03-01',
+            ]);
+        } else {
+            // AWS v2.x. Remove this condition when the support for this version is dropped.
+            $amazonclient = S3Client::factory([
+                'credentials' => [
+                    'key' => 'XXXXXXXXXXXX',
+                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+                ],
+                'region' => 'us-west-1',
+            ]);
+        }
+
+        // adapter cannot be mocked
         $adapter1 = new AwsS3($amazonclient, '');
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
 
-        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = $this->createStub(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
-        $media = $this->createMock(MediaInterface::class);
+        $media = $this->createStub(MediaInterface::class);
         $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
@@ -212,18 +242,18 @@ class ProxyMetadataBuilderTest extends TestCase
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        //adapter cannot be mocked
+        // adapter cannot be mocked
         $adapter1 = new Local('');
         $adapter2 = new Local('');
         $adapter = new Replicate($adapter1, $adapter2);
 
-        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem = $this->createStub(Filesystem::class);
         $filesystem->method('getAdapter')->willReturn($adapter);
 
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = $this->createStub(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($filesystem);
 
-        $media = $this->createMock(MediaInterface::class);
+        $media = $this->createStub(MediaInterface::class);
         $media
             ->method('getProviderName')
             ->willReturn('sonata.media.provider.image');
@@ -241,7 +271,7 @@ class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
-    protected function getContainer(array $services): Container
+    private function getContainer(array $services): ContainerInterface
     {
         $container = new Container();
 
