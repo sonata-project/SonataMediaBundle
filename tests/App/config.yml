@@ -36,11 +36,26 @@ sonata_media:
     cdn:
         server:
             path: /uploads/media
+        cloudfront:
+            distribution_id: abc
+            path: /awscdn/media
+            key: xxxxxx
+            secret: 53cr37
+            region: us-east-1
+            version: 2020-05-31
 
     filesystem:
         local:
             directory: "%kernel.root_dir%/../public/uploads/media"
             create: false
+
+        s3:
+            bucket: my-bucket
+            accessKey: xxxxxx
+            secretKey: xxxxxx
+            region: s3.amazonaws.com
+            version: 2006-03-01
+            endpoint: null
 
 fos_rest:
     param_fetcher_listener: true

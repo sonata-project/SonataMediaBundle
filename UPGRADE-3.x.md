@@ -1,6 +1,19 @@
 UPGRADE 3.x
 ===========
 
+UPGRADE FROM 3.x to 3.x
+=======================
+
+### Configuration node "sonata_media.filesystem.s3.sdk_version"
+
+The configuration node "sonata_media.filesystem.s3.sdk_version" is deprecated. The
+version of aws/aws-sdk-php is automatically inferred from the installed package.
+
+### Configuration node "sonata_media.cdn.cloudfront"
+
+The configuration nodes "sonata_media.cdn.cloudfront.region" and "sonata_media.cdn.cloudfront.version"
+are required when aws/aws-sdk-php 3.x is installed.
+
 UPGRADE FROM 3.25 to 3.26
 =========================
 

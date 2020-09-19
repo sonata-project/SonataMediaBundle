@@ -77,6 +77,8 @@ Full configuration options:
                 distribution_id:
                 key:
                 secret:
+                region:
+                version:
 
             fallback:
                 master:     sonata.media.cdn.panther
@@ -103,6 +105,7 @@ Full configuration options:
                 secretKey:
                 create:         false
                 region:         s3.amazonaws.com # change if not using US Standard region
+                version:        2006-03-01 # change according the API version you are using
                 storage:        standard # can be one of: standard or reduced
                 acl:            public # can be one of: public, private, open, auth_read, owner_read, owner_full_control
                 encryption:     aes256 # can be aes256 or not set
