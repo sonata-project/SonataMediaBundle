@@ -475,6 +475,10 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                     ->setFactory([S3Client::class, 'factory']);
             }
 
+            if (!empty($config['filesystem']['s3']['config'])) {
+                $arguments = array_merge($arguments, $config['filesystem']['s3']['config']);
+            }
+
             $container->getDefinition('sonata.media.adapter.service.s3')
                 ->replaceArgument(0, $arguments);
         } else {

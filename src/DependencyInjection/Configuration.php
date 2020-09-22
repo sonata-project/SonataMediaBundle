@@ -310,6 +310,12 @@ class Configuration implements ConfigurationInterface
                                     ->prototype('scalar')
                                     ->end()
                                 ->end()
+                                ->arrayNode('config')
+                                    ->info('Additional configuration settings to pass to the AWS S3 SDK')
+                                    ->useAttributeAsKey('name')
+                                    ->prototype('scalar')
+                                    ->end()
+                                ->end()
                             ->end()
                         ->end()
 

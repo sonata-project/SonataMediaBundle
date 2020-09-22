@@ -111,7 +111,9 @@ Full configuration options:
                 encryption:     aes256 # can be aes256 or not set
                 cache_control:  max-age=86400 # or any other
                 meta:
-                    key1:       value1 #any amount of metas(sent as x-amz-meta-key1 = value1)
+                    key1:       value1 # any amount of metas(sent as x-amz-meta-key1 = value1)
+                config:
+                    key1:       value1 # any amount of additional configuration settings to pass to the AWS SDK
 
             mogilefs:
                 hosts:      []

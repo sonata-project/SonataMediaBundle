@@ -228,6 +228,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                     'secret' => 'secret',
                     'key' => 'access',
                 ],
+                'extra' => true,
             ],
             [
                 'filesystem' => [
@@ -237,6 +238,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                         'version' => 'version',
                         'secretKey' => 'secret',
                         'accessKey' => 'access',
+                        'config' => [
+                            'extra' => true,
+                        ],
                     ],
                 ],
             ],
@@ -337,6 +341,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 'version' => 'version',
                 'secret' => 'secret',
                 'key' => 'access',
+                'extra' => true,
             ],
             [
                 'filesystem' => [
@@ -346,6 +351,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                         'version' => 'version',
                         'secretKey' => 'secret',
                         'accessKey' => 'access',
+                        'config' => [
+                            'extra' => true,
+                        ],
                     ],
                 ],
             ],
