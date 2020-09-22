@@ -28,12 +28,12 @@ class Server implements CDNInterface
      */
     public function __construct($path)
     {
-        $this->path = $path;
+        $this->path = rtrim($path, '/');
     }
 
     public function getPath($relativePath, $isFlushable)
     {
-        return sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
+        return sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
     }
 
     public function flushByString($string)

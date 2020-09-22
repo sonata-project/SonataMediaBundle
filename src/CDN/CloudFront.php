@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\CDN;
 
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\Exception\CloudFrontException;
-use Aws\Sdk;
 
 /**
  * From http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html.
@@ -44,7 +43,9 @@ use Aws\Sdk;
  *
  * @final since sonata-project/media-bundle 3.21.0
  *
- * @uses \CloudFrontClient for stablish connection with CloudFront service
+ * @todo Remove this class when support for aws/aws-sdk-php < 3.0 is dropped.
+ *
+ * @uses CloudFrontClient for establishing a connection with CloudFront service
  *
  * @see http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.htmlInvalidating Objects (Web Distributions Only)
  *
@@ -52,22 +53,35 @@ use Aws\Sdk;
  */
 class CloudFront implements CDNInterface
 {
+    private const AVAILABLE_STATUSES = [
+        self::STATUS_OK => 'Completed',
+        self::STATUS_WAITING => 'InProgress',
+    ];
+
     /**
+     * NEXT_MAJOR: Remove this property.
+     *
      * @var string
      */
     protected $path;
 
     /**
+     * NEXT_MAJOR: Remove this property.
+     *
      * @var string
      */
     protected $key;
 
     /**
+     * NEXT_MAJOR: Remove this property.
+     *
      * @var string
      */
     protected $secret;
 
     /**
+     * NEXT_MAJOR: Remove this property.
+     *
      * @var string
      */
     protected $distributionId;
@@ -88,50 +102,58 @@ class CloudFront implements CDNInterface
     private $version;
 
     /**
-     * @todo: Make mandatory argument 5 and 6 when support for aws/aws-sdk-php < 3.0 is dropped.
+     * NEXT_MAJOR: Use `CloudFrontClient $client, string $distributionId, string $path` as signature for this method.
      *
-     * @param string $path
-     * @param string $key
-     * @param string $secret
-     * @param string $distributionId
+     * @param CloudFrontClient|string $clientOrPath
+     * @param string                  $distributionIdOrKey
+     * @param string                  $pathOrSecret
+     * @param string|null             $distributionId
      */
     public function __construct(
-        $path,
-        $key,
-        $secret,
-        $distributionId,
-        ?string $region = null,
-        ?string $version = null
+        $clientOrPath,
+        $distributionIdOrKey,
+        $pathOrSecret,
+        $distributionId = null
+        /* , ?string $region = null, ?string $version = null */
     ) {
-        $this->path = $path;
-        $this->key = $key;
-        $this->secret = $secret;
-        $this->distributionId = $distributionId;
+        // NEXT_MAJOR: Remove the following conditional block.
+        if (!$clientOrPath instanceof CloudFrontClient) {
+            @trigger_error(sprintf(
+                'Passing another type than %s as argument 1 for "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                .' and will throw a %s error in version 4.0. You must pass these arguments: CDN client, CDN distribution id, CDN path.',
+                CloudFrontClient::class,
+                __METHOD__,
+                \TypeError::class
+            ), E_USER_DEPRECATED);
 
-        // @todo: Remove the following conditional block when support for aws/aws-sdk-php < 3.0 is dropped.
-        if (class_exists(Sdk::class)) {
-            if (null === $region) {
-                throw new \TypeError(sprintf(
-                    'Argument 5 for "%s()" is required and can not be null when aws/aws-sdk-php >= 3.0 is installed.',
-                    __METHOD__
-                ));
-            }
+            $this->path = rtrim($clientOrPath, '/');
+            $this->key = $distributionIdOrKey;
+            $this->secret = $pathOrSecret;
+            $this->distributionId = $distributionId;
 
-            if (null === $version) {
-                throw new \TypeError(sprintf(
-                    'Argument 6 for "%s()" is required and can not be null when aws/aws-sdk-php >= 3.0 is installed.',
-                    __METHOD__
-                ));
-            }
+            $args = \func_get_args();
+
+            $this->region = $args[4] ?? null;
+            $this->version = $args[5] ?? null;
+
+            return;
         }
 
-        $this->region = $region;
-        $this->version = $region;
+        if (\func_num_args() > 3) {
+            throw new \InvalidArgumentException(sprintf(
+                'Number of arguments passed to "%s()" cannot be higher than 3 when using the new signature.'
+                .' You must pass these arguments: CDN client, CDN distribution id, CDN path.',
+                __METHOD__
+            ));
+        }
+        $this->client = $clientOrPath;
+        $this->distributionId = $distributionIdOrKey;
+        $this->path = rtrim($pathOrSecret, '/');
     }
 
     public function getPath($relativePath, $isFlushable = false)
     {
-        return sprintf('%s/%s', rtrim($this->path, '/'), ltrim($relativePath, '/'));
+        return sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
     }
 
     public function flushByString($string)
@@ -152,83 +174,78 @@ class CloudFront implements CDNInterface
     public function flushPaths(array $paths)
     {
         if (empty($paths)) {
-            throw new \RuntimeException('Unable to flush : expected at least one path');
+            throw new \RuntimeException('Unable to flush: expected at least one path.');
         }
         // Normalizes paths due possible typos since all the CloudFront's
         // objects starts with a leading slash
-        $normalizedPaths = array_map(static function ($path) {
+        $normalizedPaths = array_map(static function (string $path): string {
             return '/'.ltrim($path, '/');
         }, $paths);
 
-        $invalidationBatch = [
-            'Paths' => [
-                'Quantity' => \count($normalizedPaths),
-                'Items' => $normalizedPaths,
-            ],
-            'CallerReference' => $this->getCallerReference($normalizedPaths),
-        ];
-
-        $arguments = [
-            'DistributionId' => $this->distributionId,
-        ];
-
-        // @todo: Remove the following check and the `else` block when support for aws/aws-sdk-php < 3.0 is dropped.
-        if (class_exists(Sdk::class)) {
-            // AWS v3.x.
-            $arguments += ['InvalidationBatch' => $invalidationBatch];
-        } else {
-            // AWS v2.x.
-            $arguments += $invalidationBatch;
-        }
-
         try {
-            $result = $this->getClient()->createInvalidation($arguments);
+            $result = $this->client->createInvalidation([
+                'DistributionId' => $this->distributionId,
+                'Paths' => [
+                    'Quantity' => \count($normalizedPaths),
+                    'Items' => $normalizedPaths,
+                ],
+                'CallerReference' => $this->getCallerReference($normalizedPaths),
+            ]);
 
-            if (!\in_array($status = $result->get('Status'), ['Completed', 'InProgress'], true)) {
-                throw new \RuntimeException('Unable to flush : '.$status);
+            $status = $result->get('Status');
+
+            if (false === array_search($status, self::AVAILABLE_STATUSES, true)) {
+                throw new \RuntimeException(sprintf('Unable to determine the flush status from the given response: "%s".', $status));
             }
 
             return $result->get('Id');
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException('Unable to flush : '.$ex->getMessage());
+            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths), 0, $ex));
         }
-    }
-
-    /**
-     * For testing only.
-     *
-     * @param CloudFrontClient $client
-     */
-    public function setClient($client)
-    {
-        if (!$client instanceof CloudFrontClient) {
-            @trigger_error('The '.__METHOD__.' expects a CloudFrontClient as parameter.', E_USER_DEPRECATED);
-        }
-
-        $this->client = $client;
     }
 
     public function getFlushStatus($identifier)
     {
         try {
-            $result = $this->getClient()->getInvalidation([
+            $result = $this->client->getInvalidation([
                 'DistributionId' => $this->distributionId,
                 'Id' => $identifier,
             ]);
 
-            return array_search($result->get('Status'), self::getStatusList(), true);
+            $status = array_search($result->get('Status'), self::AVAILABLE_STATUSES, true);
+
+            if (false === $status) {
+                @trigger_error(sprintf(
+                    'Returning a value not present in the `%s::STATUS_*` constants from %s() is deprecated since sonata-project/media-bundle 3.x'
+                    .' and will not be possible in version 4.0.',
+                    CDNInterface::class,
+                    __METHOD__
+                ), E_USER_DEPRECATED);
+
+                // NEXT_MAJOR: Remove the previous deprecation and uncomment the following exception.
+                // throw new \RuntimeException(sprintf('Unable to determine the flush status from the given response: "%s".', $status));
+            }
+
+            return $status;
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException('Unable to retrieve flush status : '.$ex->getMessage());
+            throw new \RuntimeException(sprintf('Unable to retrieve flush status for identifier %s.', $identifier), 0, $ex);
         }
     }
 
     /**
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
+     *
      * @static
      *
      * @return string[]
      */
     public static function getStatusList()
     {
+        @trigger_error(sprintf(
+            'Method "%s()" is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0.',
+            __METHOD__
+        ), E_USER_DEPRECATED);
+
         // @todo: check for a complete list of available CloudFront statuses
         return [
             self::STATUS_OK => 'Completed',
@@ -237,6 +254,38 @@ class CloudFront implements CDNInterface
             self::STATUS_ERROR => 'STATUS_ERROR',
             self::STATUS_WAITING => 'InProgress',
         ];
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
+     *
+     * @param CloudFrontClient $client
+     */
+    public function setClient($client)
+    {
+        @trigger_error(sprintf(
+            'Method "%s()" is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0.',
+            __METHOD__
+        ), E_USER_DEPRECATED);
+
+        if (!$this->client) {
+            $config = [
+                'key' => $this->region,
+                'secret' => $this->version,
+            ];
+
+            if (null !== $this->region) {
+                $config['region'] = $this->region;
+            }
+
+            if (null !== $this->version) {
+                $config['version'] = $this->version;
+            }
+
+            $this->client = CloudFrontClient::factory($config);
+        }
     }
 
     /**
@@ -249,37 +298,5 @@ class CloudFront implements CDNInterface
         sort($paths);
 
         return md5(implode(',', $paths));
-    }
-
-    /**
-     * @todo: Inject client through DI.
-     */
-    private function getClient(): CloudFrontClient
-    {
-        if (!$this->client) {
-            if (null !== $this->region) {
-                $config['region'] = $this->region;
-            }
-
-            if (null !== $this->version) {
-                $config['version'] = $this->version;
-            }
-
-            $credentials = [
-                'key' => $this->region,
-                'secret' => $this->version,
-            ];
-
-            // @todo: Remove the following check and the `else` block when support for aws/aws-sdk-php < 3.0 is dropped.
-            if (class_exists(Sdk::class)) {
-                // AWS v3.x.
-                $this->client = new CloudFrontClient($config + ['credentials' => $credentials]);
-            } else {
-                // AWS v2.x.
-                $this->client = CloudFrontClient::factory($config + $credentials);
-            }
-        }
-
-        return $this->client;
     }
 }
