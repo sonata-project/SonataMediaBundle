@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Provider;
 
 use Gaufrette\Adapter;
+use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
-use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
@@ -33,15 +33,27 @@ class BaseProviderTest extends AbstractProviderTest
         $adapter = $this->createMock(Adapter::class);
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->onlyMethods(['get'])
             ->setConstructorArgs([$adapter])
             ->getMock();
 
-        $cdn = new Server('/uploads/media');
+        $filesystem->method('get')->willReturn(new File('my_file.txt', $filesystem));
+
+        $cdn = $this->createStub(CDNInterface::class);
+        $cdn->method('flushPaths')->willReturn((string) mt_rand());
+        $cdn->method('getFlushStatus')
+            ->will($this->onConsecutiveCalls(
+                CDNInterface::STATUS_OK,
+                CDNInterface::STATUS_TO_FLUSH,
+                CDNInterface::STATUS_WAITING,
+                CDNInterface::STATUS_OK
+            ));
+        $cdn->method('getPath')->willReturnCallback(static function (string $path, bool $isFlushable): string {
+            return '/uploads/media/'.$path;
+        });
 
         $generator = new IdGenerator();
 
-        $thumbnail = $this->createMock(ThumbnailInterface::class);
+        $thumbnail = $this->createStub(ThumbnailInterface::class);
 
         $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail);
         $this->assertInstanceOf(BaseProvider::class, $provider);
@@ -78,6 +90,45 @@ class BaseProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
         $this->assertSame('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
+    }
+
+    public function testFlushCdn(): void
+    {
+        $provider = $this->getProvider();
+        $provider->addFormat('test', []);
+
+        $media = new Media();
+        $media->setId('42');
+        $media->setCdnIsFlushable(true);
+
+        $media->setContext('test');
+        $this->assertNull($media->getCdnFlushIdentifier());
+        $this->assertNull($media->getCdnStatus());
+        $provider->flushCdn($media);
+        $this->assertTrue($media->getCdnIsFlushable());
+        $this->assertNotNull($media->getCdnFlushIdentifier());
+        $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
+
+        $media->setContext('other');
+        $provider->flushCdn($media);
+        $this->assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
+        $this->assertNull($media->getCdnFlushIdentifier());
+
+        $media->setContext('test');
+        $provider->flushCdn($media);
+        $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
+        $this->assertNotNull($media->getCdnFlushIdentifier());
+
+        $media->setContext('other');
+        $provider->flushCdn($media);
+        $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
+        $this->assertNotNull($media->getCdnFlushIdentifier());
+        $provider->flushCdn($media);
+        $this->assertSame(CDNInterface::STATUS_WAITING, $media->getCdnStatus());
+        $this->assertNotNull($media->getCdnFlushIdentifier());
+        $provider->flushCdn($media);
+        $this->assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
+        $this->assertNull($media->getCdnFlushIdentifier());
     }
 
     public function testMetadata(): void
