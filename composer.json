@@ -61,6 +61,7 @@
     },
     "conflict": {
         "doctrine/dbal": "<2.6.0",
+        "doctrine/mongodb-odm": "<2.0",
         "friendsofsymfony/rest-bundle": "<2.6",
         "jms/serializer": "<0.13",
         "liip/imagine-bundle": "<1.9",
