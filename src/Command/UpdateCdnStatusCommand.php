@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
 /**
- * This command can be used to update CDN status for medias that are currently
+ * This command can be used to update CDN status for media that are currently
  * in status flushing.
  *
  * @final since sonata-project/media-bundle 3.21.0
@@ -41,6 +41,8 @@ class UpdateCdnStatusCommand extends BaseCommand
      */
     protected $output;
 
+    protected static $defaultName = 'sonata:media:update-cdn-status';
+
     /**
      * @var InputInterface
      */
@@ -48,13 +50,29 @@ class UpdateCdnStatusCommand extends BaseCommand
 
     public function configure()
     {
-        $this->setName('sonata:media:update-cdn-status')
-            ->setDescription('Refresh CDN status for medias that are in status flushing')
-            ->setDefinition(
-                [
+        $this
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-            ]
+            ])
+            ->setDescription('Updates model media with the current CDN status')
+            ->setHelp(
+                <<<'EOF'
+The <info>%command.name%</info> command helps maintaining your model media in sync
+with the CDN. Since the flush process in a CDN is not an immediate operation, the
+media that is marked as flushable has the status <info>CDNInterface::STATUS_TO_FLUSH</info>
+when it is updated. This command iterates over the media, retrieves the flush status
+from the CDN and performs the update in your model based on the CDN response.
+
+When you execute the command, it will prompt for a media provider and context:
+
+  <info>php %command.full_name%</info>
+
+You can also pass the media provider and the context as arguments:
+
+  <info>php %command.full_name% sonata.media.provider.file default</info>
+
+EOF
             );
     }
 
@@ -74,47 +92,59 @@ class UpdateCdnStatusCommand extends BaseCommand
             'cdnIsFlushable' => true,
         ]);
 
-        $this->log(sprintf('Loaded %s medias for updating CDN status (provider: %s, context: %s)', \count($medias), $provider->getName(), $context));
+        $this->log(sprintf('Loaded %s media for CDN status update (provider: %s, context: %s)', \count($medias), $provider->getName(), $context));
 
         foreach ($medias as $media) {
             $cdn = $provider->getCdn();
 
-            $this->log(sprintf('Refresh CDN status for media "%s" (%d) ', $media->getName(), $media->getId()), false);
+            $this->log(sprintf('Refresh CDN status for media "%s" (%s) ', $media->getName(), $media->getId()), false);
 
             if (!$media->getCdnFlushIdentifier()) {
-                $this->log('<error>Skiping while empty flush identifier</error>');
+                $this->log('<error>Skipping since the medium does not have a pending flush.</error>');
 
                 continue;
             }
 
+            $previousStatus = $media->getCdnStatus();
+
             try {
-                $previousStatus = $media->getCdnStatus();
-                if (CDNInterface::STATUS_OK === ($cdnStatus = $cdn->getFlushStatus($media->getCdnFlushIdentifier()))) {
-                    $media->setCdnIsFlushable(false);
+                $cdnStatus = $cdn->getFlushStatus($media->getCdnFlushIdentifier());
+                if (\in_array($cdnStatus, [CDNInterface::STATUS_OK, CDNInterface::STATUS_ERROR], true)) {
                     $media->setCdnFlushIdentifier(null);
-                    $media->setCdnFlushAt(new \DateTime());
+
+                    if (CDNInterface::STATUS_OK === $cdnStatus) {
+                        $media->setCdnFlushAt(new \DateTime());
+                    }
                 }
                 $media->setCdnStatus($cdnStatus);
 
                 if (OutputInterface::VERBOSITY_VERBOSE <= $this->output->getVerbosity()) {
                     if ($previousStatus === $cdnStatus) {
-                        $this->log(sprintf('No changes (%d)', $cdnStatus));
+                        $this->log(sprintf('No changes (%u)', $cdnStatus));
                     } elseif (CDNInterface::STATUS_OK === $cdnStatus) {
-                        $this->log(sprintf('<info>Flush completed</info> (%d => %d)', $previousStatus, $cdnStatus));
+                        $this->log(sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus, $cdnStatus));
                     } else {
-                        $this->log(sprintf('Updated status (%d => %d)', $previousStatus, $cdnStatus));
+                        $this->log(sprintf('Updated status (%u => %u)', $previousStatus, $cdnStatus));
                     }
                 }
-            } catch (\Exception $e) {
-                $this->log(sprintf('<error>Unable update CDN status, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+            } catch (\Throwable $e) {
+                $this->log(sprintf(
+                    '<error>Unable update CDN status, media: %s - %s </error>',
+                    $media->getId(),
+                    $e->getMessage()
+                ), ['exception' => $e]);
 
                 continue;
             }
 
             try {
                 $this->getMediaManager()->save($media);
-            } catch (\Exception $e) {
-                $this->log(sprintf('<error>Unable saving media, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+            } catch (\Throwable $e) {
+                $this->log(sprintf(
+                    '<error>Unable to update medium: %s - %s </error>',
+                    $media->getId(),
+                    $e->getMessage()
+                ), ['exception' => $e]);
 
                 continue;
             }

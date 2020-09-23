@@ -102,3 +102,17 @@ Creates default root categories for the ``SonataClassificationBundle`` if they d
 .. code-block:: bash
 
    bin/console sonata:media:fix-media-context
+
+Update CDN status
+^^^^^^^^^^^^^^^^^
+
+Updates and keeps synchronized the media with the CDN flush status for a given provider
+(IE: ``sonata.media.provider.image``) in the given context (IE: ``default``).
+
+.. note::
+
+   There is also an interactive shell for arguments.
+
+.. code-block:: bash
+
+   bin/console sonata:media:update-cdn-status sonata.media.provider.image default
