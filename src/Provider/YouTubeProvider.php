@@ -164,7 +164,7 @@ class YouTubeProvider extends BaseVideoProvider
 
             // Values: 'allowfullscreen' or empty. Default is 'allowfullscreen'. Setting to empty value disables
             //  the fullscreen button.
-            'allowFullScreen' => '1' === $default_player_url_parameters['fs'] ? true : false,
+            'allowFullScreen' => '1' === $default_player_url_parameters['fs'],
 
             // The allowScriptAccess parameter in the code is needed to allow the player SWF to call
             // functions on the containing HTML page, since the player is hosted on a different domain
@@ -246,8 +246,14 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\#\?&\"'>]+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[1]);
+        $isMatching = preg_match(
+            '{^(?:https?://)?(?:www\.)?(?:m\.)?(?:youtu\.be/|youtube\.com/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)/))(?<video_id>[^\#\?&\'>]+)}',
+            $media->getBinaryContent(),
+            $matches
+        );
+
+        if ($isMatching) {
+            $media->setBinaryContent($matches['video_id']);
         }
     }
 
