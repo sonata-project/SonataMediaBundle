@@ -68,7 +68,7 @@ class VimeoProvider extends BaseVideoProvider
             'width' => $box->getWidth(),
             'height' => $box->getHeight(),
             'class' => $options['class'] ?? '',
-            'allow_fullscreen' => isset($options['allowfullscreen']) ? true : false,
+            'allow_fullscreen' => (bool) ($options['allowfullscreen'] ?? false),
         ];
 
         return $params;
@@ -135,8 +135,8 @@ class VimeoProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/vimeo\.com\/(video\/|)(\d+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[2]);
+        if (preg_match('{vimeo\.com/(?:video/|)(?<video_id>\d+)}', $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches['video_id']);
         }
     }
 
