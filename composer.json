@@ -41,7 +41,7 @@
         "symfony/dependency-injection": "^4.4",
         "symfony/event-dispatcher": "^4.4",
         "symfony/filesystem": "^4.4 || ^5.1",
-        "symfony/finder": "^4.4",
+        "symfony/finder": "^4.4 || ^5.1",
         "symfony/form": "^4.4",
         "symfony/framework-bundle": "^4.4",
         "symfony/http-foundation": "^4.4",
@@ -55,7 +55,7 @@
         "symfony/translation": "^4.4",
         "symfony/twig-bridge": "^4.4",
         "symfony/twig-bundle": "^4.4",
-        "symfony/validator": "^4.4",
+        "symfony/validator": "^4.4 || ^5.1",
         "twig/string-extra": "^3.0",
         "twig/twig": "^2.12.1"
     },
