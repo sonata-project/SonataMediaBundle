@@ -72,10 +72,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $loader->load('consumer.xml');
         }
 
-        if (isset($bundles['SonataFormatterBundle'])) {
-            $loader->load('formatter.xml');
-        }
-
         if (isset($bundles['SonataBlockBundle'])) {
             $loader->load('block.xml');
         }

@@ -9,5 +9,8 @@
         <service id="sonata.media.twig.global" class="Sonata\MediaBundle\Twig\GlobalVariables">
             <argument type="service" id="service_container"/>
         </service>
+        <service id="sonata.media.formatter.twig" class="Sonata\MediaBundle\Twig\Extension\FormatterMediaExtension" public="true">
+            <argument type="service" id="sonata.media.twig.extension"/>
+        </service>
     </services>
 </container>
