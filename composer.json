@@ -122,7 +122,7 @@
     "autoload-dev": {
         "psr-4": {
             "Sonata\\MediaBundle\\Tests\\": "tests/",
-            "Sonata\\ClassificationBundle\\": "tests/fixtures/SonataClassificationBundle"
+            "Sonata\\ClassificationBundle\\": "tests/Fixtures/SonataClassificationBundle"
         }
     }
 }
