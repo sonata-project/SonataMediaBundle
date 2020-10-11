@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
+use Aws\Sdk;
 use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagicImagine;
 use Imagine\Imagick\Imagine as ImagicImagine;
@@ -135,6 +136,27 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         }
     }
 
+    public function testDefaultHasDefaultHttp(): void
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasAlias('sonata.media.http.client', 'sonata.media.buzz.browser');
+        $this->assertContainerBuilderNotHasService('sonata.media.http.message_factory');
+    }
+
+    public function testWithHttpClient(): void
+    {
+        $this->load([
+            'http' => [
+                'client' => 'acme_client',
+                'message_factory' => 'acme_factory',
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasAlias('sonata.media.http.client', 'acme_client');
+        $this->assertContainerBuilderHasAlias('sonata.media.http.message_factory', 'acme_factory');
+    }
+
     /**
      * @dataProvider dataResizer
      */
@@ -201,60 +223,278 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider dataFilesystemConfiguration
+     * @dataProvider dataFilesystemConfigurationAwsV3
      */
-    public function testLoadWithFilesystemConfiguration(array $configs, array $args): void
+    public function testLoadWithFilesystemConfigurationV3(array $expected, array $configs): void
     {
+        if (!class_exists(Sdk::class)) {
+            $this->markTestSkipped('This test requires aws/aws-sdk-php 3.x.');
+        }
+
         $this->load($configs);
 
         $this->assertSame(
-            $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0),
-            $args
+            $expected,
+            $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0)
         );
     }
 
-    public function dataFilesystemConfiguration(): array
+    public function dataFilesystemConfigurationAwsV3(): iterable
     {
-        return [
+        yield [
             [
-                [
-                    'filesystem' => [
-                        's3' => [
-                            'bucket' => 'bucket_name',
-                            'sdk_version' => 3,
-                            'region' => 'region',
-                            'version' => 'version',
-                            'secretKey' => null,
-                            'accessKey' => null,
-                        ],
-                    ],
-                ],
-                [
-                    'region' => 'region',
-                    'version' => 'version',
+                'region' => 'region',
+                'version' => 'version',
+                'credentials' => [
+                    'secret' => 'secret',
+                    'key' => 'access',
                 ],
             ],
             [
-                [
-                    'filesystem' => [
-                        's3' => [
-                            'bucket' => 'bucket_name',
-                            'sdk_version' => 3,
-                            'region' => 'region',
-                            'version' => 'version',
-                            'endpoint' => 'endpoint',
-                            'secretKey' => 'secret',
-                            'accessKey' => 'access',
-                        ],
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'region' => 'region',
+                        'version' => 'version',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
                     ],
                 ],
-                [
-                    'region' => 'region',
-                    'version' => 'version',
-                    'endpoint' => 'endpoint',
-                    'credentials' => [
-                        'secret' => 'secret',
-                        'key' => 'access',
+            ],
+        ];
+
+        yield [
+            [
+                'region' => 'region',
+                'version' => 'version',
+                'endpoint' => 'endpoint',
+                'credentials' => [
+                    'secret' => 'secret',
+                    'key' => 'access',
+                ],
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        // NEXT_MAJOR: Remove the "sdk_version" node.
+                        'sdk_version' => 3,
+                        'region' => 'region',
+                        'version' => 'version',
+                        'endpoint' => 'endpoint',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        yield [
+            [
+                'region' => 's3.amazonaws.com',
+                'version' => 'latest',
+                'credentials' => [
+                    'secret' => 'secret',
+                    'key' => 'access',
+                ],
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        yield [
+            [
+                'region' => 's3.amazonaws.com',
+                'version' => null,
+                'credentials' => [
+                    'secret' => 'secret',
+                    'key' => 'access',
+                ],
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'version' => null,
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @todo: Remove this test when support for aws/aws-sdk-php < 3.0 is dropped.
+     *
+     * @dataProvider dataFilesystemConfigurationAwsV2
+     */
+    public function testLoadWithFilesystemConfigurationV2(array $expected, array $configs): void
+    {
+        if (class_exists(Sdk::class)) {
+            $this->markTestSkipped('This test requires aws/aws-sdk-php 2.x.');
+        }
+
+        $this->load($configs);
+
+        $this->assertSame(
+            $expected,
+            $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0)
+        );
+    }
+
+    public function dataFilesystemConfigurationAwsV2(): iterable
+    {
+        yield [
+            [
+                'region' => 'region',
+                'version' => 'version',
+                'secret' => 'secret',
+                'key' => 'access',
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'region' => 'region',
+                        'version' => 'version',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        // NEXT_MAJOR: Remove the following dataset.
+        yield [
+            [
+                'region' => 'region',
+                'version' => 'version',
+                'secret' => 'secret',
+                'key' => 'access',
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'sdk_version' => 2,
+                        'region' => 'region',
+                        'version' => 'version',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        yield [
+            [
+                'region' => 'region',
+                'version' => 'version',
+                'endpoint' => 'endpoint',
+                'secret' => 'secret',
+                'key' => 'access',
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'sdk_version' => 2,
+                        'region' => 'region',
+                        'version' => 'version',
+                        'endpoint' => 'endpoint',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        yield [
+            [
+                'endpoint' => 'endpoint',
+                'secret' => 'secret',
+                'key' => 'access',
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'sdk_version' => 2,
+                        'region' => null,
+                        'version' => null,
+                        'endpoint' => 'endpoint',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        yield [
+            [
+                'region' => 's3.amazonaws.com',
+                'endpoint' => 'endpoint',
+                'secret' => 'secret',
+                'key' => 'access',
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'sdk_version' => 2,
+                        'version' => null,
+                        'endpoint' => 'endpoint',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        yield [
+            [
+                'region' => 's3.amazonaws.com',
+                'version' => 'latest',
+                'endpoint' => 'endpoint',
+                'secret' => 'secret',
+                'key' => 'access',
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'sdk_version' => 2,
+                        'endpoint' => 'endpoint',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
+                    ],
+                ],
+            ],
+        ];
+
+        yield [
+            [
+                'region' => 's3.amazonaws.com',
+                'version' => 'latest',
+                'endpoint' => 'endpoint',
+                'secret' => 'secret',
+                'key' => 'access',
+            ],
+            [
+                'filesystem' => [
+                    's3' => [
+                        'bucket' => 'bucket_name',
+                        'endpoint' => 'endpoint',
+                        'secretKey' => 'secret',
+                        'accessKey' => 'access',
                     ],
                 ],
             ],

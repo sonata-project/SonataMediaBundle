@@ -77,6 +77,8 @@ Full configuration options:
                 distribution_id:
                 key:
                 secret:
+                region:
+                version:
 
             fallback:
                 master:     sonata.media.cdn.panther
@@ -103,6 +105,7 @@ Full configuration options:
                 secretKey:
                 create:         false
                 region:         s3.amazonaws.com # change if not using US Standard region
+                version:        2006-03-01 # change according the API version you are using
                 storage:        standard # can be one of: standard or reduced
                 acl:            public # can be one of: public, private, open, auth_read, owner_read, owner_full_control
                 encryption:     aes256 # can be aes256 or not set
@@ -174,5 +177,17 @@ Full configuration options:
                 generator:  sonata.media.generator.default
                 thumbnail:  sonata.media.thumbnail.format
 
+        # The buzz implementation is deprecated, use a PSR http-client instead
         buzz:
             connector:  sonata.media.buzz.connector.file_get_contents # sonata.media.buzz.connector.curl
+
+        http:
+            client:          'symfony_http_client'       # You need symfony/http-client for this
+            message_factory: 'nyholm.psr7.psr17_factory' # You need nyholm/psr7 for this
+
+        services:
+            symfony_http_client:
+                class: Symfony\Component\HttpClient\Psr18Client
+
+            nyholm.psr7.psr17_factory:
+                class: Nyholm\Psr7\Factory\Psr17Factory

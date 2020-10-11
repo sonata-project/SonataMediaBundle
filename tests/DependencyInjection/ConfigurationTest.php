@@ -30,6 +30,10 @@ class ConfigurationTest extends TestCase
             'sonata_media' => [
                 'db_driver' => 'doctrine_orm',
                 'default_context' => 'default',
+                'http' => [
+                    'client' => 'sonata.media.http.buzz_client',
+                    'message_factory' => null,
+                ],
             ],
         ];
         $processor = new Processor();

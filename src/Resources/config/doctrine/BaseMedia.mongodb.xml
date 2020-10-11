@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseMedia">
-        <field name="name" fieldName="name" type="string"/>
-        <field name="description" fieldName="description" type="string"/>
-        <field name="enabled" fieldName="enabled" type="boolean"/>
-        <field name="providerName" fieldName="providerName" type="string"/>
-        <field name="providerStatus" fieldName="providerStatus" type="int"/>
-        <field name="providerReference" fieldName="providerReference" type="string"/>
-        <field name="providerMetadata" fieldName="providerMetadata" type="hash"/>
-        <field name="width" fieldName="width" type="int"/>
-        <field name="height" fieldName="height" type="int"/>
-        <field name="length" fieldName="length" type="float"/>
-        <field name="contentType" fieldName="contentType" type="string"/>
-        <field name="size" fieldName="size" type="int"/>
-        <field name="copyright" fieldName="copyright" type="string"/>
-        <field name="authorName" fieldName="authorName" type="string"/>
-        <field name="context" fieldName="context" type="string"/>
-        <field name="cdnIsFlushable" fieldName="cdnIsFlushable" type="boolean"/>
-        <field name="cdnFlushIdentifier" fieldName="cdnFlushIdentifier" type="string"/>
-        <field name="cdnFlushAt" fieldName="cdnFlushAt" type="date"/>
-        <field name="cdnStatus" fieldName="cdnStatus" type="int"/>
-        <field name="updatedAt" fieldName="updatedAt" type="date"/>
-        <field name="createdAt" fieldName="createdAt" type="date"/>
+        <field name="name" field-name="name" type="string"/>
+        <field name="description" field-name="description" type="string"/>
+        <field name="enabled" field-name="enabled" type="boolean"/>
+        <field name="providerName" field-name="providerName" type="string"/>
+        <field name="providerStatus" field-name="providerStatus" type="int"/>
+        <field name="providerReference" field-name="providerReference" type="string"/>
+        <field name="providerMetadata" field-name="providerMetadata" type="hash"/>
+        <field name="width" field-name="width" type="int"/>
+        <field name="height" field-name="height" type="int"/>
+        <field name="length" field-name="length" type="float"/>
+        <field name="contentType" field-name="contentType" type="string"/>
+        <field name="size" field-name="size" type="int"/>
+        <field name="copyright" field-name="copyright" type="string"/>
+        <field name="authorName" field-name="authorName" type="string"/>
+        <field name="context" field-name="context" type="string"/>
+        <field name="cdnIsFlushable" field-name="cdnIsFlushable" type="boolean"/>
+        <field name="cdnFlushIdentifier" field-name="cdnFlushIdentifier" type="string"/>
+        <field name="cdnFlushAt" field-name="cdnFlushAt" type="date"/>
+        <field name="cdnStatus" field-name="cdnStatus" type="int"/>
+        <field name="updatedAt" field-name="updatedAt" type="date"/>
+        <field name="createdAt" field-name="createdAt" type="date"/>
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist"/>
             <lifecycle-callback type="preUpdate" method="preUpdate"/>

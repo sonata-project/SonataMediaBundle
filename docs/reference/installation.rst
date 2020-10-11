@@ -51,6 +51,10 @@ Add ``SonataMediaBundle`` via composer::
 
     composer require sonata-project/media-bundle
 
+To load external resources, e.g. Vimeo or YouTube, you must use a ``psr/http-client`` and ``psr/http-factory``::
+
+    composer require symfony/http-client nyholm/psr7
+
 If you want to use the REST API, you also need ``friendsofsymfony/rest-bundle`` and ``nelmio/api-doc-bundle``::
 
     composer require friendsofsymfony/rest-bundle nelmio/api-doc-bundle

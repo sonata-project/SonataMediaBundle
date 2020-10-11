@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use Aws\Sdk;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -77,6 +79,7 @@ class Configuration implements ConfigurationInterface
         $this->addExtraSection($node);
         $this->addModelSection($node);
         $this->addBuzzSection($node);
+        $this->addHttpClientSection($node);
         $this->addResizerSection($node);
         $this->addAdapterSection($node);
 
@@ -154,17 +157,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
-                        ->arrayNode('cloudfront')
-                            ->children()
-                                ->scalarNode('path')
-                                    ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
-                                    ->isRequired()
-                                ->end()
-                                ->scalarNode('distribution_id')->isRequired()->end()
-                                ->scalarNode('key')->isRequired()->end()
-                                ->scalarNode('secret')->isRequired()->end()
-                            ->end()
-                        ->end()
+                        ->append($this->getCloudFrontCdnSection())
 
                         ->arrayNode('fallback')
                             ->children()
@@ -176,6 +169,49 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+    }
+
+    /**
+     * @todo: Remove this method when support for aws/aws-sdk-php < 3.0 is dropped
+     * and move the corresponding logic to `addCdnSection()`.
+     */
+    private function getCloudFrontCdnSection(): NodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('cloudfront');
+
+        if (class_exists(Sdk::class)) {
+            // aws/aws-sdk-php >= 3.0
+            $node = $treeBuilder->getRootNode()
+                ->children()
+                    ->scalarNode('path')
+                        ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
+                        ->isRequired()
+                    ->end()
+                    ->scalarNode('distribution_id')->isRequired()->end()
+                    ->scalarNode('key')->isRequired()->end()
+                    ->scalarNode('secret')->isRequired()->end()
+                    ->scalarNode('region')->isRequired()->end()
+                    ->scalarNode('version')->isRequired()->end()
+                ->end()
+            ;
+        } else {
+            // aws/aws-sdk-php < 3.0
+            $node = $treeBuilder->getRootNode()
+                ->children()
+                    ->scalarNode('path')
+                        ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
+                        ->isRequired()
+                    ->end()
+                    ->scalarNode('distribution_id')->isRequired()->end()
+                    ->scalarNode('key')->isRequired()->end()
+                    ->scalarNode('secret')->isRequired()->end()
+                    ->scalarNode('region')->end()
+                    ->scalarNode('version')->end()
+                ->end()
+            ;
+        }
+
+        return $node;
     }
 
     private function addFilesystemSection(ArrayNodeDefinition $node): void
@@ -236,10 +272,39 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                                 ->scalarNode('region')->defaultValue('s3.amazonaws.com')->end()
                                 ->scalarNode('endpoint')->defaultNull()->end()
-                                ->scalarNode('version')->defaultValue('latest')->end()
+                                ->scalarNode('version')
+                                    ->info(
+                                        'Using "latest" in a production application is not recommended because pulling in a new minor version of the SDK'
+                                        .' that includes an API update could break your production application.'
+                                        .' See https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_configuration.html#cfg-version.'
+                                    )
+                                    ->defaultValue('latest')
+                                ->end()
                                 ->enumNode('sdk_version')
+                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                        'The node "%node%" is deprecated and will be removed in version 4.0'
+                                        .' since the version for aws/aws-sdk-php is inferred automatically.',
+                                        '3.x'
+                                    ))
+                                    ->beforeNormalization()
+                                        ->ifString()
+                                        ->then(static function (string $v): int {
+                                            return (int) $v;
+                                        })
+                                    ->end()
+                                    ->validate()
+                                        ->ifTrue(static function (int $v): bool {
+                                            return 2 === $v && class_exists(Sdk::class);
+                                        })
+                                        ->thenInvalid('Can not use %s for "sdk_version" since the installed version of aws/aws-sdk-php is not 2.x.')
+                                    ->end()
+                                    ->validate()
+                                        ->ifTrue(static function (int $v): bool {
+                                            return 3 === $v && !class_exists(Sdk::class);
+                                        })
+                                        ->thenInvalid('Can not use %s for "sdk_version" since the installed version of aws/aws-sdk-php is not 3.x.')
+                                    ->end()
                                     ->values([2, 3])
-                                    ->defaultValue(2)
                                 ->end()
                                 ->arrayNode('meta')
                                     ->useAttributeAsKey('name')
@@ -466,6 +531,27 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    private function addHttpClientSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('http')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('client')
+                            ->defaultValue('sonata.media.http.buzz_client')
+                            ->info('Alias of the http client.')
+                        ->end()
+                        ->scalarNode('message_factory')
+                            ->defaultNull()
+                            ->info('Alias of the message factory.')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
     private function addResizerSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -509,5 +595,26 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+    }
+
+    /**
+     * Returns the correct deprecation arguments as an array for `setDeprecated()`.
+     *
+     * symfony/config 5.1 introduces a deprecation notice when calling
+     * `setDeprecation()` with less than 3 arguments and the `getDeprecation()` method was
+     * introduced at the same time. By checking if `getDeprecation()` exists,
+     * we can determine the correct parameter count to use when calling `setDeprecated()`.
+     */
+    private function getBackwardCompatibleArgumentsForSetDeprecated(string $message, string $version): array
+    {
+        if (method_exists(BaseNode::class, 'getDeprecation')) {
+            return [
+                'sonata-project/media-bundle',
+                $version,
+                $message,
+            ];
+        }
+
+        return [$message];
     }
 }

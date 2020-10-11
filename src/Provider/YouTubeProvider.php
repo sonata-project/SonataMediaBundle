@@ -15,6 +15,8 @@ namespace Sonata\MediaBundle\Provider;
 
 use Buzz\Browser;
 use Gaufrette\Filesystem;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
@@ -35,11 +37,22 @@ class YouTubeProvider extends BaseVideoProvider
     /**
      * @param string                   $name
      * @param MetadataBuilderInterface $metadata
+     * @param ClientInterface|Browser  $client
      * @param bool                     $html5
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, Browser $browser, ?MetadataBuilderInterface $metadata = null, $html5 = false)
-    {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $browser, $metadata);
+    public function __construct(
+        $name,
+        Filesystem $filesystem,
+        CDNInterface $cdn,
+        GeneratorInterface $pathGenerator,
+        ThumbnailInterface $thumbnail,
+        object $client,
+        ?MetadataBuilderInterface $metadata = null,
+        $html5 = false,
+        ?RequestFactoryInterface $requestFactory = null
+    ) {
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $metadata, $requestFactory);
+
         $this->html5 = $html5;
     }
 
@@ -164,7 +177,7 @@ class YouTubeProvider extends BaseVideoProvider
 
             // Values: 'allowfullscreen' or empty. Default is 'allowfullscreen'. Setting to empty value disables
             //  the fullscreen button.
-            'allowFullScreen' => '1' === $default_player_url_parameters['fs'] ? true : false,
+            'allowFullScreen' => '1' === $default_player_url_parameters['fs'],
 
             // The allowScriptAccess parameter in the code is needed to allow the player SWF to call
             // functions on the containing HTML page, since the player is hosted on a different domain
@@ -246,8 +259,14 @@ class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\#\?&\"'>]+)/", $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches[1]);
+        $isMatching = preg_match(
+            '{^(?:https?://)?(?:www\.)?(?:m\.)?(?:youtu\.be/|youtube\.com/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)/))(?<video_id>[^\#\?&\'>]+)}',
+            $media->getBinaryContent(),
+            $matches
+        );
+
+        if ($isMatching) {
+            $media->setBinaryContent($matches['video_id']);
         }
     }
 

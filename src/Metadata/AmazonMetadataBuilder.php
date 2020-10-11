@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Metadata;
 
-use GuzzleHttp\Psr7;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\Mime\MimeTypesInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -49,9 +50,15 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
     ];
 
-    public function __construct(array $settings)
+    /**
+     * @var MimeTypes
+     */
+    private $mimeTypes;
+
+    public function __construct(array $settings, ?MimeTypesInterface $mimeTypes = null)
     {
         $this->settings = $settings;
+        $this->mimeTypes = $mimeTypes ?? new MimeTypes();
     }
 
     public function get(MediaInterface $media, $filename)
@@ -113,9 +120,6 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = Psr7\mimetype_from_extension($extension);
-
-        return ['contentType' => $contentType];
+        return ['contentType' => $this->mimeTypes->guessMimeType($filename)];
     }
 }

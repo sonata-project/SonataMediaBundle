@@ -59,7 +59,7 @@ Take this video, for example:
      "version":"1.0",
      "provider_name":"Vimeo",
      "provider_url":"http:\/\/vimeo.com\/",
-     "title":"Blinky\u2122",
+     "title":"Blinky",
      "author_name":"Ruairi Robinson",
      "author_url":"http:\/\/vimeo.com\/ruairirobinson",
      "is_plus":"1",
@@ -265,7 +265,7 @@ added to the provider pool.
             - '@sonata.media.cdn.server'
             - '@sonata.media.generator.default'
             - '@sonata.media.thumbnail.format'
-            - '@sonata.media.buzz.browser'
+            - '@sonata.media.http.client'
             - '@sonata.media.metadata.proxy'
         calls:
             -

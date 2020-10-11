@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
+use PHPUnit\Framework\MockObject\Stub;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
@@ -32,6 +33,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class FileProviderTest extends AbstractProviderTest
 {
@@ -306,7 +310,7 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testValidate(): void
     {
-        $errorElement = $this->createMock(ErrorElement::class);
+        $errorElement = $this->createErrorElement($this->createMock(ExecutionContextInterface::class));
 
         $media = new Media();
 
@@ -316,14 +320,13 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadSize(): void
     {
-        $errorElement = $this->createMock(ErrorElement::class);
-        $errorElement->expects($this->once())->method('with')
-            ->willReturnSelf();
-        $errorElement->expects($this->once())->method('addViolation')
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $errorElement = $this->createErrorElement($executionContext);
+        $executionContext
+            ->expects($this->once())
+            ->method('buildViolation')
             ->with($this->stringContains('The file is too big, max size:'))
-            ->willReturnSelf();
-        $errorElement->expects($this->once())->method('end')
-            ->willReturnSelf();
+            ->willReturn($this->createConstraintBuilder());
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
@@ -346,14 +349,13 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadNullSize(): void
     {
-        $errorElement = $this->createMock(ErrorElement::class);
-        $errorElement->expects($this->once())->method('with')
-            ->willReturnSelf();
-        $errorElement->expects($this->once())->method('addViolation')
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $errorElement = $this->createErrorElement($executionContext);
+        $executionContext
+            ->expects($this->once())
+            ->method('buildViolation')
             ->with($this->stringContains('The file is too big, max size:'))
-            ->willReturnSelf();
-        $errorElement->expects($this->once())->method('end')
-            ->willReturnSelf();
+            ->willReturn($this->createConstraintBuilder());
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
@@ -376,14 +378,11 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadSizeOK(): void
     {
-        $errorElement = $this->createMock(ErrorElement::class);
-        $errorElement->expects($this->never())->method('with')
-            ->willReturnSelf();
-        $errorElement->expects($this->never())->method('addViolation')
-            ->with($this->stringContains('The file is too big, max size:'))
-            ->willReturnSelf();
-        $errorElement->expects($this->never())->method('end')
-            ->willReturnSelf();
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $errorElement = $this->createErrorElement($executionContext);
+        $executionContext
+            ->expects($this->never())
+            ->method('buildViolation');
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
@@ -406,14 +405,18 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testValidateUploadType(): void
     {
-        $errorElement = $this->createMock(ErrorElement::class);
-        $errorElement->expects($this->once())->method('with')
-            ->willReturnSelf();
-        $errorElement->expects($this->once())->method('addViolation')
-            ->with('Invalid mime type : %type%', ['%type%' => 'bar/baz'])
-            ->willReturnSelf();
-        $errorElement->expects($this->once())->method('end')
-            ->willReturnSelf();
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $errorElement = $this->createErrorElement($executionContext);
+        $constraintBuilder = $this->createConstraintBuilder();
+        $constraintBuilder
+            ->expects($this->once())
+            ->method('setParameters')
+            ->with(['%type%' => 'bar/baz']);
+        $executionContext
+            ->expects($this->once())
+            ->method('buildViolation')
+            ->with('Invalid mime type : %type%')
+            ->willReturn($constraintBuilder);
 
         $upload = $this->getMockBuilder(UploadedFile::class)
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
@@ -443,5 +446,37 @@ class FileProviderTest extends AbstractProviderTest
         $this->assertNotNull($provider->getProviderMetadata()->getImage());
         $this->assertSame('fa fa-file-text-o', $provider->getProviderMetadata()->getOption('class'));
         $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+    }
+
+    private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
+    {
+        return new ErrorElement(
+            '',
+            $this->createStub(ConstraintValidatorFactoryInterface::class),
+            $executionContext,
+            'group'
+        );
+    }
+
+    /**
+     * @return Stub&ConstraintViolationBuilderInterface
+     */
+    private function createConstraintBuilder(): object
+    {
+        $constraintBuilder = $this->createStub(ConstraintViolationBuilderInterface::class);
+        $constraintBuilder
+            ->method('atPath')
+            ->willReturnSelf();
+        $constraintBuilder
+            ->method('setParameters')
+            ->willReturnSelf();
+        $constraintBuilder
+            ->method('setTranslationDomain')
+            ->willReturnSelf();
+        $constraintBuilder
+            ->method('setInvalidValue')
+            ->willReturnSelf();
+
+        return $constraintBuilder;
     }
 }

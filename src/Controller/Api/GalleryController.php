@@ -296,13 +296,14 @@ class GalleryController
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
+        $galleryItemExists = $gallery->getGalleryItems()->exists(static function ($key, GalleryItemInterface $element) use ($media): bool {
+            return $element->getMedia()->getId() === $media->getId();
+        });
 
-        foreach ($gallery->getGalleryItems() as $galleryItem) {
-            if ($galleryItem->getMedia()->getId() === $media->getId()) {
-                return FOSRestView::create([
-                    'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
-                ], 400);
-            }
+        if ($galleryItemExists) {
+            return FOSRestView::create([
+                'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
+            ], 400);
         }
 
         return $this->handleWriteGalleryItem($gallery, $media, null, $request);

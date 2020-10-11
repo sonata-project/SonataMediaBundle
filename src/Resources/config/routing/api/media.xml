@@ -12,17 +12,17 @@
     <route id="get_medium_binary" path="/media/{id}/binaries/{format}.{_format}" methods="GET" controller="Sonata\MediaBundle\Controller\Api\MediaController::getMediumBinaryAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
-    <route id="delete_medium" path="/media/{id}.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\GalleryController::deleteMediumAction" format="json">
+    <route id="delete_medium" path="/media/{id}.{_format}" methods="DELETE" controller="Sonata\MediaBundle\Controller\Api\MediaController::deleteMediumAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
-    <route id="put_medium" path="/media/{id}.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putMediumAction" format="json">
+    <route id="put_medium" path="/media/{id}.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\MediaController::putMediumAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
-    <route id="post_provider_medium" path="/media/providers/{provider}/media.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\GalleryController::postProviderMediumAction" format="json">
+    <route id="post_provider_medium" path="/media/providers/{provider}/media.{_format}" methods="POST" controller="Sonata\MediaBundle\Controller\Api\MediaController::postProviderMediumAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
         <requirement key="provider">[A-Za-z0-9.]*</requirement>
     </route>
-    <route id="put_medium_binary_content" path="/media/{id}/binary/content.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\GalleryController::putMediumBinaryContentAction" format="json">
+    <route id="put_medium_binary_content" path="/media/{id}/binary/content.{_format}" methods="PUT" controller="Sonata\MediaBundle\Controller\Api\MediaController::putMediumBinaryContentAction" format="json">
         <requirement key="_format">json|xml|html</requirement>
     </route>
 </routes>

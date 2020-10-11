@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\CDN;
 
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\Exception\CloudFrontException;
+use Aws\Sdk;
 
 /**
  * From http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html.
@@ -77,17 +78,55 @@ class CloudFront implements CDNInterface
     protected $client;
 
     /**
+     * @var string
+     */
+    private $region;
+
+    /**
+     * @var string
+     */
+    private $version;
+
+    /**
+     * @todo: Make mandatory argument 5 and 6 when support for aws/aws-sdk-php < 3.0 is dropped.
+     *
      * @param string $path
      * @param string $key
      * @param string $secret
      * @param string $distributionId
      */
-    public function __construct($path, $key, $secret, $distributionId)
-    {
+    public function __construct(
+        $path,
+        $key,
+        $secret,
+        $distributionId,
+        ?string $region = null,
+        ?string $version = null
+    ) {
         $this->path = $path;
         $this->key = $key;
         $this->secret = $secret;
         $this->distributionId = $distributionId;
+
+        // @todo: Remove the following conditional block when support for aws/aws-sdk-php < 3.0 is dropped.
+        if (class_exists(Sdk::class)) {
+            if (null === $region) {
+                throw new \TypeError(sprintf(
+                    'Argument 5 for "%s()" is required and can not be null when aws/aws-sdk-php >= 3.0 is installed.',
+                    __METHOD__
+                ));
+            }
+
+            if (null === $version) {
+                throw new \TypeError(sprintf(
+                    'Argument 6 for "%s()" is required and can not be null when aws/aws-sdk-php >= 3.0 is installed.',
+                    __METHOD__
+                ));
+            }
+        }
+
+        $this->region = $region;
+        $this->version = $region;
     }
 
     public function getPath($relativePath, $isFlushable = false)
@@ -121,15 +160,29 @@ class CloudFront implements CDNInterface
             return '/'.ltrim($path, '/');
         }, $paths);
 
+        $invalidationBatch = [
+            'Paths' => [
+                'Quantity' => \count($normalizedPaths),
+                'Items' => $normalizedPaths,
+            ],
+            'CallerReference' => $this->getCallerReference($normalizedPaths),
+        ];
+
+        $arguments = [
+            'DistributionId' => $this->distributionId,
+        ];
+
+        // @todo: Remove the following check and the `else` block when support for aws/aws-sdk-php < 3.0 is dropped.
+        if (class_exists(Sdk::class)) {
+            // AWS v3.x.
+            $arguments += ['InvalidationBatch' => $invalidationBatch];
+        } else {
+            // AWS v2.x.
+            $arguments += $invalidationBatch;
+        }
+
         try {
-            $result = $this->getClient()->createInvalidation([
-                'DistributionId' => $this->distributionId,
-                'Paths' => [
-                    'Quantity' => \count($normalizedPaths),
-                    'Items' => $normalizedPaths,
-                ],
-                'CallerReference' => $this->getCallerReference($normalizedPaths),
-            ]);
+            $result = $this->getClient()->createInvalidation($arguments);
 
             if (!\in_array($status = $result->get('Status'), ['Completed', 'InProgress'], true)) {
                 throw new \RuntimeException('Unable to flush : '.$status);
@@ -192,13 +245,33 @@ class CloudFront implements CDNInterface
         return md5(implode(',', $paths));
     }
 
+    /**
+     * @todo: Inject client through DI.
+     */
     private function getClient(): CloudFrontClient
     {
         if (!$this->client) {
-            $this->client = CloudFrontClient::factory([
-                'key' => $this->key,
-                'secret' => $this->secret,
-            ]);
+            if (null !== $this->region) {
+                $config['region'] = $this->region;
+            }
+
+            if (null !== $this->version) {
+                $config['version'] = $this->version;
+            }
+
+            $credentials = [
+                'key' => $this->region,
+                'secret' => $this->version,
+            ];
+
+            // @todo: Remove the following check and the `else` block when support for aws/aws-sdk-php < 3.0 is dropped.
+            if (class_exists(Sdk::class)) {
+                // AWS v3.x.
+                $this->client = new CloudFrontClient($config + ['credentials' => $credentials]);
+            } else {
+                // AWS v2.x.
+                $this->client = CloudFrontClient::factory($config + $credentials);
+            }
         }
 
         return $this->client;

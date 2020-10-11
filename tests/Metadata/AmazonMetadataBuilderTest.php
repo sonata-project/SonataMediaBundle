@@ -17,36 +17,44 @@ use Aws\S3\Enum\Storage;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\Mime\MimeTypesInterface;
 
-class AmazonMetadataBuilderTest extends TestCase
+final class AmazonMetadataBuilderTest extends TestCase
 {
-    public function testAmazon(): void
+    /**
+     * @dataProvider provider
+     */
+    public function testAmazon(array $settings, array $expected): void
     {
-        $media = $this->createMock(MediaInterface::class);
+        $mimeTypes = $this->createMock(MimeTypesInterface::class);
+        $mimeTypes->method('guessMimeType')->willReturn($expected['contentType']);
+
+        $media = $this->createStub(MediaInterface::class);
         $filename = '/test/folder/testfile.png';
 
-        foreach ($this->provider() as $provider) {
-            [$a, $b] = $provider;
-            $amazonmetadatabuilder = new AmazonMetadataBuilder($a);
-            $this->assertSame($b, $amazonmetadatabuilder->get($media, $filename));
-        }
+        $amazonmetadatabuilder = new AmazonMetadataBuilder($settings, $mimeTypes);
+        $this->assertSame($expected, $amazonmetadatabuilder->get($media, $filename));
     }
 
-    public function provider(): array
+    public function provider(): iterable
     {
-        return [
-            [['acl' => 'private'], ['ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png']],
-            [['acl' => 'public'], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'contentType' => 'image/png']],
-            [['acl' => 'open'], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ_WRITE, 'contentType' => 'image/png']],
-            [['acl' => 'auth_read'], ['ACL' => AmazonMetadataBuilder::AUTHENTICATED_READ, 'contentType' => 'image/png']],
-            [['acl' => 'owner_read'], ['ACL' => AmazonMetadataBuilder::BUCKET_OWNER_READ, 'contentType' => 'image/png']],
-            [['acl' => 'owner_full_control'], ['ACL' => AmazonMetadataBuilder::BUCKET_OWNER_FULL_CONTROL, 'contentType' => 'image/png']],
-            [['storage' => 'standard'], ['storage' => AmazonMetadataBuilder::STORAGE_STANDARD, 'contentType' => 'image/png']],
-            [['storage' => 'reduced'], ['storage' => AmazonMetadataBuilder::STORAGE_REDUCED, 'contentType' => 'image/png']],
-            [['cache_control' => 'max-age=86400'], ['CacheControl' => 'max-age=86400', 'contentType' => 'image/png']],
-            [['encryption' => 'aes256'], ['encryption' => 'AES256', 'contentType' => 'image/png']],
-            [['meta' => ['key' => 'value']], ['meta' => ['key' => 'value'], 'contentType' => 'image/png']],
-            [['acl' => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => ['key' => 'value']], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'storage' => Storage::STANDARD, 'meta' => ['key' => 'value'], 'CacheControl' => 'max-age=86400', 'encryption' => 'AES256', 'contentType' => 'image/png']],
+        yield [['acl' => 'private'], ['ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png']];
+        yield [['acl' => 'public'], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'contentType' => 'image/png']];
+        yield [['acl' => 'open'], ['ACL' => AmazonMetadataBuilder::PUBLIC_READ_WRITE, 'contentType' => 'image/png']];
+        yield [['acl' => 'auth_read'], ['ACL' => AmazonMetadataBuilder::AUTHENTICATED_READ, 'contentType' => 'image/png']];
+        yield [['acl' => 'owner_read'], ['ACL' => AmazonMetadataBuilder::BUCKET_OWNER_READ, 'contentType' => 'image/png']];
+        yield [['acl' => 'owner_full_control'], ['ACL' => AmazonMetadataBuilder::BUCKET_OWNER_FULL_CONTROL, 'contentType' => 'image/png']];
+        yield [['storage' => 'standard'], ['storage' => AmazonMetadataBuilder::STORAGE_STANDARD, 'contentType' => 'image/png']];
+        yield [['storage' => 'reduced'], ['storage' => AmazonMetadataBuilder::STORAGE_REDUCED, 'contentType' => 'image/png']];
+        yield [['cache_control' => 'max-age=86400'], ['CacheControl' => 'max-age=86400', 'contentType' => 'image/png']];
+        yield [['encryption' => 'aes256'], ['encryption' => 'AES256', 'contentType' => 'image/png']];
+        yield [['meta' => ['key' => 'value']], ['meta' => ['key' => 'value'], 'contentType' => 'image/png']];
+        yield [
+            ['acl' => 'public', 'storage' => 'standard', 'cache_control' => 'max-age=86400', 'encryption' => 'aes256', 'meta' => ['key' => 'value']],
+            [
+                'ACL' => AmazonMetadataBuilder::PUBLIC_READ, 'storage' => class_exists(Storage::class) ? Storage::STANDARD : AmazonMetadataBuilder::STORAGE_STANDARD,
+                'meta' => ['key' => 'value'], 'CacheControl' => 'max-age=86400', 'encryption' => 'AES256', 'contentType' => 'image/png',
+            ],
         ];
     }
 }
