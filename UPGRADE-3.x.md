@@ -4,6 +4,11 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### MogileFS filesystem adapter is deprecated
+
+The services `sonata.media.adapter.filesystem.mogilefs`, `sonata.media.filesystem.mogilefs`
+and the configuration node "sonata_media.filesystem.mogilefs" are deprecated.
+
 ### Configuration node "sonata_media.filesystem.s3.sdk_version"
 
 The configuration node "sonata_media.filesystem.s3.sdk_version" is deprecated. The

@@ -315,6 +315,10 @@ class Configuration implements ConfigurationInterface
                         ->end()
 
                         ->arrayNode('mogilefs')
+                            ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                'The node "%node%" is deprecated and will be removed in version 4.0.',
+                                '3.x'
+                            ))
                             ->children()
                                 ->scalarNode('domain')->isRequired()->end()
                                 ->arrayNode('hosts')
