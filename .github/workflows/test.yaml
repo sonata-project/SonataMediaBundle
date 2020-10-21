@@ -112,7 +112,7 @@ jobs:
       - name: Run Tests
         run: make test
         env:
-          SYMFONY_PHPUNIT_VERSION: ${{ matrix.phpunit }}
+          SYMFONY_PHPUNIT_VERSION: '${{ matrix.phpunit }}'
 
       - name: Send coverage to Codecov
         uses: codecov/codecov-action@v1
