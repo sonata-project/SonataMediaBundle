@@ -15,9 +15,17 @@ namespace Sonata\ClassificationBundle\Model;
 
 interface ContextInterface
 {
-    public function setId($id);
+    public function getName(): ?string;
 
-    public function setName($name);
+    /**
+     * @return static
+     */
+    public function setName(string $name);
 
-    public function setEnabled($enabled);
+    public function getEnabled(): ?bool;
+
+    /**
+     * @return static
+     */
+    public function setEnabled(bool $enabled);
 }

@@ -82,7 +82,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertRegExp('@\'.+\' does not exist\s+done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@\'.+\' does not exist\s+done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }
@@ -101,7 +101,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertRegExp('@Context: foo\s+done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@Context: foo\s+done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }
@@ -135,7 +135,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertRegExp('@Context: foo\s+done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@Context: foo\s+done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }

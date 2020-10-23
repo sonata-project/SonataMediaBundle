@@ -20,18 +20,15 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdminTest extends TestCase
 {
-    protected $pool;
     protected $mediaAdmin;
 
     protected function setUp(): void
     {
-        $this->pool = $this->prophesize(Pool::class);
-
         $this->mediaAdmin = new GalleryAdmin(
-            null,
+            'media',
             BaseGallery::class,
             'SonataMediaBundle:GalleryAdmin',
-            $this->pool->reveal()
+            $this->createStub(Pool::class)
         );
     }
 

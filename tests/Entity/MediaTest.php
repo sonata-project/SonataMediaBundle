@@ -14,8 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\ClassificationBundle\Model\CategoryInterface;
-use Sonata\MediaBundle\Tests\Fixtures\EntityWithGetId;
+use Sonata\ClassificationBundle\Model\Category;
 
 class MediaTest extends TestCase
 {
@@ -39,9 +38,7 @@ class MediaTest extends TestCase
 
     public function testSetGet(): void
     {
-        $category = $this->prophesize();
-        $category->willExtend(EntityWithGetId::class);
-        $category->willImplement(CategoryInterface::class);
+        $category = new Category();
 
         $media = new Media();
         $media->setName('MediaBundle');
@@ -50,7 +47,7 @@ class MediaTest extends TestCase
         $media->setEnabled(true);
         $media->setProviderName('name');
         $media->setLength(2);
-        $media->setCategory($category->reveal());
+        $media->setCategory($category);
         $media->setCopyright('copyleft');
         $media->setAuthorName('Thomas');
         $media->setCdnIsFlushable(true);
@@ -64,7 +61,7 @@ class MediaTest extends TestCase
         $this->assertTrue($media->getEnabled());
         $this->assertSame('name', $media->getProviderName());
         $this->assertSame(2, $media->getLength());
-        $this->assertSame($category->reveal(), $media->getCategory());
+        $this->assertSame($category, $media->getCategory());
         $this->assertSame('copyleft', $media->getCopyright());
         $this->assertSame('Thomas', $media->getAuthorName());
         $this->assertTrue($media->getCdnIsFlushable());
