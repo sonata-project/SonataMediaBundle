@@ -25,6 +25,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
 {
     /**
      * @var AdapterInterface
+     * @deprecared use $primary instead
      */
     protected $master;
     
@@ -48,6 +49,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
      */
     public function __construct(AdapterInterface $primary, AdapterInterface $secondary, ?LoggerInterface $logger = null)
     {
+        $this->master = $primary;
+        $this->slave = $secondary;
         $this->primary = $primary;
         $this->secondary = $secondary;
         $this->logger = $logger;
