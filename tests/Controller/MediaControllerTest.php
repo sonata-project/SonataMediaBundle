@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Controller;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Controller\MediaController;
 use Sonata\MediaBundle\Model\Media;
@@ -63,38 +63,38 @@ class MediaControllerTest extends TestCase
     {
         $this->expectException(AccessDeniedException::class);
 
-        $request = $this->prophesize(Request::class);
-        $media = $this->prophesize(Media::class);
-        $pool = $this->prophesize(Pool::class);
+        $request = $this->createStub(Request::class);
+        $media = $this->createStub(Media::class);
+        $pool = $this->createStub(Pool::class);
 
-        $this->configureGetCurrentRequest($request->reveal());
-        $this->configureGetMedia(1, $media->reveal());
-        $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), false);
-        $this->container->set('sonata.media.pool', $pool->reveal());
+        $this->configureGetCurrentRequest($request);
+        $this->configureGetMedia(1, $media);
+        $this->configureDownloadSecurity($pool, $media, $request, false);
+        $this->container->set('sonata.media.pool', $pool);
 
         $this->controller->downloadAction(1);
     }
 
     public function testDownloadActionBinaryFile(): void
     {
-        $media = $this->prophesize(Media::class);
-        $pool = $this->prophesize(Pool::class);
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $request = $this->prophesize(Request::class);
-        $response = $this->prophesize(BinaryFileResponse::class);
+        $media = $this->createStub(Media::class);
+        $pool = $this->createStub(Pool::class);
+        $provider = $this->createStub(MediaProviderInterface::class);
+        $request = $this->createStub(Request::class);
+        $response = $this->createMock(BinaryFileResponse::class);
 
-        $this->configureGetMedia(1, $media->reveal());
-        $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
-        $this->configureGetProvider($pool, $media, $provider->reveal());
-        $this->configureGetCurrentRequest($request->reveal());
-        $this->container->set('sonata.media.pool', $pool->reveal());
-        $pool->getDownloadMode($media->reveal())->willReturn('mode');
-        $provider->getDownloadResponse($media->reveal(), 'format', 'mode')->willReturn($response->reveal());
-        $response->prepare($request->reveal())->shouldBeCalled();
+        $this->configureGetMedia(1, $media);
+        $this->configureDownloadSecurity($pool, $media, $request, true);
+        $this->configureGetProvider($pool, $media, $provider);
+        $this->configureGetCurrentRequest($request);
+        $this->container->set('sonata.media.pool', $pool);
+        $pool->method('getDownloadMode')->with($media)->willReturn('mode');
+        $provider->method('getDownloadResponse')->with($media, 'format', 'mode')->willReturn($response);
+        $response->expects($this->once())->method('prepare')->with($request);
 
         $result = $this->controller->downloadAction(1, 'format');
 
-        $this->assertSame($response->reveal(), $result);
+        $this->assertSame($response, $result);
     }
 
     public function testViewActionWithNotFoundMedia(): void
@@ -110,35 +110,35 @@ class MediaControllerTest extends TestCase
     {
         $this->expectException(AccessDeniedException::class);
 
-        $media = $this->prophesize(Media::class);
-        $pool = $this->prophesize(Pool::class);
-        $request = $this->prophesize(Request::class);
+        $media = $this->createStub(Media::class);
+        $pool = $this->createStub(Pool::class);
+        $request = $this->createStub(Request::class);
 
-        $this->configureGetMedia(1, $media->reveal());
-        $this->configureGetCurrentRequest($request->reveal());
-        $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), false);
-        $this->container->set('sonata.media.pool', $pool->reveal());
+        $this->configureGetMedia(1, $media);
+        $this->configureGetCurrentRequest($request);
+        $this->configureDownloadSecurity($pool, $media, $request, false);
+        $this->container->set('sonata.media.pool', $pool);
 
         $this->controller->viewAction(1);
     }
 
     public function testViewActionRendersView(): void
     {
-        $media = $this->prophesize(Media::class);
-        $pool = $this->prophesize(Pool::class);
-        $request = $this->prophesize(Request::class);
+        $media = $this->createStub(Media::class);
+        $pool = $this->createStub(Pool::class);
+        $request = $this->createStub(Request::class);
 
-        $this->configureGetMedia(1, $media->reveal());
-        $this->configureGetCurrentRequest($request->reveal());
-        $this->configureDownloadSecurity($pool, $media->reveal(), $request->reveal(), true);
+        $this->configureGetMedia(1, $media);
+        $this->configureGetCurrentRequest($request);
+        $this->configureDownloadSecurity($pool, $media, $request, true);
         $this->configureRender('@SonataMedia/Media/view.html.twig', [
-            'media' => $media->reveal(),
+            'media' => $media,
             'formats' => ['format'],
             'format' => 'format',
         ], 'renderResponse');
-        $this->container->set('sonata.media.pool', $pool->reveal());
-        $media->getContext()->willReturn('context');
-        $pool->getFormatNamesByContext('context')->willReturn(['format']);
+        $this->container->set('sonata.media.pool', $pool);
+        $media->method('getContext')->willReturn('context');
+        $pool->method('getFormatNamesByContext')->with('context')->willReturn(['format']);
 
         $response = $this->controller->viewAction(1, 'format');
 
@@ -147,40 +147,40 @@ class MediaControllerTest extends TestCase
     }
 
     private function configureDownloadSecurity(
-        ObjectProphecy $pool,
+        MockObject $pool,
         Media $media,
         Request $request,
         bool $isGranted
     ): void {
-        $strategy = $this->prophesize(DownloadStrategyInterface::class);
+        $strategy = $this->createStub(DownloadStrategyInterface::class);
 
-        $pool->getDownloadSecurity($media)->willReturn($strategy->reveal());
-        $strategy->isGranted($media, $request)->willReturn($isGranted);
+        $pool->method('getDownloadSecurity')->with($media)->willReturn($strategy);
+        $strategy->method('isGranted')->with($media, $request)->willReturn($isGranted);
     }
 
     private function configureGetMedia(int $id, ?Media $media): void
     {
-        $mediaManager = $this->prophesize(BaseEntityManager::class);
+        $mediaManager = $this->createStub(BaseEntityManager::class);
 
-        $this->container->set('sonata.media.manager.media', $mediaManager->reveal());
-        $mediaManager->find($id)->willReturn($media);
+        $this->container->set('sonata.media.manager.media', $mediaManager);
+        $mediaManager->method('find')->with($id)->willReturn($media);
     }
 
     private function configureGetProvider(
-        ObjectProphecy $pool,
-        ObjectProphecy $media,
+        MockObject $pool,
+        MockObject $media,
         MediaProviderInterface $provider
     ): void {
-        $pool->getProvider('provider')->willReturn($provider);
-        $media->getProviderName()->willReturn('provider');
+        $pool->method('getProvider')->with('provider')->willReturn($provider);
+        $media->method('getProviderName')->willReturn('provider');
     }
 
     private function configureGetCurrentRequest(Request $request): void
     {
-        $requestStack = $this->prophesize(RequestStack::class);
+        $requestStack = $this->createStub(RequestStack::class);
 
-        $this->container->set('request_stack', $requestStack->reveal());
-        $requestStack->getCurrentRequest()->willReturn($request);
+        $this->container->set('request_stack', $requestStack);
+        $requestStack->method('getCurrentRequest')->willReturn($request);
     }
 
     private function configureRender(
@@ -188,11 +188,11 @@ class MediaControllerTest extends TestCase
         array $data,
         string $rendered
     ): void {
-        $twig = $this->prophesize(Environment::class);
-        $response = $this->prophesize(Response::class);
+        $twig = $this->createStub(Environment::class);
+        $response = $this->createStub(Response::class);
 
-        $this->container->set('twig', $twig->reveal());
-        $response->getContent()->willReturn($rendered);
-        $twig->render($template, $data)->willReturn($rendered);
+        $this->container->set('twig', $twig);
+        $response->method('getContent')->willReturn($rendered);
+        $twig->method('render')->with($template, $data)->willReturn($rendered);
     }
 }

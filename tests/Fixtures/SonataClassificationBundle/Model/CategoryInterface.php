@@ -15,13 +15,31 @@ namespace Sonata\ClassificationBundle\Model;
 
 interface CategoryInterface
 {
-    public function getContext();
+    public function getContext(): ?ContextInterface;
 
-    public function setContext($context);
+    /**
+     * @return static
+     */
+    public function setContext(ContextInterface $context);
 
-    public function setName($name);
+    public function getName(): ?string;
 
-    public function setEnabled($enabled);
+    /**
+     * @return static
+     */
+    public function setName(string $name);
 
-    public function setPosition($position);
+    public function getEnabled(): ?bool;
+
+    /**
+     * @return static
+     */
+    public function setEnabled(bool $enabled);
+
+    public function getPosition(): ?int;
+
+    /**
+     * @return static
+     */
+    public function setPosition(int $position);
 }

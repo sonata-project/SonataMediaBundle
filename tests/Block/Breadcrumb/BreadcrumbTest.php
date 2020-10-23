@@ -28,9 +28,9 @@ class BreadcrumbTest extends BlockServiceTestCase
         $blockService = new BreadcrumbGalleryBlockService_Test(
             'context',
             'name',
-            $this->prophesize(EngineInterface::class)->reveal(),
-            $this->prophesize(MenuProviderInterface::class)->reveal(),
-            $this->prophesize(FactoryInterface::class)->reveal()
+            $this->createStub(EngineInterface::class),
+            $this->createStub(MenuProviderInterface::class),
+            $this->createStub(FactoryInterface::class)
         );
 
         $this->assertTrue($blockService->handleContext('context'));
