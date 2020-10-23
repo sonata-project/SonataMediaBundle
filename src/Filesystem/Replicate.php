@@ -25,7 +25,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
 {
     /**
      * @var AdapterInterface
-     * @deprecared use $primary instead
+     * @deprecated use $primary instead
      */
     protected $master;
     
