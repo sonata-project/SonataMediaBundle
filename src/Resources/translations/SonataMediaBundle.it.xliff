@@ -11,12 +11,16 @@
                 <target>Media</target>
             </trans-unit>
             <trans-unit id="gallery">
-                <source>gallery</source>
+                <source>Gallery</source>
                 <target>Gallerie</target>
             </trans-unit>
             <trans-unit id="options">
                 <source>Options</source>
                 <target>Opzioni</target>
+            </trans-unit>
+            <trans-unit id="reference">
+                <source>reference</source>
+                <target>Riferimento</target>
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
@@ -471,13 +475,13 @@
                 <source>form.label_orientation</source>
                 <target>Orientazione</target>
             </trans-unit>
-            <trans-unit id="form.label_format">
-                <source>form.label_format</source>
-                <target>Formato</target>
-            </trans-unit>
             <trans-unit id="form.label_gallery">
                 <source>form.label_gallery</source>
                 <target>Galleria</target>
+            </trans-unit>
+            <trans-unit id="form.label_format">
+                <source>form.label_format</source>
+                <target>Formato</target>
             </trans-unit>
             <trans-unit id="form.label_pause_time">
                 <source>form.label_pause_time</source>
@@ -566,6 +570,18 @@
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
                 <target>Classe CSS</target>
+            </trans-unit>
+            <trans-unit id="form.label_translation_domain">
+                <source>form.label_translation_domain</source>
+                <target>Dominio di traduzione</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form.label_icon</source>
+                <target>Icona</target>
+            </trans-unit>
+            <trans-unit id="error.image_too_small">
+                <source>error.image_too_small</source>
+                <target>Immagine troppo piccola, la grandezza richiesta è minimo %min_width% x %min_height%.</target>
             </trans-unit>
         </body>
     </file>
