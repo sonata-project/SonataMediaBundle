@@ -119,7 +119,7 @@ class CloudFront implements CDNInterface
         // NEXT_MAJOR: Remove the following conditional block.
         if (!$clientOrPath instanceof CloudFrontClient) {
             @trigger_error(sprintf(
-                'Passing another type than %s as argument 1 for "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                'Passing another type than %s as argument 1 for "%s()" is deprecated since sonata-project/media-bundle 3.28'
                 .' and will throw a %s error in version 4.0. You must pass these arguments: CDN client, CDN distribution id, CDN path.',
                 CloudFrontClient::class,
                 __METHOD__,
@@ -216,7 +216,7 @@ class CloudFront implements CDNInterface
 
             if (false === $status) {
                 @trigger_error(sprintf(
-                    'Returning a value not present in the `%s::STATUS_*` constants from %s() is deprecated since sonata-project/media-bundle 3.x'
+                    'Returning a value not present in the `%s::STATUS_*` constants from %s() is deprecated since sonata-project/media-bundle 3.28'
                     .' and will not be possible in version 4.0.',
                     CDNInterface::class,
                     __METHOD__
@@ -233,7 +233,7 @@ class CloudFront implements CDNInterface
     }
 
     /**
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
+     * @deprecated since sonata-project/media-bundle 3.28, to be removed in version 4.0.
      *
      * @static
      *
@@ -242,7 +242,7 @@ class CloudFront implements CDNInterface
     public static function getStatusList()
     {
         @trigger_error(sprintf(
-            'Method "%s()" is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0.',
+            'Method "%s()" is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.',
             __METHOD__
         ), E_USER_DEPRECATED);
 
@@ -259,14 +259,14 @@ class CloudFront implements CDNInterface
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
+     * @deprecated since sonata-project/media-bundle 3.28, to be removed in version 4.0.
      *
      * @param CloudFrontClient $client
      */
     public function setClient($client)
     {
         @trigger_error(sprintf(
-            'Method "%s()" is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0.',
+            'Method "%s()" is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.',
             __METHOD__
         ), E_USER_DEPRECATED);
 

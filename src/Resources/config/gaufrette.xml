@@ -23,7 +23,7 @@
             <argument type="service" id="logger"/>
         </service>
         <service id="sonata.media.adapter.filesystem.mogilefs" class="Gaufrette\Adapter\MogileFS">
-            <deprecated>The "%service_id%" service is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0.</deprecated>
+            <deprecated>The "%service_id%" service is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.</deprecated>
             <argument/>
             <argument/>
         </service>
@@ -42,7 +42,7 @@
             <argument/>
         </service>
         <service id="sonata.media.filesystem.mogilefs" class="Gaufrette\Filesystem">
-            <deprecated>The "%service_id%" service is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0.</deprecated>
+            <deprecated>The "%service_id%" service is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.</deprecated>
             <argument type="service" id="sonata.media.adapter.filesystem.mogilefs"/>
         </service>
         <service id="sonata.media.filesystem.ftp" class="Gaufrette\Filesystem">
