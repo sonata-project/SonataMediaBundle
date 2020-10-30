@@ -139,7 +139,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function getFormat($name)
     {
-        return isset($this->formats[$name]) ? $this->formats[$name] : false;
+        return $this->formats[$name] ?? false;
     }
 
     public function requireThumbnails()
@@ -238,7 +238,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function getTemplate($name)
     {
-        return isset($this->templates[$name]) ? $this->templates[$name] : null;
+        return $this->templates[$name] ?? null;
     }
 
     public function getResizer()
