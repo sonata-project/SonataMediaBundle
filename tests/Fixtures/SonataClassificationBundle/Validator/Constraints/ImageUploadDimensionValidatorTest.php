@@ -21,7 +21,6 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
 use Sonata\MediaBundle\Validator\Constraints\ImageUploadDimension;
 use Sonata\MediaBundle\Validator\Constraints\ImageUploadDimensionValidator;
-use stdClass;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -53,7 +52,7 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $object = new stdClass();
+        $object = new \stdClass();
 
         $constraint = new ImageUploadDimension();
 
