@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Metadata;
 
+use League\MimeTypeDetection\ExtensionMimeTypeDetector;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
@@ -37,6 +38,11 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     protected $settings;
 
     /**
+     * @var ExtensionMimeTypeDetector
+     */
+    protected $extensionMimeTypeDetector;
+
+    /**
      * @var string[]
      */
     protected $acl = [
@@ -51,6 +57,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     public function __construct(array $settings)
     {
         $this->settings = $settings;
+        $this->extensionMimeTypeDetector = new ExtensionMimeTypeDetector();
     }
 
     public function get(MediaInterface $media, $filename)
@@ -112,9 +119,6 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $contentType = Psr7\mimetype_from_extension($extension);
-
-        return ['contentType' => $contentType];
+        return ['contentType' => $this->extensionMimeTypeDetector->detectMimeTypeFromPath($filename)];
     }
 }
