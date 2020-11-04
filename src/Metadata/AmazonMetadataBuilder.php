@@ -114,12 +114,15 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     /**
      * Gets the correct content-type.
      *
-     * @param string $filename
+     * @param string $filename path to the file inside the s3 bucket
      *
      * @return array
      */
     protected function getContentType($filename)
     {
-        return ['contentType' => $this->mimeTypes->guessMimeType($filename)];
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $contentType = Psr7\mimetype_from_extension($extension);
+
+        return ['contentType' => $contentType];
     }
 }
