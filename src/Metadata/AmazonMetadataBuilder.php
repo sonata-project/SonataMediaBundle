@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Metadata;
 
 use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\Mime\MimeTypes;
-use Symfony\Component\Mime\MimeTypesInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -50,15 +48,9 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
     ];
 
-    /**
-     * @var MimeTypes
-     */
-    private $mimeTypes;
-
-    public function __construct(array $settings, ?MimeTypesInterface $mimeTypes = null)
+    public function __construct(array $settings)
     {
         $this->settings = $settings;
-        $this->mimeTypes = $mimeTypes ?? new MimeTypes();
     }
 
     public function get(MediaInterface $media, $filename)
