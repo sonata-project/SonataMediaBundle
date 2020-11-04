@@ -114,12 +114,16 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     /**
      * Gets the correct content-type.
      *
-     * @param string $filename
+     * @param string $filename path to the file inside the S3 bucket
      *
      * @return array
+     * @phpstan-return array{contentType: string}
      */
     protected function getContentType($filename)
     {
-        return ['contentType' => $this->mimeTypes->guessMimeType($filename)];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $mimeTypes = $this->mimeTypes->getMimeTypes($ext);
+
+        return ['contentType' => current($mimeTypes)];
     }
 }
