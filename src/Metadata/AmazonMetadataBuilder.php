@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Metadata;
 
-use League\MimeTypeDetection\ExtensionMimeTypeDetector;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\Mime\MimeTypesInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -38,11 +39,6 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     protected $settings;
 
     /**
-     * @var ExtensionMimeTypeDetector
-     */
-    protected $extensionMimeTypeDetector;
-
-    /**
      * @var string[]
      */
     protected $acl = [
@@ -54,10 +50,15 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
         'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
     ];
 
-    public function __construct(array $settings)
+    /**
+     * @var MimeTypes
+     */
+    private $mimeTypes;
+
+    public function __construct(array $settings, ?MimeTypesInterface $mimeTypes = null)
     {
         $this->settings = $settings;
-        $this->extensionMimeTypeDetector = new ExtensionMimeTypeDetector();
+        $this->mimeTypes = $mimeTypes ?? new MimeTypes();
     }
 
     public function get(MediaInterface $media, $filename)
@@ -119,6 +120,9 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        return ['contentType' => $this->extensionMimeTypeDetector->detectMimeTypeFromPath($filename)];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $mimeTypes = $this->mimeTypes->getMimeTypes($ext);
+
+        return ['contentType' => current($mimeTypes)];
     }
 }
