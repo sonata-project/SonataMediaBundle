@@ -91,7 +91,7 @@ class FakeHttpWrapper
 
     public function stream_open($path, $mode, $options, &$opened_path): bool
     {
-        $file = __DIR__.'/../fixtures/'.self::$ref[$path];
+        $file = __DIR__.'/../Fixtures/'.self::$ref[$path];
 
         if (!is_file($file)) {
             var_dump('unable to retrieve the file : '.$file);
