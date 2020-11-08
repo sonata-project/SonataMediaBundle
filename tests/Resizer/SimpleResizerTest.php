@@ -43,7 +43,7 @@ class SimpleResizerTest extends TestCase
     {
         $image = $this->createMock(ImageInterface::class);
         $image->expects($this->once())->method('thumbnail')->willReturn($image);
-        $image->expects($this->once())->method('get')->willReturn(file_get_contents(__DIR__.'/../fixtures/logo.png'));
+        $image->expects($this->once())->method('get')->willReturn(file_get_contents(__DIR__.'/../Fixtures/logo.png'));
 
         $adapter = $this->createMock(ImagineInterface::class);
         $adapter->method('load')->willReturn($image);
@@ -53,7 +53,7 @@ class SimpleResizerTest extends TestCase
 
         $filesystem = new Filesystem(new InMemory());
         $in = $filesystem->get('in', true);
-        $in->setContent(file_get_contents(__DIR__.'/../fixtures/logo.png'));
+        $in->setContent(file_get_contents(__DIR__.'/../Fixtures/logo.png'));
 
         $out = $filesystem->get('out', true);
 
