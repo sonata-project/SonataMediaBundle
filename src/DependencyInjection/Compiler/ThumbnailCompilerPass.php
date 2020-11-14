@@ -32,7 +32,9 @@ class ThumbnailCompilerPass implements CompilerPassInterface
             'sonata.media.thumbnail.format'
         );
 
-        if (!\is_callable([$container->getParameterBag()->resolveValue($definition->getClass()), 'addResizer'])) {
+        $reflectionClass = new \ReflectionClass($container->getParameterBag()->resolveValue($definition->getClass()));
+
+        if (!$reflectionClass->hasMethod('addResizer') || !$reflectionClass->getMethod('addResizer')->isPublic()) {
             return;
         }
 
