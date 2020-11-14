@@ -69,7 +69,8 @@ jobs:
                   php-version: ${{ matrix.php-version }}
                   coverage: pcov
                   tools: composer:v2, pecl
-                  extensions: mongodb-1.9.0rc1
+                                    extensions: mongodb-1.9.0rc1
+
             - name: Add PHPUnit matcher
               run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
