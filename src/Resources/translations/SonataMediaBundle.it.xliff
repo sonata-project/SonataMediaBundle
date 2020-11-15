@@ -11,8 +11,12 @@
                 <target>Media</target>
             </trans-unit>
             <trans-unit id="gallery">
-                <source>Gallery</source>
+                <source>gallery</source>
                 <target>Gallerie</target>
+            </trans-unit>
+            <trans-unit id="gallery_">
+                <source>Gallery</source>
+                <target>Galleria</target>
             </trans-unit>
             <trans-unit id="options">
                 <source>Options</source>

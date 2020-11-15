@@ -10,9 +10,21 @@
                 <source>media</source>
                 <target>Medien</target>
             </trans-unit>
+            <trans-unit id="media_">
+                <source>Media</source>
+                <target>Medien</target>
+            </trans-unit>
             <trans-unit id="gallery">
                 <source>gallery</source>
                 <target>Galerie</target>
+            </trans-unit>
+            <trans-unit id="gallery_">
+                <source>Gallery</source>
+                <target>Galerie</target>
+            </trans-unit>
+            <trans-unit id="options">
+                <source>Options</source>
+                <target>Einstellungen</target>
             </trans-unit>
             <trans-unit id="sonata_media">
                 <source>sonata_media</source>
@@ -562,18 +574,6 @@
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
                 <target>CSS Klasse</target>
-            </trans-unit>
-            <trans-unit id="media_">
-                <source>Media</source>
-                <target>Medien</target>
-            </trans-unit>
-            <trans-unit id="gallery_">
-                <source>Gallery</source>
-                <target>Galerie</target>
-            </trans-unit>
-            <trans-unit id="options">
-                <source>Options</source>
-                <target>Einstellungen</target>
             </trans-unit>
             <trans-unit id="form.label_translation_domain">
                 <source>form.label_translation_domain</source>
