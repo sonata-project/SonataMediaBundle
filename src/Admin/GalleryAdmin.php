@@ -85,7 +85,9 @@ class GalleryAdmin extends AbstractAdmin
     {
         // define group zoning
         $formMapper
+            // NEXT_MAJOR: Change Gallery key to `form_group.gallery` and update translations files.
             ->with('Gallery', ['class' => 'col-md-9'])->end()
+            // NEXT_MAJOR: Change Options key to `form_group.options` and update translations files.
             ->with('Options', ['class' => 'col-md-3'])->end()
         ;
 
