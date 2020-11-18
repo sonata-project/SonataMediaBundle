@@ -265,38 +265,6 @@ class CloudFront implements CDNInterface
     }
 
     /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.28, to be removed in version 4.0.
-     *
-     * @param CloudFrontClient $client
-     */
-    public function setClient($client)
-    {
-        @trigger_error(sprintf(
-            'Method "%s()" is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.',
-            __METHOD__
-        ), E_USER_DEPRECATED);
-
-        if (!$this->client) {
-            $config = [
-                'key' => $this->region,
-                'secret' => $this->version,
-            ];
-
-            if (null !== $this->region) {
-                $config['region'] = $this->region;
-            }
-
-            if (null !== $this->version) {
-                $config['version'] = $this->version;
-            }
-
-            $this->client = CloudFrontClient::factory($config);
-        }
-    }
-
-    /**
      * Generates a valid caller reference from given paths regardless its order.
      *
      * @return string a md5 representation
