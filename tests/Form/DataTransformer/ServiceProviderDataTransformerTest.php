@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use Sonata\MediaBundle\Form\DataTransformer\ServiceProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -24,9 +23,9 @@ class ServiceProviderDataTransformerTest extends TestCase
 {
     public function testTransformNoop(): void
     {
-        $provider = $this->prophesize(MediaProviderInterface::class);
-
-        $transformer = new ServiceProviderDataTransformer($provider->reveal());
+        $transformer = new ServiceProviderDataTransformer(
+            $this->createStub(MediaProviderInterface::class)
+        );
 
         $value = new \stdClass();
         $this->assertSame($value, $transformer->transform($value));
@@ -34,10 +33,10 @@ class ServiceProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformSkipsProviderIfNotMedia(): void
     {
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $provider->transform()->shouldNotBeCalled();
+        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider->expects($this->never())->method('transform');
 
-        $transformer = new ServiceProviderDataTransformer($provider->reveal());
+        $transformer = new ServiceProviderDataTransformer($provider);
 
         $media = new \stdClass();
         $this->assertSame($media, $transformer->reverseTransform($media));
@@ -45,42 +44,42 @@ class ServiceProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformForwardsToProvider(): void
     {
-        $media = $this->prophesize(MediaInterface::class)->reveal();
+        $media = $this->createStub(MediaInterface::class);
 
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $provider->transform(Argument::is($media))->shouldBeCalledTimes(1);
+        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider->expects($this->once())->method('transform')->with($media);
 
-        $transformer = new ServiceProviderDataTransformer($provider->reveal());
+        $transformer = new ServiceProviderDataTransformer($provider);
         $this->assertSame($media, $transformer->reverseTransform($media));
     }
 
     public function testReverseTransformWithThrowingProviderNoThrow(): void
     {
-        $media = $this->prophesize(MediaInterface::class)->reveal();
+        $media = $this->createStub(MediaInterface::class);
 
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $provider->transform(Argument::is($media))->shouldBeCalled()->willThrow(new \Exception());
+        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider->expects($this->once())->method('transform')->with($media)->willThrowException(new \Exception());
 
-        $transformer = new ServiceProviderDataTransformer($provider->reveal());
+        $transformer = new ServiceProviderDataTransformer($provider);
         $transformer->reverseTransform($media);
     }
 
     public function testReverseTransformWithThrowingProviderLogsException(): void
     {
-        $media = $this->prophesize(MediaInterface::class)->reveal();
+        $media = $this->createStub(MediaInterface::class);
 
         $exception = new \Exception('foo');
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $provider->transform(Argument::is($media))->shouldBeCalled()->willThrow($exception);
+        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider->expects($this->once())->method('transform')->with($media)->willThrowException($exception);
 
-        $logger = $this->prophesize(LoggerInterface::class);
-        $logger->error(
-            Argument::containingString('Caught Exception Exception: "foo" at'),
-            Argument::is(['exception' => $exception])
-        )->shouldBeCalled();
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error')->with(
+            $this->stringStartsWith('Caught Exception Exception: "foo" at'),
+            ['exception' => $exception]
+        );
 
-        $transformer = new ServiceProviderDataTransformer($provider->reveal());
-        $transformer->setLogger($logger->reveal());
+        $transformer = new ServiceProviderDataTransformer($provider);
+        $transformer->setLogger($logger);
         $transformer->reverseTransform($media);
     }
 }

@@ -13,12 +13,15 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use Aws\CloudFront\CloudFrontClient;
 use Aws\S3\S3Client;
 use Aws\Sdk;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
 use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector as DeprecatedDoctrineCollector;
+use Sonata\MediaBundle\CDN\CloudFront;
+use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -332,25 +335,42 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         if ($container->hasDefinition('sonata.media.cdn.cloudfront') && isset($config['cdn']['cloudfront'])) {
-            $container->getDefinition('sonata.media.cdn.cloudfront')
-                ->replaceArgument(0, $config['cdn']['cloudfront']['path'])
-                ->replaceArgument(1, $config['cdn']['cloudfront']['key'])
-                ->replaceArgument(2, $config['cdn']['cloudfront']['secret'])
-                ->replaceArgument(3, $config['cdn']['cloudfront']['distribution_id'])
-            ;
-
             if (isset($config['cdn']['cloudfront']['region'])) {
-                // @todo: Perform this replacenent unconditionally when support for aws/aws-sdk-php < 3.0 is dropped.
-                $container->getDefinition('sonata.media.cdn.cloudfront')
-                    ->replaceArgument(4, $config['cdn']['cloudfront']['region']);
+                $cloudFrontConfig['region'] = $config['cdn']['cloudfront']['region'];
             }
 
             if (isset($config['cdn']['cloudfront']['version'])) {
-                // @todo: Perform this replacenent unconditionally when support for aws/aws-sdk-php < 3.0 is dropped.
-                $container->getDefinition('sonata.media.cdn.cloudfront')
-                    ->replaceArgument(5, $config['cdn']['cloudfront']['version']);
+                $cloudFrontConfig['version'] = $config['cdn']['cloudfront']['version'];
             }
+
+            // @todo: Remove the following check and the `else` block when support for aws/aws-sdk-php < 3.0 is dropped.
+            if (class_exists(Sdk::class)) {
+                $cloudFrontConfig['credentials'] = [
+                    'key' => $config['cdn']['cloudfront']['key'],
+                    'secret' => $config['cdn']['cloudfront']['secret'],
+                ];
+
+                $cloudFrontClass = CloudFrontVersion3::class;
+            } else {
+                $cloudFrontConfig['key'] = $config['cdn']['cloudfront']['key'];
+                $cloudFrontConfig['secret'] = $config['cdn']['cloudfront']['secret'];
+
+                $cloudFrontClass = CloudFront::class;
+
+                $container->getDefinition('sonata.media.cdn.cloudfront.client')
+                    ->setFactory([CloudFrontClient::class, 'factory']);
+            }
+
+            $container->getDefinition('sonata.media.cdn.cloudfront.client')
+                    ->replaceArgument(0, $cloudFrontConfig);
+
+            $container->getDefinition('sonata.media.cdn.cloudfront')
+                ->setClass($cloudFrontClass)
+                ->replaceArgument(0, new Reference('sonata.media.cdn.cloudfront.client'))
+                ->replaceArgument(1, $config['cdn']['cloudfront']['distribution_id'])
+                ->replaceArgument(2, $config['cdn']['cloudfront']['path']);
         } else {
+            $container->removeDefinition('sonata.media.cdn.cloudfront.client');
             $container->removeDefinition('sonata.media.cdn.cloudfront');
         }
 

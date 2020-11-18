@@ -19,7 +19,6 @@ class GalleryTest
 
     public function __construct()
     {
-        parent::__construct();
         $this->id = random_int(0, getrandmax());
     }
 

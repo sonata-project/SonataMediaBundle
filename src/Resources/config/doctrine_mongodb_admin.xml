@@ -40,9 +40,7 @@
                 </argument>
             </call>
         </service>
-        <service id="sonata.media.admin.media.manager" class="Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager" public="true">
-            <argument type="service" id="doctrine_mongodb"/>
-        </service>
+        <service id="sonata.media.admin.media.manager" alias="sonata.admin.manager.doctrine_mongodb" public="true"/>
         <service id="sonata.media.admin.gallery" class="%sonata.media.admin.gallery.class%" public="true">
             <tag name="sonata.admin" manager_type="doctrine_mongodb" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.gallery.translation_domain%" label="gallery" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>

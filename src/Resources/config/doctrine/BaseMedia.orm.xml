@@ -3,8 +3,8 @@
     <mapped-superclass name="Sonata\MediaBundle\Entity\BaseMedia">
         <field name="name" column="name" type="string" nullable="false" length="255"/>
         <field name="description" column="description" type="text" nullable="true" length="1024"/>
-        <field name="enabled" column="enabled" type="boolean" nullable="false" default="false"/>
-        <field name="providerName" column="provider_name" type="string" nullable="false" length="255" default="image"/>
+        <field name="enabled" column="enabled" type="boolean" nullable="false"/>
+        <field name="providerName" column="provider_name" type="string" nullable="false" length="255"/>
         <field name="providerStatus" column="provider_status" type="integer" nullable="false"/>
         <field name="providerReference" column="provider_reference" type="string" nullable="false" length="255"/>
         <field name="providerMetadata" column="provider_metadata" type="json" nullable="true"/>
@@ -16,7 +16,7 @@
         <field name="copyright" column="copyright" type="string" nullable="true"/>
         <field name="authorName" column="author_name" type="string" nullable="true"/>
         <field name="context" column="context" type="string" nullable="true" length="64"/>
-        <field name="cdnIsFlushable" column="cdn_is_flushable" type="boolean" nullable="true" default="false"/>
+        <field name="cdnIsFlushable" column="cdn_is_flushable" type="boolean" nullable="true"/>
         <field name="cdnFlushIdentifier" column="cdn_flush_identifier" type="string" nullable="true" length="64"/>
         <field name="cdnFlushAt" column="cdn_flush_at" type="datetime" nullable="true"/>
         <field name="cdnStatus" column="cdn_status" type="integer" nullable="true"/>

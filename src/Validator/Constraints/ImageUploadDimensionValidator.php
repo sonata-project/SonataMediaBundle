@@ -48,7 +48,7 @@ final class ImageUploadDimensionValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, MediaInterface::class);
         }
 
-        if (null === $value->getBinaryContent()) {
+        if (!$value->getBinaryContent() instanceof \SplFileInfo) {
             return;
         }
 

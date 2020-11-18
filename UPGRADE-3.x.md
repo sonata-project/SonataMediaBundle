@@ -4,6 +4,31 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Sonata\MediaBundle\CDN\CloudFront
+
+The previous signature of `CloudFront::__construct()` is deprecated.
+
+Before:
+
+```php
+public function __construct(string $path, string $key, string $secret, string $distributionId, ?string $region = null, ?string $version = null)
+```
+
+After:
+
+```php
+public function __construct(Aws\CloudFront\CloudFrontClient $client, string $distributionId, string $path)
+```
+
+Returning `false` or any value not present in the `CDNInterface::STATUS_*` constants from `CloudFront::getFlushStatus()` is deprecated.
+
+The methods `CloudFront::setClient()` and `CloudFront::getStatusList()` are deprecated.
+
+### MogileFS filesystem adapter is deprecated
+
+The services `sonata.media.adapter.filesystem.mogilefs`, `sonata.media.filesystem.mogilefs`
+and the configuration node "sonata_media.filesystem.mogilefs" are deprecated.
+
 ### Configuration node "sonata_media.filesystem.s3.sdk_version"
 
 The configuration node "sonata_media.filesystem.s3.sdk_version" is deprecated. The

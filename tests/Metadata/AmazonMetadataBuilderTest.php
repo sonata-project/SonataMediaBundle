@@ -26,8 +26,10 @@ final class AmazonMetadataBuilderTest extends TestCase
      */
     public function testAmazon(array $settings, array $expected): void
     {
-        $mimeTypes = $this->createMock(MimeTypesInterface::class);
-        $mimeTypes->method('guessMimeType')->willReturn($expected['contentType']);
+        $mimeTypes = $this->createStub(MimeTypesInterface::class);
+        $mimeTypes->method('getMimeTypes')->willReturnCallback(static function (string $ext): array {
+            return 'png' === $ext ? ['image/png'] : [];
+        });
 
         $media = $this->createStub(MediaInterface::class);
         $filename = '/test/folder/testfile.png';

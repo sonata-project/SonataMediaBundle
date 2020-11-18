@@ -284,7 +284,7 @@ class Configuration implements ConfigurationInterface
                                     ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
                                         'The node "%node%" is deprecated and will be removed in version 4.0'
                                         .' since the version for aws/aws-sdk-php is inferred automatically.',
-                                        '3.x'
+                                        '3.28'
                                     ))
                                     ->beforeNormalization()
                                         ->ifString()
@@ -315,6 +315,10 @@ class Configuration implements ConfigurationInterface
                         ->end()
 
                         ->arrayNode('mogilefs')
+                            ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                'The node "%node%" is deprecated and will be removed in version 4.0.',
+                                '3.28'
+                            ))
                             ->children()
                                 ->scalarNode('domain')->isRequired()->end()
                                 ->arrayNode('hosts')

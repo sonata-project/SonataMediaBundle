@@ -13,11 +13,14 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
+use Aws\CloudFront\CloudFrontClient;
 use Aws\Sdk;
 use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagicImagine;
 use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Sonata\MediaBundle\CDN\CloudFront;
+use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Sonata\MediaBundle\Model\CategoryManager;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
@@ -507,6 +510,70 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService('sonata.media.pool');
         $this->assertContainerBuilderHasAlias('%sonata.media.pool.class%', 'sonata.media.pool');
+    }
+
+    public function testCdnCloudFront(): void
+    {
+        if (!class_exists(CloudFrontClient::class) || class_exists(Sdk::class)) {
+            $this->markTestSkipped('This test requires "aws/aws-sdk-php:^2.0" to be installed.');
+        }
+
+        $this->load([
+            'cdn' => [
+                'cloudfront' => [
+                    'path' => '/foo',
+                    'distribution_id' => '$some_id$',
+                    'key' => 'cloudfront_key',
+                    'secret' => 'cloudfront_secret',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront.client', CloudFrontClient::class);
+        $this->assertSame(
+            $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getArgument(0),
+            [
+                'key' => 'cloudfront_key',
+                'secret' => 'cloudfront_secret',
+            ]
+        );
+        $this->assertSame([CloudFrontClient::class, 'factory'], $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getFactory());
+        $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront', CloudFront::class);
+    }
+
+    public function testCdnCloudFrontVersion3(): void
+    {
+        if (!class_exists(CloudFrontClient::class) || !class_exists(Sdk::class)) {
+            $this->markTestSkipped('This test requires "aws/aws-sdk-php:^3.0" to be installed.');
+        }
+
+        $this->load([
+            'cdn' => [
+                'cloudfront' => [
+                    'path' => '/foo',
+                    'distribution_id' => '$some_id$',
+                    'key' => 'cloudfront_key',
+                    'secret' => 'cloudfront_secret',
+                    'region' => 'cloudfront_region',
+                    'version' => 'cloudfront_version',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront.client', CloudFrontClient::class);
+        $this->assertSame(
+            $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getArgument(0),
+            [
+                'region' => 'cloudfront_region',
+                'version' => 'cloudfront_version',
+                'credentials' => [
+                    'key' => 'cloudfront_key',
+                    'secret' => 'cloudfront_secret',
+                ],
+            ]
+        );
+        $this->assertNull($this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getFactory());
+        $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront', CloudFrontVersion3::class);
     }
 
     protected function getMinimalConfiguration(): array

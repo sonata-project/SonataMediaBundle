@@ -92,20 +92,43 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function flushCdn(MediaInterface $media): void
     {
-        if ($media->getId() && $this->requireThumbnails() && !$media->getCdnIsFlushable()) {
-            $flushPaths = [];
-            foreach ($this->getFormats() as $format => $settings) {
-                if (MediaProviderInterface::FORMAT_ADMIN === $format ||
-                    substr($format, 0, \strlen((string) $media->getContext())) === $media->getContext()) {
-                    $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
-                }
+        if (!$media->getId() || !$media->getCdnIsFlushable()) {
+            // If the medium is new or if it isn't marked as flushable, skip the CDN flush process.
+            return;
+        }
+
+        // Check if the medium already has a pending CDN flush.
+        if ($media->getCdnFlushIdentifier()) {
+            $cdnStatus = $this->getCdn()->getFlushStatus($media->getCdnFlushIdentifier());
+            // Update the flush status.
+            $media->setCdnStatus($cdnStatus);
+
+            if (!\in_array($cdnStatus, [CDNInterface::STATUS_OK, CDNInterface::STATUS_ERROR], true)) {
+                // If the previous flush process is still pending, do nothing.
+                return;
             }
-            if (!empty($flushPaths)) {
-                $cdnFlushIdentifier = $this->getCdn()->flushPaths($flushPaths);
-                $media->setCdnFlushIdentifier($cdnFlushIdentifier);
-                $media->setCdnIsFlushable(true);
-                $media->setCdnStatus(CDNInterface::STATUS_TO_FLUSH);
+
+            // If the previous flush process is finished, we clean its identifier.
+            $media->setCdnFlushIdentifier(null);
+
+            if (CDNInterface::STATUS_OK === $cdnStatus) {
+                $media->setCdnFlushAt(new \DateTime());
             }
+        }
+
+        $flushPaths = [];
+
+        foreach ($this->getFormats() as $format => $settings) {
+            if (MediaProviderInterface::FORMAT_ADMIN === $format ||
+                substr($format, 0, \strlen((string) $media->getContext())) === $media->getContext()) {
+                $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
+            }
+        }
+
+        if (!empty($flushPaths)) {
+            $cdnFlushIdentifier = $this->getCdn()->flushPaths($flushPaths);
+            $media->setCdnFlushIdentifier($cdnFlushIdentifier);
+            $media->setCdnStatus(CDNInterface::STATUS_TO_FLUSH);
         }
     }
 
@@ -116,7 +139,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function getFormat($name)
     {
-        return isset($this->formats[$name]) ? $this->formats[$name] : false;
+        return $this->formats[$name] ?? false;
     }
 
     public function requireThumbnails()
@@ -215,7 +238,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function getTemplate($name)
     {
-        return isset($this->templates[$name]) ? $this->templates[$name] : null;
+        return $this->templates[$name] ?? null;
     }
 
     public function getResizer()

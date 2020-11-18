@@ -211,7 +211,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
+        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../Fixtures/logo.png'));
 
         $media = new Media();
         $media->setContext('default');
@@ -235,7 +235,7 @@ class ImageProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../fixtures/logo.png'));
+        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../Fixtures/logo.png'));
 
         $media = new Media();
         $media->setBinaryContent($file);

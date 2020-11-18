@@ -2,6 +2,98 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.28.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.27.0...3.28.0) - 2020-10-30
+### Added
+- [[#1823](https://github.com/sonata-project/SonataMediaBundle/pull/1823)]
+  Added CDN flush status check at `BaseProvider::flushCdn()` in order to
+resolve previous flushing processes. ([@phansys](https://github.com/phansys))
+- [[#1848](https://github.com/sonata-project/SonataMediaBundle/pull/1848)]
+  Missing translations ([@gremo](https://github.com/gremo))
+- [[#1834](https://github.com/sonata-project/SonataMediaBundle/pull/1834)]
+  Support for symfony/validator ^5.1 ([@jorrit](https://github.com/jorrit))
+- [[#1664](https://github.com/sonata-project/SonataMediaBundle/pull/1664)]
+  Added support for `psr/http-client` in `BaseVideoProvider`
+([@core23](https://github.com/core23))
+
+### Changed
+- [[#1848](https://github.com/sonata-project/SonataMediaBundle/pull/1848)]
+  `gallery` translation key into `Gallery` ([@gremo](https://github.com/gremo))
+- [[#1821](https://github.com/sonata-project/SonataMediaBundle/pull/1821)] When
+  using Doctrine ORM or MongoDB the service `sonata.media.admin.media.manager`
+is now an alias of `sonata.admin.manager.orm` or
+`sonata.admin.manager.doctrine_mongodb` instead of a separate service
+implemented by the same class. ([@jorrit](https://github.com/jorrit))
+
+### Deprecated
+- [[#1815](https://github.com/sonata-project/SonataMediaBundle/pull/1815)]
+  Deprecated method signature for `CloudFront::__construct()`;
+([@phansys](https://github.com/phansys))
+- [[#1815](https://github.com/sonata-project/SonataMediaBundle/pull/1815)]
+  Deprecated methods `CloudFront::setClient()` and
+`CloudFront::getStatusList()`; ([@phansys](https://github.com/phansys))
+- [[#1815](https://github.com/sonata-project/SonataMediaBundle/pull/1815)]
+  Deprecated returning `false` or any value not present in the
+`CDNInterface::STATUS_*` constants from `CloudFront::getFlushStatus()`.
+([@phansys](https://github.com/phansys))
+- [[#1841](https://github.com/sonata-project/SonataMediaBundle/pull/1841)]
+  `sonata.media.adapter.filesystem.mogilefs` and
+`sonata.media.filesystem.mogilefs` services;
+([@phansys](https://github.com/phansys))
+- [[#1841](https://github.com/sonata-project/SonataMediaBundle/pull/1841)]
+  `sonata_media.filesystem.mogilefs` configuration node.
+([@phansys](https://github.com/phansys))
+- [[#1664](https://github.com/sonata-project/SonataMediaBundle/pull/1664)]
+  Deprecate `Guzzle` and `Buzz` usage in `BaseVideoProvider`
+([@core23](https://github.com/core23))
+- [[#1814](https://github.com/sonata-project/SonataMediaBundle/pull/1814)]
+  Deprecated `sonata_media.filesystem.s3.sdk_version` configuration node.
+([@phansys](https://github.com/phansys))
+
+### Fixed
+- [[#1815](https://github.com/sonata-project/SonataMediaBundle/pull/1815)]
+  Fixed getting values returned by `CloudFrontClient::createInvalidation()` and
+`CloudFrontClient::getInvalidation()` methods when using
+"aws/aws-sdk-php:^3.0". ([@phansys](https://github.com/phansys))
+- [[#1823](https://github.com/sonata-project/SonataMediaBundle/pull/1823)]
+  Fixed marking the medium as not CDN synced (`Media::$cdnIsFlushable`) in
+`BaseProvider::flushCdn()` and `UpdateCdnStatusCommand`.
+([@phansys](https://github.com/phansys))
+- [[#1847](https://github.com/sonata-project/SonataMediaBundle/pull/1847)]
+  Error on YouTube media creation in `ImageUploadDimensionValidator`
+([@tambait](https://github.com/tambait))
+- [[#1832](https://github.com/sonata-project/SonataMediaBundle/pull/1832)]
+  Fixed validity of `*.orm.xml` mapping files.
+([@jorrit](https://github.com/jorrit))
+- [[#1821](https://github.com/sonata-project/SonataMediaBundle/pull/1821)]
+  Deprecation notice in `Sonata\DoctrineORMAdminBundle\Model\ModelManager` and
+`Sonata\DoctrineMongoDBAdminBundle\Model\ModelManager`.
+([@jorrit](https://github.com/jorrit))
+- [[#1716](https://github.com/sonata-project/SonataMediaBundle/pull/1716)]
+  Invalid mongodb xml mapping for BaseGallery.mongodb.xml and
+BaseMedia.mongodb.xml files ([@SylvanoTombo](https://github.com/SylvanoTombo))
+- [[#1816](https://github.com/sonata-project/SonataMediaBundle/pull/1816)]
+  Controller reference of some media API routes.
+([@jorrit](https://github.com/jorrit))
+- [[#1814](https://github.com/sonata-project/SonataMediaBundle/pull/1814)]
+  Fixed calls to deprecated method `AwsClient::factory()` when using
+aws/aws-sdk-php:^3.0; ([@phansys](https://github.com/phansys))
+- [[#1814](https://github.com/sonata-project/SonataMediaBundle/pull/1814)]
+  Fixed passing required arguments to "sonata.media.cdn.cloudfront" service
+when using aws/aws-sdk-php:^3.0; ([@phansys](https://github.com/phansys))
+- [[#1814](https://github.com/sonata-project/SonataMediaBundle/pull/1814)]
+  Fixed respecting `sonata_media.filesystem.s3.region`,
+`sonata_media.filesystem.s3.version` and `sonata_media.filesystem.s3.endpoint`
+configuration nodes when using aws/aws-sdk-php:^2.0.
+([@phansys](https://github.com/phansys))
+
+### Removed
+- [[#1836](https://github.com/sonata-project/SonataMediaBundle/pull/1836)] Dev
+  dependency on sonata-project/formatter-bundle.
+([@jorrit](https://github.com/jorrit))
+- [[#1818](https://github.com/sonata-project/SonataMediaBundle/pull/1818)]
+  Remove support for `doctrine/mongodb-odm` <2.0
+([@franmomu](https://github.com/franmomu))
+
 ## [3.27.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.26.0...3.27.0) - 2020-09-02
 ### Added
 - [[#1786](https://github.com/sonata-project/SonataMediaBundle/pull/1786)]

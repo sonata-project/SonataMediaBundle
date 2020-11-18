@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Command;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\ClassificationBundle\Model\CategoryInterface;
-use Sonata\ClassificationBundle\Model\ContextInterface;
+use Sonata\ClassificationBundle\Model\Category;
+use Sonata\ClassificationBundle\Model\Context;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
@@ -92,17 +92,17 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
-        $contextModel = $this->createMock(ContextInterface::class);
+        $contextModel = new Context();
 
         $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->willReturn($contextModel);
 
-        $category = $this->createMock(CategoryInterface::class);
+        $category = new Category();
 
         $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->willReturn($category);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertRegExp('@Done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }
@@ -117,11 +117,11 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
-        $contextModel = $this->createMock(ContextInterface::class);
+        $contextModel = new Context();
 
         $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->willReturn($contextModel);
 
-        $category = $this->createMock(CategoryInterface::class);
+        $category = new Category();
 
         $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->willReturn(null);
         $this->categoryManager->expects($this->once())->method('create')->willReturn($category);
@@ -129,7 +129,7 @@ class FixMediaContextCommandTest extends TestCase
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertRegExp('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }
@@ -144,13 +144,13 @@ class FixMediaContextCommandTest extends TestCase
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
 
-        $contextModel = $this->createMock(ContextInterface::class);
+        $contextModel = new Context();
 
         $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->willReturn(null);
         $this->contextManager->expects($this->once())->method('create')->willReturn($contextModel);
         $this->contextManager->expects($this->once())->method('save')->with($this->equalTo($contextModel));
 
-        $category = $this->createMock(CategoryInterface::class);
+        $category = new Category();
 
         $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->willReturn(null);
         $this->categoryManager->expects($this->once())->method('create')->willReturn($category);
@@ -158,7 +158,7 @@ class FixMediaContextCommandTest extends TestCase
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertRegExp('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }

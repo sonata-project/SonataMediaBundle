@@ -14,16 +14,14 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\Prophecy\ObjectProphecy;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
-use Sonata\ClassificationBundle\Model\CategoryInterface;
-use Sonata\ClassificationBundle\Model\ContextInterface;
+use Sonata\ClassificationBundle\Model\Category;
+use Sonata\ClassificationBundle\Model\Context;
 use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
-use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Tests\Fixtures\EntityWithGetId;
+use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,99 +42,94 @@ class BaseMediaAdminTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->pool = $this->prophesize(Pool::class);
-        $this->categoryManager = $this->prophesize(CategoryManagerInterface::class);
-        $this->request = $this->prophesize(Request::class);
-        $this->modelManager = $this->prophesize(ModelManagerInterface::class);
+        $this->pool = $this->createStub(Pool::class);
+        $this->categoryManager = $this->createStub(CategoryManagerInterface::class);
+        $this->request = $this->createStub(Request::class);
+        $this->modelManager = $this->createStub(ModelManagerInterface::class);
 
         $this->mediaAdmin = new TestMediaAdmin(
-            null,
+            'media',
             BaseMedia::class,
             'SonataMediaBundle:MediaAdmin',
-            $this->pool->reveal(),
-            $this->categoryManager->reveal()
+            $this->pool,
+            $this->categoryManager
         );
-        $this->mediaAdmin->setRequest($this->request->reveal());
-        $this->mediaAdmin->setModelManager($this->modelManager->reveal());
+        $this->mediaAdmin->setRequest($this->request);
+        $this->mediaAdmin->setModelManager($this->modelManager);
         $this->mediaAdmin->setUniqid('uniqid');
     }
 
     public function testGetNewInstance(): void
     {
-        $media = $this->prophesize(Media::class);
-        $category = $this->prophesize();
-        $category->willExtend(EntityWithGetId::class);
-        $category->willImplement(CategoryInterface::class);
-        $context = $this->prophesize();
-        $context->willExtend(EntityWithGetId::class);
-        $context->willImplement(ContextInterface::class);
+        $media = new Media();
+        $category = new Category();
+        $context = new Context();
+
+        $context->setId('context');
+        $category->setContext($context);
 
         $this->configureGetPersistentParameters();
-        $this->configureGetProviderName($media);
-        $this->modelManager->getModelInstance(BaseMedia::class)->willReturn($media->reveal());
-        $this->categoryManager->find(1)->willReturn($category->reveal());
-        $this->request->isMethod('POST')->willReturn(true);
-        $this->request->get('context')->willReturn('context');
-        $this->request->get('id')->willReturn(null);
-        $category->getContext()->willReturn($context->reveal());
-        $context->getId()->willReturn('context');
-        $media->setContext('context')->shouldBeCalled();
-        $media->setCategory($category->reveal())->shouldBeCalled();
 
-        $this->assertSame($media->reveal(), $this->mediaAdmin->getNewInstance());
+        $this->modelManager->method('getModelInstance')->with(BaseMedia::class)->willReturn($media);
+        $this->categoryManager->method('find')->with(1)->willReturn($category);
+        $this->request->method('isMethod')->with('POST')->willReturn(true);
+
+        $newMedia = $this->mediaAdmin->getNewInstance();
+
+        $this->assertSame($media, $newMedia);
+        $this->assertSame('context', $media->getContext());
+        $this->assertSame($category, $media->getCategory());
+        $this->assertSame('providerName', $media->getProviderName());
     }
 
     public function testGetPersistentParametersWithMultipleProvidersInContext(): void
     {
-        $category = $this->prophesize();
-        $category->willExtend(EntityWithGetId::class);
-        $category->willImplement(CategoryInterface::class);
-        $category->getId()->willReturn(1);
-        $this->categoryManager->getRootCategory('context')->willReturn($category->reveal());
-        $this->request->isMethod('POST')->willReturn(true);
-        $this->request->get('filter')->willReturn([]);
-        $this->request->get('context', 'default_context')->willReturn('context');
-        $this->request->get('provider')->willReturn('providerName');
-        $this->request->get('category')->willReturn(null);
-        $this->request->get('hide_context')->willReturn(true);
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $this->pool->getDefaultContext()->willReturn('default_context');
-        $this->pool->getProvidersByContext('context')->willReturn([$provider->reveal(), $provider->reveal()]);
-        $this->assertSame(
-            [
-                'provider' => 'providerName',
-                'context' => 'context',
-                'category' => 1,
-                'hide_context' => true,
-            ],
-            $this->mediaAdmin->getPersistentParameters()
-        );
+        $category = new Category();
+        $category->setId(1);
+        $provider = $this->createStub(MediaProviderInterface::class);
+
+        $this->categoryManager->method('getRootCategory')->with('context')->willReturn($category);
+        $this->request->method('isMethod')->with('POST')->willReturn(true);
+        $this->request->method('get')->willReturnMap([
+            ['filter', null, []],
+            ['provider', null, 'providerName'],
+            ['category', null, null],
+            ['hide_context', null, true],
+            ['context', 'default_context', 'context'],
+        ]);
+        $this->pool->method('getDefaultContext')->willReturn('default_context');
+        $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider, $provider]);
+
+        $persistentParameters = $this->mediaAdmin->getPersistentParameters();
+
+        $this->assertSame([
+            'provider' => 'providerName',
+            'context' => 'context',
+            'category' => 1,
+            'hide_context' => true,
+        ], $persistentParameters);
     }
 
     private function configureGetPersistentParameters(): void
     {
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $category = $this->prophesize();
-        $category->willExtend(EntityWithGetId::class);
-        $category->willImplement(CategoryInterface::class);
-        $query = $this->prophesize(ParameterBag::class);
-        $this->request->query = $query->reveal();
-        $query->set('provider', null)->shouldBeCalled();
+        $provider = $this->createStub(MediaProviderInterface::class);
+        $category = new Category();
+        $category->setId(1);
 
-        $this->pool->getDefaultContext()->willReturn('default_context');
-        $this->pool->getProvidersByContext('context')->willReturn([$provider->reveal()]);
-        $this->categoryManager->getRootCategory('context')->willReturn($category->reveal());
-        $this->request->get('filter')->willReturn([]);
-        $this->request->get('provider')->willReturn(null);
-        $this->request->get('category')->willReturn(null);
-        $this->request->get('hide_context')->willReturn(true);
-        $this->request->get('context', 'default_context')->willReturn('context');
-        $category->getId()->willReturn(1);
-    }
+        $this->request->query = new ParameterBag();
 
-    private function configureGetProviderName(ObjectProphecy $media): void
-    {
-        $this->request->get('uniqid')->willReturn(['providerName' => 'providerName']);
-        $media->setProviderName('providerName')->shouldBeCalled();
+        $this->pool->method('getDefaultContext')->willReturn('default_context');
+        $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider]);
+        $this->categoryManager->method('getRootCategory')->with('context')->willReturn($category);
+        $this->request->method('get')->willReturnMap([
+            ['filter', null, []],
+            ['provider', null, null],
+            ['category', null, null],
+            ['hide_context', null, true],
+            ['context', 'default_context', 'context'],
+            ['context', null, 'context'],
+            ['uniqid', null, ['providerName' => 'providerName']],
+            ['id', null, null],
+        ]);
     }
 }

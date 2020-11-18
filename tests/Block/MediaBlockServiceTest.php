@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
-use Prophecy\Prophecy\ObjectProphecy;
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
@@ -28,8 +28,6 @@ class MediaBlockServiceTest extends BlockServiceTestCase
 {
     protected $container;
 
-    private $galleryManager;
-
     /**
      * @var MediaBlockService
      */
@@ -39,42 +37,43 @@ class MediaBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
-        $this->container = $this->prophesize(ContainerInterface::class);
-        $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
+        $this->container = $this->createStub(ContainerInterface::class);
 
         $this->blockService = new MediaBlockService(
             $this->twig,
             null,
-            $this->container->reveal(),
-            $this->galleryManager->reveal()
+            $this->container,
+            $this->createStub(GalleryManagerInterface::class)
         );
     }
 
     public function testExecute(): void
     {
-        $block = $this->prophesize(Block::class);
-        $media = $this->prophesize(MediaInterface::class);
-        $blockContext = $this->prophesize(BlockContext::class);
+        $block = $this->createStub(Block::class);
+        $media = $this->createStub(MediaInterface::class);
+        $blockContext = $this->createMock(BlockContext::class);
 
         $this->configureGetFormatChoices($media, ['format1' => 'format1']);
-        $blockContext->getBlock()->willReturn($block->reveal());
-        $blockContext->getSetting('format')->willReturn('format');
-        $blockContext->setSetting('format', 'format1')->shouldBeCalled();
-        $blockContext->getSettings()->willReturn([]);
-        $blockContext->getTemplate()->willReturn('template');
-        $blockContext->getSetting('mediaId')->willReturn($media->reveal());
-        $block->getSetting('mediaId')->willReturn($media->reveal());
+        $blockContext->method('getBlock')->willReturn($block);
+        $blockContext->method('getSetting')->willReturnMap([
+            ['format', 'format'],
+            ['mediaId', $media],
+        ]);
+        $blockContext->expects($this->once())->method('setSetting')->with('format', 'format1');
+        $blockContext->method('getSettings')->willReturn([]);
+        $blockContext->method('getTemplate')->willReturn('template');
+        $block->method('getSetting')->with('mediaId')->willReturn($media);
 
         $this->twig
             ->expects($this->once())
             ->method('render')
             ->with('template', [
-                'media' => $media->reveal(),
-                'block' => $block->reveal(),
+                'media' => $media,
+                'block' => $block,
                 'settings' => [],
             ]);
 
-        $this->blockService->execute($blockContext->reveal());
+        $this->blockService->execute($blockContext);
     }
 
     public function testDefaultSettings(): void
@@ -98,14 +97,14 @@ class MediaBlockServiceTest extends BlockServiceTestCase
         ], $blockContext);
     }
 
-    private function configureGetFormatChoices(ObjectProphecy $media, array $choices): void
+    private function configureGetFormatChoices(MockObject $media, array $choices): void
     {
-        $mediaAdmin = $this->prophesize(BaseMediaAdmin::class);
-        $pool = $this->prophesize(Pool::class);
+        $mediaAdmin = $this->createStub(BaseMediaAdmin::class);
+        $pool = $this->createStub(Pool::class);
 
-        $this->container->get('sonata.media.admin.media')->willReturn($mediaAdmin->reveal());
-        $mediaAdmin->getPool()->willReturn($pool->reveal());
-        $media->getContext()->willReturn('context');
-        $pool->getFormatNamesByContext('context')->willReturn($choices);
+        $this->container->method('get')->with('sonata.media.admin.media')->willReturn($mediaAdmin);
+        $mediaAdmin->method('getPool')->with()->willReturn($pool);
+        $media->method('getContext')->with()->willReturn('context');
+        $pool->method('getFormatNamesByContext')->with('context')->willReturn($choices);
     }
 }

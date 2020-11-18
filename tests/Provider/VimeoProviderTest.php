@@ -133,7 +133,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt')));
+            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt')));
 
         $provider = $this->getProvider($client, $requestFactory);
 
@@ -164,7 +164,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt')));
+            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt')));
 
         $provider = $this->getProvider($client, $messageFactory);
 
@@ -203,7 +203,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $this->expectExceptionCode(12);
 
         $response = new Response();
-        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_vimeo.txt'));
+        $response->setContent(file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt'));
 
         $browser = $this->createMock(Browser::class);
         $browser->expects($this->once())->method('call')->will($this->throwException(new \RuntimeException('First error on get', 12)));

@@ -18,10 +18,11 @@
             <argument/>
             <argument/>
         </service>
-        <service id="sonata.media.cdn.cloudfront" class="Sonata\MediaBundle\CDN\CloudFront">
-            <argument/>
-            <argument/>
-            <argument/>
+        <service id="sonata.media.cdn.cloudfront.client" class="Aws\CloudFront\CloudFrontClient">
+            <argument type="collection"/>
+        </service>
+        <!-- The class for "sonata.media.cdn.cloudfront" service is set dynamically at `SonataMediaExtension` -->
+        <service id="sonata.media.cdn.cloudfront">
             <argument/>
             <argument/>
             <argument/>

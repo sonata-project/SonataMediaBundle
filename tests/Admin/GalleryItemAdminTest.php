@@ -24,7 +24,7 @@ class GalleryItemAdminTest extends TestCase
     protected function setUp(): void
     {
         $this->mediaAdmin = new GalleryItemAdmin(
-            null,
+            'gallery',
             BaseGallery::class,
             'SonataMediaBundle:GalleryAdmin'
         );

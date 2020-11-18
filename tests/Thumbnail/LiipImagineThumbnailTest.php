@@ -29,8 +29,8 @@ class LiipImagineThumbnailTest extends TestCase
 {
     public function testGenerate(): void
     {
-        $cacheManager = $this->prophesize(CacheManager::class);
-        $cacheManager->getBrowserPath()->willReturn('cache/media/default/0011/24/ASDASDAS.png');
+        $cacheManager = $this->createStub(CacheManager::class);
+        $cacheManager->method('getBrowserPath')->willReturn('cache/media/default/0011/24/ASDASDAS.png');
 
         $thumbnail = new LiipImagineThumbnail($cacheManager);
 
@@ -43,8 +43,8 @@ class LiipImagineThumbnailTest extends TestCase
           'anothercontext_large' => ['height' => 500, 'width' => 500, 'quality' => 100],
         ];
 
-        $resizer = $this->prophesize(ResizerInterface::class);
-        $resizer->resize()->willReturn(true);
+        $resizer = $this->createStub(ResizerInterface::class);
+        $resizer->method('resize')->willReturn(true);
 
         $media = new Media();
         $media->setName('ASDASDAS.png');
@@ -52,28 +52,28 @@ class LiipImagineThumbnailTest extends TestCase
         $media->setId(1023456);
         $media->setContext('default');
 
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $provider->requireThumbnails()->willReturn(true);
-        $provider->getReferenceFile()->willReturn($referenceFile);
-        $provider->getFormats()->willReturn($formats);
-        $provider->getResizer()->willReturn($resizer);
-        $provider->generatePrivateUrl()->willReturn('/my/private/path');
-        $provider->generatePublicUrl()->willReturn('/my/public/path');
-        $provider->getFilesystem()->willReturn($filesystem);
-        $provider->getReferenceImage($media)->willReturn('default/0011/24/ASDASDAS.png');
-        $provider->getCdnPath(
+        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider->method('requireThumbnails')->willReturn(true);
+        $provider->method('getReferenceFile')->willReturn($referenceFile);
+        $provider->method('getFormats')->willReturn($formats);
+        $provider->method('getResizer')->willReturn($resizer);
+        $provider->method('generatePrivateUrl')->willReturn('/my/private/path');
+        $provider->method('generatePublicUrl')->willReturn('/my/public/path');
+        $provider->method('getFilesystem')->willReturn($filesystem);
+        $provider->method('getReferenceImage')->with($media)->willReturn('default/0011/24/ASDASDAS.png');
+        $provider->method('getCdnPath')->with(
             'default/0011/24/ASDASDAS.png',
             null
         )->willReturn('cache/media/default/0011/24/ASDASDAS.png');
 
-        $thumbnail->generate($provider->reveal(), $media);
+        $thumbnail->generate($provider, $media);
         $this->assertSame('default/0011/24/ASDASDAS.png', $thumbnail->generatePublicUrl(
-            $provider->reveal(),
+            $provider,
             $media,
             MediaProviderInterface::FORMAT_ADMIN
         ));
         $this->assertSame('cache/media/default/0011/24/ASDASDAS.png', $thumbnail->generatePublicUrl(
-            $provider->reveal(),
+            $provider,
             $media,
             'mycontext_medium'
         ));
@@ -85,26 +85,26 @@ class LiipImagineThumbnailTest extends TestCase
      */
     public function testLegacyGenerate(): void
     {
-        $router = $this->prophesize(RouterInterface::class);
-        $router->generate(
+        $router = $this->createStub(RouterInterface::class);
+        $router->method('generate')->with(
             '_imagine_medium',
             ['path' => '/some/path/42_medium.jpg']
         )->willReturn('/imagine/medium/some/path/42_medium.jpg');
-        $thumbnail = new LiipImagineThumbnail($router->reveal());
-        $provider = $this->prophesize(MediaProviderInterface::class);
-        $media = $this->prophesize(MediaInterface::class);
-        $media->getId()->willReturn(42);
-        $media->getCdnIsFlushable()->willReturn(true);
+        $thumbnail = new LiipImagineThumbnail($router);
+        $provider = $this->createStub(MediaProviderInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $media->method('getId')->willReturn(42);
+        $media->method('getCdnIsFlushable')->willReturn(true);
         $format = 'medium';
-        $provider->getReferenceImage($media->reveal())->willReturn('/some/image.jpg');
-        $provider->generatePath($media->reveal())->willReturn('/some/path');
-        $provider->getCdnPath(
+        $provider->method('getReferenceImage')->with($media)->willReturn('/some/image.jpg');
+        $provider->method('generatePath')->with($media)->willReturn('/some/path');
+        $provider->method('getCdnPath')->with(
             '/imagine/medium/some/path/42_medium.jpg',
             true
         )->willReturn('some/cdn/path');
         $this->assertSame(
             'some/cdn/path',
-            $thumbnail->generatePublicUrl($provider->reveal(), $media->reveal(), $format)
+            $thumbnail->generatePublicUrl($provider, $media, $format)
         );
     }
 }

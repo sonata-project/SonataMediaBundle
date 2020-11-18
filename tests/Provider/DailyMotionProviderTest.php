@@ -132,7 +132,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt')));
+            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt')));
 
         $provider = $this->getProvider($client, $requestFactory);
 
@@ -162,7 +162,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt')));
+            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt')));
 
         $provider = $this->getProvider($client, $messageFactory);
 
@@ -198,7 +198,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->expectExceptionCode(12);
 
         $response = new Response();
-        $response->setContent(file_get_contents(__DIR__.'/../fixtures/valid_dailymotion.txt'));
+        $response->setContent(file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt'));
 
         $browser = $this->createMock(Browser::class);
         $browser->expects($this->once())->method('call')->will($this->throwException(new \RuntimeException('First error on get', 12)));

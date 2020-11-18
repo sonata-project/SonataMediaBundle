@@ -45,7 +45,7 @@ class FileProviderTest extends AbstractProviderTest
         $resizer->method('resize')->willReturn(true);
 
         $adapter = $this->createMock(Local::class);
-        $adapter->method('getDirectory')->willReturn(realpath(__DIR__).'/../fixtures');
+        $adapter->method('getDirectory')->willReturn(realpath(__DIR__).'/../Fixtures');
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->onlyMethods(['get'])
@@ -143,7 +143,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $file = __DIR__.'/../fixtures/file.txt';
+        $file = __DIR__.'/../Fixtures/file.txt';
 
         $media = new Media();
         $provider->preUpdate($media);
@@ -157,7 +157,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $provider->postUpdate($media);
 
-        $file = new File(realpath(__DIR__.'/../fixtures/file.txt'));
+        $file = new File(realpath(__DIR__.'/../Fixtures/file.txt'));
 
         $media = new Media();
         $media->setContext('default');
@@ -178,7 +178,7 @@ class FileProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $file = new File(realpath(__DIR__.'/../fixtures/FileProviderTest/0011/24/file.txt'));
+        $file = new File(realpath(__DIR__.'/../Fixtures/FileProviderTest/0011/24/file.txt'));
 
         $media = new Media();
         $media->setBinaryContent($file);
@@ -209,8 +209,8 @@ class FileProviderTest extends AbstractProviderTest
 
     public function mediaProvider(): array
     {
-        $file = new File(realpath(__DIR__.'/../fixtures/file.txt'));
-        $content = file_get_contents(realpath(__DIR__.'/../fixtures/file.txt'));
+        $file = new File(realpath(__DIR__.'/../Fixtures/file.txt'));
+        $content = file_get_contents(realpath(__DIR__.'/../Fixtures/file.txt'));
         $request = new Request([], [], [], [], [], [], $content);
 
         $media1 = new Media();
@@ -250,7 +250,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $binaryContent->expects($this->atLeastOnce())
             ->method('getRealPath')
-            ->willReturn(__DIR__.'/../fixtures/file.txt');
+            ->willReturn(__DIR__.'/../Fixtures/file.txt');
 
         $binaryContent->expects($this->never())
             ->method('getPathname');
@@ -291,7 +291,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $binaryContent->expects($this->atLeastOnce())
             ->method('getPathname')
-            ->willReturn(__DIR__.'/../fixtures/file.txt');
+            ->willReturn(__DIR__.'/../Fixtures/file.txt');
 
         $media
             ->method('getBinaryContent')

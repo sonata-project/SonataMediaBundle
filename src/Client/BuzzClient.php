@@ -21,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * NEXT_MAJOR: Remove this class.
  *
- * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0.
+ * @deprecated since sonata-project/media-bundle 3.28, to be removed in version 4.0.
  */
 final class BuzzClient implements ClientInterface
 {

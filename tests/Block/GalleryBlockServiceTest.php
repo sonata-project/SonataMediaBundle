@@ -23,10 +23,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GalleryBlockServiceTest extends BlockServiceTestCase
 {
-    protected $container;
-
-    private $galleryManager;
-
     /**
      * @var GalleryBlockService
      */
@@ -36,40 +32,37 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
-        $this->container = $this->prophesize(ContainerInterface::class);
-        $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
-
         $this->blockService = new GalleryBlockService(
             $this->twig,
             null,
-            $this->container->reveal(),
-            $this->galleryManager->reveal()
+            $this->createStub(ContainerInterface::class),
+            $this->createStub(GalleryManagerInterface::class)
         );
     }
 
     public function testExecute(): void
     {
-        $block = $this->prophesize(Block::class);
-        $gallery = $this->prophesize(GalleryInterface::class);
-        $blockContext = $this->prophesize(BlockContext::class);
+        $block = $this->createStub(Block::class);
+        $gallery = $this->createStub(GalleryInterface::class);
+        $blockContext = $this->createStub(BlockContext::class);
 
-        $blockContext->getBlock()->willReturn($block->reveal());
-        $blockContext->getSettings()->willReturn(['settings']);
-        $blockContext->getTemplate()->willReturn('template');
-        $block->getSetting('galleryId')->willReturn($gallery->reveal());
-        $gallery->getGalleryItems()->willReturn([]);
+        $blockContext->method('getBlock')->willReturn($block);
+        $blockContext->method('getSettings')->willReturn(['settings']);
+        $blockContext->method('getTemplate')->willReturn('template');
+        $block->method('getSetting')->with('galleryId')->willReturn($gallery);
+        $gallery->method('getGalleryItems')->willReturn([]);
 
         $this->twig
             ->expects($this->once())
             ->method('render')
             ->with('template', [
-                'gallery' => $gallery->reveal(),
-                'block' => $block->reveal(),
+                'gallery' => $gallery,
+                'block' => $block,
                 'elements' => [],
                 'settings' => ['settings'],
             ]);
 
-        $this->blockService->execute($blockContext->reveal());
+        $this->blockService->execute($blockContext);
     }
 
     public function testDefaultSettings(): void

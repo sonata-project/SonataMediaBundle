@@ -25,21 +25,23 @@ class ConsumerThumbnailTest extends TestCase
 {
     public function testGenerateDispatchesEvents(): void
     {
-        $thumbnail = $this->createMock(ThumbnailInterface::class);
-        $backend = $this->createMock(BackendInterface::class);
-        $provider = $this->createMock(MediaProviderInterface::class);
-        $media = $this->createMock(MediaInterface::class);
-
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $dispatcher->expects($this->at(0))
+        $dispatcher->expects($this->exactly(2))
             ->method('addListener')
-            ->with($this->equalTo('kernel.finish_request'), $this->anything());
+            ->withConsecutive(
+                ['kernel.finish_request', $this->anything()],
+                ['console.terminate', $this->anything()]
+            );
 
-        $dispatcher->expects($this->at(1))
-            ->method('addListener')
-            ->with($this->equalTo('console.terminate'), $this->anything());
-
-        $consumer = new ConsumerThumbnail('foo', $thumbnail, $backend, $dispatcher);
-        $consumer->generate($provider, $media);
+        $consumer = new ConsumerThumbnail(
+            'foo',
+            $this->createStub(ThumbnailInterface::class),
+            $this->createStub(BackendInterface::class),
+            $dispatcher
+        );
+        $consumer->generate(
+            $this->createStub(MediaProviderInterface::class),
+            $this->createStub(MediaInterface::class)
+        );
     }
 }

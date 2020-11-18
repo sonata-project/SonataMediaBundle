@@ -21,21 +21,16 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class MediaAdminTest extends TestCase
 {
-    private $pool;
-    private $categoryManager;
     private $mediaAdmin;
 
     protected function setUp(): void
     {
-        $this->pool = $this->prophesize(Pool::class);
-        $this->categoryManager = $this->prophesize(CategoryManagerInterface::class);
-
         $this->mediaAdmin = new MediaAdmin(
-            null,
+            'media',
             BaseMedia::class,
             'SonataMediaBundle:MediaAdmin',
-            $this->pool->reveal(),
-            $this->categoryManager->reveal()
+            $this->createStub(Pool::class),
+            $this->createStub(CategoryManagerInterface::class)
         );
     }
 

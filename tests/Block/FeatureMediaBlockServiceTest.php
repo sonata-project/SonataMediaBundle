@@ -20,22 +20,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FeatureMediaBlockServiceTest extends BlockServiceTestCase
 {
-    protected $container;
-    private $galleryManager;
     private $blockService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->container = $this->prophesize(ContainerInterface::class);
-        $this->galleryManager = $this->prophesize(GalleryManagerInterface::class);
-
         $this->blockService = new FeatureMediaBlockService(
             $this->twig,
             null,
-            $this->container->reveal(),
-            $this->galleryManager->reveal()
+            $this->createStub(ContainerInterface::class),
+            $this->createStub(GalleryManagerInterface::class)
         );
     }
 
