@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.29.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.28.0...3.29.0) - 2020-11-30
+### Fixed
+- [[#1866](https://github.com/sonata-project/SonataMediaBundle/pull/1866)] Guessing the content type of a file stored on Amazon S3 ([@jorrit](https://github.com/jorrit))
+- [[#1863](https://github.com/sonata-project/SonataMediaBundle/pull/1863)] `SonataMediaBundle.it.xliff` fixed "gallery" and "Gallery" translations (case) ([@gremo](https://github.com/gremo))
+
 ## [3.28.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.27.0...3.28.0) - 2020-10-30
 ### Added
 - [[#1823](https://github.com/sonata-project/SonataMediaBundle/pull/1823)]
