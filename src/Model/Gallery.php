@@ -35,12 +35,12 @@ abstract class Gallery implements GalleryInterface
     protected $enabled;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     protected $createdAt;
 
@@ -79,7 +79,7 @@ abstract class Gallery implements GalleryInterface
         return $this->enabled;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -89,7 +89,7 @@ abstract class Gallery implements GalleryInterface
         return $this->updatedAt;
     }
 
-    public function setCreatedAt(?\DateTime $createdAt = null): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }

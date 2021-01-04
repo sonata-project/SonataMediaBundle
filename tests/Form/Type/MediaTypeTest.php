@@ -69,6 +69,9 @@ class MediaTypeTest extends AbstractTypeTest
         $this->factory->create($this->getFormType(), null);
     }
 
+    /**
+     * @requires extension gd
+     */
     public function testMissingFormContextOption(): void
     {
         $this->mediaPool->method('getProviderList')->willReturn([
@@ -127,6 +130,9 @@ class MediaTypeTest extends AbstractTypeTest
         ]);
     }
 
+    /**
+     * @requires extension gd
+     */
     public function testInvalidFormContextOption(): void
     {
         $this->mediaPool->method('getProviderList')->willReturn([

@@ -136,7 +136,7 @@ class FileProviderTest extends AbstractProviderTest
         $media->setBinaryContent($file);
         $this->provider->transform($media);
 
-        $this->assertInstanceOf(\DateTime::class, $media->getUpdatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $media->getUpdatedAt());
         $this->assertNotNull($media->getProviderReference());
 
         $this->provider->postUpdate($media);

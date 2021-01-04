@@ -51,6 +51,11 @@ are required when aws/aws-sdk-php 3.x is installed.
 
 The `Guzzle` and `Buzz` dependencies are deprecated and will be replaced with the abstract `http-client` interface, so you can choose your preferred client implementation. You should adapt to the new `BaseVideoProvider::__construct()` signature.
 
+## Model classes use `\DateTimeInterface`
+
+If you overrided some date-related methods (`setUpdatedAt`, `setCreatedAt`, `setCdnFlushAt`) in model classes (Gallery, Media, GalleryHasMedia),
+you need to change type hint of argument to `\DateTimeInterface`.
+
 UPGRADE FROM 3.25 to 3.26
 =========================
 

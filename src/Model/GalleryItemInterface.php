@@ -61,17 +61,17 @@ interface GalleryItemInterface
      */
     public function getPosition();
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null);
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null);
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeInterface|null
      */
     public function getUpdatedAt();
 
-    public function setCreatedAt(?\DateTime $createdAt = null);
+    public function setCreatedAt(?\DateTimeInterface $createdAt = null);
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeInterface|null
      */
     public function getCreatedAt();
 }
