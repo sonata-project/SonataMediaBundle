@@ -152,7 +152,7 @@ class MediaBlockService extends AbstractBlockService
         ]);
     }
 
-    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         // make sure we have a valid format
         $media = $blockContext->getBlock()->getSetting('mediaId');

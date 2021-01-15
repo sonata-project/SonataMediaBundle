@@ -18,6 +18,13 @@
         <parameter key="sonata.media.admin.gallery_item.translation_domain">%sonata.media.admin.media.translation_domain%</parameter>
     </parameters>
     <services>
+        <service autowire="true" autoconfigure="true" id="Sonata\MediaBundle\Controller\MediaAdminController" class="Sonata\MediaBundle\Controller\MediaAdminController">
+            <call method="setContainer">
+                <argument type="service" id="service_container"></argument>
+            </call>
+            <tag name="controller.service_subscriber"></tag>
+            <tag name="controller.service_arguments"></tag>
+        </service>
         <service id="sonata.media.admin.media" class="%sonata.media.admin.media.class%" public="true">
             <tag name="sonata.admin" manager_type="orm" group="%sonata.media.admin.groupname%" label_catalogue="%sonata.media.admin.media.translation_domain%" label="media" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%sonata.media.admin.groupicon%"/>
             <argument/>

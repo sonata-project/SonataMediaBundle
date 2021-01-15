@@ -10,7 +10,7 @@
         <service id="sonata.media.block.media" class="%sonata.media.block.media.class%" public="true">
             <tag name="sonata.block"/>
             <argument>sonata.media.block.media</argument>
-            <argument type="service" id="sonata.templating"/>
+            <argument type="service" id="twig"/>
             <argument type="service" id="service_container"/>
             <argument type="service" id="sonata.media.manager.media"/>
         </service>

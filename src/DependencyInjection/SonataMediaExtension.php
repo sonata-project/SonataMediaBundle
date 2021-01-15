@@ -60,6 +60,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $loader->load('validators.xml');
         $loader->load('serializer.xml');
         $loader->load('command.xml');
+        $loader->load('controllers.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autowire="true" autoconfigure="true" />
+        <service id="Sonata\MediaBundle\Controller\GalleryController" class="Sonata\MediaBundle\Controller\GalleryController">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+            <tag name="controller.service_arguments"/>
+        </service>
+        <service id="sonata.media.controller.gallery" alias="Sonata\MediaBundle\Controller\GalleryController" public="true"/>
+        <service id="Sonata\MediaBundle\Controller\MediaController" class="Sonata\MediaBundle\Controller\MediaController">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+            <tag name="controller.service_arguments"/>
+        </service>
+        <service id="sonata.media.controller.media" alias="Sonata\MediaBundle\Controller\MediaController" public="true"/>
+    </services>
+</container>

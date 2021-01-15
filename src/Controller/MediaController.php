@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Controller;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +25,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class MediaController extends Controller
+class MediaController extends AbstractController
 {
     /**
      * @return MediaProviderInterface
