@@ -18,7 +18,7 @@ if (!class_exists(IdGenerator::class, false)) {
         'The %s\DefaultGenerator class is deprecated since sonata/media-bundle 3.4 and will be removed in 4.0.'
         .' Use \Sonata\MediaBundle\Generator\IdGenerator instead.',
         __NAMESPACE__
-    ), E_USER_DEPRECATED);
+    ), \E_USER_DEPRECATED);
 }
 
 class_alias(IdGenerator::class, DefaultGenerator::class);

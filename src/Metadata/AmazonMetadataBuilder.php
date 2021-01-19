@@ -121,7 +121,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     protected function getContentType($filename)
     {
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $ext = pathinfo($filename, \PATHINFO_EXTENSION);
         $mimeTypes = $this->mimeTypes->getMimeTypes($ext);
 
         return ['contentType' => current($mimeTypes)];

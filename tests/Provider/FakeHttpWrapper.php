@@ -107,7 +107,7 @@ class FakeHttpWrapper
         return fread($this->fp, $count);
     }
 
-    public function stream_seek($offset, $whence = SEEK_SET): void
+    public function stream_seek($offset, $whence = \SEEK_SET): void
     {
     }
 
