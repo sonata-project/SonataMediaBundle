@@ -281,7 +281,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
                 ->end();
         }
 
-        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions, true)) {
+        if (!\in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), $this->allowedExtensions, true)) {
             $errorElement
                 ->with('binaryContent')
                 ->addViolation('Invalid extensions')

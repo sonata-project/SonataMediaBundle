@@ -18,7 +18,7 @@ if (!class_exists(PathGenerator::class, false)) {
         'The %s\PHPCRGenerator class is deprecated since sonata/media-bundle 3.4 and will be removed in 4.0.'
         .' Use \Sonata\MediaBundle\Generator\PathGenerator instead.',
         __NAMESPACE__
-    ), E_USER_DEPRECATED);
+    ), \E_USER_DEPRECATED);
 }
 
 class_alias(PathGenerator::class, PHPCRGenerator::class);

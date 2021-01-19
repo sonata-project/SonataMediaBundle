@@ -90,8 +90,8 @@ class AddMassMediaCommand extends BaseCommand
      */
     protected function getFilePointer(InputInterface $input, OutputInterface $output)
     {
-        if (false !== ftell(STDIN)) {
-            return STDIN;
+        if (false !== ftell(\STDIN)) {
+            return \STDIN;
         }
 
         if (!$input->getOption('file')) {

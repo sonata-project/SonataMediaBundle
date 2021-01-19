@@ -67,7 +67,7 @@ abstract class BaseVideoProvider extends BaseProvider
     ) {
         // NEXT_MAJOR: remove this check!
         if (!method_exists($this, 'getReferenceUrl')) {
-            @trigger_error('The method "getReferenceUrl" is required since sonata-project/media-bundle 3.27.0 with the next major release.', E_USER_DEPRECATED);
+            @trigger_error('The method "getReferenceUrl" is required since sonata-project/media-bundle 3.27.0 with the next major release.', \E_USER_DEPRECATED);
         }
 
         if (!$client instanceof Browser && !$client instanceof ClientInterface) {
