@@ -18,7 +18,7 @@ if (!class_exists(UuidGenerator::class, false)) {
         'The %s\ODMGenerator class is deprecated since sonata/media-bundle 3.4 and will be removed in 4.0.'
         .' Use \Sonata\MediaBundle\Generator\UuidGenerator instead.',
         __NAMESPACE__
-    ), E_USER_DEPRECATED);
+    ), \E_USER_DEPRECATED);
 }
 
 class_alias(UuidGenerator::class, ODMGenerator::class);

@@ -66,7 +66,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
                 'Using an instance of Symfony\Component\DependencyInjection\ContainerInterface is deprecated since
                 version 3.1 and will be removed in 4.0.
                 Use Symfony\Component\HttpFoundation\Session\SessionInterface instead.',
-                E_USER_DEPRECATED
+                \E_USER_DEPRECATED
             );
 
             $this->session = $session->get('session');

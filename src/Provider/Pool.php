@@ -100,7 +100,7 @@ class Pool
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.',
-            E_USER_DEPRECATED
+            \E_USER_DEPRECATED
         );
 
         $this->downloadSecurities[$name] = $security;
@@ -260,7 +260,7 @@ class Pool
      */
     public function getDownloadSecurity(MediaInterface $media)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.', \E_USER_DEPRECATED);
 
         return $this->getDownloadStrategy($media);
     }
