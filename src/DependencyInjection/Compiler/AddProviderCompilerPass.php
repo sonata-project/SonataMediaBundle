@@ -55,7 +55,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since 3.5, to be removed in 4.0.',
-            E_USER_DEPRECATED
+            \E_USER_DEPRECATED
         );
 
         return $this->getExtensionConfig($container);

@@ -149,7 +149,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         @trigger_error(
             'The '.__METHOD__.' is deprecated and will be removed with next major release.'
             .'Use `addGalleryHasMedia` method instead.',
-            E_USER_DEPRECATED
+            \E_USER_DEPRECATED
         );
         $this->addGalleryHasMedia($galleryHasMedia);
     }

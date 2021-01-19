@@ -45,7 +45,7 @@ class LiipImagineThumbnail implements ThumbnailInterface
                 'Using an instance of %s is deprecated since version 3.3 and will be removed in 4.0. Use %s.',
                 RouterInterface::class,
                 CacheManager::class
-            ), E_USER_DEPRECATED);
+            ), \E_USER_DEPRECATED);
             $this->router = $cacheManager;
         }
         $this->cacheManager = $cacheManager;

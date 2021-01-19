@@ -150,7 +150,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $statusCode = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertStringEndsWith('Done (total medias processed: 2).'.PHP_EOL, $this->tester->getDisplay());
+        $this->assertStringEndsWith('Done (total medias processed: 2).'.\PHP_EOL, $this->tester->getDisplay());
 
         $this->assertSame(0, $statusCode);
     }
