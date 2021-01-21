@@ -412,7 +412,7 @@ abstract class Media implements MediaInterface
         }
 
         // strips off query strings or hashes, which are common in URIs remote references
-        return preg_replace('{(\?|#).*}', '', pathinfo($providerReference, PATHINFO_EXTENSION));
+        return preg_replace('{(\?|#).*}', '', pathinfo($providerReference, \PATHINFO_EXTENSION));
     }
 
     public function setSize($size): void
