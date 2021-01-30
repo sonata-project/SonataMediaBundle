@@ -49,9 +49,9 @@ class GalleryItemAdmin extends AbstractAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add('media')
             ->add('gallery')
             ->add('position')

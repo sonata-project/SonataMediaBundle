@@ -131,9 +131,9 @@ class GalleryAdmin extends AbstractAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->addIdentifier('name')
             ->add('enabled', 'boolean', ['editable' => true])
             ->add('context', 'trans', ['catalogue' => 'SonataMediaBundle'])

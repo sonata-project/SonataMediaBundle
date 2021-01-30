@@ -155,8 +155,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             if (isset($bundles['SonataDoctrineBundle'])) {
                 $this->registerSonataDoctrineMapping($config);
             } else {
-                // NEXT MAJOR: Remove next line and throw error when not registering SonataDoctrineBundle
-                $this->registerDoctrineMapping($config);
+                throw new \Exception('Please register SonataDoctrineBundle');
             }
         }
 
@@ -216,98 +215,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('sonata.media.gallery.class', $config['class']['gallery']);
 
         $container->getDefinition('sonata.media.form.type.media')->replaceArgument(1, $config['class']['media']);
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     */
-    public function registerDoctrineMapping(array $config): void
-    {
-        @trigger_error(
-            'Using SonataEasyExtendsBundle is deprecated since sonata-project/media-bundle 3.26. Please register SonataDoctrineBundle as a bundle instead.',
-            E_USER_DEPRECATED
-        );
-
-        $collector = DeprecatedDoctrineCollector::getInstance();
-
-        $collector->addAssociation($config['class']['media'], 'mapOneToMany', [
-            'fieldName' => 'galleryItems',
-            'targetEntity' => $config['class']['gallery_item'],
-            'cascade' => [
-                'persist',
-            ],
-            'mappedBy' => 'media',
-            'orphanRemoval' => false,
-        ]);
-
-        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', [
-            'fieldName' => 'gallery',
-            'targetEntity' => $config['class']['gallery'],
-            'cascade' => [
-                'persist',
-            ],
-            'mappedBy' => null,
-            'inversedBy' => 'galleryItems',
-            'joinColumns' => [
-                [
-                    'name' => 'gallery_id',
-                    'referencedColumnName' => 'id',
-                    'onDelete' => 'CASCADE',
-                ],
-            ],
-            'orphanRemoval' => false,
-        ]);
-
-        $collector->addAssociation($config['class']['gallery_item'], 'mapManyToOne', [
-            'fieldName' => 'media',
-            'targetEntity' => $config['class']['media'],
-            'cascade' => [
-                 'persist',
-            ],
-            'mappedBy' => null,
-            'inversedBy' => 'galleryItems',
-            'joinColumns' => [
-                [
-                    'name' => 'media_id',
-                    'referencedColumnName' => 'id',
-                    'onDelete' => 'CASCADE',
-                ],
-            ],
-            'orphanRemoval' => false,
-        ]);
-
-        $collector->addAssociation($config['class']['gallery'], 'mapOneToMany', [
-            'fieldName' => 'galleryItems',
-            'targetEntity' => $config['class']['gallery_item'],
-            'cascade' => [
-                'persist',
-            ],
-            'mappedBy' => 'gallery',
-            'orphanRemoval' => true,
-            'orderBy' => [
-                'position' => 'ASC',
-            ],
-        ]);
-
-        if ($this->isClassificationEnabled($config)) {
-            $collector->addAssociation($config['class']['media'], 'mapManyToOne', [
-                'fieldName' => 'category',
-                'targetEntity' => $config['class']['category'],
-                'cascade' => [
-                    'persist',
-                ],
-                'mappedBy' => null,
-                'inversedBy' => null,
-                'joinColumns' => [
-                    [
-                     'name' => 'category_id',
-                     'referencedColumnName' => 'id',
-                     'onDelete' => 'SET NULL',
-                    ],
-                ],
-                'orphanRemoval' => false,
-            ]);
-        }
     }
 
     /**

@@ -150,9 +150,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->addIdentifier('name')
             ->add('description')
             ->add('enabled')
