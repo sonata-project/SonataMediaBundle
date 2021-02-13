@@ -37,9 +37,13 @@ class MediaAdmin extends Admin
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
-            ->add('context', null, [
+            ->add('context', ChoiceFilter::class, [
                 'show_filter' => true !== $this->getPersistentParameter('hide_context'),
-            ], ChoiceType::class, $options);
+                'field_type' => ChoiceType::class,
+                'field_options' => [
+                    'choices' => $options
+                ]
+            ]);
 
         if (null !== $this->categoryManager) {
             $datagridMapper->add('category', null, ['show_filter' => false]);
