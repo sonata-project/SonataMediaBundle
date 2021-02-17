@@ -69,13 +69,16 @@
         "friendsofsymfony/rest-bundle": "<2.6",
         "jms/serializer": "<0.13",
         "liip/imagine-bundle": "<1.9",
+        "rackspace/php-opencloud": "<1.6",
         "sonata-project/block-bundle": "<3.17 || >=4.0",
         "sonata-project/classification-bundle": "<3.0 || >= 5.0",
         "sonata-project/core-bundle": "<3.20",
+        "sonata-project/doctrine-orm-admin-bundle": "<3.0",
         "sonata-project/formatter-bundle": "<3.4",
         "sonata-project/notification-bundle": "<3.3",
         "sonata-project/seo-bundle": "<2.5 || >=3.0",
-        "symfony/monolog-bundle": "<2.4"
+        "symfony/monolog-bundle": "<2.4",
+        "tilleuls/ckeditor-sonata-media-bundle": "<1.0"
     },
     "require-dev": {
         "aws/aws-sdk-php": "^2.8 || ^3.0",
@@ -98,14 +101,14 @@
     },
     "suggest": {
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...)",
-        "rackspace/php-opencloud": "^1.6",
+        "rackspace/php-opencloud": "If you want to use OpenStack/Rackspace APIs",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
-        "sonata-project/doctrine-orm-admin-bundle": "^3.0",
+        "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities",
         "sonata-project/notification-bundle": "If you want to generate thumbnails asynchronously.",
-        "sonata-project/seo-bundle": "^2.1",
+        "sonata-project/seo-bundle": "If you're sensible to SEO",
         "symfony/http-client": "If you want to load external content",
         "symfony/monolog-bundle": "If you want to log exceptions produced when dealing with images.",
-        "tilleuls/ckeditor-sonata-media-bundle": "^1.0",
+        "tilleuls/ckeditor-sonata-media-bundle": "If you want to use CKEditor",
         "twig/extra-bundle": "Auto configures the Twig Intl extension"
     },
     "config": {
