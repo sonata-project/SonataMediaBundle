@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use PHPUnit\Framework\TestCase;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
@@ -36,11 +37,12 @@ class GalleryControllerTest extends TestCase
 {
     public function testGetGalleriesAction(): void
     {
+        $pager = $this->createStub(PagerInterface::class);
         $gManager = $this->createMock(GalleryManagerInterface::class);
         $mediaManager = $this->createMock(MediaManagerInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $gManager->expects($this->once())->method('getPager')->willReturn([]);
+        $gManager->expects($this->once())->method('getPager')->willReturn($pager);
 
         $gController = new GalleryController($gManager, $mediaManager, $formFactory, 'test');
 
@@ -48,7 +50,7 @@ class GalleryControllerTest extends TestCase
         $paramFetcher->expects($this->exactly(3))->method('get');
         $paramFetcher->expects($this->once())->method('all')->willReturn([]);
 
-        $this->assertSame([], $gController->getGalleriesAction($paramFetcher));
+        $this->assertSame($pager, $gController->getGalleriesAction($paramFetcher));
     }
 
     public function testGetGalleryAction(): void
