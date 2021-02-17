@@ -57,6 +57,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
      */
     public function __construct(AdapterInterface $primary, AdapterInterface $secondary, ?LoggerInterface $logger = null)
     {
+        // NEXT_MAJOR: remove master nad slave
         $this->master = $primary;
         $this->slave = $secondary;
         $this->primary = $primary;
