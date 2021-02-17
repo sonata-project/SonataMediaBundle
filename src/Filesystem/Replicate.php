@@ -42,7 +42,6 @@ class Replicate implements AdapterInterface, MetadataSupporter
      */
     private $primary;
 
-
     /**
      * @var LoggerInterface
      */
