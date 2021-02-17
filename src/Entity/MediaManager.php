@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Entity;
 
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
@@ -47,7 +48,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
         }
     }
 
-    public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
+    public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
     {
         $query = $this->getRepository()
             ->createQueryBuilder('m')
