@@ -4,9 +4,9 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
-### Remove deprecated calls
+### Sonata\DatagridBundle\Pager\PageableInterface
 
-- `Sonata\Doctrine\Model\PageableManagerInterface` is no longer used in profit of `Sonata\DatagridBundle\Pager\PageableInterface`.
+- Usages of `Sonata\Doctrine\Model\PageableManagerInterface` were replaced in favor of `Sonata\DatagridBundle\Pager\PageableInterface`.
 
 ### Dependencies
 
