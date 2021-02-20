@@ -10,7 +10,7 @@ UPGRADE FROM 3.x to 3.x
 
 ### Dependencies
 
-- drop support for `sonata-project/datagrid-bundle` < 3.0.
+- Drop support for `sonata-project/datagrid-bundle` < 3.0.
 
     If you are extending these methods, you MUST add argument and return type declarations:
 
