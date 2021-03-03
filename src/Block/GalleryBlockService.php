@@ -15,11 +15,13 @@ namespace Sonata\MediaBundle\Block;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
+use Sonata\BlockBundle\Block\Service\EditableBlockService;
+use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
+use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
@@ -34,18 +36,15 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Templating\EngineInterface;
 use Twig\Environment;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class GalleryBlockService extends AbstractBlockService
+final class GalleryBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
-     * @var ManagerInterface
+     * @var AdminInterface
      */
     protected $galleryAdmin;
 
@@ -59,31 +58,20 @@ class GalleryBlockService extends AbstractBlockService
      */
     private $container;
 
-    /**
-     * NEXT_MAJOR: Remove `$templating` argument.
-     *
-     * @param Environment|string $twigOrName
-     */
-    public function __construct($twigOrName, ?EngineInterface $templating, ContainerInterface $container, ManagerInterface $galleryManager)
+    public function __construct(Environment $twig, ManagerInterface $galleryManager, AdminInterface $galleryAdmin)
     {
-        parent::__construct($twigOrName, $templating);
+        parent::__construct($twig);
 
         $this->galleryManager = $galleryManager;
-        $this->container = $container;
+        $this->galleryAdmin = $galleryAdmin;
     }
 
-    /**
-     * @return Pool
-     */
-    public function getMediaPool()
+    public function getMediaPool(): Pool
     {
         return $this->container->get('sonata.media.pool');
     }
 
-    /**
-     * @return AdminInterface
-     */
-    public function getGalleryAdmin()
+    public function getGalleryAdmin(): AdminInterface
     {
         if (!$this->galleryAdmin) {
             $this->galleryAdmin = $this->container->get('sonata.media.admin.gallery');
@@ -109,13 +97,7 @@ class GalleryBlockService extends AbstractBlockService
         ]);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block): void
+    public function configureEditForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $contextChoices = [];
 
@@ -192,7 +174,7 @@ class GalleryBlockService extends AbstractBlockService
         ]);
     }
 
-    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
 
@@ -235,73 +217,19 @@ class GalleryBlockService extends AbstractBlockService
         $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function getBlockMetadata($code = null)
+    public function getMetadata(): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    public function configureCreateForm(FormMapper $formMapper, BlockInterface $block): void
     {
-        $this->buildEditForm($formMapper, $block);
+        $this->configureEditForm($formMapper, $block);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function postPersist(BlockInterface $block)
-    {
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function postUpdate(BlockInterface $block)
-    {
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function preRemove(BlockInterface $block)
-    {
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function postRemove(BlockInterface $block)
-    {
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
+    public function validate(ErrorElement $errorElement, BlockInterface $block): void
     {
     }
 

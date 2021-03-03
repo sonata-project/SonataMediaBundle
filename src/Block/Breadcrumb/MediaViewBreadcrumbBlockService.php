@@ -54,4 +54,9 @@ class MediaViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 
         return $menu;
     }
+
+    protected function getContext(): string
+    {
+        // TODO: Implement getContext() method.
+    }
 }

@@ -16,27 +16,23 @@ namespace Sonata\MediaBundle\Block;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Block\Service\AbstractBlockService;
+use Sonata\BlockBundle\Block\Service\EditableBlockService;
 use Sonata\BlockBundle\Form\Mapper\FormMapper;
-use Sonata\BlockBundle\Meta\Metadata;
-use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
-use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Twig\Environment;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-final class MediaBlockService extends BaseMediaBlockService
+abstract class BaseMediaBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
      * @var BaseMediaAdmin
@@ -48,56 +44,25 @@ final class MediaBlockService extends BaseMediaBlockService
      */
     protected $mediaManager;
 
-    public function configureSettings(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'media' => false,
-            'title' => null,
-            'translation_domain' => null,
-            'icon' => null,
-            'class' => null,
-            'context' => false,
-            'mediaId' => null,
-            'format' => false,
-            'template' => '@SonataMedia/Block/block_media.html.twig',
-        ]);
+    public function __construct(
+        Environment $twig,
+        ManagerInterface $mediaManager,
+        BaseMediaAdmin $mediaAdmin
+    ) {
+        parent::__construct($twig);
+
+        $this->mediaManager = $mediaManager;
+        $this->mediaAdmin = $mediaAdmin;
     }
 
-    public function configureEditForm(FormMapper $formMapper, BlockInterface $block): void
+    public function getMediaPool(): Pool
     {
-        if (!$block->getSetting('mediaId') instanceof MediaInterface) {
-            $this->load($block);
-        }
+        return $this->getMediaAdmin()->getPool();
+    }
 
-        $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
-
-        $formMapper->add('settings', ImmutableArrayType::class, [
-            'keys' => [
-                ['title', TextType::class, [
-                    'label' => 'form.label_title',
-                    'required' => false,
-                ]],
-                ['translation_domain', TextType::class, [
-                    'label' => 'form.label_translation_domain',
-                    'required' => false,
-                ]],
-                ['icon', TextType::class, [
-                    'label' => 'form.label_icon',
-                    'required' => false,
-                ]],
-                ['class', TextType::class, [
-                    'label' => 'form.label_class',
-                    'required' => false,
-                ]],
-                [$this->getMediaBuilder($formMapper), null, []],
-                ['format', ChoiceType::class, [
-                    'required' => \count($formatChoices) > 0,
-                    'choices' => $formatChoices,
-                    'label' => 'form.label_format',
-                ]],
-            ],
-            'translation_domain' => 'SonataMediaBundle',
-        ]);
+    public function getMediaAdmin(): BaseMediaAdmin
+    {
+        return $this->mediaAdmin;
     }
 
     public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
@@ -140,13 +105,6 @@ final class MediaBlockService extends BaseMediaBlockService
         $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
 
-    public function getMetadata($code = null): MetadataInterface
-    {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), null, 'SonataMediaBundle', [
-            'class' => 'fa fa-picture-o',
-        ]);
-    }
-
     public function configureCreateForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $this->configureEditForm($formMapper, $block);
@@ -154,6 +112,23 @@ final class MediaBlockService extends BaseMediaBlockService
 
     public function validate(ErrorElement $errorElement, BlockInterface $block): void
     {
+    }
+
+    protected function getFormatChoices(?MediaInterface $media = null): array
+    {
+        $formatChoices = [];
+
+        if (!$media instanceof MediaInterface) {
+            return $formatChoices;
+        }
+
+        $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
+
+        foreach ($formats as $code => $format) {
+            $formatChoices[$code] = $code;
+        }
+
+        return $formatChoices;
     }
 
     protected function getMediaBuilder(FormMapper $formMapper): FormBuilderInterface

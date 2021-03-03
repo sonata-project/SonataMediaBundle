@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
-use Sonata\BlockBundle\Block\BlockContext;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\GalleryBlockService;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GalleryBlockServiceTest extends BlockServiceTestCase
 {
@@ -34,9 +34,8 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
 
         $this->blockService = new GalleryBlockService(
             $this->twig,
-            null,
-            $this->createStub(ContainerInterface::class),
-            $this->createStub(GalleryManagerInterface::class)
+            $this->createStub(GalleryManagerInterface::class),
+            $this->createStub(AdminInterface::class)
         );
     }
 
@@ -44,7 +43,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
     {
         $block = $this->createStub(Block::class);
         $gallery = $this->createStub(GalleryInterface::class);
-        $blockContext = $this->createStub(BlockContext::class);
+        $blockContext = $this->createStub(BlockContextInterface::class);
 
         $blockContext->method('getBlock')->willReturn($block);
         $blockContext->method('getSettings')->willReturn(['settings']);

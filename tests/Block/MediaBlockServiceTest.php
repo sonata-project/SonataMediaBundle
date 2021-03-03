@@ -14,46 +14,57 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Block;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use Sonata\BlockBundle\Block\BlockContext;
+use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Block\MediaBlockService;
-use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MediaBlockServiceTest extends BlockServiceTestCase
 {
-    protected $container;
-
     /**
      * @var MediaBlockService
      */
     private $blockService;
 
+    /**
+     * @var BaseMediaAdmin|MockObject
+     */
+    private $mediaAdmin;
+
+    /**
+     * @var Pool|MockObject
+     */
+    private $pool;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->container = $this->createStub(ContainerInterface::class);
+        $this->mediaAdmin = $this->createMock(BaseMediaAdmin::class);
+        $this->pool = $this->createMock(Pool::class);
 
         $this->blockService = new MediaBlockService(
             $this->twig,
-            null,
-            $this->container,
-            $this->createStub(GalleryManagerInterface::class)
+            $this->createStub(MediaManagerInterface::class),
+            $this->mediaAdmin
         );
     }
 
     public function testExecute(): void
     {
+        $this->pool->method('getFormatNamesByContext')->with('context')->willReturn(['format1' => 'format1']);
+        $this->mediaAdmin->method('getPool')->with()->willReturn($this->pool);
+
         $block = $this->createStub(Block::class);
         $media = $this->createStub(MediaInterface::class);
-        $blockContext = $this->createMock(BlockContext::class);
+        $blockContext = $this->createMock(BlockContextInterface::class);
 
-        $this->configureGetFormatChoices($media, ['format1' => 'format1']);
+        $media->method('getContext')->with()->willReturn('context');
+
         $blockContext->method('getBlock')->willReturn($block);
         $blockContext->method('getSetting')->willReturnMap([
             ['format', 'format'],
@@ -95,16 +106,5 @@ class MediaBlockServiceTest extends BlockServiceTestCase
             'ttl' => 0,
             'use_cache' => true,
         ], $blockContext);
-    }
-
-    private function configureGetFormatChoices(MockObject $media, array $choices): void
-    {
-        $mediaAdmin = $this->createStub(BaseMediaAdmin::class);
-        $pool = $this->createStub(Pool::class);
-
-        $this->container->method('get')->with('sonata.media.admin.media')->willReturn($mediaAdmin);
-        $mediaAdmin->method('getPool')->with()->willReturn($pool);
-        $media->method('getContext')->with()->willReturn('context');
-        $pool->method('getFormatNamesByContext')->with('context')->willReturn($choices);
     }
 }

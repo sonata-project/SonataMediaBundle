@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block\Breadcrumb;
 
+use Knp\Menu\ItemInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\SeoBundle\Block\Breadcrumb\BaseBreadcrumbMenuBlockService;
 
@@ -23,7 +24,7 @@ use Sonata\SeoBundle\Block\Breadcrumb\BaseBreadcrumbMenuBlockService;
  */
 abstract class BaseGalleryBreadcrumbBlockService extends BaseBreadcrumbMenuBlockService
 {
-    protected function getRootMenu(BlockContextInterface $blockContext)
+    protected function getRootMenu(BlockContextInterface $blockContext): ItemInterface
     {
         $menu = parent::getRootMenu($blockContext);
 
