@@ -15,7 +15,8 @@ namespace Sonata\MediaBundle\Security;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -23,12 +24,29 @@ use Symfony\Component\Translation\TranslatorInterface;
 class ForbiddenDownloadStrategy implements DownloadStrategyInterface
 {
     /**
-     * @var TranslatorInterface
+     * @var LegacyTranslatorInterface|TranslatorInterface
      */
     protected $translator;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(object $translator)
     {
+        if ($translator instanceof LegacyTranslatorInterface) {
+            @trigger_error(sprintf(
+                'Passing other type than "%s" as argument 1 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                .' and will throw a "\TypeError" error in 4.0.',
+                TranslatorInterface::class,
+                __METHOD__
+            ), \E_USER_DEPRECATED);
+        } elseif (!$translator instanceof TranslatorInterface) {
+            throw new \TypeError(sprintf(
+                'Argument 1 passed to "%s()" MUST be an instance of "%s" or "%s", "%s" given.',
+                __METHOD__,
+                LegacyTranslatorInterface::class,
+                TranslatorInterface::class,
+                \get_class($translator)
+            ));
+        }
+
         $this->translator = $translator;
     }
 

@@ -17,15 +17,30 @@ use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\ForbiddenDownloadStrategy;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ForbiddenDownloadStrategyTest extends TestCase
 {
     public function testIsGranted(): void
     {
-        $media = $this->createMock(MediaInterface::class);
-        $request = $this->createMock(Request::class);
-        $translator = $this->createMock(TranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $translator = $this->createStub(TranslatorInterface::class);
+
+        $strategy = new ForbiddenDownloadStrategy($translator);
+        $this->assertFalse($strategy->isGranted($media, $request));
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyIsGranted(): void
+    {
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
 
         $strategy = new ForbiddenDownloadStrategy($translator);
         $this->assertFalse($strategy->isGranted($media, $request));

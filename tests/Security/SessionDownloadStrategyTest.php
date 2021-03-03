@@ -19,8 +19,8 @@ use Sonata\MediaBundle\Security\SessionDownloadStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
@@ -29,9 +29,9 @@ final class SessionDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedFalseWithGreaterSessionTime(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
-        $media = $this->createMock(MediaInterface::class);
-        $request = $this->createMock(Request::class);
+        $translator = $this->createStub(TranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
         $session = $this->createMock(Session::class);
 
         $session
@@ -44,9 +44,9 @@ final class SessionDownloadStrategyTest extends TestCase
 
     public function testIsGrantedTrue(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
-        $media = $this->createMock(MediaInterface::class);
-        $request = $this->createMock(Request::class);
+        $translator = $this->createStub(TranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
         $session = $this->createMock(Session::class);
 
         $session
@@ -65,9 +65,9 @@ final class SessionDownloadStrategyTest extends TestCase
     {
         $container = $this->createMock(ContainerInterface::class);
 
-        $translator = $this->createMock(TranslatorInterface::class);
-        $media = $this->createMock(MediaInterface::class);
-        $request = $this->createMock(Request::class);
+        $translator = $this->createStub(TranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
         $session = $this->createMock(Session::class);
 
         $session
@@ -83,10 +83,108 @@ final class SessionDownloadStrategyTest extends TestCase
         $this->assertTrue($strategy->isGranted($media, $request));
     }
 
-    public function testInvalidArgumentException(): void
+    public function testTypeError(): void
     {
         $this->expectException(\TypeError::class);
 
-        new SessionDownloadStrategy(new Translator('es_AR'), 'foo', 1);
+        $translator = $this->createStub(TranslatorInterface::class);
+
+        new SessionDownloadStrategy($translator, 'foo', 1);
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyIsGrantedFalseWithGreaterSessionTime(): void
+    {
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $session = $this->createMock(Session::class);
+
+        $session
+            ->method('get')
+            ->willReturn(1);
+
+        $strategy = new SessionDownloadStrategy($translator, $session, 0);
+        $this->assertFalse($strategy->isGranted($media, $request));
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyIsGrantedTrue(): void
+    {
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $session = $this->createMock(Session::class);
+
+        $session
+            ->method('get')
+            ->willReturn(0);
+
+        $strategy = new SessionDownloadStrategy($translator, $session, 1);
+        $this->assertTrue($strategy->isGranted($media, $request));
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyIsGrantedTrueWithContainer(): void
+    {
+        $container = $this->createMock(ContainerInterface::class);
+
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $session = $this->createMock(Session::class);
+
+        $session
+            ->method('get')
+            ->willReturn(0);
+
+        $container->expects($this->once())
+            ->method('get')
+            ->willReturn($session);
+
+        $strategy = new SessionDownloadStrategy($translator, $container, 1);
+
+        $this->assertTrue($strategy->isGranted($media, $request));
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyTypeError(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
+
+        new SessionDownloadStrategy($translator, 'foo', 1);
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyTimeAsString(): void
+    {
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $session = $this->createMock(Session::class);
+
+        $session
+            ->method('get')
+            ->willReturn(1);
+
+        $strategy = new SessionDownloadStrategy($translator, $session, '0');
+        $this->assertFalse($strategy->isGranted($media, $request));
     }
 }

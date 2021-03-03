@@ -17,7 +17,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -35,7 +36,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     protected $container;
 
     /**
-     * @var TranslatorInterface
+     * @var LegacyTranslatorInterface|TranslatorInterface
      */
     protected $translator;
 
@@ -58,8 +59,25 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
      * @param ContainerInterface|SessionInterface $sessionOrContainer
      * @param int                                 $times
      */
-    public function __construct(TranslatorInterface $translator, object $sessionOrContainer, $times)
+    public function __construct(object $translator, object $sessionOrContainer, $times)
     {
+        if ($translator instanceof LegacyTranslatorInterface) {
+            @trigger_error(sprintf(
+                'Passing other type than "%s" as argument 1 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                .' and will throw a "\TypeError" error in 4.0.',
+                TranslatorInterface::class,
+                __METHOD__
+            ), \E_USER_DEPRECATED);
+        } elseif (!$translator instanceof TranslatorInterface) {
+            throw new \TypeError(sprintf(
+                'Argument 1 passed to "%s()" MUST be an instance of "%s" or "%s", "%s" given.',
+                __METHOD__,
+                LegacyTranslatorInterface::class,
+                TranslatorInterface::class,
+                \get_class($translator)
+            ));
+        }
+
         // NEXT_MAJOR: Remove these checks and declare `SessionInterface` for argument 2.
         if ($sessionOrContainer instanceof SessionInterface) {
             $this->session = $sessionOrContainer;
@@ -82,8 +100,8 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
             ));
         }
 
-        $this->times = $times;
         $this->translator = $translator;
+        $this->times = $times;
     }
 
     public function isGranted(MediaInterface $media, Request $request)
@@ -103,10 +121,22 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
 
     public function getDescription()
     {
-        return $this->translator->transChoice(
+        // NEXT_MAJOR: remove this if
+        if ($this->translator instanceof LegacyTranslatorInterface) {
+            return $this->translator->transChoice(
+                'description.session_download_strategy',
+                $this->times,
+                ['%times%' => $this->times],
+                'SonataMediaBundle'
+            );
+        }
+
+        return $this->translator->trans(
             'description.session_download_strategy',
-            $this->times,
-            ['%times%' => $this->times],
+            [
+                '%count%' => $this->times,
+                '%times%' => $this->times,
+            ],
             'SonataMediaBundle'
         );
     }
