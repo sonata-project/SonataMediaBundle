@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Document;
 
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\Doctrine\Document\BaseDocumentManager;
 
 /**
@@ -40,7 +41,7 @@ class MediaManager extends BaseDocumentManager
         }
     }
 
-    public function getPager(array $criteria, $page, $limit = 10, array $sort = []): void
+    public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
     {
         throw new \RuntimeException('Not Implemented yet');
     }

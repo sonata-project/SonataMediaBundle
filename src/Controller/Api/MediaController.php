@@ -132,7 +132,7 @@ class MediaController
             $sort = [$sort => 'asc'];
         }
 
-        return $this->mediaManager->getPager($criteria, $page, $limit, $sort);
+        return $this->mediaManager->getPager($criteria, (int) $page, (int) $limit, $sort);
     }
 
     /**
