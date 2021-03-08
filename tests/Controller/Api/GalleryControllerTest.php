@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Tests\Controller\Api;
 
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use PHPUnit\Framework\TestCase;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryItemInterface;
@@ -31,11 +32,12 @@ class GalleryControllerTest extends TestCase
 {
     public function testGetGalleriesAction(): void
     {
+        $pager = $this->createStub(PagerInterface::class);
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
         $mediaManager = $this->createMock(MediaManagerInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $galleryManager->expects($this->once())->method('getPager')->willReturn([]);
+        $galleryManager->expects($this->once())->method('getPager')->willReturn($pager);
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
 
@@ -50,7 +52,7 @@ class GalleryControllerTest extends TestCase
                 'orderBy' => ['id' => 'ASC'],
             ]);
 
-        $this->assertSame([], $gController->getGalleriesAction($paramFetcher));
+        $this->assertSame($pager, $gController->getGalleriesAction($paramFetcher));
     }
 
     public function testGetGalleryAction(): void

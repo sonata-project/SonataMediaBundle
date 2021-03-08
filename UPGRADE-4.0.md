@@ -1,6 +1,21 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### Sonata\DatagridBundle\Pager\PageableInterface
+
+  Usages of `Sonata\Doctrine\Model\PageableManagerInterface` were replaced in favor of `Sonata\DatagridBundle\Pager\PageableInterface`.
+
+### Dependencies
+
+ - Drop support for `sonata-project/datagrid-bundle` < 3.0.
+
+  If you are extending these methods, you MUST add argument and return type declarations:
+
+    - `Sonata\MediaBundle\Entity\GalleryManager::getPager()`
+    - `Sonata\MediaBundle\Entity\MediaManager::getPager()`
+    - `Sonata\MediaBundle\Model\GalleryManager::getPager()`
+    - `Sonata\MediaBundle\Model\MediaManager::getPager()`
+
 ## Closed API
 
 Many classes have been made final, meaning you can no longer extend them. Consider using decoration instead.
