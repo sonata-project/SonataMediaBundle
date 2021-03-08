@@ -130,19 +130,9 @@ final class MediaBlockService extends BaseMediaBlockService
         $block->setSetting('mediaId', $media);
     }
 
-    public function prePersist(BlockInterface $block): void
-    {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
-    public function preUpdate(BlockInterface $block): void
-    {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
     public function getMetadata($code = null): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), null, 'SonataMediaBundle', [
+        return new Metadata('Media - item', 'sonata.media.block.media', null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
     }

@@ -197,29 +197,9 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
         $block->setSetting('galleryId', $gallery);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function prePersist(BlockInterface $block): void
-    {
-        $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function preUpdate(BlockInterface $block): void
-    {
-        $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
-    }
-
     public function getMetadata(): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), null, 'SonataMediaBundle', [
+        return new Metadata('Media - Gallery', 'sonata.media.block.gallery', null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
     }

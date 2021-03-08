@@ -70,11 +70,13 @@
         "jms/serializer": "<0.13",
         "liip/imagine-bundle": "<1.9",
         "rackspace/php-opencloud": "<1.6",
+        "sonata-project/block-bundle": "<4.0",
         "sonata-project/classification-bundle": "<3.0 || >= 5.0",
         "sonata-project/core-bundle": "<3.20",
         "sonata-project/doctrine-orm-admin-bundle": "<3.0",
         "sonata-project/formatter-bundle": "<3.4",
         "sonata-project/notification-bundle": "<3.3",
+        "sonata-project/seo-bundle": "<3.0",
         "symfony/monolog-bundle": "<2.4",
         "tilleuls/ckeditor-sonata-media-bundle": "<1.0"
     },

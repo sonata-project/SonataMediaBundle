@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block\Breadcrumb;
 
+use Knp\Menu\ItemInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 
 /**
@@ -24,12 +25,12 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
  */
 class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Breadcrumb Index: Media Gallery';
     }
 
-    protected function getMenu(BlockContextInterface $blockContext)
+    protected function getMenu(BlockContextInterface $blockContext): ItemInterface
     {
         $menu = $this->getRootMenu($blockContext);
 
@@ -38,6 +39,6 @@ class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockServi
 
     protected function getContext(): string
     {
-        // TODO: Implement getContext() method.
+        return 'Gallery';
     }
 }

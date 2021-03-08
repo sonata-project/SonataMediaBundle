@@ -1,6 +1,18 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+## Closed API
+
+Many classes have been made final, meaning you can no longer extend them. Consider using decoration instead.
+
+* `Sonata\MediaBundle\Block\Breadcrumb\GalleryIndexBreadcrumbBlockService`
+* `Sonata\MediaBundle\Block\Breadcrumb\GalleryViewBreadcrumbBlockService`
+* `Sonata\MediaBundle\Block\Breadcrumb\MediaViewBreadcrumbBlockService`
+* `Sonata\MediaBundle\Block\FeatureMediaBlockService`
+* `Sonata\MediaBundle\Block\GalleryBlockService`
+* `Sonata\MediaBundle\Block\GalleryListBlockService`
+* `Sonata\MediaBundle\Block\MediaBlockService`
+
 ## Deprecations
 
 All the deprecated code introduced on 3.x is removed on 4.0.

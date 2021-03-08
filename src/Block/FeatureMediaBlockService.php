@@ -18,6 +18,7 @@ use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Form\Type\ImmutableArrayType;
+use Sonata\Form\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -90,17 +91,21 @@ final class FeatureMediaBlockService extends BaseMediaBlockService
         ]);
     }
 
-    public function getStylesheets($media)
+    public function getStylesheets($media): array
     {
         return [
             '/bundles/sonatamedia/blocks/feature_media/theme.css',
         ];
     }
 
-    public function getMetadata($code = null): MetadataInterface
+    public function getMetadata(): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), null, 'SonataMediaBundle', [
+        return new Metadata('Media - feature', 'sonata.media.block.feature_media', null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
+    }
+
+    public function validate(ErrorElement $errorElement, BlockInterface $block): void
+    {
     }
 }

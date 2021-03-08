@@ -21,7 +21,6 @@ use Sonata\BlockBundle\Block\Service\EditableBlockService;
 use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
-use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -95,23 +94,9 @@ abstract class BaseMediaBlockService extends AbstractBlockService implements Edi
         $block->setSetting('mediaId', $media);
     }
 
-    public function prePersist(BlockInterface $block): void
-    {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
-    public function preUpdate(BlockInterface $block): void
-    {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
     public function configureCreateForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $this->configureEditForm($formMapper, $block);
-    }
-
-    public function validate(ErrorElement $errorElement, BlockInterface $block): void
-    {
     }
 
     protected function getFormatChoices(?MediaInterface $media = null): array

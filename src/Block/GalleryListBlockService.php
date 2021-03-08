@@ -157,7 +157,7 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
 
     public function getMetadata(): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata('Media - Gallery list', 'sonata.media.block.gallery_list', null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
     }
