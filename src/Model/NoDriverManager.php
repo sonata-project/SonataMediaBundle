@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Exception\NoDriverException;
 
 /**
@@ -87,7 +88,7 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
         throw new NoDriverException();
     }
 
-    public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
+    public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
     {
         throw new NoDriverException();
     }

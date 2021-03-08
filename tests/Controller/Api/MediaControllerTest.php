@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Controller\Api;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use PHPUnit\Framework\TestCase;
+use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Controller\Api\MediaController;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
@@ -34,10 +35,10 @@ class MediaControllerTest extends TestCase
 {
     public function testGetMediaAction(): void
     {
+        $pager = $this->createStub(PagerInterface::class);
         $mManager = $this->createMock(MediaManagerInterface::class);
-        $media = $this->createMock(MediaInterface::class);
 
-        $mManager->expects($this->once())->method('getPager')->willReturn([$media]);
+        $mManager->expects($this->once())->method('getPager')->willReturn($pager);
 
         $mController = $this->createMediaController($mManager);
 
@@ -45,7 +46,7 @@ class MediaControllerTest extends TestCase
         $paramFetcher->expects($this->exactly(3))->method('get');
         $paramFetcher->expects($this->once())->method('all')->willReturn([]);
 
-        $this->assertSame([$media], $mController->getMediaAction($paramFetcher));
+        $this->assertSame($pager, $mController->getMediaAction($paramFetcher));
     }
 
     public function testGetMediumAction(): void
