@@ -132,7 +132,7 @@ class GalleryController
             $sort = [$sort => 'asc'];
         }
 
-        return $this->getGalleryManager()->getPager($criteria, $page, $limit, $sort);
+        return $this->getGalleryManager()->getPager($criteria, (int) $page, (int) $limit, $sort);
     }
 
     /**
