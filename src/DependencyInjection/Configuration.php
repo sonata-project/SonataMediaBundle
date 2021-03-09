@@ -281,11 +281,11 @@ class Configuration implements ConfigurationInterface
                                     ->defaultValue('latest')
                                 ->end()
                                 ->enumNode('sdk_version')
-                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                        'The node "%node%" is deprecated and will be removed in version 4.0'
-                                        .' since the version for aws/aws-sdk-php is inferred automatically.',
-                                        '3.28'
-                                    ))
+                                    //->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                    //    'The node "%node%" is deprecated and will be removed in version 4.0'
+                                    //    .' since the version for aws/aws-sdk-php is inferred automatically.',
+                                    //    '3.28'
+                                    //))
                                     ->beforeNormalization()
                                         ->ifString()
                                         ->then(static function (string $v): int {

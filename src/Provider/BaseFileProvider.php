@@ -35,10 +35,7 @@ use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class FileProvider extends BaseFileProvider implements FileProviderInterface
+abstract class BaseFileProvider extends BaseProvider implements FileProviderInterface
 {
     protected $allowedExtensions;
 
