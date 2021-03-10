@@ -30,10 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class GalleryListBlockService extends AbstractBlockService
+final class GalleryListBlockService extends AbstractBlockService
 {
     /**
      * @var GalleryManagerInterface

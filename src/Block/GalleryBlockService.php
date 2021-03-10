@@ -38,11 +38,9 @@ use Symfony\Component\Templating\EngineInterface;
 use Twig\Environment;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class GalleryBlockService extends AbstractBlockService
+final class GalleryBlockService extends AbstractBlockService
 {
     /**
      * @var ManagerInterface
