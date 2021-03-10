@@ -23,10 +23,7 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class ImageProvider extends FileProvider
+final class ImageProvider extends BaseFileProvider implements ImageProviderInterface
 {
     /**
      * @var ImagineInterface
@@ -192,9 +189,6 @@ class ImageProvider extends FileProvider
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function getFormatsForContext(string $context): array
     {
         return array_filter($this->getFormats(), static function (string $providerFormat) use ($context): bool {

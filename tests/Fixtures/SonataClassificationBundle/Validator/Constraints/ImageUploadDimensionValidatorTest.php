@@ -18,7 +18,7 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Provider\ImageProvider;
+use Sonata\MediaBundle\Provider\ImageProviderInterface;
 use Sonata\MediaBundle\Validator\Constraints\ImageUploadDimension;
 use Sonata\MediaBundle\Validator\Constraints\ImageUploadDimensionValidator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -36,14 +36,14 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     private $imagineAdapter;
 
     /**
-     * @var ImageProvider
+     * @var ImageProviderInterface
      */
     private $imageProvider;
 
     protected function setUp(): void
     {
         $this->imagineAdapter = $this->createStub(ImagineInterface::class);
-        $this->imageProvider = $this->createStub(ImageProvider::class);
+        $this->imageProvider = $this->createStub(ImageProviderInterface::class);
 
         parent::setUp();
     }

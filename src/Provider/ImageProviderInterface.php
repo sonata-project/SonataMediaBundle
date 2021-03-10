@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-final class FileProvider extends BaseFileProvider implements FileProviderInterface
+interface ImageProviderInterface extends FileProviderInterface
 {
+    /**
+     * @return array<string, mixed>
+     */
+    public function getFormatsForContext(string $context): array;
 }

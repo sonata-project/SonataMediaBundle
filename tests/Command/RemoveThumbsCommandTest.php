@@ -17,7 +17,7 @@ use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Command\RemoveThumbsCommand;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Provider\FileProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Tests\Fixtures\FilesystemTestCase;
@@ -93,7 +93,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             'small' => [],
         ];
 
-        $fileProvider = $this->createMock(FileProvider::class);
+        $fileProvider = $this->createMock(FileProviderInterface::class);
 
         $fileProvider
             ->method('getName')

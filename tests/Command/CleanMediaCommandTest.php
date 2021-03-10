@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Command\CleanMediaCommand;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Provider\FileProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Fixtures\FilesystemTestCase;
 use Symfony\Component\Console\Application;
@@ -118,7 +118,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->createMock(FileProvider::class);
+        $provider = $this->createMock(FileProviderInterface::class);
         $provider->method('getName')->willReturn('fooprovider');
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
@@ -152,7 +152,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->createMock(FileProvider::class);
+        $provider = $this->createMock(FileProviderInterface::class);
         $provider->method('getName')->willReturn('fooprovider');
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
@@ -195,7 +195,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->createMock(FileProvider::class);
+        $provider = $this->createMock(FileProviderInterface::class);
         $provider->method('getName')->willReturn('fooprovider');
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
@@ -233,7 +233,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $provider = $this->createMock(FileProvider::class);
+        $provider = $this->createMock(FileProviderInterface::class);
         $provider->method('getName')->willReturn('fooprovider');
 
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
