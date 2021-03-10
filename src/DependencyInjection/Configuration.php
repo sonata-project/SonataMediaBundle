@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\DependencyInjection;
 
 use Aws\Sdk;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -157,7 +156,19 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
-                        ->append($this->getCloudFrontCdnSection())
+                        ->arrayNode('cloudfront')
+                            ->children()
+                                ->scalarNode('path')
+                                    ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
+                                    ->isRequired()
+                                ->end()
+                                ->scalarNode('distribution_id')->isRequired()->end()
+                                ->scalarNode('key')->isRequired()->end()
+                                ->scalarNode('secret')->isRequired()->end()
+                                ->scalarNode('region')->isRequired()->end()
+                                ->scalarNode('version')->isRequired()->end()
+                            ->end()
+                        ->end()
 
                         ->arrayNode('fallback')
                             ->children()
@@ -169,49 +180,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-    }
-
-    /**
-     * @todo: Remove this method when support for aws/aws-sdk-php < 3.0 is dropped
-     * and move the corresponding logic to `addCdnSection()`.
-     */
-    private function getCloudFrontCdnSection(): NodeDefinition
-    {
-        $treeBuilder = new TreeBuilder('cloudfront');
-
-        if (class_exists(Sdk::class)) {
-            // aws/aws-sdk-php >= 3.0
-            $node = $treeBuilder->getRootNode()
-                ->children()
-                    ->scalarNode('path')
-                        ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
-                        ->isRequired()
-                    ->end()
-                    ->scalarNode('distribution_id')->isRequired()->end()
-                    ->scalarNode('key')->isRequired()->end()
-                    ->scalarNode('secret')->isRequired()->end()
-                    ->scalarNode('region')->isRequired()->end()
-                    ->scalarNode('version')->isRequired()->end()
-                ->end()
-            ;
-        } else {
-            // aws/aws-sdk-php < 3.0
-            $node = $treeBuilder->getRootNode()
-                ->children()
-                    ->scalarNode('path')
-                        ->info('e.g. http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media')
-                        ->isRequired()
-                    ->end()
-                    ->scalarNode('distribution_id')->isRequired()->end()
-                    ->scalarNode('key')->isRequired()->end()
-                    ->scalarNode('secret')->isRequired()->end()
-                    ->scalarNode('region')->end()
-                    ->scalarNode('version')->end()
-                ->end()
-            ;
-        }
-
-        return $node;
     }
 
     private function addFilesystemSection(ArrayNodeDefinition $node): void
