@@ -93,7 +93,14 @@ class MediaAdminControllerTest extends TestCase
     {
         $this->configureCreateAction(Media::class);
         $this->configureRender('template', 'renderResponse');
-        $this->admin->expects($this->atLeastOnce())->method('checkAccess')->with('create');
+        $this->admin
+            ->expects($this->atLeastOnce())
+            ->method('checkAccess')
+            ->with('create');
+
+        $this->admin
+            ->method('getIdParameter')
+            ->willReturn('id');
         $this->request->query->set('provider', true);
         $response = $this->controller->createAction($this->request);
 
