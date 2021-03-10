@@ -59,9 +59,29 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $media->setContext($parameters['context']);
     }
 
-    public function getPersistentParameters()
+    /**
+     * @return Pool
+     */
+    public function getPool()
     {
-        $parameters = parent::getPersistentParameters();
+        return $this->pool;
+    }
+
+    public function getObjectMetadata($object)
+    {
+        $provider = $this->pool->getProvider($object->getProviderName());
+
+        $url = $provider->generatePublicUrl(
+            $object,
+            $provider->getFormatName($object, MediaProviderInterface::FORMAT_ADMIN)
+        );
+
+        return new Metadata($object->getName(), $object->getDescription(), $url);
+    }
+
+    protected function configurePersistentParameters(): array
+    {
+        $parameters = parent::configurePersistentParameters();
 
         if (!$this->hasRequest()) {
             return $parameters;
@@ -103,9 +123,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         ]);
     }
 
-    public function getNewInstance()
+    protected function createNewInstance(): object
     {
-        $media = parent::getNewInstance();
+        $media = parent::createNewInstance();
 
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
@@ -127,26 +147,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         return $media;
-    }
-
-    /**
-     * @return Pool
-     */
-    public function getPool()
-    {
-        return $this->pool;
-    }
-
-    public function getObjectMetadata($object)
-    {
-        $provider = $this->pool->getProvider($object->getProviderName());
-
-        $url = $provider->generatePublicUrl(
-            $object,
-            $provider->getFormatName($object, MediaProviderInterface::FORMAT_ADMIN)
-        );
-
-        return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 
     protected function configureListFields(ListMapper $listMapper): void
