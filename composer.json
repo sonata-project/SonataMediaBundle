@@ -63,6 +63,7 @@
         "twig/twig": "^2.12.1"
     },
     "conflict": {
+        "aws/aws-sdk-php": "<3.0",
         "doctrine/dbal": "<2.6.0",
         "doctrine/mongodb-odm": "<2.0",
         "doctrine/persistence": "<1.3",

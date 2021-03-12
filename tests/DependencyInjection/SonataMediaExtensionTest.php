@@ -25,6 +25,7 @@ use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Sonata\MediaBundle\Model\CategoryManager;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
@@ -280,6 +281,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 'filesystem' => [
                     's3' => [
                         'bucket' => 'bucket_name',
+                        'sdk_version' => 3,
                         'region' => 'region',
                         'version' => 'version',
                         'endpoint' => 'endpoint',
@@ -330,6 +332,24 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 ],
             ],
         ];
+    }
+
+    public function testLoadWithSdkVersion2(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Can not use 2 for "sdk_version" since the installed version of aws/aws-sdk-php is not 2.x.');
+
+        $this->load([
+            'filesystem' => [
+                's3' => [
+                    'bucket' => 'bucket_name',
+                    'version' => null,
+                    'sdk_version' => 2,
+                    'secretKey' => 'secret',
+                    'accessKey' => 'access',
+                ],
+            ],
+        ]);
     }
 
     public function testMediaPool(): void
