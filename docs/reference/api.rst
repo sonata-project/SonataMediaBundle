@@ -37,7 +37,7 @@ Here's the configuration we used, you may adapt it to your needs:
         metadata:
             directories:
                 - { name: 'sonata_datagrid', path: "%kernel.project_dir%/vendor/sonata-project/datagrid-bundle/src/Resources/config/serializer", namespace_prefix: 'Sonata\DatagridBundle' }
-                - { name: 'sonata_media', path: "%kernel.project_dir%/vendor/sonata-project/media-bundle/src/Resources/config/serializer", namespace_prefix: 'Sonata\MediaBundle' }
+                - { name: 'sonata_media', path: '%kernel.project_dir%/vendor/sonata-project/media-bundle/src/Resources/config/serializer', namespace_prefix: 'Sonata\MediaBundle' }
 
     twig:
         exception_controller: null
