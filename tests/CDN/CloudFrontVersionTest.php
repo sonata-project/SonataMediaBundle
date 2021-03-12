@@ -23,7 +23,7 @@ use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-final class CloudFrontVersion3Test extends TestCase
+final class CloudFrontVersionTest extends TestCase
 {
     protected function setUp(): void
     {
