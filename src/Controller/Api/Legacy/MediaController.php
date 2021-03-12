@@ -36,7 +36,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator).
  *
- * @deprecated since sonata-project/media-bundle 3.21, to be removed in 4.0.
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0. Use Sonata\MediaBundle\Controller\Api\MediaController instead.
  *
  * @author Hugo Briand <briand@ekino.com>
  */
