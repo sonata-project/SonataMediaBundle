@@ -195,5 +195,5 @@ Full configuration options:
     jms_serializer:
         metadata:
             directories:
-                - { name: 'sonata_datagrid', path: "%kernel.project_dir%/vendor/sonata-project/datagrid-bundle/src/Resources/config/serializer", namespace_prefix: 'Sonata\DatagridBundle' }
+                - { name: 'sonata_datagrid', path: '%kernel.project_dir%/vendor/sonata-project/datagrid-bundle/src/Resources/config/serializer', namespace_prefix: 'Sonata\DatagridBundle' }
                 - { name: 'sonata_media', path: '%kernel.project_dir%/vendor/sonata-project/media-bundle/src/Resources/config/serializer', namespace_prefix: 'Sonata\MediaBundle' }
