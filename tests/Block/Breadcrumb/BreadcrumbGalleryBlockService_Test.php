@@ -17,4 +17,8 @@ use Sonata\MediaBundle\Block\Breadcrumb\BaseGalleryBreadcrumbBlockService;
 
 class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockService
 {
+    protected function getContext(): string
+    {
+        return 'context';
+    }
 }

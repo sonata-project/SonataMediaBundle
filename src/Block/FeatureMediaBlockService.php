@@ -13,21 +13,21 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block;
 
-use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
+use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Form\Type\ImmutableArrayType;
+use Sonata\Form\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class FeatureMediaBlockService extends MediaBlockService
+final class FeatureMediaBlockService extends BaseMediaBlockService
 {
     public function configureSettings(OptionsResolver $resolver): void
     {
@@ -46,7 +46,7 @@ class FeatureMediaBlockService extends MediaBlockService
         ]);
     }
 
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block): void
+    public function configureEditForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
@@ -98,10 +98,14 @@ class FeatureMediaBlockService extends MediaBlockService
         ];
     }
 
-    public function getBlockMetadata($code = null)
+    public function getMetadata($code = null): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata('sonata.media.block.feature_media', null, null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
+    }
+
+    public function validate(ErrorElement $errorElement, BlockInterface $block): void
+    {
     }
 }

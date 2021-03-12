@@ -1,6 +1,16 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+## Some classes and methods were marked as final, thus they cannot be overridden:
+
+  - `Sonata\BlockBundle\Block\Breadcrumb\GalleryIndexBreadcrumbBlockService`
+  - `Sonata\BlockBundle\Block\Breadcrumb\GalleryViewBreadcrumbBlockService`
+  - `Sonata\BlockBundle\Block\Breadcrumb\MediaViewBreadcrumbBlockService`
+  - `Sonata\BlockBundle\Block\FeatureMediaBlockService`
+  - `Sonata\BlockBundle\Block\GalleryBlockService`
+  - `Sonata\BlockBundle\Block\GalleryListBlockService`
+  - `Sonata\BlockBundle\Block\MediaBlockService`
+
 ### Sonata\DatagridBundle\Pager\PageableInterface
 
   Usages of `Sonata\Doctrine\Model\PageableManagerInterface` were replaced in favor of `Sonata\DatagridBundle\Pager\PageableInterface`.

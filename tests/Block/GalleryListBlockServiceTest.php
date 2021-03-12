@@ -53,7 +53,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
 
         $blockContext = new BlockContext($block, $settings);
 
-        $blockService = new GalleryListBlockService($this->twig, null, $this->galleryManager, $this->pool);
+        $blockService = new GalleryListBlockService($this->twig, $this->galleryManager, $this->pool);
 
         $this->twig
             ->expects($this->once())
@@ -70,7 +70,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
 
     public function testDefaultSettings(): void
     {
-        $blockService = new GalleryListBlockService($this->twig, null, $this->galleryManager, $this->pool);
+        $blockService = new GalleryListBlockService($this->twig, $this->galleryManager, $this->pool);
         $blockContext = $this->getBlockContext($blockService);
 
         $this->assertSettings([

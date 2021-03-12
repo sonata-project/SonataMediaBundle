@@ -28,7 +28,6 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
 
         $this->blockService = new FeatureMediaBlockService(
             $this->twig,
-            null,
             $this->createStub(ContainerInterface::class),
             $this->createStub(GalleryManagerInterface::class)
         );

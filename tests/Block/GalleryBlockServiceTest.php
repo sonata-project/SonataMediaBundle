@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
-use Sonata\BlockBundle\Block\BlockContext;
+use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\GalleryBlockService;
@@ -34,7 +34,6 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
 
         $this->blockService = new GalleryBlockService(
             $this->twig,
-            null,
             $this->createStub(ContainerInterface::class),
             $this->createStub(GalleryManagerInterface::class)
         );
@@ -44,7 +43,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
     {
         $block = $this->createStub(Block::class);
         $gallery = $this->createStub(GalleryInterface::class);
-        $blockContext = $this->createStub(BlockContext::class);
+        $blockContext = $this->createStub(BlockContextInterface::class);
 
         $blockContext->method('getBlock')->willReturn($block);
         $blockContext->method('getSettings')->willReturn(['settings']);

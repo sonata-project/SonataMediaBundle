@@ -13,26 +13,30 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block\Breadcrumb;
 
+use Knp\Menu\ItemInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 
 /**
  * BlockService for view gallery.
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
-class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
+final class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
     public function getName()
     {
         return 'Breadcrumb Index: Media Gallery';
     }
 
-    protected function getMenu(BlockContextInterface $blockContext)
+    protected function getMenu(BlockContextInterface $blockContext): ItemInterface
     {
         $menu = $this->getRootMenu($blockContext);
 
         return $menu;
+    }
+
+    protected function getContext(): string
+    {
+        return 'media';
     }
 }
