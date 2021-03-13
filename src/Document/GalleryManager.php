@@ -37,6 +37,6 @@ class GalleryManager extends BaseDocumentManager implements GalleryManagerInterf
 
     public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
     {
-        throw new \RuntimeException('Not Implemented yet');
+        throw new \BadMethodCallException('Not implemented yet.');
     }
 }
