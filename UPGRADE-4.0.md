@@ -13,7 +13,7 @@ UPGRADE FROM 3.x to 4.0
 
        sontata_media:
            http:
-               client: 'your_custom.buzz_client'           # Psr\Http\Client\ClientInterface
+               client: 'your_custom.buzz_client' # Psr\Http\Client\ClientInterface
                message_factory: 'your_custom.message_facory' # Psr\Http\Message\RequestFactoryInterface
 
 - Bump support for `sonata-project/datagrid-bundle` < 3.0.
