@@ -9,7 +9,7 @@ UPGRADE FROM 3.x to 4.0
 
 - Drop support for `kriswallsmith/buzz`
 
-  If you are using media provider(s) service with Guzzle, you MUST create a custom service based on the Buzz client and add it to configuration:
+  If you are using media provider services with Guzzle, you MUST create a custom service based on the Buzz client and add it to configuration:
 
        sontata_media:
            http:
