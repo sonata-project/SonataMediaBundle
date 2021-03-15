@@ -234,10 +234,8 @@ class YouTubeProvider extends BaseVideoProvider
 
     /**
      * Get provider reference url.
-     *
-     * @return string
      */
-    public function getReferenceUrl(MediaInterface $media)
+    public function getReferenceUrl(MediaInterface $media): string
     {
         return sprintf('https://www.youtube.com/watch?v=%s', $media->getProviderReference());
     }
