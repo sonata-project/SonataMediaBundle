@@ -164,7 +164,7 @@ abstract class BaseVideoProvider extends BaseProvider
      *
      * @return string
      */
-    abstract public function getReferenceUrl(MediaInterface $media);
+    abstract public function getReferenceUrl(MediaInterface $media): string;
 
     /**
      * @param string $url
