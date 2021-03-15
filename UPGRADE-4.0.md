@@ -1,7 +1,7 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
-## Some classes and methods were marked as final, thus they cannot be overridden:
+## Some classes were marked as final, thus they cannot be overridden:
 
   - `Sonata\BlockBundle\Block\Breadcrumb\GalleryIndexBreadcrumbBlockService`
   - `Sonata\BlockBundle\Block\Breadcrumb\GalleryViewBreadcrumbBlockService`
