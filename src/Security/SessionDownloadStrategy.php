@@ -55,27 +55,31 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     private $session;
 
     /**
-     * @param ContainerInterface|SessionInterface $session
+     * @param ContainerInterface|SessionInterface $sessionOrContainer
      * @param int                                 $times
      */
-    public function __construct(TranslatorInterface $translator, $session, $times)
+    public function __construct(TranslatorInterface $translator, object $sessionOrContainer, $times)
     {
-        // NEXT_MAJOR : remove this block and set session from parameter.
-        if ($session instanceof ContainerInterface) {
-            @trigger_error(
-                'Using an instance of Symfony\Component\DependencyInjection\ContainerInterface is deprecated since
-                version 3.1 and will be removed in 4.0.
-                Use Symfony\Component\HttpFoundation\Session\SessionInterface instead.',
-                \E_USER_DEPRECATED
-            );
+        // NEXT_MAJOR: Remove these checks and declare `SessionInterface` for argument 2.
+        if ($sessionOrContainer instanceof SessionInterface) {
+            $this->session = $sessionOrContainer;
+        } elseif ($sessionOrContainer instanceof ContainerInterface) {
+            @trigger_error(sprintf(
+                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.1'
+                .' and will throw a "\TypeError" error in 4.0.',
+                SessionInterface::class,
+                __METHOD__
+            ), \E_USER_DEPRECATED);
 
-            $this->session = $session->get('session');
-        } elseif ($session instanceof SessionInterface) {
-            $this->session = $session;
+            $this->session = $sessionOrContainer->get('session');
         } else {
-            throw new \InvalidArgumentException(
-                '$session should be an instance of Symfony\Component\HttpFoundation\Session\SessionInterface'
-            );
+            throw new \TypeError(sprintf(
+                'Argument 2 passed to "%s()" MUST be an instance of "%s" or "%s", "%s" given.',
+                __METHOD__,
+                SessionInterface::class,
+                ContainerInterface::class,
+                \get_class($sessionOrContainer)
+            ));
         }
 
         $this->times = $times;

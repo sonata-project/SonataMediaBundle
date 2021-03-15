@@ -40,15 +40,10 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     protected $translator;
 
     /**
-     * @param AuthorizationCheckerInterface $security
-     * @param string[]                      $roles
+     * @param string[] $roles
      */
-    public function __construct(TranslatorInterface $translator, $security, array $roles = [])
+    public function __construct(TranslatorInterface $translator, AuthorizationCheckerInterface $security, array $roles = [])
     {
-        if (!$security instanceof AuthorizationCheckerInterface) {
-            throw new \InvalidArgumentException('Argument 2 should be an instance of Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        }
-
         $this->roles = $roles;
         $this->security = $security;
         $this->translator = $translator;
