@@ -16,7 +16,7 @@ UPGRADE FROM 3.x to 4.0
                client: 'your_custom.buzz_client' # Psr\Http\Client\ClientInterface
                message_factory: 'your_custom.message_facory' # Psr\Http\Message\RequestFactoryInterface
 
-- Bump support for `sonata-project/datagrid-bundle` < 3.0.
+- Drop support for `sonata-project/datagrid-bundle` < 3.0.
 
   If you are extending these methods, you MUST add argument and return type declarations:
 
