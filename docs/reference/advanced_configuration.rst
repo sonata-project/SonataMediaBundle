@@ -178,5 +178,5 @@ Full configuration options:
                 thumbnail:  sonata.media.thumbnail.format
 
         http:
-            client:          'sonata.media.http.base_client'          # You need symfony/http-client for this
+            client:          'sonata.media.http.base_client' # You need symfony/http-client for this
             message_factory: 'sonata.media.http.base_message_factory' # You need nyholm/psr7 for this
