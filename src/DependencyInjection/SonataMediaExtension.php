@@ -160,7 +160,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
         $this->configureParameterClass($container, $config);
         $this->configureExtra($container, $config);
-        $this->configureBuzz($container, $config);
         $this->configureHttpClient($container, $config);
         $this->configureProviders($container, $config);
         $this->configureAdapters($container, $config);
@@ -180,25 +179,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             ->replaceArgument(6, $config['providers']['file']['allowed_mime_types'])
         ;
 
-        $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(7, $config['providers']['youtube']['html5']);
-    }
-
-    public function configureBuzz(ContainerBuilder $container, array $config): void
-    {
-        $container->getDefinition('sonata.media.buzz.browser')
-            ->replaceArgument(0, new Reference($config['buzz']['connector']));
-
-        foreach ([
-            'sonata.media.buzz.connector.curl',
-            'sonata.media.buzz.connector.file_get_contents',
-        ] as $connector) {
-            $container->getDefinition($connector)
-                ->addMethodCall('setIgnoreErrors', [$config['buzz']['client']['ignore_errors']])
-                ->addMethodCall('setMaxRedirects', [$config['buzz']['client']['max_redirects']])
-                ->addMethodCall('setTimeout', [$config['buzz']['client']['timeout']])
-                ->addMethodCall('setVerifyPeer', [$config['buzz']['client']['verify_peer']])
-                ->addMethodCall('setProxy', [$config['buzz']['client']['proxy']]);
-        }
+        $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(8, $config['providers']['youtube']['html5']);
     }
 
     public function configureParameterClass(ContainerBuilder $container, array $config): void
@@ -639,13 +620,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
     private function configureHttpClient(ContainerBuilder $container, array $config): void
     {
-        if (null === $config['http']['client'] || null === $config['http']['message_factory']) {
-            // NEXT_MAJOR: Remove this fallback service
-            $container->setAlias('sonata.media.http.client', 'sonata.media.buzz.browser');
-
-            return;
-        }
-
         $container->setAlias('sonata.media.http.client', $config['http']['client']);
         $container->setAlias('sonata.media.http.message_factory', $config['http']['message_factory']);
     }

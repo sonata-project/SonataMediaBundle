@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Buzz\Browser;
 use Buzz\Message\Response;
 use Gaufrette\Adapter;
 use Gaufrette\File;
@@ -68,7 +67,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $client, $metadata, $requestFactory);
+        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -200,10 +199,10 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $response = new Response();
         $response->setContent(file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt'));
 
-        $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('call')->will($this->throwException(new \RuntimeException('First error on get', 12)));
+        $client = $this->createMock(ClientInterface::class);
+        $client->expects($this->once())->method('sendRequest')->will($this->throwException(new \RuntimeException('First error on get', 12)));
 
-        $provider = $this->getProvider($browser);
+        $provider = $this->getProvider($client);
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 

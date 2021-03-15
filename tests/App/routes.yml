@@ -1,7 +1,3 @@
-NelmioApiDocBundle:
-    prefix: /api/doc
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-
 sonata_api_media:
     prefix: /api/media
     resource: "@SonataMediaBundle/Resources/config/routing/api.xml"
