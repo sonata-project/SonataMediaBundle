@@ -7,7 +7,16 @@ UPGRADE FROM 3.x to 4.0
 
 ### Dependencies
 
- - Drop support for `sonata-project/datagrid-bundle` < 3.0.
+- Drop support for `kriswallsmith/buzz`
+
+  If you are using media provider(s) service with Guzzle, you MUST create a custom service based on the Buzz client and add it to configuration:
+
+       sontata_media:
+           http:
+               client: 'your_custom.buzz_client'           # Psr\Http\Client\ClientInterface
+               message_factory: 'your_custom.message_facory' # Psr\Http\Message\RequestFactoryInterface
+
+- Bump support for `sonata-project/datagrid-bundle` < 3.0.
 
   If you are extending these methods, you MUST add argument and return type declarations:
 
