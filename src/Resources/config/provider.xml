@@ -114,8 +114,5 @@
         <service id="%sonata.media.provider.youtube.class%" alias="sonata.media.provider.youtube"/>
         <service id="%sonata.media.provider.dailymotion.class%" alias="sonata.media.provider.dailymotion"/>
         <service id="%sonata.media.provider.vimeo.class%" alias="sonata.media.provider.vimeo"/>
-
-        <service id="sonata.media.http.base_client" class="Symfony\Component\HttpClient\Psr18Client"/>
-        <service id="sonata.media.http.base_message_factory" class="Nyholm\Psr7\Factory\Psr17Factory"/>
     </services>
 </container>
