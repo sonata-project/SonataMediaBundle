@@ -548,6 +548,16 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
     private function configureResizers(ContainerBuilder $container, array $config): void
     {
+        if ($container->hasParameter('sonata.media.resizer.crop.class')) {
+            $class = $container->getParameter('sonata.media.resizer.crop.class');
+            $definition = new Definition($class, [
+                new Reference('sonata.media.adapter.image.default'),
+                new Reference('sonata.media.metadata.proxy'),
+            ]);
+            $definition->addTag('sonata.media.resizer');
+            $container->setDefinition('sonata.media.resizer.crop', $definition);
+        }
+
         if ($container->hasParameter('sonata.media.resizer.simple.class')) {
             $class = $container->getParameter('sonata.media.resizer.simple.class');
             $definition = new Definition($class, [

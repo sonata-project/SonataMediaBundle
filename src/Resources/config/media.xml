@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
+        <parameter key="sonata.media.resizer.crop.class">Sonata\MediaBundle\Resizer\CropResizer</parameter>
         <parameter key="sonata.media.resizer.simple.class">Sonata\MediaBundle\Resizer\SimpleResizer</parameter>
         <parameter key="sonata.media.resizer.square.class">Sonata\MediaBundle\Resizer\SquareResizer</parameter>
         <parameter key="sonata.media.adapter.image.gd.class">Imagine\Gd\Imagine</parameter>
