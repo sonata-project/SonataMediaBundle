@@ -152,7 +152,7 @@ Full configuration options:
 
             image:
                 service:    sonata.media.provider.image
-                resizer:    sonata.media.resizer.simple # sonata.media.resizer.square
+                resizer:    sonata.media.resizer.simple # sonata.media.resizer.square, sonata.media.resizer.crop
                 filesystem: sonata.media.filesystem.local
                 cdn:        sonata.media.cdn.server
                 generator:  sonata.media.generator.default
