@@ -111,7 +111,7 @@ SonataMediaBundle Configuration
     a transversal ``admin`` format to be used by the ``mediaadmin`` class.
 
 Also, you can determine the resizer to use; the default value is
-``sonata.media.resizer.simple`` but you can change it to ``sonata.media.resizer.square``
+``sonata.media.resizer.simple`` but you can change it to ``sonata.media.resizer.square`` or ``sonata.media.resizer.crop``
 
 .. code-block:: yaml
 
@@ -127,6 +127,9 @@ Also, you can determine the resizer to use; the default value is
     The square resizer works like the simple resizer when the image format has
     only the width. But if you specify the height the resizer crop the image in
     the lower size.
+
+    The crop resizer crops the image to the exact width and height. This is done by
+    resizing the image first and cropping the unwanted parts at the end.
 
 Doctrine ORM Configuration
 --------------------------
