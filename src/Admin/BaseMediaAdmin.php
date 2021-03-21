@@ -60,9 +60,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $media->setContext($parameters['context']);
     }
 
-    public function getPersistentParameters(): array
+    public function configurePersistentParameters(): array
     {
-        $parameters = parent::getPersistentParameters();
+        $parameters = parent::configurePersistentParameters();
 
         if (!$this->hasRequest()) {
             return $parameters;
@@ -104,9 +104,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         ]);
     }
 
-    public function getNewInstance(): object
+    public function createNewInstance(): object
     {
-        $media = parent::getNewInstance();
+        $media = parent::createNewInstance();
 
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {

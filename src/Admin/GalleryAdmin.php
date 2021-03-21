@@ -57,9 +57,9 @@ class GalleryAdmin extends AbstractAdmin
         $gallery->reorderGalleryItems();
     }
 
-    public function getPersistentParameters(): array
+    public function configurePersistentParameters(): array
     {
-        $parameters = parent::getPersistentParameters();
+        $parameters = parent::configurePersistentParameters();
 
         if (!$this->hasRequest()) {
             return $parameters;
@@ -70,9 +70,9 @@ class GalleryAdmin extends AbstractAdmin
         ]);
     }
 
-    public function getNewInstance(): object
+    public function createNewInstance(): object
     {
-        $gallery = parent::getNewInstance();
+        $gallery = parent::createNewInstance();
 
         if ($this->hasRequest()) {
             $gallery->setContext($this->getRequest()->get('context'));
