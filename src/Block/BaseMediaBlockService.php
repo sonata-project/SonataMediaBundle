@@ -25,7 +25,7 @@ use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
@@ -60,18 +60,12 @@ abstract class BaseMediaBlockService extends AbstractBlockService implements Edi
         $this->container = $container;
     }
 
-    /**
-     * @return Pool
-     */
-    public function getMediaPool()
+    public function getMediaPool(): Pool
     {
         return $this->getMediaAdmin()->getPool();
     }
 
-    /**
-     * @return BaseMediaAdmin
-     */
-    public function getMediaAdmin()
+    public function getMediaAdmin(): BaseMediaAdmin
     {
         if (!$this->mediaAdmin) {
             $this->mediaAdmin = $this->container->get('sonata.media.admin.media');
@@ -110,25 +104,12 @@ abstract class BaseMediaBlockService extends AbstractBlockService implements Edi
         $block->setSetting('mediaId', $media);
     }
 
-    public function prePersist(BlockInterface $block): void
-    {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
-    public function preUpdate(BlockInterface $block): void
-    {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
-    }
-
     public function configureCreateForm(FormMapper $formMapper, BlockInterface $block): void
     {
         $this->configureEditForm($formMapper, $block);
     }
 
-    /**
-     * @return array
-     */
-    protected function getFormatChoices(?MediaInterface $media = null)
+    protected function getFormatChoices(?MediaInterface $media = null): array
     {
         $formatChoices = [];
 
@@ -145,10 +126,7 @@ abstract class BaseMediaBlockService extends AbstractBlockService implements Edi
         return $formatChoices;
     }
 
-    /**
-     * @return FormBuilder
-     */
-    protected function getMediaBuilder(FormMapper $formMapper)
+    protected function getMediaBuilder(FormMapper $formMapper): FormBuilderInterface
     {
         // simulate an association ...
         $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', [

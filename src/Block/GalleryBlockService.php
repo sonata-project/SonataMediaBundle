@@ -66,18 +66,12 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
         $this->container = $container;
     }
 
-    /**
-     * @return Pool
-     */
-    public function getMediaPool()
+    public function getMediaPool(): Pool
     {
         return $this->container->get('sonata.media.pool');
     }
 
-    /**
-     * @return AdminInterface
-     */
-    public function getGalleryAdmin()
+    public function getGalleryAdmin(): AdminInterface
     {
         if (!$this->galleryAdmin) {
             $this->galleryAdmin = $this->container->get('sonata.media.admin.gallery');
@@ -203,26 +197,6 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
         $block->setSetting('galleryId', $gallery);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function prePersist(BlockInterface $block): void
-    {
-        $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function preUpdate(BlockInterface $block): void
-    {
-        $block->setSetting('galleryId', \is_object($block->getSetting('galleryId')) ? $block->getSetting('galleryId')->getId() : null);
-    }
-
     public function getMetadata(): MetadataInterface
     {
         return new Metadata('sonata.media.block.gallery', null, null, 'SonataMediaBundle', [
@@ -232,7 +206,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
 
     public function configureCreateForm(FormMapper $formMapper, BlockInterface $block): void
     {
-        $this->bconfigureEditForm($formMapper, $block);
+        $this->configureEditForm($formMapper, $block);
     }
 
     public function validate(ErrorElement $errorElement, BlockInterface $block): void
