@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.30.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.29.0...3.30.0) - 2021-02-15
+### Added
+- [[#1907](https://github.com/sonata-project/SonataMediaBundle/pull/1907)] Support `sonata-project/datagrid-bundle:^3.0` ([@Yozhef](https://github.com/Yozhef))
+
 ## [3.29.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.28.0...3.29.0) - 2020-11-30
 ### Fixed
 - [[#1866](https://github.com/sonata-project/SonataMediaBundle/pull/1866)] Guessing the content type of a file stored on Amazon S3 ([@jorrit](https://github.com/jorrit))

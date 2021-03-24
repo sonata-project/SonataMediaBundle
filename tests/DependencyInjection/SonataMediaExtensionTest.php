@@ -25,6 +25,7 @@ use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Sonata\MediaBundle\Model\CategoryManager;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
@@ -280,7 +281,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 'filesystem' => [
                     's3' => [
                         'bucket' => 'bucket_name',
-                        // NEXT_MAJOR: Remove the "sdk_version" node.
                         'sdk_version' => 3,
                         'region' => 'region',
                         'version' => 'version',
@@ -334,174 +334,22 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    /**
-     * @todo: Remove this test when support for aws/aws-sdk-php < 3.0 is dropped.
-     *
-     * @dataProvider dataFilesystemConfigurationAwsV2
-     */
-    public function testLoadWithFilesystemConfigurationV2(array $expected, array $configs): void
+    public function testLoadWithSdkVersion2(): void
     {
-        if (class_exists(Sdk::class)) {
-            $this->markTestSkipped('This test requires aws/aws-sdk-php 2.x.');
-        }
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Can not use 2 for "sdk_version" since the installed version of aws/aws-sdk-php is not 2.x.');
 
-        $this->load($configs);
-
-        $this->assertSame(
-            $expected,
-            $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0)
-        );
-    }
-
-    public function dataFilesystemConfigurationAwsV2(): iterable
-    {
-        yield [
-            [
-                'region' => 'region',
-                'version' => 'version',
-                'secret' => 'secret',
-                'key' => 'access',
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'region' => 'region',
-                        'version' => 'version',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
+        $this->load([
+            'filesystem' => [
+                's3' => [
+                    'bucket' => 'bucket_name',
+                    'version' => null,
+                    'sdk_version' => 2,
+                    'secretKey' => 'secret',
+                    'accessKey' => 'access',
                 ],
             ],
-        ];
-
-        // NEXT_MAJOR: Remove the following dataset.
-        yield [
-            [
-                'region' => 'region',
-                'version' => 'version',
-                'secret' => 'secret',
-                'key' => 'access',
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'sdk_version' => 2,
-                        'region' => 'region',
-                        'version' => 'version',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'region' => 'region',
-                'version' => 'version',
-                'endpoint' => 'endpoint',
-                'secret' => 'secret',
-                'key' => 'access',
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'sdk_version' => 2,
-                        'region' => 'region',
-                        'version' => 'version',
-                        'endpoint' => 'endpoint',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'endpoint' => 'endpoint',
-                'secret' => 'secret',
-                'key' => 'access',
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'sdk_version' => 2,
-                        'region' => null,
-                        'version' => null,
-                        'endpoint' => 'endpoint',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'region' => 's3.amazonaws.com',
-                'endpoint' => 'endpoint',
-                'secret' => 'secret',
-                'key' => 'access',
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'sdk_version' => 2,
-                        'version' => null,
-                        'endpoint' => 'endpoint',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'region' => 's3.amazonaws.com',
-                'version' => 'latest',
-                'endpoint' => 'endpoint',
-                'secret' => 'secret',
-                'key' => 'access',
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'sdk_version' => 2,
-                        'endpoint' => 'endpoint',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'region' => 's3.amazonaws.com',
-                'version' => 'latest',
-                'endpoint' => 'endpoint',
-                'secret' => 'secret',
-                'key' => 'access',
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'endpoint' => 'endpoint',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
+        ]);
     }
 
     public function testMediaPool(): void

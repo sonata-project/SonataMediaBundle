@@ -20,11 +20,14 @@ use Sonata\MediaBundle\Model\MediaInterface;
 interface ResizerInterface
 {
     /**
-     * @param string $format
+     * @param string               $format
+     * @param array<string, mixed> $settings
      */
     public function resize(MediaInterface $media, File $in, File $out, $format, array $settings);
 
     /**
+     * @param array<string, mixed> $settings
+     *
      * @return Box
      */
     public function getBox(MediaInterface $media, array $settings);

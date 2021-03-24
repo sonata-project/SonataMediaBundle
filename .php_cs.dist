@@ -56,16 +56,15 @@ $rules = [
     'static_lambda' => true,
     'strict_comparison' => true,
     'strict_param' => true,
-    'void_return' => null,
+    'void_return' => false,
 ];
 
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->exclude('Tests/Fixtures')
-    ->exclude('tests/Fixtures')
     ->exclude('Resources/skeleton')
     ->exclude('Resources/public/vendor')
+    ->exclude('var')
 ;
 
 return PhpCsFixer\Config::create()
