@@ -19,6 +19,7 @@ use Sonata\MediaBundle\Security\SessionDownloadStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -84,10 +85,8 @@ final class SessionDownloadStrategyTest extends TestCase
 
     public function testInvalidArgumentException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\TypeError::class);
 
-        $translator = $this->createMock(TranslatorInterface::class);
-
-        new SessionDownloadStrategy($translator, 'foo', 1);
+        new SessionDownloadStrategy(new Translator('es_AR'), 'foo', 1);
     }
 }
