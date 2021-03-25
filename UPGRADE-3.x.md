@@ -6,7 +6,7 @@ UPGRADE FROM 3.x to 3.x
 
 ### Deprecations
 
-`Symfony\Component\Translation\TranslatorInterface` is deprecated in favor of `Symfony\Contracts\Translation\TranslatorInterface`. You MUST replace all references to them in your code and inject correct object into:
+Usages of `Symfony\Component\Translation\TranslatorInterface` are deprecated in favor of `Symfony\Contracts\Translation\TranslatorInterface`. You MUST replace all references to them in your code and inject correct object into:
 - `Sonata\MediaBundle\Security\ForbiddenDownloadStrategy`
 - `Sonata\MediaBundle\Security\PublicDownloadStrategy`
 - `Sonata\MediaBundle\Security\RolesDownloadStrategy`
