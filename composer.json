@@ -56,6 +56,7 @@
         "symfony/security-core": "^4.4",
         "symfony/templating": "^4.4 || ^5.2",
         "symfony/translation": "^4.4",
+        "symfony/translation-contracts": "^1.1 || ^2.0",
         "symfony/twig-bridge": "^4.4",
         "symfony/twig-bundle": "^4.4",
         "symfony/validator": "^4.4 || ^5.2",

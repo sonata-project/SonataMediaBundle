@@ -18,20 +18,21 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\RolesDownloadStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RolesDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedTrue(): void
     {
-        $media = $this->createMock(MediaInterface::class);
-        $request = $this->createMock(Request::class);
-        $translator = $this->createMock(TranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $translator = $this->createStub(TranslatorInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (array $roles) {
+            ->willReturnCallback(static function (array $roles): bool {
                 return \in_array('ROLE_ADMIN', $roles, true);
             });
 
@@ -41,9 +42,51 @@ class RolesDownloadStrategyTest extends TestCase
 
     public function testIsGrantedFalse(): void
     {
-        $media = $this->createMock(MediaInterface::class);
-        $request = $this->createMock(Request::class);
-        $translator = $this->createMock(TranslatorInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $translator = $this->createStub(TranslatorInterface::class);
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
+
+        $security
+            ->method('isGranted')
+            ->willReturnCallback(static function (array $roles): bool {
+                return \in_array('FOO', $roles, true);
+            });
+
+        $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
+        $this->assertFalse($strategy->isGranted($media, $request));
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyIsGrantedTrue(): void
+    {
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
+
+        $security
+            ->method('isGranted')
+            ->willReturnCallback(static function (array $roles): bool {
+                return \in_array('ROLE_ADMIN', $roles, true);
+            });
+
+        $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
+        $this->assertTrue($strategy->isGranted($media, $request));
+    }
+
+    /**
+     * @group legacy
+     * NEXT_MAJOR: remove this method
+     */
+    public function testLegacyIsGrantedFalse(): void
+    {
+        $media = $this->createStub(MediaInterface::class);
+        $request = $this->createStub(Request::class);
+        $translator = $this->createStub(LegacyTranslatorInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security
