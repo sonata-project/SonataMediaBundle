@@ -56,6 +56,7 @@
         "symfony/security-core": "^4.4",
         "symfony/templating": "^4.4 || ^5.2",
         "symfony/translation": "^4.4",
+        "symfony/translation-contracts": "^1.1 || ^2.0",
         "symfony/twig-bridge": "^4.4",
         "symfony/twig-bundle": "^4.4",
         "symfony/validator": "^4.4 || ^5.2",
@@ -70,6 +71,7 @@
         "friendsofsymfony/rest-bundle": "<2.6",
         "jms/serializer": "<0.13",
         "liip/imagine-bundle": "<1.9",
+        "nelmio/api-doc-bundle": "<2.13.5 || >=4.0",
         "rackspace/php-opencloud": "<1.6",
         "sonata-project/block-bundle": "<3.17 || >=4.0",
         "sonata-project/classification-bundle": "<3.0 || >= 5.0",
@@ -101,16 +103,18 @@
         "symfony/security-csrf": "^4.4 || ^5.2"
     },
     "suggest": {
-        "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...)",
-        "rackspace/php-opencloud": "If you want to use OpenStack/Rackspace APIs",
+        "friendsofsymfony/rest-bundle": "If you want to expose a ReST API.",
+        "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...).",
+        "nelmio/api-doc-bundle": "If you want to provide OAS documentation for the ReST API.",
+        "rackspace/php-opencloud": "If you want to use OpenStack/Rackspace APIs.",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
-        "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities",
+        "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities.",
         "sonata-project/notification-bundle": "If you want to generate thumbnails asynchronously.",
-        "sonata-project/seo-bundle": "If you're sensible to SEO",
-        "symfony/http-client": "If you want to load external content",
+        "sonata-project/seo-bundle": "If you're sensible to SEO.",
+        "symfony/http-client": "If you want to load external content.",
         "symfony/monolog-bundle": "If you want to log exceptions produced when dealing with images.",
-        "tilleuls/ckeditor-sonata-media-bundle": "If you want to use CKEditor",
-        "twig/extra-bundle": "Auto configures the Twig Intl extension"
+        "tilleuls/ckeditor-sonata-media-bundle": "If you want to use CKEditor.",
+        "twig/extra-bundle": "Auto configures the Twig Intl extension."
     },
     "config": {
         "sort-packages": true

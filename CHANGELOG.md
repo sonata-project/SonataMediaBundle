@@ -2,6 +2,26 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.31.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.30.0...3.31.0) - 2021-03-26
+### Added
+- [[#1923](https://github.com/sonata-project/SonataMediaBundle/pull/1923)] Added support for `symfony/translation-contracts` ^1.1 || ^2.0 ([@wbloszyk](https://github.com/wbloszyk))
+- [[#1943](https://github.com/sonata-project/SonataMediaBundle/pull/1943)] Conflict against nelmio/api-doc-bundle <2.13.5 || >=4.0 ([@phansys](https://github.com/phansys))
+- [[#1939](https://github.com/sonata-project/SonataMediaBundle/pull/1939)] Stricter type checks for arguments at `RolesDownloadStrategy::__construct()` ([@phansys](https://github.com/phansys))
+- [[#1939](https://github.com/sonata-project/SonataMediaBundle/pull/1939)] Stricter type checks for arguments at `SessionDownloadStrategy::__construct()` ([@phansys](https://github.com/phansys))
+- [[#1906](https://github.com/sonata-project/SonataMediaBundle/pull/1906)] Added support for PHP 8.x ([@Yozhef](https://github.com/Yozhef))
+- [[#1930](https://github.com/sonata-project/SonataMediaBundle/pull/1930)] Support for "symfony/templating:^5.2" ([@phansys](https://github.com/phansys))
+- [[#1930](https://github.com/sonata-project/SonataMediaBundle/pull/1930)] Support for "symfony/http-foundation:^5.2" ([@phansys](https://github.com/phansys))
+- [[#1930](https://github.com/sonata-project/SonataMediaBundle/pull/1930)] Support for "symfony/dependency-injection:^5.2" ([@phansys](https://github.com/phansys))
+- [[#1930](https://github.com/sonata-project/SonataMediaBundle/pull/1930)] Support for "symfony/config:^5.2" ([@phansys](https://github.com/phansys))
+- [[#1930](https://github.com/sonata-project/SonataMediaBundle/pull/1930)] Support for "symfony/routing:^5.2" ([@phansys](https://github.com/phansys))
+- [[#1940](https://github.com/sonata-project/SonataMediaBundle/pull/1940)] Added `CropResizer` ([@core23](https://github.com/core23))
+
+### Deprecated
+- [[#1778](https://github.com/sonata-project/SonataMediaBundle/pull/1778)] `Replicate::$master` and `Replicate::$slave`, in favor of `Replicate::$primary` and `Replicate::$secondary` ([@dps910](https://github.com/dps910))
+
+### Removed
+- [[#1933](https://github.com/sonata-project/SonataMediaBundle/pull/1933)] Removed support for `aws/aws-sdk-php` < 3.0 ([@wbloszyk](https://github.com/wbloszyk))
+
 ## [3.30.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.29.0...3.30.0) - 2021-02-15
 ### Added
 - [[#1907](https://github.com/sonata-project/SonataMediaBundle/pull/1907)] Support `sonata-project/datagrid-bundle:^3.0` ([@Yozhef](https://github.com/Yozhef))
