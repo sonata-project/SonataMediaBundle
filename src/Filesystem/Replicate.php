@@ -26,14 +26,14 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * @var AdapterInterface
      *
-     * @deprecated since version 3.x, to be removed in 4.0. Use `$primary` instead.
+     * @deprecated since version 3.31, to be removed in 4.0. Use `$primary` instead.
      */
     protected $master;
 
     /**
      * @var AdapterInterface
      *
-     * @deprecated since version 3.x, to be removed in 4.0. Use `$primary` instead.
+     * @deprecated since version 3.31, to be removed in 4.0. Use `$secondary` instead.
      */
     protected $slave;
     /**

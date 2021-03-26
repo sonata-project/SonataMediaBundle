@@ -47,7 +47,7 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     {
         if ($translator instanceof LegacyTranslatorInterface) {
             @trigger_error(sprintf(
-                'Passing other type than "%s" as argument 1 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                'Passing other type than "%s" as argument 1 to "%s()" is deprecated since sonata-project/media-bundle 3.31'
                 .' and will throw a "%s" error in 4.0.',
                 TranslatorInterface::class,
                 __METHOD__,
