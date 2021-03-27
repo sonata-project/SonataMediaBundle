@@ -11,7 +11,7 @@ UPGRADE FROM 3.x to 4.0
 
   If you are using media provider services with Guzzle, you MUST create a custom service based on the Buzz client and add it to configuration:
 
-       sontata_media:
+       sonata_media:
            http:
                client: 'your_custom.buzz_client' # Psr\Http\Client\ClientInterface
                message_factory: 'your_custom.message_facory' # Psr\Http\Message\RequestFactoryInterface
