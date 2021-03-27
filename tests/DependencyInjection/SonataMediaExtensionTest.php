@@ -144,8 +144,8 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        $this->assertContainerBuilderHasAlias('sonata.media.http.client', 'sonata.media.buzz.browser');
-        $this->assertContainerBuilderNotHasService('sonata.media.http.message_factory');
+        $this->assertContainerBuilderHasAlias('sonata.media.http.client', 'sonata.media.http.base_client');
+        $this->assertContainerBuilderHasAlias('sonata.media.http.message_factory', 'sonata.media.http.base_message_factory');
     }
 
     public function testWithHttpClient(): void

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Buzz\Browser;
 use Gaufrette\Filesystem;
 use Imagine\Image\Box;
 use Psr\Http\Client\ClientInterface;
@@ -32,11 +31,6 @@ use Symfony\Component\Validator\Constraints\NotNull;
 abstract class BaseVideoProvider extends BaseProvider
 {
     /**
-     * @var Browser|null
-     */
-    protected $browser;
-
-    /**
      * @var MetadataBuilderInterface
      */
     protected $metadata;
@@ -51,45 +45,21 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     private $requestFactory;
 
-    /**
-     * @param string                  $name
-     * @param ClientInterface|Browser $client
-     */
     public function __construct(
-        $name,
+        string $name,
         Filesystem $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
-        object $client,
-        ?MetadataBuilderInterface $metadata = null,
-        ?RequestFactoryInterface $requestFactory = null
+        ClientInterface $client,
+        RequestFactoryInterface $requestFactory,
+        ?MetadataBuilderInterface $metadata = null
     ) {
-        // NEXT_MAJOR: remove this check!
-        if (!method_exists($this, 'getReferenceUrl')) {
-            @trigger_error('The method "getReferenceUrl" is required since sonata-project/media-bundle 3.27.0 with the next major release.', \E_USER_DEPRECATED);
-        }
-
-        if (!$client instanceof Browser && !$client instanceof ClientInterface) {
-            throw new \TypeError('Client must be an instance of Browser or ClientInterface.');
-        }
-
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
         $this->metadata = $metadata;
         $this->requestFactory = $requestFactory;
-
-        if ($client instanceof Browser) {
-            $this->browser = $client;
-
-            return;
-        }
-
         $this->client = $client;
-
-        if (null === $requestFactory) {
-            throw new \TypeError('When using PSR client, you must define a request factory.');
-        }
     }
 
     public function getProviderMetadata()
@@ -189,15 +159,10 @@ abstract class BaseVideoProvider extends BaseProvider
     {
     }
 
-    // NEXT_MAJOR: Uncomment this method
-    /*
+    /**
      * Get provider reference url.
-     *
-     * @param MediaInterface $media
-     *
-     * @return string
      */
-    // abstract public function getReferenceUrl(MediaInterface $media);
+    abstract public function getReferenceUrl(MediaInterface $media): string;
 
     /**
      * @param string $url
@@ -252,10 +217,6 @@ abstract class BaseVideoProvider extends BaseProvider
      */
     final protected function sendRequest(string $method, string $url): string
     {
-        if (null !== $this->browser) {
-            return $this->browser->call($url, $method)->getContent();
-        }
-
         return $this->client->sendRequest(
             $this->requestFactory->createRequest($method, $url)
         )->getBody()->getContents();

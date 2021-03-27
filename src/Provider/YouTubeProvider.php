@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Buzz\Browser;
 use Gaufrette\Filesystem;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -34,24 +33,18 @@ class YouTubeProvider extends BaseVideoProvider
      */
     protected $html5;
 
-    /**
-     * @param string                   $name
-     * @param MetadataBuilderInterface $metadata
-     * @param ClientInterface|Browser  $client
-     * @param bool                     $html5
-     */
     public function __construct(
-        $name,
+        string $name,
         Filesystem $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
-        object $client,
+        ClientInterface $client,
+        RequestFactoryInterface $requestFactory,
         ?MetadataBuilderInterface $metadata = null,
-        $html5 = false,
-        ?RequestFactoryInterface $requestFactory = null
+        bool $html5 = false
     ) {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $metadata, $requestFactory);
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $requestFactory, $metadata);
 
         $this->html5 = $html5;
     }
@@ -241,10 +234,8 @@ class YouTubeProvider extends BaseVideoProvider
 
     /**
      * Get provider reference url.
-     *
-     * @return string
      */
-    public function getReferenceUrl(MediaInterface $media)
+    public function getReferenceUrl(MediaInterface $media): string
     {
         return sprintf('https://www.youtube.com/watch?v=%s', $media->getProviderReference());
     }

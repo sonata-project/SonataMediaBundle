@@ -31,8 +31,8 @@ class ConfigurationTest extends TestCase
                 'db_driver' => 'doctrine_orm',
                 'default_context' => 'default',
                 'http' => [
-                    'client' => 'sonata.media.http.buzz_client',
-                    'message_factory' => null,
+                    'client' => 'sonata.media.http.base_client',
+                    'message_factory' => 'sonata.media.http.base_message_factory',
                 ],
             ],
         ];

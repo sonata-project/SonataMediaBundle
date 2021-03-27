@@ -77,7 +77,6 @@ class Configuration implements ConfigurationInterface
         $this->addProvidersSection($node);
         $this->addExtraSection($node);
         $this->addModelSection($node);
-        $this->addBuzzSection($node);
         $this->addHttpClientSection($node);
         $this->addResizerSection($node);
         $this->addAdapterSection($node);
@@ -480,29 +479,6 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addBuzzSection(ArrayNodeDefinition $node): void
-    {
-        $node
-            ->children()
-                ->arrayNode('buzz')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('connector')->defaultValue('sonata.media.buzz.connector.curl')->end()
-                        ->arrayNode('client')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->booleanNode('ignore_errors')->defaultValue(true)->end()
-                            ->scalarNode('max_redirects')->defaultValue(5)->end()
-                            ->scalarNode('timeout')->defaultValue(5)->end()
-                            ->booleanNode('verify_peer')->defaultValue(true)->end()
-                            ->scalarNode('proxy')->defaultNull()->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-    }
-
     private function addHttpClientSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -511,11 +487,11 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('client')
-                            ->defaultValue('sonata.media.http.buzz_client')
+                            ->defaultValue('sonata.media.http.base_client')
                             ->info('Alias of the http client.')
                         ->end()
                         ->scalarNode('message_factory')
-                            ->defaultNull()
+                            ->defaultValue('sonata.media.http.base_message_factory')
                             ->info('Alias of the message factory.')
                         ->end()
                     ->end()

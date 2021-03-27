@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Buzz\Browser;
-use Buzz\Message\Response;
 use Gaufrette\Adapter;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
@@ -68,7 +66,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new YouTubeProvider('youtube', $filesystem, $cdn, $generator, $thumbnail, $client, $metadata, false, $messageFactory);
+        $provider = new YouTubeProvider('youtube', $filesystem, $cdn, $generator, $thumbnail, $client, $messageFactory, $metadata, false);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -204,13 +202,10 @@ class YouTubeProviderTest extends AbstractProviderTest
         $this->expectExceptionMessage('Unable to retrieve the video information for :BDYAbAtaDzA');
         $this->expectExceptionCode(12);
 
-        $response = new Response();
-        $response->setContent(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt'));
+        $client = $this->createMock(ClientInterface::class);
+        $client->expects($this->once())->method('sendRequest')->will($this->throwException(new \RuntimeException('First error on get', 12)));
 
-        $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('call')->will($this->throwException(new \RuntimeException('First error on get', 12)));
-
-        $provider = $this->getProvider($browser);
+        $provider = $this->getProvider($client);
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
