@@ -37,8 +37,7 @@ class PoolTest extends TestCase
             ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->onlyMethods([])
-            ->getMock()
-        ;
+            ->getMock();
 
         $mediaPool->getProvider(null);
     }
@@ -52,8 +51,7 @@ class PoolTest extends TestCase
             ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->onlyMethods([])
-            ->getMock()
-        ;
+            ->getMock();
 
         $mediaPool->getProvider('provider_a');
     }
@@ -67,8 +65,7 @@ class PoolTest extends TestCase
             ->getMockBuilder(Pool::class)
             ->disableOriginalConstructor()
             ->onlyMethods([])
-            ->getMock()
-        ;
+            ->getMock();
         $mediaPool->setProviders([
             'provider_a' => $this->createProvider('provider_a'),
             'provider_b' => $this->createProvider('provider_b'),
