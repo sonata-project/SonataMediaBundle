@@ -27,7 +27,6 @@ class MediaAdmin extends Admin
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
-            ->add('context')
-        ;
+            ->add('context');
     }
 }

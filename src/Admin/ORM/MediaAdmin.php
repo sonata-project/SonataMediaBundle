@@ -48,8 +48,7 @@ class MediaAdmin extends Admin
         $datagridMapper
             ->add('width')
             ->add('height')
-            ->add('contentType')
-        ;
+            ->add('contentType');
 
         $providers = [];
 

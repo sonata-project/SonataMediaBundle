@@ -68,8 +68,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('constraint')->defaultValue(true)->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         $this->addContextsSection($node);
         $this->addCdnSection($node);
@@ -126,8 +125,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addCdnSection(ArrayNodeDefinition $node): void
@@ -177,8 +175,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addFilesystemSection(ArrayNodeDefinition $node): void
@@ -332,8 +329,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addProvidersSection(ArrayNodeDefinition $node): void
@@ -440,8 +436,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addExtraSection(ArrayNodeDefinition $node): void
@@ -457,8 +452,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('referrer')->defaultValue('Sonata Media')->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addModelSection(ArrayNodeDefinition $node): void
@@ -475,8 +469,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addHttpClientSection(ArrayNodeDefinition $node): void
@@ -496,8 +489,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addResizerSection(ArrayNodeDefinition $node): void
@@ -527,8 +519,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('default')->defaultValue('sonata.media.resizer.simple')->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     private function addAdapterSection(ArrayNodeDefinition $node): void
@@ -541,8 +532,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('default')->defaultValue('sonata.media.adapter.image.gd')->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 
     /**
