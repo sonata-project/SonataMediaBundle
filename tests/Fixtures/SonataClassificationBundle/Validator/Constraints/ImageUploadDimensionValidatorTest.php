@@ -112,8 +112,7 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
                     '%min_width%' => 100,
                     '%min_height%' => 100,
                 ])
-            ->assertRaised()
-        ;
+            ->assertRaised();
     }
 
     protected function createValidator(): ConstraintValidatorInterface

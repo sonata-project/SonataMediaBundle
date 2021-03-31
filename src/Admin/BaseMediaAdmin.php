@@ -156,8 +156,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             ->addIdentifier('name')
             ->add('description')
             ->add('enabled')
-            ->add('size')
-        ;
+            ->add('size');
     }
 
     protected function configureFormFields(FormMapper $formMapper)

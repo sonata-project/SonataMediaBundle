@@ -80,8 +80,7 @@ class AddProviderCompilerPass implements CompilerPassInterface
                         ->replaceArgument(1, new Reference($config['filesystem']))
                         ->replaceArgument(2, new Reference($config['cdn']))
                         ->replaceArgument(3, new Reference($config['generator']))
-                        ->replaceArgument(4, new Reference($config['thumbnail']))
-                    ;
+                        ->replaceArgument(4, new Reference($config['thumbnail']));
 
                     if ($config['resizer']) {
                         $definition->addMethodCall('setResizer', [new Reference($config['resizer'])]);

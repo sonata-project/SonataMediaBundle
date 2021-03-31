@@ -172,13 +172,11 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $container->getDefinition('sonata.media.provider.image')
             ->replaceArgument(5, array_map('strtolower', $config['providers']['image']['allowed_extensions']))
             ->replaceArgument(6, $config['providers']['image']['allowed_mime_types'])
-            ->replaceArgument(7, new Reference($config['providers']['image']['adapter']))
-        ;
+            ->replaceArgument(7, new Reference($config['providers']['image']['adapter']));
 
         $container->getDefinition('sonata.media.provider.file')
             ->replaceArgument(5, $config['providers']['file']['allowed_extensions'])
-            ->replaceArgument(6, $config['providers']['file']['allowed_mime_types'])
-        ;
+            ->replaceArgument(6, $config['providers']['file']['allowed_mime_types']);
 
         $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(7, $config['providers']['youtube']['html5']);
     }
@@ -313,8 +311,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         // add the default configuration for the server cdn
         if ($container->hasDefinition('sonata.media.cdn.server') && isset($config['cdn']['server'])) {
             $container->getDefinition('sonata.media.cdn.server')
-                ->replaceArgument(0, $config['cdn']['server']['path'])
-            ;
+                ->replaceArgument(0, $config['cdn']['server']['path']);
         } else {
             $container->removeDefinition('sonata.media.cdn.server');
         }
@@ -324,8 +321,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                 ->replaceArgument(0, $config['cdn']['panther']['path'])
                 ->replaceArgument(1, $config['cdn']['panther']['username'])
                 ->replaceArgument(2, $config['cdn']['panther']['password'])
-                ->replaceArgument(3, $config['cdn']['panther']['site_id'])
-            ;
+                ->replaceArgument(3, $config['cdn']['panther']['site_id']);
         } else {
             $container->removeDefinition('sonata.media.cdn.panther');
         }
@@ -362,8 +358,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
             $container->getDefinition('sonata.media.cdn.fallback')
                 ->replaceArgument(0, new Reference($config['cdn']['fallback']['master']))
-                ->replaceArgument(1, new Reference($config['cdn']['fallback']['fallback']))
-            ;
+                ->replaceArgument(1, new Reference($config['cdn']['fallback']['fallback']));
         } else {
             $container->removeDefinition('sonata.media.cdn.fallback');
         }
@@ -378,8 +373,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         if ($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['local'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.local')
                 ->addArgument($config['filesystem']['local']['directory'])
-                ->addArgument($config['filesystem']['local']['create'])
-            ;
+                ->addArgument($config['filesystem']['local']['create']);
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.local');
         }
@@ -396,8 +390,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                     'passive' => $config['filesystem']['ftp']['passive'],
                     'create' => $config['filesystem']['ftp']['create'],
                     'mode' => $config['filesystem']['ftp']['mode'],
-                ])
-            ;
+                ]);
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.ftp');
             $container->removeDefinition('sonata.media.filesystem.ftp');
@@ -408,8 +401,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $container->getDefinition('sonata.media.adapter.filesystem.s3')
                 ->replaceArgument(0, new Reference('sonata.media.adapter.service.s3'))
                 ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
-                ->replaceArgument(2, ['create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']])
-            ;
+                ->replaceArgument(2, ['create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']]);
 
             $container->getDefinition('sonata.media.metadata.amazon')
                 ->replaceArgument(0, [
@@ -418,8 +410,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                         'encryption' => $config['filesystem']['s3']['encryption'],
                         'meta' => $config['filesystem']['s3']['meta'],
                         'cache_control' => $config['filesystem']['s3']['cache_control'],
-                ])
-            ;
+                ]);
 
             $arguments = [
                 'region' => $config['filesystem']['s3']['region'],
@@ -447,8 +438,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.replicate')
                 ->replaceArgument(0, new Reference($config['filesystem']['replicate']['master']))
-                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['slave']))
-            ;
+                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['slave']));
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');
@@ -457,8 +447,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         if ($container->hasDefinition('sonata.media.adapter.filesystem.mogilefs') && isset($config['filesystem']['mogilefs'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.mogilefs')
                 ->replaceArgument(0, $config['filesystem']['mogilefs']['domain'])
-                ->replaceArgument(1, $config['filesystem']['mogilefs']['hosts'])
-            ;
+                ->replaceArgument(1, $config['filesystem']['mogilefs']['hosts']);
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.mogilefs');
             $container->removeDefinition('sonata.media.filesystem.mogilefs');
@@ -475,8 +464,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             }
             $container->getDefinition('sonata.media.adapter.filesystem.opencloud.connection')
                 ->replaceArgument(0, $config['filesystem'][$settings]['url'])
-                ->replaceArgument(1, $config['filesystem'][$settings]['secret'])
-                ;
+                ->replaceArgument(1, $config['filesystem'][$settings]['secret']);
             $container->getDefinition('sonata.media.adapter.filesystem.opencloud')
                 ->replaceArgument(1, $config['filesystem'][$settings]['containerName'])
                 ->replaceArgument(2, $config['filesystem'][$settings]['create_container']);
@@ -495,8 +483,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         if ($config['pixlr']['enabled']) {
             $container->getDefinition('sonata.media.extra.pixlr')
                 ->replaceArgument(0, $config['pixlr']['referrer'])
-                ->replaceArgument(1, $config['pixlr']['secret'])
-            ;
+                ->replaceArgument(1, $config['pixlr']['secret']);
         } else {
             $container->removeDefinition('sonata.media.extra.pixlr');
         }
