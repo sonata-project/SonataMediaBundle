@@ -126,7 +126,7 @@ final class CloudFrontVersion3 implements CDNInterface
 
             return $result->get('Invalidation')['Id'];
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths), 0, $ex));
+            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths)), 0, $ex);
         }
     }
 

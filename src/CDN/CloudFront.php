@@ -200,7 +200,7 @@ class CloudFront implements CDNInterface
 
             return $result->get('Id');
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths), 0, $ex));
+            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths)), 0, $ex);
         }
     }
 
