@@ -47,7 +47,6 @@ class PathNode extends Node
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('format'))
-            ->raw(");\n")
-        ;
+            ->raw(");\n");
     }
 }

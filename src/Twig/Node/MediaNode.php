@@ -49,7 +49,6 @@ class MediaNode extends Node
             ->subcompile($this->getNode('format'))
             ->raw(', ')
             ->subcompile($this->getNode('attributes'))
-            ->raw(");\n")
-        ;
+            ->raw(");\n");
     }
 }

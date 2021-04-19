@@ -45,8 +45,7 @@ class GalleryHasMediaAdmin extends AbstractAdmin
                 'link_parameters' => $link_parameters,
             ])
             ->add('enabled', null, ['required' => false])
-            ->add('position', HiddenType::class)
-        ;
+            ->add('position', HiddenType::class);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -55,7 +54,6 @@ class GalleryHasMediaAdmin extends AbstractAdmin
             ->add('media')
             ->add('gallery')
             ->add('position')
-            ->add('enabled')
-        ;
+            ->add('enabled');
     }
 }

@@ -11,9 +11,6 @@ on:
             - master
     pull_request:
 
-env:
-    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
 jobs:
     php-cs-fixer:
         name: PHP-CS-Fixer
@@ -25,7 +22,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Run PHP-CS-Fixer
-              uses: docker://oskarstark/php-cs-fixer-ga:2.18.1
+              uses: docker://oskarstark/php-cs-fixer-ga:2.18.5
               with:
                   args: --ansi --verbose --diff --dry-run
 

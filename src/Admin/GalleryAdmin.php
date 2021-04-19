@@ -88,8 +88,7 @@ class GalleryAdmin extends AbstractAdmin
             // NEXT_MAJOR: Change Gallery key to `form_group.gallery` and update translations files.
             ->with('Gallery', ['class' => 'col-md-9'])->end()
             // NEXT_MAJOR: Change Options key to `form_group.options` and update translations files.
-            ->with('Options', ['class' => 'col-md-3'])->end()
-        ;
+            ->with('Options', ['class' => 'col-md-3'])->end();
 
         $context = $this->getPersistentParameter('context');
 
@@ -127,8 +126,7 @@ class GalleryAdmin extends AbstractAdmin
                     'link_parameters' => ['context' => $context],
                     'admin_code' => 'sonata.media.admin.gallery_has_media',
                 ])
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -137,8 +135,7 @@ class GalleryAdmin extends AbstractAdmin
             ->addIdentifier('name')
             ->add('enabled', 'boolean', ['editable' => true])
             ->add('context', 'trans', ['catalogue' => 'SonataMediaBundle'])
-            ->add('defaultFormat', 'trans', ['catalogue' => 'SonataMediaBundle'])
-        ;
+            ->add('defaultFormat', 'trans', ['catalogue' => 'SonataMediaBundle']);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -148,7 +145,6 @@ class GalleryAdmin extends AbstractAdmin
             ->add('enabled')
             ->add('context', null, [
                 'show_filter' => false,
-            ])
-        ;
+            ]);
     }
 }
