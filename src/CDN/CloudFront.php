@@ -189,7 +189,7 @@ class CloudFront implements CDNInterface
                     'Quantity' => \count($normalizedPaths),
                     'Items' => $normalizedPaths,
                 ],
-                'CallerReference' => $this->getCallerReference($normalizedPaths),
+                'CallerReference' => $this->getCallerReference(),
             ]);
 
             $status = $result->get('Status');
@@ -289,14 +289,14 @@ class CloudFront implements CDNInterface
     }
 
     /**
-     * Generates a valid caller reference from given paths regardless its order.
+     * Generates a caller reference.
      *
-     * @return string a md5 representation
+     * @see https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_InvalidationBatch.html.
+     *
+     * NEXT_MAJOR: Generate the reference based on the `MediaInterface::getUpdatedAt()` property for the given media.
      */
-    protected function getCallerReference(array $paths)
+    protected function getCallerReference()
     {
-        sort($paths);
-
-        return md5(implode(',', $paths));
+        return (string) time();
     }
 }
