@@ -91,7 +91,7 @@
         "matthiasnoback/symfony-config-test": "^4.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.0",
         "nelmio/api-doc-bundle": "^2.13.5",
-        "sonata-project/admin-bundle": "^3.41",
+        "sonata-project/admin-bundle": "^3.98.2",
         "sonata-project/block-bundle": "^3.17",
         "sonata-project/datagrid-bundle": "^3.0.1",
         "sonata-project/doctrine-orm-admin-bundle": "^3.14",
