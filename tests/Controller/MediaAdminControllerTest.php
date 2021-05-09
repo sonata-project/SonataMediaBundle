@@ -160,8 +160,8 @@ class MediaAdminControllerTest extends TestCase
         $pool->method('getAdminByAdminCode')->with('admin_code')->willReturn($this->admin);
         $this->request->query->set('_xml_http_request', false);
         $this->request->query->set('_sonata_admin', 'admin_code');
-        $this->container->set('sonata.admin.pool', $pool);
-        $this->container->set('sonata.admin.breadcrumbs_builder', $breadcrumbsBuilder);
+        $this->container->set('sonata.admin.pool.do-not-use', $pool);
+        $this->container->set('sonata.admin.breadcrumbs_builder.do-not-use', $breadcrumbsBuilder);
         $this->container->set('admin_code.template_registry', $templateRegistry);
         $this->admin->method('getTemplate')->willReturnMap([
             ['layout', 'layout.html.twig'],

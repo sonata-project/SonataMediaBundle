@@ -77,23 +77,20 @@ final class CropResizerTest extends TestCase
             ->with(static::callback(static function (Box $box) use ($scaleWidth, $scaleHeight): bool {
                 return $box->getWidth() === $scaleWidth && $box->getHeight() === $scaleHeight;
             }), static::equalTo('outbound'))
-            ->willReturnReference($image)
-        ;
+            ->willReturnReference($image);
 
         $image->expects(0 === $cropWidth && 0 === $cropHeight ? static::never() : static::once())
             ->method('crop')
             ->with(static::anything(), static::callback(static function (Box $box) use ($cropWidth, $cropHeight): bool {
                 return $box->getWidth() === $cropWidth && $box->getHeight() === $cropHeight;
             }))
-            ->willReturnReference($image)
-        ;
+            ->willReturnReference($image);
 
         $image->method('get')
             ->with(self::FORMAT, [
                 'quality' => self::QUALITY,
             ])
-            ->willReturn('CONTENT')
-        ;
+            ->willReturn('CONTENT');
 
         $this->adapter->method('load')->willReturn($image);
 
@@ -153,8 +150,7 @@ final class CropResizerTest extends TestCase
             ->with(self::FORMAT, [
                 'quality' => self::QUALITY,
             ])
-            ->willReturn('CONTENT')
-        ;
+            ->willReturn('CONTENT');
 
         $this->adapter->method('load')->willReturn($image);
 
@@ -190,14 +186,11 @@ final class CropResizerTest extends TestCase
     {
         $media = $this->createMock(MediaInterface::class);
         $media->method('getWidth')
-            ->willReturn($srcWidth)
-        ;
+            ->willReturn($srcWidth);
         $media->method('getHeight')
-            ->willReturn($srcHeight)
-        ;
+            ->willReturn($srcHeight);
         $media->expects(static::once())->method('getBox')
-            ->willReturn(new Box($srcWidth, $srcHeight))
-        ;
+            ->willReturn(new Box($srcWidth, $srcHeight));
 
         $resizer = new CropResizer($this->adapter, $this->metadata);
         $box = $resizer->getBox($media, ['width' => $targetWidth, 'height' => $targetHeight]);

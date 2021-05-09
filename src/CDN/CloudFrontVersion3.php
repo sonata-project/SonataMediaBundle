@@ -115,7 +115,7 @@ final class CloudFrontVersion3 implements CDNInterface
                         'Quantity' => \count($normalizedPaths),
                         'Items' => $normalizedPaths,
                     ],
-                    'CallerReference' => $this->getCallerReference($normalizedPaths),
+                    'CallerReference' => $this->getCallerReference(),
                 ],
             ]);
             $status = $result->get('Invalidation')['Status'];
@@ -126,7 +126,7 @@ final class CloudFrontVersion3 implements CDNInterface
 
             return $result->get('Invalidation')['Id'];
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths), 0, $ex));
+            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths)), 0, $ex);
         }
     }
 
@@ -151,16 +151,14 @@ final class CloudFrontVersion3 implements CDNInterface
     }
 
     /**
-     * Generates a valid caller reference from given paths regardless its order.
+     * Generates a caller reference.
      *
-     * @phpstan-param list<string> $paths
+     * @see https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_InvalidationBatch.html.
      *
-     * @return string a md5 representation
+     * NEXT_MAJOR: Generate the reference based on the `MediaInterface::getUpdatedAt()` property for the given media.
      */
-    private function getCallerReference(array $paths): string
+    private function getCallerReference(): string
     {
-        sort($paths);
-
-        return md5(implode(',', $paths));
+        return (string) time();
     }
 }

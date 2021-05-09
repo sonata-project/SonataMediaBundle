@@ -36,8 +36,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 class MediaBlockService extends AbstractBlockService

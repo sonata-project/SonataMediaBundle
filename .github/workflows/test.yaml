@@ -11,9 +11,6 @@ on:
             - master
     pull_request:
 
-env:
-    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
 jobs:
     test:
         name: PHP ${{ matrix.php-version }} + ${{ matrix.dependencies }} + ${{ matrix.variant }}
@@ -21,6 +18,9 @@ jobs:
         runs-on: ubuntu-latest
 
         continue-on-error: ${{ matrix.allowed-to-fail }}
+
+        env:
+            SYMFONY_REQUIRE: ${{matrix.symfony-require}}
 
         services:
             mongo:
@@ -36,6 +36,7 @@ jobs:
                     - '8.0'
                 dependencies: [highest]
                 allowed-to-fail: [false]
+                symfony-require: [""]
                 variant: [normal]
                 include:
                     - php-version: '7.3'
@@ -45,15 +46,16 @@ jobs:
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
-                      variant: 'symfony/symfony:"4.4.*"'
-                    - php-version: '8.0'
-                      dependencies: highest
-                      allowed-to-fail: false
                       variant: 'sonata-project/admin-bundle:"3.*"'
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
                       variant: 'imagine/imagine:"1.*"'
+                    - php-version: '8.0'
+                      dependencies: highest
+                      allowed-to-fail: false
+                      symfony-require: 4.4.*
+                      variant: 'symfony/symfony:"4.4.*"'
 
         steps:
             - name: Checkout
@@ -70,8 +72,12 @@ jobs:
             - name: Add PHPUnit matcher
               run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+            - name: "Globally install symfony/flex"
+              if: matrix.symfony-require != ''
+              run: "composer global require --no-progress --no-scripts --no-plugins symfony/flex"
+
             - name: Install variant
-              if: matrix.variant != 'normal'
+              if: matrix.variant != 'normal' && !startsWith(matrix.variant, 'symfony/symfony')
               run: composer require ${{ matrix.variant }} --no-update
 
             - name: "Install Composer dependencies (${{ matrix.dependencies }})"
