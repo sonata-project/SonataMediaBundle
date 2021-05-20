@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.31.2](https://github.com/sonata-project/SonataMediaBundle/compare/3.31.1...3.31.2) - 2021-05-18
+### Fixed
+- [[#1955](https://github.com/sonata-project/SonataMediaBundle/pull/1955)] CDN invalidation from CloudFront when submitting paths that were previously invalidated. ([@phansys](https://github.com/phansys))
+- [[#1956](https://github.com/sonata-project/SonataMediaBundle/pull/1956)] Arguments passed to `sprintf()` in `flushPaths()` methods at `CloudFront` and `CloudFrontVersion3`. ([@phansys](https://github.com/phansys))
+
 ## [3.31.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.31.0...3.31.1) - 2021-04-19
 ### Fixed
 - [[#1953](https://github.com/sonata-project/SonataMediaBundle/pull/1953)] Remove superfluous deprecation message when translator class is registered that implements both the legacy and new `TranslatorInterface` ([@jorrit](https://github.com/jorrit))
