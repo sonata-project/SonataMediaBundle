@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MediaViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
-    public function getName()
+    public function getContext(): string
     {
         return 'Breadcrumb View: Media';
     }

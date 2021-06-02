@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Block;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use Sonata\BlockBundle\Block\BlockContext;
+use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
@@ -51,7 +51,7 @@ class MediaBlockServiceTest extends BlockServiceTestCase
     {
         $block = $this->createStub(Block::class);
         $media = $this->createStub(MediaInterface::class);
-        $blockContext = $this->createMock(BlockContext::class);
+        $blockContext = $this->createMock(BlockContextInterface::class);
 
         $this->configureGetFormatChoices($media, ['format1' => 'format1']);
         $blockContext->method('getBlock')->willReturn($block);

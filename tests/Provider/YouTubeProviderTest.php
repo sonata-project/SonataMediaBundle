@@ -21,6 +21,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Builder\FormContractorInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
@@ -30,6 +31,7 @@ use Sonata\MediaBundle\Provider\YouTubeProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\Form\Test\FormBuilderInterface;
 
 class YouTubeProviderTest extends AbstractProviderTest
 {
@@ -223,18 +225,19 @@ class YouTubeProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $admin = $this->createMock(AdminInterface::class);
-        $admin
-            ->method('trans')
-            ->willReturn('message');
+        $formBuilder = $this->createMock(FormBuilderInterface::class);
 
-        $formMapper = $this->createMock(FormMapper::class);
-        $formMapper->expects($this->exactly(8))
+        $formMapper = new FormMapper(
+            $this->createStub(FormContractorInterface::class),
+            $formBuilder,
+            $this->createStub(AdminInterface::class)
+        );
+
+        $formBuilder->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
 
         $provider->buildCreateForm($formMapper);
-
         $provider->buildEditForm($formMapper);
     }
 

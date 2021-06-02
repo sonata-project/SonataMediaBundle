@@ -200,7 +200,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
     {
         @trigger_error(
             'Using SonataEasyExtendsBundle is deprecated since sonata-project/media-bundle 3.26. Please register SonataDoctrineBundle as a bundle instead.',
-            \E_USER_DEPRECATED
+            E_USER_DEPRECATED
         );
 
         $collector = DeprecatedDoctrineCollector::getInstance();

@@ -24,7 +24,7 @@ use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class BaseProviderTest extends AbstractProviderTest
 {
@@ -247,7 +247,7 @@ class TestProvider extends BaseProvider
         // TODO: Implement getDownloadResponse() method.
     }
 
-    public function buildMediaType(FormBuilder $formBuilder): void
+    public function buildMediaType(FormBuilderInterface $formBuilder): void
     {
         $formBuilder->add('foo');
     }

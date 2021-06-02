@@ -18,7 +18,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 interface MediaProviderInterface
@@ -201,7 +201,7 @@ interface MediaProviderInterface
 
     public function validate(ErrorElement $errorElement, MediaInterface $media);
 
-    public function buildMediaType(FormBuilder $formBuilder);
+    public function buildMediaType(FormBuilderInterface $formBuilder);
 
     /**
      * @param bool $force

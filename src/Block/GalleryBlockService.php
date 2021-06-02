@@ -34,7 +34,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Templating\EngineInterface;
 use Twig\Environment;
 
 /**
@@ -59,14 +58,9 @@ class GalleryBlockService extends AbstractBlockService
      */
     private $container;
 
-    /**
-     * NEXT_MAJOR: Remove `$templating` argument.
-     *
-     * @param Environment|string $twigOrName
-     */
-    public function __construct($twigOrName, ?EngineInterface $templating, ContainerInterface $container, ManagerInterface $galleryManager)
+    public function __construct(Environment $twig, ContainerInterface $container, ManagerInterface $galleryManager)
     {
-        parent::__construct($twigOrName, $templating);
+        parent::__construct($twig);
 
         $this->galleryManager = $galleryManager;
         $this->container = $container;
@@ -192,7 +186,7 @@ class GalleryBlockService extends AbstractBlockService
         ]);
     }
 
-    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
 

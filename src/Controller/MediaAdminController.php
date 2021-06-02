@@ -24,14 +24,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MediaAdminController extends Controller
 {
-    public function createAction(?Request $request = null)
+    public function createAction(Request $request): Response
     {
         $this->admin->checkAccess('create');
 
         if (!$request->get('provider') && $request->isMethod('get')) {
             $pool = $this->get('sonata.media.pool');
 
-            return $this->render('@SonataMedia/MediaAdmin/select_provider.html.twig', [
+            return $this->renderWithExtraParams('@SonataMedia/MediaAdmin/select_provider.html.twig', [
                 'providers' => $pool->getProvidersByContext(
                     $request->get('context', $pool->getDefaultContext())
                 ),
@@ -39,10 +39,10 @@ class MediaAdminController extends Controller
             ]);
         }
 
-        return parent::createAction();
+        return parent::createAction($request);
     }
 
-    public function render($view, array $parameters = [], ?Response $response = null)
+    public function renderWithExtraParams($view, array $parameters = [], ?Response $response = null): Response
     {
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
@@ -50,7 +50,7 @@ class MediaAdminController extends Controller
         return parent::renderWithExtraParams($view, $parameters, $response);
     }
 
-    public function listAction(?Request $request = null)
+    public function listAction(?Request $request = null): Response
     {
         $this->admin->checkAccess('list');
 
@@ -96,7 +96,7 @@ class MediaAdminController extends Controller
 
         $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
-        return $this->render($this->admin->getTemplate('list'), [
+        return $this->renderWithExtraParams($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,

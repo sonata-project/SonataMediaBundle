@@ -17,9 +17,11 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Builder\FormContractorInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
 /**
@@ -28,12 +30,12 @@ use Symfony\Component\Form\FormTypeInterface;
 abstract class AbstractProviderTest extends TestCase
 {
     /**
-     * @var FormBuilder|MockObject
+     * @var FormBuilderInterface|MockObject
      */
     protected $formBuilder;
 
     /**
-     * @var FormMapper|MockObject
+     * @var FormMapper
      */
     protected $formMapper;
 
@@ -49,10 +51,14 @@ abstract class AbstractProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formMapper = $this->createMock(FormMapper::class);
-
-        $this->formBuilder = $this->createMock(FormBuilder::class);
+        $this->formBuilder = $this->createMock(FormBuilderInterface::class);
         $this->formBuilder->method('getOption')->willReturn('api');
+
+        $this->formMapper = new FormMapper(
+            $this->createStub(FormContractorInterface::class),
+            $this->formBuilder,
+            $this->createStub(AdminInterface::class)
+        );
 
         $this->provider = $this->getProvider();
     }
@@ -64,7 +70,7 @@ abstract class AbstractProviderTest extends TestCase
 
     public function testBuildEditForm(): void
     {
-        $this->formMapper
+        $this->formBuilder
             ->expects($this->atLeastOnce())
             ->method('add');
 
@@ -73,7 +79,7 @@ abstract class AbstractProviderTest extends TestCase
 
     public function testBuildCreateForm(): void
     {
-        $this->formMapper
+        $this->formBuilder
             ->expects($this->atLeastOnce())
             ->method('add');
 

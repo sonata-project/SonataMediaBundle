@@ -24,7 +24,7 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -132,7 +132,7 @@ abstract class BaseVideoProvider extends BaseProvider
         ]);
     }
 
-    public function buildMediaType(FormBuilder $formBuilder): void
+    public function buildMediaType(FormBuilderInterface $formBuilder): void
     {
         $formBuilder->add('binaryContent', TextType::class, [
             'label' => 'widget_label_binary_content',

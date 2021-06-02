@@ -52,33 +52,27 @@ class GalleryAdmin extends AbstractAdmin
         $gallery->setContext($parameters['context']);
     }
 
-    public function postUpdate($gallery)
+    public function postUpdate(object $object): void
     {
-        $gallery->reorderGalleryItems();
+        $object->reorderGalleryItems();
     }
 
-    public function getPersistentParameters()
+    public function configurePersistentParameters(): array
     {
-        $parameters = parent::getPersistentParameters();
-
         if (!$this->hasRequest()) {
-            return $parameters;
+            return [];
         }
 
-        return array_merge($parameters, [
+        return [
             'context' => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
-        ]);
+        ];
     }
 
-    public function getNewInstance()
+    public function alterNewInstance(object $object): void
     {
-        $gallery = parent::getNewInstance();
-
         if ($this->hasRequest()) {
-            $gallery->setContext($this->getRequest()->get('context'));
+            $object->setContext($this->getRequest()->get('context'));
         }
-
-        return $gallery;
     }
 
     protected function configureFormFields(FormMapper $formMapper): void

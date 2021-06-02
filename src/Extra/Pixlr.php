@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -57,9 +57,9 @@ class Pixlr
     protected $pool;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
-    protected $templating;
+    protected $twig;
 
     /**
      * @var ContainerInterface
@@ -80,14 +80,14 @@ class Pixlr
      * @param string $referrer
      * @param string $secret
      */
-    public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, EngineInterface $templating, ContainerInterface $container)
+    public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, Environment $twig, ContainerInterface $container)
     {
         $this->referrer = $referrer;
         $this->secret = $secret;
         $this->mediaManager = $mediaManager;
         $this->router = $router;
         $this->pool = $pool;
-        $this->templating = $templating;
+        $this->twig = $twig;
         $this->container = $container;
 
         $this->validFormats = ['jpg', 'jpeg', 'png'];
@@ -142,7 +142,7 @@ class Pixlr
 
         $this->checkMedia($hash, $media);
 
-        return new Response($this->templating->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
+        return new Response($this->twig->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
     }
 
     /**
@@ -174,7 +174,7 @@ class Pixlr
 
         $this->mediaManager->save($media);
 
-        return new Response($this->templating->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
+        return new Response($this->twig->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
     }
 
     /**
@@ -204,7 +204,7 @@ class Pixlr
             throw new NotFoundHttpException('The media is not editable');
         }
 
-        return new Response($this->templating->render('@SonataMedia/Extra/pixlr_editor.html.twig', [
+        return new Response($this->twig->render('@SonataMedia/Extra/pixlr_editor.html.twig', [
             'media' => $media,
             'admin_pool' => $this->container->get('sonata.admin.pool'),
         ]));

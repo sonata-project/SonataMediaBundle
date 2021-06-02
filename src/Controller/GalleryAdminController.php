@@ -24,13 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GalleryAdminController extends Controller
 {
-    /**
-     * @param string   $view
-     * @param Response $response
-     *
-     * @return Response
-     */
-    public function render($view, array $parameters = [], ?Response $response = null)
+    public function renderWithExtraParams(string $view, array $parameters = [], ?Response $response = null): Response
     {
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
@@ -40,12 +34,8 @@ class GalleryAdminController extends Controller
 
     /**
      * return the Response object associated to the list action.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
-    public function listAction(?Request $request = null)
+    public function listAction(Request $request): Response
     {
         $this->admin->checkAccess('list');
 
@@ -61,7 +51,7 @@ class GalleryAdminController extends Controller
         // set the theme for the current Admin Form
         $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
-        return $this->render($this->admin->getTemplate('list'), [
+        return $this->render($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,

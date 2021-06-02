@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Block\Breadcrumb;
 
 use Knp\Menu\FactoryInterface;
-use Knp\Menu\Provider\MenuProviderInterface;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
@@ -26,10 +25,7 @@ class BreadcrumbTest extends BlockServiceTestCase
     public function testBlockService(): void
     {
         $blockService = new BreadcrumbGalleryBlockService_Test(
-            'context',
-            'name',
-            $this->createStub(EngineInterface::class),
-            $this->createStub(MenuProviderInterface::class),
+            $this->createStub(Environment::class),
             $this->createStub(FactoryInterface::class)
         );
 
