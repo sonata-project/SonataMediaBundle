@@ -19,6 +19,6 @@ class BreadcrumbGalleryBlockService_Test extends BaseGalleryBreadcrumbBlockServi
 {
     public function getContext(): string
     {
-        return 'Breadcrumb for testing';
+        return 'context';
     }
 }

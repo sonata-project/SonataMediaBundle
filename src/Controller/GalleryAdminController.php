@@ -24,12 +24,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GalleryAdminController extends Controller
 {
-    public function renderWithExtraParams(string $view, array $parameters = [], ?Response $response = null): Response
+    public function addRenderExtraParams(array $parameters = []): array
     {
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
-        return parent::renderWithExtraParams($view, $parameters, $response);
+        return parent::addRenderExtraParams($parameters);
     }
 
     /**
@@ -51,7 +51,7 @@ class GalleryAdminController extends Controller
         // set the theme for the current Admin Form
         $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
-        return $this->render($this->admin->getTemplateRegistry()->getTemplate('list'), [
+        return $this->renderWithExtraParams($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
