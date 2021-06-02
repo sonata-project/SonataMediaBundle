@@ -51,7 +51,7 @@ class PublicDownloadStrategy implements DownloadStrategyInterface
                     __METHOD__,
                     \TypeError::class
                 ),
-                E_USER_DEPRECATED
+                \E_USER_DEPRECATED
             );
         }
 

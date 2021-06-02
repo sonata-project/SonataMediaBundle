@@ -124,7 +124,7 @@ class CloudFront implements CDNInterface
                 CloudFrontClient::class,
                 __METHOD__,
                 \TypeError::class
-            ), E_USER_DEPRECATED);
+            ), \E_USER_DEPRECATED);
 
             $this->path = rtrim($clientOrPath, '/');
             $this->key = $distributionIdOrKey;
@@ -228,7 +228,7 @@ class CloudFront implements CDNInterface
                     .' and will not be possible in version 4.0.',
                     CDNInterface::class,
                     __METHOD__
-                ), E_USER_DEPRECATED);
+                ), \E_USER_DEPRECATED);
 
                 // NEXT_MAJOR: Remove the previous deprecation and uncomment the following exception.
                 // throw new \RuntimeException(sprintf('Unable to determine the flush status from the given response: "%s".', $status));
@@ -252,7 +252,7 @@ class CloudFront implements CDNInterface
         @trigger_error(sprintf(
             'Method "%s()" is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         // @todo: check for a complete list of available CloudFront statuses
         return [

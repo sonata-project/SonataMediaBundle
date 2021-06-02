@@ -119,7 +119,7 @@ class MediaController extends Controller
     {
         @trigger_error(
             'The '.__METHOD__.' method is deprecated since 3.12, to be removed in 4.0.',
-            E_USER_DEPRECATED
+            \E_USER_DEPRECATED
         );
 
         if (!preg_match('@([^/]*)/(.*)/([0-9]*)_([a-z_A-Z]*).jpg@', $path, $matches)) {

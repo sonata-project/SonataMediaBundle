@@ -41,7 +41,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         if (null !== $map) {
             @trigger_error(
                 'The "map" parameter is deprecated since sonata-project/media-bundle 2.4 and will be removed in 4.0.',
-                E_USER_DEPRECATED
+                \E_USER_DEPRECATED
             );
         }
     }

@@ -180,7 +180,7 @@ class ImageProvider extends FileProvider
         }
 
         // if $path is already an url, no further action is required
-        if (null !== parse_url($path, PHP_URL_SCHEME)) {
+        if (null !== parse_url($path, \PHP_URL_SCHEME)) {
             return $path;
         }
 
@@ -199,7 +199,7 @@ class ImageProvider extends FileProvider
     {
         return array_filter($this->getFormats(), static function (string $providerFormat) use ($context): bool {
             return 0 === strpos($providerFormat, $context);
-        }, ARRAY_FILTER_USE_KEY);
+        }, \ARRAY_FILTER_USE_KEY);
     }
 
     protected function doTransform(MediaInterface $media): void
@@ -215,7 +215,7 @@ class ImageProvider extends FileProvider
             return;
         }
 
-        if (!\in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions, true)
+        if (!\in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), $this->allowedExtensions, true)
             || !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes, true)) {
             return;
         }
