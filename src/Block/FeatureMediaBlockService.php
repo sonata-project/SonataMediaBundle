@@ -23,11 +23,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class FeatureMediaBlockService extends MediaBlockService
+final class FeatureMediaBlockService extends MediaBlockService
 {
     public function configureSettings(OptionsResolver $resolver): void
     {
@@ -46,11 +44,11 @@ class FeatureMediaBlockService extends MediaBlockService
         ]);
     }
 
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block): void
+    public function buildEditForm(FormMapper $form, BlockInterface $block): void
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', ImmutableArrayType::class, [
+        $form->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
                     'label' => 'form.label_title',
@@ -80,7 +78,7 @@ class FeatureMediaBlockService extends MediaBlockService
                     ],
                     'label' => 'form.label_orientation',
                 ]],
-                [$this->getMediaBuilder($formMapper), null, []],
+                [$this->getMediaBuilder($form), null, []],
                 ['format', ChoiceType::class, [
                     'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
