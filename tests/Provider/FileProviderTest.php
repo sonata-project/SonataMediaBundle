@@ -16,9 +16,6 @@ namespace Sonata\MediaBundle\Tests\Provider;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\Stub;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Builder\FormContractorInterface;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
@@ -30,7 +27,6 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -111,19 +107,11 @@ class FileProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $formBuilder = $this->createMock(FormBuilderInterface::class);
-
-        $formMapper = new FormMapper(
-            $this->createStub(FormContractorInterface::class),
-            $formBuilder,
-            $this->createStub(AdminInterface::class)
-        );
-
-        $formBuilder->expects($this->exactly(8))
+        $this->formBuilder->expects($this->exactly(8))
             ->method('add');
 
-        $provider->buildCreateForm($formMapper);
-        $provider->buildEditForm($formMapper);
+        $provider->buildCreateForm($this->formMapper);
+        $provider->buildEditForm($this->formMapper);
     }
 
     /**

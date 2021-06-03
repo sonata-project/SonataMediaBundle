@@ -218,21 +218,13 @@ class DailyMotionProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $formBuilder = $this->createMock(FormBuilderInterface::class);
-
-        $formMapper = new FormMapper(
-            $this->createStub(FormContractorInterface::class),
-            $formBuilder,
-            $this->createStub(AdminInterface::class)
-        );
-
-        $formBuilder->expects($this->exactly(8))
+        $this->formBuilder->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
 
-        $provider->buildCreateForm($formMapper);
+        $provider->buildCreateForm($this->formMapper);
 
-        $provider->buildEditForm($formMapper);
+        $provider->buildEditForm($this->formMapper);
     }
 
     public function testHelperProperties(): void

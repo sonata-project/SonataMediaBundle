@@ -17,10 +17,14 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Builder\FormContractorInterface;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionFactoryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Translator\LabelTranslatorStrategyInterface;
+use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
@@ -54,10 +58,14 @@ abstract class AbstractProviderTest extends TestCase
         $this->formBuilder = $this->createMock(FormBuilderInterface::class);
         $this->formBuilder->method('getOption')->willReturn('api');
 
+        $admin = new MediaAdmin('media', Media::class, '', $this->createStub(Pool::class));
+        $admin->setLabelTranslatorStrategy($this->createStub(LabelTranslatorStrategyInterface::class));
+        $admin->setFieldDescriptionFactory($this->createStub(FieldDescriptionFactoryInterface::class));
+
         $this->formMapper = new FormMapper(
             $this->createStub(FormContractorInterface::class),
             $this->formBuilder,
-            $this->createStub(AdminInterface::class)
+            $admin
         );
 
         $this->provider = $this->getProvider();
