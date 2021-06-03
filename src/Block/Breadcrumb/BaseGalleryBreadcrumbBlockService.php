@@ -35,4 +35,9 @@ abstract class BaseGalleryBreadcrumbBlockService extends BaseBreadcrumbMenuBlock
 
         return $menu;
     }
+
+    protected function getContext(): string
+    {
+        return 'media';
+    }
 }
