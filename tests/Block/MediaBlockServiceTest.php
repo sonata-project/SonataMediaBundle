@@ -41,7 +41,6 @@ class MediaBlockServiceTest extends BlockServiceTestCase
 
         $this->blockService = new MediaBlockService(
             $this->twig,
-            null,
             $this->container,
             $this->createStub(GalleryManagerInterface::class)
         );

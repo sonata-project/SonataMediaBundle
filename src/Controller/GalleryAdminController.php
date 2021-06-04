@@ -13,16 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Controller;
 
-use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\FormRenderer;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class GalleryAdminController extends Controller
+final class GalleryAdminController extends CRUDController
 {
     public function addRenderExtraParams(array $parameters = []): array
     {
@@ -48,8 +44,10 @@ class GalleryAdminController extends Controller
 
         $formView = $datagrid->getForm()->createView();
 
+        $twig = $this->get('twig');
+
         // set the theme for the current Admin Form
-        $this->setFormTheme($formView, $this->admin->getFilterTheme());
+        $twig->getRuntime(FormRenderer::class)->setTheme($formView, $this->admin->getFilterTheme());
 
         return $this->renderWithExtraParams($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
@@ -57,15 +55,5 @@ class GalleryAdminController extends Controller
             'datagrid' => $datagrid,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ]);
-    }
-
-    /**
-     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
-     */
-    private function setFormTheme(FormView $formView, array $theme)
-    {
-        $twig = $this->get('twig');
-
-        $twig->getRuntime(FormRenderer::class)->setTheme($formView, $theme);
     }
 }

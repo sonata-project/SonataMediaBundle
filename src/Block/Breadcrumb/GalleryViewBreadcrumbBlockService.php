@@ -28,6 +28,11 @@ final class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlock
         return 'Breadcrumb View: Media Gallery';
     }
 
+    public function getContext(): string
+    {
+        return 'gallery_view';
+    }
+
     public function configureSettings(OptionsResolver $resolver): void
     {
         parent::configureSettings($resolver);

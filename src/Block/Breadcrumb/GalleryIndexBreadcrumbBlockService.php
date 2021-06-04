@@ -27,6 +27,11 @@ final class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBloc
         return 'Breadcrumb Index: Media Gallery';
     }
 
+    public function getContext(): string
+    {
+        return 'gallery_index';
+    }
+
     protected function getMenu(BlockContextInterface $blockContext)
     {
         $menu = $this->getRootMenu($blockContext);
