@@ -19,12 +19,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class GalleryItemAdmin extends AbstractAdmin
+final class GalleryItemAdmin extends AbstractAdmin
 {
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
         $link_parameters = [];
 
@@ -40,7 +37,7 @@ class GalleryItemAdmin extends AbstractAdmin
             }
         }
 
-        $formMapper
+        $form
             ->add('media', ModelListType::class, ['required' => false], [
                 'link_parameters' => $link_parameters,
             ])
@@ -48,9 +45,9 @@ class GalleryItemAdmin extends AbstractAdmin
             ->add('position', HiddenType::class);
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add('media')
             ->add('gallery')
             ->add('position')
