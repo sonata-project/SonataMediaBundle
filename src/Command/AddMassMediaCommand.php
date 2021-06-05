@@ -44,7 +44,7 @@ final class AddMassMediaCommand extends Command
     {
         parent::__construct();
 
-        $this->mediaManger = $mediaManager;
+        $this->mediaManager = $mediaManager;
         $this->managerRegistry = $managerRegistry;
     }
 

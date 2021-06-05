@@ -22,11 +22,6 @@
             <argument/>
             <argument type="service" id="logger"/>
         </service>
-        <service id="sonata.media.adapter.filesystem.mogilefs" class="Gaufrette\Adapter\MogileFS">
-            <deprecated>The "%service_id%" service is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.</deprecated>
-            <argument/>
-            <argument/>
-        </service>
         <service id="sonata.media.adapter.filesystem.opencloud" class="Gaufrette\Adapter\OpenCloud">
             <argument type="service" id="sonata.media.adapter.filesystem.opencloud.objectstore"/>
             <argument/>
@@ -40,10 +35,6 @@
             <factory service="sonata.media.adapter.filesystem.opencloud.connection" method="ObjectStore"/>
             <argument/>
             <argument/>
-        </service>
-        <service id="sonata.media.filesystem.mogilefs" class="Gaufrette\Filesystem">
-            <deprecated>The "%service_id%" service is deprecated since sonata-project/media-bundle 3.28 and will be removed in version 4.0.</deprecated>
-            <argument type="service" id="sonata.media.adapter.filesystem.mogilefs"/>
         </service>
         <service id="sonata.media.filesystem.ftp" class="Gaufrette\Filesystem">
             <argument type="service" id="sonata.media.adapter.filesystem.ftp"/>

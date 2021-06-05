@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Gaufrette\Adapter\AmazonS3;
 use Gaufrette\Adapter\AwsS3;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -66,7 +65,7 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
         }
 
         //for amazon s3
-        if ((!\in_array(AmazonS3::class, $adapterClassNames, true) && !\in_array(AwsS3::class, $adapterClassNames, true)) || !$this->container->has('sonata.media.metadata.amazon')) {
+        if (!\in_array(AwsS3::class, $adapterClassNames, true) || !$this->container->has('sonata.media.metadata.amazon')) {
             return false;
         }
 

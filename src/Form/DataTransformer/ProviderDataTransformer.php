@@ -30,6 +30,11 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     protected $pool;
 
     /**
+     * @var string
+     */
+    protected $class;
+
+    /**
      * @var array
      */
     protected $options;

@@ -19,13 +19,11 @@ use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagicImagine;
 use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
-use Sonata\MediaBundle\CDN\CloudFront;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Sonata\MediaBundle\Model\CategoryManager;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
@@ -281,7 +279,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 'filesystem' => [
                     's3' => [
                         'bucket' => 'bucket_name',
-                        'sdk_version' => 3,
                         'region' => 'region',
                         'version' => 'version',
                         'endpoint' => 'endpoint',
@@ -334,24 +331,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    public function testLoadWithSdkVersion2(): void
-    {
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('Can not use 2 for "sdk_version" since the installed version of aws/aws-sdk-php is not 2.x.');
-
-        $this->load([
-            'filesystem' => [
-                's3' => [
-                    'bucket' => 'bucket_name',
-                    'version' => null,
-                    'sdk_version' => 2,
-                    'secretKey' => 'secret',
-                    'accessKey' => 'access',
-                ],
-            ],
-        ]);
-    }
-
     public function testMediaPool(): void
     {
         $this->load();
@@ -360,41 +339,8 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasAlias('%sonata.media.pool.class%', 'sonata.media.pool');
     }
 
-    public function testCdnCloudFront(): void
-    {
-        if (!class_exists(CloudFrontClient::class) || class_exists(Sdk::class)) {
-            $this->markTestSkipped('This test requires "aws/aws-sdk-php:^2.0" to be installed.');
-        }
-
-        $this->load([
-            'cdn' => [
-                'cloudfront' => [
-                    'path' => '/foo',
-                    'distribution_id' => '$some_id$',
-                    'key' => 'cloudfront_key',
-                    'secret' => 'cloudfront_secret',
-                ],
-            ],
-        ]);
-
-        $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront.client', CloudFrontClient::class);
-        $this->assertSame(
-            $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getArgument(0),
-            [
-                'key' => 'cloudfront_key',
-                'secret' => 'cloudfront_secret',
-            ]
-        );
-        $this->assertSame([CloudFrontClient::class, 'factory'], $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getFactory());
-        $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront', CloudFront::class);
-    }
-
     public function testCdnCloudFrontVersion3(): void
     {
-        if (!class_exists(CloudFrontClient::class) || !class_exists(Sdk::class)) {
-            $this->markTestSkipped('This test requires "aws/aws-sdk-php:^3.0" to be installed.');
-        }
-
         $this->load([
             'cdn' => [
                 'cloudfront' => [

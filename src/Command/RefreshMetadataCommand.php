@@ -63,7 +63,7 @@ final class RefreshMetadataCommand extends Command
         parent::__construct();
 
         $this->mediaPool = $mediaPool;
-        $this->mediaManger = $mediaManager;
+        $this->mediaManager = $mediaManager;
     }
 
     public function configure(): void
