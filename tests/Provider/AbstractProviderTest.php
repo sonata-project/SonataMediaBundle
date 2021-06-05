@@ -17,9 +17,15 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Sonata\AdminBundle\Builder\FormContractorInterface;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionFactoryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Translator\LabelTranslatorStrategyInterface;
+use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\Form\FormBuilder;
+use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\App\Entity\Media;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
 /**
@@ -28,12 +34,12 @@ use Symfony\Component\Form\FormTypeInterface;
 abstract class AbstractProviderTest extends TestCase
 {
     /**
-     * @var FormBuilder|MockObject
+     * @var FormBuilderInterface|MockObject
      */
     protected $formBuilder;
 
     /**
-     * @var FormMapper|MockObject
+     * @var FormMapper
      */
     protected $formMapper;
 
@@ -49,10 +55,18 @@ abstract class AbstractProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formMapper = $this->createMock(FormMapper::class);
-
-        $this->formBuilder = $this->createMock(FormBuilder::class);
+        $this->formBuilder = $this->createMock(FormBuilderInterface::class);
         $this->formBuilder->method('getOption')->willReturn('api');
+
+        $admin = new MediaAdmin('media', Media::class, '', $this->createStub(Pool::class));
+        $admin->setLabelTranslatorStrategy($this->createStub(LabelTranslatorStrategyInterface::class));
+        $admin->setFieldDescriptionFactory($this->createStub(FieldDescriptionFactoryInterface::class));
+
+        $this->formMapper = new FormMapper(
+            $this->createStub(FormContractorInterface::class),
+            $this->formBuilder,
+            $admin
+        );
 
         $this->provider = $this->getProvider();
     }
@@ -64,7 +78,7 @@ abstract class AbstractProviderTest extends TestCase
 
     public function testBuildEditForm(): void
     {
-        $this->formMapper
+        $this->formBuilder
             ->expects($this->atLeastOnce())
             ->method('add');
 
@@ -73,7 +87,7 @@ abstract class AbstractProviderTest extends TestCase
 
     public function testBuildCreateForm(): void
     {
-        $this->formMapper
+        $this->formBuilder
             ->expects($this->atLeastOnce())
             ->method('add');
 

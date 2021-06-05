@@ -16,8 +16,6 @@ namespace Sonata\MediaBundle\Tests\Provider;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\Stub;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
@@ -109,18 +107,11 @@ class FileProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $admin = $this->createMock(AdminInterface::class);
-        $admin
-            ->method('trans')
-            ->willReturn('message');
+        $this->formBuilder->expects($this->exactly(8))
+            ->method('add');
 
-        $formMapper = $this->createMock(FormMapper::class);
-        $formMapper->expects($this->exactly(8))
-            ->method('add')
-            ->willReturn(null);
-
-        $provider->buildCreateForm($formMapper);
-        $provider->buildEditForm($formMapper);
+        $provider->buildCreateForm($this->formMapper);
+        $provider->buildEditForm($this->formMapper);
     }
 
     /**

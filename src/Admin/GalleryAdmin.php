@@ -21,10 +21,7 @@ use Sonata\Form\Type\CollectionType;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class GalleryAdmin extends AbstractAdmin
+final class GalleryAdmin extends AbstractAdmin
 {
     /**
      * @var Pool
@@ -52,39 +49,33 @@ class GalleryAdmin extends AbstractAdmin
         $gallery->setContext($parameters['context']);
     }
 
-    public function postUpdate($gallery)
+    public function postUpdate(object $object): void
     {
-        $gallery->reorderGalleryItems();
+        $object->reorderGalleryItems();
     }
 
-    public function getPersistentParameters()
+    public function configurePersistentParameters(): array
     {
-        $parameters = parent::getPersistentParameters();
-
         if (!$this->hasRequest()) {
-            return $parameters;
+            return [];
         }
 
-        return array_merge($parameters, [
+        return [
             'context' => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
-        ]);
+        ];
     }
 
-    public function getNewInstance()
+    public function alterNewInstance(object $object): void
     {
-        $gallery = parent::getNewInstance();
-
         if ($this->hasRequest()) {
-            $gallery->setContext($this->getRequest()->get('context'));
+            $object->setContext($this->getRequest()->get('context'));
         }
-
-        return $gallery;
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
         // define group zoning
-        $formMapper
+        $form
             // NEXT_MAJOR: Change Gallery key to `form_group.gallery` and update translations files.
             ->with('Gallery', ['class' => 'col-md-9'])->end()
             // NEXT_MAJOR: Change Options key to `form_group.options` and update translations files.
@@ -106,7 +97,7 @@ class GalleryAdmin extends AbstractAdmin
             $contexts[$contextItem] = $contextItem;
         }
 
-        $formMapper
+        $form
             ->with('Options')
                 ->add('context', ChoiceType::class, [
                     'choices' => $contexts,
@@ -114,7 +105,7 @@ class GalleryAdmin extends AbstractAdmin
                 ])
                 ->add('enabled', null, ['required' => false])
                 ->add('name')
-                ->ifTrue($formats)
+                ->ifTrue(!empty($formats))
                     ->add('defaultFormat', ChoiceType::class, ['choices' => $formats])
                 ->ifEnd()
             ->end()
@@ -129,18 +120,18 @@ class GalleryAdmin extends AbstractAdmin
             ->end();
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->addIdentifier('name')
             ->add('enabled', 'boolean', ['editable' => true])
             ->add('context', 'trans', ['catalogue' => 'SonataMediaBundle'])
             ->add('defaultFormat', 'trans', ['catalogue' => 'SonataMediaBundle']);
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add('name')
             ->add('enabled')
             ->add('context', null, [

@@ -15,15 +15,12 @@ namespace Sonata\MediaBundle\Admin\ORM;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
-use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class MediaAdmin extends Admin
+final class MediaAdmin extends BaseMediaAdmin
 {
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $options = [
             'choices' => [],
@@ -33,19 +30,21 @@ class MediaAdmin extends Admin
             $options['choices'][$name] = $name;
         }
 
-        $datagridMapper
+        $filter
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
             ->add('context', null, [
+                'field_type' => ChoiceType::class,
+                'field_options' => $options,
                 'show_filter' => true !== $this->getPersistentParameter('hide_context'),
-            ], ChoiceType::class, $options);
+            ]);
 
         if (null !== $this->categoryManager) {
-            $datagridMapper->add('category', null, ['show_filter' => false]);
+            $filter->add('category', null, ['show_filter' => false]);
         }
 
-        $datagridMapper
+        $filter
             ->add('width')
             ->add('height')
             ->add('contentType');
@@ -57,7 +56,7 @@ class MediaAdmin extends Admin
             $providers[$name] = $name;
         }
 
-        $datagridMapper->add('providerName', ChoiceFilter::class, [
+        $filter->add('providerName', ChoiceFilter::class, [
             'field_options' => [
                 'choices' => $providers,
                 'required' => false,

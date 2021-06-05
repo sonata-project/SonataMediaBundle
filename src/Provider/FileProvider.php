@@ -24,7 +24,7 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
@@ -118,7 +118,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         ]);
     }
 
-    public function buildMediaType(FormBuilder $formBuilder): void
+    public function buildMediaType(FormBuilderInterface $formBuilder): void
     {
         if ('api' === $formBuilder->getOption('context')) {
             $formBuilder->add('binaryContent', FileType::class);

@@ -19,15 +19,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * BlockService for view Media.
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
-class MediaViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
+final class MediaViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Breadcrumb View: Media';
+    }
+
+    public function getContext(): string
+    {
+        return 'media_view';
     }
 
     public function configureSettings(OptionsResolver $resolver): void

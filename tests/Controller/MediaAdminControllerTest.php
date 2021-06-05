@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\ClassificationBundle\Model\Category;
-use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -56,7 +56,7 @@ class MediaAdminControllerTest extends TestCase
     protected function setUp(): void
     {
         $this->container = new Container();
-        $this->admin = $this->createMock(BaseMediaAdmin::class);
+        $this->admin = $this->createMock(AdminInterface::class);
         $this->request = new Request();
         $this->twig = $this->createStub(Environment::class);
 
@@ -66,6 +66,7 @@ class MediaAdminControllerTest extends TestCase
 
         $this->controller = new MediaAdminController();
         $this->controller->setContainer($this->container);
+        $this->controller->configureAdmin($this->request);
     }
 
     public function testCreateActionToSelectProvider(): void
@@ -111,8 +112,7 @@ class MediaAdminControllerTest extends TestCase
     public function testListAction(): void
     {
         $datagrid = $this->createMock(DatagridInterface::class);
-        $pool = $this->createStub(Pool::class);
-        $categoryManager = $this->createStub(CategoryManagerInterface::class);
+        $categoryManager = $this->createMock(CategoryManagerInterface::class);
         $category = new Category();
         $category->setId(1);
         $form = $this->createStub(Form::class);
@@ -126,14 +126,12 @@ class MediaAdminControllerTest extends TestCase
             ['category', null, 1]
         );
         $datagrid->method('getForm')->willReturn($form);
-        $pool->method('getDefaultContext')->willReturn('context');
         $categoryManager->method('getRootCategory')->with('another_context')->willReturn($category);
         $categoryManager->method('findOneBy')->with([
             'id' => 2,
             'context' => 'another_context',
         ])->willReturn($category);
         $form->method('createView')->willReturn($formView);
-        $this->container->set('sonata.media.pool', $pool);
         $this->container->set('sonata.media.manager.category', $categoryManager);
         $this->admin->expects($this->once())->method('checkAccess')->with('list');
         $this->admin->expects($this->once())->method('setListMode')->with('mosaic');
@@ -152,22 +150,29 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureCRUDController(): void
     {
-        $pool = $this->createStub(AdminPool::class);
-        $breadcrumbsBuilder = $this->createStub(BreadcrumbsBuilderInterface::class);
+        $pool = new AdminPool($this->container, [
+            'admin_code' => 'admin_code',
+        ]);
         $templateRegistry = $this->createStub(TemplateRegistryInterface::class);
+        $mutableTemplateRegistry = $this->createStub(MutableTemplateRegistryInterface::class);
 
-        $this->configureGetCurrentRequest($this->request);
-        $pool->method('getAdminByAdminCode')->with('admin_code')->willReturn($this->admin);
-        $this->request->query->set('_xml_http_request', false);
-        $this->request->query->set('_sonata_admin', 'admin_code');
-        $this->container->set('sonata.admin.pool.do-not-use', $pool);
-        $this->container->set('sonata.admin.breadcrumbs_builder.do-not-use', $breadcrumbsBuilder);
-        $this->container->set('admin_code.template_registry', $templateRegistry);
-        $this->admin->method('getTemplate')->willReturnMap([
+        $mutableTemplateRegistry->method('getTemplate')->willReturnMap([
             ['layout', 'layout.html.twig'],
             ['edit', 'template'],
             ['list', 'templateList'],
         ]);
+
+        $this->configureGetCurrentRequest($this->request);
+
+        $this->request->query->set('_xml_http_request', false);
+        $this->request->query->set('_sonata_admin', 'admin_code');
+
+        $this->container->set('admin_code', $this->admin);
+        $this->container->set('sonata.admin.pool', $pool);
+        $this->container->set('admin_code.template_registry', $templateRegistry);
+        $this->admin->method('hasTemplateRegistry')->willReturn(true);
+        $this->admin->method('getTemplateRegistry')->willReturn($mutableTemplateRegistry);
+
         $this->admin->method('isChild')->willReturn(false);
         $this->admin->expects($this->once())->method('setRequest')->with($this->request);
         $this->admin->method('getCode')->willReturn('admin_code');
@@ -203,18 +208,15 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureSetFormTheme(FormView $formView, $formTheme): void
     {
-        $rendererClass = FormRenderer::class;
+        $twigRenderer = $this->createMock(FormRenderer::class);
 
-        $twigRenderer = $this->createMock($rendererClass);
-
-        $this->twig->method('getRuntime')->with($rendererClass)->willReturn($twigRenderer);
-
+        $this->twig->method('getRuntime')->with(FormRenderer::class)->willReturn($twigRenderer);
         $twigRenderer->expects($this->once())->method('setTheme')->with($formView, $formTheme);
     }
 
     private function configureSetCsrfToken(string $intention): void
     {
-        $tokenManager = $this->createStub(CsrfTokenManagerInterface::class);
+        $tokenManager = $this->createMock(CsrfTokenManagerInterface::class);
         $token = $this->createStub(CsrfToken::class);
 
         $tokenManager->method('getToken')->with($intention)->willReturn($token);
@@ -227,9 +229,11 @@ class MediaAdminControllerTest extends TestCase
         $response = $this->createStub(Response::class);
         $pool = $this->createStub(Pool::class);
 
+        $pool->method('getDefaultContext')->willReturn('context');
+        $response->method('getContent')->willReturn($rendered);
+
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
         $this->container->set('sonata.media.pool', $pool);
-        $response->method('getContent')->willReturn($rendered);
         $this->twig->method('render')->with($template, $this->isType('array'))->willReturn($rendered);
     }
 }

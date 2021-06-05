@@ -18,15 +18,18 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 /**
  * BlockService for view gallery.
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
-class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
+final class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Breadcrumb Index: Media Gallery';
+    }
+
+    public function getContext(): string
+    {
+        return 'gallery_index';
     }
 
     protected function getMenu(BlockContextInterface $blockContext)

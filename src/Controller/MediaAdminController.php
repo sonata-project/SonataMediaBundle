@@ -13,25 +13,21 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Controller;
 
-use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\FormRenderer;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class MediaAdminController extends Controller
+final class MediaAdminController extends CRUDController
 {
-    public function createAction(?Request $request = null)
+    public function createAction(Request $request): Response
     {
         $this->admin->checkAccess('create');
 
         if (!$request->get('provider') && $request->isMethod('get')) {
             $pool = $this->get('sonata.media.pool');
 
-            return $this->render('@SonataMedia/MediaAdmin/select_provider.html.twig', [
+            return $this->renderWithExtraParams('@SonataMedia/MediaAdmin/select_provider.html.twig', [
                 'providers' => $pool->getProvidersByContext(
                     $request->get('context', $pool->getDefaultContext())
                 ),
@@ -39,18 +35,18 @@ class MediaAdminController extends Controller
             ]);
         }
 
-        return parent::createAction();
+        return parent::createAction($request);
     }
 
-    public function render($view, array $parameters = [], ?Response $response = null)
+    public function addRenderExtraParams(array $parameters = []): array
     {
         $parameters['media_pool'] = $this->get('sonata.media.pool');
         $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
 
-        return parent::renderWithExtraParams($view, $parameters, $response);
+        return parent::addRenderExtraParams($parameters);
     }
 
-    public function listAction(?Request $request = null)
+    public function listAction(?Request $request = null): Response
     {
         $this->admin->checkAccess('list');
 
@@ -94,24 +90,17 @@ class MediaAdminController extends Controller
 
         $formView = $datagrid->getForm()->createView();
 
-        $this->setFormTheme($formView, $this->admin->getFilterTheme());
+        $twig = $this->get('twig');
 
-        return $this->render($this->admin->getTemplate('list'), [
+        // set the theme for the current Admin Form
+        $twig->getRuntime(FormRenderer::class)->setTheme($formView, $this->admin->getFilterTheme());
+
+        return $this->renderWithExtraParams($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
             'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ]);
-    }
-
-    /**
-     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
-     */
-    private function setFormTheme(FormView $formView, array $theme)
-    {
-        $twig = $this->get('twig');
-
-        $twig->getRuntime(FormRenderer::class)->setTheme($formView, $theme);
     }
 }

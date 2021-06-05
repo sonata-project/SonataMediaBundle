@@ -59,7 +59,7 @@ class BaseMediaAdminTest extends TestCase
         $this->mediaAdmin->setUniqid('uniqid');
     }
 
-    public function testGetNewInstance(): void
+    public function testAlterNewInstance(): void
     {
         $media = new Media();
         $category = new Category();
@@ -70,13 +70,11 @@ class BaseMediaAdminTest extends TestCase
 
         $this->configureGetPersistentParameters();
 
-        $this->modelManager->method('getModelInstance')->with(BaseMedia::class)->willReturn($media);
         $this->categoryManager->method('find')->with(1)->willReturn($category);
         $this->request->method('isMethod')->with('POST')->willReturn(true);
 
-        $newMedia = $this->mediaAdmin->getNewInstance();
+        $this->mediaAdmin->alterNewInstance($media);
 
-        $this->assertSame($media, $newMedia);
         $this->assertSame('context', $media->getContext());
         $this->assertSame($category, $media->getCategory());
         $this->assertSame('providerName', $media->getProviderName());

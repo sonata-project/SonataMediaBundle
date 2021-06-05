@@ -20,8 +20,6 @@ use Imagine\Image\Box;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
@@ -223,19 +221,12 @@ class YouTubeProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $admin = $this->createMock(AdminInterface::class);
-        $admin
-            ->method('trans')
-            ->willReturn('message');
-
-        $formMapper = $this->createMock(FormMapper::class);
-        $formMapper->expects($this->exactly(8))
+        $this->formBuilder->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
 
-        $provider->buildCreateForm($formMapper);
-
-        $provider->buildEditForm($formMapper);
+        $provider->buildCreateForm($this->formMapper);
+        $provider->buildEditForm($this->formMapper);
     }
 
     public function testHelperProperties(): void

@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
-use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\Container;
@@ -50,15 +50,17 @@ class GalleryAdminControllerTest extends TestCase
     protected function setUp(): void
     {
         $this->container = new Container();
-        $this->admin = $this->createStub(BaseMediaAdmin::class);
-        $this->request = $this->createStub(Request::class);
+        $this->admin = $this->createStub(AdminInterface::class);
+        $this->request = new Request();
         $this->twig = $this->createStub(Environment::class);
         $this->container->set('twig', $this->twig);
+        $this->container->set('admin_code', $this->admin);
 
         $this->configureCRUDController();
 
         $this->controller = new GalleryAdminController();
         $this->controller->setContainer($this->container);
+        $this->controller->configureAdmin($this->request);
     }
 
     public function testItIsInstantiable(): void
@@ -91,25 +93,29 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureCRUDController(): void
     {
-        $pool = $this->createStub(AdminPool::class);
-        $breadcrumbsBuilder = $this->createStub(BreadcrumbsBuilderInterface::class);
-        $templateRegistry = $this->createStub(TemplateRegistryInterface::class);
-
-        $this->configureGetCurrentRequest($this->request);
-        $pool->method('getAdminByAdminCode')->with('admin_code')->willReturn($this->admin);
-        $this->request->method('isXmlHttpRequest')->willReturn(false);
-        $this->request->method('get')->willReturnMap([
-            ['_xml_http_request', null, false],
-            ['_list_mode', null, 'list'],
-            ['_sonata_admin', null, 'admin_code'],
+        $pool = new AdminPool($this->container, [
+            'admin_code' => 'admin_code',
         ]);
-        $this->container->set('sonata.admin.pool.do-not-use', $pool);
-        $this->container->set('sonata.admin.breadcrumbs_builder.do-not-use', $breadcrumbsBuilder);
-        $this->container->set('admin_code.template_registry', $templateRegistry);
-        $this->admin->method('getTemplate')->willReturnMap([
+        $templateRegistry = $this->createStub(TemplateRegistryInterface::class);
+        $mutableTemplateRegistry = $this->createStub(MutableTemplateRegistryInterface::class);
+
+        $mutableTemplateRegistry->method('getTemplate')->willReturnMap([
             ['layout', 'layout.html.twig'],
             ['list', 'templateList'],
         ]);
+
+        $this->configureGetCurrentRequest($this->request);
+
+        $this->request->query->set('_xml_http_request', false);
+        $this->request->query->set('_sonata_admin', 'admin_code');
+        $this->request->query->set('_list_mode', 'list');
+
+        $this->container->set('admin_code', $this->admin);
+        $this->container->set('sonata.admin.pool', $pool);
+        $this->container->set('admin_code.template_registry', $templateRegistry);
+        $this->admin->method('hasTemplateRegistry')->willReturn(true);
+        $this->admin->method('getTemplateRegistry')->willReturn($mutableTemplateRegistry);
+
         $this->admin->method('isChild')->willReturn(false);
         $this->admin->expects($this->once())->method('setRequest')->with($this->request);
         $this->admin->method('getCode')->willReturn('admin_code');
@@ -125,7 +131,7 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureSetCsrfToken(string $intention): void
     {
-        $tokenManager = $this->createStub(CsrfTokenManagerInterface::class);
+        $tokenManager = $this->createMock(CsrfTokenManagerInterface::class);
         $token = $this->createStub(CsrfToken::class);
 
         $tokenManager->method('getToken')->with($intention)->willReturn($token);

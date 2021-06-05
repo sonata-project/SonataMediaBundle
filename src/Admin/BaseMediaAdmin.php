@@ -17,7 +17,8 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
-use Sonata\BlockBundle\Meta\Metadata;
+use Sonata\AdminBundle\Object\Metadata;
+use Sonata\AdminBundle\Object\MetadataInterface;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -49,19 +50,18 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
-
         $this->categoryManager = $categoryManager;
     }
 
-    public function prePersist($media): void
+    public function prePersist(object $media): void
     {
         $parameters = $this->getPersistentParameters();
         $media->setContext($parameters['context']);
     }
 
-    public function getPersistentParameters()
+    public function configurePersistentParameters(): array
     {
-        $parameters = parent::getPersistentParameters();
+        $parameters = [];
 
         if (!$this->hasRequest()) {
             return $parameters;
@@ -103,30 +103,26 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         ]);
     }
 
-    public function getNewInstance()
+    public function alterNewInstance(object $object): void
     {
-        $media = parent::getNewInstance();
-
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
                 $uniqid = $this->getUniqid();
-                $media->setProviderName($this->getRequest()->get($uniqid)['providerName']);
+                $object->setProviderName($this->getRequest()->get($uniqid)['providerName']);
             } else {
-                $media->setProviderName($this->getRequest()->get('provider'));
+                $object->setProviderName($this->getRequest()->get('provider'));
             }
 
-            $media->setContext($context = $this->getRequest()->get('context'));
+            $object->setContext($context = $this->getRequest()->get('context'));
 
             if (null !== $this->categoryManager && $categoryId = $this->getPersistentParameter('category')) {
                 $category = $this->categoryManager->find($categoryId);
 
                 if ($category && $category->getContext()->getId() === $context) {
-                    $media->setCategory($category);
+                    $object->setCategory($category);
                 }
             }
         }
-
-        return $media;
     }
 
     /**
@@ -137,7 +133,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return $this->pool;
     }
 
-    public function getObjectMetadata($object)
+    public function getObjectMetadata(object $object): MetadataInterface
     {
         $provider = $this->pool->getProvider($object->getProviderName());
 
@@ -149,41 +145,37 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->addIdentifier('name')
             ->add('description')
             ->add('enabled')
             ->add('size');
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $media = $this->getSubject();
+        $media = $this->hasSubject() ? $this->getSubject() : $this->getNewInstance();
 
-        if (!$media) {
-            $media = $this->getNewInstance();
-        }
-
-        if (!$media || !$media->getProviderName()) {
+        if (!$media->getProviderName()) {
             return;
         }
 
-        $formMapper->add('providerName', HiddenType::class);
+        $form->add('providerName', HiddenType::class);
 
-        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
+        $form->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
         if ($media->getId()) {
-            $provider->buildEditForm($formMapper);
+            $provider->buildEditForm($form);
         } else {
-            $provider->buildCreateForm($formMapper);
+            $provider->buildCreateForm($form);
         }
 
         if (null !== $this->categoryManager) {
-            $formMapper->add('category', ModelListType::class, [], [
+            $form->add('category', ModelListType::class, [], [
                 'link_parameters' => [
                     'context' => $media->getContext(),
                     'hide_context' => true,

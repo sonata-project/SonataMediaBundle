@@ -14,16 +14,13 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Admin\ODM;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
+use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class MediaAdmin extends Admin
+final class MediaAdmin extends BaseMediaAdmin
 {
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add('name')
             ->add('providerReference')
             ->add('enabled')

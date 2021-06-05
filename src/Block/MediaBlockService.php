@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Block;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
+use Sonata\BlockBundle\Block\Service\EditableBlockService;
+use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
+use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
@@ -26,7 +28,6 @@ use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,7 +39,7 @@ use Twig\Environment;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaBlockService extends AbstractBlockService
+class MediaBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
      * @var BaseMediaAdmin
@@ -55,35 +56,23 @@ class MediaBlockService extends AbstractBlockService
      */
     private $container;
 
-    /**
-     * NEXT_MAJOR: Remove `$templating` argument.
-     *
-     * @param Environment|string $twigOrName
-     */
     public function __construct(
-        $twigOrName,
-        ?EngineInterface $templating,
+        Environment $twig,
         ContainerInterface $container,
         ManagerInterface $mediaManager
     ) {
-        parent::__construct($twigOrName, $templating);
+        parent::__construct($twig);
 
         $this->mediaManager = $mediaManager;
         $this->container = $container;
     }
 
-    /**
-     * @return Pool
-     */
-    public function getMediaPool()
+    public function getMediaPool(): Pool
     {
         return $this->getMediaAdmin()->getPool();
     }
 
-    /**
-     * @return BaseMediaAdmin
-     */
-    public function getMediaAdmin()
+    public function getMediaAdmin(): BaseMediaAdmin
     {
         if (!$this->mediaAdmin) {
             $this->mediaAdmin = $this->container->get('sonata.media.admin.media');
@@ -107,13 +96,7 @@ class MediaBlockService extends AbstractBlockService
         ]);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block): void
+    public function configureEditForm(FormMapper $form, BlockInterface $block): void
     {
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
             $this->load($block);
@@ -121,7 +104,7 @@ class MediaBlockService extends AbstractBlockService
 
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', ImmutableArrayType::class, [
+        $form->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
                     'label' => 'form.label_title',
@@ -139,7 +122,7 @@ class MediaBlockService extends AbstractBlockService
                     'label' => 'form.label_class',
                     'required' => false,
                 ]],
-                [$this->getMediaBuilder($formMapper), null, []],
+                [$this->getMediaBuilder($form), null, []],
                 ['format', ChoiceType::class, [
                     'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
@@ -150,7 +133,7 @@ class MediaBlockService extends AbstractBlockService
         ]);
     }
 
-    public function execute(BlockContextInterface $blockContext, ?Response $response = null)
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         // make sure we have a valid format
         $media = $blockContext->getBlock()->getSetting('mediaId');
@@ -190,80 +173,23 @@ class MediaBlockService extends AbstractBlockService
         $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function getBlockMetadata($code = null)
+    public function getMetadata(): MetadataInterface
     {
-        return new Metadata($this->getName(), (null !== $code ? $code : $this->getName()), false, 'SonataMediaBundle', [
+        return new Metadata('sonata.media.block.media', null, null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
         ]);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    public function configureCreateForm(FormMapper $form, BlockInterface $block): void
     {
-        $this->buildEditForm($formMapper, $block);
+        $this->configureEditForm($form, $block);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function postPersist(BlockInterface $block)
+    public function validate(ErrorElement $errorElement, BlockInterface $block): void
     {
     }
 
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function postUpdate(BlockInterface $block)
-    {
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function preRemove(BlockInterface $block)
-    {
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0.
-     */
-    public function postRemove(BlockInterface $block)
-    {
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
-     *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
-     */
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-    {
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFormatChoices(?MediaInterface $media = null)
+    protected function getFormatChoices(?MediaInterface $media = null): array
     {
         $formatChoices = [];
 
@@ -280,24 +206,21 @@ class MediaBlockService extends AbstractBlockService
         return $formatChoices;
     }
 
-    /**
-     * @return FormBuilder
-     */
-    protected function getMediaBuilder(FormMapper $formMapper)
+    protected function getMediaBuilder(FormMapper $form): FormBuilder
     {
         // simulate an association ...
         $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', [
             'translation_domain' => 'SonataMediaBundle',
         ]);
         $fieldDescription->setAssociationAdmin($this->getMediaAdmin());
-        $fieldDescription->setAdmin($formMapper->getAdmin());
+        $fieldDescription->setAdmin($form->getAdmin());
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping([
             'fieldName' => 'media',
             'type' => ClassMetadataInfo::MANY_TO_ONE,
         ]);
 
-        return $formMapper->create('mediaId', ModelListType::class, [
+        return $form->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),
