@@ -25,7 +25,7 @@ final class MigrateToJsonTypeCommand extends Command
     protected static $defaultDescription = 'Migrate all media provider metadata to the doctrine JsonType';
 
     /**
-     * @var EntityManagerInterface
+     * @var EntityManagerInterface|null
      */
     private $entityManager;
 

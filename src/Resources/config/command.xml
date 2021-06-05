@@ -4,13 +4,11 @@
         <service id="Sonata\MediaBundle\Command\AddMassMediaCommand" class="Sonata\MediaBundle\Command\AddMassMediaCommand" public="true">
             <tag name="console.command"/>
             <argument type="service" id="sonata.media.manager.media"/>
-            <argument type="service" id="sonata.media.pool"/>
             <argument type="service" id="doctrine" on-invalid="null"/>
         </service>
         <service id="Sonata\MediaBundle\Command\AddMediaCommand" class="Sonata\MediaBundle\Command\AddMediaCommand" public="true">
             <tag name="console.command"/>
             <argument type="service" id="sonata.media.manager.media"/>
-            <argument type="service" id="sonata.media.pool"/>
         </service>
         <service id="Sonata\MediaBundle\Command\CleanMediaCommand" class="Sonata\MediaBundle\Command\CleanMediaCommand" public="true">
             <argument type="service" id="sonata.media.adapter.filesystem.local"/>
@@ -26,29 +24,27 @@
         </service>
         <service id="Sonata\MediaBundle\Command\MigrateToJsonTypeCommand" class="Sonata\MediaBundle\Command\MigrateToJsonTypeCommand" public="true">
             <tag name="console.command"/>
-            <argument type="service" id="sonata.media.manager.media"/>
-            <argument type="service" id="sonata.media.pool"/>
             <argument type="service" id="doctrine.orm.entity_manager" on-invalid="null"/>
         </service>
         <service id="Sonata\MediaBundle\Command\RefreshMetadataCommand" class="Sonata\MediaBundle\Command\RefreshMetadataCommand" public="true">
             <tag name="console.command"/>
-            <argument type="service" id="sonata.media.manager.media"/>
             <argument type="service" id="sonata.media.pool"/>
+            <argument type="service" id="sonata.media.manager.media"/>
         </service>
         <service id="Sonata\MediaBundle\Command\RemoveThumbsCommand" class="Sonata\MediaBundle\Command\RemoveThumbsCommand" public="true">
             <tag name="console.command"/>
-            <argument type="service" id="sonata.media.manager.media"/>
             <argument type="service" id="sonata.media.pool"/>
+            <argument type="service" id="sonata.media.manager.media"/>
         </service>
         <service id="Sonata\MediaBundle\Command\SyncThumbsCommand" class="Sonata\MediaBundle\Command\SyncThumbsCommand" public="true">
             <tag name="console.command"/>
-            <argument type="service" id="sonata.media.manager.media"/>
             <argument type="service" id="sonata.media.pool"/>
+            <argument type="service" id="sonata.media.manager.media"/>
         </service>
         <service id="Sonata\MediaBundle\Command\UpdateCdnStatusCommand" class="Sonata\MediaBundle\Command\UpdateCdnStatusCommand" public="true">
             <tag name="console.command"/>
-            <argument type="service" id="sonata.media.manager.media"/>
             <argument type="service" id="sonata.media.pool"/>
+            <argument type="service" id="sonata.media.manager.media"/>
         </service>
     </services>
 </container>
