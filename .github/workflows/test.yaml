@@ -46,11 +46,11 @@ jobs:
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
-                      variant: 'imagine/imagine:"1.*"'
+                      variant: 'sonata-project/admin-bundle:"dev-master"'
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
-                      variant: 'sonata-project/admin-bundle:"dev-master"'
+                      variant: 'imagine/imagine:"1.*"'
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
