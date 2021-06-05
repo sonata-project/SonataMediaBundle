@@ -15,10 +15,7 @@ namespace Sonata\MediaBundle\Metadata;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class NoopMetadataBuilder implements MetadataBuilderInterface
+final class NoopMetadataBuilder implements MetadataBuilderInterface
 {
     public function get(MediaInterface $media, $filename)
     {

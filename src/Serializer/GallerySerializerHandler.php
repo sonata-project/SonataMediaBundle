@@ -16,11 +16,9 @@ namespace Sonata\MediaBundle\Serializer;
 use Sonata\Form\Serializer\BaseSerializerHandler;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  */
-class GallerySerializerHandler extends BaseSerializerHandler
+final class GallerySerializerHandler extends BaseSerializerHandler
 {
     public static function getType()
     {

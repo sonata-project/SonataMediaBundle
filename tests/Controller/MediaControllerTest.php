@@ -78,8 +78,8 @@ class MediaControllerTest extends TestCase
     public function testDownloadActionBinaryFile(): void
     {
         $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $pool = $this->createMock(Pool::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $request = $this->createStub(Request::class);
         $response = $this->createMock(BinaryFileResponse::class);
 
@@ -125,7 +125,7 @@ class MediaControllerTest extends TestCase
     public function testViewActionRendersView(): void
     {
         $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
+        $pool = $this->createMock(Pool::class);
         $request = $this->createStub(Request::class);
 
         $this->configureGetMedia(1, $media);
@@ -152,15 +152,15 @@ class MediaControllerTest extends TestCase
         Request $request,
         bool $isGranted
     ): void {
-        $strategy = $this->createStub(DownloadStrategyInterface::class);
+        $strategy = $this->createMock(DownloadStrategyInterface::class);
 
-        $pool->method('getDownloadSecurity')->with($media)->willReturn($strategy);
+        $pool->method('getDownloadStrategy')->with($media)->willReturn($strategy);
         $strategy->method('isGranted')->with($media, $request)->willReturn($isGranted);
     }
 
     private function configureGetMedia(int $id, ?Media $media): void
     {
-        $mediaManager = $this->createStub(BaseEntityManager::class);
+        $mediaManager = $this->createMock(BaseEntityManager::class);
 
         $this->container->set('sonata.media.manager.media', $mediaManager);
         $mediaManager->method('find')->with($id)->willReturn($media);
@@ -188,7 +188,7 @@ class MediaControllerTest extends TestCase
         array $data,
         string $rendered
     ): void {
-        $twig = $this->createStub(Environment::class);
+        $twig = $this->createMock(Environment::class);
         $response = $this->createStub(Response::class);
 
         $this->container->set('twig', $twig);

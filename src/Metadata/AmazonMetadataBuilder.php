@@ -17,10 +17,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Mime\MimeTypesInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class AmazonMetadataBuilder implements MetadataBuilderInterface
+final class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
     public const PRIVATE_ACCESS = 'private';
     public const PUBLIC_READ = 'public-read';
@@ -36,12 +33,12 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
     /**
      * @var array
      */
-    protected $settings;
+    private $settings;
 
     /**
      * @var string[]
      */
-    protected $acl = [
+    private $acl = [
         'private' => self::PRIVATE_ACCESS,
         'public' => self::PUBLIC_READ,
         'open' => self::PUBLIC_READ_WRITE,
@@ -74,7 +71,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      *
      * @return array
      */
-    protected function getDefaultMetadata()
+    private function getDefaultMetadata()
     {
         //merge acl
         $output = [];
@@ -119,7 +116,7 @@ class AmazonMetadataBuilder implements MetadataBuilderInterface
      * @return array
      * @phpstan-return array{contentType: string}
      */
-    protected function getContentType($filename)
+    private function getContentType($filename)
     {
         $ext = pathinfo($filename, \PATHINFO_EXTENSION);
         $mimeTypes = $this->mimeTypes->getMimeTypes($ext);

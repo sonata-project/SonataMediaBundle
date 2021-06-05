@@ -23,15 +23,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
-    /**
-     * NEXT_MAJOR: make constant protected/private.
-     */
-    public const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'];
+    private const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'no_driver'];
 
     public function getConfigTreeBuilder()
     {

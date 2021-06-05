@@ -17,10 +17,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class FormatThumbnail implements ThumbnailInterface
+final class FormatThumbnail implements ThumbnailInterface
 {
     /**
      * @var string
@@ -144,7 +141,7 @@ class FormatThumbnail implements ThumbnailInterface
     /**
      * @return string the file extension for the $media, or the $defaultExtension if not available
      */
-    protected function getExtension(MediaInterface $media)
+    private function getExtension(MediaInterface $media)
     {
         $ext = $media->getExtension();
         if (!\is_string($ext) || \strlen($ext) < 3) {

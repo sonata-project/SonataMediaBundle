@@ -27,7 +27,7 @@ use Twig\Template;
 class MediaExtensionTest extends TestCase
 {
     /**
-     * @var Sonata\MediaBundle\Provider\MediaProviderInterface
+     * @var MediaProviderInterface
      */
     private $provider;
 
@@ -48,8 +48,7 @@ class MediaExtensionTest extends TestCase
 
     public function testThumbnailHasAllNecessaryAttributes(): void
     {
-        $mediaExtension = new MediaExtension($this->getMediaService(), $this->getMediaManager());
-        $mediaExtension->initRuntime($this->getEnvironment());
+        $mediaExtension = new MediaExtension($this->getMediaService(), $this->getMediaManager(), $this->getEnvironment());
 
         $media = $this->getMedia();
         $format = 'png';

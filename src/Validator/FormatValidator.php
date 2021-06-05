@@ -19,10 +19,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class FormatValidator extends ConstraintValidator
+final class FormatValidator extends ConstraintValidator
 {
     /**
      * @var Pool

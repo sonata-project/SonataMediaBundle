@@ -13,15 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\CDN;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class Server implements CDNInterface
+final class Server implements CDNInterface
 {
     /**
      * @var string
      */
-    protected $path;
+    private $path;
 
     /**
      * @param string $path

@@ -23,11 +23,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Hugo Briand <briand@ekino.com>
  */
-class ApiMediaType extends AbstractType implements LoggerAwareInterface
+final class ApiMediaType extends AbstractType implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -80,15 +78,5 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
     public function getBlockPrefix()
     {
         return 'sonata_media_api_form_media';
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.22, to be removed in version 4.0.
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }

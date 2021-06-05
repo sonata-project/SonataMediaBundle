@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\Console\Helper\QuestionHelper;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,37 +27,54 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  * This command can be used to update CDN status for media that are currently
  * in status flushing.
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class UpdateCdnStatusCommand extends BaseCommand
+final class UpdateCdnStatusCommand extends Command
 {
+    protected static $defaultName = 'sonata:media:update-cdn-status';
+    protected static $defaultDescription = 'Updates model media with the current CDN status';
+
+    /**
+     * @var Pool
+     */
+    private $mediaPool;
+
+    /**
+     * @var ManagerInterface
+     */
+    private $mediaManager;
+
     /**
      * @var bool
      */
-    protected $quiet = false;
+    private $quiet = false;
 
     /**
      * @var OutputInterface
      */
-    protected $output;
-
-    protected static $defaultName = 'sonata:media:update-cdn-status';
+    private $output;
 
     /**
      * @var InputInterface
      */
     private $input;
 
+    public function __construct(Pool $mediaPool, ManagerInterface $mediaManager)
+    {
+        parent::__construct();
+
+        $this->mediaPool = $mediaPool;
+        $this->mediaManger = $mediaManager;
+    }
+
     public function configure(): void
     {
         $this
+            ->setDescription(static::$defaultDescription)
             ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
             ])
-            ->setDescription('Updates model media with the current CDN status')
             ->setHelp(
                 <<<'EOF'
 The <info>%command.name%</info> command helps maintaining your model media in sync
@@ -86,7 +105,7 @@ EOF
         $provider = $this->getProvider();
         $context = $this->getContext();
 
-        $medias = $this->getMediaManager()->findBy([
+        $medias = $this->mediaManager->findBy([
             'providerName' => $provider->getName(),
             'context' => $context,
             'cdnIsFlushable' => true,
@@ -138,7 +157,7 @@ EOF
             }
 
             try {
-                $this->getMediaManager()->save($media);
+                $this->mediaManager->save($media);
             } catch (\Throwable $e) {
                 $this->log(sprintf(
                     '<error>Unable to update medium: %s - %s </error>',
@@ -177,14 +196,14 @@ EOF
         $providerName = $this->input->getArgument('providerName');
 
         if (null === $providerName) {
-            $providerName = $this->getQuestionHelper()->ask(
+            $providerName = $this->getHelper('question')->ask(
                 $this->input,
                 $this->output,
-                new ChoiceQuestion('Please select the provider', array_keys($this->getMediaPool()->getProviders()))
+                new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
             );
         }
 
-        return $this->getMediaPool()->getProvider($providerName);
+        return $this->mediaPool->getProvider($providerName);
     }
 
     private function getContext(): string
@@ -192,18 +211,13 @@ EOF
         $context = $this->input->getArgument('context');
 
         if (null === $context) {
-            $context = $this->getQuestionHelper()->ask(
+            $context = $this->getHelper('question')->ask(
                 $this->input,
                 $this->output,
-                new ChoiceQuestion('Please select the context', array_keys($this->getMediaPool()->getContexts()))
+                new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
             );
         }
 
         return $context;
-    }
-
-    private function getQuestionHelper(): QuestionHelper
-    {
-        return $this->getHelper('question');
     }
 }

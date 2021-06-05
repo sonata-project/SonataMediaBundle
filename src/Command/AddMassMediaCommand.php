@@ -15,37 +15,43 @@ namespace Sonata\MediaBundle\Command;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Sonata\Doctrine\Model\ManagerInterface;
-use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class AddMassMediaCommand extends BaseCommand
+final class AddMassMediaCommand extends Command
 {
+    protected static $defaultName = 'sonata:media:add-multiple';
+    protected static $defaultDescription = 'Add medias in mass into the database';
+
+    /**
+     * @var ManagerInterface
+     */
+    private $mediaManager;
+
     /**
      * @var ManagerRegistry|null
      */
-    protected $managerRegistry;
+    private $managerRegistry;
 
     /**
      * @var string[]
      */
-    protected $setters;
+    private $setters;
 
-    public function __construct(ManagerInterface $mediaManager, Pool $pool, ?ManagerRegistry $managerRegistry = null)
+    public function __construct(ManagerInterface $mediaManager, ?ManagerRegistry $managerRegistry = null)
     {
-        parent::__construct($mediaManager, $pool);
+        parent::__construct();
 
+        $this->mediaManger = $mediaManager;
         $this->managerRegistry = $managerRegistry;
     }
 
     public function configure(): void
     {
-        $this->setName('sonata:media:add-multiple')
-            ->setDescription('Add medias in mass into the database')
+        $this
+            ->setDescription(static::$defaultDescription)
             ->setDefinition([
                 new InputOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse'),
                 new InputOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ','),
@@ -103,14 +109,14 @@ class AddMassMediaCommand extends BaseCommand
 
     protected function insertMedia(array $data, OutputInterface $output): void
     {
-        $media = $this->getMediaManager()->create();
+        $media = $this->mediaManager->create();
 
         foreach ($this->setters as $pos => $name) {
             $media->{'set'.$name}($data[$pos]);
         }
 
         try {
-            $this->getMediaManager()->save($media);
+            $this->mediaManager->save($media);
             $output->writeln(sprintf(' > %s - %s', $media->getId(), $media->getName()));
         } catch (\Exception $e) {
             $output->writeln(sprintf('<error>%s</error> : %s', $e->getMessage(), json_encode($data)));

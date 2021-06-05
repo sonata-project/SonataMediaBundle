@@ -30,40 +30,37 @@ namespace Sonata\MediaBundle\CDN;
  *    Please note that an error with response "Over the limit of flush requests per hour" means that the flush is rate limited.
  *    Any requests until the rate limit is no longer exceeded will receive this response.
  */
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class PantherPortal implements CDNInterface
+final class PantherPortal implements CDNInterface
 {
     /**
      * @var string
      */
-    protected $path;
+    private $path;
 
     /**
      * @var string
      */
-    protected $username;
+    private $username;
 
     /**
      * @var string
      */
-    protected $password;
+    private $password;
 
     /**
      * @var string
      */
-    protected $siteId;
+    private $siteId;
 
     /**
      * @var \SoapClient
      */
-    protected $client;
+    private $client;
 
     /**
      * @var string
      */
-    protected $wsdl;
+    private $wsdl;
 
     /**
      * @param string $path

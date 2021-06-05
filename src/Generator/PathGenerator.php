@@ -15,10 +15,7 @@ namespace Sonata\MediaBundle\Generator;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class PathGenerator implements GeneratorInterface
+final class PathGenerator implements GeneratorInterface
 {
     public function generatePath(MediaInterface $media)
     {

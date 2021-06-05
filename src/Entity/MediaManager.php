@@ -19,35 +19,8 @@ use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class MediaManager extends BaseEntityManager implements MediaManagerInterface
+final class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
-    public function save($media, $andFlush = true): void
-    {
-        /*
-         * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
-         */
-
-        // BC compatibility for $context parameter
-        if ($andFlush && \is_string($andFlush)) {
-            $media->setContext($andFlush);
-        }
-
-        // BC compatibility for $providerName parameter
-        if (3 === \func_num_args()) {
-            $media->setProviderName(func_get_arg(2));
-        }
-
-        if (\is_bool($andFlush)) {
-            parent::save($media, $andFlush);
-        } else {
-            // BC compatibility with previous signature
-            parent::save($media, true);
-        }
-    }
-
     public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
     {
         $query = $this->getRepository()

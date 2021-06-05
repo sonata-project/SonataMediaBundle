@@ -17,10 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
-/**
- * NEXT_MAJOR: remove GalleryMediaCollectionInterface interface. Move its content into GalleryInterface.
- */
-abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterface
+abstract class Gallery implements GalleryInterface
 {
     /**
      * @var string

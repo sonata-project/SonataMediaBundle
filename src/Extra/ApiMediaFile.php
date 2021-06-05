@@ -15,10 +15,7 @@ namespace Sonata\MediaBundle\Extra;
 
 use Symfony\Component\HttpFoundation\File\File;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class ApiMediaFile extends File
+final class ApiMediaFile extends File
 {
     /**
      * @var string

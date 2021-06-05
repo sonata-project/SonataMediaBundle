@@ -18,12 +18,10 @@ use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail;
-use Symfony\Component\Routing\RouterInterface;
 
 class LiipImagineThumbnailTest extends TestCase
 {
@@ -77,34 +75,5 @@ class LiipImagineThumbnailTest extends TestCase
             $media,
             'mycontext_medium'
         ));
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Using an instance of Symfony\Component\Routing\RouterInterface is deprecated since version 3.3 and will be removed in 4.0. Use Liip\ImagineBundle\Imagine\Cache\CacheManager.
-     */
-    public function testLegacyGenerate(): void
-    {
-        $router = $this->createStub(RouterInterface::class);
-        $router->method('generate')->with(
-            '_imagine_medium',
-            ['path' => '/some/path/42_medium.jpg']
-        )->willReturn('/imagine/medium/some/path/42_medium.jpg');
-        $thumbnail = new LiipImagineThumbnail($router);
-        $provider = $this->createStub(MediaProviderInterface::class);
-        $media = $this->createStub(MediaInterface::class);
-        $media->method('getId')->willReturn(42);
-        $media->method('getCdnIsFlushable')->willReturn(true);
-        $format = 'medium';
-        $provider->method('getReferenceImage')->with($media)->willReturn('/some/image.jpg');
-        $provider->method('generatePath')->with($media)->willReturn('/some/path');
-        $provider->method('getCdnPath')->with(
-            '/imagine/medium/some/path/42_medium.jpg',
-            true
-        )->willReturn('some/cdn/path');
-        $this->assertSame(
-            'some/cdn/path',
-            $thumbnail->generatePublicUrl($provider, $media, $format)
-        );
     }
 }

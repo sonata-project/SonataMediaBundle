@@ -26,11 +26,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
  * smaller size. For example, if width is 100 and height 80; the generated image
  * will be 80x80.
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Edwin Ibarra <edwines@feniaz.com>
  */
-class SquareResizer implements ResizerInterface
+final class SquareResizer implements ResizerInterface
 {
     use ImagineCompatibleResizerTrait;
 

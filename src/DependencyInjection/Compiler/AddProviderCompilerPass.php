@@ -21,11 +21,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class AddProviderCompilerPass implements CompilerPassInterface
+final class AddProviderCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
@@ -44,21 +42,6 @@ class AddProviderCompilerPass implements CompilerPassInterface
                 [MediaProviderInterface::FORMAT_ADMIN, $format]
             );
         }
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @return array
-     */
-    public function fixSettings(ContainerBuilder $container)
-    {
-        @trigger_error(
-            'The '.__METHOD__.' method is deprecated since 3.5, to be removed in 4.0.',
-            \E_USER_DEPRECATED
-        );
-
-        return $this->getExtensionConfig($container);
     }
 
     public function attachProviders(ContainerBuilder $container): void

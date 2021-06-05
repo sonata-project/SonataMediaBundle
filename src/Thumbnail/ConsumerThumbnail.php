@@ -18,50 +18,30 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\NotificationBundle\Backend\BackendInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class ConsumerThumbnail implements ThumbnailInterface
+final class ConsumerThumbnail implements ThumbnailInterface
 {
     /**
      * @var string
      */
-    protected $id;
+    private $id;
 
     /**
      * @var ThumbnailInterface
      */
-    protected $thumbnail;
+    private $thumbnail;
 
     /**
      * @var BackendInterface
      */
-    protected $backend;
+    private $backend;
 
     /**
      * @var EventDispatcherInterface
      */
-    protected $dispatcher;
+    private $dispatcher;
 
-    /**
-     * NEXT_MAJOR: remove optional null for EventDispatcherInterface.
-     *
-     * @param string                   $id
-     * @param EventDispatcherInterface $dispatcher
-     */
-    public function __construct($id, ThumbnailInterface $thumbnail, BackendInterface $backend, ?EventDispatcherInterface $dispatcher = null)
+    public function __construct(string $id, ThumbnailInterface $thumbnail, BackendInterface $backend, EventDispatcherInterface $dispatcher)
     {
-        /*
-         * NEXT_MAJOR: remove this check
-         */
-        if (null === $dispatcher) {
-            @trigger_error(
-                'Since version 3.0, passing an empty parameter in argument 4 for __construct() in '.__CLASS__.' is
-                 deprecated and the workaround for it will be removed in 4.0.',
-                \E_USER_DEPRECATED
-            );
-        }
-
         $this->id = $id;
         $this->thumbnail = $thumbnail;
         $this->backend = $backend;
@@ -94,15 +74,8 @@ class ConsumerThumbnail implements ThumbnailInterface
             ]);
         };
 
-        /*
-         * NEXT_MAJOR: remove this check
-         */
-        if (null === $this->dispatcher) {
-            $publish();
-        } else {
-            $this->dispatcher->addListener('kernel.finish_request', $publish);
-            $this->dispatcher->addListener('console.terminate', $publish);
-        }
+        $this->dispatcher->addListener('kernel.finish_request', $publish);
+        $this->dispatcher->addListener('console.terminate', $publish);
     }
 
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)

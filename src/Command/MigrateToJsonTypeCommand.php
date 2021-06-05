@@ -14,36 +14,35 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Sonata\Doctrine\Model\ManagerInterface;
-use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class MigrateToJsonTypeCommand extends BaseCommand
+final class MigrateToJsonTypeCommand extends Command
 {
+    protected static $defaultName = 'sonata:media:migrate-json';
+    protected static $defaultDescription = 'Migrate all media provider metadata to the doctrine JsonType';
+
     /**
      * @var EntityManagerInterface
      */
     private $entityManager;
 
-    public function __construct(ManagerInterface $mediaManager, Pool $pool, ?EntityManagerInterface $entityManager = null)
+    public function __construct(?EntityManagerInterface $entityManager = null)
     {
-        parent::__construct($mediaManager, $pool);
+        parent::__construct();
 
         $this->entityManager = $entityManager;
     }
 
     public function configure(): void
     {
-        $this->setName('sonata:media:migrate-json');
-        $this->addOption('table', null, InputOption::VALUE_OPTIONAL, 'Media table', 'media__media');
-        $this->addOption('column', null, InputOption::VALUE_OPTIONAL, 'Column name for provider_metadata', 'provider_metadata');
-        $this->addOption('column_id', null, InputOption::VALUE_OPTIONAL, 'Column name for id', 'id');
-        $this->setDescription('Migrate all media provider metadata to the doctrine JsonType');
+        $this
+            ->setDescription(static::$defaultDescription)
+            ->addOption('table', null, InputOption::VALUE_OPTIONAL, 'Media table', 'media__media')
+            ->addOption('column', null, InputOption::VALUE_OPTIONAL, 'Column name for provider_metadata', 'provider_metadata')
+            ->addOption('column_id', null, InputOption::VALUE_OPTIONAL, 'Column name for id', 'id');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -59,7 +58,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
         $table = $input->getOption('table');
         $column = $input->getOption('column');
         $columnId = $input->getOption('column_id');
-        $medias = $this->entityManager->getConnection()->fetchAll("SELECT * FROM $table");
+        $medias = $this->entityManager->getConnection()->fetchAllAssociative("SELECT * FROM $table");
 
         foreach ($medias as $media) {
             // if the row need to migrate

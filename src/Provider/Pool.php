@@ -33,15 +33,6 @@ class Pool
     protected $contexts = [];
 
     /**
-     * NEXT_MAJOR: remove this property.
-     *
-     * @deprecated since sonata-project/media-bundle 3.1 and will be removed in 4.0. Use $downloadStrategies instead
-     *
-     * @var DownloadStrategyInterface[]
-     */
-    protected $downloadSecurities = [];
-
-    /**
      * @var DownloadStrategyInterface[]
      */
     protected $downloadStrategies = [];
@@ -87,25 +78,6 @@ class Pool
     public function addProvider($name, MediaProviderInterface $instance): void
     {
         $this->providers[$name] = $instance;
-    }
-
-    /**
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.1, to be removed in 4.0
-     *
-     * @param string $name
-     */
-    public function addDownloadSecurity($name, DownloadStrategyInterface $security): void
-    {
-        @trigger_error(
-            'The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.',
-            \E_USER_DEPRECATED
-        );
-
-        $this->downloadSecurities[$name] = $security;
-
-        $this->addDownloadStrategy($name, $security);
     }
 
     /**
@@ -250,22 +222,6 @@ class Pool
     }
 
     /**
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.1, to be removed in 4.0
-     *
-     * @throws \RuntimeException
-     *
-     * @return DownloadStrategyInterface
-     */
-    public function getDownloadSecurity(MediaInterface $media)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 3.1 and will be removed in 4.0.', \E_USER_DEPRECATED);
-
-        return $this->getDownloadStrategy($media);
-    }
-
-    /**
      * @throws \RuntimeException
      *
      * @return DownloadStrategyInterface
@@ -275,11 +231,6 @@ class Pool
         $context = $this->getContext($media->getContext());
 
         $id = $context['download']['strategy'];
-
-        // NEXT_MAJOR: remove this line with the next major release.
-        if (isset($this->downloadSecurities[$id])) {
-            return $this->downloadSecurities[$id];
-        }
 
         if (!isset($this->downloadStrategies[$id])) {
             throw new \RuntimeException('Unable to retrieve the download security : '.$id);

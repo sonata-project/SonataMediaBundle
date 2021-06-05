@@ -16,38 +16,16 @@ namespace Sonata\MediaBundle\Thumbnail;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\Routing\RouterInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class LiipImagineThumbnail implements ThumbnailInterface
+final class LiipImagineThumbnail implements ThumbnailInterface
 {
-    /**
-     * @deprecated since sonata-project/media-bundle 3.3, will be removed in 4.0.
-     *
-     * @var RouterInterface
-     */
-    protected $router;
-
     /**
      * @var CacheManager
      */
     private $cacheManager;
 
-    /**
-     * @param RouterInterface|CacheManager $cacheManager
-     */
-    public function __construct($cacheManager)
+    public function __construct(CacheManager $cacheManager)
     {
-        if ($cacheManager instanceof RouterInterface) {
-            @trigger_error(sprintf(
-                'Using an instance of %s is deprecated since version 3.3 and will be removed in 4.0. Use %s.',
-                RouterInterface::class,
-                CacheManager::class
-            ), \E_USER_DEPRECATED);
-            $this->router = $cacheManager;
-        }
         $this->cacheManager = $cacheManager;
     }
 
@@ -57,12 +35,6 @@ class LiipImagineThumbnail implements ThumbnailInterface
 
         if (MediaProviderInterface::FORMAT_ADMIN === $format || MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $path;
-        }
-        if ($this->router instanceof RouterInterface && !($this->cacheManager instanceof CacheManager)) {
-            $path = $this->router->generate(
-                sprintf('_imagine_%s', $format),
-                ['path' => sprintf('%s/%s_%s.jpg', $provider->generatePath($media), $media->getId(), $format)]
-            );
         }
 
         $path = $provider->getCdnPath($path, $media->getCdnIsFlushable());

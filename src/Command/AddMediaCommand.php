@@ -13,32 +13,34 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\Doctrine\Model\ManagerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class AddMediaCommand extends BaseCommand
+final class AddMediaCommand extends Command
 {
-    /**
-     * @var bool
-     */
-    protected $quiet = false;
+    protected static $defaultName = 'sonata:media:add';
+    protected static $defaultDescription = 'Add a media into the database';
 
     /**
-     * NEXT_MAJOR: remove this property.
-     *
-     * @deprecated This property is deprecated since sonata-project/media-bundle 2.4 and will be removed in 4.0
+     * @var ManagerInterface
      */
-    protected $output;
+    private $mediaManager;
+
+    public function __construct(ManagerInterface $mediaManager)
+    {
+        parent::__construct();
+
+        $this->mediaManager = $mediaManager;
+    }
 
     public function configure(): void
     {
-        $this->setName('sonata:media:add')
-            ->setDescription('Add a media into the database')
+        $this
+            ->setDescription(static::$defaultDescription)
             ->setDefinition([
                 new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
                 new InputArgument('context', InputArgument::REQUIRED, 'The context'),
@@ -59,7 +61,7 @@ class AddMediaCommand extends BaseCommand
 
         $output->writeln(sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));
 
-        $media = $this->getMediaManager()->create();
+        $media = $this->mediaManager->create();
         $media->setBinaryContent($binaryContent);
 
         if ($input->getOption('description')) {
@@ -80,7 +82,7 @@ class AddMediaCommand extends BaseCommand
             $media->setEnabled(false);
         }
 
-        $this->getMediaManager()->save($media, $context, $provider);
+        $this->mediaManager->save($media, $context, $provider);
 
         $output->writeln('done!');
 
