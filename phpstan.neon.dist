@@ -8,12 +8,4 @@ parameters:
     paths:
         - src
         - tests
-    excludePaths:
-        - src/Controller/Api/*
-        - tests/Controller/Api/GalleryControllerTest.php
-        - src/Listener/ODM/MediaEventSubscriber.php
-        # NEXT_MAJOR: Remove PHPCR lines
-        - src/Listener/PHPCR/*
-        - src/PHPCR/*
-        - tests/PHPCR/*
     treatPhpDocTypesAsCertain: false

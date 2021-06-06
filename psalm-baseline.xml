@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.7.3@38c452ae584467e939d55377aaf83b5a26f19dd1">
-    <!-- NEXT_MAJOR: Remove the PHPCR issues -->
+    <!-- NEXT_MAJOR: Remove this issue -->
     <file src="src/Admin/PHPCR/GalleryAdmin.php">
         <InvalidExtendClass occurrences="1">
             <code>BaseGalleryAdmin</code>
@@ -29,61 +29,10 @@
             <code>public function configureSettings(OptionsResolver $resolver)</code>
         </MethodSignatureMismatch>
     </file>
-    <file src="src/Controller/Api/GalleryController.php">
-        <MissingDependency occurrences="3">
-            <code>Rest\View</code>
-            <code>Rest\View</code>
-            <code>Rest\View|FormInterface</code>
-        </MissingDependency>
-    </file>
-    <file src="src/Controller/Api/MediaController.php">
-        <MissingDependency occurrences="2">
-            <code>Rest\View</code>
-            <code>Rest\View|FormInterface</code>
-        </MissingDependency>
-    </file>
     <!-- NEXT_MAJOR: Remove this issue -->
     <file src="src/DependencyInjection/SonataMediaExtension.php">
         <UndefinedClass occurrences="1">
             <code>DeprecatedDoctrineCollector</code>
-        </UndefinedClass>
-    </file>
-    <file src="src/Listener/ODM/MediaEventSubscriber.php">
-        <UndefinedClass occurrences="6">
-            <code>Events</code>
-            <code>Events</code>
-            <code>Events</code>
-            <code>Events</code>
-            <code>Events</code>
-            <code>Events</code>
-        </UndefinedClass>
-    </file>
-    <file src="src/Listener/PHPCR/MediaEventSubscriber.php">
-        <UndefinedClass occurrences="6">
-            <code>Event</code>
-            <code>Event</code>
-            <code>Event</code>
-            <code>Event</code>
-            <code>Event</code>
-            <code>Event</code>
-        </UndefinedClass>
-    </file>
-    <file src="src/PHPCR/BaseGalleryHasMediaRepository.php">
-        <UndefinedClass occurrences="2">
-            <code>DocumentRepository</code>
-            <code>RepositoryIdInterface</code>
-        </UndefinedClass>
-    </file>
-    <file src="src/PHPCR/BaseGalleryRepository.php">
-        <UndefinedClass occurrences="2">
-            <code>DocumentRepository</code>
-            <code>RepositoryIdInterface</code>
-        </UndefinedClass>
-    </file>
-    <file src="src/PHPCR/BaseMediaRepository.php">
-        <UndefinedClass occurrences="2">
-            <code>DocumentRepository</code>
-            <code>RepositoryIdInterface</code>
         </UndefinedClass>
     </file>
     <!-- NEXT_MAJOR: Remove this issue -->
