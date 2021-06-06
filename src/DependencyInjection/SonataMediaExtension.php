@@ -22,7 +22,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -42,39 +42,39 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('provider.xml');
-        $loader->load('http_client.xml');
-        $loader->load('media.xml');
-        $loader->load('twig.xml');
-        $loader->load('security.xml');
-        $loader->load('extra.xml');
-        $loader->load('form.xml');
-        $loader->load('gaufrette.xml');
-        $loader->load('validators.xml');
-        $loader->load('serializer.xml');
-        $loader->load('command.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('provider.php');
+        $loader->load('http_client.php');
+        $loader->load('media.php');
+        $loader->load('twig.php');
+        $loader->load('security.php');
+        $loader->load('extra.php');
+        $loader->load('form.php');
+        $loader->load('gaufrette.php');
+        $loader->load('validators.php');
+        $loader->load('serializer.php');
+        $loader->load('command.php');
 
         $bundles = $container->getParameter('kernel.bundles');
 
         if (isset($bundles['FOSRestBundle'], $bundles['NelmioApiDocBundle'])) {
-            $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
+            $loader->load(sprintf('api_form_%s.php', $config['db_driver']));
 
             if ('doctrine_orm' === $config['db_driver']) {
-                $loader->load('api_controllers.xml');
+                $loader->load('api_controllers.php');
             }
         }
 
         if (isset($bundles['SonataNotificationBundle'])) {
-            $loader->load('consumer.xml');
+            $loader->load('consumer.php');
         }
 
         if (isset($bundles['SonataBlockBundle'])) {
-            $loader->load('block.xml');
+            $loader->load('block.php');
         }
 
         if (isset($bundles['SonataSeoBundle'])) {
-            $loader->load('seo_block.xml');
+            $loader->load('seo_block.php');
         }
 
         if (!isset($bundles['LiipImagineBundle'])) {
@@ -82,7 +82,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         }
 
         if ($this->isClassificationEnabled($config)) {
-            $loader->load('category.xml');
+            $loader->load('category.php');
             $categoryManagerAlias = 'sonata.media.manager.category';
             $container->setAlias($categoryManagerAlias, $config['category_manager']);
             $categoryManager = $container->getAlias($categoryManagerAlias);
@@ -93,10 +93,10 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid default context : %s, available : %s', $config['default_context'], json_encode(array_keys($config['contexts']))));
         }
 
-        $loader->load(sprintf('%s.xml', $config['db_driver']));
+        $loader->load(sprintf('%s.php', $config['db_driver']));
 
         if (isset($bundles['SonataAdminBundle'])) {
-            $loader->load(sprintf('%s_admin.xml', $config['db_driver']));
+            $loader->load(sprintf('%s_admin.php', $config['db_driver']));
 
             $sonataAdminConfig = $this->bundleConfigs['SonataAdminBundle'];
 
