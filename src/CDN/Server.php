@@ -33,23 +33,23 @@ final class Server implements CDNInterface
         return sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
     }
 
-    public function flushByString($string): void
+    public function flushByString($string): string
     {
-        // nothing to do
+        return '';
     }
 
-    public function flush($string): void
+    public function flush($string): string
     {
-        // nothing to do
+        return '';
     }
 
-    public function flushPaths(array $paths): void
+    public function flushPaths(array $paths): string
     {
-        // nothing to do
+        return '';
     }
 
-    public function getFlushStatus($identifier): void
+    public function getFlushStatus($identifier): int
     {
-        // nothing to do
+        return CDNInterface::STATUS_OK;
     }
 }

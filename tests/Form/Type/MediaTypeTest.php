@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Forms;
@@ -26,6 +27,9 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
  */
 class MediaTypeTest extends AbstractTypeTest
 {
+    /**
+     * @var MockObject&Pool
+     */
     protected $mediaPool;
 
     /**

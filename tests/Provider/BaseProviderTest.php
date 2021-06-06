@@ -16,19 +16,16 @@ namespace Sonata\MediaBundle\Tests\Provider;
 use Gaufrette\Adapter;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\IdGenerator;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Tests\App\Provider\TestProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 
 class BaseProviderTest extends AbstractProviderTest
 {
-    public function getProvider(): MediaProviderInterface
+    public function getProvider(): TestProvider
     {
         $adapter = $this->createMock(Adapter::class);
 
@@ -165,100 +162,5 @@ class BaseProviderTest extends AbstractProviderTest
         $this->assertSame('/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
 
         $prop->setAccessible(false);
-    }
-}
-
-class TestProvider extends BaseProvider
-{
-    /**
-     * @var string
-     */
-    public $prevReferenceImage;
-
-    public function getHelperProperties(MediaInterface $media, $format, $options = []): void
-    {
-        // TODO: Implement getHelperProperties() method.
-    }
-
-    public function postPersist(MediaInterface $media): void
-    {
-        // TODO: Implement postPersist() method.
-    }
-
-    public function buildEditForm(FormMapper $form): void
-    {
-        $form->add('foo');
-    }
-
-    public function buildCreateForm(FormMapper $form): void
-    {
-        $form->add('foo');
-    }
-
-    public function postUpdate(MediaInterface $media): void
-    {
-        // TODO: Implement postUpdate() method.
-    }
-
-    public function getAbsolutePath(MediaInterface $media): void
-    {
-        // TODO: Implement getAbsolutePath() method.
-    }
-
-    public function getReferenceImage(MediaInterface $media): string
-    {
-        // A copy of the code from \Sonata\MediaBundle\Provider\FileProvider::getReferenceImage()
-        $this->prevReferenceImage = sprintf(
-            '%s/%s',
-            $this->generatePath($media),
-            $media->getProviderReference()
-        );
-
-        return $this->prevReferenceImage;
-    }
-
-    public function generatePrivateUrl(MediaInterface $media, $format): void
-    {
-        // TODO: Implement generatePrivateUrl() method.
-    }
-
-    public function generatePublicUrl(MediaInterface $media, $format): void
-    {
-        // TODO: Implement generatePublicUrl() method.
-    }
-
-    public function getReferenceFile(MediaInterface $media): void
-    {
-        // TODO: Implement getReferenceFile() method.
-    }
-
-    public function preUpdate(MediaInterface $media): void
-    {
-        // TODO: Implement preUpdate() method.
-    }
-
-    public function prePersist(MediaInterface $media): void
-    {
-        // TODO: Implement prePersist() method.
-    }
-
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = []): void
-    {
-        // TODO: Implement getDownloadResponse() method.
-    }
-
-    public function buildMediaType(FormBuilderInterface $formBuilder): void
-    {
-        $formBuilder->add('foo');
-    }
-
-    public function updateMetadata(MediaInterface $media, $force = false): void
-    {
-        // TODO: Implement updateMetadata() method.
-    }
-
-    protected function doTransform(MediaInterface $media): void
-    {
-        // TODO: Implement doTransform() method.
     }
 }

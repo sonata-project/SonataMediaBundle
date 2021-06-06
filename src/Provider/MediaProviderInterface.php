@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Provider;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
+use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -190,6 +191,8 @@ interface MediaProviderInterface
      * @return Filesystem
      */
     public function getFilesystem();
+
+    public function getCdn(): CDNInterface;
 
     /**
      * @param string $relativePath

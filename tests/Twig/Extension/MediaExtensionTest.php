@@ -11,6 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\Media;
@@ -27,22 +28,22 @@ use Twig\Template;
 class MediaExtensionTest extends TestCase
 {
     /**
-     * @var MediaProviderInterface
+     * @var MockObject&MediaProviderInterface
      */
     private $provider;
 
     /**
-     * @var Template
+     * @var MockObject&Template
      */
     private $template;
 
     /**
-     * @var Environment
+     * @var MockObject&Environment
      */
     private $environment;
 
     /**
-     * @var Sonata\MediaBundle\Model\Media
+     * @var MockObject&Media
      */
     private $media;
 
@@ -80,7 +81,10 @@ class MediaExtensionTest extends TestCase
         $mediaExtension->thumbnail($media, $format, $options);
     }
 
-    public function getMediaService(): Pool
+    /**
+     * @return MockObject&Pool
+     */
+    public function getMediaService(): object
     {
         $mediaService = $this->createMock(Pool::class);
         $mediaService->method('getProvider')->willReturn($this->getProvider());
@@ -88,12 +92,18 @@ class MediaExtensionTest extends TestCase
         return $mediaService;
     }
 
-    public function getMediaManager(): ManagerInterface
+    /**
+     * @return MockObject&ManagerInterface
+     */
+    public function getMediaManager(): object
     {
         return $this->createMock(ManagerInterface::class);
     }
 
-    public function getProvider(): MediaProviderInterface
+    /**
+     * @return MockObject&MediaProviderInterface
+     */
+    public function getProvider(): object
     {
         if (null === $this->provider) {
             $this->provider = $this->createMock(MediaProviderInterface::class);
@@ -104,7 +114,10 @@ class MediaExtensionTest extends TestCase
         return $this->provider;
     }
 
-    public function getTemplate(): Template
+    /**
+     * @return MockObject&Template
+     */
+    public function getTemplate(): object
     {
         if (null === $this->template) {
             $this->template = $this->createMock(Template::class);
@@ -113,7 +126,10 @@ class MediaExtensionTest extends TestCase
         return $this->template;
     }
 
-    public function getEnvironment(): Environment
+    /**
+     * @return MockObject&Environment
+     */
+    public function getEnvironment(): object
     {
         if (null === $this->environment) {
             $this->environment = $this->createMock(Environment::class);

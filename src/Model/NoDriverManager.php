@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Doctrine\DBAL\Connection;
 use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Exception\NoDriverException;
 
@@ -23,12 +24,12 @@ use Sonata\MediaBundle\Exception\NoDriverException;
  */
 final class NoDriverManager implements GalleryManagerInterface, MediaManagerInterface
 {
-    public function getClass(): void
+    public function getClass(): string
     {
         throw new NoDriverException();
     }
 
-    public function findAll(): void
+    public function findAll(): array
     {
         throw new NoDriverException();
     }
@@ -37,12 +38,12 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): void
+    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
         throw new NoDriverException();
     }
 
-    public function findOneBy(array $criteria, ?array $orderBy = null): void
+    public function findOneBy(array $criteria, ?array $orderBy = null): object
     {
         throw new NoDriverException();
     }
@@ -50,12 +51,12 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
     /**
      * @param mixed $id
      */
-    public function find($id): void
+    public function find($id): ?object
     {
         throw new NoDriverException();
     }
 
-    public function create(): void
+    public function create(): object
     {
         throw new NoDriverException();
     }
@@ -78,12 +79,12 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
         throw new NoDriverException();
     }
 
-    public function getTableName(): void
+    public function getTableName(): string
     {
         throw new NoDriverException();
     }
 
-    public function getConnection(): void
+    public function getConnection(): Connection
     {
         throw new NoDriverException();
     }

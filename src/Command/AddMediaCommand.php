@@ -63,6 +63,8 @@ final class AddMediaCommand extends Command
 
         $media = $this->mediaManager->create();
         $media->setBinaryContent($binaryContent);
+        $media->setContext($context);
+        $media->setProviderName($provider);
 
         if ($input->getOption('description')) {
             $media->setDescription($input->getOption('description'));
@@ -82,7 +84,7 @@ final class AddMediaCommand extends Command
             $media->setEnabled(false);
         }
 
-        $this->mediaManager->save($media, $context, $provider);
+        $this->mediaManager->save($media);
 
         $output->writeln('done!');
 

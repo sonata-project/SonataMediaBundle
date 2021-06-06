@@ -322,7 +322,7 @@ interface MediaInterface
     public function setContentType($contentType);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getExtension();
 

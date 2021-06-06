@@ -214,7 +214,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             return $this->getReferenceImage($media);
         }
 
-        return false;
+        return '';
     }
 
     public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])

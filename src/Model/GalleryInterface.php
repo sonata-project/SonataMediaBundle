@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 interface GalleryInterface
 {
     /**
@@ -40,7 +42,7 @@ interface GalleryInterface
     /**
      * @param string $context
      *
-     * @return string
+     * @return void
      */
     public function setContext($context);
 
@@ -100,12 +102,14 @@ interface GalleryInterface
     public function getDefaultFormat();
 
     /**
-     * @param array $galleryItems
+     * @param Collection $galleryItems
+     * @phpstan-param Collection<GalleryItemInterface> $galleryItems
      */
     public function setGalleryItems($galleryItems);
 
     /**
-     * @return GalleryItemInterface[]
+     * @return Collection
+     * @phpstan-return Collection<GalleryItemInterface>
      */
     public function getGalleryItems();
 

@@ -31,7 +31,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
@@ -206,7 +206,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
         return $formatChoices;
     }
 
-    protected function getMediaBuilder(FormMapper $form): FormBuilder
+    protected function getMediaBuilder(FormMapper $form): FormBuilderInterface
     {
         // simulate an association ...
         $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', [

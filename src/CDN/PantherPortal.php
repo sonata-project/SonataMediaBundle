@@ -83,38 +83,35 @@ final class PantherPortal implements CDNInterface
         return sprintf('%s/%s', $this->path, $relativePath);
     }
 
-    public function flushByString($string): void
+    public function flushByString($string): string
     {
-        $this->flushPaths([$string]);
+        return $this->flushPaths([$string]);
     }
 
-    public function flush($string): void
+    public function flush($string): string
     {
-        $this->flushPaths([$string]);
+        return $this->flushPaths([$string]);
     }
 
-    public function flushPaths(array $paths): void
+    public function flushPaths(array $paths): string
     {
         $result = $this->getClient()->flush($this->username, $this->password, 'paths', $this->siteId, implode("\n", $paths), true, false);
 
         if ('Flush successfully submitted.' !== $result) {
             throw new \RuntimeException('Unable to flush : '.$result);
         }
+
+        return $result;
     }
 
-    /**
-     * For testing only.
-     *
-     * @param $client
-     */
     public function setClient($client): void
     {
         $this->client = $client;
     }
 
-    public function getFlushStatus($identifier): void
+    public function getFlushStatus($identifier): int
     {
-        // nothing to do
+        return CDNInterface::STATUS_OK;
     }
 
     private function getClient(): \SoapClient

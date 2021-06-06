@@ -251,7 +251,7 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->filesystem;
     }
 
-    public function getCdn()
+    public function getCdn(): CDNInterface
     {
         return $this->cdn;
     }
