@@ -42,6 +42,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             '',
             '',
+            // NEXT_MAJOR: make symfony/monolog-bundle a require dependency and remove nullOnInvalid
             (new ReferenceConfigurator('logger'))->nullOnInvalid(),
         ]);
 
