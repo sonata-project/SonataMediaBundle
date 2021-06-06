@@ -36,6 +36,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             new ReferenceConfigurator('form.factory'),
         ]);
 
-    $services->alias(GalleryController::class, 'sonata.media.controller.api.gallery');
-    $services->alias(MediaController::class, 'sonata.media.controller.api.media');
+    $services->alias(GalleryController::class, 'sonata.media.controller.api.gallery')->public();
+    $services->alias(MediaController::class, 'sonata.media.controller.api.media')->public();
 };
