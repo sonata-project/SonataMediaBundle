@@ -18,10 +18,7 @@ use Twig\Node\Expression\ArrayExpression;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class MediaTokenParser extends AbstractTokenParser
+final class MediaTokenParser extends AbstractTokenParser
 {
     /**
      * @var string

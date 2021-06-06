@@ -13,54 +13,33 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Filesystem;
 
-use Gaufrette\Adapter as AdapterInterface;
+use Gaufrette\Adapter;
 use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Filesystem;
 use Psr\Log\LoggerInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class Replicate implements AdapterInterface, MetadataSupporter
+final class Replicate implements Adapter, MetadataSupporter
 {
     /**
-     * @var AdapterInterface
-     *
-     * @deprecated since version 3.31, to be removed in 4.0. Use `$primary` instead.
-     */
-    protected $master;
-
-    /**
-     * @var AdapterInterface
-     *
-     * @deprecated since version 3.31, to be removed in 4.0. Use `$secondary` instead.
-     */
-    protected $slave;
-    /**
      * @var LoggerInterface
-     *
-     * NEXT_MAJOR change visibiity to private
      */
-    protected $logger;
+    private $logger;
 
     /**
-     * @var AdapterInterface
+     * @var Adapter
      */
     private $primary;
 
     /**
-     * @var AdapterInterface
+     * @var Adapter
      */
     private $secondary;
 
     /**
      * @param LoggerInterface $logger
      */
-    public function __construct(AdapterInterface $primary, AdapterInterface $secondary, ?LoggerInterface $logger = null)
+    public function __construct(Adapter $primary, Adapter $secondary, ?LoggerInterface $logger = null)
     {
-        // NEXT_MAJOR: remove master nad slave
-        $this->master = $primary;
-        $this->slave = $secondary;
         $this->primary = $primary;
         $this->secondary = $secondary;
         $this->logger = $logger;

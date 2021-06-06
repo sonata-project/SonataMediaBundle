@@ -113,4 +113,6 @@ interface GalleryInterface
      * @return void
      */
     public function addGalleryItem(GalleryItemInterface $galleryItem);
+
+    public function removeGalleryItem(GalleryItemInterface $galleryItem);
 }

@@ -69,7 +69,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         $this->mediaManager = $this->createStub(MediaManagerInterface::class);
         $this->pool = $this->createStub(Pool::class);
 
-        $this->command = new RemoveThumbsCommand($this->mediaManager, $this->pool);
+        $this->command = new RemoveThumbsCommand($this->pool, $this->mediaManager);
 
         $this->application = new Application();
         $this->application->add($this->command);

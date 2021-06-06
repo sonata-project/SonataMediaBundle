@@ -26,11 +26,11 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class CleanMediaCommand extends Command
+final class CleanMediaCommand extends Command
 {
+    protected static $defaultName = 'sonata:media:clean-uploads';
+    protected static $defaultDescription = 'Find orphaned files in media upload directory';
+
     /**
      * @var MediaProviderInterface[]|null
      */
@@ -62,8 +62,8 @@ class CleanMediaCommand extends Command
 
     public function configure(): void
     {
-        $this->setName('sonata:media:clean-uploads')
-            ->setDescription('Find orphaned files in media upload directory')
+        $this
+            ->setDescription(static::$defaultDescription)
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Execute the cleanup as a dry run. This doesn\'t remove any files');
     }
 

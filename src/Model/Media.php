@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 abstract class Media implements MediaInterface
 {
@@ -453,16 +452,6 @@ abstract class Media implements MediaInterface
     public function getPreviousProviderReference()
     {
         return $this->previousProviderReference;
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method when bumping Symfony requirement to 2.8+.
-     */
-    public function isStatusErroneous(ExecutionContextInterface $context): void
-    {
-        if ($this->getBinaryContent() && self::STATUS_ERROR === $this->getProviderStatus()) {
-            $context->buildViolation('invalid')->atPath('binaryContent')->addViolation();
-        }
     }
 
     /**

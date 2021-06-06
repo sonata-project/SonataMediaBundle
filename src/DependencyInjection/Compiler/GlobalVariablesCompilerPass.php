@@ -20,11 +20,9 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * GlobalVariablesCompilerPass.
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class GlobalVariablesCompilerPass implements CompilerPassInterface
+final class GlobalVariablesCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

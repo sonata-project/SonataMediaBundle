@@ -35,26 +35,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator).
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Hugo Briand <briand@ekino.com>
  */
-class MediaController
+final class MediaController
 {
     /**
      * @var MediaManagerInterface
      */
-    protected $mediaManager;
+    private $mediaManager;
 
     /**
      * @var Pool
      */
-    protected $mediaPool;
+    private $mediaPool;
 
     /**
      * @var FormFactoryInterface
      */
-    protected $formFactory;
+    private $formFactory;
 
     /**
      * Constructor.
@@ -353,7 +351,7 @@ class MediaController
      *
      * @return MediaInterface
      */
-    protected function getMedium($id = null)
+    private function getMedium($id = null)
     {
         $media = $this->mediaManager->find($id);
 
@@ -369,7 +367,7 @@ class MediaController
      *
      * @return Rest\View|FormInterface
      */
-    protected function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
+    private function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
     {
         $form = $this->formFactory->createNamed('', ApiMediaType::class, $media, [
             'provider_name' => $provider->getName(),

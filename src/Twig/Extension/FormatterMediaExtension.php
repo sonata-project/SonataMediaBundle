@@ -20,10 +20,7 @@ use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class FormatterMediaExtension extends AbstractExtension implements ExtensionInterface
+final class FormatterMediaExtension extends AbstractExtension implements ExtensionInterface
 {
     /**
      * @var ExtensionInterface

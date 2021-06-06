@@ -15,20 +15,17 @@ namespace Sonata\MediaBundle\Generator;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class IdGenerator implements GeneratorInterface
+final class IdGenerator implements GeneratorInterface
 {
     /**
      * @var int
      */
-    protected $firstLevel;
+    private $firstLevel;
 
     /**
      * @var int
      */
-    protected $secondLevel;
+    private $secondLevel;
 
     /**
      * @param int $firstLevel

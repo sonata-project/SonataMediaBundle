@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -25,11 +28,12 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  * This command can be used to re-generate the thumbnails for all uploaded medias.
  *
  * Useful if you have existing media content and added new formats.
- *
- * @final since sonata-project/media-bundle 3.21.0
  */
-class SyncThumbsCommand extends BaseCommand
+final class SyncThumbsCommand extends Command
 {
+    protected static $defaultName = 'sonata:media:sync-thumbnails';
+    protected static $defaultDescription = 'Sync uploaded image thumbs with new media formats';
+
     /**
      * @var bool
      */
@@ -40,19 +44,35 @@ class SyncThumbsCommand extends BaseCommand
      */
     protected $output;
 
+    /**
+     * @var Pool
+     */
+    private $mediaPool;
+
+    /**
+     * @var ManagerInterface
+     */
+    private $mediaManager;
+
+    public function __construct(Pool $mediaPool, ManagerInterface $mediaManager)
+    {
+        parent::__construct();
+
+        $this->mediaPool = $mediaPool;
+        $this->mediaManager = $mediaManager;
+    }
+
     public function configure(): void
     {
-        $this->setName('sonata:media:sync-thumbnails')
-            ->setDescription('Sync uploaded image thumbs with new media formats')
-            ->setDefinition(
-                [
+        $this
+            ->setDescription(static::$defaultDescription)
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
                 new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
                 new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
                 new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
-            ]
-            );
+            ]);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -61,7 +81,7 @@ class SyncThumbsCommand extends BaseCommand
 
         $providerName = $input->getArgument('providerName');
         if (null === $providerName) {
-            $providers = array_keys($this->getMediaPool()->getProviders());
+            $providers = array_keys($this->mediaPool->getProviders());
             $question = new ChoiceQuestion('Please select the provider', $providers, 0);
             $question->setErrorMessage('Provider %s is invalid.');
 
@@ -70,7 +90,7 @@ class SyncThumbsCommand extends BaseCommand
 
         $context = $input->getArgument('context');
         if (null === $context) {
-            $contexts = array_keys($this->getMediaPool()->getContexts());
+            $contexts = array_keys($this->mediaPool->getContexts());
             $question = new ChoiceQuestion('Please select the context', $contexts, 0);
             $question->setErrorMessage('Context %s is invalid.');
 
@@ -80,7 +100,7 @@ class SyncThumbsCommand extends BaseCommand
         $this->quiet = $input->getOption('quiet');
         $this->output = $output;
 
-        $provider = $this->getMediaPool()->getProvider($providerName);
+        $provider = $this->mediaPool->getProvider($providerName);
 
         $filesystem = $provider->getFilesystem();
         $fsReflection = new \ReflectionClass($filesystem);
@@ -97,7 +117,7 @@ class SyncThumbsCommand extends BaseCommand
 
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
-                $medias = $this->getMediaManager()->findBy(
+                $medias = $this->mediaManager->findBy(
                     [
                         'providerName' => $providerName,
                         'context' => $context,
@@ -140,7 +160,7 @@ class SyncThumbsCommand extends BaseCommand
             }
 
             //clear entity manager for saving memory
-            $this->getMediaManager()->getObjectManager()->clear();
+            $this->mediaManager->getObjectManager()->clear();
 
             if ($batchesLimit > 0 && $batchCounter === $batchesLimit) {
                 break;

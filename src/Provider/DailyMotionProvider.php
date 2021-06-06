@@ -16,10 +16,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class DailyMotionProvider extends BaseVideoProvider
+final class DailyMotionProvider extends BaseVideoProvider
 {
     public function getHelperProperties(MediaInterface $media, $format, $options = [])
     {

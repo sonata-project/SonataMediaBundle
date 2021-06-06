@@ -13,20 +13,17 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\CDN;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class Fallback implements CDNInterface
+final class Fallback implements CDNInterface
 {
     /**
      * @var CDNInterface
      */
-    protected $cdn;
+    private $cdn;
 
     /**
      * @var CDNInterface
      */
-    protected $fallback;
+    private $fallback;
 
     public function __construct(CDNInterface $cdn, CDNInterface $fallback)
     {

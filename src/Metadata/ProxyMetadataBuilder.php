@@ -13,37 +13,21 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Metadata;
 
-use Gaufrette\Adapter\AmazonS3;
 use Gaufrette\Adapter\AwsS3;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class ProxyMetadataBuilder implements MetadataBuilderInterface
+final class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
     /**
      * @var ContainerInterface
      */
     private $container;
 
-    /**
-     * NEXT_MAJOR: remove the second parameter $map.
-     *
-     * @param array $map
-     */
-    public function __construct(ContainerInterface $container, ?array $map = null)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-
-        if (null !== $map) {
-            @trigger_error(
-                'The "map" parameter is deprecated since sonata-project/media-bundle 2.4 and will be removed in 4.0.',
-                \E_USER_DEPRECATED
-            );
-        }
     }
 
     public function get(MediaInterface $media, $filename)
@@ -69,7 +53,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
      *
      * @return array|bool
      */
-    protected function getAmazonBuilder(MediaInterface $media, $filename)
+    private function getAmazonBuilder(MediaInterface $media, $filename)
     {
         $adapter = $this->container->get($media->getProviderName())->getFilesystem()->getAdapter();
 
@@ -81,7 +65,7 @@ class ProxyMetadataBuilder implements MetadataBuilderInterface
         }
 
         //for amazon s3
-        if ((!\in_array(AmazonS3::class, $adapterClassNames, true) && !\in_array(AwsS3::class, $adapterClassNames, true)) || !$this->container->has('sonata.media.metadata.amazon')) {
+        if (!\in_array(AwsS3::class, $adapterClassNames, true) || !$this->container->has('sonata.media.metadata.amazon')) {
             return false;
         }
 

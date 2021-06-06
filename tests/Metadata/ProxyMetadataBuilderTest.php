@@ -14,14 +14,12 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Metadata;
 
 use Aws\S3\S3Client;
-use Aws\Sdk;
 use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
-use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
-use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -32,36 +30,24 @@ final class ProxyMetadataBuilderTest extends TestCase
 {
     public function testProxyAmazon(): void
     {
-        $amazon = $this->createMock(AmazonMetadataBuilder::class);
+        $amazon = $this->createMock(MetadataBuilderInterface::class);
         $amazon->expects($this->once())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
-        $noop = $this->createMock(NoopMetadataBuilder::class);
+        $noop = $this->createMock(MetadataBuilderInterface::class);
         $noop->expects($this->never())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        if (class_exists(Sdk::class)) {
-            // AWS v3.x
-            $amazonclient = new S3Client([
-                'credentials' => [
-                    'key' => 'XXXXXXXXXXXX',
-                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                ],
-                'region' => 'us-west-1',
-                'version' => '2006-03-01',
-            ]);
-        } else {
-            // AWS v2.x. Remove this condition when the support for this version is dropped.
-            $amazonclient = S3Client::factory([
-                'credentials' => [
-                    'key' => 'XXXXXXXXXXXX',
-                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                ],
-                'region' => 'us-west-1',
-            ]);
-        }
+        $amazonclient = new S3Client([
+            'credentials' => [
+                'key' => 'XXXXXXXXXXXX',
+                'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            ],
+            'region' => 'us-west-1',
+            'version' => '2006-03-01',
+        ]);
 
         // adapter cannot be mocked
         $adapter = new AwsS3($amazonclient, '');
@@ -92,12 +78,12 @@ final class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyLocal(): void
     {
-        $amazon = $this->createMock(AmazonMetadataBuilder::class);
+        $amazon = $this->createMock(MetadataBuilderInterface::class);
         $amazon->expects($this->never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
-        $noop = $this->createMock(NoopMetadataBuilder::class);
+        $noop = $this->createMock(MetadataBuilderInterface::class);
         $noop->expects($this->once())
             ->method('get')
             ->willReturn(['key' => 'noop']);
@@ -131,12 +117,12 @@ final class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyNoProvider(): void
     {
-        $amazon = $this->createMock(AmazonMetadataBuilder::class);
+        $amazon = $this->createMock(MetadataBuilderInterface::class);
         $amazon->expects($this->never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
-        $noop = $this->createMock(NoopMetadataBuilder::class);
+        $noop = $this->createMock(MetadataBuilderInterface::class);
         $noop->expects($this->never())
             ->method('get')
             ->willReturn(['key' => 'noop']);
@@ -170,36 +156,24 @@ final class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyReplicateWithAmazon(): void
     {
-        $amazon = $this->createMock(AmazonMetadataBuilder::class);
+        $amazon = $this->createMock(MetadataBuilderInterface::class);
         $amazon->expects($this->once())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
-        $noop = $this->createMock(NoopMetadataBuilder::class);
+        $noop = $this->createMock(MetadataBuilderInterface::class);
         $noop->expects($this->never())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        if (class_exists(Sdk::class)) {
-            // AWS v3.x
-            $amazonclient = new S3Client([
-                'credentials' => [
-                    'key' => 'XXXXXXXXXXXX',
-                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                ],
-                'region' => 'us-west-1',
-                'version' => '2006-03-01',
-            ]);
-        } else {
-            // AWS v2.x. Remove this condition when the support for this version is dropped.
-            $amazonclient = S3Client::factory([
-                'credentials' => [
-                    'key' => 'XXXXXXXXXXXX',
-                    'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                ],
-                'region' => 'us-west-1',
-            ]);
-        }
+        $amazonclient = new S3Client([
+            'credentials' => [
+                'key' => 'XXXXXXXXXXXX',
+                'secret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+            ],
+            'region' => 'us-west-1',
+            'version' => '2006-03-01',
+        ]);
 
         // adapter cannot be mocked
         $adapter1 = new AwsS3($amazonclient, '');
@@ -232,12 +206,12 @@ final class ProxyMetadataBuilderTest extends TestCase
 
     public function testProxyReplicateWithoutAmazon(): void
     {
-        $amazon = $this->createMock(AmazonMetadataBuilder::class);
+        $amazon = $this->createMock(MetadataBuilderInterface::class);
         $amazon->expects($this->never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
-        $noop = $this->createMock(NoopMetadataBuilder::class);
+        $noop = $this->createMock(MetadataBuilderInterface::class);
         $noop->expects($this->once())
             ->method('get')
             ->willReturn(['key' => 'noop']);

@@ -21,12 +21,8 @@ use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\InitRuntimeInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class MediaExtension extends AbstractExtension implements InitRuntimeInterface
+final class MediaExtension extends AbstractExtension
 {
     /**
      * @var Pool
@@ -46,12 +42,13 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
     /**
      * @var Environment
      */
-    protected $environment;
+    protected $twig;
 
-    public function __construct(Pool $mediaService, ManagerInterface $mediaManager)
+    public function __construct(Pool $mediaService, ManagerInterface $mediaManager, Environment $twig)
     {
         $this->mediaService = $mediaService;
         $this->mediaManager = $mediaManager;
+        $this->twig = $twig;
     }
 
     public function getTokenParsers()
@@ -61,11 +58,6 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
             new ThumbnailTokenParser(static::class),
             new PathTokenParser(static::class),
         ];
-    }
-
-    public function initRuntime(Environment $environment): void
-    {
-        $this->environment = $environment;
     }
 
     /**
@@ -152,7 +144,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
     public function render($template, array $parameters = [])
     {
         if (!isset($this->resources[$template])) {
-            $this->resources[$template] = $this->environment->loadTemplate($template);
+            $this->resources[$template] = $this->twig->loadTemplate($template);
         }
 
         return $this->resources[$template]->render($parameters);

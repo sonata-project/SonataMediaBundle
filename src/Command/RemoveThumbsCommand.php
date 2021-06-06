@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,40 +29,57 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  * This command can be used to re-generate the thumbnails for all uploaded medias.
  *
  * Useful if you have existing media content and added new formats.
- *
- * @final since sonata-project/media-bundle 3.21.0
  */
-class RemoveThumbsCommand extends BaseCommand
+final class RemoveThumbsCommand extends Command
 {
+    protected static $defaultName = 'sonata:media:remove-thumbnails';
+    protected static $defaultDescription = 'Remove uploaded image thumbs';
+
+    /**
+     * @var Pool
+     */
+    private $mediaPool;
+
+    /**
+     * @var ManagerInterface
+     */
+    private $mediaManager;
+
     /**
      * @var bool
      */
-    protected $quiet = false;
+    private $quiet = false;
 
     /**
      * @var InputInterface
      */
-    protected $input;
+    private $input;
 
     /**
      * @var OutputInterface
      */
-    protected $output;
+    private $output;
+
+    public function __construct(Pool $mediaPool, ManagerInterface $mediaManager)
+    {
+        parent::__construct();
+
+        $this->mediaPool = $mediaPool;
+        $this->mediaManager = $mediaManager;
+    }
 
     public function configure(): void
     {
-        $this->setName('sonata:media:remove-thumbnails')
-            ->setDescription('Remove uploaded image thumbs')
-            ->setDefinition(
-                [
+        $this
+            ->setDescription(static::$defaultDescription)
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
                 new InputArgument('format', InputArgument::OPTIONAL, 'The format (pass `all` to delete all thumbs)'),
                 new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
                 new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
                 new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
-            ]
-            );
+            ]);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -83,7 +103,7 @@ class RemoveThumbsCommand extends BaseCommand
 
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
-                $medias = $this->getMediaManager()->findBy(
+                $medias = $this->mediaManager->findBy(
                     [
                         'providerName' => $provider->getName(),
                         'context' => $context,
@@ -143,11 +163,11 @@ class RemoveThumbsCommand extends BaseCommand
             $providerName = $this->getQuestionHelper()->ask(
                 $this->input,
                 $this->output,
-                new ChoiceQuestion('Please select the provider', array_keys($this->getMediaPool()->getProviders()))
+                new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
             );
         }
 
-        return $this->getMediaPool()->getProvider($providerName);
+        return $this->mediaPool->getProvider($providerName);
     }
 
     public function getContext(): string
@@ -158,7 +178,7 @@ class RemoveThumbsCommand extends BaseCommand
             $context = $this->getQuestionHelper()->ask(
                 $this->input,
                 $this->output,
-                new ChoiceQuestion('Please select the context', array_keys($this->getMediaPool()->getContexts()))
+                new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
             );
         }
 

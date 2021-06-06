@@ -15,9 +15,6 @@ namespace Sonata\MediaBundle\Form\Type;
 
 use Sonata\Form\Type\BaseDoctrineORMSerializationType;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class ApiDoctrineMediaType extends BaseDoctrineORMSerializationType
+final class ApiDoctrineMediaType extends BaseDoctrineORMSerializationType
 {
 }

@@ -33,21 +33,6 @@ class MediaManagerTest extends TestCase
         $this->manager = new MediaManager(MediaInterface::class, $this->createRegistryMock());
     }
 
-    public function testSave(): void
-    {
-        $media = new Media();
-        $this->manager->save($media, 'default', 'media.test');
-
-        $this->assertSame('default', $media->getContext());
-        $this->assertSame('media.test', $media->getProviderName());
-
-        $media = new Media();
-        $this->manager->save($media, true);
-
-        $this->assertNull($media->getContext());
-        $this->assertNull($media->getProviderName());
-    }
-
     public function testSaveException(): void
     {
         $this->expectException(\InvalidArgumentException::class);

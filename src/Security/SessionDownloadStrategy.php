@@ -16,30 +16,27 @@ namespace Sonata\MediaBundle\Security;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Ahmet Akbana <ahmetakbana@gmail.com>
  */
-class SessionDownloadStrategy implements DownloadStrategyInterface
+final class SessionDownloadStrategy implements DownloadStrategyInterface
 {
     /**
-     * @var LegacyTranslatorInterface|TranslatorInterface
+     * @var TranslatorInterface
      */
-    protected $translator;
+    private $translator;
 
     /**
      * @var int
      */
-    protected $times;
+    private $times;
 
     /**
      * @var string
      */
-    protected $sessionKey = 'sonata/media/session/times';
+    private $sessionKey = 'sonata/media/session/times';
 
     /**
      * @var SessionInterface
@@ -49,33 +46,8 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     /**
      * @param int $times
      */
-    public function __construct(object $translator, SessionInterface $session, $times)
+    public function __construct(TranslatorInterface $translator, SessionInterface $session, $times)
     {
-        if (!$translator instanceof TranslatorInterface) {
-            if (!$translator instanceof LegacyTranslatorInterface) {
-                throw new \TypeError(
-                    sprintf(
-                        'Argument 1 passed to "%s()" MUST be an instance of "%s" or "%s", "%s" given.',
-                        __METHOD__,
-                        LegacyTranslatorInterface::class,
-                        TranslatorInterface::class,
-                        \get_class($translator)
-                    )
-                );
-            }
-
-            @trigger_error(
-                sprintf(
-                    'Passing other type than "%s" as argument 1 to "%s()" is deprecated since sonata-project/media-bundle 3.31'
-                    .' and will throw a "%s" error in 4.0.',
-                    TranslatorInterface::class,
-                    __METHOD__,
-                    \TypeError::class
-                ),
-                \E_USER_DEPRECATED
-            );
-        }
-
         $this->translator = $translator;
         $this->session = $session;
         $this->times = $times;
@@ -98,16 +70,6 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
 
     public function getDescription()
     {
-        // NEXT_MAJOR: remove this if
-        if ($this->translator instanceof LegacyTranslatorInterface) {
-            return $this->translator->transChoice(
-                'description.session_download_strategy',
-                $this->times,
-                ['%times%' => $this->times],
-                'SonataMediaBundle'
-            );
-        }
-
         return $this->translator->trans(
             'description.session_download_strategy',
             [

@@ -17,59 +17,30 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class RolesDownloadStrategy implements DownloadStrategyInterface
+final class RolesDownloadStrategy implements DownloadStrategyInterface
 {
     /**
      * @var string[]
      */
-    protected $roles;
+    private $roles;
 
     /**
      * @var AuthorizationCheckerInterface
      */
-    protected $security;
+    private $security;
 
     /**
-     * @var LegacyTranslatorInterface|TranslatorInterface
+     * @var TranslatorInterface
      */
-    protected $translator;
+    private $translator;
 
     /**
      * @param string[] $roles
      */
-    public function __construct(object $translator, AuthorizationCheckerInterface $security, array $roles = [])
+    public function __construct(TranslatorInterface $translator, AuthorizationCheckerInterface $security, array $roles = [])
     {
-        if (!$translator instanceof TranslatorInterface) {
-            if (!$translator instanceof LegacyTranslatorInterface) {
-                throw new \TypeError(
-                    sprintf(
-                        'Argument 1 passed to "%s()" MUST be an instance of "%s" or "%s", "%s" given.',
-                        __METHOD__,
-                        LegacyTranslatorInterface::class,
-                        TranslatorInterface::class,
-                        \get_class($translator)
-                    )
-                );
-            }
-
-            @trigger_error(
-                sprintf(
-                    'Passing other type than "%s" as argument 1 to "%s()" is deprecated since sonata-project/media-bundle 3.31'
-                    .' and will throw a "%s" error in 4.0.',
-                    TranslatorInterface::class,
-                    __METHOD__,
-                    \TypeError::class
-                ),
-                \E_USER_DEPRECATED
-            );
-        }
-
         $this->roles = $roles;
         $this->security = $security;
         $this->translator = $translator;

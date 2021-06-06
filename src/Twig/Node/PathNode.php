@@ -17,10 +17,7 @@ use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class PathNode extends Node
+final class PathNode extends Node
 {
     /**
      * @var string

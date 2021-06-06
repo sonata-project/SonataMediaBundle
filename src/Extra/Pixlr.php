@@ -26,55 +26,52 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class Pixlr
+final class Pixlr
 {
     /**
      * @var string
      */
-    protected $referrer;
+    private $referrer;
 
     /**
      * @var string
      */
-    protected $secret;
+    private $secret;
 
     /**
      * @var MediaManagerInterface
      */
-    protected $mediaManager;
+    private $mediaManager;
 
     /**
      * @var RouterInterface
      */
-    protected $router;
+    private $router;
 
     /**
      * @var Pool
      */
-    protected $pool;
+    private $pool;
 
     /**
      * @var Environment
      */
-    protected $twig;
+    private $twig;
 
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    private $container;
 
     /**
      * @var string[]
      */
-    protected $validFormats;
+    private $validFormats;
 
     /**
      * @var string
      */
-    protected $allowEreg;
+    private $allowEreg;
 
     /**
      * @param string $referrer

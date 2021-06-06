@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,36 +28,52 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  *
  * Useful if you have existing media content and added new formats.
  */
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class RefreshMetadataCommand extends BaseCommand
+final class RefreshMetadataCommand extends Command
 {
+    protected static $defaultName = 'sonata:media:refresh-metadata';
+    protected static $defaultDescription = 'Refresh meta information';
+
+    /**
+     * @var Pool
+     */
+    private $mediaPool;
+
+    /**
+     * @var ManagerInterface
+     */
+    private $mediaManager;
+
     /**
      * @var bool
      */
-    protected $quiet = false;
+    private $quiet = false;
 
     /**
      * @var OutputInterface
      */
-    protected $output;
+    private $output;
 
     /**
      * @var InputInterface
      */
     private $input;
 
+    public function __construct(Pool $mediaPool, ManagerInterface $mediaManager)
+    {
+        parent::__construct();
+
+        $this->mediaPool = $mediaPool;
+        $this->mediaManager = $mediaManager;
+    }
+
     public function configure(): void
     {
-        $this->setName('sonata:media:refresh-metadata')
-            ->setDescription('Refresh meta information')
-            ->setDefinition(
-                [
+        $this
+            ->setDescription(static::$defaultDescription)
+            ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-            ]
-            );
+            ]);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -67,7 +86,7 @@ class RefreshMetadataCommand extends BaseCommand
         $provider = $this->getProvider();
         $context = $this->getContext();
 
-        $medias = $this->getMediaManager()->findBy([
+        $medias = $this->mediaManager->findBy([
             'providerName' => $provider->getName(),
             'context' => $context,
         ]);
@@ -91,7 +110,7 @@ class RefreshMetadataCommand extends BaseCommand
             }
 
             try {
-                $this->getMediaManager()->save($media);
+                $this->mediaManager->save($media);
             } catch (\Exception $e) {
                 $this->log(sprintf('<error>Unable saving media, media: %s - %s </error>', $media->getId(), $e->getMessage()));
 
@@ -124,11 +143,11 @@ class RefreshMetadataCommand extends BaseCommand
             $providerName = $this->getQuestionHelper()->ask(
                 $this->input,
                 $this->output,
-                new ChoiceQuestion('Please select the provider', array_keys($this->getMediaPool()->getProviders()))
+                new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
             );
         }
 
-        return $this->getMediaPool()->getProvider($providerName);
+        return $this->mediaPool->getProvider($providerName);
     }
 
     private function getContext(): string
@@ -139,7 +158,7 @@ class RefreshMetadataCommand extends BaseCommand
             $context = $this->getQuestionHelper()->ask(
                 $this->input,
                 $this->output,
-                new ChoiceQuestion('Please select the context', array_keys($this->getMediaPool()->getContexts()))
+                new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
             );
         }
 

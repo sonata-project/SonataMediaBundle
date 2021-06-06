@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
-use Aws\Sdk;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -23,15 +22,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
-    /**
-     * NEXT_MAJOR: make constant protected/private.
-     */
-    public const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'doctrine_phpcr', 'no_driver'];
+    private const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'no_driver'];
 
     public function getConfigTreeBuilder()
     {
@@ -43,7 +36,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('db_driver')
                     ->defaultValue('no_driver')
-                    ->info('Choose persistence mechanism driver from the following list: "doctrine_orm", "doctrine_mongodb", "doctrine_phpcr"')
+                    ->info('Choose persistence mechanism driver from the following list: "doctrine_orm", "doctrine_mongodb"')
                     ->validate()
                         ->ifNotInArray(self::DB_DRIVERS)
                         ->thenInvalid('SonataMediaBundle - Invalid db driver %s.')
@@ -244,50 +237,10 @@ class Configuration implements ConfigurationInterface
                                     )
                                     ->defaultValue('latest')
                                 ->end()
-                                ->enumNode('sdk_version')
-                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                        'The node "%node%" is deprecated and will be removed in version 4.0'
-                                        .' since the version for aws/aws-sdk-php is inferred automatically.',
-                                        '3.28'
-                                    ))
-                                    ->beforeNormalization()
-                                        ->ifString()
-                                        ->then(static function (string $v): int {
-                                            return (int) $v;
-                                        })
-                                    ->end()
-                                    ->validate()
-                                        ->ifTrue(static function (int $v): bool {
-                                            return 2 === $v && class_exists(Sdk::class);
-                                        })
-                                        ->thenInvalid('Can not use %s for "sdk_version" since the installed version of aws/aws-sdk-php is not 2.x.')
-                                    ->end()
-                                    ->validate()
-                                        ->ifTrue(static function (int $v): bool {
-                                            return 3 === $v && !class_exists(Sdk::class);
-                                        })
-                                        ->thenInvalid('Can not use %s for "sdk_version" since the installed version of aws/aws-sdk-php is not 3.x.')
-                                    ->end()
-                                    ->values([2, 3])
-                                ->end()
                                 ->arrayNode('meta')
                                     ->useAttributeAsKey('name')
                                     ->prototype('scalar')
                                     ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-
-                        ->arrayNode('mogilefs')
-                            ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                'The node "%node%" is deprecated and will be removed in version 4.0.',
-                                '3.28'
-                            ))
-                            ->children()
-                                ->scalarNode('domain')->isRequired()->end()
-                                ->arrayNode('hosts')
-                                    ->prototype('scalar')->end()
-                                    ->isRequired()
                                 ->end()
                             ->end()
                         ->end()
@@ -532,26 +485,5 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-    }
-
-    /**
-     * Returns the correct deprecation arguments as an array for `setDeprecated()`.
-     *
-     * symfony/config 5.1 introduces a deprecation notice when calling
-     * `setDeprecation()` with less than 3 arguments and the `getDeprecation()` method was
-     * introduced at the same time. By checking if `getDeprecation()` exists,
-     * we can determine the correct parameter count to use when calling `setDeprecated()`.
-     */
-    private function getBackwardCompatibleArgumentsForSetDeprecated(string $message, string $version): array
-    {
-        if (method_exists(BaseNode::class, 'getDeprecation')) {
-            return [
-                'sonata-project/media-bundle',
-                $version,
-                $message,
-            ];
-        }
-
-        return [$message];
     }
 }

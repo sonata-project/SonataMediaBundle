@@ -32,31 +32,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Hugo Briand <briand@ekino.com>
  */
-class GalleryController
+final class GalleryController
 {
     /**
      * @var GalleryManagerInterface
      */
-    protected $galleryManager;
+    private $galleryManager;
 
     /**
      * @var MediaManagerInterface
      */
-    protected $mediaManager;
+    private $mediaManager;
 
     /**
      * @var FormFactoryInterface
      */
-    protected $formFactory;
+    private $formFactory;
 
     /**
      * @var string
      */
-    protected $galleryItemClass;
+    private $galleryItemClass;
 
     /**
      * @param string $galleryItemClass
@@ -422,9 +420,9 @@ class GalleryController
      *
      * @return FormInterface
      */
-    protected function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, ?GalleryItemInterface $galleryItem = null, Request $request)
+    private function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, ?GalleryItemInterface $galleryItem = null, Request $request)
     {
-        $form = $this->formFactory->createNamed(null, ApiGalleryItemType::class, $galleryItem, [
+        $form = $this->formFactory->createNamed('', ApiGalleryItemType::class, $galleryItem, [
             'csrf_protection' => false,
         ]);
 
@@ -460,7 +458,7 @@ class GalleryController
      *
      * @return GalleryInterface
      */
-    protected function getGallery($id)
+    private function getGallery($id)
     {
         $gallery = $this->getGalleryManager()->findOneBy(['id' => $id]);
 
@@ -480,7 +478,7 @@ class GalleryController
      *
      * @return MediaInterface
      */
-    protected function getMedia($id)
+    private function getMedia($id)
     {
         $media = $this->getMediaManager()->findOneBy(['id' => $id]);
 
@@ -494,7 +492,7 @@ class GalleryController
     /**
      * @return GalleryManagerInterface
      */
-    protected function getGalleryManager()
+    private function getGalleryManager()
     {
         return $this->galleryManager;
     }
@@ -502,7 +500,7 @@ class GalleryController
     /**
      * @return MediaManagerInterface
      */
-    protected function getMediaManager()
+    private function getMediaManager()
     {
         return $this->mediaManager;
     }
@@ -515,11 +513,11 @@ class GalleryController
      *
      * @return Rest\View|FormInterface
      */
-    protected function handleWriteGallery($request, $id = null)
+    private function handleWriteGallery($request, $id = null)
     {
         $gallery = $id ? $this->getGallery($id) : null;
 
-        $form = $this->formFactory->createNamed(null, ApiGalleryType::class, $gallery, [
+        $form = $this->formFactory->createNamed('', ApiGalleryType::class, $gallery, [
             'csrf_protection' => false,
         ]);
 

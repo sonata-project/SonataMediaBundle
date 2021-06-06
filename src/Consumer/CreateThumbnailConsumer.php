@@ -21,25 +21,22 @@ use Sonata\NotificationBundle\Consumer\ConsumerInterface;
 use Sonata\NotificationBundle\Exception\HandlingException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * @final since sonata-project/media-bundle 3.21.0
- */
-class CreateThumbnailConsumer implements ConsumerInterface
+final class CreateThumbnailConsumer implements ConsumerInterface
 {
     /**
      * @var ManagerInterface
      */
-    protected $mediaManager;
+    private $mediaManager;
 
     /**
      * @var Pool
      */
-    protected $pool;
+    private $pool;
 
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    private $container;
 
     public function __construct(ManagerInterface $mediaManager, Pool $pool, ContainerInterface $container)
     {
@@ -75,7 +72,7 @@ class CreateThumbnailConsumer implements ConsumerInterface
     /**
      * @return ThumbnailInterface
      */
-    protected function getThumbnail(ConsumerEvent $event)
+    private function getThumbnail(ConsumerEvent $event)
     {
         $thumbnail = $this->container->get($event->getMessage()->getValue('thumbnailId'));
 
