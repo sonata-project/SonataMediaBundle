@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\CDN;
 
 use Aws\CloudFront\Exception\CloudFrontException;
+use Aws\CommandInterface;
 use Aws\Sdk;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\CDN\CloudFront;
@@ -71,7 +72,7 @@ final class CloudFrontTest extends TestCase
 
         $client->expects($this->once())
             ->method('createInvalidation')
-            ->willThrowException(new CloudFrontException('An exception occurred.'));
+            ->willThrowException(new CloudFrontException('An exception occurred.', $this->createStub(CommandInterface::class)));
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to flush paths "/bar", "/baz".');

@@ -35,7 +35,7 @@ abstract class AbstractProviderTest extends TestCase
     /**
      * @var FormMapper|MockObject
      */
-    protected $formMapper;
+    protected $form;
 
     /**
      * @var FormTypeInterface|MockObject
@@ -49,7 +49,7 @@ abstract class AbstractProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formMapper = $this->createMock(FormMapper::class);
+        $this->form = $this->createMock(FormMapper::class);
 
         $this->formBuilder = $this->createMock(FormBuilder::class);
         $this->formBuilder->method('getOption')->willReturn('api');
@@ -64,20 +64,20 @@ abstract class AbstractProviderTest extends TestCase
 
     public function testBuildEditForm(): void
     {
-        $this->formMapper
+        $this->form
             ->expects($this->atLeastOnce())
             ->method('add');
 
-        $this->provider->buildEditForm($this->formMapper);
+        $this->provider->buildEditForm($this->form);
     }
 
     public function testBuildCreateForm(): void
     {
-        $this->formMapper
+        $this->form
             ->expects($this->atLeastOnce())
             ->method('add');
 
-        $this->provider->buildCreateForm($this->formMapper);
+        $this->provider->buildCreateForm($this->form);
     }
 
     public function testBuildMediaType(): void

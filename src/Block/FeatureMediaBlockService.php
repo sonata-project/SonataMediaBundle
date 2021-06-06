@@ -46,11 +46,11 @@ class FeatureMediaBlockService extends MediaBlockService
         ]);
     }
 
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $form, BlockInterface $block)
     {
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', ImmutableArrayType::class, [
+        $form->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
                     'label' => 'form.label_title',
@@ -80,7 +80,7 @@ class FeatureMediaBlockService extends MediaBlockService
                     ],
                     'label' => 'form.label_orientation',
                 ]],
-                [$this->getMediaBuilder($formMapper), null, []],
+                [$this->getMediaBuilder($form), null, []],
                 ['format', ChoiceType::class, [
                     'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,

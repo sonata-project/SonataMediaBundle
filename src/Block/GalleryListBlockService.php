@@ -64,7 +64,7 @@ class GalleryListBlockService extends AbstractBlockService
      * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $form, BlockInterface $block)
     {
         $contextChoices = [];
 
@@ -72,7 +72,7 @@ class GalleryListBlockService extends AbstractBlockService
             $contextChoices[$name] = $name;
         }
 
-        $formMapper->add('settings', ImmutableArrayType::class, [
+        $form->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
                     'label' => 'form.label_title',
@@ -187,9 +187,9 @@ class GalleryListBlockService extends AbstractBlockService
      * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
-    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildCreateForm(FormMapper $form, BlockInterface $block)
     {
-        $this->buildEditForm($formMapper, $block);
+        $this->buildEditForm($form, $block);
     }
 
     /**

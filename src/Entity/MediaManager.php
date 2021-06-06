@@ -23,7 +23,7 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
  */
 class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
-    public function save($media, $andFlush = true)
+    public function save($entity, $andFlush = true)
     {
         /*
          * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
@@ -31,19 +31,19 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
 
         // BC compatibility for $context parameter
         if ($andFlush && \is_string($andFlush)) {
-            $media->setContext($andFlush);
+            $entity->setContext($andFlush);
         }
 
         // BC compatibility for $providerName parameter
         if (3 === \func_num_args()) {
-            $media->setProviderName(func_get_arg(2));
+            $entity->setProviderName(func_get_arg(2));
         }
 
         if (\is_bool($andFlush)) {
-            parent::save($media, $andFlush);
+            parent::save($entity, $andFlush);
         } else {
             // BC compatibility with previous signature
-            parent::save($media, true);
+            parent::save($entity, true);
         }
     }
 

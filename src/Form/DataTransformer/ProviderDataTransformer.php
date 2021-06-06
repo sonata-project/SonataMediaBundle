@@ -28,6 +28,13 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
     use LoggerAwareTrait;
 
     /**
+     * NEXT_MAJOR: Make this property private.
+     *
+     * @var string
+     */
+    public $class;
+
+    /**
      * @var Pool
      */
     protected $pool;
@@ -58,34 +65,34 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
         return $value;
     }
 
-    public function reverseTransform($media)
+    public function reverseTransform($value)
     {
-        if (!$media instanceof MediaInterface) {
-            return $media;
+        if (!$value instanceof MediaInterface) {
+            return $value;
         }
 
-        $binaryContent = $media->getBinaryContent();
+        $binaryContent = $value->getBinaryContent();
 
         // no binary
         if (empty($binaryContent)) {
             // and no media id
-            if (null === $media->getId() && $this->options['empty_on_new']) {
+            if (null === $value->getId() && $this->options['empty_on_new']) {
                 return;
-            } elseif ($media->getId()) {
-                return $media;
+            } elseif ($value->getId()) {
+                return $value;
             }
 
-            $media->setProviderStatus(MediaInterface::STATUS_PENDING);
-            $media->setProviderReference(MediaInterface::MISSING_BINARY_REFERENCE);
+            $value->setProviderStatus(MediaInterface::STATUS_PENDING);
+            $value->setProviderReference(MediaInterface::MISSING_BINARY_REFERENCE);
 
-            return $media;
+            return $value;
         }
 
         // create a new media to avoid erasing other media or not ...
-        $newMedia = $this->options['new_on_update'] ? new $this->class() : $media;
+        $newMedia = $this->options['new_on_update'] ? new $this->class() : $value;
 
-        $newMedia->setProviderName($media->getProviderName());
-        $newMedia->setContext($media->getContext());
+        $newMedia->setProviderName($value->getProviderName());
+        $newMedia->setContext($value->getContext());
         $newMedia->setBinaryContent($binaryContent);
 
         if (!$newMedia->getProviderName() && $this->options['provider']) {

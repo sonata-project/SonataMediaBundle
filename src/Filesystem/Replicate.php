@@ -141,25 +141,25 @@ class Replicate implements AdapterInterface, MetadataSupporter
         return $this->primary->read($key);
     }
 
-    public function rename($key, $new)
+    public function rename($sourceKey, $targetKey)
     {
         $ok = true;
 
         try {
-            $this->primary->rename($key, $new);
+            $this->primary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
             if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
             }
 
             $ok = false;
         }
 
         try {
-            $this->secondary->rename($key, $new);
+            $this->secondary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
             if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $key, $e->getMessage()));
+                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
             }
 
             $ok = false;
@@ -178,13 +178,13 @@ class Replicate implements AdapterInterface, MetadataSupporter
         return $this->primary instanceof MetadataSupporter || $this->secondary instanceof MetadataSupporter;
     }
 
-    public function setMetadata($key, $metadata)
+    public function setMetadata($key, $content)
     {
         if ($this->primary instanceof MetadataSupporter) {
-            $this->primary->setMetadata($key, $metadata);
+            $this->primary->setMetadata($key, $content);
         }
         if ($this->secondary instanceof MetadataSupporter) {
-            $this->secondary->setMetadata($key, $metadata);
+            $this->secondary->setMetadata($key, $content);
         }
     }
 

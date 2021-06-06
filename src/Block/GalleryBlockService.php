@@ -116,7 +116,7 @@ class GalleryBlockService extends AbstractBlockService
      * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $form, BlockInterface $block)
     {
         $contextChoices = [];
 
@@ -141,18 +141,18 @@ class GalleryBlockService extends AbstractBlockService
             'translation_domain' => 'SonataMediaBundle',
         ]);
         $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
-        $fieldDescription->setAdmin($formMapper->getAdmin());
+        $fieldDescription->setAdmin($form->getAdmin());
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping(['fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE]);
 
-        $builder = $formMapper->create('galleryId', ModelListType::class, [
+        $builder = $form->create('galleryId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getGalleryAdmin()->getClass(),
             'model_manager' => $this->getGalleryAdmin()->getModelManager(),
             'label' => 'form.label_gallery',
         ]);
 
-        $formMapper->add('settings', ImmutableArrayType::class, [
+        $form->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
                     'label' => 'form.label_title',
@@ -259,9 +259,9 @@ class GalleryBlockService extends AbstractBlockService
      * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
-    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildCreateForm(FormMapper $form, BlockInterface $block)
     {
-        $this->buildEditForm($formMapper, $block);
+        $this->buildEditForm($form, $block);
     }
 
     /**

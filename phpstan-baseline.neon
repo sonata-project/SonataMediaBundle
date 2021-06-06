@@ -1,0 +1,6 @@
+parameters:
+    ignoreErrors:
+        - # NEXT_MAJOR: Remove this issue.
+            message: "#^Call to static method getInstance\\(\\) on an unknown class Sonata\\\\EasyExtendsBundle\\\\Mapper\\\\DoctrineCollector\\.$#"
+            count: 1
+            path: src/DependencyInjection/SonataMediaExtension.php

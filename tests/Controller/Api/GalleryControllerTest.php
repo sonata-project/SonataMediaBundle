@@ -152,7 +152,7 @@ class GalleryControllerTest extends TestCase
         $formFactory = $this->createMock(FormFactoryInterface::class);
         $formFactory->expects($this->once())->method('createNamed')->willReturn($form);
 
-        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryTest::class);
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryHasMediaInterface::class);
         $view = $galleryController->postGalleryMediaGalleryhasmediaAction(1, 2, new Request());
 
         $this->assertInstanceOf(View::class, $view);
@@ -178,7 +178,7 @@ class GalleryControllerTest extends TestCase
 
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryTest::class);
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryHasMediaInterface::class);
         $view = $galleryController->postGalleryMediaGalleryhasmediaAction(1, 1, new Request());
 
         $this->assertInstanceOf(View::class, $view);
@@ -213,7 +213,7 @@ class GalleryControllerTest extends TestCase
         $formFactory = $this->createMock(FormFactoryInterface::class);
         $formFactory->expects($this->once())->method('createNamed')->willReturn($form);
 
-        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryTest::class);
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryHasMediaInterface::class);
         $view = $galleryController->putGalleryMediaGalleryhasmediaAction(1, 1, new Request());
 
         $this->assertInstanceOf(View::class, $view);
@@ -244,7 +244,7 @@ class GalleryControllerTest extends TestCase
         $formFactory = $this->createMock(FormFactoryInterface::class);
         $formFactory->expects($this->once())->method('createNamed')->willReturn($form);
 
-        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryTest::class);
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryHasMediaInterface::class);
         $view = $galleryController->putGalleryMediaGalleryhasmediaAction(1, 1, new Request());
 
         $this->assertInstanceOf(FormInterface::class, $view);
@@ -269,7 +269,7 @@ class GalleryControllerTest extends TestCase
 
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryTest::class);
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryHasMediaInterface::class);
         $view = $galleryController->deleteGalleryMediaGalleryhasmediaAction(1, 1);
 
         $this->assertSame(['deleted' => true], $view);
@@ -296,7 +296,7 @@ class GalleryControllerTest extends TestCase
 
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryTest::class);
+        $galleryController = new GalleryController($galleryManager, $mediaManager, $formFactory, GalleryHasMediaInterface::class);
         $view = $galleryController->deleteGalleryMediaGalleryhasmediaAction(1, 1);
 
         $this->assertInstanceOf(View::class, $view);
