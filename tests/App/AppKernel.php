@@ -16,9 +16,12 @@ namespace Sonata\MediaBundle\Tests\App;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use FOS\RestBundle\FOSRestBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
+use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Nelmio\ApiDocBundle\NelmioApiDocBundle;
+use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
+use Sonata\SeoBundle\SonataSeoBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -40,15 +43,18 @@ final class AppKernel extends Kernel
     public function registerBundles()
     {
         return [
-            new FrameworkBundle(),
-            new SecurityBundle(),
-            new TwigBundle(),
+            new DoctrineBundle(),
             new FOSRestBundle(),
+            new FrameworkBundle(),
+            new JMSSerializerBundle(),
+            new KnpMenuBundle(),
+            new NelmioApiDocBundle(),
+            new SecurityBundle(),
+            new SonataBlockBundle(),
             new SonataDoctrineBundle(),
             new SonataMediaBundle(),
-            new JMSSerializerBundle(),
-            new DoctrineBundle(),
-            new NelmioApiDocBundle(),
+            new SonataSeoBundle(),
+            new TwigBundle(),
         ];
     }
 
