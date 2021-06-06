@@ -25,5 +25,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             new ReferenceConfigurator('sonata.media.pool'),
             '',
         ])
+        // NEXT_MAJOR: make symfony/monolog-bundle a require dependency and remove nullOnInvalid
         ->call('setLogger', [(new ReferenceConfigurator('logger'))->nullOnInvalid()]);
 };
