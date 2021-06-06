@@ -41,7 +41,7 @@ abstract class AbstractProviderTest extends TestCase
     /**
      * @var FormMapper
      */
-    protected $formMapper;
+    protected $form;
 
     /**
      * @var FormTypeInterface|MockObject
@@ -62,7 +62,7 @@ abstract class AbstractProviderTest extends TestCase
         $admin->setLabelTranslatorStrategy($this->createStub(LabelTranslatorStrategyInterface::class));
         $admin->setFieldDescriptionFactory($this->createStub(FieldDescriptionFactoryInterface::class));
 
-        $this->formMapper = new FormMapper(
+        $this->form = new FormMapper(
             $this->createStub(FormContractorInterface::class),
             $this->formBuilder,
             $admin
@@ -82,7 +82,7 @@ abstract class AbstractProviderTest extends TestCase
             ->expects($this->atLeastOnce())
             ->method('add');
 
-        $this->provider->buildEditForm($this->formMapper);
+        $this->provider->buildEditForm($this->form);
     }
 
     public function testBuildCreateForm(): void
@@ -91,7 +91,7 @@ abstract class AbstractProviderTest extends TestCase
             ->expects($this->atLeastOnce())
             ->method('add');
 
-        $this->provider->buildCreateForm($this->formMapper);
+        $this->provider->buildCreateForm($this->form);
     }
 
     public function testBuildMediaType(): void

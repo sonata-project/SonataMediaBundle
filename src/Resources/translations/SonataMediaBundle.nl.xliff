@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="default">
                 <source>default</source>
-                <target>default</target>
+                <target>Standaard</target>
             </trans-unit>
             <trans-unit id="media">
                 <source>media</source>
@@ -401,15 +401,15 @@
             </trans-unit>
             <trans-unit id="widget_label_type">
                 <source>widget_label_type</source>
-                <target>widget_label_type</target>
+                <target>Type</target>
             </trans-unit>
             <trans-unit id="widget_label_context">
                 <source>widget_label_context</source>
-                <target>widget_label_context</target>
+                <target>Context</target>
             </trans-unit>
             <trans-unit id="widget_headline_information">
                 <source>widget_headline_information</source>
-                <target>widget_headline_information</target>
+                <target>Informatie</target>
             </trans-unit>
             <trans-unit id="widget_label_unlink">
                 <source>widget_label_unlink</source>
@@ -417,7 +417,7 @@
             </trans-unit>
             <trans-unit id="widget_label_binary_content">
                 <source>widget_label_binary_content</source>
-                <target>widget_label_binary_content</target>
+                <target>Bestand</target>
             </trans-unit>
             <trans-unit id="sonata_media_gallery_index">
                 <source>sonata_media_gallery_index</source>
@@ -445,119 +445,135 @@
             </trans-unit>
             <trans-unit id="sonata.media.block.media">
                 <source>sonata.media.block.media</source>
-                <target>sonata.media.block.media</target>
+                <target>Media</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.feature_media">
                 <source>sonata.media.block.feature_media</source>
-                <target>sonata.media.block.feature_media</target>
+                <target>Media uitlichten</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery">
                 <source>sonata.media.block.gallery</source>
-                <target>sonata.media.block.gallery</target>
+                <target>Media galerij</target>
             </trans-unit>
             <trans-unit id="form.label_title">
                 <source>form.label_title</source>
-                <target>form.label_title</target>
+                <target>Titel</target>
             </trans-unit>
             <trans-unit id="form.label_content">
                 <source>form.label_content</source>
-                <target>form.label_content</target>
+                <target>Inhoud</target>
             </trans-unit>
             <trans-unit id="form.label_orientation">
                 <source>form.label_orientation</source>
-                <target>form.label_orientation</target>
+                <target>Orientatie</target>
             </trans-unit>
             <trans-unit id="form.label_gallery">
                 <source>form.label_gallery</source>
-                <target>form.label_gallery</target>
+                <target>Galerij</target>
             </trans-unit>
             <trans-unit id="form.label_format">
                 <source>form.label_format</source>
-                <target>form.label_format</target>
+                <target>Formaat</target>
             </trans-unit>
             <trans-unit id="form.label_pause_time">
                 <source>form.label_pause_time</source>
-                <target>form.label_pause_time</target>
+                <target>Pauseren op</target>
             </trans-unit>
             <trans-unit id="form.label_start_paused">
                 <source>form.label_start_paused</source>
-                <target>form.label_start_paused</target>
+                <target>Start gepauseerd</target>
+            </trans-unit>
+            <trans-unit id="form.label_wrap">
+                <source>form.label_wrap</source>
+                <target>Tekst omloop</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_left">
                 <source>form.label_orientation_left</source>
-                <target>form.label_orientation_left</target>
+                <target>Links</target>
             </trans-unit>
             <trans-unit id="form.label_orientation_right">
                 <source>form.label_orientation_right</source>
-                <target>form.label_orientation_right</target>
+                <target>Rechts</target>
             </trans-unit>
             <trans-unit id="sonata.media.block.gallery_list">
                 <source>sonata.media.block.gallery_list</source>
-                <target>sonata.media.block.gallery_list</target>
+                <target>Album lijst</target>
             </trans-unit>
             <trans-unit id="label_gallery_enabled">
                 <source>label_gallery_enabled</source>
-                <target>label_gallery_enabled</target>
+                <target>Ingeschakeld</target>
             </trans-unit>
             <trans-unit id="label_gallery_disabled">
                 <source>label_gallery_disabled</source>
-                <target>label_gallery_disabled</target>
+                <target>Uitgeschakeld</target>
             </trans-unit>
             <trans-unit id="no_galleries_found">
                 <source>no_galleries_found</source>
-                <target>no_galleries_found</target>
+                <target>Geen galerijen gevonden</target>
             </trans-unit>
             <trans-unit id="view_all_galleries">
                 <source>view_all_galleries</source>
-                <target>view_all_galleries</target>
+                <target>Alle albums weergeven</target>
             </trans-unit>
             <trans-unit id="form.label_mode">
                 <source>form.label_mode</source>
-                <target>form.label_mode</target>
+                <target>Mode</target>
             </trans-unit>
             <trans-unit id="form.label_number">
                 <source>form.label_number</source>
-                <target>form.label_number</target>
+                <target>Nummer</target>
             </trans-unit>
             <trans-unit id="form.label_order">
                 <source>form.label_order</source>
-                <target>form.label_order</target>
+                <target>Volgorde</target>
             </trans-unit>
             <trans-unit id="form.label_order_name">
                 <source>form.label_order_name</source>
-                <target>form.label_order_name</target>
+                <target>Naam</target>
             </trans-unit>
             <trans-unit id="form.label_order_created_at">
                 <source>form.label_order_created_at</source>
-                <target>form.label_order_created_at</target>
+                <target>Aangemaakt om</target>
             </trans-unit>
             <trans-unit id="form.label_order_updated_at">
                 <source>form.label_order_updated_at</source>
-                <target>form.label_order_updated_at</target>
+                <target>Bijgewerkt om</target>
             </trans-unit>
             <trans-unit id="form.label_sort">
                 <source>form.label_sort</source>
-                <target>form.label_sort</target>
+                <target>Sorteren</target>
             </trans-unit>
             <trans-unit id="form.label_sort_asc">
                 <source>form.label_sort_asc</source>
-                <target>form.label_sort_asc</target>
+                <target>Oplopend</target>
             </trans-unit>
             <trans-unit id="form.label_sort_desc">
                 <source>form.label_sort_desc</source>
-                <target>form.label_sort_desc</target>
+                <target>Aflopend</target>
             </trans-unit>
             <trans-unit id="form.label_mode_public">
                 <source>form.label_mode_public</source>
-                <target>form.label_mode_public</target>
+                <target>Publiek</target>
             </trans-unit>
             <trans-unit id="form.label_mode_admin">
                 <source>form.label_mode_admin</source>
-                <target>form.label_mode_admin</target>
+                <target>Admin</target>
             </trans-unit>
             <trans-unit id="form.label_class">
                 <source>form.label_class</source>
-                <target>form.label_class</target>
+                <target>CSS class</target>
+            </trans-unit>
+            <trans-unit id="form.label_translation_domain">
+                <source>form.label_translation_domain</source>
+                <target>Vertaling domein</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form.label_icon</source>
+                <target>Icoon</target>
+            </trans-unit>
+            <trans-unit id="error.image_too_small">
+                <source>error.image_too_small</source>
+                <target>Afbeelding te klein, minimaal vereist formaat is %min_width% x %min_height%.</target>
             </trans-unit>
         </body>
     </file>

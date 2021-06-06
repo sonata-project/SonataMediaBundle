@@ -110,8 +110,8 @@ class FileProviderTest extends AbstractProviderTest
         $this->formBuilder->expects($this->exactly(8))
             ->method('add');
 
-        $provider->buildCreateForm($this->formMapper);
-        $provider->buildEditForm($this->formMapper);
+        $provider->buildCreateForm($this->form);
+        $provider->buildEditForm($this->form);
     }
 
     /**

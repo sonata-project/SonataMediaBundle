@@ -27,7 +27,7 @@ final class ServiceProviderDataTransformer implements DataTransformerInterface, 
     /**
      * @var MediaProviderInterface
      */
-    protected $provider;
+    private $provider;
 
     public function __construct(MediaProviderInterface $provider)
     {
@@ -41,14 +41,14 @@ final class ServiceProviderDataTransformer implements DataTransformerInterface, 
         return $value;
     }
 
-    public function reverseTransform($media)
+    public function reverseTransform($value)
     {
-        if (!$media instanceof MediaInterface) {
-            return $media;
+        if (!$value instanceof MediaInterface) {
+            return $value;
         }
 
         try {
-            $this->provider->transform($media);
+            $this->provider->transform($value);
         } catch (\Throwable $e) {
             // #1107 We must never throw an exception here.
             // An exception here would prevent us to provide meaningful errors through the Form
@@ -59,6 +59,6 @@ final class ServiceProviderDataTransformer implements DataTransformerInterface, 
             );
         }
 
-        return $media;
+        return $value;
     }
 }

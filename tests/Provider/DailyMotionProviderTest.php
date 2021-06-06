@@ -218,9 +218,8 @@ class DailyMotionProviderTest extends AbstractProviderTest
             ->method('add')
             ->willReturn(null);
 
-        $provider->buildCreateForm($this->formMapper);
-
-        $provider->buildEditForm($this->formMapper);
+        $provider->buildCreateForm($this->form);
+        $provider->buildEditForm($this->form);
     }
 
     public function testHelperProperties(): void

@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Document;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Document\MediaManager;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -49,14 +49,9 @@ class MediaManagerTest extends TestCase
 
     protected function createRegistryMock(): ManagerRegistry
     {
-        $dm = $this->getMockBuilder(DocumentManager::class)
-            ->setMethods(['persist', 'flush'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $dm = $this->createStub(ObjectManager::class);
         $registry = $this->createMock(ManagerRegistry::class);
 
-        $dm->method('persist');
-        $dm->method('flush');
         $registry->method('getManagerForClass')->willReturn($dm);
 
         return $registry;

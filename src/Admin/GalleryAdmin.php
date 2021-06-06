@@ -42,11 +42,11 @@ final class GalleryAdmin extends AbstractAdmin
         $this->pool = $pool;
     }
 
-    public function prePersist($gallery): void
+    public function prePersist($object): void
     {
         $parameters = $this->getPersistentParameters();
 
-        $gallery->setContext($parameters['context']);
+        $object->setContext($parameters['context']);
     }
 
     public function postUpdate(object $object): void

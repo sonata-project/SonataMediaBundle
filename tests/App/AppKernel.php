@@ -78,11 +78,11 @@ final class AppKernel extends Kernel
         $routes->import(__DIR__.'/routes.yml', '/', 'yaml');
     }
 
-    protected function configureContainer(ContainerBuilder $containerBuilder, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config.yml');
         $loader->load(__DIR__.'/security.yml');
-        $containerBuilder->setParameter('app.base_dir', $this->getBaseDir());
+        $container->setParameter('app.base_dir', $this->getBaseDir());
     }
 
     private function getBaseDir(): string

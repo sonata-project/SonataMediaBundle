@@ -1,0 +1,8 @@
+parameters:
+    level: 0
+    bootstrapFiles:
+        - vendor/bin/.phpunit/phpunit/vendor/autoload.php
+    paths:
+        - src
+        - tests
+    treatPhpDocTypesAsCertain: false

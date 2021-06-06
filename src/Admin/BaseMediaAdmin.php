@@ -53,10 +53,10 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $this->categoryManager = $categoryManager;
     }
 
-    public function prePersist(object $media): void
+    public function prePersist(object $object): void
     {
         $parameters = $this->getPersistentParameters();
-        $media->setContext($parameters['context']);
+        $object->setContext($parameters['context']);
     }
 
     public function configurePersistentParameters(): array

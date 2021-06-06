@@ -111,20 +111,20 @@ abstract class BaseVideoProvider extends BaseProvider
         );
     }
 
-    public function buildEditForm(FormMapper $formMapper): void
+    public function buildEditForm(FormMapper $form): void
     {
-        $formMapper->add('name');
-        $formMapper->add('enabled', null, ['required' => false]);
-        $formMapper->add('authorName');
-        $formMapper->add('cdnIsFlushable');
-        $formMapper->add('description');
-        $formMapper->add('copyright');
-        $formMapper->add('binaryContent', TextType::class, ['required' => false]);
+        $form->add('name');
+        $form->add('enabled', null, ['required' => false]);
+        $form->add('authorName');
+        $form->add('cdnIsFlushable');
+        $form->add('description');
+        $form->add('copyright');
+        $form->add('binaryContent', TextType::class, ['required' => false]);
     }
 
-    public function buildCreateForm(FormMapper $formMapper): void
+    public function buildCreateForm(FormMapper $form): void
     {
-        $formMapper->add('binaryContent', TextType::class, [
+        $form->add('binaryContent', TextType::class, [
             'constraints' => [
                 new NotBlank(),
                 new NotNull(),
