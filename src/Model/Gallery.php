@@ -50,7 +50,8 @@ abstract class Gallery implements GalleryInterface
     protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
-     * @var GalleryItemInterface[]|Collection
+     * @var Collection
+     * @phpstan-var Collection<GalleryItemInterface>
      */
     protected $galleryItems;
 

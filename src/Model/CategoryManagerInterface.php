@@ -38,7 +38,7 @@ interface CategoryManagerInterface
     /**
      * @param int $categoryId
      *
-     * @return CategoryInterface[]
+     * @return CategoryInterface|null
      */
     public function find($categoryId);
 

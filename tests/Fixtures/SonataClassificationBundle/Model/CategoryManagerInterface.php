@@ -17,4 +17,17 @@ use Sonata\Doctrine\Model\ManagerInterface;
 
 interface CategoryManagerInterface extends ManagerInterface
 {
+    /**
+     * @param string $context
+     *
+     * @return CategoryInterface
+     */
+    public function getRootCategory($context);
+
+    /**
+     * @param bool $loadChildren
+     *
+     * @return CategoryInterface[]
+     */
+    public function getRootCategories($loadChildren = true);
 }

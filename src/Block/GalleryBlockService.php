@@ -44,7 +44,7 @@ use Twig\Environment;
 final class GalleryBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
-     * @var ManagerInterface
+     * @var AdminInterface
      */
     protected $galleryAdmin;
 

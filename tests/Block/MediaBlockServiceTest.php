@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Block;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
@@ -26,6 +27,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MediaBlockServiceTest extends BlockServiceTestCase
 {
+    /**
+     * @var MockObject&ContainerInterface
+     */
     protected $container;
 
     /**
@@ -37,7 +41,7 @@ class MediaBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
-        $this->container = $this->createStub(ContainerInterface::class);
+        $this->container = $this->createMock(ContainerInterface::class);
 
         $this->blockService = new MediaBlockService(
             $this->twig,
@@ -48,8 +52,8 @@ class MediaBlockServiceTest extends BlockServiceTestCase
 
     public function testExecute(): void
     {
-        $block = $this->createStub(Block::class);
-        $media = $this->createStub(MediaInterface::class);
+        $block = $this->createMock(Block::class);
+        $media = $this->createMock(MediaInterface::class);
         $blockContext = $this->createMock(BlockContextInterface::class);
 
         $this->configureGetFormatChoices($media, ['format1' => 'format1']);
@@ -98,8 +102,8 @@ class MediaBlockServiceTest extends BlockServiceTestCase
 
     private function configureGetFormatChoices(MockObject $media, array $choices): void
     {
-        $mediaAdmin = $this->createStub(BaseMediaAdmin::class);
-        $pool = $this->createStub(Pool::class);
+        $mediaAdmin = $this->createMock(BaseMediaAdmin::class);
+        $pool = $this->createMock(Pool::class);
 
         $this->container->method('get')->with('sonata.media.admin.media')->willReturn($mediaAdmin);
         $mediaAdmin->method('getPool')->with()->willReturn($pool);

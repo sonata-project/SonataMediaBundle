@@ -17,6 +17,7 @@ use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
@@ -33,12 +34,12 @@ final class CropResizerTest extends TestCase
     private const QUALITY = 75;
 
     /**
-     * @var ImagineInterface&MockObject
+     * @var MockObject&ImagineInterface
      */
     private $adapter;
 
     /**
-     * @var MockObject&MetadataBuilderInterface
+     * @var Stub&MetadataBuilderInterface
      */
     private $metadata;
 

@@ -48,7 +48,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     ];
 
     /**
-     * @var MimeTypes
+     * @var MimeTypesInterface
      */
     private $mimeTypes;
 

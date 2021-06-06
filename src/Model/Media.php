@@ -44,7 +44,7 @@ abstract class Media implements MediaInterface
     protected $providerStatus;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $providerReference;
 

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Controller;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
@@ -42,8 +44,14 @@ class MediaAdminControllerTest extends TestCase
      */
     private $container;
 
+    /**
+     * @var MockObject&AdminInterface
+     */
     private $admin;
 
+    /**
+     * @var Request
+     */
     private $request;
 
     /**
@@ -51,6 +59,9 @@ class MediaAdminControllerTest extends TestCase
      */
     private $controller;
 
+    /**
+     * @var MockObject&Environment
+     */
     private $twig;
 
     protected function setUp(): void
@@ -58,7 +69,7 @@ class MediaAdminControllerTest extends TestCase
         $this->container = new Container();
         $this->admin = $this->createMock(AdminInterface::class);
         $this->request = new Request();
-        $this->twig = $this->createStub(Environment::class);
+        $this->twig = $this->createMock(Environment::class);
 
         $this->container->set('twig', $this->twig);
 
@@ -71,7 +82,7 @@ class MediaAdminControllerTest extends TestCase
 
     public function testCreateActionToSelectProvider(): void
     {
-        $pool = $this->createStub(Pool::class);
+        $pool = $this->createMock(Pool::class);
 
         $this->configureRender(
             '@SonataMedia/MediaAdmin/select_provider.html.twig',

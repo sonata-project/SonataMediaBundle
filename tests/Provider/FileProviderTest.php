@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
-use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
@@ -23,7 +23,6 @@ use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
@@ -37,7 +36,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class FileProviderTest extends AbstractProviderTest
 {
-    public function getProvider(): MediaProviderInterface
+    public function getProvider(): FileProvider
     {
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('resize')->willReturn(true);
@@ -161,7 +160,7 @@ class FileProviderTest extends AbstractProviderTest
         $this->assertSame('file.txt', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        $this->assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false on non reference formate');
+        $this->assertEmpty($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return empty on non reference formate');
         $this->assertNotNull($provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
     }
 
@@ -450,11 +449,11 @@ class FileProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @return Stub&ConstraintViolationBuilderInterface
+     * @return MockObject&ConstraintViolationBuilderInterface
      */
     private function createConstraintBuilder(): object
     {
-        $constraintBuilder = $this->createStub(ConstraintViolationBuilderInterface::class);
+        $constraintBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $constraintBuilder
             ->method('atPath')
             ->willReturnSelf();

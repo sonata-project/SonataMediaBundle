@@ -50,7 +50,7 @@ class LiipImagineThumbnailTest extends TestCase
         $media->setId(1023456);
         $media->setContext('default');
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $provider->method('requireThumbnails')->willReturn(true);
         $provider->method('getReferenceFile')->willReturn($referenceFile);
         $provider->method('getFormats')->willReturn($formats);
