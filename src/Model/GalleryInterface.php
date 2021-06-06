@@ -102,14 +102,12 @@ interface GalleryInterface
     public function getDefaultFormat();
 
     /**
-     * @param Collection $galleryItems
-     * @phpstan-param Collection<GalleryItemInterface> $galleryItems
+     * @param Collection<array-key, GalleryItemInterface> $galleryItems
      */
     public function setGalleryItems($galleryItems);
 
     /**
-     * @return Collection
-     * @phpstan-return Collection<GalleryItemInterface>
+     * @return Collection<array-key, GalleryItemInterface>
      */
     public function getGalleryItems();
 
