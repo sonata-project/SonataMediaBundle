@@ -95,12 +95,12 @@ interface MediaProviderInterface
     /**
      * build the related create form.
      */
-    public function buildCreateForm(FormMapper $formMapper);
+    public function buildCreateForm(FormMapper $form);
 
     /**
      * build the related create form.
      */
-    public function buildEditForm(FormMapper $formMapper);
+    public function buildEditForm(FormMapper $form);
 
     public function prePersist(MediaInterface $media);
 

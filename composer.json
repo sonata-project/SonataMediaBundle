@@ -91,6 +91,7 @@
         "matthiasnoback/symfony-config-test": "^4.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.0",
         "nelmio/api-doc-bundle": "^2.13.5",
+        "phpstan/phpstan": "^0.12.84",
         "sonata-project/admin-bundle": "^3.98.2",
         "sonata-project/block-bundle": "^3.17",
         "sonata-project/datagrid-bundle": "^3.0.1",
@@ -100,7 +101,8 @@
         "symfony/browser-kit": "^4.4 || ^5.2",
         "symfony/http-client": "^4.4 || ^5.2",
         "symfony/phpunit-bridge": "^5.2",
-        "symfony/security-csrf": "^4.4 || ^5.2"
+        "symfony/security-csrf": "^4.4 || ^5.2",
+        "vimeo/psalm": "^4.7.2"
     },
     "suggest": {
         "friendsofsymfony/rest-bundle": "If you want to expose a ReST API.",
@@ -134,5 +136,13 @@
             "Sonata\\MediaBundle\\Tests\\": "tests/",
             "Sonata\\ClassificationBundle\\": "tests/Fixtures/SonataClassificationBundle"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/simple-phpunit install"
+        ],
+        "post-update-cmd": [
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/simple-phpunit install"
+        ]
     }
 }

@@ -491,7 +491,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @param ExecutionContextInterface|LegacyExecutionContextInterface $context
+     * @param ExecutionContextInterface $context
      */
     public function isStatusErroneous($context)
     {

@@ -113,7 +113,7 @@ class MediaBlockService extends AbstractBlockService
      * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
-    public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildEditForm(FormMapper $form, BlockInterface $block)
     {
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
             $this->load($block);
@@ -121,7 +121,7 @@ class MediaBlockService extends AbstractBlockService
 
         $formatChoices = $this->getFormatChoices($block->getSetting('mediaId'));
 
-        $formMapper->add('settings', ImmutableArrayType::class, [
+        $form->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
                     'label' => 'form.label_title',
@@ -139,7 +139,7 @@ class MediaBlockService extends AbstractBlockService
                     'label' => 'form.label_class',
                     'required' => false,
                 ]],
-                [$this->getMediaBuilder($formMapper), null, []],
+                [$this->getMediaBuilder($form), null, []],
                 ['format', ChoiceType::class, [
                     'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
@@ -209,9 +209,9 @@ class MediaBlockService extends AbstractBlockService
      * @deprecated since sonata-project/media-bundle 3.25, to be removed in 4.0. You should use
      *             `Sonata\BlockBundle\Block\Service\EditableBlockService` interface instead.
      */
-    public function buildCreateForm(FormMapper $formMapper, BlockInterface $block)
+    public function buildCreateForm(FormMapper $form, BlockInterface $block)
     {
-        $this->buildEditForm($formMapper, $block);
+        $this->buildEditForm($form, $block);
     }
 
     /**
@@ -283,21 +283,21 @@ class MediaBlockService extends AbstractBlockService
     /**
      * @return FormBuilder
      */
-    protected function getMediaBuilder(FormMapper $formMapper)
+    protected function getMediaBuilder(FormMapper $form)
     {
         // simulate an association ...
         $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', [
             'translation_domain' => 'SonataMediaBundle',
         ]);
         $fieldDescription->setAssociationAdmin($this->getMediaAdmin());
-        $fieldDescription->setAdmin($formMapper->getAdmin());
+        $fieldDescription->setAdmin($form->getAdmin());
         $fieldDescription->setOption('edit', 'list');
         $fieldDescription->setAssociationMapping([
             'fieldName' => 'media',
             'type' => ClassMetadataInfo::MANY_TO_ONE,
         ]);
 
-        return $formMapper->create('mediaId', ModelListType::class, [
+        return $form->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->getMediaAdmin()->getClass(),
             'model_manager' => $this->getMediaAdmin()->getModelManager(),

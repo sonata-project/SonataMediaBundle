@@ -21,9 +21,9 @@ use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
  */
 class MediaAdmin extends Admin
 {
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $filter)
     {
-        $datagridMapper
+        $filter
             ->add('name')
             ->add('providerReference')
             ->add('enabled')

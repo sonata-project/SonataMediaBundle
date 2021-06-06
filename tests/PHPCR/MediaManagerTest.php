@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\PHPCR;
 
-use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\PHPCR\MediaManager;
@@ -64,10 +64,7 @@ class MediaManagerTest extends TestCase
 
     protected function createRegistryMock(): ManagerRegistry
     {
-        $dm = $this->getMockBuilder(DocumentManager::class)
-            ->setMethods(['persist', 'flush'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $dm = $this->createStub(ObjectManager::class);
         $registry = $this->createMock(ManagerRegistry::class);
 
         $dm->method('persist');

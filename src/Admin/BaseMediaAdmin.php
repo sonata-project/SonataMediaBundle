@@ -53,10 +53,10 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $this->categoryManager = $categoryManager;
     }
 
-    public function prePersist($media)
+    public function prePersist($object)
     {
         $parameters = $this->getPersistentParameters();
-        $media->setContext($parameters['context']);
+        $object->setContext($parameters['context']);
     }
 
     public function getPersistentParameters()
@@ -150,16 +150,16 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return new Metadata($object->getName(), $object->getDescription(), $url);
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $list)
     {
-        $listMapper
+        $list
             ->addIdentifier('name')
             ->add('description')
             ->add('enabled')
             ->add('size');
     }
 
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $form)
     {
         $media = $this->getSubject();
 
@@ -171,20 +171,20 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             return;
         }
 
-        $formMapper->add('providerName', HiddenType::class);
+        $form->add('providerName', HiddenType::class);
 
-        $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
+        $form->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
         if ($media->getId()) {
-            $provider->buildEditForm($formMapper);
+            $provider->buildEditForm($form);
         } else {
-            $provider->buildCreateForm($formMapper);
+            $provider->buildCreateForm($form);
         }
 
         if (null !== $this->categoryManager) {
-            $formMapper->add('category', ModelListType::class, [], [
+            $form->add('category', ModelListType::class, [], [
                 'link_parameters' => [
                     'context' => $media->getContext(),
                     'hide_context' => true,

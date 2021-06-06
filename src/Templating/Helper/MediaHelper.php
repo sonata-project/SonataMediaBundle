@@ -106,7 +106,7 @@ class MediaHelper extends Helper
 
         $options['src'] = $provider->generatePublicUrl($media, $format);
 
-        return $this->getTemplating()->render($provider->getTemplate('helper_thumbnail'), [
+        return $this->templating->render($provider->getTemplate('helper_thumbnail'), [
             'media' => $media,
             'options' => $options,
         ]);

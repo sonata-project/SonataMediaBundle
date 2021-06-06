@@ -45,16 +45,16 @@ class GalleryAdmin extends AbstractAdmin
         $this->pool = $pool;
     }
 
-    public function prePersist($gallery)
+    public function prePersist($object)
     {
         $parameters = $this->getPersistentParameters();
 
-        $gallery->setContext($parameters['context']);
+        $object->setContext($parameters['context']);
     }
 
-    public function postUpdate($gallery)
+    public function postUpdate($object)
     {
-        $gallery->reorderGalleryHasMedia();
+        $object->reorderGalleryHasMedia();
     }
 
     public function getPersistentParameters()
@@ -81,10 +81,10 @@ class GalleryAdmin extends AbstractAdmin
         return $gallery;
     }
 
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $form)
     {
         // define group zoning
-        $formMapper
+        $form
             // NEXT_MAJOR: Change Gallery key to `form_group.gallery` and update translations files.
             ->with('Gallery', ['class' => 'col-md-9'])->end()
             // NEXT_MAJOR: Change Options key to `form_group.options` and update translations files.
@@ -106,7 +106,7 @@ class GalleryAdmin extends AbstractAdmin
             $contexts[$contextItem] = $contextItem;
         }
 
-        $formMapper
+        $form
             ->with('Options')
                 ->add('context', ChoiceType::class, [
                     'choices' => $contexts,
@@ -129,18 +129,18 @@ class GalleryAdmin extends AbstractAdmin
             ->end();
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $list)
     {
-        $listMapper
+        $list
             ->addIdentifier('name')
             ->add('enabled', 'boolean', ['editable' => true])
             ->add('context', 'trans', ['catalogue' => 'SonataMediaBundle'])
             ->add('defaultFormat', 'trans', ['catalogue' => 'SonataMediaBundle']);
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $filter)
     {
-        $datagridMapper
+        $filter
             ->add('name')
             ->add('enabled')
             ->add('context', null, [

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.7.3@38c452ae584467e939d55377aaf83b5a26f19dd1">
+    <!-- NEXT_MAJOR: Remove the PHPCR issues -->
+    <file src="src/Admin/PHPCR/GalleryAdmin.php">
+        <InvalidExtendClass occurrences="1">
+            <code>BaseGalleryAdmin</code>
+        </InvalidExtendClass>
+        <MethodSignatureMismatch occurrences="1">
+            <code>protected function configureDatagridFilters(DatagridMapper $filter)</code>
+        </MethodSignatureMismatch>
+    </file>
+    <!-- NEXT_MAJOR: Remove this issue -->
+    <file src="src/Block/Breadcrumb/GalleryIndexBreadcrumbBlockService.php">
+        <MethodSignatureMismatch occurrences="1">
+            <code>protected function getMenu(BlockContextInterface $blockContext)</code>
+        </MethodSignatureMismatch>
+    </file>
+    <!-- NEXT_MAJOR: Remove this issue -->
+    <file src="src/Block/Breadcrumb/GalleryViewBreadcrumbBlockService.php">
+        <MethodSignatureMismatch occurrences="2">
+            <code>protected function getMenu(BlockContextInterface $blockContext)</code>
+            <code>public function configureSettings(OptionsResolver $resolver)</code>
+        </MethodSignatureMismatch>
+    </file>
+    <!-- NEXT_MAJOR: Remove this issue -->
+    <file src="src/Block/Breadcrumb/MediaViewBreadcrumbBlockService.php">
+        <MethodSignatureMismatch occurrences="2">
+            <code>protected function getMenu(BlockContextInterface $blockContext)</code>
+            <code>public function configureSettings(OptionsResolver $resolver)</code>
+        </MethodSignatureMismatch>
+    </file>
+    <file src="src/Controller/Api/GalleryController.php">
+        <MissingDependency occurrences="3">
+            <code>Rest\View</code>
+            <code>Rest\View</code>
+            <code>Rest\View|FormInterface</code>
+        </MissingDependency>
+    </file>
+    <file src="src/Controller/Api/MediaController.php">
+        <MissingDependency occurrences="2">
+            <code>Rest\View</code>
+            <code>Rest\View|FormInterface</code>
+        </MissingDependency>
+    </file>
+    <!-- NEXT_MAJOR: Remove this issue -->
+    <file src="src/DependencyInjection/SonataMediaExtension.php">
+        <UndefinedClass occurrences="1">
+            <code>DeprecatedDoctrineCollector</code>
+        </UndefinedClass>
+    </file>
+    <file src="src/Listener/ODM/MediaEventSubscriber.php">
+        <UndefinedClass occurrences="6">
+            <code>Events</code>
+            <code>Events</code>
+            <code>Events</code>
+            <code>Events</code>
+            <code>Events</code>
+            <code>Events</code>
+        </UndefinedClass>
+    </file>
+    <file src="src/Listener/PHPCR/MediaEventSubscriber.php">
+        <UndefinedClass occurrences="6">
+            <code>Event</code>
+            <code>Event</code>
+            <code>Event</code>
+            <code>Event</code>
+            <code>Event</code>
+            <code>Event</code>
+        </UndefinedClass>
+    </file>
+    <file src="src/PHPCR/BaseGalleryHasMediaRepository.php">
+        <UndefinedClass occurrences="2">
+            <code>DocumentRepository</code>
+            <code>RepositoryIdInterface</code>
+        </UndefinedClass>
+    </file>
+    <file src="src/PHPCR/BaseGalleryRepository.php">
+        <UndefinedClass occurrences="2">
+            <code>DocumentRepository</code>
+            <code>RepositoryIdInterface</code>
+        </UndefinedClass>
+    </file>
+    <file src="src/PHPCR/BaseMediaRepository.php">
+        <UndefinedClass occurrences="2">
+            <code>DocumentRepository</code>
+            <code>RepositoryIdInterface</code>
+        </UndefinedClass>
+    </file>
+    <!-- NEXT_MAJOR: Remove this issue -->
+    <file src="src/Provider/MetadataInterface.php">
+        <UndefinedClass occurrences="1">
+            <code>CoreMetadataInterface</code>
+        </UndefinedClass>
+        <UnrecognizedStatement occurrences="1"/>
+    </file>
+</files>

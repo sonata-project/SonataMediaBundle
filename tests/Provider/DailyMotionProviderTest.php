@@ -224,14 +224,14 @@ class DailyMotionProviderTest extends AbstractProviderTest
             ->method('trans')
             ->willReturn('message');
 
-        $formMapper = $this->createMock(FormMapper::class);
-        $formMapper->expects($this->exactly(8))
+        $form = $this->createMock(FormMapper::class);
+        $form->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
 
-        $provider->buildCreateForm($formMapper);
+        $provider->buildCreateForm($form);
 
-        $provider->buildEditForm($formMapper);
+        $provider->buildEditForm($form);
     }
 
     public function testHelperProperties(): void

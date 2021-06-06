@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class MediaAdmin extends Admin
 {
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $filter)
     {
         $options = [
             'choices' => [],
@@ -33,7 +33,7 @@ class MediaAdmin extends Admin
             $options['choices'][$name] = $name;
         }
 
-        $datagridMapper
+        $filter
             ->add('name')
             ->add('providerReference')
             ->add('enabled')
@@ -42,10 +42,10 @@ class MediaAdmin extends Admin
             ], ChoiceType::class, $options);
 
         if (null !== $this->categoryManager) {
-            $datagridMapper->add('category', null, ['show_filter' => false]);
+            $filter->add('category', null, ['show_filter' => false]);
         }
 
-        $datagridMapper
+        $filter
             ->add('width')
             ->add('height')
             ->add('contentType');
@@ -57,7 +57,7 @@ class MediaAdmin extends Admin
             $providers[$name] = $name;
         }
 
-        $datagridMapper->add('providerName', ChoiceFilter::class, [
+        $filter->add('providerName', ChoiceFilter::class, [
             'field_options' => [
                 'choices' => $providers,
                 'required' => false,

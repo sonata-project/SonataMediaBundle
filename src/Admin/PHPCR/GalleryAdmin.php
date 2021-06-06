@@ -48,15 +48,15 @@ class GalleryAdmin extends BaseGalleryAdmin
         return $query;
     }
 
-    public function id($object)
+    public function id($model)
     {
-        return $this->getUrlsafeIdentifier($object);
+        return $this->getUrlsafeIdentifier($model);
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $filter)
     {
         // TODO disabled filter due to no attached service for filter types: string, checkbox
-//        $datagridMapper
+//        $filter
 //            ->add('name')
 //            ->add('enabled')
 //            ->add('context')

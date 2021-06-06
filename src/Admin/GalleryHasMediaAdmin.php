@@ -24,7 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
  */
 class GalleryHasMediaAdmin extends AbstractAdmin
 {
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $form)
     {
         $link_parameters = [];
 
@@ -40,7 +40,7 @@ class GalleryHasMediaAdmin extends AbstractAdmin
             }
         }
 
-        $formMapper
+        $form
             ->add('media', ModelListType::class, ['required' => false], [
                 'link_parameters' => $link_parameters,
             ])
@@ -48,9 +48,9 @@ class GalleryHasMediaAdmin extends AbstractAdmin
             ->add('position', HiddenType::class);
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $list)
     {
-        $listMapper
+        $list
             ->add('media')
             ->add('gallery')
             ->add('position')
