@@ -22,6 +22,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Sonata\MediaBundle\Model\CategoryManager;
+use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -336,7 +337,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->load();
 
         $this->assertContainerBuilderHasService('sonata.media.pool');
-        $this->assertContainerBuilderHasAlias('%sonata.media.pool.class%', 'sonata.media.pool');
+        $this->assertContainerBuilderHasAlias(Pool::class, 'sonata.media.pool');
     }
 
     public function testCdnCloudFrontVersion3(): void
