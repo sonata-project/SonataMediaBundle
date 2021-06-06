@@ -23,14 +23,18 @@ use Psr\Http\Message\RequestInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\YouTubeProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
+/**
+ * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\YouTubeProvider>
+ */
 class YouTubeProviderTest extends AbstractProviderTest
 {
-    public function getProvider(?object $client = null, ?RequestFactoryInterface $messageFactory = null): YouTubeProvider
+    public function getProvider(?object $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {
         if (null === $client) {
             $client = $this->createStub(ClientInterface::class);
@@ -71,8 +75,6 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public function testProvider(): void
     {
-        $provider = $this->getProvider();
-
         $media = new Media();
         $media->setName('Nono le petit robot');
         $media->setProviderName('youtube');
@@ -82,10 +84,10 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $media->setId(1023457);
 
-        $this->assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
+        $this->assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $this->provider->getReferenceImage($media));
 
-        $this->assertSame('default/0011/24', $provider->generatePath($media));
-        $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('default/0011/24', $this->provider->generatePath($media));
+        $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail(): void
@@ -218,21 +220,17 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public function testForm(): void
     {
-        $provider = $this->getProvider();
-
         $this->formBuilder->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
 
-        $provider->buildCreateForm($this->form);
-        $provider->buildEditForm($this->form);
+        $this->provider->buildCreateForm($this->form);
+        $this->provider->buildEditForm($this->form);
     }
 
     public function testHelperProperties(): void
     {
-        $provider = $this->getProvider();
-
-        $provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', ['width' => 100]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
@@ -240,7 +238,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $media->setHeight(100);
         $media->setWidth(100);
 
-        $properties = $provider->getHelperProperties($media, 'admin');
+        $properties = $this->provider->getHelperProperties($media, 'admin');
 
         $this->assertIsArray($properties);
         $this->assertSame(100, $properties['player_parameters']['height']);
@@ -251,17 +249,15 @@ class YouTubeProviderTest extends AbstractProviderTest
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertSame('https://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
+        $this->assertSame('https://www.youtube.com/watch?v=123456', $this->provider->getReferenceUrl($media));
     }
 
     public function testMetadata(): void
     {
-        $provider = $this->getProvider();
-
-        $this->assertSame('youtube', $provider->getProviderMetadata()->getTitle());
-        $this->assertSame('youtube.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-youtube', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        $this->assertSame('youtube', $this->provider->getProviderMetadata()->getTitle());
+        $this->assertSame('youtube.description', $this->provider->getProviderMetadata()->getDescription());
+        $this->assertNotNull($this->provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa fa-youtube', $this->provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 }

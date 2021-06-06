@@ -19,13 +19,17 @@ use Gaufrette\Filesystem;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Provider\BaseProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Tests\App\Provider\TestProvider;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 
+/**
+ * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Tests\App\Provider\TestProvider>
+ */
 class BaseProviderTest extends AbstractProviderTest
 {
-    public function getProvider(): TestProvider
+    public function getProvider(): MediaProviderInterface
     {
         $adapter = $this->createMock(Adapter::class);
 
@@ -60,39 +64,36 @@ class BaseProviderTest extends AbstractProviderTest
 
     public function testBaseProvider(): void
     {
-        $provider = $this->getProvider();
-        $provider->setTemplates([
+        $this->provider->setTemplates([
             'edit' => 'edit.twig',
         ]);
 
-        $this->assertIsArray($provider->getTemplates());
-        $this->assertSame('edit.twig', $provider->getTemplate('edit'));
+        $this->assertIsArray($this->provider->getTemplates());
+        $this->assertSame('edit.twig', $this->provider->getTemplate('edit'));
 
-        $this->assertInstanceOf(CDNInterface::class, $provider->getCdn());
+        $this->assertInstanceOf(CDNInterface::class, $this->provider->getCdn());
 
-        $provider->addFormat('small', []);
+        $this->provider->addFormat('small', []);
 
-        $this->assertIsArray($provider->getFormat('small'));
+        $this->assertIsArray($this->provider->getFormat('small'));
 
         $media = new Media();
         $media->setContext('test');
 
-        $this->assertSame('admin', $provider->getFormatName($media, 'admin'));
-        $this->assertSame('reference', $provider->getFormatName($media, 'reference'));
-        $this->assertSame('test_small', $provider->getFormatName($media, 'small'));
-        $this->assertSame('test_small', $provider->getFormatName($media, 'test_small'));
+        $this->assertSame('admin', $this->provider->getFormatName($media, 'admin'));
+        $this->assertSame('reference', $this->provider->getFormatName($media, 'reference'));
+        $this->assertSame('test_small', $this->provider->getFormatName($media, 'small'));
+        $this->assertSame('test_small', $this->provider->getFormatName($media, 'test_small'));
     }
 
     public function testGetCdnPath(): void
     {
-        $provider = $this->getProvider();
-        $this->assertSame('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
+        $this->assertSame('/uploads/media/my_file.txt', $this->provider->getCdnPath('my_file.txt', false));
     }
 
     public function testFlushCdn(): void
     {
-        $provider = $this->getProvider();
-        $provider->addFormat('test', []);
+        $this->provider->addFormat('test', []);
 
         $media = new Media();
         $media->setId('42');
@@ -101,29 +102,29 @@ class BaseProviderTest extends AbstractProviderTest
         $media->setContext('test');
         $this->assertNull($media->getCdnFlushIdentifier());
         $this->assertNull($media->getCdnStatus());
-        $provider->flushCdn($media);
+        $this->provider->flushCdn($media);
         $this->assertTrue($media->getCdnIsFlushable());
         $this->assertNotNull($media->getCdnFlushIdentifier());
         $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
 
         $media->setContext('other');
-        $provider->flushCdn($media);
+        $this->provider->flushCdn($media);
         $this->assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
         $this->assertNull($media->getCdnFlushIdentifier());
 
         $media->setContext('test');
-        $provider->flushCdn($media);
+        $this->provider->flushCdn($media);
         $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
         $this->assertNotNull($media->getCdnFlushIdentifier());
 
         $media->setContext('other');
-        $provider->flushCdn($media);
+        $this->provider->flushCdn($media);
         $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
         $this->assertNotNull($media->getCdnFlushIdentifier());
-        $provider->flushCdn($media);
+        $this->provider->flushCdn($media);
         $this->assertSame(CDNInterface::STATUS_WAITING, $media->getCdnStatus());
         $this->assertNotNull($media->getCdnFlushIdentifier());
-        $provider->flushCdn($media);
+        $this->provider->flushCdn($media);
         $this->assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
         $this->assertNull($media->getCdnFlushIdentifier());
     }

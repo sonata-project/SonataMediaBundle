@@ -23,6 +23,7 @@ use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
@@ -34,9 +35,12 @@ use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
+/**
+ * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\FileProvider>
+ */
 class FileProviderTest extends AbstractProviderTest
 {
-    public function getProvider(): FileProvider
+    public function getProvider(): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('resize')->willReturn(true);
@@ -69,34 +73,30 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testProvider(): void
     {
-        $provider = $this->getProvider();
-
         $media = new Media();
         $media->setName('test.txt');
         $media->setProviderReference('ASDASD.txt');
         $media->setContext('default');
 
         $media->setId(1023456);
-        $this->assertSame('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
+        $this->assertSame('default/0011/24/ASDASD.txt', $this->provider->getReferenceImage($media));
 
-        $this->assertSame('default/0011/24', $provider->generatePath($media));
+        $this->assertSame('default/0011/24', $this->provider->generatePath($media));
 
         // default icon image
-        $this->assertSame('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('/uploads/media/sonatamedia/files/big/file.png', $this->provider->generatePublicUrl($media, 'big'));
     }
 
     public function testHelperProperties(): void
     {
-        $provider = $this->getProvider();
-
-        $provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', ['width' => 100]);
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(10);
         $media->setHeight(100);
 
-        $properties = $provider->getHelperProperties($media, 'admin');
+        $properties = $this->provider->getHelperProperties($media, 'admin');
 
         $this->assertIsArray($properties);
         $this->assertSame('test.png', $properties['title']);
@@ -104,13 +104,11 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testForm(): void
     {
-        $provider = $this->getProvider();
-
         $this->formBuilder->expects($this->exactly(8))
             ->method('add');
 
-        $provider->buildCreateForm($this->form);
-        $provider->buildEditForm($this->form);
+        $this->provider->buildCreateForm($this->form);
+        $this->provider->buildEditForm($this->form);
     }
 
     /**
@@ -118,34 +116,30 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testThumbnail(): void
     {
-        $provider = $this->getProvider();
-
         $media = new Media();
         $media->setName('test.png');
         $media->setId(1023456);
 
-        $provider->generateThumbnails($media);
+        $this->provider->generateThumbnails($media);
     }
 
     public function testEvent(): void
     {
-        $provider = $this->getProvider();
-
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $this->provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
         $file = __DIR__.'/../Fixtures/file.txt';
 
         $media = new Media();
-        $provider->preUpdate($media);
+        $this->provider->preUpdate($media);
         $this->assertNull($media->getProviderReference());
 
         $media->setBinaryContent($file);
-        $provider->transform($media);
+        $this->provider->transform($media);
 
         $this->assertInstanceOf(\DateTime::class, $media->getUpdatedAt());
         $this->assertNotNull($media->getProviderReference());
 
-        $provider->postUpdate($media);
+        $this->provider->postUpdate($media);
 
         $file = new File(realpath(__DIR__.'/../Fixtures/file.txt'));
 
@@ -155,19 +149,17 @@ class FileProviderTest extends AbstractProviderTest
         $media->setId(1023456);
 
         // pre persist the media
-        $provider->transform($media);
+        $this->provider->transform($media);
 
         $this->assertSame('file.txt', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        $this->assertEmpty($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return empty on non reference formate');
-        $this->assertNotNull($provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
+        $this->assertEmpty($this->provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return empty on non reference formate');
+        $this->assertNotNull($this->provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
     }
 
     public function testDownload(): void
     {
-        $provider = $this->getProvider();
-
         $file = new File(realpath(__DIR__.'/../Fixtures/FileProviderTest/0011/24/file.txt'));
 
         $media = new Media();
@@ -176,7 +168,7 @@ class FileProviderTest extends AbstractProviderTest
         $media->setContext('FileProviderTest');
         $media->setId(1023456);
 
-        $response = $provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
+        $response = $this->provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
 
         $this->assertInstanceOf(BinaryFileResponse::class, $response);
     }
@@ -187,10 +179,7 @@ class FileProviderTest extends AbstractProviderTest
     public function testTransform(string $expected, Media $media): void
     {
         $closure = function () use ($expected, $media): void {
-            $provider = $this->getProvider();
-
-            $provider->transform($media);
-
+            $this->provider->transform($media);
             $this->assertInstanceOf($expected, $media->getBinaryContent());
         };
 
@@ -249,12 +238,10 @@ class FileProviderTest extends AbstractProviderTest
             ->method('getBinaryContent')
             ->willReturn($binaryContent);
 
-        $provider = $this->getProvider();
-
         $setFileContents = new \ReflectionMethod(FileProvider::class, 'setFileContents');
         $setFileContents->setAccessible(true);
 
-        $setFileContents->invoke($provider, $media);
+        $setFileContents->invoke($this->provider, $media);
     }
 
     public function testBinaryContentStreamWrapped(): void
@@ -287,12 +274,10 @@ class FileProviderTest extends AbstractProviderTest
             ->method('getBinaryContent')
             ->willReturn($binaryContent);
 
-        $provider = $this->getProvider();
-
         $setFileContents = new \ReflectionMethod(FileProvider::class, 'setFileContents');
         $setFileContents->setAccessible(true);
 
-        $setFileContents->invoke($provider, $media);
+        $setFileContents->invoke($this->provider, $media);
     }
 
     /**
@@ -304,8 +289,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $media = new Media();
 
-        $provider = $this->getProvider();
-        $provider->validate($errorElement, $media);
+        $this->provider->validate($errorElement, $media);
     }
 
     public function testValidateUploadSize(): void
@@ -333,8 +317,7 @@ class FileProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $provider = $this->getProvider();
-        $provider->validate($errorElement, $media);
+        $this->provider->validate($errorElement, $media);
     }
 
     public function testValidateUploadNullSize(): void
@@ -362,8 +345,7 @@ class FileProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $provider = $this->getProvider();
-        $provider->validate($errorElement, $media);
+        $this->provider->validate($errorElement, $media);
     }
 
     public function testValidateUploadSizeOK(): void
@@ -389,8 +371,7 @@ class FileProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $provider = $this->getProvider();
-        $provider->validate($errorElement, $media);
+        $this->provider->validate($errorElement, $media);
     }
 
     public function testValidateUploadType(): void
@@ -423,19 +404,16 @@ class FileProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $provider = $this->getProvider();
-        $provider->validate($errorElement, $media);
+        $this->provider->validate($errorElement, $media);
     }
 
     public function testMetadata(): void
     {
-        $provider = $this->getProvider();
-
-        $this->assertSame('file', $provider->getProviderMetadata()->getTitle());
-        $this->assertSame('file.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-file-text-o', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        $this->assertSame('file', $this->provider->getProviderMetadata()->getTitle());
+        $this->assertSame('file.description', $this->provider->getProviderMetadata()->getDescription());
+        $this->assertNotNull($this->provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa fa-file-text-o', $this->provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement

@@ -29,7 +29,11 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
+/**
+ * @phpstan-extends AbstractProviderTest<ImageProvider>
+ */
 class ImageProviderTest extends AbstractProviderTest
 {
     public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], ?Stub $box = null): MediaProviderInterface
@@ -77,22 +81,20 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testProvider(): void
     {
-        $provider = $this->getProvider();
-
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
         $media->setContext('default');
 
-        $this->assertSame('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
+        $this->assertSame('default/0011/24/ASDASDAS.png', $this->provider->getReferenceImage($media));
 
-        $this->assertSame('default/0011/24', $provider->generatePath($media));
-        $this->assertSame('/uploads/media/default/0011/24/thumb_1023456_big.png', $provider->generatePublicUrl($media, 'big'));
-        $this->assertSame('/uploads/media/default/0011/24/ASDASDAS.png', $provider->generatePublicUrl($media, 'reference'));
+        $this->assertSame('default/0011/24', $this->provider->generatePath($media));
+        $this->assertSame('/uploads/media/default/0011/24/thumb_1023456_big.png', $this->provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('/uploads/media/default/0011/24/ASDASDAS.png', $this->provider->generatePublicUrl($media, 'reference'));
 
-        $this->assertSame('default/0011/24/ASDASDAS.png', $provider->generatePrivateUrl($media, 'reference'));
-        $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertSame('default/0011/24/ASDASDAS.png', $this->provider->generatePrivateUrl($media, 'reference'));
+        $this->assertSame('default/0011/24/thumb_1023456_big.png', $this->provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testHelperProperties(): void
@@ -186,32 +188,28 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testThumbnail(): void
     {
-        $provider = $this->getProvider();
-
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setId(1023456);
         $media->setContext('default');
 
-        $this->assertTrue($provider->requireThumbnails());
+        $this->assertTrue($this->provider->requireThumbnails());
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $this->provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
+        $this->assertNotEmpty($this->provider->getFormats(), '::getFormats() return an array');
 
-        $provider->generateThumbnails($media);
+        $this->provider->generateThumbnails($media);
 
-        $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
+        $this->assertSame('default/0011/24/thumb_1023456_big.png', $this->provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent(): void
     {
-        $provider = $this->getProvider();
+        $this->provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
-
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../Fixtures/logo.png'));
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
 
         $media = new Media();
         $media->setContext('default');
@@ -219,39 +217,34 @@ class ImageProviderTest extends AbstractProviderTest
         $media->setId(1023456);
 
         // pre persist the media
-        $provider->transform($media);
-        $provider->prePersist($media);
+        $this->provider->transform($media);
+        $this->provider->prePersist($media);
 
         $this->assertSame('logo.png', $media->getName(), '::getName() return the file name');
         $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
         // post persist the media
-        $provider->postPersist($media);
-
-        $provider->postRemove($media);
+        $this->provider->postPersist($media);
+        $this->provider->postRemove($media);
     }
 
     public function testTransformFormatNotSupported(): void
     {
-        $provider = $this->getProvider();
-
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../Fixtures/logo.png'));
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
 
         $media = new Media();
         $media->setBinaryContent($file);
 
-        $this->assertNull($provider->transform($media));
+        $this->assertNull($this->provider->transform($media));
         $this->assertNull($media->getWidth(), 'Width staid null');
     }
 
     public function testMetadata(): void
     {
-        $provider = $this->getProvider();
-
-        $this->assertSame('image', $provider->getProviderMetadata()->getTitle());
-        $this->assertSame('image.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-picture-o', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        $this->assertSame('image', $this->provider->getProviderMetadata()->getTitle());
+        $this->assertSame('image.description', $this->provider->getProviderMetadata()->getDescription());
+        $this->assertNotNull($this->provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa fa-picture-o', $this->provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 }

@@ -23,14 +23,18 @@ use Psr\Http\Message\RequestInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
+/**
+ * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\VimeoProvider>
+ */
 class VimeoProviderTest extends AbstractProviderTest
 {
-    public function getProvider(?object $client = null, ?RequestFactoryInterface $requestFactory = null): VimeoProvider
+    public function getProvider(?object $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
         if (null === $client) {
             $client = $this->createStub(ClientInterface::class);
@@ -71,8 +75,6 @@ class VimeoProviderTest extends AbstractProviderTest
 
     public function testProvider(): void
     {
-        $provider = $this->getProvider();
-
         $media = new Media();
         $media->setName('Blinky™');
         $media->setProviderName('vimeo');
@@ -81,10 +83,10 @@ class VimeoProviderTest extends AbstractProviderTest
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Vimeo","provider_url":"http:\/\/vimeo.com\/","title":"Blinky\u2122","author_name":"Ruairi Robinson","author_url":"http:\/\/vimeo.com\/ruairirobinson","is_plus":"1","html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>","width":"1920","height":"1080","duration":"771","description":"","thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg","thumbnail_width":1280,"thumbnail_height":720,"video_id":"21216091"}', true));
 
         $media->setId(1023457);
-        $this->assertSame('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $provider->getReferenceImage($media));
+        $this->assertSame('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $this->provider->getReferenceImage($media));
 
-        $this->assertSame('default/0011/24', $provider->generatePath($media));
-        $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        $this->assertSame('default/0011/24', $this->provider->generatePath($media));
+        $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail(): void
@@ -216,21 +218,17 @@ class VimeoProviderTest extends AbstractProviderTest
 
     public function testForm(): void
     {
-        $provider = $this->getProvider();
-
         $this->formBuilder->expects($this->exactly(8))
             ->method('add')
             ->willReturn(null);
 
-        $provider->buildCreateForm($this->form);
-        $provider->buildEditForm($this->form);
+        $this->provider->buildCreateForm($this->form);
+        $this->provider->buildEditForm($this->form);
     }
 
     public function testHelperProperies(): void
     {
-        $provider = $this->getProvider();
-
-        $provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', ['width' => 100]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
@@ -238,7 +236,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $media->setHeight(100);
         $media->setWidth(100);
 
-        $properties = $provider->getHelperProperties($media, 'admin');
+        $properties = $this->provider->getHelperProperties($media, 'admin');
 
         $this->assertIsArray($properties);
         $this->assertSame(100, $properties['height']);
@@ -249,17 +247,15 @@ class VimeoProviderTest extends AbstractProviderTest
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertSame('https://vimeo.com/123456', $this->getProvider()->getReferenceUrl($media));
+        $this->assertSame('https://vimeo.com/123456', $this->provider->getReferenceUrl($media));
     }
 
     public function testMetadata(): void
     {
-        $provider = $this->getProvider();
-
-        $this->assertSame('vimeo', $provider->getProviderMetadata()->getTitle());
-        $this->assertSame('vimeo.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-vimeo-square', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        $this->assertSame('vimeo', $this->provider->getProviderMetadata()->getTitle());
+        $this->assertSame('vimeo.description', $this->provider->getProviderMetadata()->getDescription());
+        $this->assertNotNull($this->provider->getProviderMetadata()->getImage());
+        $this->assertSame('fa fa-vimeo-square', $this->provider->getProviderMetadata()->getOption('class'));
+        $this->assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 }

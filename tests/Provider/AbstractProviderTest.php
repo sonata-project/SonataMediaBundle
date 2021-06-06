@@ -30,6 +30,8 @@ use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
+ *
+ * @phpstan-template T of MediaProviderInterface
  */
 abstract class AbstractProviderTest extends TestCase
 {
@@ -50,6 +52,7 @@ abstract class AbstractProviderTest extends TestCase
 
     /**
      * @var MediaProviderInterface
+     * @phpstan-var T
      */
     protected $provider;
 
@@ -73,6 +76,8 @@ abstract class AbstractProviderTest extends TestCase
 
     /**
      * Get the provider which have to be tested.
+     *
+     * @phpstan-return T
      */
     abstract public function getProvider(): MediaProviderInterface;
 
