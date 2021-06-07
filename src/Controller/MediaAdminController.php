@@ -38,15 +38,7 @@ final class MediaAdminController extends CRUDController
         return parent::createAction($request);
     }
 
-    public function addRenderExtraParams(array $parameters = []): array
-    {
-        $parameters['media_pool'] = $this->get('sonata.media.pool');
-        $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
-
-        return parent::addRenderExtraParams($parameters);
-    }
-
-    public function listAction(?Request $request = null): Response
+    public function listAction(Request $request): Response
     {
         $this->admin->checkAccess('list');
 
@@ -102,5 +94,13 @@ final class MediaAdminController extends CRUDController
             'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ]);
+    }
+
+    protected function addRenderExtraParams(array $parameters = []): array
+    {
+        $parameters['media_pool'] = $this->get('sonata.media.pool');
+        $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
+
+        return parent::addRenderExtraParams($parameters);
     }
 }

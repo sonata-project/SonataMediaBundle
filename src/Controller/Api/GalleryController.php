@@ -53,20 +53,11 @@ final class GalleryController
      */
     private $formFactory;
 
-    /**
-     * @var string
-     */
-    private $galleryItemClass;
-
-    /**
-     * @param string $galleryItemClass
-     */
-    public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory, $galleryItemClass)
+    public function __construct(GalleryManagerInterface $galleryManager, MediaManagerInterface $mediaManager, FormFactoryInterface $formFactory)
     {
         $this->galleryManager = $galleryManager;
         $this->mediaManager = $mediaManager;
         $this->formFactory = $formFactory;
-        $this->galleryItemClass = $galleryItemClass;
     }
 
     /**
@@ -582,7 +573,7 @@ final class GalleryController
      */
     private function handleWriteGallery($request, $id = null)
     {
-        $gallery = $id ? $this->getGallery($id) : null;
+        $gallery = $this->getGallery($id);
 
         $form = $this->formFactory->createNamed('', ApiGalleryType::class, $gallery, [
             'csrf_protection' => false,
