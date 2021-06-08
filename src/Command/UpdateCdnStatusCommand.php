@@ -151,7 +151,7 @@ EOF
                     '<error>Unable update CDN status, media: %s - %s </error>',
                     $media->getId(),
                     $e->getMessage()
-                ), ['exception' => $e]);
+                ));
 
                 continue;
             }
@@ -163,7 +163,7 @@ EOF
                     '<error>Unable to update medium: %s - %s </error>',
                     $media->getId(),
                     $e->getMessage()
-                ), ['exception' => $e]);
+                ));
 
                 continue;
             }

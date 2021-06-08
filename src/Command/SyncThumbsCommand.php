@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\Doctrine\Model\ClearableManagerInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -160,7 +161,9 @@ final class SyncThumbsCommand extends Command
             }
 
             //clear entity manager for saving memory
-            $this->mediaManager->getObjectManager()->clear();
+            if ($this->mediaManager instanceof ClearableManagerInterface) {
+                $this->mediaManager->clear();
+            }
 
             if ($batchesLimit > 0 && $batchCounter === $batchesLimit) {
                 break;

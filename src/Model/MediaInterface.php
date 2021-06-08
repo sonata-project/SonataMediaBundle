@@ -42,7 +42,7 @@ interface MediaInterface
 
     /**
      * @param string $name
-     * @param null   $default
+     * @param mixed  $default
      */
     public function getMetadataValue($name, $default = null);
 
@@ -261,14 +261,14 @@ interface MediaInterface
     /**
      * Set cdn_flush_identifier.
      *
-     * @param string $cdnFlushIdentifier
+     * @param string|null $cdnFlushIdentifier
      */
     public function setCdnFlushIdentifier($cdnFlushIdentifier);
 
     /**
      * Get cdn_flush_identifier.
      *
-     * @return string $cdnFlushIdentifier
+     * @return string|null $cdnFlushIdentifier
      */
     public function getCdnFlushIdentifier();
 

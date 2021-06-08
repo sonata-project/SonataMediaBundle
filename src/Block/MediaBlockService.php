@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
@@ -25,10 +25,8 @@ use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
-use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +40,12 @@ use Twig\Environment;
 class MediaBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
-     * @var BaseMediaAdmin
+     * @var Pool
+     */
+    protected $pool;
+
+    /**
+     * @var AdminInterface
      */
     protected $mediaAdmin;
 
@@ -51,34 +54,17 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
      */
     protected $mediaManager;
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
     public function __construct(
         Environment $twig,
-        ContainerInterface $container,
+        Pool $pool,
+        AdminInterface $mediaAdmin,
         ManagerInterface $mediaManager
     ) {
         parent::__construct($twig);
 
+        $this->pool = $pool;
+        $this->mediaAdmin = $mediaAdmin;
         $this->mediaManager = $mediaManager;
-        $this->container = $container;
-    }
-
-    public function getMediaPool(): Pool
-    {
-        return $this->getMediaAdmin()->getPool();
-    }
-
-    public function getMediaAdmin(): BaseMediaAdmin
-    {
-        if (!$this->mediaAdmin) {
-            $this->mediaAdmin = $this->container->get('sonata.media.admin.media');
-        }
-
-        return $this->mediaAdmin;
     }
 
     public function configureSettings(OptionsResolver $resolver): void
@@ -197,7 +183,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
             return $formatChoices;
         }
 
-        $formats = $this->getMediaPool()->getFormatNamesByContext($media->getContext());
+        $formats = $this->pool->getFormatNamesByContext($media->getContext());
 
         foreach ($formats as $code => $format) {
             $formatChoices[$code] = $code;
@@ -208,22 +194,15 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
 
     protected function getMediaBuilder(FormMapper $form): FormBuilderInterface
     {
-        // simulate an association ...
-        $fieldDescription = $this->getMediaAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->mediaAdmin->getClass(), 'media', [
+        $fieldDescription = $this->mediaAdmin->createFieldDescription('media', [
             'translation_domain' => 'SonataMediaBundle',
-        ]);
-        $fieldDescription->setAssociationAdmin($this->getMediaAdmin());
-        $fieldDescription->setAdmin($form->getAdmin());
-        $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping([
-            'fieldName' => 'media',
-            'type' => ClassMetadataInfo::MANY_TO_ONE,
+            'edit' => 'list',
         ]);
 
         return $form->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
-            'class' => $this->getMediaAdmin()->getClass(),
-            'model_manager' => $this->getMediaAdmin()->getModelManager(),
+            'class' => $this->mediaAdmin->getClass(),
+            'model_manager' => $this->mediaAdmin->getModelManager(),
             'label' => 'form.label_media',
         ]);
     }

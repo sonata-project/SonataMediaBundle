@@ -87,13 +87,4 @@ class MediaTest extends TestCase
         $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1#with-some-hash');
         $this->assertSame('png', $media->getExtension(), 'extension should not contain query strings or hashes');
     }
-
-    public function testSetCategoryWithoutAnActualCategory(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $media = new Media();
-
-        $media->setCategory(new \stdClass());
-    }
 }

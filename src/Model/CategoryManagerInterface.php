@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Sonata\ClassificationBundle\Model\CategoryInterface;
+use Sonata\ClassificationBundle\Model\ContextInterface;
 
 /**
  * @author Joao Albuquerque <albuquerque.joao.filipe@gmail.com>
@@ -22,11 +23,11 @@ use Sonata\ClassificationBundle\Model\CategoryInterface;
 interface CategoryManagerInterface
 {
     /**
-     * @param string $context
+     * @param ContextInterface|string|null $context
      *
      * @return CategoryInterface
      */
-    public function getRootCategory($context);
+    public function getRootCategory($context = null);
 
     /**
      * @param bool $loadChildren

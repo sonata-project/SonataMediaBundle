@@ -18,8 +18,10 @@ use FOS\RestBundle\FOSRestBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Nelmio\ApiDocBundle\NelmioApiDocBundle;
+use Sonata\AdminBundle\SonataAdminBundle;
 use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
+use Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
 use Sonata\SeoBundle\SonataSeoBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -52,8 +54,10 @@ final class AppKernel extends Kernel
             new KnpMenuBundle(),
             new NelmioApiDocBundle(),
             new SecurityBundle(),
+            new SonataAdminBundle(),
             new SonataBlockBundle(),
             new SonataDoctrineBundle(),
+            new SonataDoctrineORMAdminBundle(),
             new SonataMediaBundle(),
             new SonataSeoBundle(),
             new TwigBundle(),

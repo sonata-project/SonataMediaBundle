@@ -148,12 +148,13 @@ abstract class Gallery implements GalleryInterface
         if ($this->getGalleryItems() && $this->getGalleryItems() instanceof \IteratorAggregate) {
             // reorder
             $iterator = $this->getGalleryItems()->getIterator();
+            \assert($iterator instanceof \ArrayIterator);
 
             $iterator->uasort(static function (GalleryItemInterface $a, GalleryItemInterface $b) {
                 return $a->getPosition() <=> $b->getPosition();
             });
 
-            $this->setGalleryItems($iterator);
+            $this->setGalleryItems(new ArrayCollection(iterator_to_array($iterator)));
         }
     }
 }

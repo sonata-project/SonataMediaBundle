@@ -13,34 +13,25 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Listener;
 
-use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class BaseMediaEventSubscriber implements EventSubscriber
 {
     /**
-     * @var ContainerInterface
+     * @var Pool
      */
-    protected $container;
+    protected $pool;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(Pool $pool)
     {
-        $this->container = $container;
+        $this->pool = $pool;
     }
 
-    /**
-     * @return Pool
-     */
-    public function getPool()
-    {
-        return $this->container->get('sonata.media.pool');
-    }
-
-    public function postUpdate(EventArgs $args): void
+    public function postUpdate(LifecycleEventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -49,7 +40,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->postUpdate($this->getMedia($args));
     }
 
-    public function postRemove(EventArgs $args): void
+    public function postRemove(LifecycleEventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -58,7 +49,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->postRemove($this->getMedia($args));
     }
 
-    public function postPersist(EventArgs $args): void
+    public function postPersist(LifecycleEventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -67,7 +58,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->postPersist($this->getMedia($args));
     }
 
-    public function preUpdate(EventArgs $args): void
+    public function preUpdate(LifecycleEventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -79,7 +70,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->recomputeSingleEntityChangeSet($args);
     }
 
-    public function preRemove(EventArgs $args): void
+    public function preRemove(LifecycleEventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -88,7 +79,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->preRemove($this->getMedia($args));
     }
 
-    public function prePersist(EventArgs $args): void
+    public function prePersist(LifecycleEventArgs $args): void
     {
         if (!($provider = $this->getProvider($args))) {
             return;
@@ -98,24 +89,20 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->prePersist($this->getMedia($args));
     }
 
-    abstract protected function recomputeSingleEntityChangeSet(EventArgs $args);
+    abstract protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args);
 
     /**
+     * @throws \RuntimeException
+     *
      * @return MediaInterface
      */
-    abstract protected function getMedia(EventArgs $args);
+    abstract protected function getMedia(LifecycleEventArgs $args);
 
     /**
      * @return MediaProviderInterface
      */
-    protected function getProvider(EventArgs $args)
+    protected function getProvider(LifecycleEventArgs $args)
     {
-        $media = $this->getMedia($args);
-
-        if (!$media instanceof MediaInterface) {
-            return;
-        }
-
-        return $this->getPool()->getProvider($media->getProviderName());
+        return $this->pool->getProvider($this->getMedia($args)->getProviderName());
     }
 }

@@ -51,7 +51,7 @@ class Pool
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      *
      * @throws \RuntimeException
      *

@@ -41,7 +41,6 @@ sonata_media:
                 - sonata.media.provider.image
                 - sonata.media.provider.file
                 - sonata.media.provider.vimeo
-
             formats:
                 small: {width: 100, quality: 70}
                 big: {width: 500, quality: 70}
@@ -93,7 +92,7 @@ doctrine:
         entity_managers:
             default:
                 mappings:
-                    SonataMediaBundle: ~
+                    SonataMediaBundle: null
                     SonataMediaTest:
                         type: annotation
                         dir: "%kernel.project_dir%/Entity"

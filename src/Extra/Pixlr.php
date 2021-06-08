@@ -13,11 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Extra;
 
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sonata\MediaBundle\Provider\Pool as MediaPool;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,9 +40,24 @@ final class Pixlr
     private $secret;
 
     /**
+     * @var MediaPool
+     */
+    private $mediaPool;
+
+    /**
+     * @var AdminPool
+     */
+    private $adminPool;
+
+    /**
      * @var MediaManagerInterface
      */
     private $mediaManager;
+
+    /**
+     * @var AdminInterface
+     */
+    private $mediaAdmin;
 
     /**
      * @var RouterInterface
@@ -49,19 +65,9 @@ final class Pixlr
     private $router;
 
     /**
-     * @var Pool
-     */
-    private $pool;
-
-    /**
      * @var Environment
      */
     private $twig;
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
     /**
      * @var string[]
@@ -77,15 +83,24 @@ final class Pixlr
      * @param string $referrer
      * @param string $secret
      */
-    public function __construct($referrer, $secret, Pool $pool, MediaManagerInterface $mediaManager, RouterInterface $router, Environment $twig, ContainerInterface $container)
-    {
+    public function __construct(
+        $referrer,
+        $secret,
+        MediaPool $mediaPool,
+        AdminPool $adminPool,
+        MediaManagerInterface $mediaManager,
+        AdminInterface $mediaAdmin,
+        RouterInterface $router,
+        Environment $twig
+    ) {
         $this->referrer = $referrer;
         $this->secret = $secret;
+        $this->mediaPool = $mediaPool;
+        $this->adminPool = $adminPool;
         $this->mediaManager = $mediaManager;
+        $this->mediaAdmin = $mediaAdmin;
         $this->router = $router;
-        $this->pool = $pool;
         $this->twig = $twig;
-        $this->container = $container;
 
         $this->validFormats = ['jpg', 'jpeg', 'png'];
         $this->allowEreg = '@https?://([a-zA-Z0-9]*).pixlr.com/_temp/[0-9a-z]{24}\.[a-z]*@';
@@ -107,7 +122,7 @@ final class Pixlr
 
         $media = $this->getMedia($id);
 
-        $provider = $this->pool->getProvider($media->getProviderName());
+        $provider = $this->mediaPool->getProvider($media->getProviderName());
 
         $hash = $this->generateHash($media);
 
@@ -154,7 +169,7 @@ final class Pixlr
 
         $this->checkMedia($hash, $media);
 
-        $provider = $this->pool->getProvider($media->getProviderName());
+        $provider = $this->mediaPool->getProvider($media->getProviderName());
 
         /*
          * Pixlr send back the new image as an url, add some security check before downloading the file
@@ -179,7 +194,7 @@ final class Pixlr
      */
     public function isEditable(MediaInterface $media)
     {
-        if (!$this->container->get('sonata.media.admin.media')->isGranted('EDIT', $media)) {
+        if (!$this->mediaAdmin->isGranted('EDIT', $media)) {
             return false;
         }
 
@@ -203,7 +218,7 @@ final class Pixlr
 
         return new Response($this->twig->render('@SonataMedia/Extra/pixlr_editor.html.twig', [
             'media' => $media,
-            'admin_pool' => $this->container->get('sonata.admin.pool'),
+            'admin_pool' => $this->adminPool,
         ]));
     }
 

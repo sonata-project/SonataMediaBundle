@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\CDN;
 
+use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\Exception\CloudFrontException;
 use Aws\Command;
 use Aws\Result;
@@ -45,7 +46,10 @@ final class CloudFrontVersionTest extends TestCase
         int $expectedStatus,
         string $invalidationStatus
     ): void {
-        $client = $this->createMock(CloudFrontClientSpy::class);
+        $client = $this->getMockBuilder(CloudFrontClient::class)
+            ->addMethods(['createInvalidation', 'getInvalidation'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', $path);
 
@@ -87,7 +91,10 @@ final class CloudFrontVersionTest extends TestCase
 
     public function testCreateInvalidationException(): void
     {
-        $client = $this->createMock(CloudFrontClientSpy::class);
+        $client = $this->getMockBuilder(CloudFrontClient::class)
+            ->addMethods(['createInvalidation'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $client->expects($this->once())
             ->method('createInvalidation')
@@ -103,7 +110,10 @@ final class CloudFrontVersionTest extends TestCase
 
     public function testUnknownStatusException(): void
     {
-        $client = $this->createMock(CloudFrontClientSpy::class);
+        $client = $this->getMockBuilder(CloudFrontClient::class)
+            ->addMethods(['createInvalidation'])
+            ->disableOriginalConstructor()
+            ->getMock();
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
 
         $client->expects($this->once())

@@ -146,7 +146,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->expects($this->once())->method('checkAccess')->with('list');
         $this->admin->expects($this->once())->method('setListMode')->with('mosaic');
         $this->admin->method('getDatagrid')->willReturn($datagrid);
-        $this->admin->method('getPersistentParameter')->with('context', 'context')->willReturn('another_context');
+        $this->admin->method('getPersistentParameter')->with('context')->willReturn('another_context');
         $this->admin->method('getFilterTheme')->willReturn(['filterTheme']);
         $this->request->query->set('_list_mode', 'mosaic');
         $this->request->query->set('filter', []);

@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Listener\ODM;
 
-use Doctrine\Common\EventArgs;
+use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs as ODMLifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Events;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
@@ -31,18 +33,26 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         ];
     }
 
-    protected function recomputeSingleEntityChangeSet(EventArgs $args): void
+    protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args): void
     {
+        \assert($args instanceof ODMLifecycleEventArgs);
+
         $em = $args->getDocumentManager();
 
         $em->getUnitOfWork()->recomputeSingleDocumentChangeSet(
-            $em->getClassMetadata(\get_class($args->getDocument())),
-            $args->getDocument()
+            $em->getClassMetadata(\get_class($args->getObject())),
+            $args->getObject()
         );
     }
 
-    protected function getMedia(EventArgs $args)
+    protected function getMedia(LifecycleEventArgs $args)
     {
-        return $args->getDocument();
+        $media = $args->getObject();
+
+        if (!$media instanceof MediaInterface) {
+            throw new \RuntimeException('There is no media on the persistence event.');
+        }
+
+        return $media;
     }
 }

@@ -89,6 +89,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->public()
         ->args([
             new ReferenceConfigurator('service_container'),
+            (new ReferenceConfigurator('sonata.media.metadata.noop'))->nullOnInvalid(),
+            (new ReferenceConfigurator('sonata.media.metadata.amazon'))->nullOnInvalid(),
         ]);
 
     $services->set('sonata.media.metadata.amazon', AmazonMetadataBuilder::class)

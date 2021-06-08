@@ -13,13 +13,14 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Block\GalleryBlockService;
 use Sonata\MediaBundle\Model\GalleryInterface;
-use Sonata\MediaBundle\Model\GalleryManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryBlockServiceTest extends BlockServiceTestCase
 {
@@ -34,8 +35,9 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
 
         $this->blockService = new GalleryBlockService(
             $this->twig,
-            $this->createStub(ContainerInterface::class),
-            $this->createStub(GalleryManagerInterface::class)
+            $this->createStub(Pool::class),
+            $this->createStub(AdminInterface::class),
+            $this->createStub(ManagerInterface::class)
         );
     }
 

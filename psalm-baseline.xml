@@ -8,4 +8,14 @@
             <code>Service</code>
         </UndefinedClass>
     </file>
+    <file src="src/Consumer/CreateThumbnailConsumer.php">
+        <ContainerDependency occurrences="1">
+            <code>ContainerInterface $container</code>
+        </ContainerDependency>
+    </file>
+    <file src="src/Metadata/ProxyMetadataBuilder.php">
+        <ContainerDependency occurrences="1">
+            <code>ContainerInterface $container</code>
+        </ContainerDependency>
+    </file>
 </files>

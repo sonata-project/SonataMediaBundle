@@ -66,12 +66,10 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainer([
-            'sonata.media.metadata.noop' => $noop,
-            'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
         ]);
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
         $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
@@ -105,12 +103,10 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainer([
-            'sonata.media.metadata.noop' => $noop,
-            'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
         ]);
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
@@ -144,12 +140,10 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainer([
-            'sonata.media.metadata.noop' => $noop,
-            'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
         ]);
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
         $this->assertSame([], $proxymetadatabuilder->get($media, $filename));
     }
@@ -194,12 +188,10 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainer([
-            'sonata.media.metadata.noop' => $noop,
-            'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
         ]);
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
         $this->assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
@@ -235,12 +227,10 @@ final class ProxyMetadataBuilderTest extends TestCase
         $filename = '/test/folder/testfile.png';
 
         $container = $this->getContainer([
-            'sonata.media.metadata.noop' => $noop,
-            'sonata.media.metadata.amazon' => $amazon,
             'sonata.media.provider.image' => $provider,
         ]);
 
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container);
+        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }

@@ -104,7 +104,7 @@ final class CropResizerTest extends TestCase
     }
 
     /**
-     * @return int[][]
+     * @return \Generator<string, int[]>
      */
     public function getResizeProvider(): iterable
     {
@@ -164,7 +164,7 @@ final class CropResizerTest extends TestCase
     }
 
     /**
-     * @return int[][]
+     * @return \Generator<string, int[]>
      */
     public function getResizeNoChangeProvider(): iterable
     {
@@ -201,7 +201,7 @@ final class CropResizerTest extends TestCase
     }
 
     /**
-     * @return int[][]
+     * @return \Generator<string, int[]>
      */
     public function getBoxProvider(): iterable
     {
