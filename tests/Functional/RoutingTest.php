@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Functional\Routing;
 
+use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sonata\MediaBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -42,7 +43,7 @@ final class RoutingTest extends WebTestCase
 
         $matchingPath = $path;
         $matchingFormat = '';
-        if (false !== strpos($matchingPath, '.{_format}', -10)) {
+        if (\strlen($matchingPath) >= 10 && false !== strpos($matchingPath, '.{_format}', -10)) {
             $matchingFormat = '.json';
             $matchingPath = str_replace('.{_format}', $matchingFormat, $path);
         }
@@ -78,7 +79,14 @@ final class RoutingTest extends WebTestCase
     public function getRoutes(): iterable
     {
         // API
-        yield ['nelmio_api_doc_index', '/api/doc/{view}', ['GET']];
+        if (class_exists(Operation::class)) {
+            yield ['app.swagger_ui', '/api/doc', ['GET']];
+            yield ['app.swagger', '/api/doc.json', ['GET']];
+        } else {
+            yield ['nelmio_api_doc_index', '/api/doc/{view}', ['GET']];
+        }
+
+        // API - Gallery
         yield ['sonata_api_media_gallery_get_galleries', '/api/media/galleries.{_format}', ['GET']];
         yield ['sonata_api_media_gallery_get_gallery', '/api/media/galleries/{id}.{_format}', ['GET']];
         yield ['sonata_api_media_gallery_get_gallery_medias', '/api/media/galleries/{id}/medias.{_format}', ['GET']];
@@ -89,6 +97,8 @@ final class RoutingTest extends WebTestCase
         yield ['sonata_api_media_gallery_put_gallery_media_galleryhasmedia', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}', ['PUT']];
         yield ['sonata_api_media_gallery_delete_gallery_media_galleryhasmedia', '/api/media/galleries/{galleryId}/media/{mediaId}/galleryhasmedia.{_format}', ['DELETE']];
         yield ['sonata_api_media_gallery_delete_gallery', '/api/media/galleries/{id}.{_format}', ['DELETE']];
+
+        // API - Media
         yield ['sonata_api_media_media_get_media', '/api/media/media.{_format}', ['GET']];
         yield ['sonata_api_media_media_get_medium', '/api/media/media/{id}.{_format}', ['GET']];
         yield ['sonata_api_media_media_get_medium_formats', '/api/media/media/{id}/formats.{_format}', ['GET']];

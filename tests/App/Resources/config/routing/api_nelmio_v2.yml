@@ -5,7 +5,3 @@ NelmioApiDocBundle:
 sonata_api_media:
     prefix: /api/media
     resource: "@SonataMediaBundle/Resources/config/routing/api.xml"
-
-test_page:
-    path: /u_truncate_test
-    controller: Sonata\MediaBundle\Tests\App\Controller\TruncateController:test
