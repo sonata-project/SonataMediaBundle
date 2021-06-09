@@ -60,12 +60,28 @@ class MediaControllerTest extends TestCase
         $this->assertSame($media, $controller->getMediumAction(1));
     }
 
-    public function testGetMediumNotFoundExceptionAction(): void
+    /**
+     * @dataProvider getIdsForNotFound
+     */
+    public function testGetMediumNotFoundExceptionAction($identifier, string $message): void
     {
         $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('Media (42) was not found');
+        $this->expectExceptionMessage($message);
 
-        $this->createMediaController()->getMediumAction(42);
+        $this->createMediaController()->getMediumAction($identifier);
+    }
+
+    /**
+     * @phpstan-return list<array{mixed, string}>
+     */
+    public function getIdsForNotFound(): array
+    {
+        return [
+            [42, 'Media not found for identifier 42.'],
+            ['42', 'Media not found for identifier \'42\'.'],
+            [null, 'Media not found for identifier NULL.'],
+            ['', 'Media not found for identifier \'\'.'],
+        ];
     }
 
     public function testGetMediumFormatsAction(): void

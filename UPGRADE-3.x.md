@@ -4,6 +4,10 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Support for NelmioApiDocBundle > 3.6 is added
+
+Controllers for NelmioApiDocBundle v2 were moved under `Sonata\MediaBundle\Controller\Api\Legacy\` namespace and controllers for NelmioApiDocBundle v3 were added as replacement. If you extend them, you must ensure they are using the corresponding inheritance.
+
 ### Deprecations
 
 Usages of `Symfony\Component\Translation\TranslatorInterface` are deprecated in favor of `Symfony\Contracts\Translation\TranslatorInterface`. You MUST replace all references to them in your code and inject correct object into:
