@@ -49,6 +49,9 @@ If you have implemented a custom model, you must adapt the signature of the foll
  * `GalleryHasMediaInterface::getId`
  * `GalleryInterface::getId`
 
+If you overrided some date-related methods (`setUpdatedAt`, `setCreatedAt`, `setCdnFlushAt`) in model classes (Gallery, Media, GalleryHasMedia),
+you need to change type hint of argument to `\DateTimeInterface`.
+
 ## Renamed GalleryHasMedia to GalleryItem
 
 All Actions, Controllers, Interfaces and anything related to this is renamed accordingly.
