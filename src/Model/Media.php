@@ -94,7 +94,7 @@ abstract class Media implements MediaInterface
     protected $cdnFlushIdentifier;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     protected $cdnFlushAt;
 
@@ -104,12 +104,12 @@ abstract class Media implements MediaInterface
     protected $cdnStatus;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     protected $createdAt;
 
@@ -363,7 +363,7 @@ abstract class Media implements MediaInterface
         return $this->cdnFlushIdentifier;
     }
 
-    public function setCdnFlushAt(?\DateTime $cdnFlushAt = null): void
+    public function setCdnFlushAt(?\DateTimeInterface $cdnFlushAt = null): void
     {
         $this->cdnFlushAt = $cdnFlushAt;
     }
@@ -373,7 +373,7 @@ abstract class Media implements MediaInterface
         return $this->cdnFlushAt;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -383,7 +383,7 @@ abstract class Media implements MediaInterface
         return $this->updatedAt;
     }
 
-    public function setCreatedAt(?\DateTime $createdAt = null): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }

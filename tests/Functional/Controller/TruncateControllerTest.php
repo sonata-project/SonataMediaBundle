@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class TruncateControllerTest extends TestCase
 {
+    /**
+     * @requires extension gd
+     */
     public function testTruncate(): void
     {
         $client = new KernelBrowser(new AppKernel());

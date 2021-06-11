@@ -66,8 +66,8 @@ class MediaTest extends TestCase
         $this->assertSame('Thomas', $media->getAuthorName());
         $this->assertTrue($media->getCdnIsFlushable());
         $this->assertSame('identifier_123', $media->getCdnFlushIdentifier());
-        $this->assertInstanceOf('DateTime', $media->getCdnFlushAt());
-        $this->assertInstanceOf('DateTime', $media->getCreatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $media->getCdnFlushAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $media->getCreatedAt());
         $this->assertSame('sonata/media', $media->getContentType());
         $this->assertSame('MediaBundle', (string) $media);
 

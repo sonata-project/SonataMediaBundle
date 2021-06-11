@@ -18,6 +18,9 @@ use Sonata\MediaBundle\CDN\PantherPortal;
 
 class PantherPortalTest extends TestCase
 {
+    /**
+     * @requires extension soap
+     */
     public function testPortal(): void
     {
         $client = $this->createMock(ClientSpy::class);
@@ -35,6 +38,9 @@ class PantherPortalTest extends TestCase
         $panther->flushPaths([$path]);
     }
 
+    /**
+     * @requires extension soap
+     */
     public function testException(): void
     {
         $this->expectException(\RuntimeException::class);
@@ -50,10 +56,12 @@ class PantherPortalTest extends TestCase
     }
 }
 
-class ClientSpy extends \SoapClient
-{
-    public function flush(): string
+if (class_exists(\SoapClient::class)) {
+    class ClientSpy extends \SoapClient
     {
-        return 'hello';
+        public function flush(): string
+        {
+            return 'hello';
+        }
     }
 }

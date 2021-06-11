@@ -31,12 +31,12 @@ abstract class GalleryItem implements GalleryItemInterface
     protected $position = 0;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     protected $createdAt;
 
@@ -50,7 +50,7 @@ abstract class GalleryItem implements GalleryItemInterface
         return $this->getGallery().' | '.$this->getMedia();
     }
 
-    public function setCreatedAt(?\DateTime $createdAt = null): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt = null): void
     {
         $this->createdAt = $createdAt;
     }
@@ -100,7 +100,7 @@ abstract class GalleryItem implements GalleryItemInterface
         return $this->position;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null): void
     {
         $this->updatedAt = $updatedAt;
     }

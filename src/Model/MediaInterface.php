@@ -277,12 +277,12 @@ interface MediaInterface
      *
      * @param \DateTime $cdnFlushAt
      */
-    public function setCdnFlushAt(?\DateTime $cdnFlushAt = null);
+    public function setCdnFlushAt(?\DateTimeInterface $cdnFlushAt = null);
 
     /**
      * Get cdn_flush_at.
      *
-     * @return \DateTime $cdnFlushAt
+     * @return \DateTimeInterface $cdnFlushAt
      */
     public function getCdnFlushAt();
 
@@ -291,12 +291,12 @@ interface MediaInterface
      *
      * @param \DateTime $updatedAt
      */
-    public function setUpdatedAt(?\DateTime $updatedAt = null);
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null);
 
     /**
      * Get updated_at.
      *
-     * @return \DateTime $updatedAt
+     * @return \DateTimeInterface $updatedAt
      */
     public function getUpdatedAt();
 
@@ -305,12 +305,12 @@ interface MediaInterface
      *
      * @param \DateTime $createdAt
      */
-    public function setCreatedAt(?\DateTime $createdAt = null);
+    public function setCreatedAt(?\DateTimeInterface $createdAt = null);
 
     /**
      * Get created_at.
      *
-     * @return \DateTime $createdAt
+     * @return \DateTimeInterface $createdAt
      */
     public function getCreatedAt();
 

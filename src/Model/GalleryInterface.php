@@ -70,24 +70,24 @@ interface GalleryInterface
     /**
      * Set updated_at.
      */
-    public function setUpdatedAt(?\DateTime $updatedAt = null);
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null);
 
     /**
      * Get updated_at.
      *
-     * @return \DateTime|null $updatedAt
+     * @return \DateTimeInterface|null $updatedAt
      */
     public function getUpdatedAt();
 
     /**
      * Set created_at.
      */
-    public function setCreatedAt(?\DateTime $createdAt = null);
+    public function setCreatedAt(?\DateTimeInterface $createdAt = null);
 
     /**
      * Get created_at.
      *
-     * @return \DateTime|null $createdAt
+     * @return \DateTimeInterface|null $createdAt
      */
     public function getCreatedAt();
 
