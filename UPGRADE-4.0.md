@@ -25,6 +25,8 @@ UPGRADE FROM 3.x to 4.0
     - `Sonata\MediaBundle\Model\GalleryManager::getPager()`
     - `Sonata\MediaBundle\Model\MediaManager::getPager()`
 
+- Drop support for `nelmio/api-doc-bundle` < 3.9
+
 ## Deprecations
 
 All the deprecated code introduced on 3.x is removed on 4.0.

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
-use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
@@ -62,12 +61,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $loader->load(sprintf('api_form_%s.php', $config['db_driver']));
 
             if ('doctrine_orm' === $config['db_driver']) {
-                // NEXT_MAJOR: remove legacy part
-                if (class_exists(Operation::class)) {
-                    $loader->load('api_controllers.php');
-                } else {
-                    $loader->load('api_controllers_legacy.php');
-                }
+                $loader->load('api_controllers.php');
             }
         }
 
