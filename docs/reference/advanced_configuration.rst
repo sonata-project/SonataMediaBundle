@@ -180,3 +180,9 @@ Full configuration options:
         http:
             client:          'sonata.media.http.base_client' # You need symfony/http-client for this
             message_factory: 'sonata.media.http.base_message_factory' # You need nyholm/psr7 for this
+
+    jms_serializer:
+        metadata:
+            directories:
+                - { name: 'sonata_datagrid', path: '%kernel.project_dir%/vendor/sonata-project/datagrid-bundle/src/Resources/config/serializer', namespace_prefix: 'Sonata\DatagridBundle' }
+                - { name: 'sonata_media', path: '%kernel.project_dir%/vendor/sonata-project/media-bundle/src/Resources/config/serializer', namespace_prefix: 'Sonata\MediaBundle' }
