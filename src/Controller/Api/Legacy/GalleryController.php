@@ -19,12 +19,11 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sonata\DatagridBundle\Pager\PagerInterface;
-use Sonata\MediaBundle\Form\Type\ApiGalleryHasMediaType;
+use Sonata\MediaBundle\Form\Type\ApiGalleryItemType;
 use Sonata\MediaBundle\Form\Type\ApiGalleryType;
-use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
-use Sonata\MediaBundle\Model\GalleryMediaCollectionInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -162,7 +161,7 @@ class GalleryController
      */
     public function getGalleryMediasAction($id)
     {
-        $ghms = $this->getGallery($id)->getGalleryHasMedias();
+        $ghms = $this->getGallery($id)->getGalleryItems();
 
         $media = [];
         foreach ($ghms as $ghm) {
@@ -173,13 +172,13 @@ class GalleryController
     }
 
     /**
-     * Retrieves the galleryhasmedias of specified gallery.
+     * Retrieves the gallery items of specified gallery.
      *
      * @ApiDoc(
      *  requirements={
      *      {"name"="id", "dataType"="string", "description"="Gallery identifier"}
      *  },
-     *  output={"class"="Sonata\MediaBundle\Model\GalleryHasMedia", "groups"={"sonata_api_read"}},
+     *  output={"class"="Sonata\MediaBundle\Model\GalleryItem", "groups"={"sonata_api_read"}},
      *  statusCodes={
      *      200="Returned when successful",
      *      404="Returned when gallery is not found"
@@ -190,11 +189,11 @@ class GalleryController
      *
      * @param string $id Gallery identifier
      *
-     * @return GalleryHasMediaInterface[]
+     * @return GalleryItemInterface[]
      */
-    public function getGalleryGalleryhasmediasAction($id)
+    public function getGalleryGalleryItemsAction($id)
     {
-        return $this->getGallery($id)->getGalleryHasMedias();
+        return $this->getGallery($id)->getGalleryItems();
     }
 
     /**
@@ -272,21 +271,21 @@ class GalleryController
      *
      * @return GalleryInterface
      */
-    public function postGalleryMediaGalleryhasmediaAction($galleryId, $mediaId, Request $request)
+    public function postGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
-        $galleryHasMediaExists = $gallery->getGalleryHasMedias()->exists(static function ($key, GalleryHasMediaInterface $element) use ($media): bool {
+        $galleryItemExists = $gallery->getGalleryItems()->exists(static function ($key, GalleryItemInterface $element) use ($media): bool {
             return $element->getMedia()->getId() === $media->getId();
         });
 
-        if ($galleryHasMediaExists) {
+        if ($galleryItemExists) {
             return FOSRestView::create([
                 'error' => sprintf('Gallery "%s" already has media "%s"', $galleryId, $mediaId),
             ], 400);
         }
 
-        return $this->handleWriteGalleryhasmedia($gallery, $media, null, $request);
+        return $this->handleWriteGalleryItem($gallery, $media, null, $request);
     }
 
     /**
@@ -313,14 +312,14 @@ class GalleryController
      *
      * @return GalleryInterface
      */
-    public function putGalleryMediaGalleryhasmediaAction($galleryId, $mediaId, Request $request)
+    public function putGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
 
-        foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
-            if ($galleryHasMedia->getMedia()->getId() === $media->getId()) {
-                return $this->handleWriteGalleryhasmedia($gallery, $media, $galleryHasMedia, $request);
+        foreach ($gallery->getGalleryItems() as $galleryItem) {
+            if ($galleryItem->getMedia()->getId() === $media->getId()) {
+                return $this->handleWriteGalleryItem($gallery, $media, $galleryItem, $request);
             }
         }
 
@@ -349,14 +348,14 @@ class GalleryController
      *
      * @return Rest\View
      */
-    public function deleteGalleryMediaGalleryhasmediaAction($galleryId, $mediaId)
+    public function deleteGalleryMediaGalleryItemAction($galleryId, $mediaId)
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
 
-        foreach ($gallery->getGalleryHasMedias() as $key => $galleryHasMedia) {
-            if ($galleryHasMedia->getMedia()->getId() === $media->getId()) {
-                $gallery->getGalleryHasMedias()->remove($key);
+        foreach ($gallery->getGalleryItems() as $key => $galleryItem) {
+            if ($galleryItem->getMedia()->getId() === $media->getId()) {
+                $gallery->getGalleryItems()->remove($key);
                 $this->getGalleryManager()->save($gallery);
 
                 return ['deleted' => true];
@@ -398,35 +397,30 @@ class GalleryController
     }
 
     /**
-     * Write a GalleryHasMedia, this method is used by both POST and PUT action methods.
+     * Write a GalleryItem, this method is used by both POST and PUT action methods.
      *
      * @return FormInterface
      */
-    protected function handleWriteGalleryhasmedia(GalleryInterface $gallery, MediaInterface $media, ?GalleryHasMediaInterface $galleryHasMedia = null, Request $request)
+    protected function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, ?GalleryItemInterface $galleryItem = null, Request $request)
     {
-        $form = $this->formFactory->createNamed(null, ApiGalleryHasMediaType::class, $galleryHasMedia, [
+        $form = $this->formFactory->createNamed('', ApiGalleryItemType::class, $galleryItem, [
             'csrf_protection' => false,
         ]);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $galleryHasMedia = $form->getData();
-            $galleryHasMedia->setMedia($media);
+            $galleryItem = $form->getData();
+            $galleryItem->setMedia($media);
 
-            // NEXT_MAJOR: remove this if/else block. Just call `$gallery->addGalleryHasMedia($galleryHasMedia);`
-            if ($gallery instanceof GalleryMediaCollectionInterface) {
-                $gallery->addGalleryHasMedia($galleryHasMedia);
-            } else {
-                $gallery->addGalleryHasMedias($galleryHasMedia);
-            }
+            $gallery->addGalleryItem($galleryItem);
             $this->galleryManager->save($gallery);
 
             $context = new Context();
             $context->setGroups(['sonata_api_read']);
             $context->enableMaxDepth();
 
-            $view = FOSRestView::create($galleryHasMedia);
+            $view = FOSRestView::create($galleryItem);
             $view->setContext($context);
 
             return $view;
@@ -503,7 +497,7 @@ class GalleryController
     {
         $gallery = $id ? $this->getGallery($id) : null;
 
-        $form = $this->formFactory->createNamed(null, ApiGalleryType::class, $gallery, [
+        $form = $this->formFactory->createNamed('', ApiGalleryType::class, $gallery, [
             'csrf_protection' => false,
         ]);
 
