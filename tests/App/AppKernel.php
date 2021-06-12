@@ -17,7 +17,6 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use FOS\RestBundle\FOSRestBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
-use Nelmio\ApiDocBundle\Annotation\Operation;
 use Nelmio\ApiDocBundle\NelmioApiDocBundle;
 use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
@@ -77,13 +76,7 @@ final class AppKernel extends Kernel
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $routes->import(__DIR__.'/Resources/config/routing/routes.yml', '/', 'yaml');
-
-        // NEXT_MAJOR: remove support for nelmio_v2
-        if (class_exists(Operation::class)) {
-            $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml', '/', 'yaml');
-        } else {
-            $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v2.yml', '/', 'yaml');
-        }
+        $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml', '/', 'yaml');
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
