@@ -1,8 +1,0 @@
-security:
-    role_hierarchy: null
-
-    firewalls:
-        test:
-            security: false
-
-    access_control: null

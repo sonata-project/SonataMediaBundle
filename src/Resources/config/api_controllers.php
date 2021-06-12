@@ -18,7 +18,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $services = $containerConfigurator->services();
 
     $services->set('sonata.media.controller.api.gallery', GalleryController::class)
@@ -26,7 +25,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             new ReferenceConfigurator('sonata.media.manager.gallery'),
             new ReferenceConfigurator('sonata.media.manager.media'),
             new ReferenceConfigurator('form.factory'),
-            '%sonata.media.admin.gallery_item.entity%',
         ]);
 
     $services->set('sonata.media.controller.api.media', MediaController::class)

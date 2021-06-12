@@ -18,13 +18,13 @@ file that was distributed with this source code.
                 {{ "label.select_context"|trans({}, 'SonataMediaBundle') }}
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <strong class="text-info">{{ persistent_parameters.context|trans({}, 'SonataMediaBundle') }}</strong> <span class="caret"></span>
+                        <strong class="text-info">{{ admin.persistentParameters.context|trans({}, 'SonataMediaBundle') }}</strong> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        {% for name, context in media_pool.contexts %}
+                        {% for name, context in sonata_media.pool.contexts %}
                             <li>
                                 <a href="{{ admin.generateUrl('list', {'context' : name }) }}">
-                                    {% if name == persistent_parameters.context %}
+                                    {% if name == admin.persistentParameters.context %}
                                         <span class="pull-right">
                                             <i class="fa fa-check"></i>
                                         </span>

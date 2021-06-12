@@ -86,7 +86,7 @@ Full configuration options:
 
         filesystem:
             local:
-                directory:  "%kernel.root_dir%/../web/uploads/media"
+                directory:  "%kernel.project_dir%/web/uploads/media"
                 create:     false
 
             ftp:

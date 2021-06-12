@@ -5,6 +5,19 @@ framework:
         enabled: true
     translator:
         enabled: true
+    validation:
+        enable_annotations: false
+    router:
+        utf8: true
+
+security:
+    role_hierarchy: null
+
+    firewalls:
+        test:
+            security: false
+
+    access_control: null
 
 twig:
     exception_controller: null
@@ -46,7 +59,7 @@ sonata_media:
 
     filesystem:
         local:
-            directory: "%kernel.root_dir%/../public/uploads/media"
+            directory: "%kernel.project_dir%/public/uploads/media"
             create: false
 
         s3:

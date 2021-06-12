@@ -39,7 +39,7 @@ class GalleryControllerTest extends TestCase
 
         $galleryManager->expects($this->once())->method('getPager')->willReturn($pager);
 
-        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
+        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory);
 
         $paramFetcher = $this->createMock(ParamFetcherInterface::class);
         $paramFetcher->expects($this->exactly(3))->method('get');
@@ -64,7 +64,7 @@ class GalleryControllerTest extends TestCase
 
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
-        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
+        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory);
 
         $this->assertSame($gallery, $gController->getGalleryAction(1));
     }
@@ -84,7 +84,7 @@ class GalleryControllerTest extends TestCase
 
         $galleryManager->expects($this->once())->method('findOneBy');
 
-        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
+        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory);
 
         $gController->getGalleryAction($identifier);
     }
@@ -115,7 +115,7 @@ class GalleryControllerTest extends TestCase
 
         $mediaManager = $this->createMock(MediaManagerInterface::class);
 
-        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
+        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory);
 
         $this->assertSame([$galleryItem], $gController->getGalleryGalleryItemsAction(1));
     }
@@ -133,7 +133,7 @@ class GalleryControllerTest extends TestCase
         $gallery->expects($this->once())->method('getGalleryItems')->willReturn([$galleryItem]);
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
-        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory, 'test');
+        $gController = new GalleryController($galleryManager, $mediaManager, $formFactory);
 
         $this->assertSame([$media], $gController->getGalleryMediasAction(1));
     }

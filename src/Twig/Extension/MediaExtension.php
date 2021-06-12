@@ -144,7 +144,7 @@ final class MediaExtension extends AbstractExtension
     public function render($template, array $parameters = [])
     {
         if (!isset($this->resources[$template])) {
-            $this->resources[$template] = $this->twig->loadTemplate($template);
+            $this->resources[$template] = $this->twig->load($template);
         }
 
         return $this->resources[$template]->render($parameters);

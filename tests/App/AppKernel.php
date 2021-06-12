@@ -29,7 +29,9 @@ use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
 
 final class AppKernel extends Kernel
 {
@@ -73,16 +75,33 @@ final class AppKernel extends Kernel
         return __DIR__;
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    /**
+     * TODO: Drop RouteCollectionBuilder when support for Symfony < 5.1 is dropped.
+     *
+     * @param RoutingConfigurator|RouteCollectionBuilder $routes
+     */
+    protected function configureRoutes($routes): void
     {
-        $routes->import(__DIR__.'/Resources/config/routing/routes.yml', '/', 'yaml');
-        $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml', '/', 'yaml');
+        if ($routes instanceof RouteCollectionBuilder) {
+            $routes->import(__DIR__.'/Resources/config/routing/routes.yml', '/', 'yaml');
+            $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml', '/', 'yaml');
+
+            return;
+        }
+
+        $routes->import(__DIR__.'/Resources/config/routing/routes.yml');
+        $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml');
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/Resources/config/config.yml');
-        $loader->load(__DIR__.'/Resources/config/security.yml');
+
+        if (class_exists(AuthenticatorManager::class)) {
+            $loader->load(__DIR__.'/Resources/config/config_symfony_v5.yml');
+        }
+
+        $loader->load(__DIR__.'/Resources/config/services.php');
         $container->setParameter('app.base_dir', $this->getBaseDir());
     }
 

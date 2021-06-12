@@ -102,7 +102,7 @@ SonataMediaBundle Configuration
                 path: /uploads/media # http://media.sonata-project.org/
         filesystem:
             local:
-                directory: '%kernel.root_dir%/../public/uploads/media'
+                directory: '%kernel.project_dir%/public/uploads/media'
                 create: false
 
 .. note::

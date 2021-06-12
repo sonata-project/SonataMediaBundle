@@ -20,14 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class GalleryAdminController extends CRUDController
 {
-    public function addRenderExtraParams(array $parameters = []): array
-    {
-        $parameters['media_pool'] = $this->get('sonata.media.pool');
-        $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
-
-        return parent::addRenderExtraParams($parameters);
-    }
-
     /**
      * return the Response object associated to the list action.
      */

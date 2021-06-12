@@ -21,6 +21,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 use Twig\Environment;
 use Twig\Template;
+use Twig\TemplateWrapper;
 
 /**
  * @author Geza Buza <bghome@gmail.com>
@@ -36,6 +37,11 @@ class MediaExtensionTest extends TestCase
      * @var MockObject&Template
      */
     private $template;
+
+    /**
+     * @var TemplateWrapper
+     */
+    private $templateWrapper;
 
     /**
      * @var MockObject&Environment
@@ -76,7 +82,8 @@ class MediaExtensionTest extends TestCase
                         ],
                     ]
                 )
-            );
+            )
+            ->willReturn('rendered thumbnail');
 
         $mediaExtension->thumbnail($media, $format, $options);
     }
@@ -126,6 +133,15 @@ class MediaExtensionTest extends TestCase
         return $this->template;
     }
 
+    public function getTemplateWrapper(): TemplateWrapper
+    {
+        if (null === $this->templateWrapper) {
+            $this->templateWrapper = new TemplateWrapper($this->getEnvironment(), $this->getTemplate());
+        }
+
+        return $this->templateWrapper;
+    }
+
     /**
      * @return MockObject&Environment
      */
@@ -133,7 +149,7 @@ class MediaExtensionTest extends TestCase
     {
         if (null === $this->environment) {
             $this->environment = $this->createMock(Environment::class);
-            $this->environment->method('loadTemplate')->willReturn($this->getTemplate());
+            $this->environment->method('load')->willReturn($this->getTemplateWrapper());
         }
 
         return $this->environment;
