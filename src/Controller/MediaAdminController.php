@@ -95,12 +95,4 @@ final class MediaAdminController extends CRUDController
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
         ]);
     }
-
-    protected function addRenderExtraParams(array $parameters = []): array
-    {
-        $parameters['media_pool'] = $this->get('sonata.media.pool');
-        $parameters['persistent_parameters'] = $this->admin->getPersistentParameters();
-
-        return parent::addRenderExtraParams($parameters);
-    }
 }
