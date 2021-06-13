@@ -16,6 +16,9 @@ use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Adapter\Ftp;
 use Gaufrette\Adapter\OpenCloud;
 use Gaufrette\Filesystem;
+use OpenCloud\ObjectSource\Service;
+use OpenCloud\OpenStack;
+use OpenCloud\Rackspace;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
@@ -53,12 +56,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '',
         ]);
 
-    $services->set('sonata.media.adapter.filesystem.opencloud.connection', '%sonata.media.adapter.filesystem.opencloud.class%')
+    $services->set('sonata.media.adapter.filesystem.opencloud.connection.openstack', Openstack::class)
         ->args(['', '']);
 
-    $services->set('sonata.media.adapter.filesystem.opencloud.objectstore', 'OpenCloud\ObjectSource\Service')
-        ->args(['', ''])
-        ->factory([new ReferenceConfigurator('sonata.media.adapter.filesystem.opencloud.connection'), 'ObjectStore']);
+    $services->set('sonata.media.adapter.filesystem.opencloud.connection.rackspace', Rackspace::class)
+        ->args(['', '']);
+
+    $services->set('sonata.media.adapter.filesystem.opencloud.objectstore', Service::class)
+        ->args(['', '']);
 
     $services->set('sonata.media.filesystem.ftp', Filesystem::class)
         ->args([

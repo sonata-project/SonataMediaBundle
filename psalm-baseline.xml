@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.7.3@38c452ae584467e939d55377aaf83b5a26f19dd1">
+    <!-- TODO: Remove this integration, the last version of this dependency is too old to be installed -->
+    <file src="src/Resources/config/gaufrette.php">
+        <UndefinedClass occurrences="3">
+            <code>Openstack</code>
+            <code>Rackspace</code>
+            <code>Service</code>
+        </UndefinedClass>
+    </file>
+</files>
