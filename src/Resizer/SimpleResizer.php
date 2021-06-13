@@ -16,37 +16,32 @@ namespace Sonata\MediaBundle\Resizer;
 use Gaufrette\File;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Box;
-use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\ManipulatorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 final class SimpleResizer implements ResizerInterface
 {
-    use ImagineCompatibleResizerTrait;
-
     /**
      * @var ImagineInterface
      */
-    protected $adapter;
+    private $adapter;
 
     /**
-     * @var string
+     * @var int
      */
-    protected $mode;
+    private $mode;
 
     /**
      * @var MetadataBuilderInterface
      */
-    protected $metadata;
+    private $metadata;
 
-    /**
-     * @param string $mode
-     */
-    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
+    public function __construct(ImagineInterface $adapter, int $mode, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
-        $this->mode = $this->convertMode($mode);
+        $this->mode = $mode;
         $this->metadata = $metadata;
     }
 
@@ -89,9 +84,9 @@ final class SimpleResizer implements ResizerInterface
      *
      * @return Box
      */
-    protected function computeBox(MediaInterface $media, array $settings)
+    private function computeBox(MediaInterface $media, array $settings)
     {
-        if (ImageInterface::THUMBNAIL_INSET !== $this->mode && ImageInterface::THUMBNAIL_OUTBOUND !== $this->mode) {
+        if (!($this->mode & ManipulatorInterface::THUMBNAIL_INSET || $this->mode & ManipulatorInterface::THUMBNAIL_OUTBOUND)) {
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
@@ -102,7 +97,7 @@ final class SimpleResizer implements ResizerInterface
             $settings['height'] / $size->getHeight(),
         ];
 
-        if (ImageInterface::THUMBNAIL_INSET === $this->mode) {
+        if ($this->mode & ManipulatorInterface::THUMBNAIL_INSET) {
             $ratio = min($ratios);
         } else {
             $ratio = max($ratios);

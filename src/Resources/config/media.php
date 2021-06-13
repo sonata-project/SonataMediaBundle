@@ -22,18 +22,41 @@ use Sonata\MediaBundle\Resizer\CropResizer;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $parameters = $containerConfigurator->parameters();
-
-    $parameters->set('sonata.media.resizer.crop.class', CropResizer::class);
-    $parameters->set('sonata.media.resizer.simple.class', SimpleResizer::class);
-    $parameters->set('sonata.media.resizer.square.class', SquareResizer::class);
-    $parameters->set('sonata.media.adapter.image.gd.class', GdImagine::class);
-    $parameters->set('sonata.media.adapter.image.imagick.class', ImagickImagine::class);
-    $parameters->set('sonata.media.adapter.image.gmagick.class', GmagickImagine::class);
-
+    // Use "service" function for creating references to services when dropping support for Symfony 4.4
+    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $services = $containerConfigurator->services();
+
+    $services->set('sonata.media.adapter.image.gd', GdImagine::class);
+
+    $services->set('sonata.media.adapter.image.imagick', ImagickImagine::class);
+
+    $services->set('sonata.media.adapter.image.gmagick', GmagickImagine::class);
+
+    $services->set('sonata.media.resizer.crop', CropResizer::class)
+        ->tag('sonata.media.resizer')
+        ->args([
+            new ReferenceConfigurator('sonata.media.adapter.image.default'),
+            new ReferenceConfigurator('sonata.media.metadata.proxy'),
+        ]);
+
+    $services->set('sonata.media.resizer.simple', SimpleResizer::class)
+        ->tag('sonata.media.resizer')
+        ->args([
+            new ReferenceConfigurator('sonata.media.adapter.image.default'),
+            '%sonata.media.resizer.simple.adapter.mode%',
+            new ReferenceConfigurator('sonata.media.metadata.proxy'),
+        ]);
+
+    $services->set('sonata.media.resizer.square', SquareResizer::class)
+        ->tag('sonata.media.resizer')
+        ->args([
+            new ReferenceConfigurator('sonata.media.adapter.image.default'),
+            '%sonata.media.resizer.square.adapter.mode%',
+            new ReferenceConfigurator('sonata.media.metadata.proxy'),
+        ]);
 
     $services->set('sonata.media.cdn.server', Server::class)
         ->args(['']);
