@@ -21,17 +21,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $parameters = $containerConfigurator->parameters();
-
-    $parameters->set('sonata.media.admin.groupname', 'sonata_media');
-    $parameters->set('sonata.media.admin.groupicon', '<i class=\'fa fa-image\'></i>');
-    $parameters->set('sonata.media.admin.media.controller', MediaAdminController::class);
-    $parameters->set('sonata.media.admin.media.translation_domain', 'SonataMediaBundle');
-    $parameters->set('sonata.media.admin.gallery.controller', GalleryAdminController::class);
-    $parameters->set('sonata.media.admin.gallery.translation_domain', '%sonata.media.admin.media.translation_domain%');
-    $parameters->set('sonata.media.admin.gallery_item.controller', CRUDController::class);
-    $parameters->set('sonata.media.admin.gallery_item.translation_domain', '%sonata.media.admin.media.translation_domain%');
-
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $services = $containerConfigurator->services();
@@ -40,21 +29,21 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->public()
         ->tag('sonata.admin', [
             'manager_type' => 'orm',
-            'group' => '%sonata.media.admin.groupname%',
-            'label_catalogue' => '%sonata.media.admin.media.translation_domain%',
+            'group' => 'sonata_media',
+            'label_catalogue' => 'SonataMediaBundle',
             'label' => 'media',
             'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
-            'icon' => '%sonata.media.admin.groupicon%',
+            'icon' => '<i class=\'fa fa-image\'></i>',
         ])
         ->args([
             '',
             '%sonata.media.admin.media.entity%',
-            '%sonata.media.admin.media.controller%',
+            MediaAdminController::class,
             new ReferenceConfigurator('sonata.media.pool'),
             (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
         ])
         ->call('setModelManager', [new ReferenceConfigurator('sonata.media.admin.media.manager')])
-        ->call('setTranslationDomain', ['%sonata.media.admin.media.translation_domain%'])
+        ->call('setTranslationDomain', ['SonataMediaBundle'])
         ->call('setTemplates', [[
             'inner_list_row' => '@SonataMedia/MediaAdmin/inner_row_media.html.twig',
             'outer_list_rows_mosaic' => '@SonataMedia/MediaAdmin/list_outer_rows_mosaic.html.twig',
@@ -67,19 +56,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->public()
         ->tag('sonata.admin', [
             'manager_type' => 'orm',
-            'group' => '%sonata.media.admin.groupname%',
+            'group' => 'sonata_media',
             'label' => 'gallery',
-            'label_catalogue' => '%sonata.media.admin.gallery.translation_domain%',
+            'label_catalogue' => 'SonataMediaBundle',
             'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
-            'icon' => '%sonata.media.admin.groupicon%',
+            'icon' => '<i class=\'fa fa-image\'></i>',
         ])
         ->args([
             '',
             '%sonata.media.admin.gallery.entity%',
-            '%sonata.media.admin.gallery.controller%',
+            GalleryAdminController::class,
             new ReferenceConfigurator('sonata.media.pool'),
         ])
-        ->call('setTranslationDomain', ['%sonata.media.admin.gallery.translation_domain%'])
+        ->call('setTranslationDomain', ['SonataMediaBundle'])
         ->call('setTemplates', [[
             'list' => '@SonataMedia/GalleryAdmin/list.html.twig',
         ]]);
@@ -89,18 +78,18 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('sonata.admin', [
             'manager_type' => 'orm',
             'show_in_dashboard' => false,
-            'group' => '%sonata.media.admin.groupname%',
-            'label_catalogue' => '%sonata.media.admin.gallery_item.translation_domain%',
+            'group' => 'sonata_media',
+            'label_catalogue' => 'SonataMediaBundle',
             'label' => 'gallery_item',
             'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
-            'icon' => '%sonata.media.admin.groupicon%',
+            'icon' => '<i class=\'fa fa-image\'></i>',
         ])
         ->args([
             '',
             '%sonata.media.admin.gallery_item.entity%',
-            '%sonata.media.admin.gallery_item.controller%',
+            CRUDController::class,
         ])
-        ->call('setTranslationDomain', ['%sonata.media.admin.gallery_item.translation_domain%']);
+        ->call('setTranslationDomain', ['SonataMediaBundle']);
 
     $services->alias('sonata.media.admin.media.manager', 'sonata.admin.manager.orm')
         ->public();

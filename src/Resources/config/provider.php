@@ -23,10 +23,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $parameters = $containerConfigurator->parameters();
-
-    $parameters->set('sonata.media.thumbnail.format.default', 'jpg');
-
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $services = $containerConfigurator->services();
 
@@ -35,7 +31,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args(['']);
 
     $services->set('sonata.media.thumbnail.format', FormatThumbnail::class)
-        ->args(['%sonata.media.thumbnail.format.default%']);
+        ->args(['jpg']);
 
     $services->set('sonata.media.thumbnail.liip_imagine', LiipImagineThumbnail::class)
         ->args([
