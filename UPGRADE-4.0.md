@@ -1,6 +1,14 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### SimpleResizer and SquareResizer
+
+  Previously the mode that could be configured for those resizer was a string, now it is an int.
+  The default configuration is still the same but with the int value that represents `inset`.
+
+  You can take a look at this class constants: `Imagine\Image\ManipulatorInterface` to see the
+  available options.
+
 ### Sonata\DatagridBundle\Pager\PageableInterface
 
   Usages of `Sonata\Doctrine\Model\PageableManagerInterface` were replaced in favor of `Sonata\DatagridBundle\Pager\PageableInterface`.
