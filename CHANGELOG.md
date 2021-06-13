@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.32.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.31.2...3.32.0) - 2021-06-13
+### Added
+- [[#1974](https://github.com/sonata-project/SonataMediaBundle/pull/1974)] Addded support for `nelmio/api-doc-bundle` >= 3.9 ([@jordisala1991](https://github.com/jordisala1991))
+
+### Changed
+- [[#1974](https://github.com/sonata-project/SonataMediaBundle/pull/1974)] Updated docs in order to expose how to configure custom serialization paths under jms_serializer configuration node (jms_serializer.metadata.directories). ([@jordisala1991](https://github.com/jordisala1991))
+- [[#1969](https://github.com/sonata-project/SonataMediaBundle/pull/1969)] Updated Dutch translations ([@VincentLanglet](https://github.com/VincentLanglet))
+
+### Fixed
+- [[#1871](https://github.com/sonata-project/SonataMediaBundle/pull/1871)] `MediaManager` implements `MediaManagerInterface` ([@mrcmorales](https://github.com/mrcmorales))
+
 ## [3.31.2](https://github.com/sonata-project/SonataMediaBundle/compare/3.31.1...3.31.2) - 2021-05-18
 ### Fixed
 - [[#1955](https://github.com/sonata-project/SonataMediaBundle/pull/1955)] CDN invalidation from CloudFront when submitting paths that were previously invalidated. ([@phansys](https://github.com/phansys))
