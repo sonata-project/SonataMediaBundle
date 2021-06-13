@@ -38,7 +38,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @final since sonata-project/media-bundle 3.21.0
  *
- * @deprecated since sonata-project/media-bundle 3.x, to be removed in version 4.0. Use Sonata\MediaBundle\Controller\Api\MediaController instead.
+ * @deprecated since sonata-project/media-bundle 3.32, to be removed in version 4.0. Use Sonata\MediaBundle\Controller\Api\MediaController instead.
  *
  * @author Hugo Briand <briand@ekino.com>
  */
