@@ -30,30 +30,25 @@ use Sonata\MediaBundle\Model\MediaInterface;
  */
 final class SquareResizer implements ResizerInterface
 {
-    use ImagineCompatibleResizerTrait;
-
     /**
      * @var ImagineInterface
      */
-    protected $adapter;
+    private $adapter;
 
     /**
-     * @var string
+     * @var int
      */
-    protected $mode;
+    private $mode;
 
     /**
      * @var MetadataBuilderInterface
      */
-    protected $metadata;
+    private $metadata;
 
-    /**
-     * @param string $mode
-     */
-    public function __construct(ImagineInterface $adapter, $mode, MetadataBuilderInterface $metadata)
+    public function __construct(ImagineInterface $adapter, int $mode, MetadataBuilderInterface $metadata)
     {
         $this->adapter = $adapter;
-        $this->mode = $this->convertMode($mode);
+        $this->mode = $mode;
         $this->metadata = $metadata;
     }
 

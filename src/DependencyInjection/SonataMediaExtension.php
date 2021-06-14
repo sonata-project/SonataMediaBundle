@@ -20,7 +20,6 @@ use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -393,51 +392,11 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
     private function configureAdapters(ContainerBuilder $container, array $config): void
     {
-        foreach (['gd', 'imagick', 'gmagick'] as $adapter) {
-            if ($container->hasParameter('sonata.media.adapter.image.'.$adapter.'.class')) {
-                $container->register(
-                    'sonata.media.adapter.image.'.$adapter,
-                    $container->getParameter('sonata.media.adapter.image.'.$adapter.'.class')
-                );
-            }
-        }
         $container->setAlias('sonata.media.adapter.image.default', $config['adapters']['default']);
     }
 
     private function configureResizers(ContainerBuilder $container, array $config): void
     {
-        if ($container->hasParameter('sonata.media.resizer.crop.class')) {
-            $class = $container->getParameter('sonata.media.resizer.crop.class');
-            $definition = new Definition($class, [
-                new Reference('sonata.media.adapter.image.default'),
-                new Reference('sonata.media.metadata.proxy'),
-            ]);
-            $definition->addTag('sonata.media.resizer');
-            $container->setDefinition('sonata.media.resizer.crop', $definition);
-        }
-
-        if ($container->hasParameter('sonata.media.resizer.simple.class')) {
-            $class = $container->getParameter('sonata.media.resizer.simple.class');
-            $definition = new Definition($class, [
-                new Reference('sonata.media.adapter.image.default'),
-                '%sonata.media.resizer.simple.adapter.mode%',
-                new Reference('sonata.media.metadata.proxy'),
-            ]);
-            $definition->addTag('sonata.media.resizer');
-            $container->setDefinition('sonata.media.resizer.simple', $definition);
-        }
-
-        if ($container->hasParameter('sonata.media.resizer.square.class')) {
-            $class = $container->getParameter('sonata.media.resizer.square.class');
-            $definition = new Definition($class, [
-                new Reference('sonata.media.adapter.image.default'),
-                '%sonata.media.resizer.square.adapter.mode%',
-                new Reference('sonata.media.metadata.proxy'),
-            ]);
-            $definition->addTag('sonata.media.resizer');
-            $container->setDefinition('sonata.media.resizer.square', $definition);
-        }
-
         $container->setAlias('sonata.media.resizer.default', $config['resizers']['default']);
     }
 

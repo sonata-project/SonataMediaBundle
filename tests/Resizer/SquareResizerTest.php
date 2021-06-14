@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Resizer;
 use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\ManipulatorInterface;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -32,7 +33,7 @@ class SquareResizerTest extends TestCase
         $file = $this->createMock(File::class);
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $resizer = new SquareResizer($adapter, 'foo', $metadata);
+        $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
         $resizer->resize($media, $file, $file, 'bar', []);
     }
 
@@ -48,7 +49,7 @@ class SquareResizerTest extends TestCase
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $resizer = new SquareResizer($adapter, 'foo', $metadata);
+        $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
 
         $box = $resizer->getBox($media, $settings);
 

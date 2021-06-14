@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use Imagine\Image\ManipulatorInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -454,13 +455,13 @@ final class Configuration implements ConfigurationInterface
                         ->arrayNode('simple')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('mode')->defaultValue('inset')->end()
+                                ->integerNode('mode')->defaultValue(ManipulatorInterface::THUMBNAIL_INSET)->end()
                             ->end()
                         ->end()
                         ->arrayNode('square')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('mode')->defaultValue('inset')->end()
+                                ->integerNode('mode')->defaultValue(ManipulatorInterface::THUMBNAIL_INSET)->end()
                             ->end()
                         ->end()
                     ->end()

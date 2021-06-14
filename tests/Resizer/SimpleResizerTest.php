@@ -16,9 +16,11 @@ namespace Sonata\MediaBundle\Tests\Resizer;
 use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
+use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use Imagine\Image\ManipulatorInterface;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -26,16 +28,35 @@ use Sonata\MediaBundle\Resizer\SimpleResizer;
 
 class SimpleResizerTest extends TestCase
 {
+    public function testResizeWithIncorrectMode(): void
+    {
+        $image = $this->createStub(ImageInterface::class);
+        $adapter = $this->createStub(ImagineInterface::class);
+        $media = $this->createMock(MediaInterface::class);
+        $metadata = $this->createStub(MetadataBuilderInterface::class);
+        $file = $this->createStub(File::class);
+
+        $media->expects($this->once())->method('getBox')->willReturn(new Box(535, 132));
+
+        $adapter->method('load')->willReturn($image);
+
+        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_FLAG_NOCLONE, $metadata);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $resizer->resize($media, $file, $file, 'bar', ['height' => null, 'width' => 90, 'quality' => 100]);
+    }
+
     public function testResizeWithNoWidthAndHeight(): void
     {
         $this->expectException(\RuntimeException::class);
 
-        $adapter = $this->createMock(ImagineInterface::class);
-        $media = $this->createMock(MediaInterface::class);
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-        $file = $this->createMock(File::class);
+        $adapter = $this->createStub(ImagineInterface::class);
+        $media = $this->createStub(MediaInterface::class);
+        $metadata = $this->createStub(MetadataBuilderInterface::class);
+        $file = $this->createStub(File::class);
 
-        $resizer = new SimpleResizer($adapter, 'foo', $metadata);
+        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
         $resizer->resize($media, $file, $file, 'bar', []);
     }
 
@@ -45,7 +66,7 @@ class SimpleResizerTest extends TestCase
         $image->expects($this->once())->method('thumbnail')->willReturn($image);
         $image->expects($this->once())->method('get')->willReturn(file_get_contents(__DIR__.'/../Fixtures/logo.png'));
 
-        $adapter = $this->createMock(ImagineInterface::class);
+        $adapter = $this->createStub(ImagineInterface::class);
         $adapter->method('load')->willReturn($image);
 
         $media = $this->createMock(MediaInterface::class);
@@ -60,21 +81,21 @@ class SimpleResizerTest extends TestCase
         $metadata = $this->createMock(MetadataBuilderInterface::class);
         $metadata->expects($this->once())->method('get')->willReturn([]);
 
-        $resizer = new SimpleResizer($adapter, 'outbound', $metadata);
+        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_OUTBOUND, $metadata);
         $resizer->resize($media, $in, $out, 'bar', ['height' => null, 'width' => 90, 'quality' => 100]);
     }
 
     /**
      * @dataProvider getBoxSettings
      */
-    public function testGetBox(string $mode, array $settings, Box $mediaSize, Box $result): void
+    public function testGetBox(int $mode, array $settings, Box $mediaSize, Box $result): void
     {
-        $adapter = $this->createMock(ImagineInterface::class);
+        $adapter = $this->createStub(ImagineInterface::class);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects($this->exactly(2))->method('getBox')->willReturn($mediaSize);
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $metadata = $this->createStub(MetadataBuilderInterface::class);
 
         $resizer = new SimpleResizer($adapter, $mode, $metadata);
 
@@ -89,17 +110,23 @@ class SimpleResizerTest extends TestCase
     public static function getBoxSettings(): array
     {
         return [
-            ['inset', ['width' => 90, 'height' => 90], new Box(100, 120), new Box(75, 90)],
-            ['inset', ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
-            ['inset', ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
-            ['inset', ['width' => 90, 'height' => null], new Box(567, 200), new Box(90, 32)],
-            ['inset', ['width' => 100, 'height' => 100], new Box(567, 200), new Box(100, 35)],
+            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(75, 90)],
+            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => null], new Box(567, 200), new Box(90, 32)],
+            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 100, 'height' => 100], new Box(567, 200), new Box(100, 35)],
 
-            ['outbound', ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
-            ['outbound', ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)],
-            ['outbound', ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
-            ['outbound', ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
-            ['outbound', ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)],
+
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
+            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)],
         ];
     }
 }
