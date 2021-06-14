@@ -3,11 +3,10 @@ UPGRADE FROM 3.x to 4.0
 
 ### Container parameters
 
-  We have been using container parameters on SonataMediaBundle 3.x as an undocumented extension
-  points for things like classes, and configurations.
+  We have been using container parameters as undocumented extension points for things like classes and configurations.
 
   In SonataMediaBundle 4.0 those are completely removed and we encourage you to use the default
-  dependency injection override to change services configuration if you need to.
+  dependency injection override to change the default values for the removed service configurations if you need to.
 
   If you need to change something that you believe it should be handled somehow in configuration,
   please open an issue and we will discuss it.
