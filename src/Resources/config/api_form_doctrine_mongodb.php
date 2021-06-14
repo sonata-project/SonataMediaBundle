@@ -24,7 +24,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set('sonata.media.api.form.type.doctrine.media', ApiDoctrineMediaType::class)
-        ->tag('form.type', ['alias' => 'sonata_media_api_form_doctrine_media'])
+        ->tag('form.type')
         ->args([
             new ReferenceConfigurator('jms_serializer.metadata_factory'),
             new ReferenceConfigurator('doctrine_mongodb'),
@@ -34,7 +34,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.api.form.type.media', ApiMediaType::class)
-        ->tag('form.type', ['alias' => 'sonata_media_api_form_media'])
+        ->tag('form.type')
         ->args([
             new ReferenceConfigurator('sonata.media.pool'),
             '%sonata.media.admin.media.entity%',
@@ -43,7 +43,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('setLogger', [(new ReferenceConfigurator('logger'))->nullOnInvalid()]);
 
     $services->set('sonata.media.api.form.type.gallery', ApiGalleryType::class)
-        ->tag('form.type', ['alias' => 'sonata_media_api_form_gallery'])
+        ->tag('form.type')
         ->args([
             new ReferenceConfigurator('jms_serializer.metadata_factory'),
             new ReferenceConfigurator('doctrine_mongodb'),
@@ -53,7 +53,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.api.form.type.gallery_item', ApiGalleryItemType::class)
-        ->tag('form.type', ['alias' => 'sonata_media_api_form_gallery_item'])
+        ->tag('form.type')
         ->args([
             new ReferenceConfigurator('jms_serializer.metadata_factory'),
             new ReferenceConfigurator('doctrine_mongodb'),

@@ -27,7 +27,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set('sonata.media.pool', Pool::class)
-        ->public()
         ->args(['']);
 
     $services->set('sonata.media.thumbnail.format', FormatThumbnail::class)
@@ -39,7 +38,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.provider.image', ImageProvider::class)
-        ->public()
         ->tag('sonata.media.provider')
         ->args([
             'sonata.media.provider.image',
@@ -58,7 +56,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]]);
 
     $services->set('sonata.media.provider.file', FileProvider::class)
-        ->public()
         ->tag('sonata.media.provider')
         ->args([
             'sonata.media.provider.file',
@@ -76,7 +73,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]]);
 
     $services->set('sonata.media.provider.youtube', YouTubeProvider::class)
-        ->public()
         ->tag('sonata.media.provider')
         ->args([
             'sonata.media.provider.youtube',
@@ -95,7 +91,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]]);
 
     $services->set('sonata.media.provider.dailymotion', DailyMotionProvider::class)
-        ->public()
         ->tag('sonata.media.provider')
         ->args([
             'sonata.media.provider.dailymotion',
@@ -113,7 +108,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]]);
 
     $services->set('sonata.media.provider.vimeo', VimeoProvider::class)
-        ->public()
         ->tag('sonata.media.provider')
         ->args([
             'sonata.media.provider.vimeo',
@@ -129,11 +123,4 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
             'helper_view' => '@SonataMedia/Provider/view_vimeo.html.twig',
         ]]);
-
-    $services->alias(Pool::class, 'sonata.media.pool');
-    $services->alias(ImageProvider::class, 'sonata.media.provider.image');
-    $services->alias(FileProvider::class, 'sonata.media.provider.file');
-    $services->alias(YouTubeProvider::class, 'sonata.media.provider.youtube');
-    $services->alias(DailyMotionProvider::class, 'sonata.media.provider.dailymotion');
-    $services->alias(VimeoProvider::class, 'sonata.media.provider.vimeo');
 };

@@ -26,14 +26,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->alias('sonata.media.document_manager', 'doctrine_mongodb.odm.document_manager');
 
     $services->set('sonata.media.manager.media', MediaManager::class)
-        ->public()
         ->args([
             '%sonata.media.media.class%',
             new ReferenceConfigurator('doctrine_mongodb'),
         ]);
 
     $services->set('sonata.media.manager.gallery', GalleryManager::class)
-        ->public()
         ->args([
             '%sonata.media.gallery.class%',
             new ReferenceConfigurator('doctrine_mongodb'),

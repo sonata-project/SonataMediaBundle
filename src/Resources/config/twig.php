@@ -36,7 +36,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.formatter.twig', FormatterMediaExtension::class)
-        ->public()
         ->args([
             new ReferenceConfigurator('sonata.media.twig.extension'),
         ]);

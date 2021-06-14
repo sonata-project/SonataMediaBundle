@@ -27,22 +27,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $services = $containerConfigurator->services();
 
-    $services->set(AddMassMediaCommand::class, AddMassMediaCommand::class)
-        ->public()
+    $services->set('sonata.media.command.add_mass_media', AddMassMediaCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.manager.media'),
         ]);
 
-    $services->set(AddMediaCommand::class, AddMediaCommand::class)
-        ->public()
+    $services->set('sonata.media.command.add_media', AddMediaCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.manager.media'),
         ]);
 
-    $services->set(CleanMediaCommand::class, CleanMediaCommand::class)
-        ->public()
+    $services->set('sonata.media.command.clean_media', CleanMediaCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.adapter.filesystem.local'),
@@ -50,8 +47,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             new ReferenceConfigurator('sonata.media.manager.media'),
         ]);
 
-    $services->set(FixMediaContextCommand::class, FixMediaContextCommand::class)
-        ->public()
+    $services->set('sonata.media.command.fix_media_context', FixMediaContextCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.pool'),
@@ -59,39 +55,34 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             (new ReferenceConfigurator('sonata.classification.manager.context'))->nullOnInvalid(),
         ]);
 
-    $services->set(MigrateToJsonTypeCommand::class, MigrateToJsonTypeCommand::class)
-        ->public()
+    $services->set('sonata.media.command.migrate_to_json_type', MigrateToJsonTypeCommand::class)
         ->tag('console.command')
         ->args([
             (new ReferenceConfigurator('doctrine.orm.entity_manager'))->nullOnInvalid(),
         ]);
 
-    $services->set(RefreshMetadataCommand::class, RefreshMetadataCommand::class)
-        ->public()
+    $services->set('sonata.media.command.refresh_metadata', RefreshMetadataCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.pool'),
             new ReferenceConfigurator('sonata.media.manager.media'),
         ]);
 
-    $services->set(RemoveThumbsCommand::class, RemoveThumbsCommand::class)
-        ->public()
+    $services->set('sonata.media.command.remove_thumbs', RemoveThumbsCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.pool'),
             new ReferenceConfigurator('sonata.media.manager.media'),
         ]);
 
-    $services->set(SyncThumbsCommand::class, SyncThumbsCommand::class)
-        ->public()
+    $services->set('sonata.media.command.sync_thumbs', SyncThumbsCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.pool'),
             new ReferenceConfigurator('sonata.media.manager.media'),
         ]);
 
-    $services->set(UpdateCdnStatusCommand::class, UpdateCdnStatusCommand::class)
-        ->public()
+    $services->set('sonata.media.command.update_cdn_status', UpdateCdnStatusCommand::class)
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.pool'),

@@ -18,11 +18,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
-    $services->set('sonata.media.manager.media', NoDriverManager::class)
-        ->public();
+    $services->set('sonata.media.manager.media', NoDriverManager::class);
 
-    $services->set('sonata.media.manager.gallery', NoDriverManager::class)
-        ->public();
+    $services->set('sonata.media.manager.gallery', NoDriverManager::class);
 
     $services->set('sonata.media.generator.default', NoDriverGenerator::class);
 };

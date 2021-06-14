@@ -21,6 +21,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set('sonata.media.controller.api.gallery', GalleryController::class)
+        ->public()
         ->args([
             new ReferenceConfigurator('sonata.media.manager.gallery'),
             new ReferenceConfigurator('sonata.media.manager.media'),
@@ -28,12 +29,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.controller.api.media', MediaController::class)
+        ->public()
         ->args([
             new ReferenceConfigurator('sonata.media.manager.media'),
             new ReferenceConfigurator('sonata.media.pool'),
             new ReferenceConfigurator('form.factory'),
         ]);
-
-    $services->alias(GalleryController::class, 'sonata.media.controller.api.gallery')->public();
-    $services->alias(MediaController::class, 'sonata.media.controller.api.media')->public();
 };

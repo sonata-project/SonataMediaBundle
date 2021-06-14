@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set('sonata.media.form.type.media', MediaType::class)
-        ->tag('form.type', ['alias' => 'sonata_media_type'])
+        ->tag('form.type')
         ->args([
             new ReferenceConfigurator('sonata.media.pool'),
             '',

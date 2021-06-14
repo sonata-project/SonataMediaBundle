@@ -86,7 +86,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.metadata.proxy', ProxyMetadataBuilder::class)
-        ->public()
         ->args([
             new ReferenceConfigurator('service_container'),
             (new ReferenceConfigurator('sonata.media.metadata.noop'))->nullOnInvalid(),
@@ -94,9 +93,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.metadata.amazon', AmazonMetadataBuilder::class)
-        ->public()
         ->args([[]]);
 
-    $services->set('sonata.media.metadata.noop', NoopMetadataBuilder::class)
-        ->public();
+    $services->set('sonata.media.metadata.noop', NoopMetadataBuilder::class);
 };

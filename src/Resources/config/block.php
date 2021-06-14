@@ -23,7 +23,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set('sonata.media.block.media', MediaBlockService::class)
-        ->public()
         ->tag('sonata.block')
         ->args([
             new ReferenceConfigurator('twig'),
@@ -33,7 +32,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.block.feature_media', FeatureMediaBlockService::class)
-        ->public()
         ->tag('sonata.block')
         ->args([
             new ReferenceConfigurator('twig'),
@@ -43,7 +41,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.block.gallery', GalleryBlockService::class)
-        ->public()
         ->tag('sonata.block')
         ->args([
             new ReferenceConfigurator('twig'),
@@ -53,7 +50,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set('sonata.media.block.gallery_list', GalleryListBlockService::class)
-        ->public()
         ->tag('sonata.block')
         ->args([
             new ReferenceConfigurator('twig'),

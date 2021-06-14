@@ -26,7 +26,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set('sonata.media.admin.media', MediaAdmin::class)
-        ->public()
         ->tag('sonata.admin', [
             'manager_type' => 'doctrine_mongodb',
             'group' => 'sonata_media',
@@ -52,7 +51,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]]);
 
     $services->set('sonata.media.admin.gallery', GalleryAdmin::class)
-        ->public()
         ->tag('sonata.admin', [
             'manager_type' => 'doctrine_mongodb',
             'group' => 'sonata_media',
@@ -73,7 +71,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]]);
 
     $services->set('sonata.media.admin.gallery_item', GalleryItemAdmin::class)
-        ->public()
         ->tag('sonata.admin', [
             'manager_type' => 'doctrine_mongodb',
             'group' => 'sonata_media',
@@ -90,6 +87,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ])
         ->call('setTranslationDomain', ['SonataMediaBundle']);
 
-    $services->alias('sonata.media.admin.media.manager', 'sonata.admin.manager.doctrine_mongodb')
-        ->public();
+    $services->alias('sonata.media.admin.media.manager', 'sonata.admin.manager.doctrine_mongodb');
 };
