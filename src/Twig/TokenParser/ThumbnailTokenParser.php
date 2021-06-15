@@ -33,6 +33,11 @@ final class ThumbnailTokenParser extends AbstractTokenParser
         $this->extensionName = $extensionName;
     }
 
+    /**
+     * @psalm-suppress InternalMethod
+     *
+     * @see https://github.com/twigphp/Twig/issues/3443
+     */
     public function parse(Token $token)
     {
         $media = $this->parser->getExpressionParser()->parseExpression();

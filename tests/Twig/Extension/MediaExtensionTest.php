@@ -133,6 +133,11 @@ class MediaExtensionTest extends TestCase
         return $this->template;
     }
 
+    /**
+     * @psalm-suppress InternalMethod
+     *
+     * @see https://github.com/twigphp/Twig/blob/3.x/src/TemplateWrapper.php#L24-L30
+     */
     public function getTemplateWrapper(): TemplateWrapper
     {
         if (null === $this->templateWrapper) {

@@ -42,9 +42,11 @@ final class GalleryController extends AbstractController
     }
 
     /**
+     * @param int|string $id
+     *
      * @throws NotFoundHttpException
      */
-    public function viewAction(string $id): Response
+    public function viewAction($id): Response
     {
         $gallery = $this->galleryManager->findOneBy([
             'id' => $id,

@@ -34,7 +34,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class YouTubeProviderTest extends AbstractProviderTest
 {
-    public function getProvider(?object $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
+    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {
         if (null === $client) {
             $client = $this->createStub(ClientInterface::class);

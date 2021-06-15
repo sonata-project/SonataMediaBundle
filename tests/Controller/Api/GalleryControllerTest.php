@@ -106,9 +106,9 @@ class GalleryControllerTest extends TestCase
     public function testGetGalleryGalleryItemsAction(): void
     {
         $galleryManager = $this->createMock(GalleryManagerInterface::class);
-        $galleryItem = $this->createMock(GalleryItemInterface::class);
+        $galleryItem = $this->createStub(GalleryItemInterface::class);
         $gallery = $this->createMock(GalleryInterface::class);
-        $formFactory = $this->createMock(FormFactoryInterface::class);
+        $formFactory = $this->createStub(FormFactoryInterface::class);
 
         $gallery->expects($this->once())->method('getGalleryItems')->willReturn(new ArrayCollection([$galleryItem]));
 

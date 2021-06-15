@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Form\Type\MediaType;
-use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
@@ -27,25 +25,12 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
  */
 class MediaTypeTest extends AbstractTypeTest
 {
-    /**
-     * @var MockObject&Pool
-     */
-    protected $mediaPool;
-
-    /**
-     * @var MediaType
-     */
-    protected $mediaType;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->mediaPool = $this->createMock(Pool::class);
-        $this->mediaType = new MediaType($this->mediaPool, 'testClass');
-
         $this->factory = Forms::createFormFactoryBuilder()
-            ->addType($this->mediaType)
+            ->addType($this->formType)
             ->addExtensions($this->getExtensions())
             ->getFormFactory();
     }
@@ -160,6 +145,9 @@ class MediaTypeTest extends AbstractTypeTest
         return new MediaType($this->mediaPool, 'testclass');
     }
 
+    /**
+     * @phpstan-return class-string<\Symfony\Component\Form\FormTypeInterface>
+     */
     private function getFormType(): string
     {
         return MediaType::class;

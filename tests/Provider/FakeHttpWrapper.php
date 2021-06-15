@@ -97,7 +97,7 @@ class FakeHttpWrapper
         $file = __DIR__.'/../Fixtures/'.self::$ref[$path];
 
         if (!is_file($file)) {
-            var_dump('unable to retrieve the file : '.$file);
+            throw new \RuntimeException(sprintf('Unable to retrieve the file "%s".', $file));
         }
 
         $this->fp = fopen($file, $mode);

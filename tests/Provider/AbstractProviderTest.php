@@ -26,7 +26,6 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
@@ -44,11 +43,6 @@ abstract class AbstractProviderTest extends TestCase
      * @var FormMapper
      */
     protected $form;
-
-    /**
-     * @var MockObject&FormTypeInterface
-     */
-    protected $formType;
 
     /**
      * @var MediaProviderInterface

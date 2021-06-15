@@ -54,6 +54,11 @@ abstract class Gallery implements GalleryInterface
      */
     protected $galleryItems;
 
+    public function __construct()
+    {
+        $this->galleryItems = new ArrayCollection();
+    }
+
     public function __toString(): string
     {
         return $this->getName() ?: '-';
