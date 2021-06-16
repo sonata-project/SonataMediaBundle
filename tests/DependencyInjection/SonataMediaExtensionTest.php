@@ -21,7 +21,6 @@ use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
-use Sonata\MediaBundle\Model\CategoryManager;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
@@ -35,30 +34,18 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         parent::setUp();
 
         $this->container->setParameter('kernel.bundles', [
+            'SonataClassificationBundle' => true,
             'SonataDoctrineBundle' => true,
             'SonataAdminBundle' => true,
         ]);
     }
 
-    public function testLoadWithDefaultAndCustomCategoryManager(): void
+    public function testLoadWithForceDisableTrue(): void
     {
         $this->load([
             'class' => [
                 'category' => \stdClass::class,
             ],
-            'category_manager' => 'dummy.service.name',
-        ]);
-
-        $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
-    }
-
-    public function testLoadWithForceDisableTrueAndWithCategoryManager(): void
-    {
-        $this->load([
-            'class' => [
-                'category' => \stdClass::class,
-            ],
-            'category_manager' => 'dummy.service.name',
             'force_disable_category' => true,
         ]);
 
@@ -70,10 +57,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->load();
 
         $this->assertContainerBuilderHasAlias('sonata.media.manager.category');
-        $this->assertContainerBuilderHasService(
-            'sonata.media.manager.category.default',
-            CategoryManager::class
-        );
     }
 
     public function testLoadWithDefaultAndClassificationBundleEnableAndForceDisableCategory(): void
@@ -83,18 +66,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ]);
 
         $this->assertContainerBuilderNotHasService('sonata.media.manager.category');
-    }
-
-    public function testLoadWithDefaultAndClassificationBundleEnableAndCustomCategoryManager(): void
-    {
-        $this->load([
-            'class' => [
-                'category' => \stdClass::class,
-            ],
-            'category_manager' => 'dummy.service.name',
-        ]);
-
-        $this->assertContainerBuilderHasAlias('sonata.media.manager.category', 'dummy.service.name');
     }
 
     public function testDefaultAdapter(): void

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
-use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
@@ -80,12 +79,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
         }
 
-        if ($this->isClassificationEnabled($config)) {
+        if ($this->isClassificationEnabled($bundles, $config)) {
             $loader->load('category.php');
-            $categoryManagerAlias = 'sonata.media.manager.category';
-            $container->setAlias($categoryManagerAlias, $config['category_manager']);
-            $categoryManager = $container->getAlias($categoryManagerAlias);
-            $categoryManager->setPublic(true);
         }
 
         if (!\array_key_exists($config['default_context'], $config['contexts'])) {
@@ -148,7 +143,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
                 throw new \RuntimeException('You must register SonataDoctrineBundle to use SonataMediaBundle.');
             }
 
-            $this->registerSonataDoctrineMapping($config);
+            $this->registerSonataDoctrineMapping($bundles, $config);
         }
 
         $container->setParameter('sonata.media.resizer.simple.adapter.mode', $config['resizer']['simple']['mode']);
@@ -384,9 +379,9 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
     /**
      * Checks if the classification of media is enabled.
      */
-    private function isClassificationEnabled(array $config): bool
+    private function isClassificationEnabled(array $bundles, array $config): bool
     {
-        return interface_exists(CategoryInterface::class)
+        return isset($bundles['SonataClassificationBundle'])
             && !$config['force_disable_category'];
     }
 
@@ -400,7 +395,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $container->setAlias('sonata.media.resizer.default', $config['resizers']['default']);
     }
 
-    private function registerSonataDoctrineMapping(array $config): void
+    private function registerSonataDoctrineMapping(array $bundles, array $config): void
     {
         $collector = DoctrineCollector::getInstance();
 
@@ -448,7 +443,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
                 ->addOrder('position', 'ASC')
         );
 
-        if ($this->isClassificationEnabled($config)) {
+        if ($this->isClassificationEnabled($bundles, $config)) {
             $collector->addAssociation(
                 $config['class']['media'],
                 'mapManyToOne',

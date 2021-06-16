@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Command;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
-use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Category;
 use Sonata\MediaBundle\Tests\App\Entity\Context;

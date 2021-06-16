@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\ClassificationBundle\Validator\Constraints;
+namespace Sonata\MediaBundle\Tests\Validator\Constraints;
 
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;
@@ -110,9 +110,9 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
         $this->buildViolation($constraint->message)
             ->atPath('property.path.binaryContent')
             ->setParameters([
-                    '%min_width%' => 100,
-                    '%min_height%' => 100,
-                ])
+                '%min_width%' => 100,
+                '%min_height%' => 100,
+            ])
             ->assertRaised();
     }
 

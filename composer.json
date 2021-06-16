@@ -76,7 +76,7 @@
         "rackspace/php-opencloud": "<1.6",
         "sonata-project/admin-bundle": "<=4.0.0-alpha-2",
         "sonata-project/block-bundle": "<4.0",
-        "sonata-project/classification-bundle": "<3.0 || >= 5.0",
+        "sonata-project/classification-bundle": "<4.0",
         "sonata-project/doctrine-orm-admin-bundle": "<=4.0.0-alpha-1",
         "sonata-project/formatter-bundle": "<3.4",
         "sonata-project/notification-bundle": "<4.0",
@@ -103,6 +103,7 @@
         "sensio/framework-extra-bundle": "^6.1",
         "sonata-project/admin-bundle": "^4.0@dev",
         "sonata-project/block-bundle": "^4.0",
+        "sonata-project/classification-bundle": "^4.0@dev",
         "sonata-project/datagrid-bundle": "^3.0.1",
         "sonata-project/doctrine-orm-admin-bundle": "^4.0@alpha",
         "sonata-project/notification-bundle": "^4.0@dev",
@@ -141,8 +142,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Sonata\\MediaBundle\\Tests\\": "tests/",
-            "Sonata\\ClassificationBundle\\": "tests/Fixtures/SonataClassificationBundle"
+            "Sonata\\MediaBundle\\Tests\\": "tests/"
         }
     },
     "scripts": {

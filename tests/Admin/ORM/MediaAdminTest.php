@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Admin\ORM;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
 use Sonata\MediaBundle\Entity\BaseMedia;
-use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
 class MediaAdminTest extends TestCase
