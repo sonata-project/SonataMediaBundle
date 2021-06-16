@@ -15,12 +15,12 @@ namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
-use Sonata\ClassificationBundle\Model\Category;
-use Sonata\ClassificationBundle\Model\Context;
 use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\App\Entity\Category;
+use Sonata\MediaBundle\Tests\App\Entity\Context;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;

@@ -95,9 +95,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         if (null !== $this->categoryManager && !$categoryId) {
             $category = $this->categoryManager->getRootCategory($context);
 
-            if (method_exists($category, 'getId')) {
-                $categoryId = $category->getId();
-            }
+            $categoryId = $category->getId();
         }
 
         return array_merge($parameters, [
@@ -128,7 +126,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
                 $categoryContext = $category->getContext();
 
-                if ($categoryContext && method_exists($categoryContext, 'getId') && $categoryContext->getId() === $context) {
+                if ($categoryContext && $categoryContext->getId() === $context) {
                     $object->setCategory($category);
                 }
             }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 
 interface MediaInterface
 {
@@ -380,4 +381,8 @@ interface MediaInterface
      * @return string
      */
     public function getPreviousProviderReference();
+
+    public function getCategory(): ?CategoryInterface;
+
+    public function setCategory(?CategoryInterface $category = null): void;
 }

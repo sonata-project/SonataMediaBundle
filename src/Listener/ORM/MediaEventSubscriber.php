@@ -79,7 +79,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
             throw new \RuntimeException('There is no media on the persistence event.');
         }
 
-        if (null !== $this->categoryManager && method_exists($media, 'getCategory') && method_exists($media, 'setCategory') && !$media->getCategory()) {
+        if (null !== $this->categoryManager && !$media->getCategory()) {
             $media->setCategory($this->getRootCategory($media));
         }
 

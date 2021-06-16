@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Sonata\ClassificationBundle\Model\Category;
+use Sonata\MediaBundle\Tests\App\Entity\Category;
 
 class MediaTest extends TestCase
 {
