@@ -18,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\AdminBundle\Request\AdminFetcher;
 use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\MediaBundle\Controller\MediaAdminController;
@@ -163,6 +164,7 @@ class MediaAdminControllerTest extends TestCase
         $pool = new AdminPool($this->container, [
             'admin_code' => 'admin_code',
         ]);
+        $adminFetcher = new AdminFetcher($pool);
         $templateRegistry = $this->createStub(TemplateRegistryInterface::class);
         $mutableTemplateRegistry = $this->createStub(MutableTemplateRegistryInterface::class);
 
@@ -180,6 +182,7 @@ class MediaAdminControllerTest extends TestCase
         $this->container->set('admin_code', $this->admin);
         $this->container->set('sonata.admin.pool', $pool);
         $this->container->set('admin_code.template_registry', $templateRegistry);
+        $this->container->set('sonata.admin.request.fetcher', $adminFetcher);
         $this->admin->method('hasTemplateRegistry')->willReturn(true);
         $this->admin->method('getTemplateRegistry')->willReturn($mutableTemplateRegistry);
 
