@@ -164,6 +164,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         if ($this->primary instanceof MetadataSupporter) {
             $this->primary->setMetadata($key, $content);
         }
+
         if ($this->secondary instanceof MetadataSupporter) {
             $this->secondary->setMetadata($key, $content);
         }
@@ -173,7 +174,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     {
         if ($this->primary instanceof MetadataSupporter) {
             return $this->primary->getMetadata($key);
-        } elseif ($this->secondary instanceof MetadataSupporter) {
+        }
+
+        if ($this->secondary instanceof MetadataSupporter) {
             return $this->secondary->getMetadata($key);
         }
 
@@ -198,7 +201,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         if ($this->primary instanceof FileFactory) {
             return $this->primary->createFile($key, $filesystem);
         }
-        
+
         if ($this->secondary instanceof FileFactory) {
             return $this->secondary->createFile($key, $filesystem);
         }
@@ -211,7 +214,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         if ($this->primary instanceof StreamFactory) {
             return $this->primary->createStream($key);
         }
-        
+
         if ($this->secondary instanceof StreamFactory) {
             return $this->secondary->createStream($key);
         }
