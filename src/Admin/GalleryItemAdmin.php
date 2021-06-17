@@ -23,23 +23,24 @@ final class GalleryItemAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $form): void
     {
-        $link_parameters = [];
+        $linkParameters = [];
 
         if ($this->hasParentFieldDescription()) {
-            $link_parameters = $this->getParentFieldDescription()->getOption('link_parameters', []);
+            /** @var array<string, mixed> $linkParameters */
+            $linkParameters = $this->getParentFieldDescription()->getOption('link_parameters', []);
         }
 
         if ($this->hasRequest()) {
             $context = $this->getRequest()->get('context', null);
 
             if (null !== $context) {
-                $link_parameters['context'] = $context;
+                $linkParameters['context'] = $context;
             }
         }
 
         $form
             ->add('media', ModelListType::class, ['required' => false], [
-                'link_parameters' => $link_parameters,
+                'link_parameters' => $linkParameters,
             ])
             ->add('enabled', null, ['required' => false])
             ->add('position', HiddenType::class);

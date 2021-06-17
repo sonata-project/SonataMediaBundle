@@ -25,9 +25,24 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
      */
     private $container;
 
-    public function __construct(ContainerInterface $container)
-    {
+    /**
+     * @var MetadataBuilderInterface|null
+     */
+    private $noopMetadataBuilder;
+
+    /**
+     * @var MetadataBuilderInterface|null
+     */
+    private $amazonMetadataBuilder;
+
+    public function __construct(
+        ContainerInterface $container,
+        MetadataBuilderInterface $noopMetadataBuilder,
+        MetadataBuilderInterface $amazonMetadataBuilder
+    ) {
         $this->container = $container;
+        $this->noopMetadataBuilder = $noopMetadataBuilder;
+        $this->amazonMetadataBuilder = $amazonMetadataBuilder;
     }
 
     public function get(MediaInterface $media, $filename)
@@ -41,17 +56,17 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
             return $meta;
         }
 
-        if (!$this->container->has('sonata.media.metadata.noop')) {
+        if (null === $this->noopMetadataBuilder) {
             return [];
         }
 
-        return $this->container->get('sonata.media.metadata.noop')->get($media, $filename);
+        return $this->noopMetadataBuilder->get($media, $filename);
     }
 
     /**
      * @param string $filename
      *
-     * @return array|bool
+     * @return array|false
      */
     private function getAmazonBuilder(MediaInterface $media, $filename)
     {
@@ -65,10 +80,10 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
         }
 
         //for amazon s3
-        if (!\in_array(AwsS3::class, $adapterClassNames, true) || !$this->container->has('sonata.media.metadata.amazon')) {
+        if (null === $this->amazonMetadataBuilder || !\in_array(AwsS3::class, $adapterClassNames, true)) {
             return false;
         }
 
-        return $this->container->get('sonata.media.metadata.amazon')->get($media, $filename);
+        return $this->amazonMetadataBuilder->get($media, $filename);
     }
 }

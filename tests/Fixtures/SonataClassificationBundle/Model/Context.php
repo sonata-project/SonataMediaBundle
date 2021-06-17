@@ -13,56 +13,90 @@ declare(strict_types=1);
 
 namespace Sonata\ClassificationBundle\Model;
 
-class Context implements ContextInterface
+abstract class Context implements ContextInterface
 {
     /**
-     * @var string|null
+     * @var string
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $name;
+    protected $name;
 
     /**
-     * @var bool|null
+     * @var \DateTime
      */
-    private $enabled;
+    protected $createdAt;
 
-    public function getId(): ?string
+    /**
+     * @var \DateTime
+     */
+    protected $updatedAt;
+
+    /**
+     * @var bool
+     */
+    protected $enabled;
+
+    public function __toString()
     {
-        return $this->id;
+        return $this->getName() ?: 'n/a';
     }
 
-    public function setId(string $id): self
+    public function setName($name): void
     {
-        $this->id = $id;
-
-        return $this;
+        $this->name = $name;
     }
 
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setEnabled($enabled): void
     {
-        $this->name = $name;
-
-        return $this;
+        $this->enabled = $enabled;
     }
 
-    public function getEnabled(): ?bool
+    public function getEnabled()
     {
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function setCreatedAt(?\DateTime $createdAt = null): void
     {
-        $this->enabled = $enabled;
+        $this->createdAt = $createdAt;
+    }
 
-        return $this;
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setUpdatedAt(?\DateTime $updatedAt = null): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function preUpdate(): void
+    {
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }

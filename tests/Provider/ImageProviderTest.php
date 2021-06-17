@@ -235,7 +235,8 @@ class ImageProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($file);
 
-        $this->assertNull($this->provider->transform($media));
+        $this->provider->transform($media);
+
         $this->assertNull($media->getWidth(), 'Width staid null');
     }
 

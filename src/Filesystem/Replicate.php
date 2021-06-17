@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Filesystem;
 
 use Gaufrette\Adapter;
+use Gaufrette\Adapter\FileFactory;
 use Gaufrette\Adapter\MetadataSupporter;
+use Gaufrette\Adapter\StreamFactory;
 use Gaufrette\Filesystem;
 use Psr\Log\LoggerInterface;
 
-final class Replicate implements Adapter, MetadataSupporter
+final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSupporter
 {
     /**
      * @var LoggerInterface
@@ -93,7 +95,7 @@ final class Replicate implements Adapter, MetadataSupporter
         $return = false;
 
         try {
-            $return = $this->primary->write($key, $content, $metadata);
+            $return = $this->primary->write($key, $content);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
@@ -103,7 +105,7 @@ final class Replicate implements Adapter, MetadataSupporter
         }
 
         try {
-            $return = $this->secondary->write($key, $content, $metadata);
+            $return = $this->secondary->write($key, $content);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
@@ -162,6 +164,7 @@ final class Replicate implements Adapter, MetadataSupporter
         if ($this->primary instanceof MetadataSupporter) {
             $this->primary->setMetadata($key, $content);
         }
+
         if ($this->secondary instanceof MetadataSupporter) {
             $this->secondary->setMetadata($key, $content);
         }
@@ -171,7 +174,9 @@ final class Replicate implements Adapter, MetadataSupporter
     {
         if ($this->primary instanceof MetadataSupporter) {
             return $this->primary->getMetadata($key);
-        } elseif ($this->secondary instanceof MetadataSupporter) {
+        }
+
+        if ($this->secondary instanceof MetadataSupporter) {
             return $this->secondary->getMetadata($key);
         }
 
@@ -193,17 +198,28 @@ final class Replicate implements Adapter, MetadataSupporter
 
     public function createFile($key, Filesystem $filesystem)
     {
-        return $this->primary->createFile($key, $filesystem);
+        if ($this->primary instanceof FileFactory) {
+            return $this->primary->createFile($key, $filesystem);
+        }
+
+        if ($this->secondary instanceof FileFactory) {
+            return $this->secondary->createFile($key, $filesystem);
+        }
+
+        throw new \LogicException(sprintf('None of the adapters implements %s.', FileFactory::class));
     }
 
-    public function createFileStream($key, Filesystem $filesystem)
+    public function createStream($key)
     {
-        return $this->primary->createFileStream($key, $filesystem);
-    }
+        if ($this->primary instanceof StreamFactory) {
+            return $this->primary->createStream($key);
+        }
 
-    public function listDirectory($directory = '')
-    {
-        return $this->primary->listDirectory($directory);
+        if ($this->secondary instanceof StreamFactory) {
+            return $this->secondary->createStream($key);
+        }
+
+        throw new \LogicException(sprintf('None of the adapters implements %s.', StreamFactory::class));
     }
 
     public function isDirectory($key)

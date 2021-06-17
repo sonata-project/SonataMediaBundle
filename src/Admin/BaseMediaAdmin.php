@@ -93,7 +93,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $categoryId = $this->getRequest()->get('category');
 
         if (null !== $this->categoryManager && !$categoryId) {
-            $categoryId = $this->categoryManager->getRootCategory($context)->getId();
+            $category = $this->categoryManager->getRootCategory($context);
+
+            $categoryId = $category->getId();
         }
 
         return array_merge($parameters, [
@@ -118,7 +120,13 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             if (null !== $this->categoryManager && $categoryId = $this->getPersistentParameter('category')) {
                 $category = $this->categoryManager->find($categoryId);
 
-                if ($category && $category->getContext()->getId() === $context) {
+                if (!$category) {
+                    return;
+                }
+
+                $categoryContext = $category->getContext();
+
+                if ($categoryContext && $categoryContext->getId() === $context) {
                     $object->setCategory($category);
                 }
             }

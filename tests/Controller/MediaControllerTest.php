@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Controller\MediaController;
@@ -65,7 +66,7 @@ class MediaControllerTest extends TestCase
 
         $request = $this->createStub(Request::class);
         $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
+        $pool = $this->createMock(Pool::class);
 
         $this->configureGetCurrentRequest($request);
         $this->configureGetMedia(1, $media);
@@ -111,7 +112,7 @@ class MediaControllerTest extends TestCase
         $this->expectException(AccessDeniedException::class);
 
         $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
+        $pool = $this->createMock(Pool::class);
         $request = $this->createStub(Request::class);
 
         $this->configureGetMedia(1, $media);
@@ -146,10 +147,15 @@ class MediaControllerTest extends TestCase
         $this->assertSame('renderResponse', $response->getContent());
     }
 
+    /**
+     * @param MockObject&Pool $pool
+     * @param Stub&Media      $media
+     * @param Stub&Request    $request
+     */
     private function configureDownloadSecurity(
-        MockObject $pool,
-        Media $media,
-        Request $request,
+        object $pool,
+        object $media,
+        object $request,
         bool $isGranted
     ): void {
         $strategy = $this->createMock(DownloadStrategyInterface::class);
@@ -166,9 +172,13 @@ class MediaControllerTest extends TestCase
         $mediaManager->method('find')->with($id)->willReturn($media);
     }
 
+    /**
+     * @param MockObject&Pool $pool
+     * @param Stub&Media      $media
+     */
     private function configureGetProvider(
-        MockObject $pool,
-        MockObject $media,
+        object $pool,
+        object $media,
         MediaProviderInterface $provider
     ): void {
         $pool->method('getProvider')->with('provider')->willReturn($provider);

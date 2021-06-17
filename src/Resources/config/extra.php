@@ -24,9 +24,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '',
             '',
             new ReferenceConfigurator('sonata.media.pool'),
+            new ReferenceConfigurator('sonata.admin.pool'),
             new ReferenceConfigurator('sonata.media.manager.media'),
+            new ReferenceConfigurator('sonata.media.admin.media'),
             new ReferenceConfigurator('router'),
             new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('service_container'),
         ]);
 };

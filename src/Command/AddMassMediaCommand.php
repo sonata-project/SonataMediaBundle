@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
-use Doctrine\Persistence\ManagerRegistry;
+use Sonata\Doctrine\Model\ClearableManagerInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,21 +31,15 @@ final class AddMassMediaCommand extends Command
     private $mediaManager;
 
     /**
-     * @var ManagerRegistry|null
-     */
-    private $managerRegistry;
-
-    /**
      * @var string[]
      */
     private $setters;
 
-    public function __construct(ManagerInterface $mediaManager, ?ManagerRegistry $managerRegistry = null)
+    public function __construct(ManagerInterface $mediaManager)
     {
         parent::__construct();
 
         $this->mediaManager = $mediaManager;
-        $this->managerRegistry = $managerRegistry;
     }
 
     public function configure(): void
@@ -66,7 +60,7 @@ final class AddMassMediaCommand extends Command
         $imported = -1;
 
         while (!feof($fp)) {
-            $data = fgetcsv($fp, null, $input->getOption('delimiter'), $input->getOption('enclosure'), $input->getOption('escape'));
+            $data = fgetcsv($fp, 0, $input->getOption('delimiter'), $input->getOption('enclosure'), $input->getOption('escape'));
 
             if (-1 === $imported) {
                 $this->setters = $data;
@@ -83,7 +77,10 @@ final class AddMassMediaCommand extends Command
             ++$imported;
 
             $this->insertMedia($data, $output);
-            $this->optimize();
+
+            if ($this->mediaManager instanceof ClearableManagerInterface) {
+                $this->mediaManager->clear();
+            }
         }
 
         $output->writeln('Done!');
@@ -120,13 +117,6 @@ final class AddMassMediaCommand extends Command
             $output->writeln(sprintf(' > %s - %s', $media->getId(), $media->getName()));
         } catch (\Exception $e) {
             $output->writeln(sprintf('<error>%s</error> : %s', $e->getMessage(), json_encode($data)));
-        }
-    }
-
-    protected function optimize(): void
-    {
-        if (null !== $this->managerRegistry) {
-            $this->managerRegistry->getManager()->getUnitOfWork()->clear();
         }
     }
 }

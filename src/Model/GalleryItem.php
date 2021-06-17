@@ -47,7 +47,7 @@ abstract class GalleryItem implements GalleryItemInterface
 
     public function __toString()
     {
-        return $this->getGallery().' | '.$this->getMedia();
+        return $this->getGallery().' | '.(string) ($this->getMedia() ?? '');
     }
 
     public function setCreatedAt(?\DateTimeInterface $createdAt = null): void
@@ -90,9 +90,11 @@ abstract class GalleryItem implements GalleryItemInterface
         return $this->media;
     }
 
-    public function setPosition($position): void
+    public function setPosition($position): self
     {
         $this->position = $position;
+
+        return $this;
     }
 
     public function getPosition()

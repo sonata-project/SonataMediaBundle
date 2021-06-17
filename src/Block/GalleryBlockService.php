@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -29,7 +28,6 @@ use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -44,40 +42,31 @@ use Twig\Environment;
 final class GalleryBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
+     * @var Pool
+     */
+    private $pool;
+
+    /**
      * @var AdminInterface
      */
-    protected $galleryAdmin;
+    private $galleryAdmin;
 
     /**
      * @var ManagerInterface
      */
-    protected $galleryManager;
+    private $galleryManager;
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    public function __construct(Environment $twig, ContainerInterface $container, ManagerInterface $galleryManager)
-    {
+    public function __construct(
+        Environment $twig,
+        Pool $pool,
+        AdminInterface $galleryAdmin,
+        ManagerInterface $galleryManager
+    ) {
         parent::__construct($twig);
 
+        $this->pool = $pool;
+        $this->galleryAdmin = $galleryAdmin;
         $this->galleryManager = $galleryManager;
-        $this->container = $container;
-    }
-
-    public function getMediaPool(): Pool
-    {
-        return $this->container->get('sonata.media.pool');
-    }
-
-    public function getGalleryAdmin(): AdminInterface
-    {
-        if (!$this->galleryAdmin) {
-            $this->galleryAdmin = $this->container->get('sonata.media.admin.gallery');
-        }
-
-        return $this->galleryAdmin;
     }
 
     public function configureSettings(OptionsResolver $resolver): void
@@ -101,7 +90,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     {
         $contextChoices = [];
 
-        foreach ($this->getMediaPool()->getContexts() as $name => $context) {
+        foreach ($this->pool->getContexts() as $name => $context) {
             $contextChoices[$name] = $name;
         }
 
@@ -110,26 +99,22 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
         $formatChoices = [];
 
         if ($gallery instanceof GalleryInterface) {
-            $formats = $this->getMediaPool()->getFormatNamesByContext($gallery->getContext());
+            $formats = $this->pool->getFormatNamesByContext($gallery->getContext());
 
             foreach ($formats as $code => $format) {
                 $formatChoices[$code] = $code;
             }
         }
 
-        // simulate an association ...
-        $fieldDescription = $this->getGalleryAdmin()->getModelManager()->getNewFieldDescriptionInstance($this->getGalleryAdmin()->getClass(), 'media', [
+        $fieldDescription = $this->galleryAdmin->createFieldDescription('media', [
             'translation_domain' => 'SonataMediaBundle',
+            'edit' => 'list',
         ]);
-        $fieldDescription->setAssociationAdmin($this->getGalleryAdmin());
-        $fieldDescription->setAdmin($form->getAdmin());
-        $fieldDescription->setOption('edit', 'list');
-        $fieldDescription->setAssociationMapping(['fieldName' => 'gallery', 'type' => ClassMetadataInfo::MANY_TO_ONE]);
 
         $builder = $form->create('galleryId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
-            'class' => $this->getGalleryAdmin()->getClass(),
-            'model_manager' => $this->getGalleryAdmin()->getModelManager(),
+            'class' => $this->galleryAdmin->getClass(),
+            'model_manager' => $this->galleryAdmin->getModelManager(),
             'label' => 'form.label_gallery',
         ]);
 

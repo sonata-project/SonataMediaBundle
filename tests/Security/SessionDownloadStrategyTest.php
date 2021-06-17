@@ -54,13 +54,4 @@ final class SessionDownloadStrategyTest extends TestCase
         $strategy = new SessionDownloadStrategy($translator, $session, 1);
         $this->assertTrue($strategy->isGranted($media, $request));
     }
-
-    public function testTypeError(): void
-    {
-        $this->expectException(\TypeError::class);
-
-        $translator = $this->createStub(TranslatorInterface::class);
-
-        new SessionDownloadStrategy($translator, 'foo', 1);
-    }
 }

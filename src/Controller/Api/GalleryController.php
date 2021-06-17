@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Controller\Api;
 
+use Doctrine\Common\Collections\Collection;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -216,7 +217,10 @@ final class GalleryController
 
         $media = [];
         foreach ($galleryItems as $galleryItem) {
-            $media[] = $galleryItem->getMedia();
+            $medium = $galleryItem->getMedia();
+            \assert(null !== $medium);
+
+            $media[] = $medium;
         }
 
         return $media;
@@ -243,7 +247,7 @@ final class GalleryController
      *
      * @param string $id Gallery identifier
      *
-     * @return GalleryItemInterface[]
+     * @return Collection<array-key, GalleryItemInterface>
      */
     public function getGalleryGalleryItemsAction($id)
     {
@@ -271,7 +275,7 @@ final class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return GalleryInterface
+     * @return FOSRestView|FormInterface
      */
     public function postGalleryAction(Request $request)
     {
@@ -304,7 +308,7 @@ final class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return GalleryInterface
+     * @return FOSRestView|FormInterface
      */
     public function putGalleryAction($id, Request $request)
     {
@@ -334,7 +338,7 @@ final class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return GalleryInterface
+     * @return FOSRestView|FormInterface
      */
     public function postGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
@@ -376,7 +380,7 @@ final class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return GalleryInterface
+     * @return FOSRestView|FormInterface
      */
     public function putGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
     {
@@ -417,7 +421,7 @@ final class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return Rest\View
+     * @return FOSRestView
      */
     public function deleteGalleryMediaGalleryItemAction($galleryId, $mediaId)
     {
@@ -429,7 +433,7 @@ final class GalleryController
                 $gallery->getGalleryItems()->remove($key);
                 $this->getGalleryManager()->save($gallery);
 
-                return ['deleted' => true];
+                return FOSRestView::create(['deleted' => true]);
             }
         }
 
@@ -462,7 +466,7 @@ final class GalleryController
      *
      * @throws NotFoundHttpException
      *
-     * @return Rest\View
+     * @return FOSRestView
      */
     public function deleteGalleryAction($id)
     {
@@ -470,13 +474,13 @@ final class GalleryController
 
         $this->galleryManager->delete($gallery);
 
-        return ['deleted' => true];
+        return FOSRestView::create(['deleted' => true]);
     }
 
     /**
      * Write a GalleryItem, this method is used by both POST and PUT action methods.
      *
-     * @return FormInterface
+     * @return FOSRestView|FormInterface
      */
     private function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, ?GalleryItemInterface $galleryItem = null, Request $request)
     {
@@ -569,7 +573,7 @@ final class GalleryController
      * @param Request     $request Symfony request
      * @param string|null $id      Gallery identifier
      *
-     * @return Rest\View|FormInterface
+     * @return FosRestView|FormInterface
      */
     private function handleWriteGallery($request, $id = null)
     {

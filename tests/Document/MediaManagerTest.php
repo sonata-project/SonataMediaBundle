@@ -33,18 +33,11 @@ class MediaManagerTest extends TestCase
         $this->manager = new MediaManager(MediaInterface::class, $this->createRegistryMock());
     }
 
-    public function testSaveException(): void
+    public function testPagerException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\BadMethodCallException::class);
 
-        $this->manager->save(null);
-    }
-
-    public function testDeleteException(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $this->manager->delete(null);
+        $this->manager->getPager([], 1);
     }
 
     protected function createRegistryMock(): ManagerRegistry

@@ -13,90 +13,235 @@ declare(strict_types=1);
 
 namespace Sonata\ClassificationBundle\Model;
 
-class Category implements CategoryInterface
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
+
+abstract class Category implements CategoryInterface
 {
     /**
-     * @var int|null
+     * @var string
      */
-    private $id;
+    protected $name;
 
     /**
-     * @var ContextInterface|null
+     * @var string
      */
-    private $context;
+    protected $slug;
+
+    /**
+     * @var bool
+     */
+    protected $enabled;
 
     /**
      * @var string|null
      */
-    private $name;
+    protected $description;
 
     /**
-     * @var bool|null
+     * @var \DateTime
      */
-    private $enabled;
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    protected $updatedAt;
 
     /**
      * @var int|null
      */
-    private $position;
+    protected $position;
 
-    public function getId(): ?int
+    /**
+     * @var DoctrineCollection|CategoryInterface[]
+     */
+    protected $children;
+
+    /**
+     * @var CategoryInterface|null
+     */
+    protected $parent;
+
+    /**
+     * @var ContextInterface
+     */
+    protected $context;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->children = new ArrayCollection();
     }
 
-    public function setId(int $id): self
+    public function __toString()
     {
-        $this->id = $id;
-
-        return $this;
+        return $this->getName() ?: 'n/a';
     }
 
-    public function getContext(): ?ContextInterface
+    public function setName($name): void
     {
-        return $this->context;
+        $this->name = $name;
+
+        $this->setSlug($name);
     }
 
-    public function setContext(ContextInterface $context): self
-    {
-        $this->context = $context;
-
-        return $this;
-    }
-
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setEnabled($enabled): void
     {
-        $this->name = $name;
-
-        return $this;
+        $this->enabled = $enabled;
     }
 
-    public function getEnabled(): ?bool
+    public function getEnabled()
     {
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function setSlug($slug): void
     {
-        $this->enabled = $enabled;
-
-        return $this;
+        $this->slug = $slug;
     }
 
-    public function getPosition(): ?int
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setDescription($description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function prePersist(): void
+    {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    public function preUpdate(): void
+    {
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setPosition($position): void
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPosition()
     {
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    /**
+     * @deprecated only used by the AdminHelper
+     */
+    public function addChildren(CategoryInterface $child): void
     {
-        $this->position = $position;
+        $this->addChild($child, true);
+    }
 
-        return $this;
+    public function addChild(CategoryInterface $child, $nested = false): void
+    {
+        $this->children[] = $child;
+
+        if ($this->getContext()) {
+            $child->setContext($this->getContext());
+        }
+
+        if (!$nested) {
+            $child->setParent($this, true);
+        }
+    }
+
+    public function removeChild(CategoryInterface $childToDelete): void
+    {
+        foreach ($this->getChildren() as $pos => $child) {
+            if ($childToDelete->getId() && $child->getId() === $childToDelete->getId()) {
+                unset($this->children[$pos]);
+
+                return;
+            }
+
+            if (!$childToDelete->getId() && $child === $childToDelete) {
+                unset($this->children[$pos]);
+
+                return;
+            }
+        }
+    }
+
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function setChildren($children): void
+    {
+        $this->children = new ArrayCollection();
+
+        foreach ($children as $category) {
+            $this->addChild($category);
+        }
+    }
+
+    public function hasChildren()
+    {
+        return \count($this->children) > 0;
+    }
+
+    public function setParent(?CategoryInterface $parent = null, $nested = false): void
+    {
+        $this->parent = $parent;
+
+        if (!$nested && $parent) {
+            $parent->addChild($this, true);
+        }
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public function setContext(ContextInterface $context): void
+    {
+        $this->context = $context;
+    }
+
+    public function getContext()
+    {
+        return $this->context;
     }
 }

@@ -42,6 +42,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set('sonata.media.doctrine.event_subscriber', MediaEventSubscriber::class)
         ->tag('doctrine.event_subscriber')
         ->args([
-            new ReferenceConfigurator('service_container'),
+            new ReferenceConfigurator('sonata.media.pool'),
+            (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
         ]);
 };

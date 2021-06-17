@@ -139,7 +139,7 @@ abstract class Media implements MediaInterface
     protected $galleryItems;
 
     /**
-     * @var CategoryInterface
+     * @var CategoryInterface|null
      */
     protected $category;
 
@@ -454,25 +454,13 @@ abstract class Media implements MediaInterface
         return $this->previousProviderReference;
     }
 
-    /**
-     * @return CategoryInterface
-     */
-    public function getCategory()
+    public function getCategory(): ?CategoryInterface
     {
         return $this->category;
     }
 
-    /**
-     * @param CategoryInterface|null $category
-     */
-    public function setCategory($category = null): void
+    public function setCategory(?CategoryInterface $category = null): void
     {
-        if (null !== $category && !is_a($category, CategoryInterface::class)) {
-            throw new \InvalidArgumentException(
-                '$category should be an instance of Sonata\ClassificationBundle\Model\CategoryInterface or null'
-            );
-        }
-
         $this->category = $category;
     }
 }

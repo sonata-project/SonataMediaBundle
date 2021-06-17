@@ -115,7 +115,7 @@ class MediaControllerTest extends TestCase
                 ],
             ],
         ];
-        $this->assertSame($expected, $controller->getMediumFormatsAction(1));
+        $this->assertSame($expected, $controller->getMediumFormatsAction(1)->getData());
     }
 
     public function testGetMediumBinariesAction(): void
@@ -148,7 +148,7 @@ class MediaControllerTest extends TestCase
 
         $expected = ['deleted' => true];
 
-        $this->assertSame($expected, $controller->deleteMediumAction(1));
+        $this->assertSame($expected, $controller->deleteMediumAction(1)->getData());
     }
 
     public function testPutMediumAction(): void

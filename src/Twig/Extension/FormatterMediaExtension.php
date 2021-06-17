@@ -65,9 +65,9 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
     }
 
     /**
-     * @param int    $media
-     * @param string $format
-     * @param array  $options
+     * @param int|string $media
+     * @param string     $format
+     * @param array      $options
      *
      * @return string
      */
@@ -77,9 +77,9 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
     }
 
     /**
-     * @param int    $media
-     * @param string $format
-     * @param array  $options
+     * @param int|string $media
+     * @param string     $format
+     * @param array      $options
      *
      * @return string
      */
@@ -89,8 +89,8 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
     }
 
     /**
-     * @param int    $media
-     * @param string $format
+     * @param int|string $media
+     * @param string     $format
      *
      * @return string
      */

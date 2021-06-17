@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 
 interface MediaInterface
 {
@@ -42,7 +43,7 @@ interface MediaInterface
 
     /**
      * @param string $name
-     * @param null   $default
+     * @param mixed  $default
      */
     public function getMetadataValue($name, $default = null);
 
@@ -261,14 +262,14 @@ interface MediaInterface
     /**
      * Set cdn_flush_identifier.
      *
-     * @param string $cdnFlushIdentifier
+     * @param string|null $cdnFlushIdentifier
      */
     public function setCdnFlushIdentifier($cdnFlushIdentifier);
 
     /**
      * Get cdn_flush_identifier.
      *
-     * @return string $cdnFlushIdentifier
+     * @return string|null $cdnFlushIdentifier
      */
     public function getCdnFlushIdentifier();
 
@@ -380,4 +381,8 @@ interface MediaInterface
      * @return string
      */
     public function getPreviousProviderReference();
+
+    public function getCategory(): ?CategoryInterface;
+
+    public function setCategory(?CategoryInterface $category = null): void;
 }

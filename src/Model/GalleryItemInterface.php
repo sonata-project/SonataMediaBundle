@@ -52,7 +52,7 @@ interface GalleryItemInterface
     /**
      * @param int $position
      *
-     * @return int
+     * @return self
      */
     public function setPosition($position);
 

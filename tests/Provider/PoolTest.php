@@ -28,18 +28,22 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class PoolTest extends TestCase
 {
+    /**
+     * @var Pool
+     */
+    private $mediaPool;
+
+    protected function setUp(): void
+    {
+        $this->mediaPool = new Pool('context');
+    }
+
     public function testGetEmptyProviderName(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
 
-        $mediaPool = $this
-            ->getMockBuilder(Pool::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods([])
-            ->getMock();
-
-        $mediaPool->getProvider(null);
+        $this->mediaPool->getProvider(null);
     }
 
     public function testGetWithEmptyProviders(): void
@@ -47,13 +51,7 @@ class PoolTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to retrieve provider named "provider_a" since there are no providers configured yet.');
 
-        $mediaPool = $this
-            ->getMockBuilder(Pool::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods([])
-            ->getMock();
-
-        $mediaPool->getProvider('provider_a');
+        $this->mediaPool->getProvider('provider_a');
     }
 
     public function testGetInvalidProviderName(): void
@@ -61,16 +59,11 @@ class PoolTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unable to retrieve the provider named "provider_c". Available providers are "provider_a", "provider_b".');
 
-        $mediaPool = $this
-            ->getMockBuilder(Pool::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods([])
-            ->getMock();
-        $mediaPool->setProviders([
+        $this->mediaPool->setProviders([
             'provider_a' => $this->createProvider('provider_a'),
             'provider_b' => $this->createProvider('provider_b'),
         ]);
-        $mediaPool->getProvider('provider_c');
+        $this->mediaPool->getProvider('provider_c');
     }
 
     protected function createProvider(string $name): MediaProviderInterface

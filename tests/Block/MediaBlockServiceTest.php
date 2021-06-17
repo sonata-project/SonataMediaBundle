@@ -14,22 +14,21 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Block;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
-use Sonata\MediaBundle\Admin\BaseMediaAdmin;
+use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Block\MediaBlockService;
-use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MediaBlockServiceTest extends BlockServiceTestCase
 {
     /**
-     * @var MockObject&ContainerInterface
+     * @var MockObject&Pool
      */
-    protected $container;
+    private $pool;
 
     /**
      * @var MediaBlockService
@@ -40,12 +39,13 @@ class MediaBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
-        $this->container = $this->createMock(ContainerInterface::class);
+        $this->pool = $this->createMock(Pool::class);
 
         $this->blockService = new MediaBlockService(
             $this->twig,
-            $this->container,
-            $this->createStub(GalleryManagerInterface::class)
+            $this->pool,
+            $this->createStub(AdminInterface::class),
+            $this->createStub(ManagerInterface::class)
         );
     }
 
@@ -101,12 +101,7 @@ class MediaBlockServiceTest extends BlockServiceTestCase
 
     private function configureGetFormatChoices(MockObject $media, array $choices): void
     {
-        $mediaAdmin = $this->createMock(BaseMediaAdmin::class);
-        $pool = $this->createMock(Pool::class);
-
-        $this->container->method('get')->with('sonata.media.admin.media')->willReturn($mediaAdmin);
-        $mediaAdmin->method('getPool')->with()->willReturn($pool);
         $media->method('getContext')->with()->willReturn('context');
-        $pool->method('getFormatNamesByContext')->with('context')->willReturn($choices);
+        $this->pool->method('getFormatNamesByContext')->with('context')->willReturn($choices);
     }
 }

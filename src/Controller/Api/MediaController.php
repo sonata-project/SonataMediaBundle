@@ -186,7 +186,7 @@ final class MediaController
      *
      * @param string $id Medium identifier
      *
-     * @return array
+     * @return FOSRestView
      */
     public function getMediumFormatsAction($id)
     {
@@ -205,7 +205,7 @@ final class MediaController
             ];
         }
 
-        return $properties;
+        return FOSRestView::create($properties);
     }
 
     /**
@@ -266,7 +266,7 @@ final class MediaController
      *
      * @throws NotFoundHttpException
      *
-     * @return Rest\View
+     * @return FOSRestView
      */
     public function deleteMediumAction($id)
     {
@@ -274,7 +274,7 @@ final class MediaController
 
         $this->mediaManager->delete($medium);
 
-        return ['deleted' => true];
+        return FOSRestView::create(['deleted' => true]);
     }
 
     /**
@@ -306,7 +306,7 @@ final class MediaController
      *
      * @throws NotFoundHttpException
      *
-     * @return MediaInterface
+     * @return FOSRestView|FormInterface
      */
     public function putMediumAction($id, Request $request)
     {
@@ -350,7 +350,7 @@ final class MediaController
      *
      * @throws NotFoundHttpException
      *
-     * @return MediaInterface
+     * @return FOSRestView|FormInterface
      */
     public function postProviderMediumAction($provider, Request $request)
     {
@@ -427,7 +427,7 @@ final class MediaController
     /**
      * Write a medium, this method is used by both POST and PUT action methods.
      *
-     * @return Rest\View|FormInterface
+     * @return FOSRestView|FormInterface
      */
     private function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
     {

@@ -18,12 +18,13 @@ use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\AdminBundle\Request\AdminFetcher;
 use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
-use Sonata\ClassificationBundle\Model\Category;
 use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\App\Entity\Category;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
@@ -146,7 +147,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->expects($this->once())->method('checkAccess')->with('list');
         $this->admin->expects($this->once())->method('setListMode')->with('mosaic');
         $this->admin->method('getDatagrid')->willReturn($datagrid);
-        $this->admin->method('getPersistentParameter')->with('context', 'context')->willReturn('another_context');
+        $this->admin->method('getPersistentParameter')->with('context')->willReturn('another_context');
         $this->admin->method('getFilterTheme')->willReturn(['filterTheme']);
         $this->request->query->set('_list_mode', 'mosaic');
         $this->request->query->set('filter', []);
@@ -163,6 +164,7 @@ class MediaAdminControllerTest extends TestCase
         $pool = new AdminPool($this->container, [
             'admin_code' => 'admin_code',
         ]);
+        $adminFetcher = new AdminFetcher($pool);
         $templateRegistry = $this->createStub(TemplateRegistryInterface::class);
         $mutableTemplateRegistry = $this->createStub(MutableTemplateRegistryInterface::class);
 
@@ -180,6 +182,7 @@ class MediaAdminControllerTest extends TestCase
         $this->container->set('admin_code', $this->admin);
         $this->container->set('sonata.admin.pool', $pool);
         $this->container->set('admin_code.template_registry', $templateRegistry);
+        $this->container->set('sonata.admin.request.fetcher', $adminFetcher);
         $this->admin->method('hasTemplateRegistry')->willReturn(true);
         $this->admin->method('getTemplateRegistry')->willReturn($mutableTemplateRegistry);
 

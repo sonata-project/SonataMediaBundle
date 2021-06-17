@@ -13,18 +13,33 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Listener\ORM;
 
-use Doctrine\Common\EventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs as ORMLifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
+use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\Pool;
 
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**
-     * @var CategoryInterface[]
+     * @var CategoryManagerInterface|null
      */
-    protected $rootCategories;
+    private $categoryManager;
+
+    /**
+     * @var CategoryInterface[]|null
+     */
+    private $rootCategories;
+
+    public function __construct(Pool $pool, ?CategoryManagerInterface $categoryManager = null)
+    {
+        parent::__construct($pool);
+
+        $this->categoryManager = $categoryManager;
+    }
 
     public function getSubscribedEvents()
     {
@@ -44,25 +59,27 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         $this->rootCategories = null;
     }
 
-    protected function recomputeSingleEntityChangeSet(EventArgs $args): void
+    protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args): void
     {
+        \assert($args instanceof ORMLifecycleEventArgs);
+
         $em = $args->getEntityManager();
 
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet(
-            $em->getClassMetadata(\get_class($args->getEntity())),
-            $args->getEntity()
+            $em->getClassMetadata(\get_class($args->getObject())),
+            $args->getObject()
         );
     }
 
-    protected function getMedia(EventArgs $args)
+    protected function getMedia(LifecycleEventArgs $args)
     {
-        $media = $args->getEntity();
+        $media = $args->getObject();
 
         if (!$media instanceof MediaInterface) {
-            return $media;
+            throw new \LogicException('There is no media on the persistence event.');
         }
 
-        if ($this->container->has('sonata.media.manager.category') && !$media->getCategory()) {
+        if (null !== $this->categoryManager && !$media->getCategory()) {
             $media->setCategory($this->getRootCategory($media));
         }
 
@@ -77,7 +94,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
     protected function getRootCategory(MediaInterface $media)
     {
         if (!$this->rootCategories) {
-            $this->rootCategories = $this->container->get('sonata.media.manager.category')->getRootCategories(false);
+            $this->rootCategories = $this->categoryManager->getRootCategories(false);
         }
 
         if (!\array_key_exists($media->getContext(), $this->rootCategories)) {

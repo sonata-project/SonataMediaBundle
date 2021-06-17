@@ -16,7 +16,6 @@ namespace Sonata\MediaBundle\Command;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,7 +31,7 @@ final class CleanMediaCommand extends Command
     protected static $defaultDescription = 'Find orphaned files in media upload directory';
 
     /**
-     * @var MediaProviderInterface[]|null
+     * @var string[]|null
      */
     private $providers;
 

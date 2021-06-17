@@ -13,33 +13,129 @@ declare(strict_types=1);
 
 namespace Sonata\ClassificationBundle\Model;
 
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
+
 interface CategoryInterface
 {
-    public function getContext(): ?ContextInterface;
+    /**
+     * @return mixed
+     */
+    public function getId();
 
     /**
-     * @return static
+     * Set name.
+     *
+     * @param string $name
      */
+    public function setName($name);
+
+    /**
+     * Get name.
+     *
+     * @return string $name
+     */
+    public function getName();
+
+    /**
+     * Set enabled.
+     *
+     * @param bool $enabled
+     */
+    public function setEnabled($enabled);
+
+    /**
+     * Get enabled.
+     *
+     * @return bool $enabled
+     */
+    public function getEnabled();
+
+    /**
+     * Set slug.
+     *
+     * @param string $slug
+     */
+    public function setSlug($slug);
+
+    /**
+     * Get slug.
+     *
+     * @return string $slug
+     */
+    public function getSlug();
+
+    /**
+     * Set description.
+     *
+     * @param string|null $description
+     */
+    public function setDescription($description);
+
+    /**
+     * Get description.
+     *
+     * @return string|null $description
+     */
+    public function getDescription();
+
+    /**
+     * @param int|null $position
+     */
+    public function setPosition($position);
+
+    /**
+     * @return int|null
+     */
+    public function getPosition();
+
+    /**
+     * Add Children.
+     *
+     * @param CategoryInterface $child
+     * @param bool              $nested
+     */
+    public function addChild(self $child, $nested = false);
+
+    /**
+     * Get Children.
+     *
+     * @return DoctrineCollection|CategoryInterface[] $children
+     */
+    public function getChildren();
+
+    /**
+     * Set children.
+     *
+     * @param array $children
+     */
+    public function setChildren($children);
+
+    /**
+     * Return true if category has children.
+     *
+     * @return bool
+     */
+    public function hasChildren();
+
+    /**
+     * Set Parent.
+     *
+     * @param CategoryInterface|null $parent
+     * @param bool                   $nested
+     */
+    public function setParent(?self $parent = null, $nested = false);
+
+    /**
+     * Get Parent.
+     *
+     * @return CategoryInterface|null $parent
+     */
+    public function getParent();
+
     public function setContext(ContextInterface $context);
 
-    public function getName(): ?string;
-
     /**
-     * @return static
+     * @return ContextInterface
      */
-    public function setName(string $name);
-
-    public function getEnabled(): ?bool;
-
-    /**
-     * @return static
-     */
-    public function setEnabled(bool $enabled);
-
-    public function getPosition(): ?int;
-
-    /**
-     * @return static
-     */
-    public function setPosition(int $position);
+    public function getContext();
 }

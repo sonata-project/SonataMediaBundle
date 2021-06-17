@@ -30,10 +30,10 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('sonata_media');
+        $rootNode = $treeBuilder->getRootNode();
+        \assert($rootNode instanceof ArrayNodeDefinition);
 
-        $node = $treeBuilder->getRootNode();
-
-        $node
+        $rootNode
             ->children()
                 ->scalarNode('db_driver')
                     ->defaultValue('no_driver')
@@ -64,15 +64,15 @@ final class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
-        $this->addContextsSection($node);
-        $this->addCdnSection($node);
-        $this->addFilesystemSection($node);
-        $this->addProvidersSection($node);
-        $this->addExtraSection($node);
-        $this->addModelSection($node);
-        $this->addHttpClientSection($node);
-        $this->addResizerSection($node);
-        $this->addAdapterSection($node);
+        $this->addContextsSection($rootNode);
+        $this->addCdnSection($rootNode);
+        $this->addFilesystemSection($rootNode);
+        $this->addProvidersSection($rootNode);
+        $this->addExtraSection($rootNode);
+        $this->addModelSection($rootNode);
+        $this->addHttpClientSection($rootNode);
+        $this->addResizerSection($rootNode);
+        $this->addAdapterSection($rootNode);
 
         return $treeBuilder;
     }

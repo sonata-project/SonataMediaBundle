@@ -61,9 +61,9 @@ final class MediaExtension extends AbstractExtension
     }
 
     /**
-     * @param MediaInterface $media
-     * @param string         $format
-     * @param array          $options
+     * @param MediaInterface|int|string $media
+     * @param string                    $format
+     * @param array                     $options
      *
      * @return string
      */
@@ -93,9 +93,9 @@ final class MediaExtension extends AbstractExtension
     /**
      * Returns the thumbnail for the provided media.
      *
-     * @param MediaInterface $media
-     * @param string         $format
-     * @param array          $options
+     * @param MediaInterface|int|string $media
+     * @param string                    $format
+     * @param array                     $options
      *
      * @return string
      */
@@ -151,8 +151,8 @@ final class MediaExtension extends AbstractExtension
     }
 
     /**
-     * @param MediaInterface $media
-     * @param string         $format
+     * @param MediaInterface|int|string $media
+     * @param string                    $format
      *
      * @return string
      */
@@ -181,7 +181,7 @@ final class MediaExtension extends AbstractExtension
     }
 
     /**
-     * @param mixed $media
+     * @param MediaInterface|int|string $media
      */
     private function getMedia($media): ?MediaInterface
     {

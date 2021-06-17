@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Twig;
 
 use Sonata\MediaBundle\Extra\Pixlr;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * GlobalVariables.
@@ -24,11 +23,20 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 final class GlobalVariables
 {
-    private $container;
+    /**
+     * @var Pool
+     */
+    private $pool;
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * @var Pixlr|null
+     */
+    private $pixlr;
+
+    public function __construct(Pool $pool, ?Pixlr $pixlr = null)
     {
-        $this->container = $container;
+        $this->pool = $pool;
+        $this->pixlr = $pixlr;
     }
 
     /**
@@ -36,7 +44,7 @@ final class GlobalVariables
      */
     public function getPixlr()
     {
-        return $this->container->has('sonata.media.extra.pixlr') ? $this->container->get('sonata.media.extra.pixlr') : false;
+        return null !== $this->pixlr ? $this->pixlr : false;
     }
 
     /**
@@ -44,6 +52,6 @@ final class GlobalVariables
      */
     public function getPool()
     {
-        return $this->container->get('sonata.media.pool');
+        return $this->pool;
     }
 }

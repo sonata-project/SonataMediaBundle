@@ -32,7 +32,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->tag('console.command')
         ->args([
             new ReferenceConfigurator('sonata.media.manager.media'),
-            (new ReferenceConfigurator('doctrine'))->nullOnInvalid(),
         ]);
 
     $services->set(AddMediaCommand::class, AddMediaCommand::class)

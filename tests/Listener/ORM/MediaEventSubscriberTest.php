@@ -22,7 +22,6 @@ use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @author Mathieu Lemoine <mlemoine@mlemoine.name>
@@ -47,16 +46,11 @@ class MediaEventSubscriberTest extends TestCase
         $category = $this->createMock(CategoryInterface::class);
         $catManager = $this->createMock(CategoryManagerInterface::class);
 
-        $container = new Container();
-
-        $container->set('sonata.media.pool', $pool);
-        $container->set('sonata.media.manager.category', $catManager);
-
         $catManager->expects($this->exactly(2))
             ->method('getRootCategories')
             ->willReturn(['context' => $category]);
 
-        $subscriber = new MediaEventSubscriber($container);
+        $subscriber = new MediaEventSubscriber($pool, $catManager);
 
         $this->assertContains(Events::onClear, $subscriber->getSubscribedEvents());
 
@@ -64,7 +58,7 @@ class MediaEventSubscriberTest extends TestCase
         $media1->method('getContext')->willReturn('context');
 
         $args1 = $this->createMock(LifecycleEventArgs::class);
-        $args1->method('getEntity')->willReturn($media1);
+        $args1->method('getObject')->willReturn($media1);
 
         $subscriber->prePersist($args1);
 
@@ -74,7 +68,7 @@ class MediaEventSubscriberTest extends TestCase
         $media2->method('getContext')->willReturn('context');
 
         $args2 = $this->createMock(LifecycleEventArgs::class);
-        $args2->method('getEntity')->willReturn($media2);
+        $args2->method('getObject')->willReturn($media2);
 
         $subscriber->prePersist($args2);
     }
