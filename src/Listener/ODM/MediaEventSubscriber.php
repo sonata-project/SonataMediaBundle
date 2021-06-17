@@ -50,7 +50,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         $media = $args->getObject();
 
         if (!$media instanceof MediaInterface) {
-            throw new \RuntimeException('There is no media on the persistence event.');
+            throw new \LogicException('There is no media on the persistence event.');
         }
 
         return $media;

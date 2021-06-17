@@ -217,10 +217,10 @@ final class GalleryController
 
         $media = [];
         foreach ($galleryItems as $galleryItem) {
-            $itemMedia = $galleryItem->getMedia();
-            \assert(null !== $itemMedia);
+            $medium = $galleryItem->getMedia();
+            \assert(null !== $medium);
 
-            $media[] = $itemMedia;
+            $media[] = $medium;
         }
 
         return $media;
