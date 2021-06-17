@@ -197,7 +197,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     {
         if ($this->primary instanceof FileFactory) {
             return $this->primary->createFile($key, $filesystem);
-        } elseif ($this->secondary instanceof FileFactory) {
+        }
+        
+        if ($this->secondary instanceof FileFactory) {
             return $this->secondary->createFile($key, $filesystem);
         }
 
@@ -208,7 +210,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     {
         if ($this->primary instanceof StreamFactory) {
             return $this->primary->createStream($key);
-        } elseif ($this->secondary instanceof StreamFactory) {
+        }
+        
+        if ($this->secondary instanceof StreamFactory) {
             return $this->secondary->createStream($key);
         }
 
