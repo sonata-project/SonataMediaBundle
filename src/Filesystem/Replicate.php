@@ -206,7 +206,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
             return $this->secondary->createFile($key, $filesystem);
         }
 
-        throw new \RuntimeException(sprintf('None of the adapters implements: %s', FileFactory::class));
+        throw new \LogicException(sprintf('None of the adapters implements %s.', FileFactory::class));
     }
 
     public function createStream($key)
@@ -219,7 +219,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
             return $this->secondary->createStream($key);
         }
 
-        throw new \RuntimeException(sprintf('None of the adapters implements: %s', StreamFactory::class));
+        throw new \LogicException(sprintf('None of the adapters implements %s.', StreamFactory::class));
     }
 
     public function isDirectory($key)
