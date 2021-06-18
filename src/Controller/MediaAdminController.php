@@ -14,12 +14,22 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class MediaAdminController extends CRUDController
 {
+    public static function getSubscribedServices(): array
+    {
+        return [
+            'sonata.media.pool' => Pool::class,
+            'sonata.media.manager.category' => '?'.CategoryManagerInterface::class,
+        ] + parent::getSubscribedServices();
+    }
+
     public function createAction(Request $request): Response
     {
         $this->admin->checkAccess('create');

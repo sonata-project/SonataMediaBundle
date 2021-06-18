@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Controller;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +27,27 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 final class MediaController extends AbstractController
 {
     /**
+     * @var MediaManagerInterface
+     */
+    private $mediaManager;
+
+    /**
+     * @var Pool
+     */
+    private $pool;
+
+    public function __construct(MediaManagerInterface $mediaManager, Pool $pool)
+    {
+        $this->mediaManager = $mediaManager;
+        $this->pool = $pool;
+    }
+
+    /**
      * @return MediaProviderInterface
      */
     public function getProvider(MediaInterface $media)
     {
-        return $this->get('sonata.media.pool')->getProvider($media->getProviderName());
+        return $this->pool->getProvider($media->getProviderName());
     }
 
     /**
@@ -39,7 +57,7 @@ final class MediaController extends AbstractController
      */
     public function getMedia($id)
     {
-        return $this->get('sonata.media.manager.media')->find($id);
+        return $this->mediaManager->find($id);
     }
 
     /**
@@ -58,11 +76,11 @@ final class MediaController extends AbstractController
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
-        if (!$this->get('sonata.media.pool')->getDownloadStrategy($media)->isGranted($media, $request)) {
+        if (!$this->pool->getDownloadStrategy($media)->isGranted($media, $request)) {
             throw new AccessDeniedException();
         }
 
-        $response = $this->getProvider($media)->getDownloadResponse($media, $format, $this->get('sonata.media.pool')->getDownloadMode($media));
+        $response = $this->getProvider($media)->getDownloadResponse($media, $format, $this->pool->getDownloadMode($media));
 
         if ($response instanceof BinaryFileResponse) {
             $response->prepare($request);
@@ -87,13 +105,13 @@ final class MediaController extends AbstractController
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
-        if (!$this->get('sonata.media.pool')->getDownloadStrategy($media)->isGranted($media, $request)) {
+        if (!$this->pool->getDownloadStrategy($media)->isGranted($media, $request)) {
             throw new AccessDeniedException();
         }
 
         return $this->render('@SonataMedia/Media/view.html.twig', [
             'media' => $media,
-            'formats' => $this->get('sonata.media.pool')->getFormatNamesByContext($media->getContext()),
+            'formats' => $this->pool->getFormatNamesByContext($media->getContext()),
             'format' => $format,
         ]);
     }

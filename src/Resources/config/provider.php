@@ -29,6 +29,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set('sonata.media.pool', Pool::class)
         ->args(['']);
 
+    $services->alias(Pool::class, 'sonata.media.pool');
+
     $services->set('sonata.media.thumbnail.format', FormatThumbnail::class)
         ->args(['jpg']);
 

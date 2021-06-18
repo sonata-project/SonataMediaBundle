@@ -13,15 +13,26 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Controller;
 
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class GalleryController extends AbstractController
 {
+    /**
+     * @var GalleryManagerInterface
+     */
+    private $galleryManager;
+
+    public function __construct(GalleryManagerInterface $galleryManager)
+    {
+        $this->galleryManager = $galleryManager;
+    }
+
     public function indexAction(): Response
     {
-        $galleries = $this->get('sonata.media.manager.gallery')->findBy([
+        $galleries = $this->galleryManager->findBy([
             'enabled' => true,
         ]);
 
@@ -35,7 +46,7 @@ final class GalleryController extends AbstractController
      */
     public function viewAction(string $id): Response
     {
-        $gallery = $this->get('sonata.media.manager.gallery')->findOneBy([
+        $gallery = $this->galleryManager->findOneBy([
             'id' => $id,
             'enabled' => true,
         ]);

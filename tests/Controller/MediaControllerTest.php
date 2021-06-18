@@ -16,9 +16,9 @@ namespace Sonata\MediaBundle\Tests\Controller;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Controller\MediaController;
 use Sonata\MediaBundle\Model\Media;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
@@ -34,20 +34,32 @@ use Twig\Environment;
 class MediaControllerTest extends TestCase
 {
     /**
+     * @var MockObject&Pool
+     */
+    private $pool;
+
+    /**
+     * @var MockObject&MediaManagerInterface
+     */
+    private $mediaManager;
+
+    /**
      * @var Container
      */
-    protected $container;
+    private $container;
 
     /**
      * @var MediaController
      */
-    protected $controller;
+    private $controller;
 
     protected function setUp(): void
     {
+        $this->pool = $this->createMock(Pool::class);
+        $this->mediaManager = $this->createMock(MediaManagerInterface::class);
         $this->container = new Container();
 
-        $this->controller = new MediaController();
+        $this->controller = new MediaController($this->mediaManager, $this->pool);
         $this->controller->setContainer($this->container);
     }
 
@@ -66,12 +78,10 @@ class MediaControllerTest extends TestCase
 
         $request = $this->createStub(Request::class);
         $media = $this->createStub(Media::class);
-        $pool = $this->createMock(Pool::class);
 
         $this->configureGetCurrentRequest($request);
         $this->configureGetMedia(1, $media);
-        $this->configureDownloadSecurity($pool, $media, $request, false);
-        $this->container->set('sonata.media.pool', $pool);
+        $this->configureDownloadSecurity($media, $request, false);
 
         $this->controller->downloadAction($request, 1);
     }
@@ -79,17 +89,15 @@ class MediaControllerTest extends TestCase
     public function testDownloadActionBinaryFile(): void
     {
         $media = $this->createStub(Media::class);
-        $pool = $this->createMock(Pool::class);
         $provider = $this->createMock(MediaProviderInterface::class);
         $request = $this->createStub(Request::class);
         $response = $this->createMock(BinaryFileResponse::class);
 
         $this->configureGetMedia(1, $media);
-        $this->configureDownloadSecurity($pool, $media, $request, true);
-        $this->configureGetProvider($pool, $media, $provider);
+        $this->configureDownloadSecurity($media, $request, true);
+        $this->configureGetProvider($media, $provider);
         $this->configureGetCurrentRequest($request);
-        $this->container->set('sonata.media.pool', $pool);
-        $pool->method('getDownloadMode')->with($media)->willReturn('mode');
+        $this->pool->method('getDownloadMode')->with($media)->willReturn('mode');
         $provider->method('getDownloadResponse')->with($media, 'format', 'mode')->willReturn($response);
         $response->expects($this->once())->method('prepare')->with($request);
 
@@ -112,13 +120,11 @@ class MediaControllerTest extends TestCase
         $this->expectException(AccessDeniedException::class);
 
         $media = $this->createStub(Media::class);
-        $pool = $this->createMock(Pool::class);
         $request = $this->createStub(Request::class);
 
         $this->configureGetMedia(1, $media);
         $this->configureGetCurrentRequest($request);
-        $this->configureDownloadSecurity($pool, $media, $request, false);
-        $this->container->set('sonata.media.pool', $pool);
+        $this->configureDownloadSecurity($media, $request, false);
 
         $this->controller->viewAction($request, 1);
     }
@@ -126,20 +132,18 @@ class MediaControllerTest extends TestCase
     public function testViewActionRendersView(): void
     {
         $media = $this->createStub(Media::class);
-        $pool = $this->createMock(Pool::class);
         $request = $this->createStub(Request::class);
 
         $this->configureGetMedia(1, $media);
         $this->configureGetCurrentRequest($request);
-        $this->configureDownloadSecurity($pool, $media, $request, true);
+        $this->configureDownloadSecurity($media, $request, true);
         $this->configureRender('@SonataMedia/Media/view.html.twig', [
             'media' => $media,
             'formats' => ['format'],
             'format' => 'format',
         ], 'renderResponse');
-        $this->container->set('sonata.media.pool', $pool);
         $media->method('getContext')->willReturn('context');
-        $pool->method('getFormatNamesByContext')->with('context')->willReturn(['format']);
+        $this->pool->method('getFormatNamesByContext')->with('context')->willReturn(['format']);
 
         $response = $this->controller->viewAction($request, 1, 'format');
 
@@ -148,40 +152,33 @@ class MediaControllerTest extends TestCase
     }
 
     /**
-     * @param MockObject&Pool $pool
-     * @param Stub&Media      $media
-     * @param Stub&Request    $request
+     * @param Stub&Media   $media
+     * @param Stub&Request $request
      */
     private function configureDownloadSecurity(
-        object $pool,
         object $media,
         object $request,
         bool $isGranted
     ): void {
         $strategy = $this->createMock(DownloadStrategyInterface::class);
 
-        $pool->method('getDownloadStrategy')->with($media)->willReturn($strategy);
+        $this->pool->method('getDownloadStrategy')->with($media)->willReturn($strategy);
         $strategy->method('isGranted')->with($media, $request)->willReturn($isGranted);
     }
 
     private function configureGetMedia(int $id, ?Media $media): void
     {
-        $mediaManager = $this->createMock(BaseEntityManager::class);
-
-        $this->container->set('sonata.media.manager.media', $mediaManager);
-        $mediaManager->method('find')->with($id)->willReturn($media);
+        $this->mediaManager->method('find')->with($id)->willReturn($media);
     }
 
     /**
-     * @param MockObject&Pool $pool
-     * @param Stub&Media      $media
+     * @param Stub&Media $media
      */
     private function configureGetProvider(
-        object $pool,
         object $media,
         MediaProviderInterface $provider
     ): void {
-        $pool->method('getProvider')->with('provider')->willReturn($provider);
+        $this->pool->method('getProvider')->with('provider')->willReturn($provider);
         $media->method('getProviderName')->willReturn('provider');
     }
 
