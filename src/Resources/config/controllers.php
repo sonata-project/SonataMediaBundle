@@ -11,8 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Sonata\MediaBundle\Controller\Api\GalleryController;
-use Sonata\MediaBundle\Controller\Api\MediaController;
+use Psr\Container\ContainerInterface;
+use Sonata\MediaBundle\Controller\GalleryController;
+use Sonata\MediaBundle\Controller\MediaController;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -20,19 +21,20 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $containerConfigurator->services()
 
-        ->set('sonata.media.controller.api.gallery', GalleryController::class)
+        ->set('sonata.media.controller.gallery', GalleryController::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('sonata.media.manager.gallery'),
-                new ReferenceConfigurator('sonata.media.manager.media'),
-                new ReferenceConfigurator('form.factory'),
             ])
+            ->tag('container.service_subscriber')
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
 
-        ->set('sonata.media.controller.api.media', MediaController::class)
+        ->set('sonata.media.controller.media', MediaController::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('sonata.media.manager.media'),
                 new ReferenceConfigurator('sonata.media.pool'),
-                new ReferenceConfigurator('form.factory'),
-            ]);
+            ])
+            ->tag('container.service_subscriber')
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 };

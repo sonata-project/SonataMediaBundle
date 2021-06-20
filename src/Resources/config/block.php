@@ -20,45 +20,41 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.block.media', MediaBlockService::class)
-        ->public()
-        ->tag('sonata.block')
-        ->args([
-            new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('sonata.media.pool'),
-            new ReferenceConfigurator('sonata.media.admin.media'),
-            new ReferenceConfigurator('sonata.media.manager.media'),
-        ]);
+        ->set('sonata.media.block.media', MediaBlockService::class)
+            ->tag('sonata.block')
+            ->args([
+                new ReferenceConfigurator('twig'),
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('sonata.media.admin.media'),
+                new ReferenceConfigurator('sonata.media.manager.media'),
+            ])
 
-    $services->set('sonata.media.block.feature_media', FeatureMediaBlockService::class)
-        ->public()
-        ->tag('sonata.block')
-        ->args([
-            new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('sonata.media.pool'),
-            new ReferenceConfigurator('sonata.media.admin.media'),
-            new ReferenceConfigurator('sonata.media.manager.media'),
-        ]);
+        ->set('sonata.media.block.feature_media', FeatureMediaBlockService::class)
+            ->tag('sonata.block')
+            ->args([
+                new ReferenceConfigurator('twig'),
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('sonata.media.admin.media'),
+                new ReferenceConfigurator('sonata.media.manager.media'),
+            ])
 
-    $services->set('sonata.media.block.gallery', GalleryBlockService::class)
-        ->public()
-        ->tag('sonata.block')
-        ->args([
-            new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('sonata.media.pool'),
-            new ReferenceConfigurator('sonata.media.admin.gallery'),
-            new ReferenceConfigurator('sonata.media.manager.gallery'),
-        ]);
+        ->set('sonata.media.block.gallery', GalleryBlockService::class)
+            ->tag('sonata.block')
+            ->args([
+                new ReferenceConfigurator('twig'),
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('sonata.media.admin.gallery'),
+                new ReferenceConfigurator('sonata.media.manager.gallery'),
+            ])
 
-    $services->set('sonata.media.block.gallery_list', GalleryListBlockService::class)
-        ->public()
-        ->tag('sonata.block')
-        ->args([
-            new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('sonata.media.pool'),
-            new ReferenceConfigurator('sonata.media.admin.gallery'),
-            new ReferenceConfigurator('sonata.media.manager.gallery'),
-        ]);
+        ->set('sonata.media.block.gallery_list', GalleryListBlockService::class)
+            ->tag('sonata.block')
+            ->args([
+                new ReferenceConfigurator('twig'),
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('sonata.media.admin.gallery'),
+                new ReferenceConfigurator('sonata.media.manager.gallery'),
+            ]);
 };

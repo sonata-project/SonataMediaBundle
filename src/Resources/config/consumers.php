@@ -11,8 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Sonata\MediaBundle\Serializer\GallerySerializerHandler;
-use Sonata\MediaBundle\Serializer\MediaSerializerHandler;
+use Sonata\MediaBundle\Consumer\CreateThumbnailConsumer;
+use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -20,15 +20,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $containerConfigurator->services()
 
-        ->set('sonata.media.serializer.handler.media', MediaSerializerHandler::class)
-            ->tag('jms_serializer.subscribing_handler')
+        ->set('sonata.media.notification.create_thumbnail', CreateThumbnailConsumer::class)
+            ->tag('sonata.notification.consumer', ['type' => 'sonata.media.create_thumbnail'])
             ->args([
                 new ReferenceConfigurator('sonata.media.manager.media'),
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('service_container'),
             ])
 
-        ->set('sonata.media.serializer.handler.gallery', GallerySerializerHandler::class)
-            ->tag('jms_serializer.subscribing_handler')
+        ->set('sonata.media.thumbnail.consumer.format', ConsumerThumbnail::class)
             ->args([
-                new ReferenceConfigurator('sonata.media.manager.gallery'),
+                'sonata.media.thumbnail.format',
+                new ReferenceConfigurator('sonata.media.thumbnail.format'),
+                new ReferenceConfigurator('sonata.notification.backend'),
+                new ReferenceConfigurator('event_dispatcher'),
             ]);
 };

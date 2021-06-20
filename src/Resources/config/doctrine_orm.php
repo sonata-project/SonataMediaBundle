@@ -21,28 +21,26 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.manager.media', MediaManager::class)
-        ->public()
-        ->args([
-            '%sonata.media.media.class%',
-            new ReferenceConfigurator('doctrine'),
-        ]);
+        ->set('sonata.media.manager.media', MediaManager::class)
+            ->args([
+                '%sonata.media.media.class%',
+                new ReferenceConfigurator('doctrine'),
+            ])
 
-    $services->set('sonata.media.manager.gallery', GalleryManager::class)
-        ->public()
-        ->args([
-            '%sonata.media.gallery.class%',
-            new ReferenceConfigurator('doctrine'),
-        ]);
+        ->set('sonata.media.manager.gallery', GalleryManager::class)
+            ->args([
+                '%sonata.media.gallery.class%',
+                new ReferenceConfigurator('doctrine'),
+            ])
 
-    $services->set('sonata.media.generator.default', IdGenerator::class);
+        ->set('sonata.media.generator.default', IdGenerator::class)
 
-    $services->set('sonata.media.doctrine.event_subscriber', MediaEventSubscriber::class)
-        ->tag('doctrine.event_subscriber')
-        ->args([
-            new ReferenceConfigurator('sonata.media.pool'),
-            (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
-        ]);
+        ->set('sonata.media.doctrine.event_subscriber', MediaEventSubscriber::class)
+            ->tag('doctrine.event_subscriber')
+            ->args([
+                new ReferenceConfigurator('sonata.media.pool'),
+                (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
+            ]);
 };

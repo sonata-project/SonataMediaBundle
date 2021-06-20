@@ -23,74 +23,70 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.admin.media', MediaAdmin::class)
-        ->public()
-        ->tag('sonata.admin', [
-            'manager_type' => 'orm',
-            'group' => 'sonata_media',
-            'label_catalogue' => 'SonataMediaBundle',
-            'label' => 'media',
-            'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
-            'icon' => '<i class=\'fa fa-image\'></i>',
-        ])
-        ->args([
-            '',
-            '%sonata.media.admin.media.entity%',
-            MediaAdminController::class,
-            new ReferenceConfigurator('sonata.media.pool'),
-            (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
-        ])
-        ->call('setModelManager', [new ReferenceConfigurator('sonata.media.admin.media.manager')])
-        ->call('setTranslationDomain', ['SonataMediaBundle'])
-        ->call('setTemplates', [[
-            'inner_list_row' => '@SonataMedia/MediaAdmin/inner_row_media.html.twig',
-            'outer_list_rows_mosaic' => '@SonataMedia/MediaAdmin/list_outer_rows_mosaic.html.twig',
-            'base_list_field' => '@SonataAdmin/CRUD/base_list_flat_field.html.twig',
-            'list' => '@SonataMedia/MediaAdmin/list.html.twig',
-            'edit' => '@SonataMedia/MediaAdmin/edit.html.twig',
-        ]]);
+        ->alias('sonata.media.admin.media.manager', 'sonata.admin.manager.orm')
 
-    $services->set('sonata.media.admin.gallery', GalleryAdmin::class)
-        ->public()
-        ->tag('sonata.admin', [
-            'manager_type' => 'orm',
-            'group' => 'sonata_media',
-            'label' => 'gallery',
-            'label_catalogue' => 'SonataMediaBundle',
-            'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
-            'icon' => '<i class=\'fa fa-image\'></i>',
-        ])
-        ->args([
-            '',
-            '%sonata.media.admin.gallery.entity%',
-            GalleryAdminController::class,
-            new ReferenceConfigurator('sonata.media.pool'),
-        ])
-        ->call('setTranslationDomain', ['SonataMediaBundle'])
-        ->call('setTemplates', [[
-            'list' => '@SonataMedia/GalleryAdmin/list.html.twig',
-        ]]);
+        ->set('sonata.media.admin.media', MediaAdmin::class)
+            ->tag('sonata.admin', [
+                'manager_type' => 'orm',
+                'group' => 'sonata_media',
+                'label_catalogue' => 'SonataMediaBundle',
+                'label' => 'media',
+                'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
+                'icon' => '<i class=\'fa fa-image\'></i>',
+            ])
+            ->args([
+                '',
+                '%sonata.media.admin.media.entity%',
+                MediaAdminController::class,
+                new ReferenceConfigurator('sonata.media.pool'),
+                (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
+            ])
+            ->call('setModelManager', [new ReferenceConfigurator('sonata.media.admin.media.manager')])
+            ->call('setTranslationDomain', ['SonataMediaBundle'])
+            ->call('setTemplates', [[
+                'inner_list_row' => '@SonataMedia/MediaAdmin/inner_row_media.html.twig',
+                'outer_list_rows_mosaic' => '@SonataMedia/MediaAdmin/list_outer_rows_mosaic.html.twig',
+                'base_list_field' => '@SonataAdmin/CRUD/base_list_flat_field.html.twig',
+                'list' => '@SonataMedia/MediaAdmin/list.html.twig',
+                'edit' => '@SonataMedia/MediaAdmin/edit.html.twig',
+            ]])
 
-    $services->set('sonata.media.admin.gallery_item', GalleryItemAdmin::class)
-        ->public()
-        ->tag('sonata.admin', [
-            'manager_type' => 'orm',
-            'show_in_dashboard' => false,
-            'group' => 'sonata_media',
-            'label_catalogue' => 'SonataMediaBundle',
-            'label' => 'gallery_item',
-            'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
-            'icon' => '<i class=\'fa fa-image\'></i>',
-        ])
-        ->args([
-            '',
-            '%sonata.media.admin.gallery_item.entity%',
-            CRUDController::class,
-        ])
-        ->call('setTranslationDomain', ['SonataMediaBundle']);
+        ->set('sonata.media.admin.gallery', GalleryAdmin::class)
+            ->tag('sonata.admin', [
+                'manager_type' => 'orm',
+                'group' => 'sonata_media',
+                'label' => 'gallery',
+                'label_catalogue' => 'SonataMediaBundle',
+                'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
+                'icon' => '<i class=\'fa fa-image\'></i>',
+            ])
+            ->args([
+                '',
+                '%sonata.media.admin.gallery.entity%',
+                GalleryAdminController::class,
+                new ReferenceConfigurator('sonata.media.pool'),
+            ])
+            ->call('setTranslationDomain', ['SonataMediaBundle'])
+            ->call('setTemplates', [[
+                'list' => '@SonataMedia/GalleryAdmin/list.html.twig',
+            ]])
 
-    $services->alias('sonata.media.admin.media.manager', 'sonata.admin.manager.orm')
-        ->public();
+        ->set('sonata.media.admin.gallery_item', GalleryItemAdmin::class)
+            ->tag('sonata.admin', [
+                'manager_type' => 'orm',
+                'show_in_dashboard' => false,
+                'group' => 'sonata_media',
+                'label_catalogue' => 'SonataMediaBundle',
+                'label' => 'gallery_item',
+                'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
+                'icon' => '<i class=\'fa fa-image\'></i>',
+            ])
+            ->args([
+                '',
+                '%sonata.media.admin.gallery_item.entity%',
+                CRUDController::class,
+            ])
+            ->call('setTranslationDomain', ['SonataMediaBundle']);
 };

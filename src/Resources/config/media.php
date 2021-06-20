@@ -27,50 +27,50 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.adapter.image.gd', GdImagine::class);
+        ->set('sonata.media.adapter.image.gd', GdImagine::class)
 
-    $services->set('sonata.media.adapter.image.imagick', ImagickImagine::class);
+        ->set('sonata.media.adapter.image.imagick', ImagickImagine::class)
 
-    $services->set('sonata.media.adapter.image.gmagick', GmagickImagine::class);
+        ->set('sonata.media.adapter.image.gmagick', GmagickImagine::class)
 
-    $services->set('sonata.media.resizer.crop', CropResizer::class)
-        ->tag('sonata.media.resizer')
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.image.default'),
-            new ReferenceConfigurator('sonata.media.metadata.proxy'),
-        ]);
+        ->set('sonata.media.resizer.crop', CropResizer::class)
+            ->tag('sonata.media.resizer')
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.image.default'),
+                new ReferenceConfigurator('sonata.media.metadata.proxy'),
+            ])
 
-    $services->set('sonata.media.resizer.simple', SimpleResizer::class)
-        ->tag('sonata.media.resizer')
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.image.default'),
-            '%sonata.media.resizer.simple.adapter.mode%',
-            new ReferenceConfigurator('sonata.media.metadata.proxy'),
-        ]);
+        ->set('sonata.media.resizer.simple', SimpleResizer::class)
+            ->tag('sonata.media.resizer')
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.image.default'),
+                '%sonata.media.resizer.simple.adapter.mode%',
+                new ReferenceConfigurator('sonata.media.metadata.proxy'),
+            ])
 
-    $services->set('sonata.media.resizer.square', SquareResizer::class)
-        ->tag('sonata.media.resizer')
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.image.default'),
-            '%sonata.media.resizer.square.adapter.mode%',
-            new ReferenceConfigurator('sonata.media.metadata.proxy'),
-        ]);
+        ->set('sonata.media.resizer.square', SquareResizer::class)
+            ->tag('sonata.media.resizer')
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.image.default'),
+                '%sonata.media.resizer.square.adapter.mode%',
+                new ReferenceConfigurator('sonata.media.metadata.proxy'),
+            ])
 
-    $services->set('sonata.media.cdn.server', Server::class)
-        ->args(['']);
+        ->set('sonata.media.cdn.server', Server::class)
+            ->args([''])
 
-    $services->set('sonata.media.cdn.panther', PantherPortal::class)
-        ->args(['', '', '', '']);
+        ->set('sonata.media.cdn.panther', PantherPortal::class)
+            ->args(['', '', '', ''])
 
-    $services->set('sonata.media.cdn.cloudfront.client', CloudFrontClient::class)
-        ->args([[]]);
+        ->set('sonata.media.cdn.cloudfront.client', CloudFrontClient::class)
+            ->args([[]])
 
-    // The class for "sonata.media.cdn.cloudfront" service is set dynamically at `SonataMediaExtension`
-    $services->set('sonata.media.cdn.cloudfront')
-        ->args(['', '', '']);
+        // The class for "sonata.media.cdn.cloudfront" service is set dynamically at `SonataMediaExtension`
+        ->set('sonata.media.cdn.cloudfront')
+            ->args(['', '', ''])
 
-    $services->set('sonata.media.cdn.fallback', Fallback::class)
-        ->args(['', '']);
+        ->set('sonata.media.cdn.fallback', Fallback::class)
+            ->args(['', '']);
 };

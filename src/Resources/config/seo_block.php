@@ -19,32 +19,32 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.block.breadcrumb_view', GalleryViewBreadcrumbBlockService::class)
-        ->tag('sonata.breadcrumb')
-        ->tag('sonata.block', ['context' => 'breadcrumb'])
-        ->args([
-            new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('knp_menu.menu_provider'),
-            new ReferenceConfigurator('knp_menu.factory'),
-        ]);
+        ->set('sonata.media.block.breadcrumb_view', GalleryViewBreadcrumbBlockService::class)
+            ->tag('sonata.breadcrumb')
+            ->tag('sonata.block', ['context' => 'breadcrumb'])
+            ->args([
+                new ReferenceConfigurator('twig'),
+                new ReferenceConfigurator('knp_menu.menu_provider'),
+                new ReferenceConfigurator('knp_menu.factory'),
+            ])
 
-    $services->set('sonata.media.block.breadcrumb_index', GalleryIndexBreadcrumbBlockService::class)
-        ->tag('sonata.breadcrumb')
-        ->tag('sonata.block', ['context' => 'breadcrumb'])
-        ->args([
-            new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('knp_menu.menu_provider'),
-            new ReferenceConfigurator('knp_menu.factory'),
-        ]);
+        ->set('sonata.media.block.breadcrumb_index', GalleryIndexBreadcrumbBlockService::class)
+            ->tag('sonata.breadcrumb')
+            ->tag('sonata.block', ['context' => 'breadcrumb'])
+            ->args([
+                new ReferenceConfigurator('twig'),
+                new ReferenceConfigurator('knp_menu.menu_provider'),
+                new ReferenceConfigurator('knp_menu.factory'),
+            ])
 
-    $services->set('sonata.media.block.breadcrumb_view_media', MediaViewBreadcrumbBlockService::class)
-        ->tag('sonata.breadcrumb')
-        ->tag('sonata.block', ['context' => 'breadcrumb'])
-        ->args([
-            new ReferenceConfigurator('twig'),
-            new ReferenceConfigurator('knp_menu.menu_provider'),
-            new ReferenceConfigurator('knp_menu.factory'),
-        ]);
+        ->set('sonata.media.block.breadcrumb_view_media', MediaViewBreadcrumbBlockService::class)
+            ->tag('sonata.breadcrumb')
+            ->tag('sonata.block', ['context' => 'breadcrumb'])
+            ->args([
+                new ReferenceConfigurator('twig'),
+                new ReferenceConfigurator('knp_menu.menu_provider'),
+                new ReferenceConfigurator('knp_menu.factory'),
+            ]);
 };
