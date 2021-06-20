@@ -18,18 +18,18 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.validator.format', FormatValidator::class)
-        ->tag('validator.constraint_validator', ['alias' => 'sonata.media.validator.format'])
-        ->args([
-            new ReferenceConfigurator('sonata.media.pool'),
-        ]);
+        ->set('sonata.media.validator.format', FormatValidator::class)
+            ->tag('validator.constraint_validator', ['alias' => 'sonata.media.validator.format'])
+            ->args([
+                new ReferenceConfigurator('sonata.media.pool'),
+            ])
 
-    $services->set(ImageUploadDimensionValidator::class)
-        ->tag('validator.constraint_validator')
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.image.default'),
-            new ReferenceConfigurator('sonata.media.provider.image'),
-        ]);
+        ->set(ImageUploadDimensionValidator::class)
+            ->tag('validator.constraint_validator')
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.image.default'),
+                new ReferenceConfigurator('sonata.media.provider.image'),
+            ]);
 };

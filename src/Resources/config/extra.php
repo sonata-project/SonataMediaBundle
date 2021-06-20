@@ -17,17 +17,17 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.extra.pixlr', Pixlr::class)
-        ->args([
-            '',
-            '',
-            new ReferenceConfigurator('sonata.media.pool'),
-            new ReferenceConfigurator('sonata.admin.pool'),
-            new ReferenceConfigurator('sonata.media.manager.media'),
-            new ReferenceConfigurator('sonata.media.admin.media'),
-            new ReferenceConfigurator('router'),
-            new ReferenceConfigurator('twig'),
-        ]);
+        ->set('sonata.media.extra.pixlr', Pixlr::class)
+            ->args([
+                '',
+                '',
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('sonata.admin.pool'),
+                new ReferenceConfigurator('sonata.media.manager.media'),
+                new ReferenceConfigurator('sonata.media.admin.media'),
+                new ReferenceConfigurator('router'),
+                new ReferenceConfigurator('twig'),
+            ]);
 };

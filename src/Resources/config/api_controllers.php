@@ -18,21 +18,21 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.controller.api.gallery', GalleryController::class)
-        ->public()
-        ->args([
-            new ReferenceConfigurator('sonata.media.manager.gallery'),
-            new ReferenceConfigurator('sonata.media.manager.media'),
-            new ReferenceConfigurator('form.factory'),
-        ]);
+        ->set('sonata.media.controller.api.gallery', GalleryController::class)
+            ->public()
+            ->args([
+                new ReferenceConfigurator('sonata.media.manager.gallery'),
+                new ReferenceConfigurator('sonata.media.manager.media'),
+                new ReferenceConfigurator('form.factory'),
+            ])
 
-    $services->set('sonata.media.controller.api.media', MediaController::class)
-        ->public()
-        ->args([
-            new ReferenceConfigurator('sonata.media.manager.media'),
-            new ReferenceConfigurator('sonata.media.pool'),
-            new ReferenceConfigurator('form.factory'),
-        ]);
+        ->set('sonata.media.controller.api.media', MediaController::class)
+            ->public()
+            ->args([
+                new ReferenceConfigurator('sonata.media.manager.media'),
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('form.factory'),
+            ]);
 };

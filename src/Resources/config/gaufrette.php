@@ -30,70 +30,70 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.adapter.filesystem.local', Local::class);
-    $services->set('sonata.media.adapter.filesystem.ftp', Ftp::class);
+        ->set('sonata.media.adapter.filesystem.local', Local::class)
+        ->set('sonata.media.adapter.filesystem.ftp', Ftp::class)
 
-    $services->set('sonata.media.adapter.service.s3', S3Client::class)
-        ->args([[]]);
+        ->set('sonata.media.adapter.service.s3', S3Client::class)
+            ->args([[]])
 
-    $services->set('sonata.media.adapter.filesystem.s3', AwsS3::class)
-        ->args(['', '', '']);
+        ->set('sonata.media.adapter.filesystem.s3', AwsS3::class)
+            ->args(['', '', ''])
 
-    $services->set('sonata.media.adapter.filesystem.replicate', Replicate::class)
-        ->args([
-            '',
-            '',
-            // NEXT_MAJOR: make symfony/monolog-bundle a require dependency and remove nullOnInvalid
-            (new ReferenceConfigurator('logger'))->nullOnInvalid(),
-        ]);
+        ->set('sonata.media.adapter.filesystem.replicate', Replicate::class)
+            ->args([
+                '',
+                '',
+                // NEXT_MAJOR: make symfony/monolog-bundle a require dependency and remove nullOnInvalid
+                (new ReferenceConfigurator('logger'))->nullOnInvalid(),
+            ])
 
-    $services->set('sonata.media.adapter.filesystem.opencloud', OpenCloud::class)
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.filesystem.opencloud.objectstore'),
-            '',
-            '',
-        ]);
+        ->set('sonata.media.adapter.filesystem.opencloud', OpenCloud::class)
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.filesystem.opencloud.objectstore'),
+                '',
+                '',
+            ])
 
-    $services->set('sonata.media.adapter.filesystem.opencloud.connection.openstack', Openstack::class)
-        ->args(['', '']);
+        ->set('sonata.media.adapter.filesystem.opencloud.connection.openstack', Openstack::class)
+            ->args(['', ''])
 
-    $services->set('sonata.media.adapter.filesystem.opencloud.connection.rackspace', Rackspace::class)
-        ->args(['', '']);
+        ->set('sonata.media.adapter.filesystem.opencloud.connection.rackspace', Rackspace::class)
+            ->args(['', ''])
 
-    $services->set('sonata.media.adapter.filesystem.opencloud.objectstore', Service::class)
-        ->args(['', '']);
+        ->set('sonata.media.adapter.filesystem.opencloud.objectstore', Service::class)
+            ->args(['', ''])
 
-    $services->set('sonata.media.filesystem.ftp', Filesystem::class)
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.filesystem.ftp'),
-        ]);
+        ->set('sonata.media.filesystem.ftp', Filesystem::class)
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.filesystem.ftp'),
+            ])
 
-    $services->set('sonata.media.filesystem.local', Filesystem::class)
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.filesystem.local'),
-        ]);
+        ->set('sonata.media.filesystem.local', Filesystem::class)
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.filesystem.local'),
+            ])
 
-    $services->set('sonata.media.filesystem.s3', Filesystem::class)
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.filesystem.s3'),
-        ]);
+        ->set('sonata.media.filesystem.s3', Filesystem::class)
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.filesystem.s3'),
+            ])
 
-    $services->set('sonata.media.filesystem.replicate', Filesystem::class)
-        ->args([
-            new ReferenceConfigurator('sonata.media.adapter.filesystem.replicate'),
-        ]);
+        ->set('sonata.media.filesystem.replicate', Filesystem::class)
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.filesystem.replicate'),
+            ])
 
-    $services->set('sonata.media.metadata.proxy', ProxyMetadataBuilder::class)
-        ->args([
-            new ReferenceConfigurator('service_container'),
-            (new ReferenceConfigurator('sonata.media.metadata.noop'))->nullOnInvalid(),
-            (new ReferenceConfigurator('sonata.media.metadata.amazon'))->nullOnInvalid(),
-        ]);
+        ->set('sonata.media.metadata.proxy', ProxyMetadataBuilder::class)
+            ->args([
+                new ReferenceConfigurator('service_container'),
+                (new ReferenceConfigurator('sonata.media.metadata.noop'))->nullOnInvalid(),
+                (new ReferenceConfigurator('sonata.media.metadata.amazon'))->nullOnInvalid(),
+            ])
 
-    $services->set('sonata.media.metadata.amazon', AmazonMetadataBuilder::class)
-        ->args([[]]);
+        ->set('sonata.media.metadata.amazon', AmazonMetadataBuilder::class)
+            ->args([[]])
 
-    $services->set('sonata.media.metadata.noop', NoopMetadataBuilder::class);
+        ->set('sonata.media.metadata.noop', NoopMetadataBuilder::class);
 };

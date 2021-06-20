@@ -15,9 +15,9 @@ use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->alias('sonata.media.manager.category', 'sonata.classification.manager.category');
+        ->alias('sonata.media.manager.category', 'sonata.classification.manager.category')
 
-    $services->alias(CategoryManagerInterface::class, 'sonata.media.manager.category');
+        ->alias(CategoryManagerInterface::class, 'sonata.media.manager.category');
 };

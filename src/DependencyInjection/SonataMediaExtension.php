@@ -41,7 +41,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('provider.php');
+        $loader->load('providers.php');
         $loader->load('http_client.php');
         $loader->load('media.php');
         $loader->load('twig.php');
@@ -51,7 +51,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $loader->load('gaufrette.php');
         $loader->load('validators.php');
         $loader->load('serializer.php');
-        $loader->load('command.php');
+        $loader->load('commands.php');
+        $loader->load('controllers.php');
 
         $bundles = $container->getParameter('kernel.bundles');
 
@@ -64,7 +65,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         }
 
         if (isset($bundles['SonataNotificationBundle'])) {
-            $loader->load('consumer.php');
+            $loader->load('consumers.php');
         }
 
         if (isset($bundles['SonataBlockBundle'])) {

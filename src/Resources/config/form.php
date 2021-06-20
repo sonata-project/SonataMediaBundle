@@ -17,14 +17,14 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.form.type.media', MediaType::class)
-        ->tag('form.type')
-        ->args([
-            new ReferenceConfigurator('sonata.media.pool'),
-            '',
-        ])
-        // NEXT_MAJOR: make symfony/monolog-bundle a require dependency and remove nullOnInvalid
-        ->call('setLogger', [(new ReferenceConfigurator('logger'))->nullOnInvalid()]);
+        ->set('sonata.media.form.type.media', MediaType::class)
+            ->tag('form.type')
+            ->args([
+                new ReferenceConfigurator('sonata.media.pool'),
+                '',
+            ])
+            // NEXT_MAJOR: make symfony/monolog-bundle a require dependency and remove nullOnInvalid
+            ->call('setLogger', [(new ReferenceConfigurator('logger'))->nullOnInvalid()]);
 };

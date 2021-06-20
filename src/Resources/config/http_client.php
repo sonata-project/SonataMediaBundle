@@ -16,8 +16,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\HttpClient\Psr18Client;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set('sonata.media.http.base_client', Psr18Client::class);
-    $services->set('sonata.media.http.base_message_factory', Psr17Factory::class);
+        ->set('sonata.media.http.base_client', Psr18Client::class)
+
+        ->set('sonata.media.http.base_message_factory', Psr17Factory::class);
 };
