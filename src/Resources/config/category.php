@@ -11,17 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Sonata\MediaBundle\Model\CategoryManager;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $services = $containerConfigurator->services();
 
-    $services->set('sonata.media.manager.category.default', CategoryManager::class)
-        ->public()
-        ->args([
-            (new ReferenceConfigurator('sonata.classification.manager.category'))->nullOnInvalid(),
-        ]);
+    $services->alias('sonata.media.manager.category', 'sonata.classification.manager.category');
 };

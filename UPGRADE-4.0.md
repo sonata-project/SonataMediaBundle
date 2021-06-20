@@ -1,6 +1,11 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### Integration with classification-bundle
+
+  In SonataMediaBundle 4.0 we improved the integration with SonataClassificationBundle, you don't need
+  to configure the `classification_manager` anymore.
+
 ### Container parameters
 
   We have been using container parameters as undocumented extension points for things like classes and configurations.

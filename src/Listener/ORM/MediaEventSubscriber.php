@@ -17,8 +17,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs as ORMLifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
+use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
-use Sonata\MediaBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
