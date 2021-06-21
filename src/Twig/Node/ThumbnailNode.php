@@ -22,7 +22,7 @@ final class ThumbnailNode extends Node
     /**
      * @var string
      */
-    protected $extensionName;
+    private $extensionName;
 
     /**
      * @param string $extensionName

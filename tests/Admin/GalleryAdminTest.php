@@ -23,7 +23,7 @@ class GalleryAdminTest extends TestCase
     /**
      * @var GalleryAdmin
      */
-    protected $galleryAdmin;
+    private $galleryAdmin;
 
     protected function setUp(): void
     {

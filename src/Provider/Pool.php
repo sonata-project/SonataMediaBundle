@@ -25,22 +25,22 @@ class Pool
     /**
      * @var array
      */
-    protected $providers = [];
+    private $providers = [];
 
     /**
      * @var array
      */
-    protected $contexts = [];
+    private $contexts = [];
 
     /**
      * @var DownloadStrategyInterface[]
      */
-    protected $downloadStrategies = [];
+    private $downloadStrategies = [];
 
     /**
      * @var string
      */
-    protected $defaultContext;
+    private $defaultContext;
 
     /**
      * @param string $context

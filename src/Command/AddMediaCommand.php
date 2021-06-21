@@ -37,7 +37,7 @@ final class AddMediaCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)
@@ -53,7 +53,7 @@ final class AddMediaCommand extends Command
         ]);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $provider = $input->getArgument('providerName');
         $context = $input->getArgument('context');

@@ -22,7 +22,7 @@ final class PathTokenParser extends AbstractTokenParser
     /**
      * @var string
      */
-    protected $extensionName;
+    private $extensionName;
 
     /**
      * @param string $extensionName

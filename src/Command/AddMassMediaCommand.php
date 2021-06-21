@@ -42,7 +42,7 @@ final class AddMassMediaCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)
@@ -54,7 +54,7 @@ final class AddMassMediaCommand extends Command
             ]);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fp = $this->getFilePointer($input, $output);
         $imported = -1;
@@ -91,7 +91,7 @@ final class AddMassMediaCommand extends Command
     /**
      * @return resource
      */
-    protected function getFilePointer(InputInterface $input, OutputInterface $output)
+    private function getFilePointer(InputInterface $input, OutputInterface $output)
     {
         if (false !== ftell(\STDIN)) {
             return \STDIN;
@@ -104,7 +104,7 @@ final class AddMassMediaCommand extends Command
         return fopen($input->getOption('file'), 'r');
     }
 
-    protected function insertMedia(array $data, OutputInterface $output): void
+    private function insertMedia(array $data, OutputInterface $output): void
     {
         $media = $this->mediaManager->create();
 

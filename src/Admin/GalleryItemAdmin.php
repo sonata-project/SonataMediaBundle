@@ -19,6 +19,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
+/**
+ * @phpstan-extends AbstractAdmin<\Sonata\MediaBundle\Model\GalleryItemInterface>
+ */
 final class GalleryItemAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $form): void

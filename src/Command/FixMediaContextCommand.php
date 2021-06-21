@@ -50,12 +50,12 @@ final class FixMediaContextCommand extends Command
         $this->contextManager = $contextManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this->setDescription(static::$defaultDescription);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (null === $this->categoryManager || null === $this->contextManager) {
             throw new \LogicException(

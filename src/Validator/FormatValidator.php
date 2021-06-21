@@ -24,7 +24,7 @@ final class FormatValidator extends ConstraintValidator
     /**
      * @var Pool
      */
-    protected $pool;
+    private $pool;
 
     public function __construct(Pool $pool)
     {

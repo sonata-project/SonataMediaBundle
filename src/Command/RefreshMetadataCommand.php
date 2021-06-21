@@ -66,7 +66,7 @@ final class RefreshMetadataCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)
@@ -76,7 +76,7 @@ final class RefreshMetadataCommand extends Command
             ]);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->quiet = $input->getOption('quiet');
 
@@ -126,7 +126,7 @@ final class RefreshMetadataCommand extends Command
     /**
      * Write a message to the output.
      */
-    protected function log(string $message): void
+    private function log(string $message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

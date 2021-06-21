@@ -35,12 +35,12 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
     /**
      * @var Pool
      */
-    protected $pool;
+    private $pool;
 
     /**
      * @var string
      */
-    protected $class;
+    private $class;
 
     /**
      * @param string $class

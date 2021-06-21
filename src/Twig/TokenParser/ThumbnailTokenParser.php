@@ -23,7 +23,7 @@ final class ThumbnailTokenParser extends AbstractTokenParser
     /**
      * @var string
      */
-    protected $extensionName;
+    private $extensionName;
 
     /**
      * @param string $extensionName

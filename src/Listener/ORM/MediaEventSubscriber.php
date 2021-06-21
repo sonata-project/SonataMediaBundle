@@ -89,7 +89,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
     /**
      * @throws \RuntimeException
      */
-    protected function getRootCategory(MediaInterface $media): CategoryInterface
+    private function getRootCategory(MediaInterface $media): CategoryInterface
     {
         if (null === $this->rootCategories) {
             $this->rootCategories = $this->categoryManager->getAllRootCategories(false);

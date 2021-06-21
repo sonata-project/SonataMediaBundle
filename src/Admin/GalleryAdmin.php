@@ -21,14 +21,17 @@ use Sonata\Form\Type\CollectionType;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+/**
+ * @phpstan-extends AbstractAdmin<\Sonata\MediaBundle\Model\Gallery>
+ */
 final class GalleryAdmin extends AbstractAdmin
 {
+    protected $classnameLabel = 'Gallery';
+
     /**
      * @var Pool
      */
-    protected $pool;
-
-    protected $classnameLabel = 'Gallery';
+    private $pool;
 
     public function __construct(string $code, string $class, string $baseControllerName, Pool $pool)
     {

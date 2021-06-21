@@ -68,7 +68,7 @@ final class RemoveThumbsCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)
@@ -82,7 +82,7 @@ final class RemoveThumbsCommand extends Command
             ]);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = $output;
@@ -155,7 +155,7 @@ final class RemoveThumbsCommand extends Command
         return 0;
     }
 
-    public function getProvider(): MediaProviderInterface
+    private function getProvider(): MediaProviderInterface
     {
         $providerName = $this->input->getArgument('providerName');
 
@@ -170,7 +170,7 @@ final class RemoveThumbsCommand extends Command
         return $this->mediaPool->getProvider($providerName);
     }
 
-    public function getContext(): string
+    private function getContext(): string
     {
         $context = $this->input->getArgument('context');
 
@@ -185,7 +185,7 @@ final class RemoveThumbsCommand extends Command
         return $context;
     }
 
-    public function getFormat(MediaProviderInterface $provider, string $context): string
+    private function getFormat(MediaProviderInterface $provider, string $context): string
     {
         $format = $this->input->getArgument('format');
 
@@ -209,7 +209,7 @@ final class RemoveThumbsCommand extends Command
         return $format;
     }
 
-    protected function processMedia(MediaInterface $media, MediaProviderInterface $provider, string $context, string $format): bool
+    private function processMedia(MediaInterface $media, MediaProviderInterface $provider, string $context, string $format): bool
     {
         $this->log('Deleting thumbs for '.$media->getName().' - '.$media->getId());
 
@@ -235,7 +235,7 @@ final class RemoveThumbsCommand extends Command
     /**
      * Write a message to the output.
      */
-    protected function log(string $message): void
+    private function log(string $message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

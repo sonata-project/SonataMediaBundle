@@ -31,7 +31,7 @@ class ImageProvider extends FileProvider
     /**
      * @var ImagineInterface
      */
-    protected $imagineAdapter;
+    private $imagineAdapter;
 
     /**
      * @param string                   $name
