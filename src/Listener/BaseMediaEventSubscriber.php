@@ -33,76 +33,84 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     public function postUpdate(LifecycleEventArgs $args): void
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->postUpdate($this->getMedia($args));
+        $this->getProvider($media)->postUpdate($media);
     }
 
     public function postRemove(LifecycleEventArgs $args): void
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->postRemove($this->getMedia($args));
+        $this->getProvider($media)->postRemove($media);
     }
 
     public function postPersist(LifecycleEventArgs $args): void
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->postPersist($this->getMedia($args));
+        $this->getProvider($media)->postPersist($media);
     }
 
     public function preUpdate(LifecycleEventArgs $args): void
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->transform($this->getMedia($args));
-        $provider->preUpdate($this->getMedia($args));
+        $provider = $this->getProvider($media);
+
+        $provider->transform($media);
+        $provider->preUpdate($media);
 
         $this->recomputeSingleEntityChangeSet($args);
     }
 
     public function preRemove(LifecycleEventArgs $args): void
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->preRemove($this->getMedia($args));
+        $this->getProvider($media)->preRemove($media);
     }
 
     public function prePersist(LifecycleEventArgs $args): void
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->transform($this->getMedia($args));
-        $provider->prePersist($this->getMedia($args));
+        $provider = $this->getProvider($media);
+
+        $provider->transform($media);
+        $provider->prePersist($media);
     }
 
-    abstract protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args);
+    abstract protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args): void;
 
-    /**
-     * @throws \RuntimeException
-     *
-     * @return MediaInterface
-     */
-    abstract protected function getMedia(LifecycleEventArgs $args);
+    abstract protected function getMedia(LifecycleEventArgs $args): ?MediaInterface;
 
-    /**
-     * @return MediaProviderInterface
-     */
-    protected function getProvider(LifecycleEventArgs $args)
+    protected function getProvider(MediaInterface $media): MediaProviderInterface
     {
-        return $this->pool->getProvider($this->getMedia($args)->getProviderName());
+        return $this->pool->getProvider($media->getProviderName());
     }
 }

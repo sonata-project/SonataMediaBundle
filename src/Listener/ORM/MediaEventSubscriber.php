@@ -71,12 +71,12 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
-    protected function getMedia(LifecycleEventArgs $args)
+    protected function getMedia(LifecycleEventArgs $args): ?MediaInterface
     {
         $media = $args->getObject();
 
         if (!$media instanceof MediaInterface) {
-            throw new \LogicException('There is no media on the persistence event.');
+            return null;
         }
 
         if (null !== $this->categoryManager && !$media->getCategory()) {
@@ -88,19 +88,19 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
 
     /**
      * @throws \RuntimeException
-     *
-     * @return CategoryInterface
      */
-    protected function getRootCategory(MediaInterface $media)
+    protected function getRootCategory(MediaInterface $media): CategoryInterface
     {
-        if (!$this->rootCategories) {
-            $this->rootCategories = $this->categoryManager->getRootCategories(false);
+        if (null === $this->rootCategories) {
+            $this->rootCategories = $this->categoryManager->getAllRootCategories(false);
         }
 
-        if (!\array_key_exists($media->getContext(), $this->rootCategories)) {
-            throw new \RuntimeException(sprintf('There is no main category related to context: %s', $media->getContext()));
+        $context = $media->getContext();
+
+        if (!\array_key_exists($context, $this->rootCategories)) {
+            throw new \RuntimeException(sprintf('There is no main category related to context: %s', $context));
         }
 
-        return $this->rootCategories[$media->getContext()];
+        return $this->rootCategories[$context];
     }
 }

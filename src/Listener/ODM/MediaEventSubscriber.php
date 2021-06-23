@@ -45,12 +45,12 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
-    protected function getMedia(LifecycleEventArgs $args)
+    protected function getMedia(LifecycleEventArgs $args): ?MediaInterface
     {
         $media = $args->getObject();
 
         if (!$media instanceof MediaInterface) {
-            throw new \LogicException('There is no media on the persistence event.');
+            return null;
         }
 
         return $media;
