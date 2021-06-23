@@ -41,13 +41,13 @@ class MediaEventSubscriberTest extends TestCase
             ->setConstructorArgs(['default'])
             ->getMock();
 
-        $pool->method('getProvider')->willReturnMap([['provider', $provider]]);
+        $pool->method('getProvider')->willReturn($provider);
 
         $category = $this->createMock(CategoryInterface::class);
         $catManager = $this->createMock(CategoryManagerInterface::class);
 
         $catManager->expects($this->exactly(2))
-            ->method('getRootCategories')
+            ->method('getAllRootCategories')
             ->willReturn(['context' => $category]);
 
         $subscriber = new MediaEventSubscriber($pool, $catManager);
