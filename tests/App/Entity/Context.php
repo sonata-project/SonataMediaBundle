@@ -23,16 +23,13 @@ use Sonata\ClassificationBundle\Entity\BaseContext;
 class Context extends BaseContext
 {
     /**
+     * @var string|null
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     protected $id;
-
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
 
     public function getId()
     {

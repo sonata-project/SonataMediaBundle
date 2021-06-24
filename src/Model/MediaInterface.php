@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
 use Imagine\Image\Box;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 
@@ -27,362 +28,149 @@ interface MediaInterface
     public const MISSING_BINARY_REFERENCE = 'missing_binary_content';
 
     /**
+     * @return int|string|object
+     */
+    public function getId();
+
+    public function setName(?string $name): void;
+
+    public function getName(): ?string;
+
+    public function setDescription(?string $description): void;
+
+    public function getDescription(): ?string;
+
+    public function setEnabled(bool $enabled): void;
+
+    public function getEnabled(): bool;
+
+    public function setProviderName(?string $providerName): void;
+
+    public function getProviderName(): ?string;
+
+    public function setProviderStatus(?int $providerStatus): void;
+
+    public function getProviderStatus(): ?int;
+
+    public function setProviderReference(?string $providerReference): void;
+
+    public function getProviderReference(): ?string;
+
+    /**
+     * @param array<string, mixed> $providerMetadata
+     */
+    public function setProviderMetadata(array $providerMetadata = []): void;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getProviderMetadata(): array;
+
+    public function setWidth(?int $width): void;
+
+    public function getWidth(): ?int;
+
+    public function setHeight(?int $height): void;
+
+    public function getHeight(): ?int;
+
+    public function setLength(?float $length): void;
+
+    public function getLength(): ?float;
+
+    public function setCopyright(?string $copyright): void;
+
+    public function getCopyright(): ?string;
+
+    public function setAuthorName(?string $authorName): void;
+
+    public function getAuthorName(): ?string;
+
+    public function setContext(?string $context): void;
+
+    public function getContext(): ?string;
+
+    public function setCdnStatus(?int $cdnStatus): void;
+
+    public function getCdnStatus(): ?int;
+
+    public function setCdnIsFlushable(bool $cdnIsFlushable): void;
+
+    public function getCdnIsFlushable(): bool;
+
+    public function setCdnFlushIdentifier(?string $cdnFlushIdentifier): void;
+
+    public function getCdnFlushIdentifier(): ?string;
+
+    public function setCdnFlushAt(?\DateTimeInterface $cdnFlushAt): void;
+
+    public function getCdnFlushAt(): ?\DateTimeInterface;
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void;
+
+    public function getUpdatedAt(): ?\DateTimeInterface;
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void;
+
+    public function getCreatedAt(): ?\DateTimeInterface;
+
+    public function setContentType(?string $contentType): void;
+
+    public function getContentType(): ?string;
+
+    public function setSize(?int $size): void;
+
+    public function getSize(): ?int;
+
+    /**
+     * @return CategoryInterface|null
+     */
+    public function getCategory(): ?object;
+
+    /**
+     * @param CategoryInterface|null $category
+     */
+    public function setCategory(?object $category = null): void;
+
+    /**
+     * @param Collection<array-key, GalleryItemInterface> $galleryItems
+     */
+    public function setGalleryItems(Collection $galleryItems): void;
+
+    /**
+     * @return Collection<array-key, GalleryItemInterface>
+     */
+    public function getGalleryItems(): Collection;
+
+    public function getBox(): Box;
+
+    public function getExtension(): ?string;
+
+    public function getPreviousProviderReference(): ?string;
+
+    /**
      * @param mixed $binaryContent
      */
-    public function setBinaryContent($binaryContent);
+    public function setBinaryContent($binaryContent): void;
 
     /**
      * @return mixed
      */
     public function getBinaryContent();
 
-    /**
-     * Reset the binary content.
-     */
-    public function resetBinaryContent();
+    public function resetBinaryContent(): void;
 
     /**
-     * @param string $name
-     * @param mixed  $default
-     */
-    public function getMetadataValue($name, $default = null);
-
-    /**
-     * @param string $name
-     * @param mixed  $value
-     */
-    public function setMetadataValue($name, $value);
-
-    /**
-     * Remove a named data from the metadata.
+     * @param mixed $default
      *
-     * @param string $name
-     */
-    public function unsetMetadataValue($name);
-
-    /**
      * @return mixed
      */
-    public function getId();
+    public function getMetadataValue(string $name, $default = null);
 
     /**
-     * Set name.
-     *
-     * @param string $name
+     * @param mixed $value
      */
-    public function setName($name);
+    public function setMetadataValue(string $name, $value): void;
 
-    /**
-     * Get name.
-     *
-     * @return string $name
-     */
-    public function getName();
-
-    /**
-     * Set description.
-     *
-     * @param string $description
-     */
-    public function setDescription($description);
-
-    /**
-     * Get description.
-     *
-     * @return string $description
-     */
-    public function getDescription();
-
-    /**
-     * Set enabled.
-     *
-     * @param bool $enabled
-     */
-    public function setEnabled($enabled);
-
-    /**
-     * Get enabled.
-     *
-     * @return bool $enabled
-     */
-    public function getEnabled();
-
-    /**
-     * Set provider_name.
-     *
-     * @param string $providerName
-     */
-    public function setProviderName($providerName);
-
-    /**
-     * Get provider_name.
-     *
-     * @return string $providerName
-     */
-    public function getProviderName();
-
-    /**
-     * Set provider_status.
-     *
-     * @param int $providerStatus
-     */
-    public function setProviderStatus($providerStatus);
-
-    /**
-     * Get provider_status.
-     *
-     * @return int $providerStatus
-     */
-    public function getProviderStatus();
-
-    /**
-     * Set provider_reference.
-     *
-     * @param string $providerReference
-     */
-    public function setProviderReference($providerReference);
-
-    /**
-     * Get provider_reference.
-     *
-     * @return string $providerReference
-     */
-    public function getProviderReference();
-
-    /**
-     * Set provider_metadata.
-     */
-    public function setProviderMetadata(array $providerMetadata = []);
-
-    /**
-     * Get provider_metadata.
-     *
-     * @return array $providerMetadata
-     */
-    public function getProviderMetadata();
-
-    /**
-     * Set width.
-     *
-     * @param int $width
-     */
-    public function setWidth($width);
-
-    /**
-     * Get width.
-     *
-     * @return int $width
-     */
-    public function getWidth();
-
-    /**
-     * Set height.
-     *
-     * @param int $height
-     */
-    public function setHeight($height);
-
-    /**
-     * Get height.
-     *
-     * @return int $height
-     */
-    public function getHeight();
-
-    /**
-     * Set length.
-     *
-     * @param float $length
-     */
-    public function setLength($length);
-
-    /**
-     * Get length.
-     *
-     * @return float $length
-     */
-    public function getLength();
-
-    /**
-     * Set copyright.
-     *
-     * @param string $copyright
-     */
-    public function setCopyright($copyright);
-
-    /**
-     * Get copyright.
-     *
-     * @return string $copyright
-     */
-    public function getCopyright();
-
-    /**
-     * Set authorName.
-     *
-     * @param string $authorName
-     */
-    public function setAuthorName($authorName);
-
-    /**
-     * Get authorName.
-     *
-     * @return string $authorName
-     */
-    public function getAuthorName();
-
-    /**
-     * Set context.
-     *
-     * @param string $context
-     */
-    public function setContext($context);
-
-    /**
-     * Get context.
-     *
-     * @return string $context
-     */
-    public function getContext();
-
-    /**
-     * Set cdnIsFlushable.
-     *
-     * @param bool $cdnIsFlushable
-     */
-    public function setCdnIsFlushable($cdnIsFlushable);
-
-    /**
-     * Get cdn_is_flushable.
-     *
-     * @return bool $cdnIsFlushable
-     */
-    public function getCdnIsFlushable();
-
-    /**
-     * Set cdn_flush_identifier.
-     *
-     * @param string|null $cdnFlushIdentifier
-     */
-    public function setCdnFlushIdentifier($cdnFlushIdentifier);
-
-    /**
-     * Get cdn_flush_identifier.
-     *
-     * @return string|null $cdnFlushIdentifier
-     */
-    public function getCdnFlushIdentifier();
-
-    /**
-     * Set cdn_flush_at.
-     *
-     * @param \DateTime $cdnFlushAt
-     */
-    public function setCdnFlushAt(?\DateTimeInterface $cdnFlushAt = null);
-
-    /**
-     * Get cdn_flush_at.
-     *
-     * @return \DateTimeInterface $cdnFlushAt
-     */
-    public function getCdnFlushAt();
-
-    /**
-     * Set updated_at.
-     *
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null);
-
-    /**
-     * Get updated_at.
-     *
-     * @return \DateTimeInterface $updatedAt
-     */
-    public function getUpdatedAt();
-
-    /**
-     * Set created_at.
-     *
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(?\DateTimeInterface $createdAt = null);
-
-    /**
-     * Get created_at.
-     *
-     * @return \DateTimeInterface $createdAt
-     */
-    public function getCreatedAt();
-
-    /**
-     * Set content_type.
-     *
-     * @param string $contentType
-     */
-    public function setContentType($contentType);
-
-    /**
-     * @return string|null
-     */
-    public function getExtension();
-
-    /**
-     * Get content_type.
-     *
-     * @return string $contentType
-     */
-    public function getContentType();
-
-    /**
-     * Set size.
-     *
-     * @param int $size
-     */
-    public function setSize($size);
-
-    /**
-     * Get size.
-     *
-     * @return int $size
-     */
-    public function getSize();
-
-    /**
-     * Set cdn_status.
-     *
-     * @param int $cdnStatus
-     */
-    public function setCdnStatus($cdnStatus);
-
-    /**
-     * Get cdn_status.
-     *
-     * @return int $cdnStatus
-     */
-    public function getCdnStatus();
-
-    /**
-     * @return Box
-     */
-    public function getBox();
-
-    /**
-     * @param GalleryItemInterface[] $galleryItems
-     */
-    public function setGalleryItems($galleryItems);
-
-    /**
-     * @return GalleryItemInterface[]
-     */
-    public function getGalleryItems();
-
-    /**
-     * @return string
-     */
-    public function getPreviousProviderReference();
-
-    public function getCategory(): ?CategoryInterface;
-
-    public function setCategory(?CategoryInterface $category = null): void;
+    public function unsetMetadataValue(string $name): void;
 }

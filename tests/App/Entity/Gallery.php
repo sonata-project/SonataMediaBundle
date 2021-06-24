@@ -24,24 +24,16 @@ use Sonata\MediaBundle\Model\GalleryItemInterface;
 class Gallery extends BaseGallery
 {
     /**
+     * @var int|null
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     protected $id;
 
-    /**
-     * Get id.
-     */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
-    }
-
-    public function removeGalleryItem(GalleryItemInterface $galleryItem)
-    {
-        if ($this->galleryItems->contains($galleryItem)) {
-            $this->galleryItems->removeElement($galleryItem);
-        }
     }
 }

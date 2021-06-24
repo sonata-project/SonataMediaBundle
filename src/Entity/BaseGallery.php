@@ -16,9 +16,6 @@ namespace Sonata\MediaBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
 
-/**
- * Bundle\MediaBundle\Entity\BaseGallery.
- */
 abstract class BaseGallery extends Gallery
 {
     public function __construct()
@@ -26,18 +23,12 @@ abstract class BaseGallery extends Gallery
         $this->galleryItems = new ArrayCollection();
     }
 
-    /**
-     * Pre Persist method.
-     */
     public function prePersist(): void
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
-    /**
-     * Pre Update method.
-     */
     public function preUpdate(): void
     {
         $this->updatedAt = new \DateTime();
