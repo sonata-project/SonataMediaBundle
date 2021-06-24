@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Controller\Api;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use PHPUnit\Framework\TestCase;
 use Sonata\DatagridBundle\Pager\PagerInterface;
@@ -109,7 +110,7 @@ class GalleryControllerTest extends TestCase
         $gallery = $this->createMock(GalleryInterface::class);
         $formFactory = $this->createMock(FormFactoryInterface::class);
 
-        $gallery->expects($this->once())->method('getGalleryItems')->willReturn([$galleryItem]);
+        $gallery->expects($this->once())->method('getGalleryItems')->willReturn(new ArrayCollection([$galleryItem]));
 
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
@@ -117,7 +118,7 @@ class GalleryControllerTest extends TestCase
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory);
 
-        $this->assertSame([$galleryItem], $gController->getGalleryGalleryItemsAction(1));
+        $this->assertSame([$galleryItem], $gController->getGalleryGalleryItemsAction(1)->toArray());
     }
 
     public function testGetGalleryMediaAction(): void
@@ -130,7 +131,7 @@ class GalleryControllerTest extends TestCase
         $mediaManager = $this->createMock(MediaManagerInterface::class);
 
         $galleryItem->expects($this->once())->method('getMedia')->willReturn($media);
-        $gallery->expects($this->once())->method('getGalleryItems')->willReturn([$galleryItem]);
+        $gallery->expects($this->once())->method('getGalleryItems')->willReturn(new ArrayCollection([$galleryItem]));
         $galleryManager->expects($this->once())->method('findOneBy')->willReturn($gallery);
 
         $gController = new GalleryController($galleryManager, $mediaManager, $formFactory);

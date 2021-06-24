@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Tests\App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Entity\BaseGallery;
-use Sonata\MediaBundle\Model\GalleryItemInterface;
 
 /**
  * @ORM\Entity
