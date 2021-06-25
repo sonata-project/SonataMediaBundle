@@ -46,7 +46,7 @@ class MediaTest extends TestCase
         $media->setDescription('description');
         $media->setEnabled(true);
         $media->setProviderName('name');
-        $media->setLength(2);
+        $media->setLength(2.0);
         $media->setCategory($category);
         $media->setCopyright('copyleft');
         $media->setAuthorName('Thomas');
@@ -60,7 +60,7 @@ class MediaTest extends TestCase
         $this->assertSame('description', $media->getDescription());
         $this->assertTrue($media->getEnabled());
         $this->assertSame('name', $media->getProviderName());
-        $this->assertSame(2, $media->getLength());
+        $this->assertSame(2.0, $media->getLength());
         $this->assertSame($category, $media->getCategory());
         $this->assertSame('copyleft', $media->getCopyright());
         $this->assertSame('Thomas', $media->getAuthorName());

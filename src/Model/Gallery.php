@@ -20,19 +20,19 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 abstract class Gallery implements GalleryInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $context;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
      * @var bool
      */
-    protected $enabled;
+    protected $enabled = false;
 
     /**
      * @var \DateTimeInterface|null
@@ -45,7 +45,7 @@ abstract class Gallery implements GalleryInterface
     protected $createdAt;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
@@ -54,62 +54,72 @@ abstract class Gallery implements GalleryInterface
      */
     protected $galleryItems;
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName() ?: '-';
     }
 
-    public function setName($name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setEnabled($enabled): void
+    public function setContext(?string $context): void
+    {
+        $this->context = $context;
+    }
+
+    public function getContext(): ?string
+    {
+        return $this->context;
+    }
+
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt = null): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setDefaultFormat($defaultFormat): void
+    public function setDefaultFormat(?string $defaultFormat): void
     {
         $this->defaultFormat = $defaultFormat;
     }
 
-    public function getDefaultFormat()
+    public function getDefaultFormat(): ?string
     {
         return $this->defaultFormat;
     }
 
-    public function setGalleryItems($galleryItems): void
+    public function setGalleryItems(Collection $galleryItems): void
     {
         $this->galleryItems = new ArrayCollection();
 
@@ -118,7 +128,7 @@ abstract class Gallery implements GalleryInterface
         }
     }
 
-    public function getGalleryItems()
+    public function getGalleryItems(): Collection
     {
         return $this->galleryItems;
     }
@@ -130,14 +140,11 @@ abstract class Gallery implements GalleryInterface
         $this->galleryItems[] = $galleryItem;
     }
 
-    public function setContext($context): void
+    public function removeGalleryItem(GalleryItemInterface $galleryItem): void
     {
-        $this->context = $context;
-    }
-
-    public function getContext()
-    {
-        return $this->context;
+        if ($this->galleryItems->contains($galleryItem)) {
+            $this->galleryItems->removeElement($galleryItem);
+        }
     }
 
     /**
@@ -146,7 +153,6 @@ abstract class Gallery implements GalleryInterface
     public function reorderGalleryItems()
     {
         if ($this->getGalleryItems() && $this->getGalleryItems() instanceof \IteratorAggregate) {
-            // reorder
             $iterator = $this->getGalleryItems()->getIterator();
             \assert($iterator instanceof \ArrayIterator);
 

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
@@ -51,7 +52,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         $blockContext->method('getSettings')->willReturn(['settings']);
         $blockContext->method('getTemplate')->willReturn('template');
         $block->method('getSetting')->with('galleryId')->willReturn($gallery);
-        $gallery->method('getGalleryItems')->willReturn([]);
+        $gallery->method('getGalleryItems')->willReturn(new ArrayCollection());
 
         $this->twig
             ->expects($this->once())

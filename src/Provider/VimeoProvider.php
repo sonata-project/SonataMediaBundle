@@ -105,9 +105,9 @@ final class VimeoProvider extends BaseVideoProvider
             $media->setAuthorName($metadata['author_name']);
         }
 
-        $media->setHeight($metadata['height']);
-        $media->setWidth($metadata['width']);
-        $media->setLength($metadata['duration']);
+        $media->setHeight((int) $metadata['height']);
+        $media->setWidth((int) $metadata['width']);
+        $media->setLength((float) $metadata['duration']);
         $media->setContentType('video/x-flv');
     }
 

@@ -23,6 +23,8 @@ use Sonata\ClassificationBundle\Entity\BaseCategory;
 class Category extends BaseCategory
 {
     /**
+     * @var int|null
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")

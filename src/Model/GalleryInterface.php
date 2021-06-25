@@ -17,104 +17,48 @@ use Doctrine\Common\Collections\Collection;
 
 interface GalleryInterface
 {
-    /**
-     * @return string
-     */
-    public function __toString();
+    public function __toString(): string;
 
     /**
-     * @return int
+     * @return int|string|object
      */
     public function getId();
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     */
-    public function setName($name);
+    public function setName(?string $name): void;
 
-    /**
-     * @return string
-     */
-    public function getContext();
+    public function getName(): ?string;
 
-    /**
-     * @param string $context
-     *
-     * @return void
-     */
-    public function setContext($context);
+    public function setContext(?string $context): void;
 
-    /**
-     * Get name.
-     *
-     * @return string $name
-     */
-    public function getName();
+    public function getContext(): ?string;
 
-    /**
-     * Set enabled.
-     *
-     * @param bool $enabled
-     */
-    public function setEnabled($enabled);
+    public function setEnabled(bool $enabled): void;
 
-    /**
-     * Get enabled.
-     *
-     * @return bool $enabled
-     */
-    public function getEnabled();
+    public function getEnabled(): bool;
 
-    /**
-     * Set updated_at.
-     */
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null);
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void;
 
-    /**
-     * Get updated_at.
-     *
-     * @return \DateTimeInterface|null $updatedAt
-     */
-    public function getUpdatedAt();
+    public function getUpdatedAt(): ?\DateTimeInterface;
 
-    /**
-     * Set created_at.
-     */
-    public function setCreatedAt(?\DateTimeInterface $createdAt = null);
+    public function setCreatedAt(?\DateTimeInterface $createdAt);
 
-    /**
-     * Get created_at.
-     *
-     * @return \DateTimeInterface|null $createdAt
-     */
-    public function getCreatedAt();
+    public function getCreatedAt(): ?\DateTimeInterface;
 
-    /**
-     * @param string $defaultFormat
-     */
-    public function setDefaultFormat($defaultFormat);
+    public function setDefaultFormat(?string $defaultFormat): void;
 
-    /**
-     * @return string
-     */
-    public function getDefaultFormat();
+    public function getDefaultFormat(): ?string;
 
     /**
      * @param Collection<array-key, GalleryItemInterface> $galleryItems
      */
-    public function setGalleryItems($galleryItems);
+    public function setGalleryItems(Collection $galleryItems);
 
     /**
      * @return Collection<array-key, GalleryItemInterface>
      */
-    public function getGalleryItems();
+    public function getGalleryItems(): Collection;
 
-    /**
-     * @return void
-     */
-    public function addGalleryItem(GalleryItemInterface $galleryItem);
+    public function addGalleryItem(GalleryItemInterface $galleryItem): void;
 
-    public function removeGalleryItem(GalleryItemInterface $galleryItem);
+    public function removeGalleryItem(GalleryItemInterface $galleryItem): void;
 }

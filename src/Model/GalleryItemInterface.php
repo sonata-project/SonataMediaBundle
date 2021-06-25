@@ -15,63 +15,34 @@ namespace Sonata\MediaBundle\Model;
 
 interface GalleryItemInterface
 {
-    /**
-     * @return string
-     */
-    public function __toString();
+    public function __toString(): string;
 
     /**
-     * @return int
+     * @return int|string|object
      */
     public function getId();
 
-    /**
-     * @param bool $enabled
-     */
-    public function setEnabled($enabled);
+    public function setEnabled(bool $enabled): void;
 
-    /**
-     * @return bool
-     */
-    public function getEnabled();
+    public function getEnabled(): bool;
 
-    public function setGallery(?GalleryInterface $gallery = null);
+    public function setGallery(?GalleryInterface $gallery = null): void;
 
-    /**
-     * @return GalleryInterface|null
-     */
-    public function getGallery();
+    public function getGallery(): ?GalleryInterface;
 
-    public function setMedia(?MediaInterface $media = null);
+    public function setMedia(?MediaInterface $media = null): void;
 
-    /**
-     * @return MediaInterface|null
-     */
-    public function getMedia();
+    public function getMedia(): ?MediaInterface;
 
-    /**
-     * @param int $position
-     *
-     * @return self
-     */
-    public function setPosition($position);
+    public function setPosition(int $position): void;
 
-    /**
-     * @return int
-     */
-    public function getPosition();
+    public function getPosition(): int;
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null);
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void;
 
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getUpdatedAt();
+    public function getUpdatedAt(): ?\DateTimeInterface;
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt = null);
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void;
 
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getCreatedAt();
+    public function getCreatedAt(): ?\DateTimeInterface;
 }
