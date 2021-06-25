@@ -13,9 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
-use Sonata\DatagridBundle\Pager\PageableInterface;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 
-interface GalleryManagerInterface extends ManagerInterface, PageableInterface
+interface GalleryManagerInterface extends ManagerInterface
 {
+    public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface;
 }

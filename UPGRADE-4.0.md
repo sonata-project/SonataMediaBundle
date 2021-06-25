@@ -24,9 +24,9 @@ UPGRADE FROM 3.x to 4.0
   You can take a look at this class constants: `Imagine\Image\ManipulatorInterface` to see the
   available options.
 
-### Sonata\DatagridBundle\Pager\PageableInterface
+### SonataDatagridBundle
 
-  Usages of `Sonata\Doctrine\Model\PageableManagerInterface` were replaced in favor of `Sonata\DatagridBundle\Pager\PageableInterface`.
+  Usages of `sonata-project/datagrid-bundle` were replaced in favour of interfaces from `sonata-project/admin-bundle` and implementations from the persistence bundles (ex: `sonata-project/doctrine-orm-admin-bundle`).
 
 ### Dependencies
 

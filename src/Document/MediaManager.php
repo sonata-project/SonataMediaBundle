@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Document;
 
-use Sonata\DatagridBundle\Pager\PagerInterface;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Sonata\Doctrine\Document\BaseDocumentManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
