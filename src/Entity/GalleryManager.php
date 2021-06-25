@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Entity;
 
-use Sonata\DatagridBundle\Pager\Doctrine\Pager;
-use Sonata\DatagridBundle\Pager\PagerInterface;
-use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Sonata\Doctrine\Entity\BaseEntityManager;
+use Sonata\DoctrineORMAdminBundle\Datagrid\Pager;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 final class GalleryManager extends BaseEntityManager implements GalleryManagerInterface

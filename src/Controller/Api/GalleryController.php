@@ -20,7 +20,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View as FOSRestView;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Sonata\DatagridBundle\Pager\PagerInterface;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Sonata\MediaBundle\Form\Type\ApiGalleryItemType;
 use Sonata\MediaBundle\Form\Type\ApiGalleryType;
 use Sonata\MediaBundle\Model\GalleryInterface;
@@ -98,7 +98,7 @@ final class GalleryController
      *     @SWG\Response(
      *         response="200",
      *         description="Returned when successful",
-     *         @SWG\Schema(ref=@Model(type="Sonata\DatagridBundle\Pager\PagerInterface"))
+     *         @SWG\Schema(ref=@Model(type="Sonata\AdminBundle\Datagrid\PagerInterface"))
      *     )
      * )
      *

@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Tests\Controller\Api;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use PHPUnit\Framework\TestCase;
-use Sonata\DatagridBundle\Pager\PagerInterface;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Sonata\MediaBundle\Controller\Api\MediaController;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;

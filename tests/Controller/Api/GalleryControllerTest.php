@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Tests\Controller\Api;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use PHPUnit\Framework\TestCase;
-use Sonata\DatagridBundle\Pager\PagerInterface;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Sonata\MediaBundle\Controller\Api\GalleryController;
 use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryItemInterface;

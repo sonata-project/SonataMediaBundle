@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Doctrine\DBAL\Connection;
-use Sonata\DatagridBundle\Pager\PagerInterface;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Sonata\MediaBundle\Exception\NoDriverException;
 
 /**
