@@ -56,9 +56,6 @@ final class MediaController
      */
     private $formFactory;
 
-    /**
-     * Constructor.
-     */
     public function __construct(MediaManagerInterface $mediaManager, Pool $mediaPool, FormFactoryInterface $formFactory)
     {
         $this->mediaManager = $mediaManager;
@@ -85,11 +82,9 @@ final class MediaController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param string $id Medium identifier
-     *
-     * @return MediaInterface
+     * @param int|string $id Medium identifier
      */
-    public function getMediumAction($id)
+    public function getMediumAction($id): MediaInterface
     {
         return $this->getMedium($id);
     }
@@ -141,10 +136,8 @@ final class MediaController
      * @Rest\QueryParam(name="orderBy", map=true, requirements="ASC|DESC", nullable=true, strict=true, description="Order by array (key is field, value is direction)")
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
-     *
-     * @return PagerInterface
      */
-    public function getMediaAction(ParamFetcherInterface $paramFetcher)
+    public function getMediaAction(ParamFetcherInterface $paramFetcher): PagerInterface
     {
         $supportedCriteria = [
             'enabled' => '',
@@ -184,11 +177,9 @@ final class MediaController
      *     )
      * )
      *
-     * @param string $id Medium identifier
-     *
-     * @return FOSRestView
+     * @param int|string $id Medium identifier
      */
-    public function getMediumFormatsAction($id)
+    public function getMediumFormatsAction($id): FOSRestView
     {
         $media = $this->getMedium($id);
 
@@ -224,12 +215,9 @@ final class MediaController
      *     )
      * )
      *
-     * @param string $id     Medium identifier
-     * @param string $format Format
-     *
-     * @return Response
+     * @param int|string $id Medium identifier
      */
-    public function getMediumBinaryAction($id, $format, Request $request)
+    public function getMediumBinaryAction($id, string $format, Request $request): Response
     {
         $media = $this->getMedium($id);
 
@@ -262,13 +250,11 @@ final class MediaController
      *     )
      * )
      *
-     * @param string $id Medium identifier
+     * @param int|string $id Medium identifier
      *
      * @throws NotFoundHttpException
-     *
-     * @return FOSRestView
      */
-    public function deleteMediumAction($id)
+    public function deleteMediumAction($id): FOSRestView
     {
         $medium = $this->getMedium($id);
 
@@ -301,8 +287,7 @@ final class MediaController
      *     )
      * )
      *
-     * @param string  $id      Medium identifier
-     * @param Request $request Symfony request
+     * @param int|string $id Medium identifier
      *
      * @throws NotFoundHttpException
      *
@@ -345,14 +330,11 @@ final class MediaController
      *     )
      * )
      *
-     * @param string  $provider Media provider
-     * @param Request $request  Symfony request
-     *
      * @throws NotFoundHttpException
      *
      * @return FOSRestView|FormInterface
      */
-    public function postProviderMediumAction($provider, Request $request)
+    public function postProviderMediumAction(string $provider, Request $request)
     {
         $medium = $this->mediaManager->create();
         $medium->setProviderName($provider);
@@ -385,14 +367,11 @@ final class MediaController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param string  $id      Medium identifier
-     * @param Request $request Symfony request
+     * @param int|string $id Medium identifier
      *
      * @throws NotFoundHttpException
-     *
-     * @return MediaInterface
      */
-    public function putMediumBinaryContentAction($id, Request $request)
+    public function putMediumBinaryContentAction($id, Request $request): MediaInterface
     {
         $media = $this->getMedium($id);
 
@@ -406,14 +385,12 @@ final class MediaController
     /**
      * Retrieves media with identifier $id or throws an exception if not found.
      *
-     * @param string $id Media identifier
+     * @param int|string $id Media identifier
      *
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
-     *
-     * @return MediaInterface
      */
-    private function getMedium($id = null)
+    private function getMedium($id = null): MediaInterface
     {
         $media = $this->mediaManager->find($id);
 

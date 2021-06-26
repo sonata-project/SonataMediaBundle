@@ -131,10 +131,8 @@ final class GalleryController
      * )
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
-     *
-     * @return PagerInterface
      */
-    public function getGalleriesAction(ParamFetcherInterface $paramFetcher)
+    public function getGalleriesAction(ParamFetcherInterface $paramFetcher): PagerInterface
     {
         $supportedCriteria = [
             'enabled' => '',
@@ -157,7 +155,7 @@ final class GalleryController
             $sort = [$sort => 'asc'];
         }
 
-        return $this->getGalleryManager()->getPager($criteria, (int) $page, (int) $limit, $sort);
+        return $this->galleryManager->getPager($criteria, (int) $page, (int) $limit, $sort);
     }
 
     /**
@@ -179,11 +177,9 @@ final class GalleryController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param string $id Gallery identifier
-     *
-     * @return GalleryInterface
+     * @param int|string $id Gallery identifier
      */
-    public function getGalleryAction($id)
+    public function getGalleryAction($id): GalleryInterface
     {
         return $this->getGallery($id);
     }
@@ -207,11 +203,11 @@ final class GalleryController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param string $id Gallery identifier
+     * @param int|string $id Gallery identifier
      *
      * @return MediaInterface[]
      */
-    public function getGalleryMediasAction($id)
+    public function getGalleryMediasAction($id): array
     {
         $galleryItems = $this->getGallery($id)->getGalleryItems();
 
@@ -245,11 +241,11 @@ final class GalleryController
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
      *
-     * @param string $id Gallery identifier
+     * @param int|string $id Gallery identifier
      *
      * @return Collection<array-key, GalleryItemInterface>
      */
-    public function getGalleryGalleryItemsAction($id)
+    public function getGalleryGalleryItemsAction($id): Collection
     {
         return $this->getGallery($id)->getGalleryItems();
     }
@@ -270,8 +266,6 @@ final class GalleryController
      *         description="Returned when an error has occurred while gallery creation"
      *     )
      * )
-     *
-     * @param Request $request Symfony request
      *
      * @throws NotFoundHttpException
      *
@@ -303,8 +297,7 @@ final class GalleryController
      *     )
      * )
      *
-     * @param string  $id      Gallery identifier
-     * @param Request $request Symfony request
+     * @param int|string $id Gallery identifier
      *
      * @throws NotFoundHttpException
      *
@@ -332,9 +325,8 @@ final class GalleryController
      *     )
      * )
      *
-     * @param string  $galleryId Gallery identifier
-     * @param string  $mediaId   Medium identifier
-     * @param Request $request   Symfony request
+     * @param int|string $galleryId Gallery identifier
+     * @param int|string $mediaId   Medium identifier
      *
      * @throws NotFoundHttpException
      *
@@ -374,9 +366,8 @@ final class GalleryController
      *     )
      * )
      *
-     * @param string  $galleryId Gallery identifier
-     * @param string  $mediaId   Medium identifier
-     * @param Request $request   Symfony request
+     * @param int|string $galleryId Gallery identifier
+     * @param int|string $mediaId   Medium identifier
      *
      * @throws NotFoundHttpException
      *
@@ -416,14 +407,12 @@ final class GalleryController
      *     )
      * )
      *
-     * @param string $galleryId Gallery identifier
-     * @param string $mediaId   Media identifier
+     * @param int|string $galleryId Gallery identifier
+     * @param int|string $mediaId   Media identifier
      *
      * @throws NotFoundHttpException
-     *
-     * @return FOSRestView
      */
-    public function deleteGalleryMediaGalleryItemAction($galleryId, $mediaId)
+    public function deleteGalleryMediaGalleryItemAction($galleryId, $mediaId): FOSRestView
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
@@ -431,7 +420,7 @@ final class GalleryController
         foreach ($gallery->getGalleryItems() as $key => $galleryItem) {
             if ($galleryItem->getMedia()->getId() === $media->getId()) {
                 $gallery->getGalleryItems()->remove($key);
-                $this->getGalleryManager()->save($gallery);
+                $this->galleryManager->save($gallery);
 
                 return FOSRestView::create(['deleted' => true]);
             }
@@ -462,13 +451,11 @@ final class GalleryController
      *     )
      * )
      *
-     * @param string $id Gallery identifier
+     * @param int|string $id Gallery identifier
      *
      * @throws NotFoundHttpException
-     *
-     * @return FOSRestView
      */
-    public function deleteGalleryAction($id)
+    public function deleteGalleryAction($id): FOSRestView
     {
         $gallery = $this->getGallery($id);
 
@@ -514,15 +501,13 @@ final class GalleryController
     /**
      * Retrieves gallery with identifier $id or throws an exception if it doesn't exist.
      *
-     * @param string $id Gallery identifier
+     * @param int|string $id Gallery identifier
      *
      * @throws NotFoundHttpException
-     *
-     * @return GalleryInterface
      */
-    private function getGallery($id)
+    private function getGallery($id): GalleryInterface
     {
-        $gallery = $this->getGalleryManager()->findOneBy(['id' => $id]);
+        $gallery = $this->galleryManager->findOneBy(['id' => $id]);
 
         if (null === $gallery) {
             throw new NotFoundHttpException(sprintf('Gallery not found for identifier %s.', var_export($id, true)));
@@ -534,15 +519,13 @@ final class GalleryController
     /**
      * Retrieves media with identifier $id or throws an exception if it doesn't exist.
      *
-     * @param string $id Media identifier
+     * @param int|string $id Media identifier
      *
      * @throws NotFoundHttpException
-     *
-     * @return MediaInterface
      */
-    private function getMedia($id)
+    private function getMedia($id): MediaInterface
     {
-        $media = $this->getMediaManager()->findOneBy(['id' => $id]);
+        $media = $this->mediaManager->findOneBy(['id' => $id]);
 
         if (null === $media) {
             throw new NotFoundHttpException(sprintf('Media not found for identifier %s.', var_export($id, true)));
@@ -552,30 +535,13 @@ final class GalleryController
     }
 
     /**
-     * @return GalleryManagerInterface
-     */
-    private function getGalleryManager()
-    {
-        return $this->galleryManager;
-    }
-
-    /**
-     * @return MediaManagerInterface
-     */
-    private function getMediaManager()
-    {
-        return $this->mediaManager;
-    }
-
-    /**
      * Write a Gallery, this method is used by both POST and PUT action methods.
      *
-     * @param Request     $request Symfony request
-     * @param string|null $id      Gallery identifier
+     * @param int|string|null $id Gallery identifier
      *
      * @return FosRestView|FormInterface
      */
-    private function handleWriteGallery($request, $id = null)
+    private function handleWriteGallery(Request $request, $id = null)
     {
         $gallery = $this->getGallery($id);
 
