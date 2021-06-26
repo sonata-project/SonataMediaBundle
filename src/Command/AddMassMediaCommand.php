@@ -33,7 +33,7 @@ final class AddMassMediaCommand extends Command
     /**
      * @var string[]
      */
-    private $setters;
+    private $setters = [];
 
     public function __construct(ManagerInterface $mediaManager)
     {

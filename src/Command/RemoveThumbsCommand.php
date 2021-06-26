@@ -51,12 +51,12 @@ final class RemoveThumbsCommand extends Command
     private $quiet = false;
 
     /**
-     * @var InputInterface
+     * @var InputInterface|null
      */
     private $input;
 
     /**
-     * @var OutputInterface
+     * @var OutputInterface|null
      */
     private $output;
 
@@ -185,10 +185,7 @@ final class RemoveThumbsCommand extends Command
         return $context;
     }
 
-    /**
-     * @param string $context
-     */
-    public function getFormat(MediaProviderInterface $provider, $context): string
+    public function getFormat(MediaProviderInterface $provider, string $context): string
     {
         $format = $this->input->getArgument('format');
 
@@ -212,11 +209,7 @@ final class RemoveThumbsCommand extends Command
         return $format;
     }
 
-    /**
-     * @param string $context
-     * @param string $format
-     */
-    protected function processMedia(MediaInterface $media, MediaProviderInterface $provider, $context, $format): bool
+    protected function processMedia(MediaInterface $media, MediaProviderInterface $provider, string $context, string $format): bool
     {
         $this->log('Deleting thumbs for '.$media->getName().' - '.$media->getId());
 
@@ -241,10 +234,8 @@ final class RemoveThumbsCommand extends Command
 
     /**
      * Write a message to the output.
-     *
-     * @param string $message
      */
-    protected function log($message): void
+    protected function log(string $message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

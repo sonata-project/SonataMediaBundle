@@ -69,10 +69,7 @@ final class CreateThumbnailConsumer implements ConsumerInterface
         }
     }
 
-    /**
-     * @return ThumbnailInterface
-     */
-    private function getThumbnail(ConsumerEvent $event)
+    private function getThumbnail(ConsumerEvent $event): ThumbnailInterface
     {
         $thumbnail = $this->container->get($event->getMessage()->getValue('thumbnailId'));
 

@@ -36,16 +36,6 @@ final class SyncThumbsCommand extends Command
     protected static $defaultDescription = 'Sync uploaded image thumbs with new media formats';
 
     /**
-     * @var bool
-     */
-    protected $quiet = false;
-
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
-
-    /**
      * @var Pool
      */
     private $mediaPool;
@@ -54,6 +44,16 @@ final class SyncThumbsCommand extends Command
      * @var ManagerInterface
      */
     private $mediaManager;
+
+    /**
+     * @var bool
+     */
+    private $quiet = false;
+
+    /**
+     * @var OutputInterface|null
+     */
+    private $output;
 
     public function __construct(Pool $mediaPool, ManagerInterface $mediaManager)
     {
@@ -175,11 +175,7 @@ final class SyncThumbsCommand extends Command
         return 0;
     }
 
-    /**
-     * @param MediaInterface         $media
-     * @param MediaProviderInterface $provider
-     */
-    protected function processMedia($media, $provider): bool
+    protected function processMedia(MediaInterface $media, MediaProviderInterface $provider): bool
     {
         $this->log('Generating thumbs for '.$media->getName().' - '.$media->getId());
 
@@ -212,10 +208,8 @@ final class SyncThumbsCommand extends Command
 
     /**
      * Write a message to the output.
-     *
-     * @param string $message
      */
-    protected function log($message): void
+    protected function log(string $message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

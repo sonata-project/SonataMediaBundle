@@ -49,12 +49,12 @@ final class RefreshMetadataCommand extends Command
     private $quiet = false;
 
     /**
-     * @var OutputInterface
+     * @var OutputInterface|null
      */
     private $output;
 
     /**
-     * @var InputInterface
+     * @var InputInterface|null
      */
     private $input;
 
@@ -125,10 +125,8 @@ final class RefreshMetadataCommand extends Command
 
     /**
      * Write a message to the output.
-     *
-     * @param string $message
      */
-    protected function log($message): void
+    protected function log(string $message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

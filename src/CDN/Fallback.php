@@ -31,7 +31,7 @@ final class Fallback implements CDNInterface
         $this->fallback = $fallback;
     }
 
-    public function getPath($relativePath, $isFlushable)
+    public function getPath(string $relativePath, bool $isFlushable = false): string
     {
         if ($isFlushable) {
             return $this->fallback->getPath($relativePath, $isFlushable);
@@ -40,22 +40,22 @@ final class Fallback implements CDNInterface
         return $this->cdn->getPath($relativePath, $isFlushable);
     }
 
-    public function flushByString($string)
+    public function flushByString(string $string): string
     {
         return $this->cdn->flushByString($string);
     }
 
-    public function flush($string)
+    public function flush(string $string): string
     {
         return $this->cdn->flush($string);
     }
 
-    public function flushPaths(array $paths)
+    public function flushPaths(array $paths): string
     {
         return $this->cdn->flushPaths($paths);
     }
 
-    public function getFlushStatus($identifier)
+    public function getFlushStatus(string $identifier): int
     {
         return $this->cdn->getFlushStatus($identifier);
     }
