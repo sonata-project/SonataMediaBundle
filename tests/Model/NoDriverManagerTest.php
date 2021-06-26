@@ -30,7 +30,7 @@ class NoDriverManagerTest extends TestCase
         \call_user_func_array([new NoDriverManager(), $method], $arguments);
     }
 
-    public function testIsInstanceOfGalleryManagerInterface()
+    public function testIsInstanceOfGalleryManagerInterface(): void
     {
         $this->assertInstanceOf(GalleryManagerInterface::class, new NoDriverManager());
     }

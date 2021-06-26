@@ -30,6 +30,9 @@ class FilesystemTestCase extends TestCase
      */
     protected $workspace;
 
+    /**
+     * @var int
+     */
     private $umask;
 
     /**

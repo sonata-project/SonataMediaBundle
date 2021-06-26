@@ -25,7 +25,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
  */
 class MediaManagerTest extends TestCase
 {
-    /** @var MediaManager */
+    /**
+     * @var MediaManager
+     */
     private $manager;
 
     protected function setUp(): void

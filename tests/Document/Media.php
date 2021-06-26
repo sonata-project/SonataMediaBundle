@@ -17,6 +17,9 @@ use Sonata\MediaBundle\Document\BaseMedia;
 
 class Media extends BaseMedia
 {
+    /**
+     * @var int|string|object|null
+     */
     protected $id;
 
     public function setId($id): void

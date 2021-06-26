@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 class FakeHttpWrapper
 {
+    /**
+     * @var string[]
+     */
     public static $ref = [
         // youtube content
         'http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=BDYAbAtaDzA&format=json' => 'valide_youtube.txt',
@@ -29,9 +32,9 @@ class FakeHttpWrapper
         'http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg' => 'logo.jpg',
     ];
 
-    /* Properties */
-    public $context;
-
+    /**
+     * @var resource|null
+     */
     public $fp;
 
     /* Methods */

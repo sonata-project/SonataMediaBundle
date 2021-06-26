@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
@@ -23,8 +24,14 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryListBlockServiceTest extends BlockServiceTestCase
 {
+    /**
+     * @var MockObject&GalleryManagerInterface
+     */
     protected $galleryManager;
 
+    /**
+     * @var MockObject&Pool
+     */
     protected $pool;
 
     protected function setUp(): void

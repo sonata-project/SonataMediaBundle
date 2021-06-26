@@ -19,11 +19,14 @@ use Sonata\MediaBundle\Entity\BaseGallery;
 
 class GalleryItemAdminTest extends TestCase
 {
-    private $mediaAdmin;
+    /**
+     * @var GalleryItemAdmin
+     */
+    private $galleryItemAdmin;
 
     protected function setUp(): void
     {
-        $this->mediaAdmin = new GalleryItemAdmin(
+        $this->galleryItemAdmin = new GalleryItemAdmin(
             'gallery',
             BaseGallery::class,
             'SonataMediaBundle:GalleryAdmin'
@@ -32,6 +35,6 @@ class GalleryItemAdminTest extends TestCase
 
     public function testItIsInstantiable(): void
     {
-        $this->assertNotNull($this->mediaAdmin);
+        $this->assertNotNull($this->galleryItemAdmin);
     }
 }

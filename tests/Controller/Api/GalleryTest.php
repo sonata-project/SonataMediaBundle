@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\Tests\Controller\Api;
 
 class GalleryTest
 {
+    /**
+     * @var int
+     */
     private $id;
 
     public function __construct()
@@ -22,7 +25,7 @@ class GalleryTest
         $this->id = random_int(0, getrandmax());
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

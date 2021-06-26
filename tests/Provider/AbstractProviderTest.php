@@ -36,7 +36,7 @@ use Symfony\Component\Form\FormTypeInterface;
 abstract class AbstractProviderTest extends TestCase
 {
     /**
-     * @var FormBuilderInterface|MockObject
+     * @var MockObject&FormBuilderInterface
      */
     protected $formBuilder;
 
@@ -46,7 +46,7 @@ abstract class AbstractProviderTest extends TestCase
     protected $form;
 
     /**
-     * @var FormTypeInterface|MockObject
+     * @var MockObject&FormTypeInterface
      */
     protected $formType;
 

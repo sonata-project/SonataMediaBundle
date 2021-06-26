@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TestProvider extends BaseProvider
 {
     /**
-     * @var string
+     * @var string|null
      */
     public $prevReferenceImage;
 

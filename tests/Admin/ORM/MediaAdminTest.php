@@ -21,6 +21,9 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class MediaAdminTest extends TestCase
 {
+    /**
+     * @var MediaAdmin
+     */
     private $mediaAdmin;
 
     protected function setUp(): void
