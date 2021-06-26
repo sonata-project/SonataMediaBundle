@@ -30,19 +30,14 @@ final class GalleryAdmin extends AbstractAdmin
 
     protected $classnameLabel = 'Gallery';
 
-    /**
-     * @param string $code
-     * @param string $class
-     * @param string $baseControllerName
-     */
-    public function __construct($code, $class, $baseControllerName, Pool $pool)
+    public function __construct(string $code, string $class, string $baseControllerName, Pool $pool)
     {
         parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
     }
 
-    public function prePersist($object): void
+    public function prePersist(object $object): void
     {
         $parameters = $this->getPersistentParameters();
 

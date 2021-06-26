@@ -39,13 +39,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
     protected $classnameLabel = 'Media';
 
-    /**
-     * @param string                   $code
-     * @param string                   $class
-     * @param string                   $baseControllerName
-     * @param CategoryManagerInterface $categoryManager
-     */
-    public function __construct($code, $class, $baseControllerName, Pool $pool, ?CategoryManagerInterface $categoryManager = null)
+    public function __construct(string $code, string $class, string $baseControllerName, Pool $pool, ?CategoryManagerInterface $categoryManager = null)
     {
         parent::__construct($code, $class, $baseControllerName);
 
@@ -131,14 +125,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
                 }
             }
         }
-    }
-
-    /**
-     * @return Pool
-     */
-    public function getPool()
-    {
-        return $this->pool;
     }
 
     public function getObjectMetadata(object $object): MetadataInterface

@@ -53,23 +53,16 @@ final class PantherPortal implements CDNInterface
     private $siteId;
 
     /**
-     * @var \SoapClient
-     */
-    private $client;
-
-    /**
      * @var string
      */
     private $wsdl;
 
     /**
-     * @param string $path
-     * @param string $username
-     * @param string $password
-     * @param string $siteId
-     * @param string $wsdl
+     * @var \SoapClient|null
      */
-    public function __construct($path, $username, $password, $siteId, $wsdl = 'https://pantherportal.cdnetworks.com/wsdl/flush.wsdl')
+    private $client;
+
+    public function __construct(string $path, string $username, string $password, string $siteId, string $wsdl = 'https://pantherportal.cdnetworks.com/wsdl/flush.wsdl')
     {
         $this->path = $path;
         $this->username = $username;
@@ -78,17 +71,17 @@ final class PantherPortal implements CDNInterface
         $this->wsdl = $wsdl;
     }
 
-    public function getPath($relativePath, $isFlushable)
+    public function getPath(string $relativePath, bool $isFlushable = false): string
     {
         return sprintf('%s/%s', $this->path, $relativePath);
     }
 
-    public function flushByString($string): string
+    public function flushByString(string $string): string
     {
         return $this->flushPaths([$string]);
     }
 
-    public function flush($string): string
+    public function flush(string $string): string
     {
         return $this->flushPaths([$string]);
     }
@@ -104,12 +97,12 @@ final class PantherPortal implements CDNInterface
         return $result;
     }
 
-    public function setClient($client): void
+    public function setClient(\SoapClient $client): void
     {
         $this->client = $client;
     }
 
-    public function getFlushStatus($identifier): int
+    public function getFlushStatus(string $identifier): int
     {
         return CDNInterface::STATUS_OK;
     }

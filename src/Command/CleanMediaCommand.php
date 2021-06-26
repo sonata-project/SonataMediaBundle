@@ -31,11 +31,6 @@ final class CleanMediaCommand extends Command
     protected static $defaultDescription = 'Find orphaned files in media upload directory';
 
     /**
-     * @var string[]|null
-     */
-    private $providers;
-
-    /**
      * @var Pool
      */
     private $mediaPool;
@@ -49,6 +44,11 @@ final class CleanMediaCommand extends Command
      * @var MediaManagerInterface
      */
     private $mediaManager;
+
+    /**
+     * @var string[]|null
+     */
+    private $providers;
 
     public function __construct(Local $filesystemLocal, Pool $mediaPool, MediaManagerInterface $mediaManager)
     {

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block;
 
-use Sonata\BlockBundle\Block\Service\EditableBlockService;
 use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Meta\MetadataInterface;
@@ -28,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-final class FeatureMediaBlockService extends MediaBlockService implements EditableBlockService
+final class FeatureMediaBlockService extends MediaBlockService
 {
     public function configureSettings(OptionsResolver $resolver): void
     {

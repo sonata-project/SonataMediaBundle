@@ -23,45 +23,26 @@ interface CDNInterface
 
     /**
      * Return the base path.
-     *
-     * @param string $relativePath
-     * @param bool   $isFlushable
-     *
-     * @return string
      */
-    public function getPath($relativePath, $isFlushable);
+    public function getPath(string $relativePath, bool $isFlushable = false): string;
 
     /**
      * Flush the resource.
-     *
-     * @param string $string
-     *
-     * @return string
      */
-    public function flush($string);
+    public function flush(string $string): string;
 
     /**
      * Flush a set of resources matching the provided string.
-     *
-     * @param string $string
-     *
-     * @return string
      */
-    public function flushByString($string);
+    public function flushByString(string $string): string;
 
     /**
      * Flush a set of resources matching the paths in provided array.
-     *
-     * @return string
      */
-    public function flushPaths(array $paths);
+    public function flushPaths(array $paths): string;
 
     /**
      * Return the CDN status for given identifier.
-     *
-     * @param string $identifier
-     *
-     * @return int
      */
-    public function getFlushStatus($identifier);
+    public function getFlushStatus(string $identifier): int;
 }

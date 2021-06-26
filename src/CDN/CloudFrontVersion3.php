@@ -76,24 +76,22 @@ final class CloudFrontVersion3 implements CDNInterface
         $this->path = rtrim($path, '/');
     }
 
-    public function getPath($relativePath, $isFlushable = false): string
+    public function getPath(string $relativePath, bool $isFlushable = false): string
     {
         return sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
     }
 
-    public function flushByString($string): string
+    public function flushByString(string $string): string
     {
         return $this->flushPaths([$string]);
     }
 
-    public function flush($string): string
+    public function flush(string $string): string
     {
         return $this->flushPaths([$string]);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see https://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudFront.CloudFrontClient.html#_createInvalidation
      */
     public function flushPaths(array $paths): string
@@ -130,7 +128,7 @@ final class CloudFrontVersion3 implements CDNInterface
         }
     }
 
-    public function getFlushStatus($identifier): int
+    public function getFlushStatus(string $identifier): int
     {
         try {
             $result = $this->client->getInvalidation([

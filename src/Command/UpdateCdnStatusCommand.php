@@ -50,12 +50,12 @@ final class UpdateCdnStatusCommand extends Command
     private $quiet = false;
 
     /**
-     * @var OutputInterface
+     * @var OutputInterface|null
      */
     private $output;
 
     /**
-     * @var InputInterface
+     * @var InputInterface|null
      */
     private $input;
 
@@ -176,11 +176,8 @@ EOF
 
     /**
      * Write a message to the output.
-     *
-     * @param string    $message
-     * @param bool|true $newLine
      */
-    protected function log($message, $newLine = true): void
+    protected function log(string $message, bool $newLine = true): void
     {
         if (false === $this->quiet) {
             if ($newLine) {

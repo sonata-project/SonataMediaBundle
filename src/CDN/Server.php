@@ -20,25 +20,22 @@ final class Server implements CDNInterface
      */
     private $path;
 
-    /**
-     * @param string $path
-     */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         $this->path = rtrim($path, '/');
     }
 
-    public function getPath($relativePath, $isFlushable)
+    public function getPath(string $relativePath, bool $isFlushable = false): string
     {
         return sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
     }
 
-    public function flushByString($string): string
+    public function flushByString(string $string): string
     {
         return '';
     }
 
-    public function flush($string): string
+    public function flush(string $string): string
     {
         return '';
     }
@@ -48,7 +45,7 @@ final class Server implements CDNInterface
         return '';
     }
 
-    public function getFlushStatus($identifier): int
+    public function getFlushStatus(string $identifier): int
     {
         return CDNInterface::STATUS_OK;
     }
