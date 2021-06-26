@@ -95,11 +95,15 @@ interface MediaProviderInterface
 
     /**
      * build the related create form.
+     *
+     * @phpstan-param FormMapper<MediaInterface> $form
      */
     public function buildCreateForm(FormMapper $form);
 
     /**
      * build the related create form.
+     *
+     * @phpstan-param FormMapper<MediaInterface> $form
      */
     public function buildEditForm(FormMapper $form);
 
