@@ -74,6 +74,9 @@ class MediaTest extends TestCase
         return $property;
     }
 
+    /**
+     * @param mixed $id
+     */
     protected function getMedia($id): Media
     {
         $media = $this->getMockForAbstractClass(Media::class);

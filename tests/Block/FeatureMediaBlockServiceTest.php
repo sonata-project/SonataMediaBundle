@@ -21,6 +21,9 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class FeatureMediaBlockServiceTest extends BlockServiceTestCase
 {
+    /**
+     * @var FeatureMediaBlockService
+     */
     private $blockService;
 
     protected function setUp(): void

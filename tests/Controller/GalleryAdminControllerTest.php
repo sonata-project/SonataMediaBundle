@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Controller;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
@@ -40,20 +41,32 @@ class GalleryAdminControllerTest extends TestCase
      */
     private $container;
 
+    /**
+     * @var MockObject&AdminInterface
+     */
     private $admin;
 
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * @var GalleryAdminController
+     */
     private $controller;
 
+    /**
+     * @var MockObject&Environment
+     */
     private $twig;
 
     protected function setUp(): void
     {
         $this->container = new Container();
-        $this->admin = $this->createStub(AdminInterface::class);
+        $this->admin = $this->createMock(AdminInterface::class);
         $this->request = new Request();
-        $this->twig = $this->createStub(Environment::class);
+        $this->twig = $this->createMock(Environment::class);
         $this->container->set('twig', $this->twig);
         $this->container->set('admin_code', $this->admin);
 

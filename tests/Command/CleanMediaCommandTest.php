@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Command\CleanMediaCommand;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -45,21 +46,29 @@ class CleanMediaCommandTest extends FilesystemTestCase
      */
     protected $tester;
 
+    /**
+     * @var MockObject&Pool
+     */
     private $pool;
 
+    /**
+     * @var MockObject&MediaManagerInterface
+     */
     private $mediaManager;
 
+    /**
+     * @var MockObject&Local
+     */
     private $fileSystemLocal;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->pool = $pool = $this->createMock(Pool::class);
+        $this->pool = $this->createMock(Pool::class);
+        $this->mediaManager = $this->createMock(MediaManagerInterface::class);
+        $this->fileSystemLocal = $this->createMock(Local::class);
 
-        $this->mediaManager = $mediaManager = $this->createMock(MediaManagerInterface::class);
-
-        $this->fileSystemLocal = $fileSystemLocal = $this->createMock(Local::class);
         $this->fileSystemLocal->expects($this->once())->method('getDirectory')->willReturn($this->workspace);
 
         $this->command = new CleanMediaCommand($this->fileSystemLocal, $this->pool, $this->mediaManager);

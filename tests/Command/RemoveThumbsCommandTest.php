@@ -23,7 +23,6 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Tests\Fixtures\FilesystemTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @author Anton Dyshkant <vyshkant@gmail.com>
@@ -32,11 +31,6 @@ use Symfony\Component\DependencyInjection\Container;
  */
 final class RemoveThumbsCommandTest extends FilesystemTestCase
 {
-    /**
-     * @var Container
-     */
-    private $container;
-
     /**
      * @var Application
      */
@@ -53,12 +47,12 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
     private $tester;
 
     /**
-     * @var Pool|MockObject
+     * @var MockObject&Pool
      */
     private $pool;
 
     /**
-     * @var MediaManagerInterface|MockObject
+     * @var MockObject&MediaManagerInterface
      */
     private $mediaManager;
 
@@ -66,8 +60,8 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->mediaManager = $this->createStub(MediaManagerInterface::class);
-        $this->pool = $this->createStub(Pool::class);
+        $this->mediaManager = $this->createMock(MediaManagerInterface::class);
+        $this->pool = $this->createMock(Pool::class);
 
         $this->command = new RemoveThumbsCommand($this->pool, $this->mediaManager);
 

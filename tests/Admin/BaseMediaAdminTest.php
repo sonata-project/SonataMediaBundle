@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Admin;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
@@ -22,17 +24,28 @@ use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Category;
 use Sonata\MediaBundle\Tests\App\Entity\Context;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
 class BaseMediaAdminTest extends TestCase
 {
+    /**
+     * @var MockObject&Pool
+     */
     private $pool;
 
+    /**
+     * @var MockObject&CategoryManagerInterface
+     */
     private $categoryManager;
 
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * @var Stub&ModelManagerInterface
+     */
     private $modelManager;
 
     /**
@@ -42,9 +55,9 @@ class BaseMediaAdminTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->pool = $this->createStub(Pool::class);
-        $this->categoryManager = $this->createStub(CategoryManagerInterface::class);
-        $this->request = $this->createStub(Request::class);
+        $this->pool = $this->createMock(Pool::class);
+        $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
+        $this->request = new Request();
         $this->modelManager = $this->createStub(ModelManagerInterface::class);
 
         $this->mediaAdmin = new TestMediaAdmin(
@@ -71,7 +84,7 @@ class BaseMediaAdminTest extends TestCase
         $this->configureGetPersistentParameters();
 
         $this->categoryManager->method('find')->with(1)->willReturn($category);
-        $this->request->method('isMethod')->with('POST')->willReturn(true);
+        $this->request->setMethod('POST');
 
         $this->mediaAdmin->alterNewInstance($media);
 
@@ -86,15 +99,13 @@ class BaseMediaAdminTest extends TestCase
         $category->setId(1);
         $provider = $this->createStub(MediaProviderInterface::class);
 
+        $this->request->setMethod('POST');
+        $this->request->query->set('filter', []);
+        $this->request->query->set('provider', 'providerName');
+        $this->request->query->set('hide_context', true);
+        $this->request->query->set('context', 'context');
+
         $this->categoryManager->method('getRootCategory')->with('context')->willReturn($category);
-        $this->request->method('isMethod')->with('POST')->willReturn(true);
-        $this->request->method('get')->willReturnMap([
-            ['filter', null, []],
-            ['provider', null, 'providerName'],
-            ['category', null, null],
-            ['hide_context', null, true],
-            ['context', 'default_context', 'context'],
-        ]);
         $this->pool->method('getDefaultContext')->willReturn('default_context');
         $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider, $provider]);
 
@@ -114,20 +125,13 @@ class BaseMediaAdminTest extends TestCase
         $category = new Category();
         $category->setId(1);
 
-        $this->request->query = new ParameterBag();
+        $this->request->query->set('filter', []);
+        $this->request->query->set('hide_context', true);
+        $this->request->query->set('context', 'context');
+        $this->request->query->set('uniqid', ['providerName' => 'providerName']);
 
         $this->pool->method('getDefaultContext')->willReturn('default_context');
         $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider]);
         $this->categoryManager->method('getRootCategory')->with('context')->willReturn($category);
-        $this->request->method('get')->willReturnMap([
-            ['filter', null, []],
-            ['provider', null, null],
-            ['category', null, null],
-            ['hide_context', null, true],
-            ['context', 'default_context', 'context'],
-            ['context', null, 'context'],
-            ['uniqid', null, ['providerName' => 'providerName']],
-            ['id', null, null],
-        ]);
     }
 }
