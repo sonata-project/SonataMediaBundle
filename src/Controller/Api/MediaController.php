@@ -182,9 +182,13 @@ final class MediaController
     public function getMediumFormatsAction($id): FOSRestView
     {
         $media = $this->getMedium($id);
+        $mediaContext = $media->getContext();
 
         $formats = [MediaProviderInterface::FORMAT_REFERENCE];
-        $formats = array_merge($formats, array_keys($this->mediaPool->getFormatNamesByContext($media->getContext())));
+
+        if (null !== $mediaContext) {
+            $formats = array_merge($formats, array_keys($this->mediaPool->getFormatNamesByContext($mediaContext)));
+        }
 
         $provider = $this->mediaPool->getProvider($media->getProviderName());
 

@@ -88,6 +88,7 @@ class MediaControllerTest extends TestCase
     public function testGetMediumFormatsAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
+        $media->method('getContext')->willReturn('context');
 
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects($this->once())->method('find')->willReturn($media);
@@ -103,13 +104,13 @@ class MediaControllerTest extends TestCase
 
         $expected = [
             'reference' => [
-                'url' => null,
+                'url' => '',
                 'properties' => [
                     'foo' => 'bar',
                 ],
             ],
             'format_name1' => [
-                'url' => null,
+                'url' => '',
                 'properties' => [
                     'foo' => 'bar',
                 ],
