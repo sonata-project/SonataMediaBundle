@@ -33,18 +33,14 @@ class ImageProvider extends FileProvider
      */
     private $imagineAdapter;
 
-    /**
-     * @param string                   $name
-     * @param MetadataBuilderInterface $metadata
-     */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions, array $allowedMimeTypes, ImagineInterface $adapter, ?MetadataBuilderInterface $metadata = null)
+    public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions, array $allowedMimeTypes, ImagineInterface $adapter, ?MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
 
         $this->imagineAdapter = $adapter;
     }
 
-    public function getProviderMetadata()
+    public function getProviderMetadata(): MetadataInterface
     {
         return new Metadata(
             $this->getName(),
@@ -55,7 +51,7 @@ class ImageProvider extends FileProvider
         );
     }
 
-    public function getHelperProperties(MediaInterface $media, $format, $options = [])
+    public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
     {
         if (isset($options['srcset'], $options['picture'])) {
             throw new \LogicException("The 'srcset' and 'picture' options must not be used simultaneously.");
@@ -144,7 +140,7 @@ class ImageProvider extends FileProvider
         return array_merge($params, $options);
     }
 
-    public function updateMetadata(MediaInterface $media, $force = true): void
+    public function updateMetadata(MediaInterface $media, bool $force = true): void
     {
         try {
             if (!$media->getBinaryContent() instanceof \SplFileInfo) {
@@ -171,7 +167,7 @@ class ImageProvider extends FileProvider
         }
     }
 
-    public function generatePublicUrl(MediaInterface $media, $format)
+    public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $this->getReferenceImage($media);
@@ -187,7 +183,7 @@ class ImageProvider extends FileProvider
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
-    public function generatePrivateUrl(MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
     }

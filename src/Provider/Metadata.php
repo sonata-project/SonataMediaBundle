@@ -38,7 +38,7 @@ final class Metadata implements MetadataInterface
     /**
      * @var array<string, mixed>
      */
-    private $options;
+    private $options = [];
 
     /**
      * @param array<string, mixed> $options
@@ -67,7 +67,7 @@ final class Metadata implements MetadataInterface
         return $this->description;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -82,7 +82,7 @@ final class Metadata implements MetadataInterface
         return $this->options;
     }
 
-    public function getOption($name, $default = null)
+    public function getOption(string $name, $default = null)
     {
         return \array_key_exists($name, $this->options) ? $this->options[$name] : $default;
     }

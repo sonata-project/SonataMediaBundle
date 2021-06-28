@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
+use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Imagine\Image\Box;
 use Psr\Http\Client\ClientInterface;
@@ -31,17 +32,17 @@ use Symfony\Component\Validator\Constraints\NotNull;
 abstract class BaseVideoProvider extends BaseProvider
 {
     /**
-     * @var MetadataBuilderInterface
+     * @var MetadataBuilderInterface|null
      */
     protected $metadata;
 
     /**
-     * @var ClientInterface|null
+     * @var ClientInterface
      */
     private $client;
 
     /**
-     * @var RequestFactoryInterface|null
+     * @var RequestFactoryInterface
      */
     private $requestFactory;
 
@@ -62,17 +63,17 @@ abstract class BaseVideoProvider extends BaseProvider
         $this->client = $client;
     }
 
-    public function getProviderMetadata()
+    public function getProviderMetadata(): MetadataInterface
     {
         return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-video-camera']);
     }
 
-    public function getReferenceImage(MediaInterface $media)
+    public function getReferenceImage(MediaInterface $media): string
     {
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    public function getReferenceFile(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media): File
     {
         $key = $this->generatePrivateUrl($media, MediaProviderInterface::FORMAT_REFERENCE);
 
@@ -91,7 +92,7 @@ abstract class BaseVideoProvider extends BaseProvider
         return $referenceFile;
     }
 
-    public function generatePublicUrl(MediaInterface $media, $format)
+    public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         return $this->getCdn()->getPath(sprintf(
             '%s/thumb_%s_%s.jpg',
@@ -101,7 +102,7 @@ abstract class BaseVideoProvider extends BaseProvider
         ), $media->getCdnIsFlushable());
     }
 
-    public function generatePrivateUrl(MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
         return sprintf(
             '%s/thumb_%s_%s.jpg',
@@ -165,13 +166,11 @@ abstract class BaseVideoProvider extends BaseProvider
     abstract public function getReferenceUrl(MediaInterface $media): string;
 
     /**
-     * @param string $url
-     *
      * @throws \RuntimeException
      *
      * @return mixed
      */
-    protected function getMetadata(MediaInterface $media, $url)
+    protected function getMetadata(MediaInterface $media, string $url)
     {
         try {
             $response = $this->sendRequest('GET', $url);
@@ -188,13 +187,7 @@ abstract class BaseVideoProvider extends BaseProvider
         return $metadata;
     }
 
-    /**
-     * @param string $format
-     * @param array  $options
-     *
-     * @return Box
-     */
-    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = [])
+    protected function getBoxHelperProperties(MediaInterface $media, string $format, array $options = []): Box
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $media->getBox();

@@ -34,7 +34,7 @@ abstract class BaseProvider implements MediaProviderInterface
     protected $templates = [];
 
     /**
-     * @var ResizerInterface
+     * @var ResizerInterface|null
      */
     protected $resizer;
 
@@ -68,10 +68,7 @@ abstract class BaseProvider implements MediaProviderInterface
      */
     private $clones = [];
 
-    /**
-     * @param string $name
-     */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
+    public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
     {
         $this->name = $name;
         $this->filesystem = $filesystem;
@@ -132,17 +129,17 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    public function addFormat($name, $format): void
+    public function addFormat(string $name, array $format): void
     {
         $this->formats[$name] = $format;
     }
 
-    public function getFormat($name)
+    public function getFormat(string $name)
     {
         return $this->formats[$name] ?? false;
     }
 
-    public function requireThumbnails()
+    public function requireThumbnails(): bool
     {
         return null !== $this->getResizer();
     }
@@ -157,7 +154,7 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->thumbnail->delete($this, $media, $formats);
     }
 
-    public function getFormatName(MediaInterface $media, $format)
+    public function getFormatName(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_ADMIN === $format) {
             return MediaProviderInterface::FORMAT_ADMIN;
@@ -175,7 +172,7 @@ abstract class BaseProvider implements MediaProviderInterface
         return $baseName.$format;
     }
 
-    public function getProviderMetadata()
+    public function getProviderMetadata(): MetadataInterface
     {
         return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-file']);
     }
@@ -206,22 +203,22 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    public function generatePath(MediaInterface $media)
+    public function generatePath(MediaInterface $media): string
     {
         return $this->pathGenerator->generatePath($media);
     }
 
-    public function getFormats()
+    public function getFormats(): array
     {
         return $this->formats;
     }
 
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -231,22 +228,22 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->templates = $templates;
     }
 
-    public function getTemplates()
+    public function getTemplates(): array
     {
         return $this->templates;
     }
 
-    public function getTemplate($name)
+    public function getTemplate(string $name): ?string
     {
         return $this->templates[$name] ?? null;
     }
 
-    public function getResizer()
+    public function getResizer(): ?ResizerInterface
     {
         return $this->resizer;
     }
 
-    public function getFilesystem()
+    public function getFilesystem(): Filesystem
     {
         return $this->filesystem;
     }
@@ -256,7 +253,7 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->cdn;
     }
 
-    public function getCdnPath($relativePath, $isFlushable)
+    public function getCdnPath(string $relativePath, bool $isFlushable = false): string
     {
         return $this->getCdn()->getPath($relativePath, $isFlushable);
     }
@@ -281,5 +278,5 @@ abstract class BaseProvider implements MediaProviderInterface
     {
     }
 
-    abstract protected function doTransform(MediaInterface $media);
+    abstract protected function doTransform(MediaInterface $media): void;
 }
