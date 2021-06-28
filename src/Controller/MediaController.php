@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Controller;
 
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -43,34 +42,13 @@ final class MediaController extends AbstractController
     }
 
     /**
-     * @return MediaProviderInterface
-     */
-    public function getProvider(MediaInterface $media)
-    {
-        return $this->pool->getProvider($media->getProviderName());
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return MediaInterface
-     */
-    public function getMedia($id)
-    {
-        return $this->mediaManager->find($id);
-    }
-
-    /**
-     * @param string $id
-     * @param string $format
+     * @param int|string $id
      *
      * @throws NotFoundHttpException
-     *
-     * @return Response
      */
-    public function downloadAction(Request $request, $id, $format = MediaProviderInterface::FORMAT_REFERENCE)
+    public function downloadAction(Request $request, $id, string $format = MediaProviderInterface::FORMAT_REFERENCE): Response
     {
-        $media = $this->getMedia($id);
+        $media = $this->mediaManager->find($id);
 
         if (!$media) {
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
@@ -80,7 +58,11 @@ final class MediaController extends AbstractController
             throw new AccessDeniedException();
         }
 
-        $response = $this->getProvider($media)->getDownloadResponse($media, $format, $this->pool->getDownloadMode($media));
+        $response = $this->pool->getProvider($media->getProviderName())->getDownloadResponse(
+            $media,
+            $format,
+            $this->pool->getDownloadMode($media)
+        );
 
         if ($response instanceof BinaryFileResponse) {
             $response->prepare($request);
@@ -90,16 +72,13 @@ final class MediaController extends AbstractController
     }
 
     /**
-     * @param string $id
-     * @param string $format
+     * @param int|string $id
      *
      * @throws NotFoundHttpException
-     *
-     * @return Response
      */
-    public function viewAction(Request $request, $id, $format = MediaProviderInterface::FORMAT_REFERENCE)
+    public function viewAction(Request $request, $id, string $format = MediaProviderInterface::FORMAT_REFERENCE): Response
     {
-        $media = $this->getMedia($id);
+        $media = $this->mediaManager->find($id);
 
         if (!$media) {
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
