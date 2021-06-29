@@ -18,6 +18,7 @@ use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -39,6 +40,11 @@ class BaseMediaAdminTest extends TestCase
     private $categoryManager;
 
     /**
+     * @var MockObject&ContextManagerInterface
+     */
+    private $contextManager;
+
+    /**
      * @var Request
      */
     private $request;
@@ -57,6 +63,7 @@ class BaseMediaAdminTest extends TestCase
     {
         $this->pool = $this->createMock(Pool::class);
         $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
+        $this->contextManager = $this->createMock(ContextManagerInterface::class);
         $this->request = new Request();
         $this->modelManager = $this->createStub(ModelManagerInterface::class);
 
@@ -65,7 +72,8 @@ class BaseMediaAdminTest extends TestCase
             BaseMedia::class,
             'SonataMediaBundle:MediaAdmin',
             $this->pool,
-            $this->categoryManager
+            $this->categoryManager,
+            $this->contextManager
         );
         $this->mediaAdmin->setRequest($this->request);
         $this->mediaAdmin->setModelManager($this->modelManager);
@@ -97,6 +105,9 @@ class BaseMediaAdminTest extends TestCase
     {
         $category = new Category();
         $category->setId(1);
+
+        $context = new Context();
+
         $provider = $this->createStub(MediaProviderInterface::class);
 
         $this->request->setMethod('POST');
@@ -105,7 +116,8 @@ class BaseMediaAdminTest extends TestCase
         $this->request->query->set('hide_context', true);
         $this->request->query->set('context', 'context');
 
-        $this->categoryManager->method('getRootCategory')->with('context')->willReturn($category);
+        $this->contextManager->method('find')->with('context')->willReturn($context);
+        $this->categoryManager->method('getRootCategoriesForContext')->with($context)->willReturn([$category]);
         $this->pool->method('getDefaultContext')->willReturn('default_context');
         $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider, $provider]);
 
@@ -125,6 +137,8 @@ class BaseMediaAdminTest extends TestCase
         $category = new Category();
         $category->setId(1);
 
+        $context = new Context();
+
         $this->request->query->set('filter', []);
         $this->request->query->set('hide_context', true);
         $this->request->query->set('context', 'context');
@@ -132,6 +146,7 @@ class BaseMediaAdminTest extends TestCase
 
         $this->pool->method('getDefaultContext')->willReturn('default_context');
         $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider]);
-        $this->categoryManager->method('getRootCategory')->with('context')->willReturn($category);
+        $this->contextManager->method('find')->with('context')->willReturn($context);
+        $this->categoryManager->method('getRootCategoriesForContext')->with($context)->willReturn([$category]);
     }
 }

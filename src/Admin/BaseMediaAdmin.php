@@ -20,6 +20,7 @@ use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Object\Metadata;
 use Sonata\AdminBundle\Object\MetadataInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -36,18 +37,30 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     protected $pool;
 
     /**
-     * @var CategoryManagerInterface
+     * @var CategoryManagerInterface|null
      */
     protected $categoryManager;
 
+    /**
+     * @var ContextManagerInterface|null
+     */
+    protected $contextManager;
+
     protected $classnameLabel = 'Media';
 
-    public function __construct(string $code, string $class, string $baseControllerName, Pool $pool, ?CategoryManagerInterface $categoryManager = null)
-    {
+    public function __construct(
+        string $code,
+        string $class,
+        string $baseControllerName,
+        Pool $pool,
+        ?CategoryManagerInterface $categoryManager = null,
+        ?ContextManagerInterface $contextManager = null
+    ) {
         parent::__construct($code, $class, $baseControllerName);
 
         $this->pool = $pool;
         $this->categoryManager = $categoryManager;
+        $this->contextManager = $contextManager;
     }
 
     public function prePersist(object $object): void
@@ -90,9 +103,10 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $categoryId = $this->getRequest()->get('category');
 
         if (null !== $this->categoryManager && !$categoryId) {
-            $category = $this->categoryManager->getRootCategory($context);
+            $rootCategories = $this->categoryManager->getRootCategoriesForContext($this->contextManager->find($context));
+            $rootCategory = current($rootCategories);
 
-            $categoryId = $category->getId();
+            $categoryId = $rootCategory->getId();
         }
 
         return array_merge($parameters, [

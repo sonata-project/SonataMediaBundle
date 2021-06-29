@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -19,5 +20,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->alias('sonata.media.manager.category', 'sonata.classification.manager.category')
 
-        ->alias(CategoryManagerInterface::class, 'sonata.media.manager.category');
+        ->alias('sonata.media.manager.context', 'sonata.classification.manager.context')
+
+        ->alias(CategoryManagerInterface::class, 'sonata.media.manager.category')
+
+        ->alias(ContextManagerInterface::class, 'sonata.media.manager.context');
 };

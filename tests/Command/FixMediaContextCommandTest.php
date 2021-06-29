@@ -19,7 +19,6 @@ use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Tests\App\Entity\Category;
 use Sonata\MediaBundle\Tests\App\Entity\Context;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -98,42 +97,12 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = new Context();
 
-        $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->willReturn($contextModel);
-
-        $category = new Category();
-
-        $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->willReturn($category);
+        $this->contextManager->expects($this->once())->method('find')->with('foo')->willReturn($contextModel);
+        $this->categoryManager->expects($this->once())->method('getRootCategoriesForContext')->with($contextModel);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
         $this->assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
-
-        $this->assertSame(0, $output);
-    }
-
-    public function testExecuteWithEmptyRoot(): void
-    {
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
-        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
-
-        $contextModel = new Context();
-
-        $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->willReturn($contextModel);
-
-        $category = new Category();
-
-        $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->willReturn(null);
-        $this->categoryManager->expects($this->once())->method('create')->willReturn($category);
-        $this->categoryManager->expects($this->once())->method('save')->with($this->equalTo($category));
-
-        $output = $this->tester->execute(['command' => $this->command->getName()]);
-
-        $this->assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }
@@ -150,19 +119,15 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = new Context();
 
-        $this->contextManager->expects($this->once())->method('findOneBy')->with($this->equalTo(['id' => 'foo']))->willReturn(null);
+        $this->contextManager->expects($this->once())->method('find')->with('foo')->willReturn(null);
         $this->contextManager->expects($this->once())->method('create')->willReturn($contextModel);
-        $this->contextManager->expects($this->once())->method('save')->with($this->equalTo($contextModel));
+        $this->contextManager->expects($this->once())->method('save')->with($contextModel);
 
-        $category = new Category();
-
-        $this->categoryManager->expects($this->once())->method('getRootCategory')->with($this->equalTo($contextModel))->willReturn(null);
-        $this->categoryManager->expects($this->once())->method('create')->willReturn($category);
-        $this->categoryManager->expects($this->once())->method('save')->with($this->equalTo($category));
+        $this->categoryManager->expects($this->once())->method('getRootCategoriesForContext')->with($contextModel);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@ > default context for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }
