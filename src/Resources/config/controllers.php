@@ -48,7 +48,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set(GalleryAdminController::class)
             ->public()
             ->tag('container.service_subscriber')
-            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
-    ;
-
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 };
