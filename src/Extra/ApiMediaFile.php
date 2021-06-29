@@ -20,17 +20,17 @@ final class ApiMediaFile extends File
     /**
      * @var string
      */
-    protected $extension;
+    private $extension;
 
     /**
      * @var string
      */
-    protected $mimetype;
+    private $mimetype;
 
     /**
      * @var resource
      */
-    protected $resource;
+    private $resource;
 
     public function __construct($handle)
     {

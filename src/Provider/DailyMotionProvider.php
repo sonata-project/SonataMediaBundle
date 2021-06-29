@@ -125,17 +125,6 @@ final class DailyMotionProvider extends BaseVideoProvider
         return sprintf('http://www.dailymotion.com/video/%s', $media->getProviderReference());
     }
 
-    protected function fixBinaryContent(MediaInterface $media): void
-    {
-        if (!$media->getBinaryContent()) {
-            return;
-        }
-
-        if (preg_match('{^(?:https?://)?www.dailymotion.com/video/(?<video_id>[0-9a-zA-Z]*)}', $media->getBinaryContent(), $matches)) {
-            $media->setBinaryContent($matches['video_id']);
-        }
-    }
-
     protected function doTransform(MediaInterface $media): void
     {
         $this->fixBinaryContent($media);
@@ -149,5 +138,16 @@ final class DailyMotionProvider extends BaseVideoProvider
         $media->setProviderReference($media->getBinaryContent());
 
         $this->updateMetadata($media, true);
+    }
+
+    private function fixBinaryContent(MediaInterface $media): void
+    {
+        if (!$media->getBinaryContent()) {
+            return;
+        }
+
+        if (preg_match('{^(?:https?://)?www.dailymotion.com/video/(?<video_id>[0-9a-zA-Z]*)}', $media->getBinaryContent(), $matches)) {
+            $media->setBinaryContent($matches['video_id']);
+        }
     }
 }

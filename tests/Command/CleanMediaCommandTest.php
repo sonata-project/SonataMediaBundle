@@ -34,17 +34,17 @@ class CleanMediaCommandTest extends FilesystemTestCase
     /**
      * @var Application
      */
-    protected $application;
+    private $application;
 
     /**
      * @var Command
      */
-    protected $command;
+    private $command;
 
     /**
      * @var CommandTester
      */
-    protected $tester;
+    private $tester;
 
     /**
      * @var MockObject&Pool

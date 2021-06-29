@@ -23,29 +23,23 @@ use Sonata\MediaBundle\Tests\App\Entity\Category;
 use Sonata\MediaBundle\Tests\App\Entity\Context;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\Container;
 
 class FixMediaContextCommandTest extends TestCase
 {
     /**
-     * @var Container
-     */
-    protected $container;
-
-    /**
      * @var Application
      */
-    protected $application;
+    private $application;
 
     /**
      * @var FixMediaContextCommand
      */
-    protected $command;
+    private $command;
 
     /**
      * @var CommandTester
      */
-    protected $tester;
+    private $tester;
 
     /**
      * @var MockObject&Pool

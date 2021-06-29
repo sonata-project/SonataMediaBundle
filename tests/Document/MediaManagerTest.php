@@ -42,7 +42,7 @@ class MediaManagerTest extends TestCase
         $this->manager->getPager([], 1);
     }
 
-    protected function createRegistryMock(): ManagerRegistry
+    private function createRegistryMock(): ManagerRegistry
     {
         $dm = $this->createStub(ObjectManager::class);
         $registry = $this->createMock(ManagerRegistry::class);

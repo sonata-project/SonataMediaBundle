@@ -22,7 +22,7 @@ class ConfigurationTest extends TestCase
     /**
      * @var array
      */
-    protected $config;
+    private $config;
 
     protected function setUp(): void
     {

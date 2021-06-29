@@ -25,6 +25,9 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
+/**
+ * @phpstan-extends AbstractAdmin<\Sonata\MediaBundle\Model\MediaInterface>
+ */
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
     /**

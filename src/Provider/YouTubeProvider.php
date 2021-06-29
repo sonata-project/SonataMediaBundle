@@ -28,7 +28,7 @@ final class YouTubeProvider extends BaseVideoProvider
     /**
      * @var bool
      */
-    protected $html5;
+    private $html5;
 
     public function __construct(
         string $name,
@@ -237,7 +237,22 @@ final class YouTubeProvider extends BaseVideoProvider
         return sprintf('https://www.youtube.com/watch?v=%s', $media->getProviderReference());
     }
 
-    protected function fixBinaryContent(MediaInterface $media): void
+    protected function doTransform(MediaInterface $media): void
+    {
+        $this->fixBinaryContent($media);
+
+        if (!$media->getBinaryContent()) {
+            return;
+        }
+
+        $media->setProviderName($this->name);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
+        $media->setProviderReference($media->getBinaryContent());
+
+        $this->updateMetadata($media, true);
+    }
+
+    private function fixBinaryContent(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -256,20 +271,5 @@ final class YouTubeProvider extends BaseVideoProvider
         if ($isMatching) {
             $media->setBinaryContent($matches['video_id']);
         }
-    }
-
-    protected function doTransform(MediaInterface $media): void
-    {
-        $this->fixBinaryContent($media);
-
-        if (!$media->getBinaryContent()) {
-            return;
-        }
-
-        $media->setProviderName($this->name);
-        $media->setProviderStatus(MediaInterface::STATUS_OK);
-        $media->setProviderReference($media->getBinaryContent());
-
-        $this->updateMetadata($media, true);
     }
 }

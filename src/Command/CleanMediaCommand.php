@@ -59,7 +59,7 @@ final class CleanMediaCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)

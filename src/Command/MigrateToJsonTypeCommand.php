@@ -36,7 +36,7 @@ final class MigrateToJsonTypeCommand extends Command
         $this->entityManager = $entityManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)
@@ -45,7 +45,7 @@ final class MigrateToJsonTypeCommand extends Command
             ->addOption('column_id', null, InputOption::VALUE_OPTIONAL, 'Column name for id', 'id');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (null === $this->entityManager) {
             throw new \LogicException(

@@ -63,7 +63,7 @@ final class SyncThumbsCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)
@@ -76,7 +76,7 @@ final class SyncThumbsCommand extends Command
             ]);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -175,7 +175,7 @@ final class SyncThumbsCommand extends Command
         return 0;
     }
 
-    protected function processMedia(MediaInterface $media, MediaProviderInterface $provider): bool
+    private function processMedia(MediaInterface $media, MediaProviderInterface $provider): bool
     {
         $this->log('Generating thumbs for '.$media->getName().' - '.$media->getId());
 
@@ -209,7 +209,7 @@ final class SyncThumbsCommand extends Command
     /**
      * Write a message to the output.
      */
-    protected function log(string $message): void
+    private function log(string $message): void
     {
         if (false === $this->quiet) {
             $this->output->writeln($message);

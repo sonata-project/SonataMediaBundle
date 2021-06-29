@@ -99,7 +99,7 @@ class GalleryManagerTest extends TestCase
             ->getPager(['enabled' => false], 1);
     }
 
-    protected function getGalleryManager(\Closure $qbCallback): GalleryManager
+    private function getGalleryManager(\Closure $qbCallback): GalleryManager
     {
         $em = $this->createEntityManagerMock($qbCallback, [
             'name',

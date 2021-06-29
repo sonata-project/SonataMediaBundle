@@ -66,7 +66,7 @@ class PoolTest extends TestCase
         $this->mediaPool->getProvider('provider_c');
     }
 
-    protected function createProvider(string $name): MediaProviderInterface
+    private function createProvider(string $name): MediaProviderInterface
     {
         $filesystem = $this->createMock(Filesystem::class);
         $cdn = new Server('/uploads/media');

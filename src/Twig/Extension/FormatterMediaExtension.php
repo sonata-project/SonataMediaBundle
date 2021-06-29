@@ -25,7 +25,7 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
     /**
      * @var MediaExtension
      */
-    protected $twigExtension;
+    private $twigExtension;
 
     public function __construct(MediaExtension $twigExtension)
     {

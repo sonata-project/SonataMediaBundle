@@ -261,7 +261,7 @@ class MediaControllerTest extends TestCase
         $this->assertSame($media, $controller->putMediumBinaryContentAction(1, new Request()));
     }
 
-    protected function createMediaController(
+    private function createMediaController(
         ?MediaManagerInterface $manager = null,
         ?Pool $pool = null,
         ?FormFactoryInterface $factory = null

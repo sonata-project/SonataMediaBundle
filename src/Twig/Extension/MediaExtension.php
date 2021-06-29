@@ -27,22 +27,22 @@ final class MediaExtension extends AbstractExtension
     /**
      * @var Pool
      */
-    protected $mediaService;
+    private $mediaService;
 
     /**
      * @var array
      */
-    protected $resources = [];
+    private $resources = [];
 
     /**
      * @var ManagerInterface
      */
-    protected $mediaManager;
+    private $mediaManager;
 
     /**
      * @var Environment
      */
-    protected $twig;
+    private $twig;
 
     public function __construct(Pool $mediaService, ManagerInterface $mediaManager, Environment $twig)
     {

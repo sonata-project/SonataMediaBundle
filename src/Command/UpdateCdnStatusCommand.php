@@ -67,7 +67,7 @@ final class UpdateCdnStatusCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setDescription(static::$defaultDescription)
@@ -95,7 +95,7 @@ EOF
             );
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->quiet = $input->getOption('quiet');
 
@@ -177,7 +177,7 @@ EOF
     /**
      * Write a message to the output.
      */
-    protected function log(string $message, bool $newLine = true): void
+    private function log(string $message, bool $newLine = true): void
     {
         if (false === $this->quiet) {
             if ($newLine) {

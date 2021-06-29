@@ -99,7 +99,7 @@ class MediaManagerTest extends TestCase
             ->getPager(['enabled' => false], 1);
     }
 
-    protected function getMediaManager(\Closure $qbCallback): MediaManager
+    private function getMediaManager(\Closure $qbCallback): MediaManager
     {
         $em = $this->createEntityManagerMock($qbCallback, [
             'name',

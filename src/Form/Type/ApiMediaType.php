@@ -32,12 +32,12 @@ final class ApiMediaType extends AbstractType implements LoggerAwareInterface
     /**
      * @var Pool
      */
-    protected $mediaPool;
+    private $mediaPool;
 
     /**
      * @var string
      */
-    protected $class;
+    private $class;
 
     /**
      * @param string $class
