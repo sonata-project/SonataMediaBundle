@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Command;
 
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
-use Sonata\ClassificationBundle\Model\ContextInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Command\Command;
@@ -65,10 +64,7 @@ final class FixMediaContextCommand extends Command
         }
 
         foreach ($this->mediaPool->getContexts() as $context => $contextAttrs) {
-            /** @var ContextInterface $defaultContext */
-            $defaultContext = $this->contextManager->findOneBy([
-                'id' => $context,
-            ]);
+            $defaultContext = $this->contextManager->find($context);
 
             if (!$defaultContext) {
                 $output->writeln(sprintf(" > default context for '%s' is missing, creating one", $context));
@@ -80,18 +76,7 @@ final class FixMediaContextCommand extends Command
                 $this->contextManager->save($defaultContext);
             }
 
-            $defaultCategory = $this->categoryManager->getRootCategory($defaultContext);
-
-            if (!$defaultCategory) {
-                $output->writeln(sprintf(" > default category for '%s' is missing, creating one", $context));
-                $defaultCategory = $this->categoryManager->create();
-                $defaultCategory->setContext($defaultContext);
-                $defaultCategory->setName(ucfirst($context));
-                $defaultCategory->setEnabled(true);
-                $defaultCategory->setPosition(0);
-
-                $this->categoryManager->save($defaultCategory);
-            }
+            $this->categoryManager->getRootCategoriesForContext($defaultContext);
         }
 
         $output->writeln('Done!');

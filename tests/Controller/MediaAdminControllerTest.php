@@ -22,9 +22,11 @@ use Sonata\AdminBundle\Request\AdminFetcher;
 use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Category;
+use Sonata\MediaBundle\Tests\App\Entity\Context;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
@@ -124,8 +126,10 @@ class MediaAdminControllerTest extends TestCase
     {
         $datagrid = $this->createMock(DatagridInterface::class);
         $categoryManager = $this->createMock(CategoryManagerInterface::class);
+        $contextManager = $this->createMock(ContextManagerInterface::class);
         $category = new Category();
         $category->setId(1);
+        $context = new Context();
         $form = $this->createStub(Form::class);
         $formView = $this->createStub(FormView::class);
 
@@ -137,13 +141,15 @@ class MediaAdminControllerTest extends TestCase
             ['category', null, 1]
         );
         $datagrid->method('getForm')->willReturn($form);
-        $categoryManager->method('getRootCategory')->with('another_context')->willReturn($category);
+        $contextManager->method('find')->with('another_context')->willReturn($context);
+        $categoryManager->method('getRootCategoriesForContext')->with($context)->willReturn([$category]);
         $categoryManager->method('findOneBy')->with([
             'id' => 2,
             'context' => 'another_context',
         ])->willReturn($category);
         $form->method('createView')->willReturn($formView);
         $this->container->set('sonata.media.manager.category', $categoryManager);
+        $this->container->set('sonata.media.manager.context', $contextManager);
         $this->admin->expects($this->once())->method('checkAccess')->with('list');
         $this->admin->expects($this->once())->method('setListMode')->with('mosaic');
         $this->admin->method('getDatagrid')->willReturn($datagrid);

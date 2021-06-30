@@ -52,7 +52,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 new ReferenceConfigurator('sonata.media.pool'),
                 (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
-                (new ReferenceConfigurator('sonata.classification.manager.context'))->nullOnInvalid(),
+                (new ReferenceConfigurator('sonata.media.manager.context'))->nullOnInvalid(),
             ])
 
         ->set('sonata.media.command.migrate_to_json_type', MigrateToJsonTypeCommand::class)

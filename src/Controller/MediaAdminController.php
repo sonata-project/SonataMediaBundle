@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,7 @@ final class MediaAdminController extends CRUDController
         return [
             'sonata.media.pool' => Pool::class,
             'sonata.media.manager.category' => '?'.CategoryManagerInterface::class,
+            'sonata.media.manager.context' => '?'.ContextManagerInterface::class,
         ] + parent::getSubscribedServices();
     }
 
@@ -70,8 +72,12 @@ final class MediaAdminController extends CRUDController
         $datagrid->setValue('context', null, $context);
 
         $rootCategory = null;
-        if ($this->has('sonata.media.manager.category')) {
-            $rootCategory = $this->get('sonata.media.manager.category')->getRootCategory($context);
+        if ($this->has('sonata.media.manager.category') && $this->has('sonata.media.manager.context')) {
+            $rootCategories = $this->get('sonata.media.manager.category')->getRootCategoriesForContext(
+                $this->get('sonata.media.manager.context')->find($context)
+            );
+
+            $rootCategory = current($rootCategories);
         }
 
         if (null !== $rootCategory && !$filters) {

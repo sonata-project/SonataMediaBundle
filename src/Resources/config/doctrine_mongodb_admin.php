@@ -42,6 +42,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 MediaAdminController::class,
                 new ReferenceConfigurator('sonata.media.pool'),
                 (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
+                (new ReferenceConfigurator('sonata.media.manager.context'))->nullOnInvalid(),
             ])
             ->call('setModelManager', [new ReferenceConfigurator('sonata.media.admin.media.manager')])
             ->call('setTranslationDomain', ['SonataMediaBundle'])
