@@ -28,7 +28,7 @@ interface MediaInterface
     public const MISSING_BINARY_REFERENCE = 'missing_binary_content';
 
     /**
-     * @return int|string|object
+     * @return int|string|object|null
      */
     public function getId();
 
