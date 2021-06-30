@@ -41,14 +41,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
 
         ->set('sonata.media.controller.media.admin', MediaAdminController::class)
+            ->public()
             ->tag('container.service_subscriber')
             ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
-            ->alias(MediaAdminController::class, 'sonata.media.controller.media.admin')
-            ->public()
 
         ->set('sonata.media.controller.gallery.admin', GalleryAdminController::class)
+            ->public()
             ->tag('container.service_subscriber')
-            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
-            ->alias(GalleryAdminController::class, 'sonata.media.controller.gallery.admin')
-            ->public();
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 };
