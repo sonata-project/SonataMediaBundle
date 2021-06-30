@@ -12,7 +12,9 @@ declare(strict_types=1);
  */
 
 use Psr\Container\ContainerInterface;
+use Sonata\MediaBundle\Controller\GalleryAdminController;
 use Sonata\MediaBundle\Controller\GalleryController;
+use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\Controller\MediaController;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
@@ -35,6 +37,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('sonata.media.manager.media'),
                 new ReferenceConfigurator('sonata.media.pool'),
             ])
+            ->tag('container.service_subscriber')
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
+
+        ->set('sonata.media.controller.media.admin', MediaAdminController::class)
+            ->public()
+            ->tag('container.service_subscriber')
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
+
+        ->set('sonata.media.controller.gallery.admin', GalleryAdminController::class)
+            ->public()
             ->tag('container.service_subscriber')
             ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 };

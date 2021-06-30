@@ -15,8 +15,6 @@ use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 use Sonata\MediaBundle\Admin\GalleryItemAdmin;
 use Sonata\MediaBundle\Admin\ODM\MediaAdmin;
-use Sonata\MediaBundle\Controller\GalleryAdminController;
-use Sonata\MediaBundle\Controller\MediaAdminController;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -39,7 +37,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 '',
                 '%sonata.media.admin.media.entity%',
-                MediaAdminController::class,
+                'sonata.media.controller.media.admin',
                 new ReferenceConfigurator('sonata.media.pool'),
                 (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
                 (new ReferenceConfigurator('sonata.media.manager.context'))->nullOnInvalid(),
@@ -65,7 +63,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 '',
                 '%sonata.media.admin.gallery.entity%',
-                GalleryAdminController::class,
+                'sonata.media.controller.gallery.admin',
                 new ReferenceConfigurator('sonata.media.pool'),
             ])
             ->call('setTranslationDomain', ['SonataMediaBundle'])
