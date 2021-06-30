@@ -25,9 +25,9 @@ class ReplicateTest extends TestCase
         $slave = $this->createMock(Adapter::class);
         $replicate = new Replicate($master, $slave);
 
-        $master->expects($this->once())->method('mtime')->willReturn('master');
+        $master->expects($this->once())->method('mtime')->willReturn(25);
         $slave->expects($this->never())->method('mtime');
-        $this->assertSame('master', $replicate->mtime('foo'));
+        $this->assertSame(25, $replicate->mtime('foo'));
 
         $master->expects($this->once())->method('delete')->willReturn('master');
         $slave->expects($this->once())->method('delete')->willReturn('master');

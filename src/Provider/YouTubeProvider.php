@@ -168,7 +168,7 @@ final class YouTubeProvider extends BaseVideoProvider
 
             // Values: 'allowfullscreen' or empty. Default is 'allowfullscreen'. Setting to empty value disables
             //  the fullscreen button.
-            'allowFullScreen' => '1' === $default_player_url_parameters['fs'],
+            'allowFullScreen' => 1 === $default_player_url_parameters['fs'],
 
             // The allowScriptAccess parameter in the code is needed to allow the player SWF to call
             // functions on the containing HTML page, since the player is hosted on a different domain

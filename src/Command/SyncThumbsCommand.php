@@ -70,9 +70,9 @@ final class SyncThumbsCommand extends Command
             ->setDefinition([
                 new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
                 new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', 100),
-                new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', 0),
-                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', 0),
+                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', '100'),
+                new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', '0'),
+                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', '0'),
             ]);
     }
 

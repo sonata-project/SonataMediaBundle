@@ -23,11 +23,6 @@ use Psr\Log\LoggerInterface;
 final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSupporter
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @var Adapter
      */
     private $primary;
@@ -38,8 +33,10 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     private $secondary;
 
     /**
-     * @param LoggerInterface $logger
+     * @var LoggerInterface|null
      */
+    private $logger;
+
     public function __construct(Adapter $primary, Adapter $secondary, ?LoggerInterface $logger = null)
     {
         $this->primary = $primary;
