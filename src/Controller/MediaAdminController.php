@@ -80,7 +80,7 @@ final class MediaAdminController extends CRUDController
         $datagrid->setValue('context', null, $context);
 
         $rootCategory = null;
-        if ($this->has('sonata.media.manager.category')) {
+        if ($this->has('sonata.media.manager.category') && $this->has('sonata.media.manager.context')) {
             $rootCategories = $this->get('sonata.media.manager.category')->getRootCategoriesForContext(
                 $this->get('sonata.media.manager.context')->find($context)
             );
