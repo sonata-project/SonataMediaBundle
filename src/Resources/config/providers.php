@@ -27,6 +27,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
         ->set('sonata.media.pool', Pool::class)
+            ->public()
             ->args([''])
 
         ->alias(Pool::class, 'sonata.media.pool')
