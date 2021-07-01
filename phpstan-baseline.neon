@@ -17,4 +17,3 @@ parameters:
             message: "#^Class OpenCloud\\\\Rackspace not found\\.$#"
             count: 1
             path: src/Resources/config/gaufrette.php
-
