@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Controller;
 
+use Sonata\AdminBundle\Bridge\Exporter\AdminExporter;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
@@ -52,7 +53,14 @@ final class MediaAdminController extends CRUDController
 
     public function listAction(Request $request): Response
     {
+        $this->assertObjectExists($request);
+
         $this->admin->checkAccess('list');
+
+        $preResponse = $this->preList($request);
+        if (null !== $preResponse) {
+            return $preResponse;
+        }
 
         if ($listMode = $request->get('_list_mode', 'mosaic')) {
             $this->admin->setListMode($listMode);
@@ -98,10 +106,14 @@ final class MediaAdminController extends CRUDController
 
         $formView = $datagrid->getForm()->createView();
 
-        $twig = $this->get('twig');
-
         // set the theme for the current Admin Form
-        $twig->getRuntime(FormRenderer::class)->setTheme($formView, $this->admin->getFilterTheme());
+        $this->get('twig')->getRuntime(FormRenderer::class)->setTheme($formView, $this->admin->getFilterTheme());
+
+        if ($this->has('sonata.admin.admin_exporter')) {
+            $exporter = $this->get('sonata.admin.admin_exporter');
+            \assert($exporter instanceof AdminExporter);
+            $exportFormats = $exporter->getAvailableFormats($this->admin);
+        }
 
         return $this->renderWithExtraParams($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
@@ -109,6 +121,7 @@ final class MediaAdminController extends CRUDController
             'datagrid' => $datagrid,
             'root_category' => $rootCategory,
             'csrf_token' => $this->getCsrfToken('sonata.batch'),
+            'export_formats' => $exportFormats ?? $this->admin->getExportFormats(),
         ]);
     }
 }
