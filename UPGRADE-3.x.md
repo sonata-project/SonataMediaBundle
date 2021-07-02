@@ -1,8 +1,8 @@
 UPGRADE 3.x
 ===========
 
-UPGRADE FROM 3.x to 3.x
-=======================
+UPGRADE FROM 3.31 to 3.32
+=========================
 
 ### Support for NelmioApiDocBundle > 3.6 is added
 
