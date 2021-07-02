@@ -42,22 +42,15 @@ class Pool
      */
     private $defaultContext;
 
-    /**
-     * @param string $context
-     */
-    public function __construct($context)
+    public function __construct(string $context)
     {
         $this->defaultContext = $context;
     }
 
     /**
-     * @param string|null $name
-     *
      * @throws \RuntimeException
-     *
-     * @return MediaProviderInterface
      */
-    public function getProvider($name)
+    public function getProvider(?string $name): MediaProviderInterface
     {
         if (!$name) {
             throw new \InvalidArgumentException('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
@@ -72,26 +65,17 @@ class Pool
         return $this->providers[$name];
     }
 
-    /**
-     * @param string $name
-     */
-    public function addProvider($name, MediaProviderInterface $instance): void
+    public function addProvider(string $name, MediaProviderInterface $instance): void
     {
         $this->providers[$name] = $instance;
     }
 
-    /**
-     * @param string $name
-     */
-    public function addDownloadStrategy($name, DownloadStrategyInterface $security): void
+    public function addDownloadStrategy(string $name, DownloadStrategyInterface $security): void
     {
         $this->downloadStrategies[$name] = $security;
     }
 
-    /**
-     * @param array $providers
-     */
-    public function setProviders($providers): void
+    public function setProviders(array $providers): void
     {
         $this->providers = $providers;
     }
@@ -99,15 +83,12 @@ class Pool
     /**
      * @return MediaProviderInterface[]
      */
-    public function getProviders()
+    public function getProviders(): array
     {
         return $this->providers;
     }
 
-    /**
-     * @param string $name
-     */
-    public function addContext($name, array $providers = [], array $formats = [], array $download = []): void
+    public function addContext(string $name, array $providers = [], array $formats = [], array $download = []): void
     {
         if (!$this->hasContext($name)) {
             $this->contexts[$name] = [
@@ -122,22 +103,12 @@ class Pool
         $this->contexts[$name]['download'] = $download;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasContext($name)
+    public function hasContext(string $name): bool
     {
         return isset($this->contexts[$name]);
     }
 
-    /**
-     * @param string $name
-     *
-     * @return array|null
-     */
-    public function getContext($name)
+    public function getContext(string $name): ?array
     {
         if (!$this->hasContext($name)) {
             return null;
@@ -148,20 +119,13 @@ class Pool
 
     /**
      * Returns the context list.
-     *
-     * @return array
      */
-    public function getContexts()
+    public function getContexts(): array
     {
         return $this->contexts;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return array|null
-     */
-    public function getProviderNamesByContext($name)
+    public function getProviderNamesByContext(string $name): ?array
     {
         $context = $this->getContext($name);
 
@@ -172,12 +136,7 @@ class Pool
         return $context['providers'];
     }
 
-    /**
-     * @param string $name
-     *
-     * @return array|null
-     */
-    public function getFormatNamesByContext($name)
+    public function getFormatNamesByContext(string $name): ?array
     {
         $context = $this->getContext($name);
 
@@ -188,12 +147,7 @@ class Pool
         return $context['formats'];
     }
 
-    /**
-     * @param string $name
-     *
-     * @return array
-     */
-    public function getProvidersByContext($name)
+    public function getProvidersByContext(string $name): array
     {
         $providers = [];
 
@@ -208,10 +162,7 @@ class Pool
         return $providers;
     }
 
-    /**
-     * @return array
-     */
-    public function getProviderList()
+    public function getProviderList(): array
     {
         $choices = [];
         foreach (array_keys($this->providers) as $name) {
@@ -223,10 +174,8 @@ class Pool
 
     /**
      * @throws \RuntimeException
-     *
-     * @return DownloadStrategyInterface
      */
-    public function getDownloadStrategy(MediaInterface $media)
+    public function getDownloadStrategy(MediaInterface $media): DownloadStrategyInterface
     {
         $context = $this->getContext($media->getContext());
 
@@ -239,20 +188,14 @@ class Pool
         return $this->downloadStrategies[$id];
     }
 
-    /**
-     * @return string
-     */
-    public function getDownloadMode(MediaInterface $media)
+    public function getDownloadMode(MediaInterface $media): string
     {
         $context = $this->getContext($media->getContext());
 
         return $context['download']['mode'];
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultContext()
+    public function getDefaultContext(): string
     {
         return $this->defaultContext;
     }

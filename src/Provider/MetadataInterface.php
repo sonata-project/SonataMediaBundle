@@ -29,10 +29,9 @@ interface MetadataInterface
     public function getOptions(): array;
 
     /**
-     * @param string $name    The option key
-     * @param mixed  $default The default value if option not found
+     * @param mixed $default The default value if option not found
      *
      * @return mixed
      */
-    public function getOption($name, $default = null);
+    public function getOption(string $name, $default = null);
 }

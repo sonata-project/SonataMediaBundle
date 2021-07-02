@@ -15,10 +15,11 @@ namespace Sonata\MediaBundle\Provider;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final class DailyMotionProvider extends BaseVideoProvider
 {
-    public function getHelperProperties(MediaInterface $media, $format, $options = [])
+    public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
     {
         // documentation : http://www.dailymotion.com/en/doc/api/player
 
@@ -83,12 +84,12 @@ final class DailyMotionProvider extends BaseVideoProvider
         return $params;
     }
 
-    public function getProviderMetadata()
+    public function getProviderMetadata(): MetadataInterface
     {
         return new Metadata($this->getName(), $this->getName().'.description', 'bundles/sonatamedia/dailymotion-icon.png', 'SonataMediaBundle');
     }
 
-    public function updateMetadata(MediaInterface $media, $force = false): void
+    public function updateMetadata(MediaInterface $media, bool $force = false): void
     {
         $url = sprintf('http://www.dailymotion.com/services/oembed?url=%s&format=json', $this->getReferenceUrl($media));
 
@@ -112,14 +113,11 @@ final class DailyMotionProvider extends BaseVideoProvider
         $media->setWidth($metadata['width']);
     }
 
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
+    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
     }
 
-    /**
-     * Get provider reference url.
-     */
     public function getReferenceUrl(MediaInterface $media): string
     {
         return sprintf('http://www.dailymotion.com/video/%s', $media->getProviderReference());

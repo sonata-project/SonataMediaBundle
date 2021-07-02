@@ -27,9 +27,9 @@ class TestProvider extends BaseProvider
      */
     public $prevReferenceImage;
 
-    public function getHelperProperties(MediaInterface $media, $format, $options = []): void
+    public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
     {
-        // TODO: Implement getHelperProperties() method.
+        return [];
     }
 
     public function postPersist(MediaInterface $media): void
@@ -69,12 +69,12 @@ class TestProvider extends BaseProvider
         return $this->prevReferenceImage;
     }
 
-    public function generatePrivateUrl(MediaInterface $media, $format): string
+    public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
         return '';
     }
 
-    public function generatePublicUrl(MediaInterface $media, $format): string
+    public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         return '';
     }
@@ -94,7 +94,7 @@ class TestProvider extends BaseProvider
         // TODO: Implement prePersist() method.
     }
 
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = []): Response
+    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
     {
         return new Response();
     }
@@ -104,7 +104,7 @@ class TestProvider extends BaseProvider
         $formBuilder->add('foo');
     }
 
-    public function updateMetadata(MediaInterface $media, $force = false): void
+    public function updateMetadata(MediaInterface $media, bool $force = false): void
     {
         // TODO: Implement updateMetadata() method.
     }

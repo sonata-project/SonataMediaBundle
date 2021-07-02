@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
+use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
@@ -30,6 +31,7 @@ use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -37,17 +39,26 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 class FileProvider extends BaseProvider implements FileProviderInterface
 {
+    /**
+     * @var string[]
+     */
     protected $allowedExtensions;
 
+    /**
+     * @var string[]
+     */
     protected $allowedMimeTypes;
 
+    /**
+     * @var MetadataBuilderInterface|null
+     */
     protected $metadata;
 
     /**
-     * @param string                   $name
-     * @param MetadataBuilderInterface $metadata
+     * @param string[] $allowedExtensions
+     * @param string[] $allowedMimeTypes
      */
-    public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = [], array $allowedMimeTypes = [], ?MetadataBuilderInterface $metadata = null)
+    public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = [], array $allowedMimeTypes = [], ?MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
@@ -56,7 +67,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $this->metadata = $metadata;
     }
 
-    public function getProviderMetadata()
+    public function getProviderMetadata(): MetadataInterface
     {
         return new Metadata(
             $this->getName(),
@@ -67,7 +78,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         );
     }
 
-    public function getReferenceImage(MediaInterface $media)
+    public function getReferenceImage(MediaInterface $media): string
     {
         return sprintf(
             '%s/%s',
@@ -76,23 +87,17 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         );
     }
 
-    public function getReferenceFile(MediaInterface $media)
+    public function getReferenceFile(MediaInterface $media): GaufretteFile
     {
         return $this->getFilesystem()->get($this->getReferenceImage($media), true);
     }
 
-    /**
-     * @return string[]
-     */
-    public function getAllowedExtensions()
+    public function getAllowedExtensions(): array
     {
         return $this->allowedExtensions;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getAllowedMimeTypes()
+    public function getAllowedMimeTypes(): array
     {
         return $this->allowedMimeTypes;
     }
@@ -173,7 +178,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $media->resetBinaryContent();
     }
 
-    public function updateMetadata(MediaInterface $media, $force = true): void
+    public function updateMetadata(MediaInterface $media, bool $force = true): void
     {
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             // this is now optimized at all!!!
@@ -187,7 +192,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $media->setSize($fileObject->getSize());
     }
 
-    public function generatePublicUrl(MediaInterface $media, $format)
+    public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $this->getReferenceImage($media);
@@ -199,7 +204,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 
-    public function getHelperProperties(MediaInterface $media, $format, $options = [])
+    public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
     {
         return array_merge([
             'title' => $media->getName(),
@@ -208,7 +213,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         ], $options);
     }
 
-    public function generatePrivateUrl(MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $this->getReferenceImage($media);
@@ -217,7 +222,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return '';
     }
 
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
+    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
     {
         // build the default headers
         $headers = array_merge([
@@ -363,10 +368,8 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
     /**
      * Set the file contents for an image.
-     *
-     * @param string $contents path to contents, defaults to MediaInterface BinaryContent
      */
-    protected function setFileContents(MediaInterface $media, $contents = null): void
+    protected function setFileContents(MediaInterface $media, ?string $contents = null): void
     {
         $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
         $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
@@ -386,18 +389,12 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    protected function generateReferenceName(MediaInterface $media)
+    protected function generateReferenceName(MediaInterface $media): string
     {
         return $this->generateMediaUniqId($media).'.'.$media->getBinaryContent()->guessExtension();
     }
 
-    /**
-     * @return string
-     */
-    protected function generateMediaUniqId(MediaInterface $media)
+    protected function generateMediaUniqId(MediaInterface $media): string
     {
         return sha1($media->getName().uniqid().random_int(11111, 99999));
     }

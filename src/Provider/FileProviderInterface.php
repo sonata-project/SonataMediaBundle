@@ -18,10 +18,10 @@ interface FileProviderInterface extends MediaProviderInterface
     /**
      * @return string[]
      */
-    public function getAllowedExtensions();
+    public function getAllowedExtensions(): array;
 
     /**
      * @return string[]
      */
-    public function getAllowedMimeTypes();
+    public function getAllowedMimeTypes(): array;
 }

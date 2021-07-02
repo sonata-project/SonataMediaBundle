@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
+use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
@@ -30,188 +31,119 @@ interface MediaProviderInterface
     // This format holds the original media
     public const FORMAT_REFERENCE = 'reference';
 
-    /**
-     * @param string $name
-     * @param array  $format
-     */
-    public function addFormat($name, $format);
+    public function addFormat(string $name, array $format): void;
 
     /**
      * return the format settings.
      *
-     * @param string $name
-     *
      * @return array|false the format settings
      */
-    public function getFormat($name);
+    public function getFormat(string $name);
 
     /**
      * return true if the media related to the provider required thumbnails (generation).
-     *
-     * @return bool
      */
-    public function requireThumbnails();
+    public function requireThumbnails(): bool;
 
     /**
      * Generated thumbnails linked to the media, a thumbnail is a format used on the website.
      */
-    public function generateThumbnails(MediaInterface $media);
+    public function generateThumbnails(MediaInterface $media): void;
 
     /**
      * remove linked thumbnails.
      *
      * @param string|array $formats
      */
-    public function removeThumbnails(MediaInterface $media, $formats = null);
+    public function removeThumbnails(MediaInterface $media, $formats = null): void;
 
-    /**
-     * @return \Gaufrette\File
-     */
-    public function getReferenceFile(MediaInterface $media);
+    public function getReferenceFile(MediaInterface $media): File;
 
     /**
      * return the correct format name : providerName_format.
-     *
-     * @param string $format
-     *
-     * @return string
      */
-    public function getFormatName(MediaInterface $media, $format);
+    public function getFormatName(MediaInterface $media, string $format): string;
 
     /**
      * return the reference image of the media, can be the video thumbnail or the original uploaded picture.
-     *
-     * @return string to the reference image
      */
-    public function getReferenceImage(MediaInterface $media);
+    public function getReferenceImage(MediaInterface $media): string;
 
-    public function preUpdate(MediaInterface $media);
+    public function preUpdate(MediaInterface $media): void;
 
-    public function postUpdate(MediaInterface $media);
+    public function postUpdate(MediaInterface $media): void;
 
-    public function preRemove(MediaInterface $media);
+    public function preRemove(MediaInterface $media): void;
 
-    public function postRemove(MediaInterface $media);
+    public function postRemove(MediaInterface $media): void;
 
     /**
      * build the related create form.
      *
      * @phpstan-param FormMapper<MediaInterface> $form
      */
-    public function buildCreateForm(FormMapper $form);
+    public function buildCreateForm(FormMapper $form): void;
 
     /**
      * build the related create form.
      *
      * @phpstan-param FormMapper<MediaInterface> $form
      */
-    public function buildEditForm(FormMapper $form);
+    public function buildEditForm(FormMapper $form): void;
 
-    public function prePersist(MediaInterface $media);
+    public function prePersist(MediaInterface $media): void;
 
-    public function postPersist(MediaInterface $media);
+    public function postPersist(MediaInterface $media): void;
 
-    /**
-     * @param string $format
-     * @param array  $options
-     */
-    public function getHelperProperties(MediaInterface $media, $format, $options = []);
+    public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array;
 
     /**
      * Generate the media path.
-     *
-     * @return string
      */
-    public function generatePath(MediaInterface $media);
+    public function generatePath(MediaInterface $media): string;
 
     /**
      * Generate the public path.
-     *
-     * @param string $format
-     *
-     * @return string
      */
-    public function generatePublicUrl(MediaInterface $media, $format);
+    public function generatePublicUrl(MediaInterface $media, string $format): string;
 
     /**
      * Generate the private path.
-     *
-     * @param string $format
-     *
-     * @return string
      */
-    public function generatePrivateUrl(MediaInterface $media, $format);
+    public function generatePrivateUrl(MediaInterface $media, string $format): string;
 
-    /**
-     * @return array
-     */
-    public function getFormats();
+    public function getFormats(): array;
 
-    /**
-     * @param string $name
-     */
-    public function setName($name);
+    public function setName(string $name): void;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return MetadataInterface
-     */
-    public function getProviderMetadata();
+    public function getProviderMetadata(): MetadataInterface;
 
-    public function setTemplates(array $templates);
+    public function setTemplates(array $templates): void;
 
-    /**
-     * @return string[]
-     */
-    public function getTemplates();
+    public function getTemplates(): array;
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function getTemplate($name);
+    public function getTemplate(string $name): ?string;
 
     /**
      * Mode can be x-file.
-     *
-     * @param string $format
-     * @param string $mode
-     *
-     * @return Response
      */
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = []);
+    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response;
 
-    /**
-     * @return ResizerInterface
-     */
-    public function getResizer();
+    public function getResizer(): ?ResizerInterface;
 
-    /**
-     * @return Filesystem
-     */
-    public function getFilesystem();
+    public function getFilesystem(): Filesystem;
 
     public function getCdn(): CDNInterface;
 
-    /**
-     * @param string $relativePath
-     * @param bool   $isFlushable
-     */
-    public function getCdnPath($relativePath, $isFlushable);
+    public function getCdnPath(string $relativePath, bool $isFlushable = false): string;
 
-    public function transform(MediaInterface $media);
+    public function transform(MediaInterface $media): void;
 
-    public function validate(ErrorElement $errorElement, MediaInterface $media);
+    public function validate(ErrorElement $errorElement, MediaInterface $media): void;
 
-    public function buildMediaType(FormBuilderInterface $formBuilder);
+    public function buildMediaType(FormBuilderInterface $formBuilder): void;
 
-    /**
-     * @param bool $force
-     */
-    public function updateMetadata(MediaInterface $media, $force = false);
+    public function updateMetadata(MediaInterface $media, bool $force = false): void;
 }

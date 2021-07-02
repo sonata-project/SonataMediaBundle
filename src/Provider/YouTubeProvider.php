@@ -22,6 +22,7 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final class YouTubeProvider extends BaseVideoProvider
 {
@@ -46,7 +47,7 @@ final class YouTubeProvider extends BaseVideoProvider
         $this->html5 = $html5;
     }
 
-    public function getProviderMetadata()
+    public function getProviderMetadata(): MetadataInterface
     {
         return new Metadata(
             $this->getName(),
@@ -57,7 +58,7 @@ final class YouTubeProvider extends BaseVideoProvider
         );
     }
 
-    public function getHelperProperties(MediaInterface $media, $format, $options = [])
+    public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
     {
         // Override html5 value if $options['html5'] is a boolean
         if (!isset($options['html5'])) {
@@ -199,7 +200,7 @@ final class YouTubeProvider extends BaseVideoProvider
         return $params;
     }
 
-    public function updateMetadata(MediaInterface $media, $force = false): void
+    public function updateMetadata(MediaInterface $media, bool $force = false): void
     {
         $url = sprintf('https://www.youtube.com/oembed?url=%s&format=json', $this->getReferenceUrl($media));
 
@@ -224,14 +225,11 @@ final class YouTubeProvider extends BaseVideoProvider
         $media->setContentType('video/x-flv');
     }
 
-    public function getDownloadResponse(MediaInterface $media, $format, $mode, array $headers = [])
+    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
     }
 
-    /**
-     * Get provider reference url.
-     */
     public function getReferenceUrl(MediaInterface $media): string
     {
         return sprintf('https://www.youtube.com/watch?v=%s', $media->getProviderReference());
