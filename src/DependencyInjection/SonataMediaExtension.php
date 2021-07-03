@@ -394,7 +394,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
      * Checks if the classification of media is enabled.
      *
      * @param array<string, class-string> $bundles
-     * @param array<string, mixed> $config
+     * @param array<string, mixed>        $config
      */
     private function isClassificationEnabled(array $bundles, array $config): bool
     {
@@ -420,7 +420,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
     /**
      * @param array<string, class-string> $bundles
-     * @param array<string, mixed> $config
+     * @param array<string, mixed>        $config
      */
     private function registerSonataDoctrineMapping(array $bundles, array $config): void
     {

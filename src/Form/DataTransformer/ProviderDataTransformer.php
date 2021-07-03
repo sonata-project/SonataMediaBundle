@@ -35,7 +35,7 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     private $class;
 
     /**
-     * @var array<string, mixed> $options
+     * @var array<string, mixed>
      */
     private $options;
 

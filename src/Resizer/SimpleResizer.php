@@ -80,9 +80,9 @@ final class SimpleResizer implements ResizerInterface
     }
 
     /**
-     * @throws InvalidArgumentException
-     *
      * @param array<string, mixed> $settings
+     *
+     * @throws InvalidArgumentException
      */
     private function computeBox(MediaInterface $media, array $settings): Box
     {

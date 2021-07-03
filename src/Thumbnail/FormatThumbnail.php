@@ -129,7 +129,7 @@ final class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * Returns the file extension for the $media, or the $defaultExtension if not available
+     * Returns the file extension for the $media, or the $defaultExtension if not available.
      */
     private function getExtension(MediaInterface $media): string
     {

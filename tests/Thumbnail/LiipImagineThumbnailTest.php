@@ -19,7 +19,6 @@ use Gaufrette\Filesystem;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail;
 
@@ -40,7 +39,6 @@ class LiipImagineThumbnailTest extends TestCase
           'mycontext_medium' => ['height' => 500, 'width' => 500, 'quality' => 100],
           'anothercontext_large' => ['height' => 500, 'width' => 500, 'quality' => 100],
         ];
-
 
         $media = new Media();
         $media->setName('ASDASDAS.png');
