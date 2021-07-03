@@ -16,7 +16,6 @@ namespace Sonata\MediaBundle\Tests\Form\Type;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -25,11 +24,6 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 abstract class AbstractTypeTest extends TypeTestCase
 {
-    /**
-     * @var FormBuilder
-     */
-    protected $formBuilder;
-
     /**
      * @var FormTypeInterface
      */

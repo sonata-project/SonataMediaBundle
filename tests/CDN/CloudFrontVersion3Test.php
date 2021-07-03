@@ -24,7 +24,7 @@ use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-final class CloudFrontVersionTest extends TestCase
+final class CloudFrontVersion3Test extends TestCase
 {
     protected function setUp(): void
     {
@@ -126,7 +126,7 @@ final class CloudFrontVersionTest extends TestCase
             ]));
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to determine the flush status from the given response: "SomeUnknownStatus".');
+        $this->expectExceptionMessage('Unable to determine the flush status from the given response.');
 
         $cloudFront->flushPaths(['/boom']);
     }

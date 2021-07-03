@@ -85,7 +85,7 @@ class FixMediaContextCommandTest extends TestCase
         $tester->execute(['command' => $command->getName()]);
     }
 
-    public function testExecuteWithExisting(): void
+    public function testExecuteWithNewContext(): void
     {
         $context = [
             'providers' => [],
@@ -102,7 +102,7 @@ class FixMediaContextCommandTest extends TestCase
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
+        $this->assertMatchesRegularExpression('@ > default context for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
         $this->assertSame(0, $output);
     }

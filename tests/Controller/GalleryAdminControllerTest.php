@@ -61,6 +61,11 @@ class GalleryAdminControllerTest extends TestCase
      */
     private $twig;
 
+    /**
+     * @psalm-suppress InternalMethod
+     *
+     * @see https://github.com/symfony/symfony/blob/5.4/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php#L64-L68
+     */
     protected function setUp(): void
     {
         $this->container = new Container();

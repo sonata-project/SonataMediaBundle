@@ -63,7 +63,7 @@ class TestProvider extends BaseProvider
         $this->prevReferenceImage = sprintf(
             '%s/%s',
             $this->generatePath($media),
-            $media->getProviderReference()
+            $media->getProviderReference() ?? ''
         );
 
         return $this->prevReferenceImage;

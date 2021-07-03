@@ -34,7 +34,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class DailyMotionProviderTest extends AbstractProviderTest
 {
-    public function getProvider(?object $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
+    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
         if (null === $client) {
             $client = $this->createStub(ClientInterface::class);

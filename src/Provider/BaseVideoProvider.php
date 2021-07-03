@@ -39,12 +39,12 @@ abstract class BaseVideoProvider extends BaseProvider
     /**
      * @var ClientInterface
      */
-    private $client;
+    protected $client;
 
     /**
      * @var RequestFactoryInterface
      */
-    private $requestFactory;
+    protected $requestFactory;
 
     public function __construct(
         string $name,
@@ -58,9 +58,9 @@ abstract class BaseVideoProvider extends BaseProvider
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 
-        $this->metadata = $metadata;
-        $this->requestFactory = $requestFactory;
         $this->client = $client;
+        $this->requestFactory = $requestFactory;
+        $this->metadata = $metadata;
     }
 
     public function getProviderMetadata(): MetadataInterface
@@ -175,7 +175,7 @@ abstract class BaseVideoProvider extends BaseProvider
         try {
             $response = $this->sendRequest('GET', $url);
         } catch (\RuntimeException $e) {
-            throw new \RuntimeException('Unable to retrieve the video information for :'.$url, $e->getCode(), $e);
+            throw new \RuntimeException('Unable to retrieve the video information for :'.$url, (int) $e->getCode(), $e);
         }
 
         $metadata = json_decode($response, true);

@@ -53,6 +53,11 @@ class MediaControllerTest extends TestCase
      */
     private $controller;
 
+    /**
+     * @psalm-suppress InternalMethod
+     *
+     * @see https://github.com/symfony/symfony/blob/5.4/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php#L64-L68
+     */
     protected function setUp(): void
     {
         $this->pool = $this->createMock(Pool::class);

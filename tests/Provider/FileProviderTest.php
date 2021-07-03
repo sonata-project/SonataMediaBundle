@@ -175,6 +175,8 @@ class FileProviderTest extends AbstractProviderTest
 
     /**
      * @dataProvider mediaProvider
+     *
+     * @phpstan-param class-string $expected
      */
     public function testTransform(string $expected, Media $media): void
     {
