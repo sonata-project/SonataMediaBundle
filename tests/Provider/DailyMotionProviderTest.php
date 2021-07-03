@@ -178,15 +178,16 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function dataTransformWithUrl(): array
+    /**
+     * @return iterable<array{0: string}>
+     */
+    public function dataTransformWithUrl(): iterable
     {
-        return [
-            ['http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds'],
-            ['http://www.dailymotion.com/video/x9wjql'],
-            ['https://www.dailymotion.com/video/x9wjql'],
-            ['www.dailymotion.com/video/x9wjql'],
-            ['x9wjql'],
-        ];
+        yield ['http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds'];
+        yield ['http://www.dailymotion.com/video/x9wjql'];
+        yield ['https://www.dailymotion.com/video/x9wjql'];
+        yield ['www.dailymotion.com/video/x9wjql'];
+        yield ['x9wjql'];
     }
 
     public function testGetMetadataException(): void

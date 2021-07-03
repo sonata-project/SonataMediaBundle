@@ -396,7 +396,7 @@ final class MediaController
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
      */
-    private function getMedium($id = null): MediaInterface
+    private function getMedium($id): MediaInterface
     {
         $media = $this->mediaManager->find($id);
 

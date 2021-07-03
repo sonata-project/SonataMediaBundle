@@ -190,6 +190,9 @@ class MediaControllerTest extends TestCase
         $requestStack->method('getCurrentRequest')->willReturn($request);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private function configureRender(
         string $template,
         array $data,

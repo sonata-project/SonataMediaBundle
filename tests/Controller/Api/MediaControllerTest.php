@@ -63,6 +63,8 @@ class MediaControllerTest extends TestCase
 
     /**
      * @dataProvider getIdsForNotFound
+     *
+     * @param int|string $identifier
      */
     public function testGetMediumNotFoundExceptionAction($identifier, string $message): void
     {
@@ -73,16 +75,13 @@ class MediaControllerTest extends TestCase
     }
 
     /**
-     * @phpstan-return list<array{mixed, string}>
+     * @phpstan-return iterable<array{int|string, string}>
      */
-    public function getIdsForNotFound(): array
+    public function getIdsForNotFound(): iterable
     {
-        return [
-            [42, 'Media not found for identifier 42.'],
-            ['42', 'Media not found for identifier \'42\'.'],
-            [null, 'Media not found for identifier NULL.'],
-            ['', 'Media not found for identifier \'\'.'],
-        ];
+        yield [42, 'Media not found for identifier 42.'];
+        yield ['42', 'Media not found for identifier \'42\'.'];
+        yield ['', 'Media not found for identifier \'\'.'];
     }
 
     public function testGetMediumFormatsAction(): void

@@ -24,7 +24,7 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 abstract class BaseProvider implements MediaProviderInterface
 {
     /**
-     * @var array
+     * @var array<string, string[]>
      */
     protected $formats = [];
 
@@ -129,9 +129,9 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    public function addFormat(string $name, array $format): void
+    public function addFormat(string $name, array $settings): void
     {
-        $this->formats[$name] = $format;
+        $this->formats[$name] = $settings;
     }
 
     public function getFormat(string $name)

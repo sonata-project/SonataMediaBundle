@@ -82,10 +82,12 @@ final class CloudFrontVersion3Test extends TestCase
         $this->assertSame($expectedStatus, $cloudFront->getFlushStatus($invalidationId));
     }
 
+    /**
+     * @phpstan-return iterable<array{string, string, string, string, int, string}>
+     */
     public function provideCloudFrontTestCases(): iterable
     {
         yield ['/foo/bar.jpg', '/foo', '/bar.jpg', 'ivalidation_id_42', CloudFrontVersion3::STATUS_WAITING, 'InProgress'];
-
         yield ['/foo/bar.jpg', '/foo', 'bar.jpg', 'ivalidation_a', CloudFrontVersion3::STATUS_OK, 'Completed'];
     }
 

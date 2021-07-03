@@ -22,6 +22,7 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionFactoryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Translator\LabelTranslatorStrategyInterface;
 use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
@@ -41,7 +42,7 @@ abstract class AbstractProviderTest extends TestCase
     protected $formBuilder;
 
     /**
-     * @var FormMapper
+     * @var FormMapper<MediaInterface>
      */
     protected $form;
 

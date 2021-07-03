@@ -270,6 +270,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     /**
      * Asserts whether all expected texts can be found in the output within a given context.
+     *
+     * @param string[] $expected
      */
     private function assertOutputFoundInContext(
         string $extractor,
@@ -297,6 +299,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     /**
      * Returns whether every needle can be found as a substring of the haystack.
+     *
+     * @param string[] $needles
      */
     private function containsAll(string $haystack, array $needles): bool
     {

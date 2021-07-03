@@ -22,6 +22,7 @@ use Sonata\AdminBundle\Request\AdminFetcher;
 use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
+use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
@@ -42,7 +43,7 @@ class GalleryAdminControllerTest extends TestCase
     private $container;
 
     /**
-     * @var MockObject&AdminInterface
+     * @var MockObject&AdminInterface<GalleryInterface>
      */
     private $admin;
 
@@ -155,6 +156,9 @@ class GalleryAdminControllerTest extends TestCase
         $this->container->set('security.csrf.token_manager', $tokenManager);
     }
 
+    /**
+     * @param string[] $formTheme
+     */
     private function configureSetFormTheme(FormView $formView, array $formTheme): void
     {
         $twigRenderer = $this->createMock(FormRenderer::class);

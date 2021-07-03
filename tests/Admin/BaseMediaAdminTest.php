@@ -20,6 +20,7 @@ use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Entity\BaseMedia;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Category;
@@ -50,7 +51,7 @@ class BaseMediaAdminTest extends TestCase
     private $request;
 
     /**
-     * @var Stub&ModelManagerInterface
+     * @var Stub&ModelManagerInterface<MediaInterface>
      */
     private $modelManager;
 

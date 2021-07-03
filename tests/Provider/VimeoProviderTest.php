@@ -23,6 +23,7 @@ use Psr\Http\Message\RequestInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
@@ -151,7 +152,7 @@ class VimeoProviderTest extends AbstractProviderTest
     /**
      * @dataProvider getTransformWithUrlMedia
      */
-    public function testTransformWithUrl(Media $media): void
+    public function testTransformWithUrl(MediaInterface $media): void
     {
         $request = $this->createStub(RequestInterface::class);
 
@@ -174,7 +175,10 @@ class VimeoProviderTest extends AbstractProviderTest
         $this->assertSame('012341231', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public function getTransformWithUrlMedia(): array
+    /**
+     * @phpstan-return iterable<array{0: MediaInterface}>
+     */
+    public function getTransformWithUrlMedia(): iterable
     {
         $mediaWebsite = new Media();
         $mediaWebsite->setContext('default');
@@ -186,10 +190,8 @@ class VimeoProviderTest extends AbstractProviderTest
         $mediaPlayer->setBinaryContent('https://player.vimeo.com/video/012341231');
         $mediaPlayer->setId(1023456);
 
-        return [
-            'transform with website url' => [$mediaWebsite],
-            'transform with player url' => [$mediaPlayer],
-        ];
+        yield 'transform with website url' => [$mediaWebsite];
+        yield 'transform with player url' => [$mediaPlayer];
     }
 
     public function testGetMetadataException(): void

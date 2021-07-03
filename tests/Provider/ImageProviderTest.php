@@ -36,6 +36,10 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
  */
 class ImageProviderTest extends AbstractProviderTest
 {
+    /**
+     * @param string[] $allowedExtensions
+     * @param string[] $allowedMimeTypes
+     */
     public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], ?Stub $box = null): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);

@@ -87,6 +87,8 @@ class SimpleResizerTest extends TestCase
 
     /**
      * @dataProvider getBoxSettings
+     *
+     * @param array<string, mixed> $settings
      */
     public function testGetBox(int $mode, array $settings, Box $mediaSize, Box $result): void
     {
@@ -107,26 +109,27 @@ class SimpleResizerTest extends TestCase
         $this->assertSame($result->getHeight(), $box->getHeight());
     }
 
-    public static function getBoxSettings(): array
+    /**
+     * @phpstan-return iterable<array{int, array<string, mixed>, Box, Box}>
+     */
+    public static function getBoxSettings(): iterable
     {
-        return [
-            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(75, 90)],
-            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => null], new Box(567, 200), new Box(90, 32)],
-            [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 100, 'height' => 100], new Box(567, 200), new Box(100, 35)],
+        yield [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(75, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 90, 'height' => null], new Box(567, 200), new Box(90, 32)];
+        yield [ManipulatorInterface::THUMBNAIL_INSET, ['width' => 100, 'height' => 100], new Box(567, 200), new Box(100, 35)];
 
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)],
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)];
 
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
-            [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)],
-        ];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)];
+        yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)];
     }
 }

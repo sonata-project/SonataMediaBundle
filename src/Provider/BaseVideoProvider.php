@@ -187,6 +187,9 @@ abstract class BaseVideoProvider extends BaseProvider
         return $metadata;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function getBoxHelperProperties(MediaInterface $media, string $format, array $options = []): Box
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {

@@ -87,13 +87,14 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         }
     }
 
-    public function dataAdapter(): array
+    /**
+     * @phpstan-return iterable<array{string, string, class-string}>
+     */
+    public function dataAdapter(): iterable
     {
-        return [
-            ['sonata.media.adapter.image.gd', 'gd', GdImagine::class],
-            ['sonata.media.adapter.image.gmagick', 'gmagick', GmagicImagine::class],
-            ['sonata.media.adapter.image.imagick', 'imagick', ImagicImagine::class],
-        ];
+        yield ['sonata.media.adapter.image.gd', 'gd', GdImagine::class];
+        yield ['sonata.media.adapter.image.gmagick', 'gmagick', GmagicImagine::class];
+        yield ['sonata.media.adapter.image.imagick', 'imagick', ImagicImagine::class];
     }
 
     public function testDefaultResizer(): void
@@ -143,12 +144,13 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         }
     }
 
-    public function dataResizer(): array
+    /**
+     * @phpstan-return iterable<array{string, class-string}>
+     */
+    public function dataResizer(): iterable
     {
-        return [
-            ['sonata.media.resizer.simple', SimpleResizer::class],
-            ['sonata.media.resizer.square', SquareResizer::class],
-        ];
+        yield ['sonata.media.resizer.simple', SimpleResizer::class];
+        yield ['sonata.media.resizer.square', SquareResizer::class];
     }
 
     public function testLoadWithSonataAdminDefaults(): void
@@ -197,6 +199,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @dataProvider dataFilesystemConfigurationAwsV3
+     *
+     * @param array<string, mixed> $expected
+     * @param array<string, mixed> $configs
      */
     public function testLoadWithFilesystemConfigurationV3(array $expected, array $configs): void
     {
@@ -212,6 +217,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
+    /**
+     * @phpstan-return iterable<array{array<string, mixed>, array<string, mixed>}>
+     */
     public function dataFilesystemConfigurationAwsV3(): iterable
     {
         yield [
@@ -340,6 +348,9 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront', CloudFrontVersion3::class);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getMinimalConfiguration(): array
     {
         return [

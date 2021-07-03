@@ -99,7 +99,7 @@ class MediaExtensionTest extends TestCase
     }
 
     /**
-     * @return MockObject&ManagerInterface
+     * @return MockObject&ManagerInterface<MediaInterface>
      */
     public function getMediaManager(): object
     {
