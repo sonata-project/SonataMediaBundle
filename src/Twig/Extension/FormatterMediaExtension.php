@@ -72,7 +72,6 @@ final class FormatterMediaExtension extends AbstractExtension
     /**
      * @param int|string           $media
      * @param array<string, mixed> $options
-     *
      */
     public function media($media, string $format, array $options = []): string
     {

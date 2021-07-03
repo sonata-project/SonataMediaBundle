@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Functional\Routing;
 
-use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sonata\MediaBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

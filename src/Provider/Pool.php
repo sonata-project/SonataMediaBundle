@@ -99,9 +99,9 @@ class Pool
     }
 
     /**
-     * @param string[] $providers
+     * @param string[]                            $providers
      * @param array<string, array<string, mixed>> $formats
-     * @param array<string, mixed> $download
+     * @param array<string, mixed>                $download
      */
     public function addContext(string $name, array $providers = [], array $formats = [], array $download = []): void
     {
