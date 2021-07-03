@@ -30,9 +30,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 final class SonataMediaExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    private $bundleConfigs;
+    private $sonataAdminConfig = [];
 
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -55,6 +55,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $loader->load('controllers.php');
 
         $bundles = $container->getParameter('kernel.bundles');
+        \assert(\is_array($bundles));
 
         if (isset($bundles['FOSRestBundle'], $bundles['NelmioApiDocBundle'])) {
             $loader->load(sprintf('api_form_%s.php', $config['db_driver']));
@@ -93,17 +94,15 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         if (isset($bundles['SonataAdminBundle'])) {
             $loader->load(sprintf('%s_admin.php', $config['db_driver']));
 
-            $sonataAdminConfig = $this->bundleConfigs['SonataAdminBundle'];
-
             $sonataRoles = [];
-            if (isset($sonataAdminConfig['security']['role_admin'])) {
-                $sonataRoles[] = $sonataAdminConfig['security']['role_admin'];
+            if (isset($this->sonataAdminConfig['security']['role_admin'])) {
+                $sonataRoles[] = $this->sonataAdminConfig['security']['role_admin'];
             } else {
                 $sonataRoles[] = 'ROLE_ADMIN';
             }
 
-            if (isset($sonataAdminConfig['security']['role_super_admin'])) {
-                $sonataRoles[] = $sonataAdminConfig['security']['role_super_admin'];
+            if (isset($this->sonataAdminConfig['security']['role_super_admin'])) {
+                $sonataRoles[] = $this->sonataAdminConfig['security']['role_super_admin'];
             } else {
                 $sonataRoles[] = 'ROLE_SUPER_ADMIN';
             }
@@ -158,6 +157,9 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $this->configureResizers($container, $config);
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function configureProviders(ContainerBuilder $container, array $config): void
     {
         $container->getDefinition('sonata.media.provider.image')
@@ -172,6 +174,9 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(8, $config['providers']['youtube']['html5']);
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function configureParameterClass(ContainerBuilder $container, array $config): void
     {
         $container->setParameter('sonata.media.admin.media.entity', $config['class']['media']);
@@ -186,6 +191,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
     /**
      * Inject CDN dependency to default provider.
+     *
+     * @param array<string, mixed> $config
      */
     public function configureCdnAdapter(ContainerBuilder $container, array $config): void
     {
@@ -247,6 +254,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
     /**
      * Inject filesystem dependency to default provider.
+     *
+     * @param array<string, mixed> $config
      */
     public function configureFilesystemAdapter(ContainerBuilder $container, array $config): void
     {
@@ -353,6 +362,9 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         }
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function configureExtra(ContainerBuilder $container, array $config): void
     {
         if ($config['pixlr']['enabled']) {
@@ -370,15 +382,19 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
     public function prepend(ContainerBuilder $container): void
     {
         $bundles = $container->getParameter('kernel.bundles');
+        \assert(\is_array($bundles));
 
         // Store SonataAdminBundle configuration for later use
         if (isset($bundles['SonataAdminBundle'])) {
-            $this->bundleConfigs['SonataAdminBundle'] = current($container->getExtensionConfig('sonata_admin'));
+            $this->sonataAdminConfig = current($container->getExtensionConfig('sonata_admin'));
         }
     }
 
     /**
      * Checks if the classification of media is enabled.
+     *
+     * @param array<string, class-string> $bundles
+     * @param array<string, mixed> $config
      */
     private function isClassificationEnabled(array $bundles, array $config): bool
     {
@@ -386,16 +402,26 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             && !$config['force_disable_category'];
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function configureAdapters(ContainerBuilder $container, array $config): void
     {
         $container->setAlias('sonata.media.adapter.image.default', $config['adapters']['default']);
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function configureResizers(ContainerBuilder $container, array $config): void
     {
         $container->setAlias('sonata.media.resizer.default', $config['resizers']['default']);
     }
 
+    /**
+     * @param array<string, class-string> $bundles
+     * @param array<string, mixed> $config
+     */
     private function registerSonataDoctrineMapping(array $bundles, array $config): void
     {
         $collector = DoctrineCollector::getInstance();
@@ -459,6 +485,9 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         }
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function configureHttpClient(ContainerBuilder $container, array $config): void
     {
         $container->setAlias('sonata.media.http.client', $config['http']['client']);

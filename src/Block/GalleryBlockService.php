@@ -47,15 +47,19 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     private $pool;
 
     /**
-     * @var AdminInterface
+     * @var AdminInterface<GalleryInterface>
      */
     private $galleryAdmin;
 
     /**
-     * @var ManagerInterface
+     * @var ManagerInterface<GalleryInterface>
      */
     private $galleryManager;
 
+    /**
+     * @param AdminInterface<GalleryInterface>   $galleryAdmin
+     * @param ManagerInterface<GalleryInterface> $galleryManager
+     */
     public function __construct(
         Environment $twig,
         Pool $pool,
@@ -182,7 +186,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
         $block->setSetting('galleryId', $gallery);
     }
 
-    public function getMetadata($code = null): MetadataInterface
+    public function getMetadata(): MetadataInterface
     {
         return new Metadata('sonata.media.block.gallery', null, null, 'SonataMediaBundle', [
             'class' => 'fa fa-picture-o',
@@ -198,6 +202,14 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     {
     }
 
+    /**
+     * @phpstan-return array{
+     *     title: string|null,
+     *     caption: string|null,
+     *     type: string,
+     *     media: MediaInterface
+     * }[]
+     */
     private function buildElements(GalleryInterface $gallery): array
     {
         $elements = [];
@@ -206,17 +218,23 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
                 continue;
             }
 
-            $type = $this->getMediaType($galleryItem->getMedia());
+            $media = $galleryItem->getMedia();
+
+            if (null === $media) {
+                continue;
+            }
+
+            $type = $this->getMediaType($media);
 
             if (null === $type) {
                 continue;
             }
 
             $elements[] = [
-                'title' => $galleryItem->getMedia()->getName(),
-                'caption' => $galleryItem->getMedia()->getDescription(),
+                'title' => $media->getName(),
+                'caption' => $media->getDescription(),
                 'type' => $type,
-                'media' => $galleryItem->getMedia(),
+                'media' => $media,
             ];
         }
 

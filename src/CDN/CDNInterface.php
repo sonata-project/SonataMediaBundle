@@ -38,6 +38,8 @@ interface CDNInterface
 
     /**
      * Flush a set of resources matching the paths in provided array.
+     *
+     * @param string[] $paths
      */
     public function flushPaths(array $paths): string;
 

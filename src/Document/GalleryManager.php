@@ -17,6 +17,9 @@ use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\Doctrine\Document\BaseDocumentManager;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
+/**
+ * @phpstan-extends BaseDocumentManager<\Sonata\MediaBundle\Model\GalleryInterface>
+ */
 final class GalleryManager extends BaseDocumentManager implements GalleryManagerInterface
 {
     public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface

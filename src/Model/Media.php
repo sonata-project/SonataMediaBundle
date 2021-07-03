@@ -50,7 +50,7 @@ abstract class Media implements MediaInterface
     protected $providerReference;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $providerMetadata = [];
 

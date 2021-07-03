@@ -19,6 +19,9 @@ use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
+/**
+ * @phpstan-extends BaseEntityManager<\Sonata\MediaBundle\Model\GalleryInterface>
+ */
 final class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {
     public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface

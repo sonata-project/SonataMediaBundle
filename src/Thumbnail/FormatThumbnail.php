@@ -25,22 +25,16 @@ final class FormatThumbnail implements ThumbnailInterface
     private $defaultFormat;
 
     /**
-     * @var ResizerInterface[]
+     * @var array<string, ResizerInterface>
      */
     private $resizers = [];
 
-    /**
-     * @param string $defaultFormat
-     */
-    public function __construct($defaultFormat)
+    public function __construct(string $defaultFormat)
     {
         $this->defaultFormat = $defaultFormat;
     }
 
-    /**
-     * @param string $id
-     */
-    public function addResizer($id, ResizerInterface $resizer)
+    public function addResizer(string $id, ResizerInterface $resizer): void
     {
         if (!isset($this->resizers[$id])) {
             $this->resizers[$id] = $resizer;
@@ -48,13 +42,9 @@ final class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @param string $id
-     *
-     * @throws \Exception
-     *
-     * @return ResizerInterface
+     * @throws \LogicException
      */
-    public function getResizer($id)
+    public function getResizer(string $id): ResizerInterface
     {
         if (!isset($this->resizers[$id])) {
             throw new \LogicException(sprintf('Resizer with id: "%s" is not attached.', $id));
@@ -63,7 +53,7 @@ final class FormatThumbnail implements ThumbnailInterface
         return $this->resizers[$id];
     }
 
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             $path = $provider->getReferenceImage($media);
@@ -74,7 +64,7 @@ final class FormatThumbnail implements ThumbnailInterface
         return $path;
     }
 
-    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
             return $provider->getReferenceImage($media);
@@ -139,9 +129,9 @@ final class FormatThumbnail implements ThumbnailInterface
     }
 
     /**
-     * @return string the file extension for the $media, or the $defaultExtension if not available
+     * Returns the file extension for the $media, or the $defaultExtension if not available
      */
-    private function getExtension(MediaInterface $media)
+    private function getExtension(MediaInterface $media): string
     {
         $ext = $media->getExtension();
         if (!\is_string($ext) || \strlen($ext) < 3) {

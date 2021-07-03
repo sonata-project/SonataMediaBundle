@@ -45,7 +45,6 @@ class DailyMotionProviderTest extends AbstractProviderTest
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->method('resize')->willReturn(true);
         $resizer->method('getBox')->willReturn(new Box(100, 100));
 
         $adapter = $this->createMock(Adapter::class);

@@ -31,7 +31,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     public const STORAGE_GLACIER = 'GLACIER';
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $settings;
 
@@ -52,6 +52,9 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     private $mimeTypes;
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function __construct(array $settings, ?MimeTypesInterface $mimeTypes = null)
     {
         $this->settings = $settings;
@@ -69,7 +72,13 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     /**
      * Get data passed from the config.
      *
-     * @return array
+     * @phpstan-return array{
+     *     ACL?: string,
+     *     storage?: self::STORAGE_STANDARD|self::STORAGE_REDUCED,
+     *     meta?: array<string, mixed>,
+     *     CacheControl?: string,
+     *     encryption?: 'AES256'
+     * }
      */
     private function getDefaultMetadata()
     {
@@ -82,9 +91,9 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         //merge storage
         if (isset($this->settings['storage'])) {
             if ('standard' === $this->settings['storage']) {
-                $output['storage'] = static::STORAGE_STANDARD;
+                $output['storage'] = self::STORAGE_STANDARD;
             } elseif ('reduced' === $this->settings['storage']) {
-                $output['storage'] = static::STORAGE_REDUCED;
+                $output['storage'] = self::STORAGE_REDUCED;
             }
         }
 

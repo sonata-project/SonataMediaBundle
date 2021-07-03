@@ -29,7 +29,7 @@ final class LiipImagineThumbnail implements ThumbnailInterface
         $this->cacheManager = $cacheManager;
     }
 
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         $path = $provider->getReferenceImage($media);
 
@@ -38,22 +38,17 @@ final class LiipImagineThumbnail implements ThumbnailInterface
         }
 
         $path = $provider->getCdnPath($path, $media->getCdnIsFlushable());
-        if ($this->cacheManager instanceof CacheManager) {
-            $path = $this->cacheManager->getBrowserPath($path, $format);
-        }
 
-        return $path;
+        return $this->cacheManager->getBrowserPath($path, $format);
     }
 
-    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE !== $format) {
             throw new \RuntimeException('No private url for LiipImagineThumbnail');
         }
 
-        $path = $provider->getReferenceImage($media);
-
-        return $path;
+        return $provider->getReferenceImage($media);
     }
 
     public function generate(MediaProviderInterface $provider, MediaInterface $media): void

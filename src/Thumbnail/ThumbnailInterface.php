@@ -18,20 +18,14 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 interface ThumbnailInterface
 {
-    /**
-     * @param string $format
-     */
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string;
+
+    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string;
+
+    public function generate(MediaProviderInterface $provider, MediaInterface $media): void;
 
     /**
-     * @param string $format
+     * @param string|string[] $formats
      */
-    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
-
-    public function generate(MediaProviderInterface $provider, MediaInterface $media);
-
-    /**
-     * @param string|array $formats
-     */
-    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null);
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void;
 }

@@ -76,6 +76,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $this->primary->mtime($key);
     }
 
+    /**
+     * @return string[]
+     */
     public function keys()
     {
         return $this->primary->keys();
@@ -86,6 +89,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $this->primary->exists($key);
     }
 
+    /**
+     * @param array<string, mixed>|null $metadata
+     */
     public function write($key, $content, ?array $metadata = null)
     {
         $ok = true;
@@ -156,6 +162,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $this->primary instanceof MetadataSupporter || $this->secondary instanceof MetadataSupporter;
     }
 
+    /**
+     * @param array<string, mixed> $content
+     */
     public function setMetadata($key, $content): void
     {
         if ($this->primary instanceof MetadataSupporter) {
@@ -167,6 +176,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getMetadata($key)
     {
         if ($this->primary instanceof MetadataSupporter) {

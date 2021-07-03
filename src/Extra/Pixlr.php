@@ -55,7 +55,7 @@ final class Pixlr
     private $mediaManager;
 
     /**
-     * @var AdminInterface
+     * @var AdminInterface<MediaInterface>
      */
     private $mediaAdmin;
 
@@ -80,12 +80,11 @@ final class Pixlr
     private $allowEreg;
 
     /**
-     * @param string $referrer
-     * @param string $secret
+     * @param AdminInterface<MediaInterface> $mediaAdmin
      */
     public function __construct(
-        $referrer,
-        $secret,
+        string $referrer,
+        string $secret,
         MediaPool $mediaPool,
         AdminPool $adminPool,
         MediaManagerInterface $mediaManager,
@@ -137,7 +136,7 @@ final class Pixlr
             'locktarget' => true,
         ];
 
-        $url = sprintf('https://pixlr.com/%s/?%s', $mode, $this->buildQuery($parameters));
+        $url = sprintf('https://pixlr.com/%s/?%s', $mode, http_build_query($parameters));
 
         return new RedirectResponse($url);
     }
@@ -253,15 +252,5 @@ final class Pixlr
         if (!$this->isEditable($media)) {
             throw new NotFoundHttpException('Media is not editable');
         }
-    }
-
-    private function buildQuery(array $parameters = []): string
-    {
-        $query = [];
-        foreach ($parameters as $name => $value) {
-            $query[] = sprintf('%s=%s', $name, $value);
-        }
-
-        return implode('&', $query);
     }
 }

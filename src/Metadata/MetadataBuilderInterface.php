@@ -22,7 +22,7 @@ interface MetadataBuilderInterface
      *
      * @param string $filename
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function get(MediaInterface $media, $filename);
 }

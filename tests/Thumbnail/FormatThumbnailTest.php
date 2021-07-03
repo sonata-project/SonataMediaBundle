@@ -38,7 +38,7 @@ class FormatThumbnailTest extends TestCase
         ];
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->exactly(2))->method('resize')->willReturn(true);
+        $resizer->expects($this->exactly(2))->method('resize');
 
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects($this->once())->method('requireThumbnails')->willReturn(true);

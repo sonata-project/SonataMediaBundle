@@ -18,61 +18,51 @@ use Symfony\Component\HttpFoundation\File\File;
 final class ApiMediaFile extends File
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $extension;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $mimetype;
 
     /**
-     * @var resource
+     * @param resource $handle
      */
-    private $resource;
-
     public function __construct($handle)
     {
         if (!\is_resource($handle)) {
             throw new \RuntimeException('handle is not a resource');
         }
 
-        $this->resource = $handle;
-
         $meta = stream_get_meta_data($handle);
 
         parent::__construct($meta['uri']);
     }
 
-    public function getExtension()
+    public function getExtension(): string
     {
-        return $this->extension ?: parent::getExtension();
+        return $this->extension ?? parent::getExtension();
     }
 
-    /**
-     * @param string $extension
-     */
-    public function setExtension($extension): void
+    public function setExtension(string $extension): void
     {
         $this->extension = $extension;
     }
 
-    public function getMimetype()
+    public function getMimeType(): ?string
     {
-        return $this->mimetype ?: parent::getMimeType();
+        return $this->mimetype ?? parent::getMimeType();
     }
 
-    /**
-     * @param string $mimetype
-     */
-    public function setMimetype($mimetype): void
+    public function setMimetype(string $mimetype): void
     {
         $this->mimetype = $mimetype;
     }
 
-    public function guessExtension()
+    public function guessExtension(): ?string
     {
-        return $this->extension ?: parent::guessExtension();
+        return $this->extension ?? parent::guessExtension();
     }
 }

@@ -43,7 +43,6 @@ class FileProviderTest extends AbstractProviderTest
     public function getProvider(): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->method('resize')->willReturn(true);
 
         $adapter = $this->createMock(Local::class);
         $adapter->method('getDirectory')->willReturn(realpath(__DIR__).'/../Fixtures');

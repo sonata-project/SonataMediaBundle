@@ -45,15 +45,19 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     protected $pool;
 
     /**
-     * @var AdminInterface
+     * @var AdminInterface<MediaInterface>
      */
     protected $mediaAdmin;
 
     /**
-     * @var ManagerInterface
+     * @var ManagerInterface<MediaInterface>
      */
     protected $mediaManager;
 
+    /**
+     * @param AdminInterface<MediaInterface>   $mediaAdmin
+     * @param ManagerInterface<MediaInterface> $mediaManager
+     */
     public function __construct(
         Environment $twig,
         Pool $pool,
@@ -175,6 +179,9 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     {
     }
 
+    /**
+     * @return array<array-key, array-key>
+     */
     protected function getFormatChoices(?MediaInterface $media = null): array
     {
         $formatChoices = [];

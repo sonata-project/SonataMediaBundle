@@ -40,7 +40,7 @@ interface GalleryInterface
 
     public function getUpdatedAt(): ?\DateTimeInterface;
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt);
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void;
 
     public function getCreatedAt(): ?\DateTimeInterface;
 
@@ -51,7 +51,7 @@ interface GalleryInterface
     /**
      * @param Collection<array-key, GalleryItemInterface> $galleryItems
      */
-    public function setGalleryItems(Collection $galleryItems);
+    public function setGalleryItems(Collection $galleryItems): void;
 
     /**
      * @return Collection<array-key, GalleryItemInterface>

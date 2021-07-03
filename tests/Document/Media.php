@@ -22,6 +22,9 @@ class Media extends BaseMedia
      */
     protected $id;
 
+    /**
+     * @param int|string|object|null $id
+     */
     public function setId($id): void
     {
         $this->id = $id;

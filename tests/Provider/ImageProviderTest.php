@@ -39,7 +39,7 @@ class ImageProviderTest extends AbstractProviderTest
     public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], ?Stub $box = null): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->method('resize')->willReturn(true);
+
         if ($box) {
             $resizer->method('getBox')->will($box);
         }

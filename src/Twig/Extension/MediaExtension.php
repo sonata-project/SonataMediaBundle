@@ -21,21 +21,22 @@ use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\TemplateWrapper;
 
 final class MediaExtension extends AbstractExtension
 {
     /**
      * @var Pool
      */
-    private $mediaService;
+    private $mediaPool;
 
     /**
-     * @var array
+     * @var array<string, TemplateWrapper>
      */
     private $resources = [];
 
     /**
-     * @var ManagerInterface
+     * @var ManagerInterface<MediaInterface>
      */
     private $mediaManager;
 
@@ -44,9 +45,12 @@ final class MediaExtension extends AbstractExtension
      */
     private $twig;
 
-    public function __construct(Pool $mediaService, ManagerInterface $mediaManager, Environment $twig)
+    /**
+     * @param ManagerInterface<MediaInterface> $mediaManager
+     */
+    public function __construct(Pool $mediaPool, ManagerInterface $mediaManager, Environment $twig)
     {
-        $this->mediaService = $mediaService;
+        $this->mediaPool = $mediaPool;
         $this->mediaManager = $mediaManager;
         $this->twig = $twig;
     }
@@ -62,12 +66,9 @@ final class MediaExtension extends AbstractExtension
 
     /**
      * @param MediaInterface|int|string $media
-     * @param string                    $format
-     * @param array                     $options
-     *
-     * @return string
+     * @param array<string, mixed>      $options
      */
-    public function media($media, $format, $options = [])
+    public function media($media, string $format, array $options = []): string
     {
         $media = $this->getMedia($media);
 
@@ -75,9 +76,7 @@ final class MediaExtension extends AbstractExtension
             return '';
         }
 
-        $provider = $this
-            ->getMediaService()
-            ->getProvider($media->getProviderName());
+        $provider = $this->mediaPool->getProvider($media->getProviderName());
 
         $format = $provider->getFormatName($media, $format);
 
@@ -94,12 +93,9 @@ final class MediaExtension extends AbstractExtension
      * Returns the thumbnail for the provided media.
      *
      * @param MediaInterface|int|string $media
-     * @param string                    $format
-     * @param array                     $options
-     *
-     * @return string
+     * @param array<string, mixed>      $options
      */
-    public function thumbnail($media, $format, $options = [])
+    public function thumbnail($media, string $format, array $options = []): string
     {
         $media = $this->getMedia($media);
 
@@ -107,8 +103,7 @@ final class MediaExtension extends AbstractExtension
             return '';
         }
 
-        $provider = $this->getMediaService()
-           ->getProvider($media->getProviderName());
+        $provider = $this->mediaPool->getProvider($media->getProviderName());
 
         $format = $provider->getFormatName($media, $format);
         $format_definition = $provider->getFormat($format);
@@ -137,26 +132,9 @@ final class MediaExtension extends AbstractExtension
     }
 
     /**
-     * @param string $template
-     *
-     * @return mixed
-     */
-    public function render($template, array $parameters = [])
-    {
-        if (!isset($this->resources[$template])) {
-            $this->resources[$template] = $this->twig->load($template);
-        }
-
-        return $this->resources[$template]->render($parameters);
-    }
-
-    /**
      * @param MediaInterface|int|string $media
-     * @param string                    $format
-     *
-     * @return string
      */
-    public function path($media, $format)
+    public function path($media, string $format): string
     {
         $media = $this->getMedia($media);
 
@@ -164,8 +142,7 @@ final class MediaExtension extends AbstractExtension
             return '';
         }
 
-        $provider = $this->getMediaService()
-           ->getProvider($media->getProviderName());
+        $provider = $this->mediaPool->getProvider($media->getProviderName());
 
         $format = $provider->getFormatName($media, $format);
 
@@ -173,11 +150,15 @@ final class MediaExtension extends AbstractExtension
     }
 
     /**
-     * @return Pool
+     * @param array<string, mixed> $parameters
      */
-    public function getMediaService()
+    private function render(string $template, array $parameters = []): string
     {
-        return $this->mediaService;
+        if (!isset($this->resources[$template])) {
+            $this->resources[$template] = $this->twig->load($template);
+        }
+
+        return $this->resources[$template]->render($parameters);
     }
 
     /**

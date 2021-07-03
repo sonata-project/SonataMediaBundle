@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Command;
 
 use Sonata\Doctrine\Model\ManagerInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Command\Command;
@@ -39,7 +40,7 @@ final class RefreshMetadataCommand extends Command
     private $mediaPool;
 
     /**
-     * @var ManagerInterface
+     * @var ManagerInterface<MediaInterface>
      */
     private $mediaManager;
 
@@ -58,6 +59,9 @@ final class RefreshMetadataCommand extends Command
      */
     private $input;
 
+    /**
+     * @param ManagerInterface<MediaInterface> $mediaManager
+     */
     public function __construct(Pool $mediaPool, ManagerInterface $mediaManager)
     {
         parent::__construct();

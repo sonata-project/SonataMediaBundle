@@ -65,6 +65,7 @@ class MediaExtensionTest extends TestCase
         ];
 
         $provider = $this->getProvider();
+        $provider->method('getTemplate')->with('helper_thumbnail')->willReturn('template');
         $provider->expects($this->once())->method('generatePublicUrl')->with($media, $format)
             ->willReturn('http://some.url.com');
 
@@ -72,16 +73,14 @@ class MediaExtensionTest extends TestCase
         $template->expects($this->once())
             ->method('render')
             ->with(
-                $this->equalTo(
-                    [
-                        'media' => $media,
-                        'options' => [
-                            'title' => 'Test title',
-                            'alt' => 'Test title',
-                            'src' => 'http://some.url.com',
-                        ],
-                    ]
-                )
+                [
+                    'media' => $media,
+                    'options' => [
+                        'title' => 'Test title',
+                        'alt' => 'Test title',
+                        'src' => 'http://some.url.com',
+                    ],
+                ]
             )
             ->willReturn('rendered thumbnail');
 

@@ -19,6 +19,9 @@ use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
+/**
+ * @phpstan-extends BaseEntityManager<\Sonata\MediaBundle\Model\MediaInterface>
+ */
 final class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
     public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
