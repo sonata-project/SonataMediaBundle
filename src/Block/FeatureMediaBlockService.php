@@ -91,7 +91,10 @@ final class FeatureMediaBlockService extends MediaBlockService
         ]);
     }
 
-    public function getStylesheets($media)
+    /**
+     * @return string[]
+     */
+    public function getStylesheets(string $media): array
     {
         return [
             '/bundles/sonatamedia/blocks/feature_media/theme.css',
