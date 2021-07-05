@@ -38,7 +38,7 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
      * @param int|null $limit
      * @param int|null $offset
      */
-    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
+    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
     {
         throw new NoDriverException();
     }

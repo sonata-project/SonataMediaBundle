@@ -48,6 +48,7 @@ class Pool
     }
 
     /**
+     * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     public function getProvider(?string $name): MediaProviderInterface
@@ -188,7 +189,7 @@ class Pool
         return $this->downloadStrategies[$id];
     }
 
-    public function getDownloadMode(MediaInterface $media): string
+    public function getDownloadMode(MediaInterface $media): ?string
     {
         $context = $this->getContext($media->getContext());
 
