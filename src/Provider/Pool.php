@@ -189,9 +189,16 @@ class Pool
         return $this->downloadStrategies[$id];
     }
 
-    public function getDownloadMode(MediaInterface $media): ?string
+    /**
+     * @throws \RuntimeException
+     */
+    public function getDownloadMode(MediaInterface $media): string
     {
         $context = $this->getContext($media->getContext());
+
+        if (!isset($context['download']['mode'])) {
+            throw new \RuntimeException('Unable to retrieve the download mode.');
+        }
 
         return $context['download']['mode'];
     }
