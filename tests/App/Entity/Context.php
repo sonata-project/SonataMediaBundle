@@ -33,6 +33,6 @@ class Context extends BaseContext
 
     public function getId()
     {
-        return $this->id ?? '';
+        return $this->id;
     }
 }
