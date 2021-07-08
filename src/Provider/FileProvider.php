@@ -246,13 +246,15 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             }, 200, $headers);
         }
 
-        if (!$this->getFilesystem()->getAdapter() instanceof Local) {
-            throw new \RuntimeException('Cannot use X-Sendfile or X-Accel-Redirect with non \Sonata\MediaBundle\Filesystem\Local');
+        $adapter = $this->getFilesystem()->getAdapter();
+
+        if (!$adapter instanceof Local) {
+            throw new \RuntimeException(sprintf('Cannot use X-Sendfile or X-Accel-Redirect with non %s.', Local::class));
         }
 
         $filename = sprintf(
             '%s/%s',
-            $this->getFilesystem()->getAdapter()->getDirectory(),
+            $adapter->getDirectory(),
             $this->generatePrivateUrl($media, $format)
         );
 

@@ -24,7 +24,7 @@ use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-final class CloudFrontVersionTest extends TestCase
+final class CloudFrontVersion3Test extends TestCase
 {
     protected function setUp(): void
     {
@@ -106,6 +106,28 @@ final class CloudFrontVersionTest extends TestCase
         $this->expectExceptionMessage('Unable to flush paths "/bar", "/baz".');
 
         $cloudFront->flushPaths(['/bar', '/baz']);
+    }
+
+    public function testNoStatusException(): void
+    {
+        $client = $this->getMockBuilder(CloudFrontClient::class)
+            ->addMethods(['createInvalidation'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
+
+        $client->expects($this->once())
+            ->method('createInvalidation')
+            ->willReturn(new Result([
+                'Invalidation' => [
+                    'Id' => 'invalidation_id',
+                ],
+            ]));
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to find the flush status from the given response.');
+
+        $cloudFront->flushPaths(['/boom']);
     }
 
     public function testUnknownStatusException(): void

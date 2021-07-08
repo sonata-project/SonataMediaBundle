@@ -116,13 +116,26 @@ final class CloudFrontVersion3 implements CDNInterface
                     'CallerReference' => $this->getCallerReference(),
                 ],
             ]);
-            $status = $result->get('Invalidation')['Status'];
+            $invalidation = $result->get('Invalidation');
+            \assert(\is_array($invalidation));
 
-            if (false === array_search($status, self::AVAILABLE_STATUSES, true)) {
+            $status = $invalidation['Status'] ?? null;
+
+            if (null === $status) {
+                throw new \RuntimeException('Unable to find the flush status from the given response.');
+            }
+
+            if (!\in_array($status, self::AVAILABLE_STATUSES, true)) {
                 throw new \RuntimeException(sprintf('Unable to determine the flush status from the given response: "%s".', $status));
             }
 
-            return $result->get('Invalidation')['Id'];
+            $id = $invalidation['Id'] ?? null;
+
+            if (null === $id) {
+                throw new \RuntimeException('Unable to determine the flush id from the given response.');
+            }
+
+            return $id;
         } catch (CloudFrontException $ex) {
             throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths)), 0, $ex);
         }

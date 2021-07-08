@@ -48,6 +48,7 @@ class Pool
     }
 
     /**
+     * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     public function getProvider(?string $name): MediaProviderInterface
@@ -188,9 +189,16 @@ class Pool
         return $this->downloadStrategies[$id];
     }
 
+    /**
+     * @throws \RuntimeException
+     */
     public function getDownloadMode(MediaInterface $media): string
     {
         $context = $this->getContext($media->getContext());
+
+        if (!isset($context['download']['mode'])) {
+            throw new \RuntimeException('Unable to retrieve the download mode.');
+        }
 
         return $context['download']['mode'];
     }
