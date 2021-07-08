@@ -108,6 +108,28 @@ final class CloudFrontVersion3Test extends TestCase
         $cloudFront->flushPaths(['/bar', '/baz']);
     }
 
+    public function testNoStatusException(): void
+    {
+        $client = $this->getMockBuilder(CloudFrontClient::class)
+            ->addMethods(['createInvalidation'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
+
+        $client->expects($this->once())
+            ->method('createInvalidation')
+            ->willReturn(new Result([
+                'Invalidation' => [
+                    'Id' => 'invalidation_id',
+                ],
+            ]));
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Unable to find the flush status from the given response.');
+
+        $cloudFront->flushPaths(['/boom']);
+    }
+
     public function testUnknownStatusException(): void
     {
         $client = $this->getMockBuilder(CloudFrontClient::class)
@@ -126,7 +148,7 @@ final class CloudFrontVersion3Test extends TestCase
             ]));
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to determine the flush status from the given response.');
+        $this->expectExceptionMessage('Unable to determine the flush status from the given response: "SomeUnknownStatus".');
 
         $cloudFront->flushPaths(['/boom']);
     }

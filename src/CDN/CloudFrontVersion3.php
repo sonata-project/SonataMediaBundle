@@ -121,8 +121,12 @@ final class CloudFrontVersion3 implements CDNInterface
 
             $status = $invalidation['Status'] ?? null;
 
-            if (null === $status || !\in_array($status, self::AVAILABLE_STATUSES, true)) {
-                throw new \RuntimeException('Unable to determine the flush status from the given response.');
+            if (null === $status) {
+                throw new \RuntimeException('Unable to find the flush status from the given response.');
+            }
+
+            if (!\in_array($status, self::AVAILABLE_STATUSES, true)) {
+                throw new \RuntimeException(sprintf('Unable to determine the flush status from the given response: "%s".', $status));
             }
 
             $id = $invalidation['Id'] ?? null;
