@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
- * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\FileProvider>
+ * @phpstan-extends AbstractProviderTest<FileProvider>
  */
 class FileProviderTest extends AbstractProviderTest
 {

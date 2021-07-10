@@ -163,7 +163,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     }
 
     /**
-     * @param array<string, mixed> $content
+     * @param mixed[] $content
      */
     public function setMetadata($key, $content): void
     {
@@ -177,7 +177,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     }
 
     /**
-     * @return array<string, mixed>
+     * @return mixed[]
      */
     public function getMetadata($key)
     {
