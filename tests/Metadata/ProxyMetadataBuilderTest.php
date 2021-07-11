@@ -235,6 +235,9 @@ final class ProxyMetadataBuilderTest extends TestCase
         $this->assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
+    /**
+     * @param array<string, object> $services
+     */
     private function getContainer(array $services): ContainerInterface
     {
         $container = new Container();

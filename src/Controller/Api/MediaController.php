@@ -136,6 +136,8 @@ final class MediaController
      * @Rest\QueryParam(name="orderBy", map=true, requirements="ASC|DESC", nullable=true, strict=true, description="Order by array (key is field, value is direction)")
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
+     *
+     * @return PagerInterface<MediaInterface>
      */
     public function getMediaAction(ParamFetcherInterface $paramFetcher): PagerInterface
     {
@@ -394,7 +396,7 @@ final class MediaController
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
      */
-    private function getMedium($id = null): MediaInterface
+    private function getMedium($id): MediaInterface
     {
         $media = $this->mediaManager->find($id);
 

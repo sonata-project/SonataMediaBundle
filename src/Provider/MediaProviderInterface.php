@@ -31,12 +31,15 @@ interface MediaProviderInterface
     // This format holds the original media
     public const FORMAT_REFERENCE = 'reference';
 
-    public function addFormat(string $name, array $format): void;
+    /**
+     * @param array<string, mixed> $settings
+     */
+    public function addFormat(string $name, array $settings): void;
 
     /**
      * return the format settings.
      *
-     * @return array|false the format settings
+     * @return array<string, mixed>|false the format settings
      */
     public function getFormat(string $name);
 
@@ -53,7 +56,7 @@ interface MediaProviderInterface
     /**
      * remove linked thumbnails.
      *
-     * @param string|array $formats
+     * @param string|string[] $formats
      */
     public function removeThumbnails(MediaInterface $media, $formats = null): void;
 
@@ -95,6 +98,11 @@ interface MediaProviderInterface
 
     public function postPersist(MediaInterface $media): void;
 
+    /**
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
+     */
     public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array;
 
     /**
@@ -112,6 +120,9 @@ interface MediaProviderInterface
      */
     public function generatePrivateUrl(MediaInterface $media, string $format): string;
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function getFormats(): array;
 
     public function setName(string $name): void;
@@ -120,14 +131,22 @@ interface MediaProviderInterface
 
     public function getProviderMetadata(): MetadataInterface;
 
+    /**
+     * @param string[] $templates
+     */
     public function setTemplates(array $templates): void;
 
+    /**
+     * @return string[]
+     */
     public function getTemplates(): array;
 
     public function getTemplate(string $name): ?string;
 
     /**
      * Mode can be x-file.
+     *
+     * @param array<string, mixed> $headers
      */
     public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response;
 

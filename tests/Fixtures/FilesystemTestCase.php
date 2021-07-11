@@ -18,6 +18,9 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FilesystemTestCase extends TestCase
 {
+    /**
+     * @var string[]
+     */
     protected $longPathNamesWindows = [];
 
     /**
@@ -106,7 +109,7 @@ class FilesystemTestCase extends TestCase
         );
     }
 
-    protected function getFileOwner(string $filepath)
+    protected function getFileOwner(string $filepath): ?string
     {
         $this->markAsSkippedIfPosixIsMissing();
 
@@ -115,7 +118,7 @@ class FilesystemTestCase extends TestCase
         return ($datas = posix_getpwuid($infos['uid'])) ? $datas['name'] : null;
     }
 
-    protected function getFileGroup(string $filepath)
+    protected function getFileGroup(string $filepath): string
     {
         $this->markAsSkippedIfPosixIsMissing();
 

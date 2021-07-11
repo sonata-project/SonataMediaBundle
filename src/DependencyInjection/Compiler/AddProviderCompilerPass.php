@@ -44,7 +44,7 @@ final class AddProviderCompilerPass implements CompilerPassInterface
         }
     }
 
-    public function attachProviders(ContainerBuilder $container): void
+    private function attachProviders(ContainerBuilder $container): void
     {
         $pool = $container->getDefinition('sonata.media.pool');
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
@@ -52,21 +52,24 @@ final class AddProviderCompilerPass implements CompilerPassInterface
         }
     }
 
-    public function attachArguments(ContainerBuilder $container, array $settings): void
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function attachArguments(ContainerBuilder $container, array $config): void
     {
         foreach ($container->findTaggedServiceIds('sonata.media.provider') as $id => $attributes) {
-            foreach ($settings['providers'] as $name => $config) {
-                if ($config['service'] === $id) {
+            foreach ($config['providers'] as $provider) {
+                if ($provider['service'] === $id) {
                     $definition = $container->getDefinition($id);
 
                     $definition
-                        ->replaceArgument(1, new Reference($config['filesystem']))
-                        ->replaceArgument(2, new Reference($config['cdn']))
-                        ->replaceArgument(3, new Reference($config['generator']))
-                        ->replaceArgument(4, new Reference($config['thumbnail']));
+                        ->replaceArgument(1, new Reference($provider['filesystem']))
+                        ->replaceArgument(2, new Reference($provider['cdn']))
+                        ->replaceArgument(3, new Reference($provider['generator']))
+                        ->replaceArgument(4, new Reference($provider['thumbnail']));
 
-                    if ($config['resizer']) {
-                        $definition->addMethodCall('setResizer', [new Reference($config['resizer'])]);
+                    if ($provider['resizer']) {
+                        $definition->addMethodCall('setResizer', [new Reference($provider['resizer'])]);
                     }
                 }
             }
@@ -75,28 +78,33 @@ final class AddProviderCompilerPass implements CompilerPassInterface
 
     /**
      * Define the default settings to the config array.
+     *
+     * @param array<string, mixed> $config
      */
-    public function applyFormats(ContainerBuilder $container, array $settings): void
+    private function applyFormats(ContainerBuilder $container, array $config): void
     {
-        foreach ($settings['contexts'] as $name => $context) {
+        foreach ($config['contexts'] as $name => $context) {
             // add the different related formats
             foreach ($context['providers'] as $id) {
                 $definition = $container->getDefinition($id);
 
-                foreach ($context['formats'] as $format => $config) {
-                    $config['quality'] = $config['quality'] ?? 80;
-                    $config['format'] = $config['format'] ?? 'jpg';
-                    $config['height'] = $config['height'] ?? null;
-                    $config['constraint'] = $config['constraint'] ?? true;
-                    $config['resizer'] = $config['resizer'] ?? false;
+                foreach ($context['formats'] as $format => $formatConfig) {
+                    $formatConfig['quality'] = $formatConfig['quality'] ?? 80;
+                    $formatConfig['format'] = $formatConfig['format'] ?? 'jpg';
+                    $formatConfig['height'] = $formatConfig['height'] ?? null;
+                    $formatConfig['constraint'] = $formatConfig['constraint'] ?? true;
+                    $formatConfig['resizer'] = $formatConfig['resizer'] ?? false;
 
                     $formatName = sprintf('%s_%s', $name, $format);
-                    $definition->addMethodCall('addFormat', [$formatName, $config]);
+                    $definition->addMethodCall('addFormat', [$formatName, $formatConfig]);
                 }
             }
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getExtensionConfig(ContainerBuilder $container): array
     {
         $config = $container->getExtensionConfig('sonata_media');

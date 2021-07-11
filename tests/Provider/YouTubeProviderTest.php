@@ -45,7 +45,6 @@ class YouTubeProviderTest extends AbstractProviderTest
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->method('resize')->willReturn(true);
         $resizer->method('getBox')->willReturn(new Box(100, 100));
 
         $adapter = $this->createMock(Adapter::class);
@@ -178,21 +177,22 @@ class YouTubeProviderTest extends AbstractProviderTest
         $this->assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    public static function getUrls(): array
+    /**
+     * @phpstan-return iterable<array{0: string}>
+     */
+    public static function getUrls(): iterable
     {
-        return [
-        ['BDYAbAtaDzA'],
-        ['http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'],
-        ['http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'],
-        ['http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'],
-        ['http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'],
-        ['http://www.youtube.com/watch?v=BDYAbAtaDzA'],
-        ['http://www.m.youtube.com/watch?v=BDYAbAtaDzA'],
-        ['http://m.youtube.com/watch?v=BDYAbAtaDzA'],
-        ['https://www.m.youtube.com/watch?v=BDYAbAtaDzA'],
-        ['https://m.youtube.com/watch?v=BDYAbAtaDzA'],
-        ['http://youtu.be/BDYAbAtaDzA'],
-        ];
+        yield ['BDYAbAtaDzA'];
+        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'];
+        yield ['http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'];
+        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'];
+        yield ['http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'];
+        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['http://www.m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['http://m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['https://www.m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['https://m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['http://youtu.be/BDYAbAtaDzA'];
     }
 
     public function testGetMetadataException(): void

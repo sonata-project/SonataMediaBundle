@@ -25,6 +25,8 @@ final class ThumbnailCompilerPassTest extends TestCase
 {
     /**
      * @dataProvider processProvider
+     *
+     * @param class-string|string $class
      */
     public function testProcess(bool $expected, string $class, ?ParameterBagInterface $parameterBag = null): void
     {
@@ -39,14 +41,15 @@ final class ThumbnailCompilerPassTest extends TestCase
         $this->assertSame($expected, $thumbnailDefinition->hasMethodCall('addResizer'));
     }
 
-    public function processProvider(): array
+    /**
+     * @phpstan-return iterable<array{0: bool, 1: class-string|string, 2?: ParameterBagInterface}>
+     */
+    public function processProvider(): iterable
     {
-        return [
-            [true, FormatThumbnail::class],
-            [false, ConsumerThumbnail::class],
-            [true, '%foo%', new ParameterBag(['foo' => FormatThumbnail::class])],
-            [false, '%bar%', new ParameterBag(['bar' => TestUncallableAddResizerMethod::class])],
-        ];
+        yield [true, FormatThumbnail::class];
+        yield [false, ConsumerThumbnail::class];
+        yield [true, '%foo%', new ParameterBag(['foo' => FormatThumbnail::class])];
+        yield [false, '%bar%', new ParameterBag(['bar' => TestUncallableAddResizerMethod::class])];
     }
 }
 

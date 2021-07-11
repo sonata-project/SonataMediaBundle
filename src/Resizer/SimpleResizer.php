@@ -45,7 +45,7 @@ final class SimpleResizer implements ResizerInterface
         $this->metadata = $metadata;
     }
 
-    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings): void
+    public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void
     {
         if (!isset($settings['width']) && !isset($settings['height'])) {
             throw new \RuntimeException(sprintf('Width or height parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderName()));
@@ -60,7 +60,7 @@ final class SimpleResizer implements ResizerInterface
         $out->setContent($content, $this->metadata->get($media, $out->getName()));
     }
 
-    public function getBox(MediaInterface $media, array $settings)
+    public function getBox(MediaInterface $media, array $settings): Box
     {
         $size = $media->getBox();
 
@@ -80,11 +80,11 @@ final class SimpleResizer implements ResizerInterface
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @param array<string, mixed> $settings
      *
-     * @return Box
+     * @throws InvalidArgumentException
      */
-    private function computeBox(MediaInterface $media, array $settings)
+    private function computeBox(MediaInterface $media, array $settings): Box
     {
         if (!($this->mode & ManipulatorInterface::THUMBNAIL_INSET || $this->mode & ManipulatorInterface::THUMBNAIL_OUTBOUND)) {
             throw new InvalidArgumentException('Invalid mode specified');

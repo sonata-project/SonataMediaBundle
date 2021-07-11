@@ -20,7 +20,7 @@ use Symfony\Component\Config\Definition\Processor;
 class ConfigurationTest extends TestCase
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $config;
 

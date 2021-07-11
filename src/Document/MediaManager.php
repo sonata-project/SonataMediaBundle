@@ -17,6 +17,9 @@ use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\Doctrine\Document\BaseDocumentManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
+/**
+ * @phpstan-extends BaseDocumentManager<\Sonata\MediaBundle\Model\MediaInterface>
+ */
 final class MediaManager extends BaseDocumentManager implements MediaManagerInterface
 {
     public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface

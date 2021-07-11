@@ -19,6 +19,9 @@ use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @phpstan-extends CRUDController<\Sonata\MediaBundle\Model\GalleryInterface>
+ */
 final class GalleryAdminController extends CRUDController
 {
     /**

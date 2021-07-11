@@ -30,19 +30,20 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     private $pool;
 
     /**
-     * @var string
+     * @var class-string
      */
     private $class;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $options;
 
     /**
-     * @param string $class
+     * @param class-string         $class
+     * @param array<string, mixed> $options
      */
-    public function __construct(Pool $pool, $class, array $options = [])
+    public function __construct(Pool $pool, string $class, array $options = [])
     {
         $this->pool = $pool;
         $this->options = $this->getOptions($options);
@@ -118,7 +119,9 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     /**
      * Define the default options for the DataTransformer.
      *
-     * @return array
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
      */
     private function getOptions(array $options)
     {

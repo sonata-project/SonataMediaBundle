@@ -131,6 +131,8 @@ final class GalleryController
      * )
      *
      * @Rest\View(serializerGroups={"sonata_api_read"}, serializerEnableMaxDepthChecks=true)
+     *
+     * @return PagerInterface<GalleryInterface>
      */
     public function getGalleriesAction(ParamFetcherInterface $paramFetcher): PagerInterface
     {

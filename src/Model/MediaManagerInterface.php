@@ -16,6 +16,10 @@ namespace Sonata\MediaBundle\Model;
 use Sonata\DatagridBundle\Pager\PageableInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 
+/**
+ * @phpstan-extends ManagerInterface<\Sonata\MediaBundle\Model\MediaInterface>
+ * @phpstan-extends PageableInterface<\Sonata\MediaBundle\Model\MediaInterface>
+ */
 interface MediaManagerInterface extends ManagerInterface, PageableInterface
 {
 }

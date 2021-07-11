@@ -17,6 +17,9 @@ use Symfony\Component\Validator\Constraint;
 
 final class ImageUploadDimension extends Constraint
 {
+    /**
+     * @var string
+     */
     public $message = 'error.image_too_small';
 
     public function getTargets(): string

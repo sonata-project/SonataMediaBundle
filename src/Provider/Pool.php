@@ -23,17 +23,21 @@ use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 class Pool
 {
     /**
-     * @var array
+     * @var array<string, MediaProviderInterface>
      */
     private $providers = [];
 
     /**
-     * @var array
+     * @phpstan-var array<string, array{
+     *     providers: string[],
+     *     formats: array<string, array<string, mixed>>,
+     *     download: array<string, mixed>
+     * }>
      */
     private $contexts = [];
 
     /**
-     * @var DownloadStrategyInterface[]
+     * @var array<string, DownloadStrategyInterface>
      */
     private $downloadStrategies = [];
 
@@ -53,12 +57,14 @@ class Pool
      */
     public function getProvider(?string $name): MediaProviderInterface
     {
-        if (!$name) {
+        if (null === $name) {
             throw new \InvalidArgumentException('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
         }
+
         if (empty($this->providers)) {
             throw new \RuntimeException(sprintf('Unable to retrieve provider named "%s" since there are no providers configured yet.', $name));
         }
+
         if (!isset($this->providers[$name])) {
             throw new \InvalidArgumentException(sprintf('Unable to retrieve the provider named "%s". Available providers are %s.', $name, '"'.implode('", "', $this->getProviderList()).'"'));
         }
@@ -76,19 +82,27 @@ class Pool
         $this->downloadStrategies[$name] = $security;
     }
 
+    /**
+     * @param array<string, MediaProviderInterface> $providers
+     */
     public function setProviders(array $providers): void
     {
         $this->providers = $providers;
     }
 
     /**
-     * @return MediaProviderInterface[]
+     * @return array<string, MediaProviderInterface>
      */
     public function getProviders(): array
     {
         return $this->providers;
     }
 
+    /**
+     * @param string[]                            $providers
+     * @param array<string, array<string, mixed>> $formats
+     * @param array<string, mixed>                $download
+     */
     public function addContext(string $name, array $providers = [], array $formats = [], array $download = []): void
     {
         if (!$this->hasContext($name)) {
@@ -109,6 +123,13 @@ class Pool
         return isset($this->contexts[$name]);
     }
 
+    /**
+     * @phpstan-return array{
+     *     providers: string[],
+     *     formats: array<string, array<string, mixed>>,
+     *     download: array<string, mixed>
+     * }|null
+     */
     public function getContext(string $name): ?array
     {
         if (!$this->hasContext($name)) {
@@ -120,12 +141,21 @@ class Pool
 
     /**
      * Returns the context list.
+     *
+     * @phpstan-return array<string, array{
+     *     providers: string[],
+     *     formats: array<string, array<string, mixed>>,
+     *     download: array<string, mixed>
+     * }>
      */
     public function getContexts(): array
     {
         return $this->contexts;
     }
 
+    /**
+     * @return string[]|null
+     */
     public function getProviderNamesByContext(string $name): ?array
     {
         $context = $this->getContext($name);
@@ -137,6 +167,9 @@ class Pool
         return $context['providers'];
     }
 
+    /**
+     * @return array<string, array<string, mixed>>|null
+     */
     public function getFormatNamesByContext(string $name): ?array
     {
         $context = $this->getContext($name);
@@ -148,6 +181,9 @@ class Pool
         return $context['formats'];
     }
 
+    /**
+     * @return MediaProviderInterface[]
+     */
     public function getProvidersByContext(string $name): array
     {
         $providers = [];
@@ -163,6 +199,9 @@ class Pool
         return $providers;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getProviderList(): array
     {
         $choices = [];

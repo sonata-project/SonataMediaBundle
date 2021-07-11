@@ -38,7 +38,7 @@ final class ImageUploadDimensionValidator extends ConstraintValidator
         $this->imageProvider = $imageProvider;
     }
 
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ImageUploadDimension) {
             throw new UnexpectedTypeException($constraint, ImageUploadDimension::class);

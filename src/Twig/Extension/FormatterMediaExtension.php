@@ -18,9 +18,8 @@ use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\ExtensionInterface;
 
-final class FormatterMediaExtension extends AbstractExtension implements ExtensionInterface
+final class FormatterMediaExtension extends AbstractExtension
 {
     /**
      * @var MediaExtension
@@ -32,6 +31,9 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
         $this->twigExtension = $twigExtension;
     }
 
+    /**
+     * @return string[]
+     */
     public function getAllowedTags(): array
     {
         return [
@@ -41,6 +43,9 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
         ];
     }
 
+    /**
+     * @return array<class-string, string[]>
+     */
     public function getAllowedMethods(): array
     {
         return [
@@ -65,36 +70,27 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
     }
 
     /**
-     * @param int|string $media
-     * @param string     $format
-     * @param array      $options
-     *
-     * @return string
+     * @param int|string           $media
+     * @param array<string, mixed> $options
      */
-    public function media($media, $format, $options = [])
+    public function media($media, string $format, array $options = []): string
     {
         return $this->getTwigExtension()->media($media, $format, $options);
     }
 
     /**
-     * @param int|string $media
-     * @param string     $format
-     * @param array      $options
-     *
-     * @return string
+     * @param int|string           $media
+     * @param array<string, mixed> $options
      */
-    public function thumbnail($media, $format, $options = [])
+    public function thumbnail($media, string $format, array $options = []): string
     {
         return $this->getTwigExtension()->thumbnail($media, $format, $options);
     }
 
     /**
      * @param int|string $media
-     * @param string     $format
-     *
-     * @return string
      */
-    public function path($media, $format)
+    public function path($media, string $format): string
     {
         return $this->getTwigExtension()->path($media, $format);
     }
@@ -122,20 +118,5 @@ final class FormatterMediaExtension extends AbstractExtension implements Extensi
     public function getOperators()
     {
         return $this->getTwigExtension()->getOperators();
-    }
-
-    public function getAllowedFilters()
-    {
-        return [];
-    }
-
-    public function getAllowedFunctions()
-    {
-        return [];
-    }
-
-    public function getAllowedProperties()
-    {
-        return [];
     }
 }

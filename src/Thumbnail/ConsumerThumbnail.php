@@ -48,12 +48,12 @@ final class ConsumerThumbnail implements ThumbnailInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         return $this->thumbnail->generatePrivateUrl($provider, $media, $format);
     }
 
-    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         return $this->thumbnail->generatePrivateUrl($provider, $media, $format);
     }
@@ -78,8 +78,8 @@ final class ConsumerThumbnail implements ThumbnailInterface
         $this->dispatcher->addListener('console.terminate', $publish);
     }
 
-    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void
     {
-        return $this->thumbnail->delete($provider, $media, $formats);
+        $this->thumbnail->delete($provider, $media, $formats);
     }
 }

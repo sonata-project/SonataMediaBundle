@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Command;
 
 use Sonata\Doctrine\Model\ClearableManagerInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,7 +27,7 @@ final class AddMassMediaCommand extends Command
     protected static $defaultDescription = 'Add medias in mass into the database';
 
     /**
-     * @var ManagerInterface
+     * @var ManagerInterface<MediaInterface>
      */
     private $mediaManager;
 
@@ -35,6 +36,9 @@ final class AddMassMediaCommand extends Command
      */
     private $setters = [];
 
+    /**
+     * @param ManagerInterface<MediaInterface> $mediaManager
+     */
     public function __construct(ManagerInterface $mediaManager)
     {
         parent::__construct();
@@ -104,6 +108,9 @@ final class AddMassMediaCommand extends Command
         return fopen($input->getOption('file'), 'r');
     }
 
+    /**
+     * @param mixed[] $data
+     */
     private function insertMedia(array $data, OutputInterface $output): void
     {
         $media = $this->mediaManager->create();

@@ -39,6 +39,8 @@ class SquareResizerTest extends TestCase
 
     /**
      * @dataProvider getBoxSettings
+     *
+     * @param array<string, mixed> $settings
      */
     public function testGetBox(array $settings, Box $mediaSize, Box $expected): void
     {
@@ -59,13 +61,14 @@ class SquareResizerTest extends TestCase
         $this->assertSame($expected->getHeight(), $box->getHeight());
     }
 
-    public static function getBoxSettings(): array
+    /**
+     * @phpstan-return iterable<array{array<string, mixed>, Box, Box}>
+     */
+    public static function getBoxSettings(): iterable
     {
-        return [
-            [['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
-            [['width' => 90, 'height' => 90], new Box(50, 50), new Box(50, 50)],
-            [['width' => 90, 'height' => null], new Box(50, 50), new Box(50, 50)],
-            [['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 7)],
-        ];
+        yield [['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)];
+        yield [['width' => 90, 'height' => 90], new Box(50, 50), new Box(50, 50)];
+        yield [['width' => 90, 'height' => null], new Box(50, 50), new Box(50, 50)];
+        yield [['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 7)];
     }
 }

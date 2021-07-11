@@ -37,8 +37,8 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
 
     public function __construct(
         ContainerInterface $container,
-        MetadataBuilderInterface $noopMetadataBuilder,
-        MetadataBuilderInterface $amazonMetadataBuilder
+        ?MetadataBuilderInterface $noopMetadataBuilder = null,
+        ?MetadataBuilderInterface $amazonMetadataBuilder = null
     ) {
         $this->container = $container;
         $this->noopMetadataBuilder = $noopMetadataBuilder;
@@ -52,7 +52,9 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
             return [];
         }
 
-        if ($meta = $this->getAmazonBuilder($media, $filename)) {
+        $meta = $this->getAmazonBuilder($media, $filename);
+
+        if (null !== $meta) {
             return $meta;
         }
 
@@ -64,11 +66,9 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * @param string $filename
-     *
-     * @return array|false
+     * @return array<string, mixed>|null
      */
-    private function getAmazonBuilder(MediaInterface $media, $filename)
+    private function getAmazonBuilder(MediaInterface $media, string $filename): ?array
     {
         $adapter = $this->container->get($media->getProviderName())->getFilesystem()->getAdapter();
 
@@ -81,7 +81,7 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
 
         //for amazon s3
         if (null === $this->amazonMetadataBuilder || !\in_array(AwsS3::class, $adapterClassNames, true)) {
-            return false;
+            return null;
         }
 
         return $this->amazonMetadataBuilder->get($media, $filename);

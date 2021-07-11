@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block\Breadcrumb;
 
+use Knp\Menu\ItemInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -42,7 +43,7 @@ final class MediaViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockSe
         ]);
     }
 
-    protected function getMenu(BlockContextInterface $blockContext)
+    protected function getMenu(BlockContextInterface $blockContext): ItemInterface
     {
         $menu = $this->getRootMenu($blockContext);
 

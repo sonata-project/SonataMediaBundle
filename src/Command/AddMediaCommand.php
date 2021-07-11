@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Command;
 
 use Sonata\Doctrine\Model\ManagerInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,10 +27,13 @@ final class AddMediaCommand extends Command
     protected static $defaultDescription = 'Add a media into the database';
 
     /**
-     * @var ManagerInterface
+     * @var ManagerInterface<MediaInterface>
      */
     private $mediaManager;
 
+    /**
+     * @param ManagerInterface<MediaInterface> $mediaManager
+     */
     public function __construct(ManagerInterface $mediaManager)
     {
         parent::__construct();

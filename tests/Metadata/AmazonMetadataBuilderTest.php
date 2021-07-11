@@ -23,6 +23,9 @@ final class AmazonMetadataBuilderTest extends TestCase
 {
     /**
      * @dataProvider provider
+     *
+     * @param array<string, mixed> $settings
+     * @param array<string, mixed> $expected
      */
     public function testAmazon(array $settings, array $expected): void
     {
@@ -38,6 +41,9 @@ final class AmazonMetadataBuilderTest extends TestCase
         $this->assertSame($expected, $amazonmetadatabuilder->get($media, $filename));
     }
 
+    /**
+     * @return iterable<array{0: array<string, mixed>, 1: array<string, mixed>}>
+     */
     public function provider(): iterable
     {
         yield [['acl' => 'private'], ['ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS, 'contentType' => 'image/png']];

@@ -20,6 +20,9 @@ use Symfony\Component\Validator\Constraint;
  */
 final class ValidMediaFormat extends Constraint
 {
+    /**
+     * @var string
+     */
     public $message = 'The format is not valid';
 
     public function validatedBy()

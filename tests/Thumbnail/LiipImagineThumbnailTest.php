@@ -19,7 +19,6 @@ use Gaufrette\Filesystem;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail;
 
@@ -41,9 +40,6 @@ class LiipImagineThumbnailTest extends TestCase
           'anothercontext_large' => ['height' => 500, 'width' => 500, 'quality' => 100],
         ];
 
-        $resizer = $this->createStub(ResizerInterface::class);
-        $resizer->method('resize')->willReturn(true);
-
         $media = new Media();
         $media->setName('ASDASDAS.png');
         $media->setProviderReference('ASDASDAS.png');
@@ -54,7 +50,6 @@ class LiipImagineThumbnailTest extends TestCase
         $provider->method('requireThumbnails')->willReturn(true);
         $provider->method('getReferenceFile')->willReturn($referenceFile);
         $provider->method('getFormats')->willReturn($formats);
-        $provider->method('getResizer')->willReturn($resizer);
         $provider->method('generatePrivateUrl')->willReturn('/my/private/path');
         $provider->method('generatePublicUrl')->willReturn('/my/public/path');
         $provider->method('getFilesystem')->willReturn($filesystem);

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Functional\Routing;
 
-use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sonata\MediaBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -26,6 +25,8 @@ final class RoutingTest extends WebTestCase
      * @group legacy
      *
      * @dataProvider getRoutes
+     *
+     * @param string[] $methods
      */
     public function testRoutes(string $name, string $path, array $methods): void
     {
@@ -76,15 +77,13 @@ final class RoutingTest extends WebTestCase
         }
     }
 
+    /**
+     * @phpstan-return iterable<array{string, string, string[]}>
+     */
     public function getRoutes(): iterable
     {
-        // API
-        if (class_exists(Operation::class)) {
-            yield ['app.swagger_ui', '/api/doc', ['GET']];
-            yield ['app.swagger', '/api/doc.json', ['GET']];
-        } else {
-            yield ['nelmio_api_doc_index', '/api/doc/{view}', ['GET']];
-        }
+        yield ['app.swagger_ui', '/api/doc', ['GET']];
+        yield ['app.swagger', '/api/doc.json', ['GET']];
 
         // API - Gallery
         yield ['sonata_api_media_gallery_get_galleries', '/api/media/galleries.{_format}', ['GET']];

@@ -97,7 +97,7 @@ final class AppKernel extends Kernel
         $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml');
     }
 
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $loader->load(__DIR__.'/Resources/config/config.yml');
 

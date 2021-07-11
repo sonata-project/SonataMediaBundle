@@ -24,6 +24,7 @@ use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Controller\MediaAdminController;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Category;
 use Sonata\MediaBundle\Tests\App\Entity\Context;
@@ -47,7 +48,7 @@ class MediaAdminControllerTest extends TestCase
     private $container;
 
     /**
-     * @var MockObject&AdminInterface
+     * @var MockObject&AdminInterface<MediaInterface>
      */
     private $admin;
 
@@ -225,7 +226,10 @@ class MediaAdminControllerTest extends TestCase
         $requestStack->method('getCurrentRequest')->willReturn($request);
     }
 
-    private function configureSetFormTheme(FormView $formView, $formTheme): void
+    /**
+     * @param string[] $formTheme
+     */
+    private function configureSetFormTheme(FormView $formView, array $formTheme): void
     {
         $twigRenderer = $this->createMock(FormRenderer::class);
 

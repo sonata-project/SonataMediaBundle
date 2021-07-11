@@ -20,7 +20,6 @@ use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
-use PHPUnit\Framework\MockObject\Stub\Stub;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
@@ -36,13 +35,29 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
  */
 class ImageProviderTest extends AbstractProviderTest
 {
-    public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = [], ?Stub $box = null): MediaProviderInterface
+    public function getProvider(): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->method('resize')->willReturn(true);
-        if ($box) {
-            $resizer->method('getBox')->will($box);
-        }
+
+        $adminBox = new Box(100, 100);
+        $mediumBox = new Box(500, 250);
+        $largeBox = new Box(1000, 500);
+
+        $resizer->method('getBox')->will($this->onConsecutiveCalls(
+            $largeBox, // first properties call
+            $mediumBox,
+            $largeBox,
+            $mediumBox, // second call
+            $mediumBox,
+            $largeBox,
+            $adminBox, // Third call
+            $largeBox, // Fourth call
+            $mediumBox,
+            $largeBox,
+            $largeBox, // Fifth call
+            $mediumBox,
+            $largeBox
+        ));
 
         $adapter = $this->createMock(Adapter::class);
 
@@ -73,7 +88,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
+        $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, [], [], $adapter, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -99,29 +114,7 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testHelperProperties(): void
     {
-        $adminBox = new Box(100, 100);
-        $mediumBox = new Box(500, 250);
-        $largeBox = new Box(1000, 500);
-
-        $provider = $this->getProvider(
-            [],
-            [],
-            $this->onConsecutiveCalls(
-                $largeBox, // first properties call
-                $mediumBox,
-                $largeBox,
-                $mediumBox, // second call
-                $mediumBox,
-                $largeBox,
-                $adminBox, // Third call
-                $largeBox, // Fourth call
-                $mediumBox,
-                $largeBox,
-                $largeBox, // Fifth call
-                $mediumBox,
-                $largeBox
-            )
-        );
+        $provider = $this->getProvider();
 
         $provider->addFormat('admin', ['width' => 100]);
         $provider->addFormat('default_medium', ['width' => 500]);

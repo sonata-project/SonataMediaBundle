@@ -42,7 +42,7 @@ final class CropResizer implements ResizerInterface
         $this->metadata = $metadata;
     }
 
-    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings): void
+    public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void
     {
         if (!isset($settings['width'])) {
             throw new \InvalidArgumentException(sprintf(

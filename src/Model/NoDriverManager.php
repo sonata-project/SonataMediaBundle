@@ -38,7 +38,7 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return object[]
+     * @return MediaInterface[]
      */
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
@@ -52,6 +52,8 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
 
     /**
      * @param mixed $id
+     *
+     * @return MediaInterface|null
      */
     public function find($id): ?object
     {

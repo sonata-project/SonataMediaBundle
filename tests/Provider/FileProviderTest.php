@@ -36,14 +36,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
- * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\FileProvider>
+ * @phpstan-extends AbstractProviderTest<FileProvider>
  */
 class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider(): MediaProviderInterface
     {
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->method('resize')->willReturn(true);
 
         $adapter = $this->createMock(Local::class);
         $adapter->method('getDirectory')->willReturn(realpath(__DIR__).'/../Fixtures');
@@ -176,7 +175,7 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @dataProvider mediaProvider
      */
-    public function testTransform(string $expected, Media $media): void
+    public function testTransform(string $expected, MediaInterface $media): void
     {
         $closure = function () use ($expected, $media): void {
             $this->provider->transform($media);
@@ -186,7 +185,10 @@ class FileProviderTest extends AbstractProviderTest
         $closure();
     }
 
-    public function mediaProvider(): array
+    /**
+     * @phpstan-return iterable<array{0: class-string, 1: MediaInterface}>
+     */
+    public function mediaProvider(): iterable
     {
         $file = new File(realpath(__DIR__.'/../Fixtures/file.txt'));
         $content = file_get_contents(realpath(__DIR__.'/../Fixtures/file.txt'));
@@ -202,11 +204,9 @@ class FileProviderTest extends AbstractProviderTest
         $media2->setContentType('text/plain');
         $media2->setId(1023456);
 
-        return [
-            [File::class, $media1],
-            [File::class, $media1],
-            [File::class, $media2],
-        ];
+        yield [File::class, $media1];
+        yield [File::class, $media1];
+        yield [File::class, $media2];
     }
 
     public function testBinaryContentWithRealPath(): void

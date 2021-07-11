@@ -22,6 +22,8 @@ class NoDriverManagerTest extends TestCase
 {
     /**
      * @dataProvider providerMethods
+     *
+     * @param mixed[] $arguments
      */
     public function testException(string $method, array $arguments): void
     {
@@ -35,20 +37,21 @@ class NoDriverManagerTest extends TestCase
         $this->assertInstanceOf(GalleryManagerInterface::class, new NoDriverManager());
     }
 
-    public function providerMethods(): array
+    /**
+     * @phpstan-return iterable<array{0: string, 1: mixed[]}>
+     */
+    public function providerMethods(): iterable
     {
-        return [
-            ['getClass', []],
-            ['findAll', []],
-            ['findBy', [[]]],
-            ['findOneBy', [[]]],
-            ['find', [1]],
-            ['create', []],
-            ['save', [null]],
-            ['delete', [null]],
-            ['getTableName', []],
-            ['getConnection', []],
-            ['getPager', [[], 1]],
-        ];
+        yield ['getClass', []];
+        yield ['findAll', []];
+        yield ['findBy', [[]]];
+        yield ['findOneBy', [[]]];
+        yield ['find', [1]];
+        yield ['create', []];
+        yield ['save', [null]];
+        yield ['delete', [null]];
+        yield ['getTableName', []];
+        yield ['getConnection', []];
+        yield ['getPager', [[], 1]];
     }
 }
