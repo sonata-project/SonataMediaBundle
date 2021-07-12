@@ -47,7 +47,7 @@ abstract class GalleryItem implements GalleryItemInterface
 
     public function __toString(): string
     {
-        return $this->getGallery().' | '.(string) ($this->getMedia() ?? '');
+        return $this->getGallery().' | '.$this->getMedia();
     }
 
     public function setEnabled(bool $enabled): void

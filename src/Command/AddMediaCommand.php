@@ -45,23 +45,23 @@ final class AddMediaCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
-                new InputArgument('context', InputArgument::REQUIRED, 'The context'),
-                new InputArgument('binaryContent', InputArgument::REQUIRED, 'The content'),
-
-                new InputOption('description', null, InputOption::VALUE_OPTIONAL, 'The media description field', null),
-                new InputOption('copyright', null, InputOption::VALUE_OPTIONAL, 'The media copyright field', null),
-                new InputOption('author', null, InputOption::VALUE_OPTIONAL, 'The media author name field', null),
-                new InputOption('enabled', null, InputOption::VALUE_OPTIONAL, 'The media enabled field', true),
-        ]);
+            ->addArgument('providerName', InputArgument::REQUIRED, 'The provider')
+            ->addArgument('context', InputArgument::REQUIRED, 'The context')
+            ->addArgument('binaryContent', InputArgument::REQUIRED, 'The content')
+            ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The media description field')
+            ->addOption('copyright', null, InputOption::VALUE_OPTIONAL, 'The media copyright field')
+            ->addOption('author', null, InputOption::VALUE_OPTIONAL, 'The media author name field')
+            ->addOption('enabled', null, InputOption::VALUE_OPTIONAL, 'The media enabled field', true);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $provider = $input->getArgument('providerName');
+        \assert(\is_string($provider));
         $context = $input->getArgument('context');
+        \assert(\is_string($context));
         $binaryContent = $input->getArgument('binaryContent');
+        \assert(\is_string($binaryContent));
 
         $output->writeln(sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));
 
@@ -70,16 +70,25 @@ final class AddMediaCommand extends Command
         $media->setContext($context);
         $media->setProviderName($provider);
 
-        if ($input->getOption('description')) {
-            $media->setDescription($input->getOption('description'));
+        if ($input->hasOption('description')) {
+            $description = $input->getOption('description');
+            \assert(\is_string($description));
+
+            $media->setDescription($description);
         }
 
-        if ($input->getOption('copyright')) {
-            $media->setCopyright($input->getOption('copyright'));
+        if ($input->hasOption('copyright')) {
+            $copyright = $input->getOption('copyright');
+            \assert(\is_string($copyright));
+
+            $media->setCopyright($copyright);
         }
 
-        if ($input->getOption('author')) {
-            $media->setAuthorName($input->getOption('author'));
+        if ($input->hasOption('author')) {
+            $author = $input->getOption('author');
+            \assert(\is_string($author));
+
+            $media->setAuthorName($author);
         }
 
         if (\in_array($input->getOption('enabled'), [1, true, 'true'], true)) {

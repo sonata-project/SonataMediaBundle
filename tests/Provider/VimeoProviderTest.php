@@ -35,7 +35,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class VimeoProviderTest extends AbstractProviderTest
 {
-    public function getProvider(?object $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
+    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
         if (null === $client) {
             $client = $this->createStub(ClientInterface::class);
@@ -128,9 +128,13 @@ class VimeoProviderTest extends AbstractProviderTest
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
         $requestFactory->expects($this->once())->method('createRequest')->willReturn($request);
 
+        $fileContent = file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt');
+
+        $this->assertNotFalse($fileContent);
+
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt')));
+            ->willReturn($this->createResponse($fileContent));
 
         $provider = $this->getProvider($client, $requestFactory);
 
@@ -159,9 +163,13 @@ class VimeoProviderTest extends AbstractProviderTest
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
 
+        $fileContent = file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt');
+
+        $this->assertNotFalse($fileContent);
+
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt')));
+            ->willReturn($this->createResponse($fileContent));
 
         $provider = $this->getProvider($client, $messageFactory);
 

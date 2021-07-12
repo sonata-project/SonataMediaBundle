@@ -18,7 +18,6 @@ use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,6 +41,7 @@ final class MediaAdminController extends CRUDController
 
         if (!$request->get('provider') && $request->isMethod('get')) {
             $pool = $this->get('sonata.media.pool');
+            \assert($pool instanceof Pool);
 
             return $this->renderWithExtraParams('@SonataMedia/MediaAdmin/select_provider.html.twig', [
                 'providers' => $pool->getProvidersByContext(
@@ -75,7 +75,10 @@ final class MediaAdminController extends CRUDController
 
         // set the default context
         if (!$filters || !\array_key_exists('context', $filters)) {
-            $context = $this->admin->getPersistentParameter('context') ?? $this->get('sonata.media.pool')->getDefaultContext();
+            $pool = $this->get('sonata.media.pool');
+            \assert($pool instanceof Pool);
+
+            $context = $this->admin->getPersistentParameter('context') ?? $pool->getDefaultContext();
         } else {
             $context = $filters['context']['value'];
         }
@@ -84,33 +87,38 @@ final class MediaAdminController extends CRUDController
 
         $rootCategory = null;
         if ($this->has('sonata.media.manager.category') && $this->has('sonata.media.manager.context')) {
-            $rootCategories = $this->get('sonata.media.manager.category')->getRootCategoriesForContext(
-                $this->get('sonata.media.manager.context')->find($context)
-            );
+            $categoryManager = $this->get('sonata.media.manager.category');
+            \assert($categoryManager instanceof CategoryManagerInterface);
+            $contextManager = $this->get('sonata.media.manager.context');
+            \assert($contextManager instanceof ContextManagerInterface);
 
-            $rootCategory = current($rootCategories);
-        }
+            $rootCategories = $categoryManager->getRootCategoriesForContext($contextManager->find($context));
 
-        if (null !== $rootCategory && !$filters) {
-            $datagrid->setValue('category', null, $rootCategory->getId());
-        }
-        if ($this->has('sonata.media.manager.category') && $request->get('category')) {
-            $category = $this->get('sonata.media.manager.category')->findOneBy([
-                'id' => (int) $request->get('category'),
-                'context' => $context,
-            ]);
+            if ([] !== $rootCategories) {
+                $rootCategory = current($rootCategories);
+            }
 
-            if (!empty($category)) {
-                $datagrid->setValue('category', null, $category->getId());
-            } else {
+            if (null !== $rootCategory && !$filters) {
                 $datagrid->setValue('category', null, $rootCategory->getId());
+            }
+
+            if ($request->get('category')) {
+                $category = $categoryManager->findOneBy([
+                    'id' => (int) $request->get('category'),
+                    'context' => $context,
+                ]);
+
+                if (!empty($category)) {
+                    $datagrid->setValue('category', null, $category->getId());
+                } else {
+                    $datagrid->setValue('category', null, $rootCategory->getId());
+                }
             }
         }
 
         $formView = $datagrid->getForm()->createView();
 
-        // set the theme for the current Admin Form
-        $this->get('twig')->getRuntime(FormRenderer::class)->setTheme($formView, $this->admin->getFilterTheme());
+        $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
         if ($this->has('sonata.admin.admin_exporter')) {
             $exporter = $this->get('sonata.admin.admin_exporter');

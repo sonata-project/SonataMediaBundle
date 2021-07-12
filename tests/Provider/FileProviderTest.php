@@ -140,7 +140,11 @@ class FileProviderTest extends AbstractProviderTest
 
         $this->provider->postUpdate($media);
 
-        $file = new File(realpath(__DIR__.'/../Fixtures/file.txt'));
+        $realPath = realpath(__DIR__.'/../Fixtures/file.txt');
+
+        $this->assertNotFalse($realPath);
+
+        $file = new File($realPath);
 
         $media = new Media();
         $media->setContext('default');
@@ -159,7 +163,11 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testDownload(): void
     {
-        $file = new File(realpath(__DIR__.'/../Fixtures/FileProviderTest/0011/24/file.txt'));
+        $realPath = realpath(__DIR__.'/../Fixtures/FileProviderTest/0011/24/file.txt');
+
+        $this->assertNotFalse($realPath);
+
+        $file = new File($realPath);
 
         $media = new Media();
         $media->setBinaryContent($file);
@@ -174,6 +182,8 @@ class FileProviderTest extends AbstractProviderTest
 
     /**
      * @dataProvider mediaProvider
+     *
+     * @phpstan-param class-string $expected
      */
     public function testTransform(string $expected, MediaInterface $media): void
     {
@@ -190,8 +200,16 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function mediaProvider(): iterable
     {
-        $file = new File(realpath(__DIR__.'/../Fixtures/file.txt'));
-        $content = file_get_contents(realpath(__DIR__.'/../Fixtures/file.txt'));
+        $realPath = realpath(__DIR__.'/../Fixtures/file.txt');
+
+        $this->assertNotFalse($realPath);
+
+        $file = new File($realPath);
+
+        $content = file_get_contents($realPath);
+
+        $this->assertNotFalse($content);
+
         $request = new Request([], [], [], [], [], [], $content);
 
         $media1 = new Media();

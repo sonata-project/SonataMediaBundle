@@ -202,7 +202,11 @@ class ImageProviderTest extends AbstractProviderTest
     {
         $this->provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
+        $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
+
+        $this->assertNotFalse($realPath);
+
+        $file = new SymfonyFile($realPath);
 
         $media = new Media();
         $media->setContext('default');
@@ -223,7 +227,11 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testTransformFormatNotSupported(): void
     {
-        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
+        $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
+
+        $this->assertNotFalse($realPath);
+
+        $file = new SymfonyFile($realPath);
 
         $media = new Media();
         $media->setBinaryContent($file);

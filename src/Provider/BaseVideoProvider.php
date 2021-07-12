@@ -203,6 +203,10 @@ abstract class BaseVideoProvider extends BaseProvider
             ];
         } else {
             $settings = $this->getFormat($format);
+
+            if (false === $settings) {
+                throw new \RuntimeException(sprintf('Unable to retrieve format settings for format %s.', $format));
+            }
         }
 
         return $this->resizer->getBox($media, $settings);

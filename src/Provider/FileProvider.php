@@ -183,6 +183,11 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         if (!$media->getBinaryContent() instanceof \SplFileInfo) {
             // this is now optimized at all!!!
             $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
+
+            if (false === $path) {
+                throw new \RuntimeException(sprintf('Unable to generate temporary file name for media %s.', $media->getId()));
+            }
+
             $fileObject = new \SplFileObject($path, 'w');
             $fileObject->fwrite($this->getReferenceFile($media)->getContent());
         } else {
@@ -385,7 +390,13 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $binaryContent = $media->getBinaryContent();
         if ($binaryContent instanceof File) {
             $path = $binaryContent->getRealPath() ?: $binaryContent->getPathname();
-            $file->setContent(file_get_contents($path), $metadata);
+            $fileContents = file_get_contents($path);
+
+            if (false === $fileContents) {
+                throw new \RuntimeException(sprintf('Unable to get file contents for media %s', $media->getId()));
+            }
+
+            $file->setContent($fileContents, $metadata);
 
             return;
         }
@@ -432,6 +443,11 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         $handle = tmpfile();
+
+        if (false === $handle) {
+            throw new \RuntimeException('Unable to generate temporary file.');
+        }
+
         fwrite($handle, $content);
         $file = new ApiMediaFile($handle);
         $file->setExtension($extension);

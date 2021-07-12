@@ -68,7 +68,9 @@ final class CleanMediaCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $dryRun = (bool) $input->getOption('dry-run');
+        $dryRun = $input->getOption('dry-run');
+        \assert(\is_bool($dryRun));
+
         $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
 
         $finder = Finder::create();
@@ -96,7 +98,12 @@ final class CleanMediaCommand extends Command
                         $output->writeln(sprintf("<info>'%s' is orphanend</info>", $filename));
                     } else {
                         try {
-                            $filesystem->remove($file->getRealPath());
+                            $realPath = $file->getRealPath();
+
+                            if (false !== $realPath) {
+                                $filesystem->remove($realPath);
+                            }
+
                             $output->writeln(sprintf("<info>'%s' was successfully removed</info>", $filename));
                         } catch (IOException $ioe) {
                             $output->writeln(sprintf('<error>%s</error>', $ioe->getMessage()));

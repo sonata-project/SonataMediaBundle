@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Tests\Functional\Routing;
 
 use Sonata\MediaBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
@@ -33,6 +34,8 @@ final class RoutingTest extends WebTestCase
         $client = static::createClient();
         $router = $client->getContainer()->get('router');
 
+        $this->assertInstanceOf(RouterInterface::class, $router);
+
         $route = $router->getRouteCollection()->get($name);
 
         $this->assertNotNull($route);
@@ -49,14 +52,13 @@ final class RoutingTest extends WebTestCase
             $matchingPath = str_replace('.{_format}', $matchingFormat, $path);
         }
 
-        $matcher = $router->getMatcher();
         $requestContext = $router->getContext();
 
         foreach ($methods as $method) {
             $requestContext->setMethod($method);
 
             // Check paths like "/api/user/users.json".
-            $match = $matcher->match($matchingPath);
+            $match = $router->match($matchingPath);
 
             $this->assertSame($name, $match['_route']);
 
@@ -67,7 +69,7 @@ final class RoutingTest extends WebTestCase
             $matchingPathWithStrippedFormat = str_replace('.{_format}', '', $path);
 
             // Check paths like "/api/user/users".
-            $match = $matcher->match($matchingPathWithStrippedFormat);
+            $match = $router->match($matchingPathWithStrippedFormat);
 
             $this->assertSame($name, $match['_route']);
 

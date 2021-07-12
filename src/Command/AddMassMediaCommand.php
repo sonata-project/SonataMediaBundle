@@ -50,35 +50,39 @@ final class AddMassMediaCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse'),
-                new InputOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ','),
-                new InputOption('enclosure', null, InputOption::VALUE_OPTIONAL, 'Set the field enclosure character (one character only).', '"'),
-                new InputOption('escape', null, InputOption::VALUE_OPTIONAL, 'Set the escape character (one character only). Defaults as a backslash', '\\'),
-            ]);
+            ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse')
+            ->addOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ',')
+            ->addOption('enclosure', null, InputOption::VALUE_OPTIONAL, 'Set the field enclosure character (one character only).', '"')
+            ->addOption('escape', null, InputOption::VALUE_OPTIONAL, 'Set the escape character (one character only). Defaults as a backslash', '\\');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fp = $this->getFilePointer($input, $output);
-        $imported = -1;
+
+        $delimiter = $input->getOption('delimiter');
+        \assert(\is_string($delimiter));
+        $enclosure = $input->getOption('enclosure');
+        \assert(\is_string($enclosure));
+        $escape = $input->getOption('escape');
+        \assert(\is_string($escape));
+
+        $readHeaders = false;
 
         while (!feof($fp)) {
-            $data = fgetcsv($fp, 0, $input->getOption('delimiter'), $input->getOption('enclosure'), $input->getOption('escape'));
-
-            if (-1 === $imported) {
-                $this->setters = $data;
-
-                ++$imported;
-
-                continue;
-            }
+            $data = fgetcsv($fp, 0, $delimiter, $enclosure, $escape);
 
             if (!\is_array($data)) {
                 continue;
             }
 
-            ++$imported;
+            if (!$readHeaders) {
+                $this->setters = $data;
+
+                $readHeaders = true;
+
+                continue;
+            }
 
             $this->insertMedia($data, $output);
 
@@ -101,11 +105,19 @@ final class AddMassMediaCommand extends Command
             return \STDIN;
         }
 
-        if (!$input->getOption('file')) {
+        $file = $input->getOption('file');
+
+        if (null === $file || !\is_string($file)) {
             throw new \RuntimeException('Please provide a CSV file argument or CSV input stream');
         }
 
-        return fopen($input->getOption('file'), 'r');
+        $filePointer = fopen($file, 'r');
+
+        if (false === $filePointer) {
+            throw new \RuntimeException(sprintf('The provided CSV file %s could not be opened', $file));
+        }
+
+        return $filePointer;
     }
 
     /**

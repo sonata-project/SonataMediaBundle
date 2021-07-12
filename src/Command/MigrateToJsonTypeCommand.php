@@ -55,9 +55,14 @@ final class MigrateToJsonTypeCommand extends Command
         }
 
         $count = 0;
+
         $table = $input->getOption('table');
+        \assert(\is_string($table));
         $column = $input->getOption('column');
+        \assert(\is_string($column));
         $columnId = $input->getOption('column_id');
+        \assert(\is_string($columnId));
+
         $medias = $this->entityManager->getConnection()->fetchAllAssociative("SELECT * FROM $table");
 
         foreach ($medias as $media) {

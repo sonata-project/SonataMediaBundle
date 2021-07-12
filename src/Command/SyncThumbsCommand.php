@@ -70,13 +70,11 @@ final class SyncThumbsCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
-                new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', '100'),
-                new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', '0'),
-                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', '0'),
-            ]);
+            ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
+            ->addArgument('context', InputArgument::OPTIONAL, 'The context')
+            ->addOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', '100')
+            ->addOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', '0')
+            ->addOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', '0');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -101,7 +99,10 @@ final class SyncThumbsCommand extends Command
             $context = $helper->ask($input, $output, $question);
         }
 
-        $this->quiet = $input->getOption('quiet');
+        $quiet = $input->getOption('quiet');
+        \assert(\is_bool($quiet));
+
+        $this->quiet = $quiet;
         $this->output = $output;
 
         $provider = $this->mediaPool->getProvider($providerName);
