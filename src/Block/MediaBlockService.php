@@ -155,12 +155,12 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
 
     public function prePersist(BlockInterface $block): void
     {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+        $block->setSetting('mediaId', $block->getSetting('mediaId') instanceof MediaInterface ? $block->getSetting('mediaId')->getId() : null);
     }
 
     public function preUpdate(BlockInterface $block): void
     {
-        $block->setSetting('mediaId', \is_object($block->getSetting('mediaId')) ? $block->getSetting('mediaId')->getId() : null);
+        $block->setSetting('mediaId', $block->getSetting('mediaId') instanceof MediaInterface ? $block->getSetting('mediaId')->getId() : null);
     }
 
     public function getMetadata(): MetadataInterface

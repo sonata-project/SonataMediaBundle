@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 /**
  * @phpstan-extends CRUDController<\Sonata\MediaBundle\Model\GalleryInterface>
@@ -47,8 +48,7 @@ final class GalleryAdminController extends CRUDController
 
         $formView = $datagrid->getForm()->createView();
 
-        // set the theme for the current Admin Form
-        $this->get('twig')->getRuntime(FormRenderer::class)->setTheme($formView, $this->admin->getFilterTheme());
+        $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
         if ($this->has('sonata.admin.admin_exporter')) {
             $exporter = $this->get('sonata.admin.admin_exporter');

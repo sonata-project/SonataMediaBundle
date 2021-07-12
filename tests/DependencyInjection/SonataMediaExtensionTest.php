@@ -76,6 +76,8 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @dataProvider dataAdapter
+     *
+     * @phpstan-param class-string $type
      */
     public function testAdapter(string $serviceId, string $extension, string $type): void
     {
