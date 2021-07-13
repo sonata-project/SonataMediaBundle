@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Validator\Constraints;
 
 use Imagine\Image\ImagineInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Provider\ImageProvider;
+use Sonata\MediaBundle\Provider\ImageProviderInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -28,11 +28,11 @@ final class ImageUploadDimensionValidator extends ConstraintValidator
     private $imagineAdapter;
 
     /**
-     * @var ImageProvider
+     * @var ImageProviderInterface
      */
     private $imageProvider;
 
-    public function __construct(ImagineInterface $imagineAdapter, ImageProvider $imageProvider)
+    public function __construct(ImagineInterface $imagineAdapter, ImageProviderInterface $imageProvider)
     {
         $this->imagineAdapter = $imagineAdapter;
         $this->imageProvider = $imageProvider;

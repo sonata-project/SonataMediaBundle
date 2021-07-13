@@ -117,7 +117,10 @@
         <service id="sonata.media.http.buzz_client" class="Sonata\MediaBundle\Client\BuzzClient">
             <argument type="service" id="sonata.media.buzz.browser"/>
         </service>
-        <service id="%sonata.media.provider.image.class%" alias="sonata.media.provider.image"/>
+        <service id="%sonata.media.provider.image.class%" alias="sonata.media.provider.image">
+            <deprecated>The "%alias_id%" service alias is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0. Use "Sonata\MediaBundle\Provider\ImageProviderInterface" instead.</deprecated>
+        </service>
+        <service id="Sonata\MediaBundle\Provider\ImageProviderInterface" alias="sonata.media.provider.image"/>
         <service id="%sonata.media.provider.file.class%" alias="sonata.media.provider.file"/>
         <service id="%sonata.media.provider.youtube.class%" alias="sonata.media.provider.youtube"/>
         <service id="%sonata.media.provider.dailymotion.class%" alias="sonata.media.provider.dailymotion"/>
