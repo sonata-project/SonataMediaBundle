@@ -34,8 +34,6 @@ interface GalleryInterface
 
     /**
      * @param string $context
-     *
-     * @return string
      */
     public function setContext($context);
 
