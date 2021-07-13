@@ -75,14 +75,12 @@ final class RemoveThumbsCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
-                new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-                new InputArgument('format', InputArgument::OPTIONAL, 'The format (pass `all` to delete all thumbs)'),
-                new InputOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', '100'),
-                new InputOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', '0'),
-                new InputOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', '0'),
-            ]);
+            ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
+            ->addArgument('context', InputArgument::OPTIONAL, 'The context')
+            ->addArgument('format', InputArgument::OPTIONAL, 'The format (pass `all` to delete all thumbs)')
+            ->addOption('batchSize', null, InputOption::VALUE_REQUIRED, 'Media batch size (100 by default)', '100')
+            ->addOption('batchesLimit', null, InputOption::VALUE_REQUIRED, 'Media batches limit (0 by default)', '0')
+            ->addOption('startOffset', null, InputOption::VALUE_REQUIRED, 'Medias start offset (0 by default)', '0');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -18,6 +18,4 @@ require __DIR__.'/vendor/autoload.php';
 
 $kernel = new AppKernel();
 
-dump(new Application($kernel));
-
 return new Application($kernel);

@@ -45,16 +45,13 @@ final class AddMediaCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
-                new InputArgument('context', InputArgument::REQUIRED, 'The context'),
-                new InputArgument('binaryContent', InputArgument::REQUIRED, 'The content'),
-
-                new InputOption('description', null, InputOption::VALUE_OPTIONAL, 'The media description field', null),
-                new InputOption('copyright', null, InputOption::VALUE_OPTIONAL, 'The media copyright field', null),
-                new InputOption('author', null, InputOption::VALUE_OPTIONAL, 'The media author name field', null),
-                new InputOption('enabled', null, InputOption::VALUE_OPTIONAL, 'The media enabled field', true),
-        ]);
+            ->addArgument('providerName', InputArgument::REQUIRED, 'The provider')
+            ->addArgument('context', InputArgument::REQUIRED, 'The context')
+            ->addArgument('binaryContent', InputArgument::REQUIRED, 'The content')
+            ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The media description field', null)
+            ->addOption('copyright', null, InputOption::VALUE_OPTIONAL, 'The media copyright field', null)
+            ->addOption('author', null, InputOption::VALUE_OPTIONAL, 'The media author name field', null)
+            ->addOption('enabled', null, InputOption::VALUE_OPTIONAL, 'The media enabled field', true);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
