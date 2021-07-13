@@ -46,8 +46,6 @@ interface GalleryHasMediaInterface
 
     /**
      * @param int $position
-     *
-     * @return int
      */
     public function setPosition($position);
 

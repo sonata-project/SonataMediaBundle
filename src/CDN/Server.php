@@ -38,21 +38,21 @@ class Server implements CDNInterface
 
     public function flushByString($string)
     {
-        // nothing to do
+        return '';
     }
 
     public function flush($string)
     {
-        // nothing to do
+        return '';
     }
 
     public function flushPaths(array $paths)
     {
-        // nothing to do
+        return '';
     }
 
     public function getFlushStatus($identifier)
     {
-        // nothing to do
+        return CDNInterface::STATUS_OK;
     }
 }

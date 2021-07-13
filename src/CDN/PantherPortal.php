@@ -88,12 +88,12 @@ class PantherPortal implements CDNInterface
 
     public function flushByString($string)
     {
-        $this->flushPaths([$string]);
+        return $this->flushPaths([$string]);
     }
 
     public function flush($string)
     {
-        $this->flushPaths([$string]);
+        return $this->flushPaths([$string]);
     }
 
     public function flushPaths(array $paths)
@@ -103,6 +103,8 @@ class PantherPortal implements CDNInterface
         if ('Flush successfully submitted.' !== $result) {
             throw new \RuntimeException('Unable to flush : '.$result);
         }
+
+        return $result;
     }
 
     /**
@@ -117,7 +119,7 @@ class PantherPortal implements CDNInterface
 
     public function getFlushStatus($identifier)
     {
-        // nothing to do
+        return CDNInterface::STATUS_OK;
     }
 
     private function getClient(): \SoapClient
