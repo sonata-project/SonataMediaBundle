@@ -18,7 +18,7 @@ interface GalleryItemInterface
     public function __toString(): string;
 
     /**
-     * @return int|string|object|null
+     * @return int|string|null
      */
     public function getId();
 

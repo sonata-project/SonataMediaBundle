@@ -74,7 +74,14 @@ class SimpleResizerTest extends TestCase
 
         $filesystem = new Filesystem(new InMemory());
         $in = $filesystem->get('in', true);
-        $in->setContent(file_get_contents(__DIR__.'/../Fixtures/logo.png'));
+
+        $fileContents = file_get_contents(__DIR__.'/../Fixtures/logo.png');
+
+        if (false === $fileContents) {
+            $this->fail('Unable to read "logo.png" file.');
+        }
+
+        $in->setContent($fileContents);
 
         $out = $filesystem->get('out', true);
 

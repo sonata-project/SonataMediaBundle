@@ -17,6 +17,7 @@ use Gaufrette\Adapter;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -34,6 +35,9 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class YouTubeProviderTest extends AbstractProviderTest
 {
+    /**
+     * @param (MockObject&ClientInterface)|null $client
+     */
     public function getProvider(?object $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {
         if (null === $client) {
@@ -127,9 +131,15 @@ class YouTubeProviderTest extends AbstractProviderTest
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
 
+        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
+
+        if (false === $fileContents) {
+            $this->fail('Unable to read "valid_youtube.txt" file.');
+        }
+
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt')));
+            ->willReturn($this->createResponse($fileContents));
 
         $provider = $this->getProvider($client, $messageFactory);
 
@@ -157,9 +167,15 @@ class YouTubeProviderTest extends AbstractProviderTest
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
 
+        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
+
+        if (false === $fileContents) {
+            $this->fail('Unable to read "valid_youtube.txt" file.');
+        }
+
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt')));
+            ->willReturn($this->createResponse($fileContents));
 
         $provider = $this->getProvider($client, $messageFactory);
 

@@ -18,12 +18,12 @@ use Sonata\MediaBundle\Document\BaseMedia;
 class Media extends BaseMedia
 {
     /**
-     * @var int|string|object|null
+     * @var int|string|null
      */
     protected $id;
 
     /**
-     * @param int|string|object|null $id
+     * @param int|string|null $id
      */
     public function setId($id): void
     {

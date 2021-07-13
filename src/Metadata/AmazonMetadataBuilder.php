@@ -123,6 +123,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      * @param string $filename path to the file inside the S3 bucket
      *
      * @return array
+     *
      * @phpstan-return array{contentType: string}
      */
     private function getContentType($filename)
