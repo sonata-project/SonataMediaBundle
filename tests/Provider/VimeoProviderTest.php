@@ -112,7 +112,15 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $this->assertTrue($provider->requireThumbnails());
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -138,7 +146,15 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($client, $requestFactory);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setContext('default');
@@ -173,7 +189,15 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($client, $messageFactory);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         // pre persist the media
         $provider->transform($media);
@@ -213,7 +237,15 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($client);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setBinaryContent('https://vimeo.com/012341231');
@@ -237,7 +269,16 @@ class VimeoProviderTest extends AbstractProviderTest
 
     public function testHelperProperies(): void
     {
-        $this->provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', [
+            'width' => 100,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
+
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

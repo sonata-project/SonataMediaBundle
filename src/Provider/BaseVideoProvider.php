@@ -200,6 +200,11 @@ abstract class BaseVideoProvider extends BaseProvider
             $settings = [
                 'width' => $options['width'] ?? null,
                 'height' => $options['height'] ?? null,
+                'quality' => null,
+                'format' => null,
+                'constraint' => null,
+                'resizer' => null,
+                'resizer_options' => [],
             ];
         } else {
             $settings = $this->getFormat($format);

@@ -21,10 +21,13 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 
+/**
+ * @phpstan-import-type FormatOptions from MediaProviderInterface
+ */
 abstract class BaseProvider implements MediaProviderInterface
 {
     /**
-     * @var array<string, string[]>
+     * @var array<string, FormatOptions>
      */
     protected $formats = [];
 

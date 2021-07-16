@@ -88,7 +88,15 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testHelperProperties(): void
     {
-        $this->provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', [
+            'width' => 100,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
@@ -124,7 +132,15 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testEvent(): void
     {
-        $this->provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $this->provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $file = __DIR__.'/../Fixtures/file.txt';
 

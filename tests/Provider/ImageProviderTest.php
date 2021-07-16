@@ -116,9 +116,35 @@ class ImageProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        $provider->addFormat('admin', ['width' => 100]);
-        $provider->addFormat('default_medium', ['width' => 500]);
-        $provider->addFormat('default_large', ['width' => 1000]);
+        $provider->addFormat('admin', [
+            'width' => 100,
+            'height' => null,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
+
+        $provider->addFormat('default_medium', [
+            'width' => 500,
+            'height' => null,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
+
+        $provider->addFormat('default_large', [
+            'width' => 1000,
+            'height' => null,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setName('test.png');
@@ -189,7 +215,15 @@ class ImageProviderTest extends AbstractProviderTest
 
         $this->assertTrue($this->provider->requireThumbnails());
 
-        $this->provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $this->provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $this->assertNotEmpty($this->provider->getFormats(), '::getFormats() return an array');
 
@@ -200,7 +234,15 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testEvent(): void
     {
-        $this->provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $this->provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
 

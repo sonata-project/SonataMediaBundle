@@ -100,6 +100,10 @@ final class CropResizerTest extends TestCase
             'width' => $targetWidth,
             'height' => $targetHeight,
             'quality' => self::QUALITY,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
         ]);
     }
 
@@ -160,6 +164,10 @@ final class CropResizerTest extends TestCase
             'width' => $targetWidth,
             'height' => $targetHeight,
             'quality' => self::QUALITY,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
         ]);
     }
 
@@ -194,7 +202,15 @@ final class CropResizerTest extends TestCase
             ->willReturn(new Box($srcWidth, $srcHeight));
 
         $resizer = new CropResizer($this->adapter, $this->metadata);
-        $box = $resizer->getBox($media, ['width' => $targetWidth, 'height' => $targetHeight]);
+        $box = $resizer->getBox($media, [
+            'width' => $targetWidth,
+            'height' => $targetHeight,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         static::assertSame($expectWidth, $box->getWidth(), 'width mismatch');
         static::assertSame($expectHeight, $box->getHeight(), 'height mismatch');

@@ -22,6 +22,9 @@ use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 
+/**
+ * @phpstan-import-type FormatOptions from \Sonata\MediaBundle\Provider\MediaProviderInterface
+ */
 class SquareResizerTest extends TestCase
 {
     public function testResizeWithNoWidth(): void
@@ -34,13 +37,21 @@ class SquareResizerTest extends TestCase
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
         $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
-        $resizer->resize($media, $file, $file, 'bar', []);
+        $resizer->resize($media, $file, $file, 'bar', [
+            'width' => null,
+            'height' => null,
+            'quality' => null,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
     }
 
     /**
      * @dataProvider getBoxSettings
      *
-     * @param array<string, mixed> $settings
+     * @phpstan-param FormatOptions $settings
      */
     public function testGetBox(array $settings, Box $mediaSize, Box $expected): void
     {
@@ -62,13 +73,48 @@ class SquareResizerTest extends TestCase
     }
 
     /**
-     * @phpstan-return iterable<array{array<string, mixed>, Box, Box}>
+     * @phpstan-return iterable<array{FormatOptions, Box, Box}>
      */
     public static function getBoxSettings(): iterable
     {
-        yield [['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)];
-        yield [['width' => 90, 'height' => 90], new Box(50, 50), new Box(50, 50)];
-        yield [['width' => 90, 'height' => null], new Box(50, 50), new Box(50, 50)];
-        yield [['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 7)];
+        yield [[
+            'width' => 90,
+            'height' => 90,
+            'quality' => null,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ], new Box(100, 120), new Box(90, 90)];
+
+        yield [[
+            'width' => 90,
+            'height' => 90,
+            'quality' => null,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ], new Box(50, 50), new Box(50, 50)];
+
+        yield [[
+            'width' => 90,
+            'height' => null,
+            'quality' => null,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ], new Box(50, 50), new Box(50, 50)];
+
+        yield [[
+            'width' => 90,
+            'height' => null,
+            'quality' => null,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ], new Box(567, 50), new Box(90, 7)];
     }
 }

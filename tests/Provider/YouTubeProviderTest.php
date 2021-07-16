@@ -111,7 +111,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $this->assertTrue($provider->requireThumbnails());
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -139,7 +147,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($client, $messageFactory);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setContext('default');
@@ -175,7 +191,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($client, $messageFactory);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setContext('default');
@@ -218,7 +242,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($client);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
@@ -242,7 +274,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public function testHelperProperties(): void
     {
-        $this->provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', [
+            'width' => 100,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

@@ -23,6 +23,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @author Christian Gripp <mail@core23.de>
+ *
+ * @phpstan-import-type FormatOptions from \Sonata\MediaBundle\Provider\MediaProviderInterface
  */
 final class CropResizer implements ResizerInterface
 {
@@ -89,7 +91,7 @@ final class CropResizer implements ResizerInterface
     }
 
     /**
-     * @param array<string, mixed> $settings
+     * @phpstan-param FormatOptions $settings
      */
     private function createTargetBox(array $settings): Box
     {
