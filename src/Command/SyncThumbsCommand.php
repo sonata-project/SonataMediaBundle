@@ -99,8 +99,7 @@ final class SyncThumbsCommand extends Command
             $context = $helper->ask($input, $output, $question);
         }
 
-        $quiet = $input->getOption('quiet');
-        \assert(\is_bool($quiet));
+        $quiet = (bool) $input->getOption('quiet');
 
         $this->quiet = $quiet;
         $this->output = $output;

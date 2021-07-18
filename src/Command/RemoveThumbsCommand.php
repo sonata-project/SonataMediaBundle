@@ -85,8 +85,7 @@ final class RemoveThumbsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $quiet = $input->getOption('quiet');
-        \assert(\is_bool($quiet));
+        $quiet = (bool) $input->getOption('quiet');
 
         $this->quiet = $quiet;
         $this->input = $input;
@@ -191,7 +190,6 @@ final class RemoveThumbsCommand extends Command
     private function getFormat(MediaProviderInterface $provider, string $context): string
     {
         $format = $this->input->getArgument('format');
-        \assert(null === $format || \is_string($format));
 
         if (null === $format) {
             $formats = array_keys($provider->getFormats());

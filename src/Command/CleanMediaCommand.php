@@ -68,9 +68,7 @@ final class CleanMediaCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $dryRun = $input->getOption('dry-run');
-        \assert(\is_bool($dryRun));
-
+        $dryRun = (bool) $input->getOption('dry-run');
         $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
 
         $finder = Finder::create();

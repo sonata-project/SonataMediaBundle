@@ -99,8 +99,7 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $quiet = $input->getOption('quiet');
-        \assert(\is_bool($quiet));
+        $quiet = (bool) $input->getOption('quiet');
 
         $this->quiet = $quiet;
         $this->input = $input;

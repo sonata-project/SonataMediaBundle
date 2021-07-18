@@ -57,11 +57,8 @@ final class AddMediaCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $provider = $input->getArgument('providerName');
-        \assert(\is_string($provider));
         $context = $input->getArgument('context');
-        \assert(\is_string($context));
         $binaryContent = $input->getArgument('binaryContent');
-        \assert(\is_string($binaryContent));
 
         $output->writeln(sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));
 
@@ -69,27 +66,9 @@ final class AddMediaCommand extends Command
         $media->setBinaryContent($binaryContent);
         $media->setContext($context);
         $media->setProviderName($provider);
-
-        if ($input->hasOption('description')) {
-            $description = $input->getOption('description');
-            \assert(\is_string($description));
-
-            $media->setDescription($description);
-        }
-
-        if ($input->hasOption('copyright')) {
-            $copyright = $input->getOption('copyright');
-            \assert(\is_string($copyright));
-
-            $media->setCopyright($copyright);
-        }
-
-        if ($input->hasOption('author')) {
-            $author = $input->getOption('author');
-            \assert(\is_string($author));
-
-            $media->setAuthorName($author);
-        }
+        $media->setDescription($input->getOption('description'));
+        $media->setCopyright($input->getOption('copyright'));
+        $media->setAuthorName($input->getOption('author'));
 
         if (\in_array($input->getOption('enabled'), [1, true, 'true'], true)) {
             $media->setEnabled(true);

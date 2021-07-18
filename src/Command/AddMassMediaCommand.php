@@ -61,11 +61,8 @@ final class AddMassMediaCommand extends Command
         $fp = $this->getFilePointer($input, $output);
 
         $delimiter = $input->getOption('delimiter');
-        \assert(\is_string($delimiter));
         $enclosure = $input->getOption('enclosure');
-        \assert(\is_string($enclosure));
         $escape = $input->getOption('escape');
-        \assert(\is_string($escape));
 
         $readHeaders = false;
 
