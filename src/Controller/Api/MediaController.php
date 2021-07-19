@@ -189,6 +189,7 @@ final class MediaController
         $formats = [MediaProviderInterface::FORMAT_REFERENCE];
 
         if (null !== $mediaContext) {
+            /** @var string[] */
             $formats = array_merge($formats, array_keys($this->mediaPool->getFormatNamesByContext($mediaContext)));
         }
 

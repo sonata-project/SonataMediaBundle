@@ -50,6 +50,7 @@ final class MediaManager extends BaseEntityManager implements MediaManagerInterf
 
         $query->setParameters($parameters);
 
+        /** @var PagerInterface<\Sonata\MediaBundle\Model\MediaInterface> */
         $pager = new Pager();
         $pager->setMaxPerPage($limit);
         $pager->setQuery(new ProxyQuery($query));

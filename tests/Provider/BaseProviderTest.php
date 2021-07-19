@@ -73,7 +73,15 @@ class BaseProviderTest extends AbstractProviderTest
 
         $this->assertInstanceOf(CDNInterface::class, $this->provider->getCdn());
 
-        $this->provider->addFormat('small', []);
+        $this->provider->addFormat('small', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $this->assertIsArray($this->provider->getFormat('small'));
 
@@ -93,7 +101,15 @@ class BaseProviderTest extends AbstractProviderTest
 
     public function testFlushCdn(): void
     {
-        $this->provider->addFormat('test', []);
+        $this->provider->addFormat('test', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setId('42');

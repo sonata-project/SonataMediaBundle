@@ -19,6 +19,8 @@ use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-import-type FormatOptions from MediaProviderInterface
  */
 class Pool
 {
@@ -30,7 +32,7 @@ class Pool
     /**
      * @phpstan-var array<string, array{
      *     providers: string[],
-     *     formats: array<string, array<string, mixed>>,
+     *     formats: array<string, FormatOptions>,
      *     download: array<string, mixed>
      * }>
      */
@@ -99,9 +101,10 @@ class Pool
     }
 
     /**
-     * @param string[]                            $providers
-     * @param array<string, array<string, mixed>> $formats
-     * @param array<string, mixed>                $download
+     * @param string[]             $providers
+     * @param array<string, mixed> $download
+     *
+     * @phpstan-param array<string, FormatOptions> $formats
      */
     public function addContext(string $name, array $providers = [], array $formats = [], array $download = []): void
     {
@@ -126,7 +129,7 @@ class Pool
     /**
      * @phpstan-return array{
      *     providers: string[],
-     *     formats: array<string, array<string, mixed>>,
+     *     formats: array<string, FormatOptions>,
      *     download: array<string, mixed>
      * }|null
      */
@@ -144,7 +147,7 @@ class Pool
      *
      * @phpstan-return array<string, array{
      *     providers: string[],
-     *     formats: array<string, array<string, mixed>>,
+     *     formats: array<string, FormatOptions>,
      *     download: array<string, mixed>
      * }>
      */
@@ -168,7 +171,7 @@ class Pool
     }
 
     /**
-     * @return array<string, array<string, mixed>>|null
+     * @phpstan-return array<string, FormatOptions>|null
      */
     public function getFormatNamesByContext(string $name): ?array
     {

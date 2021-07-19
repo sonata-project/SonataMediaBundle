@@ -23,6 +23,17 @@ use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @phpstan-type FormatOptions = array{
+ *  width: int|null,
+ *  height: int|null,
+ *  quality: int|null,
+ *  format: string|null,
+ *  constraint: bool|null,
+ *  resizer: string|null,
+ *  resizer_options: array<string, string|bool|int|null>,
+ * }
+ */
 interface MediaProviderInterface
 {
     // This format is used to display thumbnails in Sonata Admin
@@ -32,7 +43,7 @@ interface MediaProviderInterface
     public const FORMAT_REFERENCE = 'reference';
 
     /**
-     * @param array<string, mixed> $settings
+     * @phpstan-param FormatOptions $settings
      */
     public function addFormat(string $name, array $settings): void;
 
@@ -40,6 +51,8 @@ interface MediaProviderInterface
      * return the format settings.
      *
      * @return array<string, mixed>|false the format settings
+     *
+     * @phpstan-return FormatOptions|false
      */
     public function getFormat(string $name);
 
@@ -121,7 +134,7 @@ interface MediaProviderInterface
     public function generatePrivateUrl(MediaInterface $media, string $format): string;
 
     /**
-     * @return array<string, array<string, mixed>>
+     * @phpstan-return array<string, FormatOptions>
      */
     public function getFormats(): array;
 

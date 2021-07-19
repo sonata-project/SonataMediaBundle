@@ -45,16 +45,13 @@ final class AddMediaCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('providerName', InputArgument::REQUIRED, 'The provider'),
-                new InputArgument('context', InputArgument::REQUIRED, 'The context'),
-                new InputArgument('binaryContent', InputArgument::REQUIRED, 'The content'),
-
-                new InputOption('description', null, InputOption::VALUE_OPTIONAL, 'The media description field', null),
-                new InputOption('copyright', null, InputOption::VALUE_OPTIONAL, 'The media copyright field', null),
-                new InputOption('author', null, InputOption::VALUE_OPTIONAL, 'The media author name field', null),
-                new InputOption('enabled', null, InputOption::VALUE_OPTIONAL, 'The media enabled field', true),
-        ]);
+            ->addArgument('providerName', InputArgument::REQUIRED, 'The provider')
+            ->addArgument('context', InputArgument::REQUIRED, 'The context')
+            ->addArgument('binaryContent', InputArgument::REQUIRED, 'The content')
+            ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The media description field')
+            ->addOption('copyright', null, InputOption::VALUE_OPTIONAL, 'The media copyright field')
+            ->addOption('author', null, InputOption::VALUE_OPTIONAL, 'The media author name field')
+            ->addOption('enabled', null, InputOption::VALUE_OPTIONAL, 'The media enabled field', true);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -69,18 +66,9 @@ final class AddMediaCommand extends Command
         $media->setBinaryContent($binaryContent);
         $media->setContext($context);
         $media->setProviderName($provider);
-
-        if ($input->getOption('description')) {
-            $media->setDescription($input->getOption('description'));
-        }
-
-        if ($input->getOption('copyright')) {
-            $media->setCopyright($input->getOption('copyright'));
-        }
-
-        if ($input->getOption('author')) {
-            $media->setAuthorName($input->getOption('author'));
-        }
+        $media->setDescription($input->getOption('description'));
+        $media->setCopyright($input->getOption('copyright'));
+        $media->setAuthorName($input->getOption('author'));
 
         if (\in_array($input->getOption('enabled'), [1, true, 'true'], true)) {
             $media->setEnabled(true);

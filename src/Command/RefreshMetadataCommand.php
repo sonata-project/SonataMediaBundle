@@ -74,16 +74,15 @@ final class RefreshMetadataCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
-                new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-            ]);
+            ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
+            ->addArgument('context', InputArgument::OPTIONAL, 'The context');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->quiet = $input->getOption('quiet');
+        $quiet = (bool) $input->getOption('quiet');
 
+        $this->quiet = $quiet;
         $this->input = $input;
         $this->output = $output;
 

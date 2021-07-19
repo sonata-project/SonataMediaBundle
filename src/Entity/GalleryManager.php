@@ -52,6 +52,7 @@ final class GalleryManager extends BaseEntityManager implements GalleryManagerIn
 
         $query->setParameters($parameters);
 
+        /** @var PagerInterface<\Sonata\MediaBundle\Model\GalleryInterface> */
         $pager = new Pager();
         $pager->setMaxPerPage($limit);
         $pager->setQuery(new ProxyQuery($query));

@@ -34,7 +34,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class YouTubeProviderTest extends AbstractProviderTest
 {
-    public function getProvider(?object $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
+    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {
         if (null === $client) {
             $client = $this->createStub(ClientInterface::class);
@@ -111,7 +111,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $this->assertTrue($provider->requireThumbnails());
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
@@ -127,13 +135,27 @@ class YouTubeProviderTest extends AbstractProviderTest
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
 
+        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
+
+        if (false === $fileContents) {
+            $this->fail('Unable to read "valid_youtube.txt" file.');
+        }
+
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt')));
+            ->willReturn($this->createResponse($fileContents));
 
         $provider = $this->getProvider($client, $messageFactory);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setContext('default');
@@ -157,13 +179,27 @@ class YouTubeProviderTest extends AbstractProviderTest
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
 
+        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
+
+        if (false === $fileContents) {
+            $this->fail('Unable to read "valid_youtube.txt" file.');
+        }
+
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
-            ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt')));
+            ->willReturn($this->createResponse($fileContents));
 
         $provider = $this->getProvider($client, $messageFactory);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setContext('default');
@@ -206,7 +242,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $provider = $this->getProvider($client);
 
-        $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
+        $provider->addFormat('big', [
+            'width' => 200,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
 
         $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
@@ -230,7 +274,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public function testHelperProperties(): void
     {
-        $this->provider->addFormat('admin', ['width' => 100]);
+        $this->provider->addFormat('admin', [
+            'width' => 100,
+            'height' => 100,
+            'quality' => 80,
+            'format' => null,
+            'constraint' => true,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]);
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');

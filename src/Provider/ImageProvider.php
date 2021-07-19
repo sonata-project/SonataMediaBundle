@@ -84,6 +84,12 @@ class ImageProvider extends FileProvider
             foreach ($options['picture'] as $key => $pictureFormat) {
                 $formatName = $this->getFormatName($media, $pictureFormat);
                 $settings = $this->getFormat($formatName);
+
+                if (false === $settings) {
+                    throw new \RuntimeException(sprintf('The image format "%s" is not defined.
+                            Is the format registered in your ``sonata_media`` configuration?', $formatName));
+                }
+
                 $src = $this->generatePublicUrl($media, $formatName);
                 $mediaQuery = \is_string($key)
                     ? $key
@@ -102,13 +108,27 @@ class ImageProvider extends FileProvider
                 $srcSetFormats = [];
                 foreach ($options['srcset'] as $srcSetFormat) {
                     $formatName = $this->getFormatName($media, $srcSetFormat);
-                    $srcSetFormats[$formatName] = $this->getFormat($formatName);
+                    $settings = $this->getFormat($formatName);
+
+                    if (false === $settings) {
+                        throw new \RuntimeException(sprintf('The image format "%s" is not defined.
+                                Is the format registered in your ``sonata_media`` configuration?', $formatName));
+                    }
+
+                    $srcSetFormats[$formatName] = $settings;
                 }
                 unset($options['srcset']);
 
                 // Make sure the requested format is also in the srcSetFormats
                 if (!isset($srcSetFormats[$format])) {
-                    $srcSetFormats[$format] = $this->getFormat($format);
+                    $settings = $this->getFormat($format);
+
+                    if (false === $settings) {
+                        throw new \RuntimeException(sprintf('The image format "%s" is not defined.
+                                Is the format registered in your ``sonata_media`` configuration?', $format));
+                    }
+
+                    $srcSetFormats[$format] = $settings;
                 }
             }
 
@@ -146,6 +166,11 @@ class ImageProvider extends FileProvider
             if (!$media->getBinaryContent() instanceof \SplFileInfo) {
                 // this is now optimized at all!!!
                 $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+
+                if (false === $path) {
+                    throw new \LogicException(sprintf('Unable to update metadata for media %s.', $media->getId()));
+                }
+
                 $fileObject = new \SplFileObject($path, 'w');
                 $fileObject->fwrite($this->getReferenceFile($media)->getContent());
             } else {

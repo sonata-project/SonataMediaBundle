@@ -17,15 +17,18 @@ use Gaufrette\File;
 use Imagine\Image\Box;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * @phpstan-import-type FormatOptions from \Sonata\MediaBundle\Provider\MediaProviderInterface
+ */
 interface ResizerInterface
 {
     /**
-     * @param array<string, mixed> $settings
+     * @phpstan-param FormatOptions $settings
      */
     public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void;
 
     /**
-     * @param array<string, mixed> $settings
+     * @phpstan-param FormatOptions $settings
      */
     public function getBox(MediaInterface $media, array $settings): Box;
 }

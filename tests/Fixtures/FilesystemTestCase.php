@@ -53,7 +53,11 @@ class FilesystemTestCase extends TestCase
         if ('\\' === \DIRECTORY_SEPARATOR) {
             self::$linkOnWindows = true;
             $originFile = tempnam(sys_get_temp_dir(), 'li');
+            self::assertNotFalse($originFile);
+
             $targetFile = tempnam(sys_get_temp_dir(), 'li');
+            self::assertNotFalse($targetFile);
+
             if (true !== @link($originFile, $targetFile)) {
                 $report = error_get_last();
                 if (\is_array($report) && false !== strpos($report['message'], 'error code(1314)')) {
@@ -65,7 +69,11 @@ class FilesystemTestCase extends TestCase
 
             self::$symlinkOnWindows = true;
             $originDir = tempnam(sys_get_temp_dir(), 'sl');
+            self::assertNotFalse($originDir);
+
             $targetDir = tempnam(sys_get_temp_dir(), 'sl');
+            self::assertNotFalse($targetDir);
+
             if (true !== @symlink($originDir, $targetDir)) {
                 $report = error_get_last();
                 if (\is_array($report) && false !== strpos($report['message'], 'error code(1314)')) {
@@ -83,7 +91,12 @@ class FilesystemTestCase extends TestCase
         $this->filesystem = new Filesystem();
         $this->workspace = sys_get_temp_dir().'/'.microtime(true).'.'.mt_rand();
         mkdir($this->workspace, 0777, true);
-        $this->workspace = realpath($this->workspace);
+
+        $realpath = realpath($this->workspace);
+
+        $this->assertNotFalse($realpath);
+
+        $this->workspace = $realpath;
     }
 
     protected function tearDown(): void
@@ -115,7 +128,9 @@ class FilesystemTestCase extends TestCase
 
         $infos = stat($filepath);
 
-        return ($datas = posix_getpwuid($infos['uid'])) ? $datas['name'] : null;
+        $this->assertNotFalse($infos);
+
+        return ($datas = posix_getpwuid($infos[4])) ? $datas['name'] : null;
     }
 
     protected function getFileGroup(string $filepath): string
@@ -123,7 +138,10 @@ class FilesystemTestCase extends TestCase
         $this->markAsSkippedIfPosixIsMissing();
 
         $infos = stat($filepath);
-        if ($datas = posix_getgrgid($infos['gid'])) {
+
+        $this->assertNotFalse($infos);
+
+        if ($datas = posix_getgrgid($infos[5])) {
             return $datas['name'];
         }
 

@@ -106,7 +106,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $rootCategories = $this->categoryManager->getRootCategoriesForContext($this->contextManager->find($context));
             $rootCategory = current($rootCategories);
 
-            $categoryId = $rootCategory->getId();
+            if (false !== $rootCategory) {
+                $categoryId = $rootCategory->getId();
+            }
         }
 
         return array_merge($parameters, [

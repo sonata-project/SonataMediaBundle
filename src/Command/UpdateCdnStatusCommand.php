@@ -75,10 +75,8 @@ final class UpdateCdnStatusCommand extends Command
     {
         $this
             ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('providerName', InputArgument::OPTIONAL, 'The provider'),
-                new InputArgument('context', InputArgument::OPTIONAL, 'The context'),
-            ])
+            ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
+            ->addArgument('context', InputArgument::OPTIONAL, 'The context')
             ->setHelp(
                 <<<'EOF'
 The <info>%command.name%</info> command helps maintaining your model media in sync
@@ -101,8 +99,9 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->quiet = $input->getOption('quiet');
+        $quiet = (bool) $input->getOption('quiet');
 
+        $this->quiet = $quiet;
         $this->input = $input;
         $this->output = $output;
 

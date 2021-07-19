@@ -25,7 +25,15 @@ class FormatValidatorTest extends TestCase
     public function testValidate(): void
     {
         $pool = new Pool('defaultContext');
-        $pool->addContext('test', [], ['format1' => []]);
+        $pool->addContext('test', [], ['format1' => [
+            'width' => null,
+            'height' => null,
+            'quality' => null,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]]);
 
         $gallery = $this->createMock(GalleryInterface::class);
         $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('format1');
@@ -43,7 +51,15 @@ class FormatValidatorTest extends TestCase
     public function testValidateNotValidDefaultFormat(): void
     {
         $pool = new Pool('defaultContext');
-        $pool->addContext('test', [], ['format1' => []]);
+        $pool->addContext('test', [], ['format1' => [
+            'width' => null,
+            'height' => null,
+            'quality' => null,
+            'format' => null,
+            'constraint' => null,
+            'resizer' => null,
+            'resizer_options' => [],
+        ]]);
 
         $gallery = $this->createMock(GalleryInterface::class);
         $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('non_existing_format');

@@ -122,9 +122,10 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
             'context' => $context,
         ];
 
-        $order = [
-            $blockContext->getSetting('order') => $blockContext->getSetting('sort'),
-        ];
+        $order = $blockContext->getSetting('order');
+        \assert(\is_string($order));
+        $sortDirection = $blockContext->getSetting('sort');
+        \assert(\is_string($sortDirection));
 
         return $this->renderResponse($blockContext->getTemplate(), [
             'context' => $blockContext,
@@ -134,7 +135,7 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
                 $criteria,
                 1,
                 $blockContext->getSetting('number'),
-                $order
+                [$order => $sortDirection]
             ),
         ], $response);
     }

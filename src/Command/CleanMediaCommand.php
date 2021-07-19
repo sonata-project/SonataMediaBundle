@@ -96,7 +96,12 @@ final class CleanMediaCommand extends Command
                         $output->writeln(sprintf("<info>'%s' is orphanend</info>", $filename));
                     } else {
                         try {
-                            $filesystem->remove($file->getRealPath());
+                            $realPath = $file->getRealPath();
+
+                            if (false !== $realPath) {
+                                $filesystem->remove($realPath);
+                            }
+
                             $output->writeln(sprintf("<info>'%s' was successfully removed</info>", $filename));
                         } catch (IOException $ioe) {
                             $output->writeln(sprintf('<error>%s</error>', $ioe->getMessage()));

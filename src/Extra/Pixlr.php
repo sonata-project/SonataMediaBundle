@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Extra;
 
+use Liip\ImagineBundle\Exception\Config\Filter\NotFoundException;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\Pool as AdminPool;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -170,15 +171,23 @@ final class Pixlr
 
         $provider = $this->mediaPool->getProvider($media->getProviderName());
 
+        $image = $request->get('image');
+
         /*
          * Pixlr send back the new image as an url, add some security check before downloading the file
          */
-        if (!preg_match($this->allowEreg, $request->get('image'), $matches)) {
-            throw new NotFoundHttpException(sprintf('Invalid image host : %s', $request->get('image')));
+        if (!preg_match($this->allowEreg, $image, $matches)) {
+            throw new NotFoundHttpException(sprintf('Invalid image host : %s', $image));
         }
 
         $file = $provider->getReferenceFile($media);
-        $file->setContent(file_get_contents($request->get('image')));
+        $fileContents = file_get_contents($image);
+
+        if (false === $fileContents) {
+            throw new NotFoundException(sprintf('Unable to open image: %s', $image));
+        }
+
+        $file->setContent($fileContents);
 
         $provider->updateMetadata($media);
         $provider->generateThumbnails($media);
