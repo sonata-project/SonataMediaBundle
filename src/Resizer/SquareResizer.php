@@ -111,6 +111,7 @@ final class SquareResizer implements ResizerInterface
         }
 
         $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
+        $settings['width'] = (int) $settings['width'];
 
         if ($settings['height'] < $size->getHeight() && $settings['width'] < $size->getWidth()) {
             return new Box($settings['width'], $settings['height']);

@@ -66,6 +66,10 @@ class ImageProvider extends FileProvider
                         Is the format registered in your ``sonata_media`` configuration?', $format));
             }
 
+            if (null === $this->resizer) {
+                throw new \RuntimeException('Resizer not set on the imageg provider.');
+            }
+
             $box = $this->resizer->getBox($media, $resizerFormat);
         }
 
@@ -88,6 +92,10 @@ class ImageProvider extends FileProvider
                 if (false === $settings) {
                     throw new \RuntimeException(sprintf('The image format "%s" is not defined.
                             Is the format registered in your ``sonata_media`` configuration?', $formatName));
+                }
+
+                if (null === $this->resizer) {
+                    throw new \RuntimeException('Resizer not set on the image provider.');
                 }
 
                 $src = $this->generatePublicUrl($media, $formatName);
@@ -136,8 +144,14 @@ class ImageProvider extends FileProvider
                 $srcSet = [];
 
                 foreach ($srcSetFormats as $providerFormat => $settings) {
+                    $context = $media->getContext();
+
                     // Check if format belongs to the current media's context
-                    if (0 === strpos($providerFormat, $media->getContext())) {
+                    if (null !== $context && 0 === strpos($providerFormat, $context)) {
+                        if (null === $this->resizer) {
+                            throw new \RuntimeException('Resizer not set on the imageg provider.');
+                        }
+
                         $width = $this->resizer->getBox($media, $settings)->getWidth();
 
                         $srcSet[] = sprintf('%s %dw', $this->generatePublicUrl($media, $providerFormat), $width);

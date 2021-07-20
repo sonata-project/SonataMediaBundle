@@ -48,6 +48,8 @@ final class AddMassMediaCommand extends Command
 
     protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
             ->setDescription(static::$defaultDescription)
             ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse')
@@ -61,8 +63,11 @@ final class AddMassMediaCommand extends Command
         $fp = $this->getFilePointer($input, $output);
 
         $delimiter = $input->getOption('delimiter');
+        \assert(null !== $delimiter);
         $enclosure = $input->getOption('enclosure');
+        \assert(null !== $enclosure);
         $escape = $input->getOption('escape');
+        \assert(null !== $escape);
 
         $readHeaders = false;
 

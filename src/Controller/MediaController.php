@@ -88,9 +88,19 @@ final class MediaController extends AbstractController
             throw new AccessDeniedException();
         }
 
+        $context = $media->getContext();
+
+        if (null === $context) {
+            throw new NotFoundHttpException(sprintf('Media %s does not have context', $id));
+        }
+
+        if (!$this->pool->hasContext($context)) {
+            throw new NotFoundHttpException(sprintf('Pool does not have context %s, did you configure all your context correctly?.', $context));
+        }
+
         return $this->render('@SonataMedia/Media/view.html.twig', [
             'media' => $media,
-            'formats' => $this->pool->getFormatNamesByContext($media->getContext()),
+            'formats' => $this->pool->getFormatNamesByContext($context),
             'format' => $format,
         ]);
     }

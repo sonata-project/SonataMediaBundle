@@ -126,8 +126,10 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
         \assert(\is_string($order));
         $sortDirection = $blockContext->getSetting('sort');
         \assert(\is_string($sortDirection));
+        $template = $blockContext->getTemplate();
+        \assert(\is_string($template));
 
-        return $this->renderResponse($blockContext->getTemplate(), [
+        return $this->renderResponse($template, [
             'context' => $blockContext,
             'settings' => $blockContext->getSettings(),
             'block' => $blockContext->getBlock(),

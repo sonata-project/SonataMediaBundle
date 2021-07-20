@@ -127,16 +127,18 @@ class Pool
     }
 
     /**
+     * @throws \LogicException
+     *
      * @phpstan-return array{
      *     providers: string[],
      *     formats: array<string, FormatOptions>,
      *     download: array<string, mixed>
-     * }|null
+     * }
      */
-    public function getContext(string $name): ?array
+    public function getContext(string $name): array
     {
         if (!$this->hasContext($name)) {
-            return null;
+            throw new \LogicException(sprintf('Pool does not have context %s, did you configure all your contexts?', $name));
         }
 
         return $this->contexts[$name];
@@ -157,31 +159,19 @@ class Pool
     }
 
     /**
-     * @return string[]|null
+     * @return string[]
      */
-    public function getProviderNamesByContext(string $name): ?array
+    public function getProviderNamesByContext(string $name): array
     {
-        $context = $this->getContext($name);
-
-        if (!$context) {
-            return null;
-        }
-
-        return $context['providers'];
+        return $this->getContext($name)['providers'];
     }
 
     /**
-     * @phpstan-return array<string, FormatOptions>|null
+     * @phpstan-return array<string, FormatOptions>
      */
-    public function getFormatNamesByContext(string $name): ?array
+    public function getFormatNamesByContext(string $name): array
     {
-        $context = $this->getContext($name);
-
-        if (!$context) {
-            return null;
-        }
-
-        return $context['formats'];
+        return $this->getContext($name)['formats'];
     }
 
     /**
@@ -190,12 +180,9 @@ class Pool
     public function getProvidersByContext(string $name): array
     {
         $providers = [];
+        $providerNames = $this->getProviderNamesByContext($name);
 
-        if (!$this->hasContext($name)) {
-            return $providers;
-        }
-
-        foreach ($this->getProviderNamesByContext($name) as $name) {
+        foreach ($providerNames as $name) {
             $providers[] = $this->getProvider($name);
         }
 
@@ -220,12 +207,22 @@ class Pool
      */
     public function getDownloadStrategy(MediaInterface $media): DownloadStrategyInterface
     {
-        $context = $this->getContext($media->getContext());
+        $mediaContext = $media->getContext();
+
+        if (null === $mediaContext) {
+            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId()));
+        }
+
+        $context = $this->getContext($mediaContext);
 
         $id = $context['download']['strategy'];
 
+        if (!isset($context['download']['mode'])) {
+            throw new \RuntimeException(sprintf('Unable to retrieve the download mode from context %s.', $mediaContext));
+        }
+
         if (!isset($this->downloadStrategies[$id])) {
-            throw new \RuntimeException('Unable to retrieve the download security : '.$id);
+            throw new \RuntimeException(sprintf('Unable to retrieve the download security %s', $id));
         }
 
         return $this->downloadStrategies[$id];
@@ -236,7 +233,13 @@ class Pool
      */
     public function getDownloadMode(MediaInterface $media): string
     {
-        $context = $this->getContext($media->getContext());
+        $mediaContext = $media->getContext();
+
+        if (null === $mediaContext) {
+            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId()));
+        }
+
+        $context = $this->getContext($mediaContext);
 
         if (!isset($context['download']['mode'])) {
             throw new \RuntimeException('Unable to retrieve the download mode.');
@@ -252,7 +255,7 @@ class Pool
 
     public function validate(ErrorElement $errorElement, MediaInterface $media): void
     {
-        if (!$media->getProviderName()) {
+        if (null === $media->getProviderName()) {
             return;
         }
 

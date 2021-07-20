@@ -102,7 +102,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $categoryId = $this->getRequest()->get('category');
 
-        if (null !== $this->categoryManager && !$categoryId) {
+        if (null !== $this->categoryManager && null !== $this->contextManager && !$categoryId) {
             $rootCategories = $this->categoryManager->getRootCategoriesForContext($this->contextManager->find($context));
             $rootCategory = current($rootCategories);
 
@@ -155,7 +155,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $provider->getFormatName($object, MediaProviderInterface::FORMAT_ADMIN)
         );
 
-        return new Metadata($object->getName(), $object->getDescription(), $url);
+        return new Metadata((string) $object, $object->getDescription(), $url);
     }
 
     protected function configureListFields(ListMapper $list): void

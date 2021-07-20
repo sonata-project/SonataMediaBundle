@@ -91,13 +91,17 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     private function getRootCategory(MediaInterface $media): CategoryInterface
     {
-        if (null === $this->rootCategories) {
+        if (null === $this->rootCategories && null !== $this->categoryManager) {
             $this->rootCategories = $this->categoryManager->getAllRootCategories(false);
         }
 
         $context = $media->getContext();
 
-        if (!\array_key_exists($context, $this->rootCategories)) {
+        if (null === $context) {
+            throw new \RuntimeException(sprintf('There is no context on media %s', $media->getId()));
+        }
+
+        if (null === $this->rootCategories || !\array_key_exists($context, $this->rootCategories)) {
             throw new \RuntimeException(sprintf('There is no main category related to context: %s', $context));
         }
 

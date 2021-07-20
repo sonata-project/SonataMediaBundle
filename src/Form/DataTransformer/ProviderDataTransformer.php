@@ -104,6 +104,8 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         try {
             $provider->transform($newMedia);
         } catch (\Throwable $e) {
+            \assert(null !== $this->logger);
+
             // #1107 We must never throw an exception here.
             // An exception here would prevent us to provide meaningful errors through the Form
             // Error message inspired from Monolog\ErrorHandler

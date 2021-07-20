@@ -74,7 +74,7 @@ final class MediaAdminController extends CRUDController
         $filters = $request->get('filter');
 
         // set the default context
-        if (!$filters || !\array_key_exists('context', $filters)) {
+        if (null === $filters || !\array_key_exists('context', $filters)) {
             $pool = $this->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
@@ -108,9 +108,9 @@ final class MediaAdminController extends CRUDController
                     'context' => $context,
                 ]);
 
-                if (!empty($category)) {
+                if (null !== $category) {
                     $datagrid->setValue('category', null, $category->getId());
-                } else {
+                } elseif (null !== $rootCategory) {
                     $datagrid->setValue('category', null, $rootCategory->getId());
                 }
             }

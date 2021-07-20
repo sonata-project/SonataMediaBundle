@@ -103,10 +103,14 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
         $formatChoices = [];
 
         if ($gallery instanceof GalleryInterface) {
-            $formats = $this->pool->getFormatNamesByContext($gallery->getContext());
+            $context = $gallery->getContext();
 
-            foreach ($formats as $code => $format) {
-                $formatChoices[$code] = $code;
+            if (null !== $context && $this->pool->hasContext($context)) {
+                $formats = $this->pool->getFormatNamesByContext($context);
+
+                foreach ($formats as $code => $format) {
+                    $formatChoices[$code] = $code;
+                }
             }
         }
 
@@ -166,8 +170,10 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
+        $template = $blockContext->getTemplate();
+        \assert(\is_string($template));
 
-        return $this->renderResponse($blockContext->getTemplate(), [
+        return $this->renderResponse($template, [
             'gallery' => $gallery,
             'block' => $blockContext->getBlock(),
             'settings' => $blockContext->getSettings(),
@@ -243,10 +249,17 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
 
     private function getMediaType(MediaInterface $media): ?string
     {
-        if ('video/x-flv' === $media->getContentType()) {
+        $contentType = $media->getContentType();
+
+        if (null === $contentType) {
+            return null;
+        }
+
+        if ('video/x-flv' === $contentType) {
             return 'video';
         }
-        if ('image' === substr($media->getContentType(), 0, 5)) {
+
+        if ('image' === substr($contentType, 0, 5)) {
             return 'image';
         }
 

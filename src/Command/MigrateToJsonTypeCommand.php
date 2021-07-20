@@ -38,6 +38,8 @@ final class MigrateToJsonTypeCommand extends Command
 
     protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
             ->setDescription(static::$defaultDescription)
             ->addOption('table', null, InputOption::VALUE_OPTIONAL, 'Media table', 'media__media')
@@ -56,6 +58,7 @@ final class MigrateToJsonTypeCommand extends Command
 
         $count = 0;
         $table = $input->getOption('table');
+        \assert(null !== $table);
         $column = $input->getOption('column');
         $columnId = $input->getOption('column_id');
         $medias = $this->entityManager->getConnection()->fetchAllAssociative("SELECT * FROM $table");

@@ -339,7 +339,9 @@ final class GalleryController
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
         $galleryItemExists = $gallery->getGalleryItems()->exists(static function ($key, GalleryItemInterface $element) use ($media): bool {
-            return $element->getMedia()->getId() === $media->getId();
+            $elementMedia = $element->getMedia();
+
+            return null !== $elementMedia && $elementMedia->getId() === $media->getId();
         });
 
         if ($galleryItemExists) {
@@ -381,7 +383,9 @@ final class GalleryController
         $media = $this->getMedia($mediaId);
 
         foreach ($gallery->getGalleryItems() as $galleryItem) {
-            if ($galleryItem->getMedia()->getId() === $media->getId()) {
+            $galleryItemMedia = $galleryItem->getMedia();
+
+            if (null !== $galleryItemMedia && $galleryItemMedia->getId() === $media->getId()) {
                 return $this->handleWriteGalleryItem($gallery, $media, $galleryItem, $request);
             }
         }
@@ -420,7 +424,9 @@ final class GalleryController
         $media = $this->getMedia($mediaId);
 
         foreach ($gallery->getGalleryItems() as $key => $galleryItem) {
-            if ($galleryItem->getMedia()->getId() === $media->getId()) {
+            $galleryItemMedia = $galleryItem->getMedia();
+
+            if (null !== $galleryItemMedia && $galleryItemMedia->getId() === $media->getId()) {
                 $gallery->getGalleryItems()->remove($key);
                 $this->galleryManager->save($gallery);
 
@@ -545,7 +551,7 @@ final class GalleryController
      */
     private function handleWriteGallery(Request $request, $id = null)
     {
-        $gallery = $this->getGallery($id);
+        $gallery = null !== $id ? $this->getGallery($id) : null;
 
         $form = $this->formFactory->createNamed('', ApiGalleryType::class, $gallery, [
             'csrf_protection' => false,

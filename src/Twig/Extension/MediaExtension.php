@@ -79,10 +79,14 @@ final class MediaExtension extends AbstractExtension
         $provider = $this->mediaPool->getProvider($media->getProviderName());
 
         $format = $provider->getFormatName($media, $format);
-
         $options = $provider->getHelperProperties($media, $format, $options);
+        $template = $provider->getTemplate('helper_view');
 
-        return $this->render($provider->getTemplate('helper_view'), [
+        if (null === $template) {
+            return '';
+        }
+
+        return $this->render($template, [
             'media' => $media,
             'format' => $format,
             'options' => $options,
@@ -106,7 +110,12 @@ final class MediaExtension extends AbstractExtension
         $provider = $this->mediaPool->getProvider($media->getProviderName());
 
         $format = $provider->getFormatName($media, $format);
-        $format_definition = $provider->getFormat($format);
+        $formatDefinition = $provider->getFormat($format);
+        $template = $provider->getTemplate('helper_thumbnail');
+
+        if (null === $template) {
+            return '';
+        }
 
         // build option
         $defaultOptions = [
@@ -114,18 +123,18 @@ final class MediaExtension extends AbstractExtension
             'alt' => $media->getName(),
         ];
 
-        if (\is_array($format_definition) && $format_definition['width']) {
-            $defaultOptions['width'] = $format_definition['width'];
+        if (\is_array($formatDefinition) && $formatDefinition['width']) {
+            $defaultOptions['width'] = $formatDefinition['width'];
         }
-        if (\is_array($format_definition) && $format_definition['height']) {
-            $defaultOptions['height'] = $format_definition['height'];
+        if (\is_array($formatDefinition) && $formatDefinition['height']) {
+            $defaultOptions['height'] = $formatDefinition['height'];
         }
 
         $options = array_merge($defaultOptions, $options);
 
         $options['src'] = $provider->generatePublicUrl($media, $format);
 
-        return $this->render($provider->getTemplate('helper_thumbnail'), [
+        return $this->render($template, [
             'media' => $media,
             'options' => $options,
         ]);

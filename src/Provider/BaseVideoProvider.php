@@ -214,6 +214,10 @@ abstract class BaseVideoProvider extends BaseProvider
             }
         }
 
+        if (null === $this->resizer) {
+            throw new \RuntimeException('Resizer not set on the video provider.');
+        }
+
         return $this->resizer->getBox($media, $settings);
     }
 

@@ -52,10 +52,16 @@ final class ImageUploadDimensionValidator extends ConstraintValidator
             return;
         }
 
+        $context = $value->getContext();
+
+        if (null === $context) {
+            return;
+        }
+
         $minWidth = 0;
         $minHeight = 0;
 
-        foreach ($this->imageProvider->getFormatsForContext($value->getContext()) as $format) {
+        foreach ($this->imageProvider->getFormatsForContext($context) as $format) {
             if (!$format['constraint']) {
                 continue;
             }
