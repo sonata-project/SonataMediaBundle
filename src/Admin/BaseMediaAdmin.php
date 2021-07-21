@@ -155,7 +155,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $provider->getFormatName($object, MediaProviderInterface::FORMAT_ADMIN)
         );
 
-        return new Metadata((string) $object, $object->getDescription(), $url);
+        return new Metadata($this->toString($object), $object->getDescription(), $url);
     }
 
     protected function configureListFields(ListMapper $list): void
