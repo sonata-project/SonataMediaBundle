@@ -97,6 +97,7 @@ class MediaControllerTest extends TestCase
 
         $pool = $this->createMock(Pool::class);
         $pool->method('getProvider')->willReturn($provider);
+        $pool->expects($this->once())->method('hasContext')->willReturn(true);
         $pool->expects($this->once())->method('getFormatNamesByContext')->willReturn(['format_name1' => 'value1']);
 
         $controller = $this->createMediaController($manager, $pool);
