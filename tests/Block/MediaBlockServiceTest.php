@@ -105,6 +105,8 @@ class MediaBlockServiceTest extends BlockServiceTestCase
     private function configureGetFormatChoices(MockObject $media, array $choices): void
     {
         $media->method('getContext')->with()->willReturn('context');
+
+        $this->pool->method('hasContext')->with('context')->willReturn(true);
         $this->pool->method('getFormatNamesByContext')->with('context')->willReturn($choices);
     }
 }

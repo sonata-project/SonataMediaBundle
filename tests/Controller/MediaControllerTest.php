@@ -143,6 +143,7 @@ class MediaControllerTest extends TestCase
             'format' => 'format',
         ], 'renderResponse');
         $media->method('getContext')->willReturn('context');
+        $this->pool->method('hasContext')->with('context')->willReturn(true);
         $this->pool->method('getFormatNamesByContext')->with('context')->willReturn(['format']);
 
         $response = $this->controller->viewAction($request, 1, 'format');

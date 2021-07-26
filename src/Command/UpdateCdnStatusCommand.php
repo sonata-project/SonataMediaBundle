@@ -51,12 +51,12 @@ final class UpdateCdnStatusCommand extends Command
     private $quiet = false;
 
     /**
-     * @var OutputInterface|null
+     * @var OutputInterface
      */
     private $output;
 
     /**
-     * @var InputInterface|null
+     * @var InputInterface
      */
     private $input;
 
@@ -73,6 +73,8 @@ final class UpdateCdnStatusCommand extends Command
 
     protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
             ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
@@ -99,7 +101,8 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $quiet = (bool) $input->getOption('quiet');
+        $quiet = $input->getOption('quiet');
+        \assert(\is_bool($quiet));
 
         $this->quiet = $quiet;
         $this->input = $input;
@@ -130,7 +133,9 @@ EOF
             $previousStatus = $media->getCdnStatus();
 
             try {
-                $cdnStatus = $cdn->getFlushStatus($media->getCdnFlushIdentifier());
+                $flushIdentifier = $media->getCdnFlushIdentifier();
+                $cdnStatus = null !== $flushIdentifier ? $cdn->getFlushStatus($flushIdentifier) : null;
+
                 if (\in_array($cdnStatus, [CDNInterface::STATUS_OK, CDNInterface::STATUS_ERROR], true)) {
                     $media->setCdnFlushIdentifier(null);
 
@@ -138,6 +143,7 @@ EOF
                         $media->setCdnFlushAt(new \DateTime());
                     }
                 }
+
                 $media->setCdnStatus($cdnStatus);
 
                 if (OutputInterface::VERBOSITY_VERBOSE <= $this->output->getVerbosity()) {

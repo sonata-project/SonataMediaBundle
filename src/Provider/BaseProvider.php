@@ -97,9 +97,11 @@ abstract class BaseProvider implements MediaProviderInterface
             return;
         }
 
+        $flushIdentifier = $media->getCdnFlushIdentifier();
+
         // Check if the medium already has a pending CDN flush.
-        if ($media->getCdnFlushIdentifier()) {
-            $cdnStatus = $this->getCdn()->getFlushStatus($media->getCdnFlushIdentifier());
+        if (null !== $flushIdentifier) {
+            $cdnStatus = $this->getCdn()->getFlushStatus($flushIdentifier);
             // Update the flush status.
             $media->setCdnStatus($cdnStatus);
 
@@ -120,12 +122,12 @@ abstract class BaseProvider implements MediaProviderInterface
 
         foreach ($this->getFormats() as $format => $settings) {
             if (MediaProviderInterface::FORMAT_ADMIN === $format ||
-                substr($format, 0, \strlen((string) $media->getContext())) === $media->getContext()) {
+                substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext()) {
                 $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
             }
         }
 
-        if (!empty($flushPaths)) {
+        if ([] !== $flushPaths) {
             $cdnFlushIdentifier = $this->getCdn()->flushPaths($flushPaths);
             $media->setCdnFlushIdentifier($cdnFlushIdentifier);
             $media->setCdnStatus(CDNInterface::STATUS_TO_FLUSH);

@@ -51,7 +51,7 @@ final class SyncThumbsCommand extends Command
     private $quiet = false;
 
     /**
-     * @var OutputInterface|null
+     * @var OutputInterface
      */
     private $output;
 
@@ -68,6 +68,8 @@ final class SyncThumbsCommand extends Command
 
     protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
             ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
@@ -99,7 +101,8 @@ final class SyncThumbsCommand extends Command
             $context = $helper->ask($input, $output, $question);
         }
 
-        $quiet = (bool) $input->getOption('quiet');
+        $quiet = $input->getOption('quiet');
+        \assert(\is_bool($quiet));
 
         $this->quiet = $quiet;
         $this->output = $output;
@@ -116,6 +119,7 @@ final class SyncThumbsCommand extends Command
         $batchesLimit = (int) $input->getOption('batchesLimit');
         $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
+
         do {
             ++$batchCounter;
 
@@ -133,7 +137,7 @@ final class SyncThumbsCommand extends Command
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log('Error: '.$e->getMessage());
+                $this->log(sprintf('Error: %s', $e->getMessage()));
 
                 break;
             }
@@ -144,26 +148,25 @@ final class SyncThumbsCommand extends Command
             }
 
             $totalMediasCount += $batchMediasCount;
-            $this->log(
-                sprintf(
-                    'Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)',
-                    $batchMediasCount,
-                    $batchCounter,
-                    $batchOffset,
-                    $providerName,
-                    $context
-                )
-            );
+            $this->log(sprintf(
+                'Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)',
+                $batchMediasCount,
+                $batchCounter,
+                $batchOffset,
+                $providerName,
+                $context
+            ));
 
             foreach ($medias as $media) {
                 if (!$this->processMedia($media, $provider)) {
                     continue;
                 }
-                //clean filesystem registry for saving memory
+
+                // Clean filesystem registry for saving memory
                 $fsRegister->setValue($filesystem, []);
             }
 
-            //clear entity manager for saving memory
+            // Clear entity manager for saving memory
             if ($this->mediaManager instanceof ClearableManagerInterface) {
                 $this->mediaManager->clear();
             }
@@ -173,14 +176,18 @@ final class SyncThumbsCommand extends Command
             }
         } while (true);
 
-        $this->log("Done (total medias processed: {$totalMediasCount}).");
+        $this->log(sprintf('Done (total medias processed: %s).', $totalMediasCount));
 
         return 0;
     }
 
     private function processMedia(MediaInterface $media, MediaProviderInterface $provider): bool
     {
-        $this->log('Generating thumbs for '.$media->getName().' - '.$media->getId());
+        $this->log(sprintf(
+            'Generating thumbs for %s - %s',
+            $media->getName(),
+            $media->getId()
+        ));
 
         try {
             $provider->removeThumbnails($media);

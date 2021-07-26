@@ -51,12 +51,12 @@ final class RemoveThumbsCommand extends Command
     private $quiet = false;
 
     /**
-     * @var InputInterface|null
+     * @var InputInterface
      */
     private $input;
 
     /**
-     * @var OutputInterface|null
+     * @var OutputInterface
      */
     private $output;
 
@@ -73,6 +73,8 @@ final class RemoveThumbsCommand extends Command
 
     protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
             ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
@@ -85,7 +87,8 @@ final class RemoveThumbsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $quiet = (bool) $input->getOption('quiet');
+        $quiet = $input->getOption('quiet');
+        \assert(\is_bool($quiet));
 
         $this->quiet = $quiet;
         $this->input = $input;

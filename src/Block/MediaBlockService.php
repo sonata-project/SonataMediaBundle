@@ -127,6 +127,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     {
         // make sure we have a valid format
         $media = $blockContext->getBlock()->getSetting('mediaId');
+
         if ($media instanceof MediaInterface) {
             $choices = $this->getFormatChoices($media);
 
@@ -135,7 +136,10 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
             }
         }
 
-        return $this->renderResponse($blockContext->getTemplate(), [
+        $template = $blockContext->getTemplate();
+        \assert(\is_string($template));
+
+        return $this->renderResponse($template, [
             'media' => $blockContext->getSetting('mediaId'),
             'block' => $blockContext->getBlock(),
             'settings' => $blockContext->getSettings(),
@@ -184,13 +188,18 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
      */
     protected function getFormatChoices(?MediaInterface $media = null): array
     {
-        $formatChoices = [];
-
         if (!$media instanceof MediaInterface) {
-            return $formatChoices;
+            return [];
         }
 
-        $formats = $this->pool->getFormatNamesByContext($media->getContext());
+        $context = $media->getContext();
+
+        if (null === $context || !$this->pool->hasContext($context)) {
+            return [];
+        }
+
+        $formatChoices = [];
+        $formats = $this->pool->getFormatNamesByContext($context);
 
         foreach ($formats as $code => $format) {
             $formatChoices[$code] = $code;

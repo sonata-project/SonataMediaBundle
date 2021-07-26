@@ -206,7 +206,13 @@ final class Pixlr
             return false;
         }
 
-        return \in_array(strtolower($media->getExtension()), $this->validFormats, true);
+        $extension = $media->getExtension();
+
+        if (null === $extension) {
+            return false;
+        }
+
+        return \in_array(strtolower($extension), $this->validFormats, true);
     }
 
     /**
@@ -232,7 +238,9 @@ final class Pixlr
 
     private function generateHash(MediaInterface $media): string
     {
-        return sha1($media->getId().$media->getCreatedAt()->format('u').$this->secret);
+        $createdAt = null !== $media->getCreatedAt() ? $media->getCreatedAt()->format('u') : '';
+
+        return sha1(sprintf('%s%s%s', $media->getId() ?? '', $createdAt, $this->secret));
     }
 
     /**

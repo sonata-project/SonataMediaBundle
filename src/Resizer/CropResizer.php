@@ -95,7 +95,7 @@ final class CropResizer implements ResizerInterface
      */
     private function createTargetBox(array $settings): Box
     {
-        return new Box($settings['width'], $settings['height']);
+        return new Box($settings['width'] ?? 0, $settings['height'] ?? 0);
     }
 
     private function shouldModify(Box $sourceSize, Box $targetSize): bool

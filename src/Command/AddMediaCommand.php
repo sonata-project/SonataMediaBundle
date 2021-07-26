@@ -43,6 +43,8 @@ final class AddMediaCommand extends Command
 
     protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
             ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::REQUIRED, 'The provider')

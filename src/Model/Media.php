@@ -381,7 +381,7 @@ abstract class Media implements MediaInterface
 
     public function getBox(): Box
     {
-        return new Box($this->width, $this->height);
+        return new Box($this->width ?? 0, $this->height ?? 0);
     }
 
     public function getExtension(): ?string

@@ -48,12 +48,14 @@ final class AddMassMediaCommand extends Command
 
     protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
             ->setDescription(static::$defaultDescription)
-            ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'The file to parse')
-            ->addOption('delimiter', null, InputOption::VALUE_OPTIONAL, 'Set the field delimiter (one character only)', ',')
-            ->addOption('enclosure', null, InputOption::VALUE_OPTIONAL, 'Set the field enclosure character (one character only).', '"')
-            ->addOption('escape', null, InputOption::VALUE_OPTIONAL, 'Set the escape character (one character only). Defaults as a backslash', '\\');
+            ->addOption('file', null, InputOption::VALUE_REQUIRED, 'The file to parse')
+            ->addOption('delimiter', null, InputOption::VALUE_REQUIRED, 'Set the field delimiter (one character only)', ',')
+            ->addOption('enclosure', null, InputOption::VALUE_REQUIRED, 'Set the field enclosure character (one character only).', '"')
+            ->addOption('escape', null, InputOption::VALUE_REQUIRED, 'Set the escape character (one character only). Defaults as a backslash', '\\');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -104,7 +106,7 @@ final class AddMassMediaCommand extends Command
 
         $file = $input->getOption('file');
 
-        if (null === $file || !\is_string($file)) {
+        if (null === $file) {
             throw new \RuntimeException('Please provide a CSV file argument or CSV input stream');
         }
 

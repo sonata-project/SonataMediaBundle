@@ -352,7 +352,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $this->fixFilename($media);
 
         if ($media->getBinaryContent() instanceof UploadedFile && 0 === $media->getBinaryContent()->getSize()) {
-            $media->setProviderReference(uniqid($media->getName(), true));
+            $media->setProviderReference(uniqid($media->getName() ?? '', true));
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
             throw new UploadException('The uploaded file is not found');
@@ -430,10 +430,15 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         $content = $request->getContent();
+        $contentType = $media->getContentType();
 
-        // create unique id for media reference
+        if (null === $contentType) {
+            throw new \RuntimeException(sprintf('Media %s does not have content type.', $media->getId()));
+        }
+
+        // Create unique id for media reference
         $guesser = MimeTypes::getDefault();
-        $extensions = $guesser->getExtensions($media->getContentType());
+        $extensions = $guesser->getExtensions($contentType);
         $extension = $extensions[0] ?? null;
 
         if (!$extension) {
@@ -451,7 +456,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         fwrite($handle, $content);
         $file = new ApiMediaFile($handle);
         $file->setExtension($extension);
-        $file->setMimetype($media->getContentType());
+        $file->setMimetype($contentType);
 
         $media->setBinaryContent($file);
     }
