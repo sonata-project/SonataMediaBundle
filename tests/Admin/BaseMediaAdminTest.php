@@ -78,7 +78,7 @@ class BaseMediaAdminTest extends TestCase
         );
         $this->mediaAdmin->setRequest($this->request);
         $this->mediaAdmin->setModelManager($this->modelManager);
-        $this->mediaAdmin->setUniqid('uniqid');
+        $this->mediaAdmin->setUniqId('uniqid');
     }
 
     public function testAlterNewInstance(): void

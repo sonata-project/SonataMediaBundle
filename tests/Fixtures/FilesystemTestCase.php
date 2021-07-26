@@ -101,7 +101,7 @@ class FilesystemTestCase extends TestCase
 
     protected function tearDown(): void
     {
-        if (!empty($this->longPathNamesWindows)) {
+        if ([] !== $this->longPathNamesWindows) {
             foreach ($this->longPathNamesWindows as $path) {
                 exec('DEL '.$path);
             }
@@ -130,7 +130,9 @@ class FilesystemTestCase extends TestCase
 
         self::assertNotFalse($infos);
 
-        return ($datas = posix_getpwuid($infos[4])) ? $datas['name'] : null;
+        $datas = posix_getpwuid($infos[4]);
+
+        return (false !== $datas) ? $datas['name'] : null;
     }
 
     protected function getFileGroup(string $filepath): string
@@ -141,7 +143,9 @@ class FilesystemTestCase extends TestCase
 
         self::assertNotFalse($infos);
 
-        if ($datas = posix_getgrgid($infos[5])) {
+        $datas = posix_getgrgid($infos[5]);
+
+        if (false !== $datas) {
             return $datas['name'];
         }
 
