@@ -97,9 +97,9 @@ class BaseMediaAdminTest extends TestCase
 
         $this->mediaAdmin->alterNewInstance($media);
 
-        $this->assertSame('context', $media->getContext());
-        $this->assertSame($category, $media->getCategory());
-        $this->assertSame('providerName', $media->getProviderName());
+        self::assertSame('context', $media->getContext());
+        self::assertSame($category, $media->getCategory());
+        self::assertSame('providerName', $media->getProviderName());
     }
 
     public function testGetPersistentParametersWithMultipleProvidersInContext(): void
@@ -124,7 +124,7 @@ class BaseMediaAdminTest extends TestCase
 
         $persistentParameters = $this->mediaAdmin->getPersistentParameters();
 
-        $this->assertSame([
+        self::assertSame([
             'provider' => 'providerName',
             'context' => 'context',
             'category' => 1,

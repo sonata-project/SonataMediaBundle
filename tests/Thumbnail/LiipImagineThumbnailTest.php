@@ -60,12 +60,12 @@ class LiipImagineThumbnailTest extends TestCase
         )->willReturn('cache/media/default/0011/24/ASDASDAS.png');
 
         $thumbnail->generate($provider, $media);
-        $this->assertSame('default/0011/24/ASDASDAS.png', $thumbnail->generatePublicUrl(
+        self::assertSame('default/0011/24/ASDASDAS.png', $thumbnail->generatePublicUrl(
             $provider,
             $media,
             MediaProviderInterface::FORMAT_ADMIN
         ));
-        $this->assertSame('cache/media/default/0011/24/ASDASDAS.png', $thumbnail->generatePublicUrl(
+        self::assertSame('cache/media/default/0011/24/ASDASDAS.png', $thumbnail->generatePublicUrl(
             $provider,
             $media,
             'mycontext_medium'

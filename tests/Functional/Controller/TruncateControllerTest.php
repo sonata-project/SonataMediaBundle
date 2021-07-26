@@ -29,7 +29,7 @@ final class TruncateControllerTest extends TestCase
         $client = new KernelBrowser(new AppKernel());
         $client->request(Request::METHOD_GET, '/u_truncate_test');
 
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        $this->assertSame('test', $client->getResponse()->getContent());
+        self::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        self::assertSame('test', $client->getResponse()->getContent());
     }
 }

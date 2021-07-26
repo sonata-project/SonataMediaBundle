@@ -34,7 +34,7 @@ class NoDriverManagerTest extends TestCase
 
     public function testIsInstanceOfGalleryManagerInterface(): void
     {
-        $this->assertInstanceOf(GalleryManagerInterface::class, new NoDriverManager());
+        self::assertInstanceOf(GalleryManagerInterface::class, new NoDriverManager());
     }
 
     /**

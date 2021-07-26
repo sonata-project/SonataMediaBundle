@@ -78,12 +78,12 @@ class FileProviderTest extends AbstractProviderTest
         $media->setContext('default');
 
         $media->setId(1023456);
-        $this->assertSame('default/0011/24/ASDASD.txt', $this->provider->getReferenceImage($media));
+        self::assertSame('default/0011/24/ASDASD.txt', $this->provider->getReferenceImage($media));
 
-        $this->assertSame('default/0011/24', $this->provider->generatePath($media));
+        self::assertSame('default/0011/24', $this->provider->generatePath($media));
 
         // default icon image
-        $this->assertSame('/uploads/media/sonatamedia/files/big/file.png', $this->provider->generatePublicUrl($media, 'big'));
+        self::assertSame('/uploads/media/sonatamedia/files/big/file.png', $this->provider->generatePublicUrl($media, 'big'));
     }
 
     public function testHelperProperties(): void
@@ -105,13 +105,13 @@ class FileProviderTest extends AbstractProviderTest
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        $this->assertIsArray($properties);
-        $this->assertSame('test.png', $properties['title']);
+        self::assertIsArray($properties);
+        self::assertSame('test.png', $properties['title']);
     }
 
     public function testForm(): void
     {
-        $this->formBuilder->expects($this->exactly(8))
+        $this->formBuilder->expects(self::exactly(8))
             ->method('add');
 
         $this->provider->buildCreateForm($this->form);
@@ -146,19 +146,19 @@ class FileProviderTest extends AbstractProviderTest
 
         $media = new Media();
         $this->provider->preUpdate($media);
-        $this->assertNull($media->getProviderReference());
+        self::assertNull($media->getProviderReference());
 
         $media->setBinaryContent($file);
         $this->provider->transform($media);
 
-        $this->assertInstanceOf(\DateTimeInterface::class, $media->getUpdatedAt());
-        $this->assertNotNull($media->getProviderReference());
+        self::assertInstanceOf(\DateTimeInterface::class, $media->getUpdatedAt());
+        self::assertNotNull($media->getProviderReference());
 
         $this->provider->postUpdate($media);
 
         $realPath = realpath(__DIR__.'/../Fixtures/file.txt');
 
-        $this->assertNotFalse($realPath);
+        self::assertNotFalse($realPath);
 
         $file = new File($realPath);
 
@@ -170,18 +170,18 @@ class FileProviderTest extends AbstractProviderTest
         // pre persist the media
         $this->provider->transform($media);
 
-        $this->assertSame('file.txt', $media->getName(), '::getName() return the file name');
-        $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
+        self::assertSame('file.txt', $media->getName(), '::getName() return the file name');
+        self::assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        $this->assertEmpty($this->provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return empty on non reference formate');
-        $this->assertNotNull($this->provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
+        self::assertEmpty($this->provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return empty on non reference formate');
+        self::assertNotNull($this->provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
     }
 
     public function testDownload(): void
     {
         $realPath = realpath(__DIR__.'/../Fixtures/FileProviderTest/0011/24/file.txt');
 
-        $this->assertNotFalse($realPath);
+        self::assertNotFalse($realPath);
 
         $file = new File($realPath);
 
@@ -193,7 +193,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $response = $this->provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
 
-        $this->assertInstanceOf(BinaryFileResponse::class, $response);
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
     }
 
     /**
@@ -205,7 +205,7 @@ class FileProviderTest extends AbstractProviderTest
     {
         $closure = function () use ($expected, $media): void {
             $this->provider->transform($media);
-            $this->assertInstanceOf($expected, $media->getBinaryContent());
+            self::assertInstanceOf($expected, $media->getBinaryContent());
         };
 
         $closure();
@@ -218,13 +218,13 @@ class FileProviderTest extends AbstractProviderTest
     {
         $realPath = realpath(__DIR__.'/../Fixtures/file.txt');
 
-        $this->assertNotFalse($realPath);
+        self::assertNotFalse($realPath);
 
         $file = new File($realPath);
 
         $content = file_get_contents($realPath);
 
-        $this->assertNotFalse($content);
+        self::assertNotFalse($content);
 
         $request = new Request([], [], [], [], [], [], $content);
 
@@ -261,11 +261,11 @@ class FileProviderTest extends AbstractProviderTest
 
         $binaryContent = $this->createMock(File::class);
 
-        $binaryContent->expects($this->atLeastOnce())
+        $binaryContent->expects(self::atLeastOnce())
             ->method('getRealPath')
             ->willReturn(__DIR__.'/../Fixtures/file.txt');
 
-        $binaryContent->expects($this->never())
+        $binaryContent->expects(self::never())
             ->method('getPathname');
 
         $media
@@ -296,11 +296,11 @@ class FileProviderTest extends AbstractProviderTest
 
         $binaryContent = $this->createMock(File::class);
 
-        $binaryContent->expects($this->atLeastOnce())
+        $binaryContent->expects(self::atLeastOnce())
             ->method('getRealPath')
             ->willReturn(false);
 
-        $binaryContent->expects($this->atLeastOnce())
+        $binaryContent->expects(self::atLeastOnce())
             ->method('getPathname')
             ->willReturn(__DIR__.'/../Fixtures/file.txt');
 
@@ -331,9 +331,9 @@ class FileProviderTest extends AbstractProviderTest
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('buildViolation')
-            ->with($this->stringContains('The file is too big, max size:'))
+            ->with(self::stringContains('The file is too big, max size:'))
             ->willReturn($this->createConstraintBuilder());
 
         $upload = $this->getMockBuilder(UploadedFile::class)
@@ -359,9 +359,9 @@ class FileProviderTest extends AbstractProviderTest
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('buildViolation')
-            ->with($this->stringContains('The file is too big, max size:'))
+            ->with(self::stringContains('The file is too big, max size:'))
             ->willReturn($this->createConstraintBuilder());
 
         $upload = $this->getMockBuilder(UploadedFile::class)
@@ -387,7 +387,7 @@ class FileProviderTest extends AbstractProviderTest
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('buildViolation');
 
         $upload = $this->getMockBuilder(UploadedFile::class)
@@ -414,11 +414,11 @@ class FileProviderTest extends AbstractProviderTest
         $errorElement = $this->createErrorElement($executionContext);
         $constraintBuilder = $this->createConstraintBuilder();
         $constraintBuilder
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('setParameters')
             ->with(['%type%' => 'bar/baz']);
         $executionContext
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('buildViolation')
             ->with('Invalid mime type : %type%')
             ->willReturn($constraintBuilder);
@@ -443,11 +443,11 @@ class FileProviderTest extends AbstractProviderTest
 
     public function testMetadata(): void
     {
-        $this->assertSame('file', $this->provider->getProviderMetadata()->getTitle());
-        $this->assertSame('file.description', $this->provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($this->provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-file-text-o', $this->provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
+        self::assertSame('file', $this->provider->getProviderMetadata()->getTitle());
+        self::assertSame('file.description', $this->provider->getProviderMetadata()->getDescription());
+        self::assertNotNull($this->provider->getProviderMetadata()->getImage());
+        self::assertSame('fa fa-file-text-o', $this->provider->getProviderMetadata()->getOption('class'));
+        self::assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
