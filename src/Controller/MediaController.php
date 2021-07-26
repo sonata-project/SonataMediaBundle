@@ -50,7 +50,7 @@ final class MediaController extends AbstractController
     {
         $media = $this->mediaManager->find($id);
 
-        if (!$media) {
+        if (null === $media) {
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
@@ -80,7 +80,7 @@ final class MediaController extends AbstractController
     {
         $media = $this->mediaManager->find($id);
 
-        if (!$media) {
+        if (null === $media) {
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 

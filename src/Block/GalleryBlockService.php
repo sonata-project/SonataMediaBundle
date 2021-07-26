@@ -177,7 +177,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
             'gallery' => $gallery,
             'block' => $blockContext->getBlock(),
             'settings' => $blockContext->getSettings(),
-            'elements' => $gallery ? $this->buildElements($gallery) : [],
+            'elements' => null !== $gallery ? $this->buildElements($gallery) : [],
         ], $response);
     }
 
@@ -185,7 +185,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     {
         $gallery = $block->getSetting('galleryId');
 
-        if ($gallery) {
+        if (null !== $gallery) {
             $gallery = $this->galleryManager->findOneBy(['id' => $gallery]);
         }
 

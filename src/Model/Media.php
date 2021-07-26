@@ -146,7 +146,7 @@ abstract class Media implements MediaInterface
 
     public function __toString(): string
     {
-        return $this->getName() ?: 'n/a';
+        return $this->getName() ?? 'n/a';
     }
 
     public function setName(?string $name): void
@@ -387,7 +387,8 @@ abstract class Media implements MediaInterface
     public function getExtension(): ?string
     {
         $providerReference = $this->getProviderReference();
-        if (!$providerReference) {
+
+        if (null === $providerReference) {
             return null;
         }
 

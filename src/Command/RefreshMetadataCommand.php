@@ -82,10 +82,7 @@ final class RefreshMetadataCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $quiet = $input->getOption('quiet');
-        \assert(\is_bool($quiet));
-
-        $this->quiet = $quiet;
+        $this->quiet = $input->getOption('quiet');
         $this->input = $input;
         $this->output = $output;
 

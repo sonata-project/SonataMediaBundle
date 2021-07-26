@@ -68,7 +68,7 @@ final class FixMediaContextCommand extends Command
         foreach ($this->mediaPool->getContexts() as $context => $contextAttrs) {
             $defaultContext = $this->contextManager->find($context);
 
-            if (!$defaultContext) {
+            if (null === $defaultContext) {
                 $output->writeln(sprintf(" > default context for '%s' is missing, creating one", $context));
                 $defaultContext = $this->contextManager->create();
                 $defaultContext->setId($context);

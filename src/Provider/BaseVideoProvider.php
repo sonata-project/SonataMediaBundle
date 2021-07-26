@@ -82,7 +82,7 @@ abstract class BaseVideoProvider extends BaseProvider
             $referenceFile = $this->getFilesystem()->get($key);
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
-            $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
+            $metadata = null !== $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
 
             $response = $this->sendRequest('GET', $this->getReferenceImage($media));
 
@@ -147,7 +147,7 @@ abstract class BaseVideoProvider extends BaseProvider
 
     public function postPersist(MediaInterface $media): void
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -180,7 +180,7 @@ abstract class BaseVideoProvider extends BaseProvider
 
         $metadata = json_decode($response, true);
 
-        if (!$metadata) {
+        if (null === $metadata) {
             throw new \RuntimeException('Unable to decode the video information for :'.$url);
         }
 

@@ -71,7 +71,7 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
         $builder->addModelTransformer($dataTransformer);
 
         $builder->addEventListener(FormEvents::SUBMIT, static function (FormEvent $event): void {
-            if ($event->getForm()->has('unlink') && $event->getForm()->get('unlink')->getData()) {
+            if ($event->getForm()->has('unlink') && null !== $event->getForm()->get('unlink')->getData()) {
                 $event->setData(null);
             }
         });

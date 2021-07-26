@@ -79,19 +79,15 @@ final class GalleryAdmin extends AbstractAdmin
             // NEXT_MAJOR: Change Options key to `form_group.options` and update translations files.
             ->with('Options', ['class' => 'col-md-3'])->end();
 
-        $context = $this->getPersistentParameter('context');
-
-        if (!$context) {
-            $context = $this->pool->getDefaultContext();
-        }
+        $context = $this->getPersistentParameter('context') ?? $this->pool->getDefaultContext();
 
         $formats = [];
-        foreach ((array) $this->pool->getFormatNamesByContext($context) as $name => $options) {
+        foreach ($this->pool->getFormatNamesByContext($context) as $name => $options) {
             $formats[$name] = $name;
         }
 
         $contexts = [];
-        foreach ((array) $this->pool->getContexts() as $contextItem => $format) {
+        foreach ($this->pool->getContexts() as $contextItem => $format) {
             $contexts[$contextItem] = $contextItem;
         }
 
@@ -103,7 +99,7 @@ final class GalleryAdmin extends AbstractAdmin
                 ])
                 ->add('enabled', null, ['required' => false])
                 ->add('name')
-                ->ifTrue(!empty($formats))
+                ->ifTrue([] !== $formats)
                     ->add('defaultFormat', ChoiceType::class, ['choices' => $formats])
                 ->ifEnd()
             ->end()

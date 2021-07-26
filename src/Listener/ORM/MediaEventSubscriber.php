@@ -79,7 +79,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
             return null;
         }
 
-        if (null !== $this->categoryManager && !$media->getCategory()) {
+        if (null !== $this->categoryManager && null === $media->getCategory()) {
             $media->setCategory($this->getRootCategory($media));
         }
 

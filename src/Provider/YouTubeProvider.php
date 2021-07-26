@@ -168,7 +168,7 @@ final class YouTubeProvider extends BaseVideoProvider
 
             // Values: 'allowfullscreen' or empty. Default is 'allowfullscreen'. Setting to empty value disables
             //  the fullscreen button.
-            'allowFullScreen' => 1 === $default_player_url_parameters['fs'],
+            'allowFullScreen' => true,
 
             // The allowScriptAccess parameter in the code is needed to allow the player SWF to call
             // functions on the containing HTML page, since the player is hosted on a different domain
@@ -239,7 +239,7 @@ final class YouTubeProvider extends BaseVideoProvider
     {
         $this->fixBinaryContent($media);
 
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -252,7 +252,7 @@ final class YouTubeProvider extends BaseVideoProvider
 
     private function fixBinaryContent(MediaInterface $media): void
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -266,7 +266,7 @@ final class YouTubeProvider extends BaseVideoProvider
             $matches
         );
 
-        if ($isMatching) {
+        if (false !== $isMatching) {
             $media->setBinaryContent($matches['video_id']);
         }
     }

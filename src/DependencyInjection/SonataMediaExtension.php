@@ -215,6 +215,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         }
 
         if ($container->hasDefinition('sonata.media.cdn.cloudfront') && isset($config['cdn']['cloudfront'])) {
+            $cloudFrontConfig = [];
+
             if (isset($config['cdn']['cloudfront']['region'])) {
                 $cloudFrontConfig['region'] = $config['cdn']['cloudfront']['region'];
             }
@@ -398,6 +400,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
      */
     private function isClassificationEnabled(array $bundles, array $config): bool
     {
+        \assert(\is_bool($config['force_disable_category']));
+
         return isset($bundles['SonataClassificationBundle'])
             && !$config['force_disable_category'];
     }

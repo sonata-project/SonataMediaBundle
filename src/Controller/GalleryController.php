@@ -51,7 +51,7 @@ final class GalleryController extends AbstractController
             'enabled' => true,
         ]);
 
-        if (!$gallery) {
+        if (null === $gallery) {
             throw new NotFoundHttpException('unable to find the gallery with the id');
         }
 

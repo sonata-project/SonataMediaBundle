@@ -55,7 +55,7 @@ final class CreateThumbnailConsumer implements ConsumerInterface
             'id' => $event->getMessage()->getValue('mediaId'),
         ]);
 
-        if (!$media) {
+        if (null === $media) {
             throw new HandlingException(sprintf('Media not found for identifier: %s.', $event->getMessage()->getValue('mediaId')));
         }
 

@@ -69,6 +69,8 @@ final class SimpleResizer implements ResizerInterface
         }
 
         if (null === $settings['height']) {
+            \assert(null !== $settings['width']);
+
             $settings['height'] = (int) round($settings['width'] * $size->getHeight() / $size->getWidth());
         }
 
@@ -86,7 +88,7 @@ final class SimpleResizer implements ResizerInterface
      */
     private function computeBox(MediaInterface $media, array $settings): Box
     {
-        if (!($this->mode & ManipulatorInterface::THUMBNAIL_INSET || $this->mode & ManipulatorInterface::THUMBNAIL_OUTBOUND)) {
+        if (!(0 !== ($this->mode & ManipulatorInterface::THUMBNAIL_INSET) || 0 !== ($this->mode & ManipulatorInterface::THUMBNAIL_OUTBOUND))) {
             throw new InvalidArgumentException('Invalid mode specified');
         }
 
@@ -97,7 +99,7 @@ final class SimpleResizer implements ResizerInterface
             $settings['height'] / $size->getHeight(),
         ];
 
-        if ($this->mode & ManipulatorInterface::THUMBNAIL_INSET) {
+        if (0 !== ($this->mode & ManipulatorInterface::THUMBNAIL_INSET)) {
             $ratio = min($ratios);
         } else {
             $ratio = max($ratios);

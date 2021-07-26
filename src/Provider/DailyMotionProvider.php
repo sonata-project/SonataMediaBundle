@@ -127,7 +127,7 @@ final class DailyMotionProvider extends BaseVideoProvider
     {
         $this->fixBinaryContent($media);
 
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -140,11 +140,11 @@ final class DailyMotionProvider extends BaseVideoProvider
 
     private function fixBinaryContent(MediaInterface $media): void
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
-        if (preg_match('{^(?:https?://)?www.dailymotion.com/video/(?<video_id>[0-9a-zA-Z]*)}', $media->getBinaryContent(), $matches)) {
+        if (0 !== preg_match('{^(?:https?://)?www.dailymotion.com/video/(?<video_id>[0-9a-zA-Z]*)}', $media->getBinaryContent(), $matches)) {
             $media->setBinaryContent($matches['video_id']);
         }
     }

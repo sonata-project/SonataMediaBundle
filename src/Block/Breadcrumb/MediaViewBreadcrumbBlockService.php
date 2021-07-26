@@ -46,8 +46,9 @@ final class MediaViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockSe
     protected function getMenu(BlockContextInterface $blockContext): ItemInterface
     {
         $menu = $this->getRootMenu($blockContext);
+        $media = $blockContext->getBlock()->getSetting('media');
 
-        if ($media = $blockContext->getBlock()->getSetting('media')) {
+        if (null !== $media) {
             $menu->addChild($media->getName(), [
                 'route' => 'sonata_media_view',
                 'routeParameters' => [

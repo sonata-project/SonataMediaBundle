@@ -123,10 +123,10 @@ final class MediaExtension extends AbstractExtension
             'alt' => $media->getName(),
         ];
 
-        if (\is_array($formatDefinition) && $formatDefinition['width']) {
+        if (false !== $formatDefinition && null !== $formatDefinition['width']) {
             $defaultOptions['width'] = $formatDefinition['width'];
         }
-        if (\is_array($formatDefinition) && $formatDefinition['height']) {
+        if (false !== $formatDefinition && null !== $formatDefinition['height']) {
             $defaultOptions['height'] = $formatDefinition['height'];
         }
 
@@ -147,7 +147,7 @@ final class MediaExtension extends AbstractExtension
     {
         $media = $this->getMedia($media);
 
-        if (!$media) {
+        if (null === $media) {
             return '';
         }
 

@@ -124,11 +124,11 @@ final class VimeoProvider extends BaseVideoProvider
 
     protected function fixBinaryContent(MediaInterface $media): void
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
-        if (preg_match('{vimeo\.com/(?:video/|)(?<video_id>\d+)}', $media->getBinaryContent(), $matches)) {
+        if (0 !== preg_match('{vimeo\.com/(?:video/|)(?<video_id>\d+)}', $media->getBinaryContent(), $matches)) {
             $media->setBinaryContent($matches['video_id']);
         }
     }
@@ -137,7 +137,7 @@ final class VimeoProvider extends BaseVideoProvider
     {
         $this->fixBinaryContent($media);
 
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
