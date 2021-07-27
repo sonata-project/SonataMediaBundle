@@ -12,15 +12,16 @@ declare(strict_types=1);
  */
 
 use Sonata\MediaBundle\Generator\NoDriverGenerator;
-use Sonata\MediaBundle\Model\NoDriverManager;
+use Sonata\MediaBundle\Model\NoDriverGalleryManager;
+use Sonata\MediaBundle\Model\NoDriverMediaManager;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
-        ->set('sonata.media.manager.media', NoDriverManager::class)
+        ->set('sonata.media.manager.media', NoDriverMediaManager::class)
 
-        ->set('sonata.media.manager.gallery', NoDriverManager::class)
+        ->set('sonata.media.manager.gallery', NoDriverGalleryManager::class)
 
         ->set('sonata.media.generator.default', NoDriverGenerator::class);
 };

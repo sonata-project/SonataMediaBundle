@@ -22,7 +22,7 @@ use Sonata\MediaBundle\Exception\NoDriverException;
  *
  * @author Andrey F. Mindubaev <covex.mobile@gmail.com>
  */
-final class NoDriverManager implements GalleryManagerInterface, MediaManagerInterface
+final class NoDriverGalleryManager implements GalleryManagerInterface
 {
     public function getClass(): string
     {
@@ -38,14 +38,14 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return MediaInterface[]
+     * @return GalleryInterface[]
      */
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
         throw new NoDriverException();
     }
 
-    public function findOneBy(array $criteria, ?array $orderBy = null): object
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?object
     {
         throw new NoDriverException();
     }
@@ -53,7 +53,7 @@ final class NoDriverManager implements GalleryManagerInterface, MediaManagerInte
     /**
      * @param mixed $id
      *
-     * @return MediaInterface|null
+     * @return GalleryInterface|null
      */
     public function find($id): ?object
     {
