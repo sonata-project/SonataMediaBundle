@@ -95,7 +95,6 @@ class MediaAdminControllerTest extends TestCase
         $pool->method('getDefaultContext')->willReturn('default_context');
         $this->admin->expects(self::once())->method('checkAccess')->with('create');
         $this->container->set('sonata.media.pool', $pool);
-        $this->request->query->set('provider', false);
         $this->request->query->set('context', 'context');
 
         $response = $this->controller->createAction($this->request);
@@ -116,7 +115,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin
             ->method('getIdParameter')
             ->willReturn('id');
-        $this->request->query->set('provider', true);
+        $this->request->query->set('provider', 'provider');
         $response = $this->controller->createAction($this->request);
 
         self::assertInstanceOf(Response::class, $response);
