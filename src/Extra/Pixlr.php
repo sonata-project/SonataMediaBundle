@@ -176,7 +176,7 @@ final class Pixlr
         /*
          * Pixlr send back the new image as an url, add some security check before downloading the file
          */
-        if (0 === preg_match($this->allowEreg, $image, $matches)) {
+        if (1 !== preg_match($this->allowEreg, $image, $matches)) {
             throw new NotFoundHttpException(sprintf('Invalid image host : %s', $image));
         }
 

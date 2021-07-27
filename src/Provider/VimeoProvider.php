@@ -128,7 +128,7 @@ final class VimeoProvider extends BaseVideoProvider
             return;
         }
 
-        if (0 !== preg_match('{vimeo\.com/(?:video/|)(?<video_id>\d+)}', $media->getBinaryContent(), $matches)) {
+        if (1 === preg_match('{vimeo\.com/(?:video/|)(?<video_id>\d+)}', $media->getBinaryContent(), $matches)) {
             $media->setBinaryContent($matches['video_id']);
         }
     }
