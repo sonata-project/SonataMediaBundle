@@ -30,7 +30,7 @@ class GalleryManagerTest extends TestCase
     public function testGetPager(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
+            ->getGalleryManager(static function (MockObject $qb): void {
                 $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects(self::never())->method('andWhere');
                 $qb->expects(self::once())->method('orderBy')->with('g.name', 'ASC');
@@ -53,11 +53,11 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithMultipleSort(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
+            ->getGalleryManager(static function (MockObject $qb): void {
                 $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects(self::never())->method('andWhere');
                 $qb->expects(self::exactly(2))->method('orderBy')->with(
-                    self::logicalOr('g.name','g.context'),
+                    self::logicalOr('g.name', 'g.context'),
                     self::logicalOr('ASC', 'DESC')
                 );
                 $qb->expects(self::once())->method('setParameters')->with([]);
@@ -71,7 +71,7 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
+            ->getGalleryManager(static function (MockObject $qb): void {
                 $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects(self::once())->method('andWhere')->with('g.enabled = :enabled');
                 $qb->expects(self::once())->method('setParameters')->with(['enabled' => true]);
@@ -82,7 +82,7 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithNoEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
+            ->getGalleryManager(static function (MockObject $qb): void {
                 $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
                 $qb->expects(self::once())->method('andWhere')->with('g.enabled = :enabled');
                 $qb->expects(self::once())->method('setParameters')->with(['enabled' => false]);
