@@ -17,6 +17,15 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Mime\MimeTypesInterface;
 
+/**
+ * @phpstan-type AmazonSettings = array{
+ *     acl: 'private'|'public'|'open'|'auth_read'|'owner_read'|'owner_full_control',
+ *     storage: 'standard'|'reduced',
+ *     encryption: 'aes256',
+ *     meta: array<string, mixed>,
+ *     cache_control: string
+ * }
+ */
 final class AmazonMetadataBuilder implements MetadataBuilderInterface
 {
     public const PRIVATE_ACCESS = 'private';
@@ -31,12 +40,28 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     public const STORAGE_GLACIER = 'GLACIER';
 
     /**
-     * @var array<string, mixed>
+     * @var array
+     *
+     * @phpstan-var AmazonSettings
      */
     private $settings;
 
     /**
-     * @var string[]
+     * @var MimeTypesInterface
+     */
+    private $mimeTypes;
+
+    /**
+     * @var array
+     *
+     * @phpstan-var array{
+     *     'private': self::PRIVATE_ACCESS,
+     *     'public': self::PUBLIC_READ,
+     *     'open': self::PUBLIC_READ_WRITE,
+     *     'auth_read': self::AUTHENTICATED_READ,
+     *     'owner_read': self::BUCKET_OWNER_READ,
+     *     'owner_full_control': self::BUCKET_OWNER_FULL_CONTROL,
+     * }
      */
     private $acl = [
         'private' => self::PRIVATE_ACCESS,
@@ -48,12 +73,20 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     ];
 
     /**
-     * @var MimeTypesInterface
+     * @var array
+     *
+     * @phpstan-var array{
+     *     'standard': self::STORAGE_STANDARD,
+     *     'reduced': self::STORAGE_REDUCED,
+     * }
      */
-    private $mimeTypes;
+    private $storage = [
+        'standard' => self::STORAGE_STANDARD,
+        'reduced' => self::STORAGE_REDUCED,
+    ];
 
     /**
-     * @param array<string, mixed> $settings
+     * @phpstan-param AmazonSettings $settings
      */
     public function __construct(array $settings, ?MimeTypesInterface $mimeTypes = null)
     {
@@ -73,50 +106,22 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      * Get data passed from the config.
      *
      * @phpstan-return array{
-     *     ACL?: string,
-     *     storage?: self::STORAGE_STANDARD|self::STORAGE_REDUCED,
-     *     meta?: array<string, mixed>,
-     *     CacheControl?: string,
-     *     encryption?: 'AES256'
+     *     ACL: self::PRIVATE_ACCESS|self::PUBLIC_READ|self::PUBLIC_READ_WRITE|self::AUTHENTICATED_READ|self::BUCKET_OWNER_READ|self::BUCKET_OWNER_FULL_CONTROL,
+     *     storage: self::STORAGE_STANDARD|self::STORAGE_REDUCED,
+     *     meta: array<string, mixed>,
+     *     CacheControl: string,
+     *     encryption: 'AES256'
      * }
      */
-    private function getDefaultMetadata()
+    private function getDefaultMetadata(): array
     {
-        //merge acl
-        $output = [];
-        $acl = $this->settings['acl'] ?? null;
-        if (null !== $acl) {
-            $output['ACL'] = $this->acl[$acl];
-        }
-
-        //merge storage
-        if (isset($this->settings['storage'])) {
-            if ('standard' === $this->settings['storage']) {
-                $output['storage'] = self::STORAGE_STANDARD;
-            } elseif ('reduced' === $this->settings['storage']) {
-                $output['storage'] = self::STORAGE_REDUCED;
-            }
-        }
-
-        //merge meta
-        $meta = $this->settings['meta'] ?? null;
-        if (null !== $meta) {
-            $output['meta'] = $meta;
-        }
-
-        //merge cache control header
-        $cacheControl = $this->settings['cache_control'] ?? null;
-        if (null !== $cacheControl) {
-            $output['CacheControl'] = $cacheControl;
-        }
-
-        //merge encryption
-        $encryption = $this->settings['encryption'] ?? null;
-        if ('aes256' === $encryption) {
-            $output['encryption'] = 'AES256';
-        }
-
-        return $output;
+        return [
+            'ACL' => $this->acl[$this->settings['acl']],
+            'storage' => $this->storage[$this->settings['storage']],
+            'meta' => $this->settings['meta'],
+            'CacheControl' => $this->settings['cache_control'],
+            'encryption' => 'AES256',
+        ];
     }
 
     /**

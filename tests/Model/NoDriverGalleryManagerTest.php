@@ -38,7 +38,7 @@ class NoDriverGalleryManagerTest extends TestCase
     }
 
     /**
-     * @phpstan-return iterable<array{0: string, 1: mixed[]}>
+     * @phpstan-return iterable<array{string, mixed[]}>
      */
     public function providerMethods(): iterable
     {

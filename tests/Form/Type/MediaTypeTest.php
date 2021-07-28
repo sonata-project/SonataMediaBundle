@@ -161,6 +161,9 @@ class MediaTypeTest extends AbstractTypeTest
         return new MediaType($this->mediaPool, Media::class);
     }
 
+    /**
+     * @phpstan-return class-string<FormTypeInterface>
+     */
     private function getFormType(): string
     {
         return MediaType::class;

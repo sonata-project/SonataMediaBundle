@@ -30,7 +30,9 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     private $pool;
 
     /**
-     * @var class-string
+     * @var string
+     *
+     * @phpstan-var class-string<MediaInterface>
      */
     private $class;
 
@@ -40,8 +42,9 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     private $options;
 
     /**
-     * @param class-string         $class
      * @param array<string, mixed> $options
+     *
+     * @phpstan-param class-string<MediaInterface> $class
      */
     public function __construct(Pool $pool, string $class, array $options = [])
     {

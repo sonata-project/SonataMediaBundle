@@ -208,7 +208,7 @@ class VimeoProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @phpstan-return iterable<array{0: MediaInterface}>
+     * @phpstan-return iterable<array{MediaInterface}>
      */
     public function getTransformWithUrlMedia(): iterable
     {
@@ -288,7 +288,6 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        self::assertIsArray($properties);
         self::assertSame(100, $properties['height']);
         self::assertSame(100, $properties['width']);
     }

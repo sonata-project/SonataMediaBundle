@@ -238,9 +238,9 @@ final class Pixlr
 
     private function generateHash(MediaInterface $media): string
     {
-        $createdAt = null !== $media->getCreatedAt() ? $media->getCreatedAt()->format('u') : '';
+        $createdAt = $media->getCreatedAt();
 
-        return sha1(sprintf('%s%s%s', $media->getId() ?? '', $createdAt, $this->secret));
+        return sha1(sprintf('%s%s%s', $media->getId() ?? '', null !== $createdAt ? $createdAt->format('u') : '', $this->secret));
     }
 
     /**

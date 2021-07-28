@@ -50,7 +50,7 @@ interface MediaProviderInterface
     /**
      * return the format settings.
      *
-     * @return array<string, mixed>|false the format settings
+     * @return array|false the format settings
      *
      * @phpstan-return FormatOptions|false
      */

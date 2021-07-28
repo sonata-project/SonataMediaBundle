@@ -214,7 +214,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @phpstan-return iterable<array{0: string}>
+     * @phpstan-return iterable<array{string}>
      */
     public static function getUrls(): iterable
     {
@@ -292,7 +292,6 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        self::assertIsArray($properties);
         self::assertSame(100, $properties['player_parameters']['height']);
         self::assertSame(100, $properties['player_parameters']['width']);
     }

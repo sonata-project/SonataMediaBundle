@@ -30,6 +30,8 @@ class Pool
     private $providers = [];
 
     /**
+     * @var array
+     *
      * @phpstan-var array<string, array{
      *     providers: string[],
      *     formats: array<string, FormatOptions>,

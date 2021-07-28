@@ -27,6 +27,11 @@ final class Configuration implements ConfigurationInterface
 {
     private const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'no_driver'];
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('sonata_media');
@@ -73,6 +78,11 @@ final class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addContextsSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -118,6 +128,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addCdnSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -168,6 +183,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addFilesystemSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -282,6 +302,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addProvidersSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -389,6 +414,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addExtraSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -405,6 +435,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addModelSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -421,6 +456,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addHttpClientSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -441,6 +481,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addResizerSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -471,6 +516,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addAdapterSection(ArrayNodeDefinition $node): void
     {
         $node

@@ -148,14 +148,16 @@ final class CloudFrontVersion3 implements CDNInterface
                 'DistributionId' => $this->distributionId,
                 'Id' => $identifier,
             ]);
+            $invalidation = $result->get('Invalidation');
+            \assert(\is_array($invalidation));
 
-            $status = array_search($result->get('Invalidation')['Status'], self::AVAILABLE_STATUSES, true);
+            $status = array_search($invalidation['Status'], self::AVAILABLE_STATUSES, true);
 
             if (false !== $status) {
                 return $status;
             }
 
-            throw new \RuntimeException(sprintf('Unable to determine the flush status from the given response: "%s".', $status));
+            throw new \RuntimeException('Unable to determine the flush status from the given response.');
         } catch (CloudFrontException $ex) {
             throw new \RuntimeException(sprintf('Unable to retrieve flush status for identifier %s.', $identifier), 0, $ex);
         }
