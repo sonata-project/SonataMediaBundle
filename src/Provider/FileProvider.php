@@ -280,7 +280,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             throw new \RuntimeException(sprintf('Invalid binary content type: %s', \get_class($media->getBinaryContent())));
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getSize() ?: 0)) {
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getSize() ?? 0)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation(
@@ -333,15 +333,15 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     protected function fixFilename(MediaInterface $media): void
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
-            $media->setName($media->getName() ?: $media->getBinaryContent()->getClientOriginalName());
+            $media->setName($media->getName() ?? $media->getBinaryContent()->getClientOriginalName());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getClientOriginalName());
         } elseif ($media->getBinaryContent() instanceof File) {
-            $media->setName($media->getName() ?: $media->getBinaryContent()->getBasename());
+            $media->setName($media->getName() ?? $media->getBinaryContent()->getBasename());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getBasename());
         }
 
-        // this is the original name
-        if (!$media->getName()) {
+        // This is the original name
+        if (null === $media->getName()) {
             throw new \RuntimeException('Please define a valid media\'s name');
         }
     }
@@ -359,7 +359,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         // this is the name used to store the file
-        if (!$media->getProviderReference() ||
+        if (null === $media->getProviderReference() ||
             MediaInterface::MISSING_BINARY_REFERENCE === $media->getProviderReference()
         ) {
             $media->setProviderReference($this->generateReferenceName($media));
@@ -379,9 +379,9 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     protected function setFileContents(MediaInterface $media, ?string $contents = null): void
     {
         $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
-        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
+        $metadata = null !== $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
 
-        if ($contents) {
+        if (null !== $contents) {
             $file->setContent($contents, $metadata);
 
             return;
@@ -389,7 +389,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
         $binaryContent = $media->getBinaryContent();
         if ($binaryContent instanceof File) {
-            $path = $binaryContent->getRealPath() ?: $binaryContent->getPathname();
+            $path = false !== $binaryContent->getRealPath() ? $binaryContent->getRealPath() : $binaryContent->getPathname();
             $fileContents = file_get_contents($path);
 
             if (false === $fileContents) {
@@ -417,7 +417,9 @@ class FileProvider extends BaseProvider implements FileProviderInterface
      */
     protected function generateBinaryFromRequest(MediaInterface $media): void
     {
-        if (!$media->getContentType()) {
+        $contentType = $media->getContentType();
+
+        if (null === $contentType) {
             throw new \RuntimeException(
                 'You must provide the content type value for your media before setting the binary content'
             );
@@ -430,18 +432,13 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         $content = $request->getContent();
-        $contentType = $media->getContentType();
-
-        if (null === $contentType) {
-            throw new \RuntimeException(sprintf('Media %s does not have content type.', $media->getId()));
-        }
 
         // Create unique id for media reference
         $guesser = MimeTypes::getDefault();
         $extensions = $guesser->getExtensions($contentType);
         $extension = $extensions[0] ?? null;
 
-        if (!$extension) {
+        if (null === $extension) {
             throw new \RuntimeException(
                 sprintf('Unable to guess extension for content type %s', $media->getContentType())
             );

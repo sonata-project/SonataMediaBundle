@@ -96,7 +96,7 @@ final class CloudFrontVersion3 implements CDNInterface
      */
     public function flushPaths(array $paths): string
     {
-        if (empty($paths)) {
+        if ([] === $paths) {
             throw new \RuntimeException('Unable to flush : expected at least one path');
         }
         // Normalizes paths due possible typos since all the CloudFront's

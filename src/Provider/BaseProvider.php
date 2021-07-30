@@ -92,7 +92,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function flushCdn(MediaInterface $media): void
     {
-        if (!$media->getId() || !$media->getCdnIsFlushable()) {
+        if (null === $media->getId() || !$media->getCdnIsFlushable()) {
             // If the medium is new or if it isn't marked as flushable, skip the CDN flush process.
             return;
         }

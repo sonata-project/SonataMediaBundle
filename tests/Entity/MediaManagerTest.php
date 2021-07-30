@@ -29,12 +29,11 @@ class MediaManagerTest extends TestCase
 
     public function testGetPager(): void
     {
-        $self = $this;
         $this
-            ->getMediaManager(static function (MockObject $qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($self->never())->method('andWhere');
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
+            ->getMediaManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::never())->method('andWhere');
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo([]));
             })
             ->getPager([], 1);
     }
@@ -52,22 +51,21 @@ class MediaManagerTest extends TestCase
 
     public function testGetPagerWithMultipleSort(): void
     {
-        $self = $this;
         $this
-            ->getMediaManager(static function (MockObject $qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($self->never())->method('andWhere');
-                $qb->expects($self->exactly(2))->method('orderBy')->with(
-                    $self->logicalOr(
-                        $self->equalTo('m.name'),
-                        $self->equalTo('m.description')
+            ->getMediaManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::never())->method('andWhere');
+                $qb->expects(self::exactly(2))->method('orderBy')->with(
+                    self::logicalOr(
+                        self::equalTo('m.name'),
+                        self::equalTo('m.description')
                     ),
-                    $self->logicalOr(
-                        $self->equalTo('ASC'),
-                        $self->equalTo('DESC')
+                    self::logicalOr(
+                        self::equalTo('ASC'),
+                        self::equalTo('DESC')
                     )
                 );
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo([]));
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo([]));
             })
             ->getPager([], 1, 10, [
                 'name' => 'ASC',
@@ -77,24 +75,22 @@ class MediaManagerTest extends TestCase
 
     public function testGetPagerWithEnabledMedia(): void
     {
-        $self = $this;
         $this
-            ->getMediaManager(static function (MockObject $qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => true]));
+            ->getMediaManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::once())->method('andWhere')->with(self::equalTo('m.enabled = :enabled'));
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo(['enabled' => true]));
             })
             ->getPager(['enabled' => true], 1);
     }
 
     public function testGetPagerWithNoEnabledMedias(): void
     {
-        $self = $this;
         $this
-            ->getMediaManager(static function (MockObject $qb) use ($self): void {
-                $qb->expects($self->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($self->once())->method('andWhere')->with($self->equalTo('m.enabled = :enabled'));
-                $qb->expects($self->once())->method('setParameters')->with($self->equalTo(['enabled' => false]));
+            ->getMediaManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::once())->method('andWhere')->with(self::equalTo('m.enabled = :enabled'));
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo(['enabled' => false]));
             })
             ->getPager(['enabled' => false], 1);
     }

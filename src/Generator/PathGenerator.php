@@ -31,6 +31,6 @@ final class PathGenerator implements GeneratorInterface
 
         $context = $media->getContext() ?? '';
 
-        return $path ? sprintf('%s/%s', $context, $path) : $context;
+        return '' !== $path ? sprintf('%s/%s', $context, $path) : $context;
     }
 }

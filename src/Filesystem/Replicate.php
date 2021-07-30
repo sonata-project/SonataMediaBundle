@@ -19,6 +19,7 @@ use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Adapter\StreamFactory;
 use Gaufrette\Filesystem;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSupporter
 {
@@ -33,7 +34,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     private $secondary;
 
     /**
-     * @var LoggerInterface|null
+     * @var LoggerInterface
      */
     private $logger;
 
@@ -41,7 +42,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     {
         $this->primary = $primary;
         $this->secondary = $secondary;
-        $this->logger = $logger;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function delete($key)
@@ -51,9 +52,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->secondary->delete($key);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -61,9 +60,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->primary->delete($key);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -100,9 +97,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $return = $this->primary->write($key, $content);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -110,14 +105,12 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $return = $this->secondary->write($key, $content);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
 
-        return $ok && $return;
+        return $ok && false !== $return;
     }
 
     public function read($key)
@@ -132,9 +125,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->primary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
 
             $ok = false;
         }
@@ -142,9 +133,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->secondary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
 
             $ok = false;
         }

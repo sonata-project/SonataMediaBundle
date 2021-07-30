@@ -38,7 +38,7 @@ final class AmazonMetadataBuilderTest extends TestCase
         $filename = '/test/folder/testfile.png';
 
         $amazonmetadatabuilder = new AmazonMetadataBuilder($settings, $mimeTypes);
-        $this->assertSame($expected, $amazonmetadatabuilder->get($media, $filename));
+        self::assertSame($expected, $amazonmetadatabuilder->get($media, $filename));
     }
 
     /**

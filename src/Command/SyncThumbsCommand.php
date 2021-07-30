@@ -101,10 +101,7 @@ final class SyncThumbsCommand extends Command
             $context = $helper->ask($input, $output, $question);
         }
 
-        $quiet = $input->getOption('quiet');
-        \assert(\is_bool($quiet));
-
-        $this->quiet = $quiet;
+        $this->quiet = $input->getOption('quiet');
         $this->output = $output;
 
         $provider = $this->mediaPool->getProvider($providerName);

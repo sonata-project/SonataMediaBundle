@@ -46,13 +46,13 @@ class MediaEventSubscriberTest extends TestCase
         $category = $this->createMock(CategoryInterface::class);
         $catManager = $this->createMock(CategoryManagerInterface::class);
 
-        $catManager->expects($this->exactly(2))
+        $catManager->expects(self::exactly(2))
             ->method('getAllRootCategories')
             ->willReturn(['context' => $category]);
 
         $subscriber = new MediaEventSubscriber($pool, $catManager);
 
-        $this->assertContains(Events::onClear, $subscriber->getSubscribedEvents());
+        self::assertContains(Events::onClear, $subscriber->getSubscribedEvents());
 
         $media1 = $this->createMock(Media::class);
         $media1->method('getContext')->willReturn('context');

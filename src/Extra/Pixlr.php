@@ -176,7 +176,7 @@ final class Pixlr
         /*
          * Pixlr send back the new image as an url, add some security check before downloading the file
          */
-        if (!preg_match($this->allowEreg, $image, $matches)) {
+        if (1 !== preg_match($this->allowEreg, $image, $matches)) {
             throw new NotFoundHttpException(sprintf('Invalid image host : %s', $image));
         }
 
@@ -250,7 +250,7 @@ final class Pixlr
     {
         $media = $this->mediaManager->findOneBy(['id' => $id]);
 
-        if (!$media) {
+        if (null === $media) {
             throw new NotFoundHttpException('Media not found');
         }
 

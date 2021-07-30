@@ -84,8 +84,9 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     {
         //merge acl
         $output = [];
-        if (isset($this->settings['acl']) && !empty($this->settings['acl'])) {
-            $output['ACL'] = $this->acl[$this->settings['acl']];
+        $acl = $this->settings['acl'] ?? null;
+        if (null !== $acl) {
+            $output['ACL'] = $this->acl[$acl];
         }
 
         //merge storage
@@ -98,20 +99,21 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         }
 
         //merge meta
-        if (isset($this->settings['meta']) && !empty($this->settings['meta'])) {
-            $output['meta'] = $this->settings['meta'];
+        $meta = $this->settings['meta'] ?? null;
+        if (null !== $meta) {
+            $output['meta'] = $meta;
         }
 
         //merge cache control header
-        if (isset($this->settings['cache_control']) && !empty($this->settings['cache_control'])) {
-            $output['CacheControl'] = $this->settings['cache_control'];
+        $cacheControl = $this->settings['cache_control'] ?? null;
+        if (null !== $cacheControl) {
+            $output['CacheControl'] = $cacheControl;
         }
 
         //merge encryption
-        if (isset($this->settings['encryption']) && !empty($this->settings['encryption'])) {
-            if ('aes256' === $this->settings['encryption']) {
-                $output['encryption'] = 'AES256';
-            }
+        $encryption = $this->settings['encryption'] ?? null;
+        if ('aes256' === $encryption) {
+            $output['encryption'] = 'AES256';
         }
 
         return $output;

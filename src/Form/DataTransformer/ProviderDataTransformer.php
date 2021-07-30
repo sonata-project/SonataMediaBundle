@@ -70,11 +70,11 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         $binaryContent = $value->getBinaryContent();
 
         // no binary
-        if (empty($binaryContent)) {
+        if (null === $binaryContent) {
             // and no media id
-            if (null === $value->getId() && $this->options['empty_on_new']) {
+            if (null === $value->getId() && true === $this->options['empty_on_new']) {
                 return;
-            } elseif ($value->getId()) {
+            } elseif (null !== $value->getId()) {
                 return $value;
             }
 
@@ -85,17 +85,17 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         }
 
         // create a new media to avoid erasing other media or not ...
-        $newMedia = $this->options['new_on_update'] ? new $this->class() : $value;
+        $newMedia = true === $this->options['new_on_update'] ? new $this->class() : $value;
 
         $newMedia->setProviderName($value->getProviderName());
         $newMedia->setContext($value->getContext());
         $newMedia->setBinaryContent($binaryContent);
 
-        if (!$newMedia->getProviderName() && $this->options['provider']) {
+        if (null === $newMedia->getProviderName() && false !== $this->options['provider']) {
             $newMedia->setProviderName($this->options['provider']);
         }
 
-        if (!$newMedia->getContext() && $this->options['context']) {
+        if (null === $newMedia->getContext() && false !== $this->options['context']) {
             $newMedia->setContext($this->options['context']);
         }
 

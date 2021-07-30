@@ -101,10 +101,7 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $quiet = $input->getOption('quiet');
-        \assert(\is_bool($quiet));
-
-        $this->quiet = $quiet;
+        $this->quiet = $input->getOption('quiet');
         $this->input = $input;
         $this->output = $output;
 
@@ -121,10 +118,11 @@ EOF
 
         foreach ($medias as $media) {
             $cdn = $provider->getCdn();
+            $flushIdentifier = $media->getCdnFlushIdentifier();
 
             $this->log(sprintf('Refresh CDN status for media "%s" (%s) ', $media->getName(), $media->getId()), false);
 
-            if (!$media->getCdnFlushIdentifier()) {
+            if (null === $flushIdentifier) {
                 $this->log('<error>Skipping since the medium does not have a pending flush.</error>');
 
                 continue;
@@ -133,8 +131,7 @@ EOF
             $previousStatus = $media->getCdnStatus();
 
             try {
-                $flushIdentifier = $media->getCdnFlushIdentifier();
-                $cdnStatus = null !== $flushIdentifier ? $cdn->getFlushStatus($flushIdentifier) : null;
+                $cdnStatus = $cdn->getFlushStatus($flushIdentifier);
 
                 if (\in_array($cdnStatus, [CDNInterface::STATUS_OK, CDNInterface::STATUS_ERROR], true)) {
                     $media->setCdnFlushIdentifier(null);

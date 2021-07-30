@@ -22,7 +22,7 @@ class ValidMediaFormatTest extends TestCase
     {
         $constraint = new ValidMediaFormat();
 
-        $this->assertSame('class', $constraint->getTargets());
-        $this->assertSame('sonata.media.validator.format', $constraint->validatedBy());
+        self::assertSame('class', $constraint->getTargets());
+        self::assertSame('sonata.media.validator.format', $constraint->validatedBy());
     }
 }

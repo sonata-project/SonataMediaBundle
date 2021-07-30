@@ -154,7 +154,7 @@ final class MediaController
             return null !== $value;
         });
 
-        if (!$sort) {
+        if (null === $sort) {
             $sort = [];
         } elseif (!\is_array($sort)) {
             $sort = [$sort => 'asc'];

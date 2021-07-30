@@ -78,7 +78,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         $filter = $this->getRequest()->get('filter');
-        if ($filter && \array_key_exists('context', $this->getRequest()->get('filter'))) {
+        if (null !== $filter && \array_key_exists('context', $filter)) {
             $context = $filter['context']['value'];
         } else {
             $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
@@ -102,7 +102,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $categoryId = $this->getRequest()->get('category');
 
-        if (null !== $this->categoryManager && null !== $this->contextManager && !$categoryId) {
+        if (null !== $this->categoryManager && null !== $this->contextManager && null === $categoryId) {
             $rootCategories = $this->categoryManager->getRootCategoriesForContext($this->contextManager->find($context));
             $rootCategory = current($rootCategories);
 
@@ -122,24 +122,25 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     {
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
-                $uniqid = $this->getUniqid();
+                $uniqid = $this->getUniqId();
                 $object->setProviderName($this->getRequest()->get($uniqid)['providerName']);
             } else {
                 $object->setProviderName($this->getRequest()->get('provider'));
             }
 
             $object->setContext($context = $this->getRequest()->get('context'));
+            $categoryId = $this->getPersistentParameter('category');
 
-            if (null !== $this->categoryManager && $categoryId = $this->getPersistentParameter('category')) {
+            if (null !== $this->categoryManager && null !== $categoryId) {
                 $category = $this->categoryManager->find($categoryId);
 
-                if (!$category) {
+                if (null === $category) {
                     return;
                 }
 
                 $categoryContext = $category->getContext();
 
-                if ($categoryContext && $categoryContext->getId() === $context) {
+                if (null !== $categoryContext && $categoryContext->getId() === $context) {
                     $object->setCategory($category);
                 }
             }
@@ -171,7 +172,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     {
         $media = $this->hasSubject() ? $this->getSubject() : $this->getNewInstance();
 
-        if (!$media->getProviderName()) {
+        if (null === $media->getProviderName()) {
             return;
         }
 
@@ -181,7 +182,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
-        if ($media->getId()) {
+        if (null !== $media->getId()) {
             $provider->buildEditForm($form);
         } else {
             $provider->buildCreateForm($form);

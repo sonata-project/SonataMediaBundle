@@ -23,7 +23,7 @@ final class ImageUploadDimensionTest extends TestCase
     {
         $constraint = new ImageUploadDimension();
 
-        $this->assertSame('class', $constraint->getTargets());
-        $this->assertSame(ImageUploadDimensionValidator::class, $constraint->validatedBy());
+        self::assertSame('class', $constraint->getTargets());
+        self::assertSame(ImageUploadDimensionValidator::class, $constraint->validatedBy());
     }
 }

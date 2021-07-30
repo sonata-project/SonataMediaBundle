@@ -29,7 +29,7 @@ final class CloudFrontVersion3Test extends TestCase
     protected function setUp(): void
     {
         if (!class_exists(Sdk::class)) {
-            $this->markTestSkipped('This test requires aws/aws-sdk-php 3.x.');
+            self::markTestSkipped('This test requires aws/aws-sdk-php 3.x.');
         }
 
         parent::setUp();
@@ -53,11 +53,11 @@ final class CloudFrontVersion3Test extends TestCase
 
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', $path);
 
-        $this->assertSame($expectedPath, $cloudFront->getPath($relativePath, true));
+        self::assertSame($expectedPath, $cloudFront->getPath($relativePath, true));
 
         $flushPath = '/mypath/file.jpg';
 
-        $client->expects($this->exactly(3))
+        $client->expects(self::exactly(3))
             ->method('createInvalidation')
             ->willReturn(new Result([
                 'Invalidation' => [
@@ -66,11 +66,11 @@ final class CloudFrontVersion3Test extends TestCase
                 ],
             ]));
 
-        $this->assertSame($invalidationId, $cloudFront->flushByString($flushPath));
-        $this->assertSame($invalidationId, $cloudFront->flush($flushPath));
-        $this->assertSame($invalidationId, $cloudFront->flushPaths([$flushPath]));
+        self::assertSame($invalidationId, $cloudFront->flushByString($flushPath));
+        self::assertSame($invalidationId, $cloudFront->flush($flushPath));
+        self::assertSame($invalidationId, $cloudFront->flushPaths([$flushPath]));
 
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('getInvalidation')
             ->willReturn(new Result([
                 'Invalidation' => [
@@ -79,7 +79,7 @@ final class CloudFrontVersion3Test extends TestCase
                 ],
             ]));
 
-        $this->assertSame($expectedStatus, $cloudFront->getFlushStatus($invalidationId));
+        self::assertSame($expectedStatus, $cloudFront->getFlushStatus($invalidationId));
     }
 
     /**
@@ -98,7 +98,7 @@ final class CloudFrontVersion3Test extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('createInvalidation')
             ->willThrowException(new CloudFrontException('An exception occurred.', new Command('command_name')));
 
@@ -118,7 +118,7 @@ final class CloudFrontVersion3Test extends TestCase
             ->getMock();
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
 
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('createInvalidation')
             ->willReturn(new Result([
                 'Invalidation' => [
@@ -140,7 +140,7 @@ final class CloudFrontVersion3Test extends TestCase
             ->getMock();
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
 
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('createInvalidation')
             ->willReturn(new Result([
                 'Invalidation' => [

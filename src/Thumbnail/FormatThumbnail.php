@@ -94,9 +94,8 @@ final class FormatThumbnail implements ThumbnailInterface
         foreach ($provider->getFormats() as $format => $settings) {
             if (substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext() ||
                 MediaProviderInterface::FORMAT_ADMIN === $format) {
-                $resizer = (isset($settings['resizer']) && ($settings['resizer'])) ?
-                    $this->getResizer($settings['resizer']) :
-                    $provider->getResizer();
+                $resizerName = $settings['resizer'] ?? null;
+                $resizer = null !== $resizerName ? $this->getResizer($resizerName) : $provider->getResizer();
 
                 if (null === $resizer) {
                     continue;
@@ -127,7 +126,8 @@ final class FormatThumbnail implements ThumbnailInterface
 
         foreach ($formats as $format) {
             $path = $provider->generatePrivateUrl($media, $format);
-            if ($path && $provider->getFilesystem()->has($path)) {
+
+            if ($provider->getFilesystem()->has($path)) {
                 $provider->getFilesystem()->delete($path);
             }
         }

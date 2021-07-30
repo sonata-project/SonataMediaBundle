@@ -16,9 +16,9 @@ namespace Sonata\MediaBundle\Tests\Model;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Exception\NoDriverException;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
-use Sonata\MediaBundle\Model\NoDriverManager;
+use Sonata\MediaBundle\Model\NoDriverGalleryManager;
 
-class NoDriverManagerTest extends TestCase
+class NoDriverGalleryManagerTest extends TestCase
 {
     /**
      * @dataProvider providerMethods
@@ -29,12 +29,12 @@ class NoDriverManagerTest extends TestCase
     {
         $this->expectException(NoDriverException::class);
 
-        (new NoDriverManager())->$method(...$arguments);
+        (new NoDriverGalleryManager())->$method(...$arguments);
     }
 
     public function testIsInstanceOfGalleryManagerInterface(): void
     {
-        $this->assertInstanceOf(GalleryManagerInterface::class, new NoDriverManager());
+        self::assertInstanceOf(GalleryManagerInterface::class, new NoDriverGalleryManager());
     }
 
     /**

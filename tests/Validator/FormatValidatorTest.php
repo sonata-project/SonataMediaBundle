@@ -36,11 +36,11 @@ class FormatValidatorTest extends TestCase
         ]]);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('format1');
-        $gallery->expects($this->once())->method('getContext')->willReturn('test');
+        $gallery->expects(self::once())->method('getDefaultFormat')->willReturn('format1');
+        $gallery->expects(self::once())->method('getContext')->willReturn('test');
 
         $context = $this->createMock(ExecutionContext::class);
-        $context->expects($this->never())->method('addViolation');
+        $context->expects(self::never())->method('addViolation');
 
         $validator = new FormatValidator($pool);
         $validator->initialize($context);
@@ -62,11 +62,11 @@ class FormatValidatorTest extends TestCase
         ]]);
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('non_existing_format');
-        $gallery->expects($this->once())->method('getContext')->willReturn('test');
+        $gallery->expects(self::once())->method('getDefaultFormat')->willReturn('non_existing_format');
+        $gallery->expects(self::once())->method('getContext')->willReturn('test');
 
         $context = $this->createMock(ExecutionContext::class);
-        $context->expects($this->once())->method('addViolation');
+        $context->expects(self::once())->method('addViolation');
 
         $validator = new FormatValidator($pool);
         $validator->initialize($context);
@@ -80,11 +80,11 @@ class FormatValidatorTest extends TestCase
         $pool->addContext('test');
 
         $gallery = $this->createMock(GalleryInterface::class);
-        $gallery->expects($this->once())->method('getDefaultFormat')->willReturn('format_that_is_not_reference');
-        $gallery->expects($this->once())->method('getContext')->willReturn('test');
+        $gallery->expects(self::once())->method('getDefaultFormat')->willReturn('format_that_is_not_reference');
+        $gallery->expects(self::once())->method('getContext')->willReturn('test');
 
         $context = $this->createMock(ExecutionContext::class);
-        $context->expects($this->once())->method('addViolation');
+        $context->expects(self::once())->method('addViolation');
 
         $validator = new FormatValidator($pool);
         $validator->initialize($context);

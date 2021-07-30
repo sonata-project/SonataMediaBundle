@@ -39,7 +39,7 @@ final class MediaAdminController extends CRUDController
     {
         $this->admin->checkAccess('create');
 
-        if (!$request->get('provider') && $request->isMethod('get')) {
+        if (null === $request->get('provider') && $request->isMethod('get')) {
             $pool = $this->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
@@ -65,16 +65,14 @@ final class MediaAdminController extends CRUDController
             return $preResponse;
         }
 
-        if ($listMode = $request->get('_list_mode', 'mosaic')) {
-            $this->admin->setListMode($listMode);
-        }
+        $this->admin->setListMode($request->get('_list_mode', 'mosaic'));
 
         $datagrid = $this->admin->getDatagrid();
 
-        $filters = $request->get('filter');
+        $filters = $request->get('filter', []);
 
         // set the default context
-        if (null === $filters || !\array_key_exists('context', $filters)) {
+        if ([] === $filters || !\array_key_exists('context', $filters)) {
             $pool = $this->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
@@ -98,11 +96,11 @@ final class MediaAdminController extends CRUDController
                 $rootCategory = current($rootCategories);
             }
 
-            if (null !== $rootCategory && !$filters) {
+            if (null !== $rootCategory && [] === $filters) {
                 $datagrid->setValue('category', null, $rootCategory->getId());
             }
 
-            if ($request->get('category')) {
+            if (null !== $request->get('category')) {
                 $category = $categoryManager->findOneBy([
                     'id' => (int) $request->get('category'),
                     'context' => $context,

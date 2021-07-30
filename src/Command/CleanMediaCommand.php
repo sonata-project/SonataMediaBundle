@@ -70,7 +70,7 @@ final class CleanMediaCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $dryRun = (bool) $input->getOption('dry-run');
+        $dryRun = $input->getOption('dry-run');
         $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
 
         $finder = Finder::create();
@@ -125,7 +125,7 @@ final class CleanMediaCommand extends Command
      */
     private function getProviders(): array
     {
-        if (!$this->providers) {
+        if (null === $this->providers) {
             $this->providers = [];
 
             foreach ($this->mediaPool->getProviders() as $provider) {

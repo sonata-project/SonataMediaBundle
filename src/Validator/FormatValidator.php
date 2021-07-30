@@ -44,7 +44,7 @@ final class FormatValidator extends ConstraintValidator
         $galleryDefaultFormat = $value->getDefaultFormat();
 
         if (MediaProviderInterface::FORMAT_REFERENCE !== $galleryDefaultFormat
-            && !($formats && \array_key_exists($galleryDefaultFormat, $formats))) {
+            && !\array_key_exists($galleryDefaultFormat, $formats)) {
             $this->context->addViolation('invalid format');
         }
     }

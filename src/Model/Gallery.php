@@ -56,7 +56,7 @@ abstract class Gallery implements GalleryInterface
 
     public function __toString(): string
     {
-        return $this->getName() ?: '-';
+        return $this->getName() ?? '-';
     }
 
     public function setName(?string $name): void
@@ -158,7 +158,7 @@ abstract class Gallery implements GalleryInterface
             throw new \RuntimeException(sprintf('The gallery %s cannot be reordered, $galleryItems should implement %s', $this->getId(), \ArrayIterator::class));
         }
 
-        $iterator->uasort(static function (GalleryItemInterface $a, GalleryItemInterface $b) {
+        $iterator->uasort(static function (GalleryItemInterface $a, GalleryItemInterface $b): int {
             return $a->getPosition() <=> $b->getPosition();
         });
 

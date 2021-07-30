@@ -39,7 +39,7 @@ class SimpleResizerTest extends TestCase
         $metadata = $this->createStub(MetadataBuilderInterface::class);
         $file = $this->createStub(File::class);
 
-        $media->expects($this->once())->method('getBox')->willReturn(new Box(535, 132));
+        $media->expects(self::once())->method('getBox')->willReturn(new Box(535, 132));
 
         $adapter->method('load')->willReturn($image);
 
@@ -82,14 +82,14 @@ class SimpleResizerTest extends TestCase
     public function testResize(): void
     {
         $image = $this->createMock(ImageInterface::class);
-        $image->expects($this->once())->method('thumbnail')->willReturn($image);
-        $image->expects($this->once())->method('get')->willReturn(file_get_contents(__DIR__.'/../Fixtures/logo.png'));
+        $image->expects(self::once())->method('thumbnail')->willReturn($image);
+        $image->expects(self::once())->method('get')->willReturn(file_get_contents(__DIR__.'/../Fixtures/logo.png'));
 
         $adapter = $this->createStub(ImagineInterface::class);
         $adapter->method('load')->willReturn($image);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(2))->method('getBox')->willReturn(new Box(535, 132));
+        $media->expects(self::exactly(2))->method('getBox')->willReturn(new Box(535, 132));
 
         $filesystem = new Filesystem(new InMemory());
         $in = $filesystem->get('in', true);
@@ -97,7 +97,7 @@ class SimpleResizerTest extends TestCase
         $fileContents = file_get_contents(__DIR__.'/../Fixtures/logo.png');
 
         if (false === $fileContents) {
-            $this->fail('Unable to read "logo.png" file.');
+            self::fail('Unable to read "logo.png" file.');
         }
 
         $in->setContent($fileContents);
@@ -105,7 +105,7 @@ class SimpleResizerTest extends TestCase
         $out = $filesystem->get('out', true);
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
-        $metadata->expects($this->once())->method('get')->willReturn([]);
+        $metadata->expects(self::once())->method('get')->willReturn([]);
 
         $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_OUTBOUND, $metadata);
         $resizer->resize($media, $in, $out, 'bar', [
@@ -129,7 +129,7 @@ class SimpleResizerTest extends TestCase
         $adapter = $this->createStub(ImagineInterface::class);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(2))->method('getBox')->willReturn($mediaSize);
+        $media->expects(self::exactly(2))->method('getBox')->willReturn($mediaSize);
 
         $metadata = $this->createStub(MetadataBuilderInterface::class);
 
@@ -137,10 +137,10 @@ class SimpleResizerTest extends TestCase
 
         $box = $resizer->getBox($media, $settings);
 
-        $this->assertInstanceOf(Box::class, $box);
+        self::assertInstanceOf(Box::class, $box);
 
-        $this->assertSame($result->getWidth(), $box->getWidth());
-        $this->assertSame($result->getHeight(), $box->getHeight());
+        self::assertSame($result->getWidth(), $box->getWidth());
+        self::assertSame($result->getHeight(), $box->getHeight());
     }
 
     /**
