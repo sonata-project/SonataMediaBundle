@@ -30,7 +30,7 @@ class Pool
     private $providers = [];
 
     /**
-     * @var array
+     * @var array<string, string|array>
      *
      * @phpstan-var array<string, array{
      *     providers: string[],
@@ -104,6 +104,7 @@ class Pool
 
     /**
      * @param string[]             $providers
+     * @param array<string, array> $formats
      * @param array<string, mixed> $download
      *
      * @phpstan-param array<string, FormatOptions> $formats
@@ -131,6 +132,8 @@ class Pool
     /**
      * @throws \LogicException
      *
+     * @return array<string, array|string>
+     *
      * @phpstan-return array{
      *     providers: string[],
      *     formats: array<string, FormatOptions>,
@@ -148,6 +151,8 @@ class Pool
 
     /**
      * Returns the context list.
+     *
+     * @return array<string, array>
      *
      * @phpstan-return array<string, array{
      *     providers: string[],
@@ -169,6 +174,8 @@ class Pool
     }
 
     /**
+     * @return array<string, array>
+     *
      * @phpstan-return array<string, FormatOptions>
      */
     public function getFormatNamesByContext(string $name): array

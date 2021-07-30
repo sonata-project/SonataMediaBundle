@@ -43,6 +43,8 @@ interface MediaProviderInterface
     public const FORMAT_REFERENCE = 'reference';
 
     /**
+     * @param array<string, int|string|bool|array|null>|false $settings
+     *
      * @phpstan-param FormatOptions $settings
      */
     public function addFormat(string $name, array $settings): void;
@@ -50,7 +52,7 @@ interface MediaProviderInterface
     /**
      * return the format settings.
      *
-     * @return array|false the format settings
+     * @return array<string, int|string|bool|array|null>|false the format settings
      *
      * @phpstan-return FormatOptions|false
      */
@@ -134,6 +136,8 @@ interface MediaProviderInterface
     public function generatePrivateUrl(MediaInterface $media, string $format): string;
 
     /**
+     * @return array<string, array>
+     *
      * @phpstan-return array<string, FormatOptions>
      */
     public function getFormats(): array;

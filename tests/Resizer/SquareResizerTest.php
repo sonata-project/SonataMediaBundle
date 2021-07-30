@@ -51,6 +51,8 @@ class SquareResizerTest extends TestCase
     /**
      * @dataProvider getBoxSettings
      *
+     * @param array<string, int|string|bool|array|null>|false $settings
+     *
      * @phpstan-param FormatOptions $settings
      */
     public function testGetBox(array $settings, Box $mediaSize, Box $expected): void

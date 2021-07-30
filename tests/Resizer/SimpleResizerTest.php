@@ -122,6 +122,8 @@ class SimpleResizerTest extends TestCase
     /**
      * @dataProvider getBoxSettings
      *
+     * @param array<string, int|string|bool|array|null>|false $settings
+     *
      * @phpstan-param FormatOptions $settings
      */
     public function testGetBox(int $mode, array $settings, Box $mediaSize, Box $result): void

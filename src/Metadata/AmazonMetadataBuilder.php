@@ -40,7 +40,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     public const STORAGE_GLACIER = 'GLACIER';
 
     /**
-     * @var array
+     * @var array<string, mixed>
      *
      * @phpstan-var AmazonSettings
      */
@@ -52,7 +52,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     private $mimeTypes;
 
     /**
-     * @var array
+     * @var array<string, string>
      *
      * @phpstan-var array{
      *     'private': self::PRIVATE_ACCESS,
@@ -73,7 +73,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      *
      * @phpstan-var array{
      *     'standard': self::STORAGE_STANDARD,
@@ -86,6 +86,8 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     ];
 
     /**
+     * @param array<string, mixed> $settings
+     *
      * @phpstan-param AmazonSettings $settings
      */
     public function __construct(array $settings, ?MimeTypesInterface $mimeTypes = null)
@@ -104,6 +106,8 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
 
     /**
      * Get data passed from the config.
+     *
+     * @return array<string, array|string>
      *
      * @phpstan-return array{
      *     ACL: self::PRIVATE_ACCESS|self::PUBLIC_READ|self::PUBLIC_READ_WRITE|self::AUTHENTICATED_READ|self::BUCKET_OWNER_READ|self::BUCKET_OWNER_FULL_CONTROL,
@@ -129,7 +133,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      *
      * @param string $filename path to the file inside the S3 bucket
      *
-     * @return array
+     * @return array<string, string>
      *
      * @phpstan-return array{contentType: string}
      */
