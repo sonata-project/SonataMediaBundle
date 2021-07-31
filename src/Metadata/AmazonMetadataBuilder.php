@@ -39,6 +39,20 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     public const STORAGE_REDUCED = 'REDUCED_REDUNDANCY';
     public const STORAGE_GLACIER = 'GLACIER';
 
+    private const ACL = [
+        'private' => self::PRIVATE_ACCESS,
+        'public' => self::PUBLIC_READ,
+        'open' => self::PUBLIC_READ_WRITE,
+        'auth_read' => self::AUTHENTICATED_READ,
+        'owner_read' => self::BUCKET_OWNER_READ,
+        'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
+    ];
+
+    private const STORAGE = [
+        'standard' => self::STORAGE_STANDARD,
+        'reduced' => self::STORAGE_REDUCED,
+    ];
+
     /**
      * @var array<string, mixed>
      *
@@ -50,40 +64,6 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      * @var MimeTypesInterface
      */
     private $mimeTypes;
-
-    /**
-     * @var array<string, string>
-     *
-     * @phpstan-var array{
-     *     'private': self::PRIVATE_ACCESS,
-     *     'public': self::PUBLIC_READ,
-     *     'open': self::PUBLIC_READ_WRITE,
-     *     'auth_read': self::AUTHENTICATED_READ,
-     *     'owner_read': self::BUCKET_OWNER_READ,
-     *     'owner_full_control': self::BUCKET_OWNER_FULL_CONTROL,
-     * }
-     */
-    private $acl = [
-        'private' => self::PRIVATE_ACCESS,
-        'public' => self::PUBLIC_READ,
-        'open' => self::PUBLIC_READ_WRITE,
-        'auth_read' => self::AUTHENTICATED_READ,
-        'owner_read' => self::BUCKET_OWNER_READ,
-        'owner_full_control' => self::BUCKET_OWNER_FULL_CONTROL,
-    ];
-
-    /**
-     * @var array<string, string>
-     *
-     * @phpstan-var array{
-     *     'standard': self::STORAGE_STANDARD,
-     *     'reduced': self::STORAGE_REDUCED,
-     * }
-     */
-    private $storage = [
-        'standard' => self::STORAGE_STANDARD,
-        'reduced' => self::STORAGE_REDUCED,
-    ];
 
     /**
      * @param array<string, mixed> $settings
@@ -120,8 +100,8 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     private function getDefaultMetadata(): array
     {
         return [
-            'ACL' => $this->acl[$this->settings['acl']],
-            'storage' => $this->storage[$this->settings['storage']],
+            'ACL' => self::ACL[$this->settings['acl']],
+            'storage' => self::STORAGE[$this->settings['storage']],
             'meta' => $this->settings['meta'],
             'CacheControl' => $this->settings['cache_control'],
             'encryption' => 'AES256',
