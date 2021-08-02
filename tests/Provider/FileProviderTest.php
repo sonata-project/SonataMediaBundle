@@ -54,6 +54,7 @@ class FileProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(GaufretteFile::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
+        $file->method('getName')->willReturn('name');
         $filesystem->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');

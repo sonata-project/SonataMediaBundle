@@ -245,7 +245,9 @@ final class GalleryController
      *
      * @param int|string $id Gallery identifier
      *
-     * @return Collection<array-key, GalleryItemInterface>
+     * @return Collection<int|string, GalleryItemInterface>
+     *
+     * @phpstan-return Collection<array-key, GalleryItemInterface>
      */
     public function getGalleryGalleryItemsAction($id): Collection
     {
@@ -273,7 +275,7 @@ final class GalleryController
      *
      * @return FOSRestView|FormInterface
      */
-    public function postGalleryAction(Request $request)
+    public function postGalleryAction(Request $request): object
     {
         return $this->handleWriteGallery($request);
     }
@@ -305,7 +307,7 @@ final class GalleryController
      *
      * @return FOSRestView|FormInterface
      */
-    public function putGalleryAction($id, Request $request)
+    public function putGalleryAction($id, Request $request): object
     {
         return $this->handleWriteGallery($request, $id);
     }
@@ -334,7 +336,7 @@ final class GalleryController
      *
      * @return FOSRestView|FormInterface
      */
-    public function postGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
+    public function postGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request): object
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
@@ -377,7 +379,7 @@ final class GalleryController
      *
      * @return FOSRestView|FormInterface
      */
-    public function putGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request)
+    public function putGalleryMediaGalleryItemAction($galleryId, $mediaId, Request $request): object
     {
         $gallery = $this->getGallery($galleryId);
         $media = $this->getMedia($mediaId);
@@ -477,7 +479,7 @@ final class GalleryController
      *
      * @return FOSRestView|FormInterface
      */
-    private function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, ?GalleryItemInterface $galleryItem = null, Request $request)
+    private function handleWriteGalleryItem(GalleryInterface $gallery, MediaInterface $media, ?GalleryItemInterface $galleryItem = null, Request $request): object
     {
         $form = $this->formFactory->createNamed('', ApiGalleryItemType::class, $galleryItem, [
             'csrf_protection' => false,
@@ -547,9 +549,9 @@ final class GalleryController
      *
      * @param int|string|null $id Gallery identifier
      *
-     * @return FosRestView|FormInterface
+     * @return FOSRestView|FormInterface
      */
-    private function handleWriteGallery(Request $request, $id = null)
+    private function handleWriteGallery(Request $request, $id = null): object
     {
         $gallery = null !== $id ? $this->getGallery($id) : null;
 

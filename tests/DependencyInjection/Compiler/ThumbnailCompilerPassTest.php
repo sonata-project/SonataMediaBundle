@@ -26,7 +26,7 @@ final class ThumbnailCompilerPassTest extends TestCase
     /**
      * @dataProvider processProvider
      *
-     * @param class-string|string $class
+     * @phpstan-param class-string $class
      */
     public function testProcess(bool $expected, string $class, ?ParameterBagInterface $parameterBag = null): void
     {

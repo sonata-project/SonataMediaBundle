@@ -18,13 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface DownloadStrategyInterface
 {
-    /**
-     * @return bool
-     */
-    public function isGranted(MediaInterface $media, Request $request);
+    public function isGranted(MediaInterface $media, Request $request): bool;
 
-    /**
-     * @return string
-     */
-    public function getDescription();
+    public function getDescription(): string;
 }

@@ -143,10 +143,8 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
 
     /**
      * If one of the adapters can allow inserting metadata.
-     *
-     * @return bool true if supports metadata, false if not
      */
-    public function supportsMetadata()
+    public function supportsMetadata(): bool
     {
         return $this->primary instanceof MetadataSupporter || $this->secondary instanceof MetadataSupporter;
     }
@@ -185,8 +183,10 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      * Gets the class names as an array for both adapters.
      *
      * @return string[]
+     *
+     * @phpstan-return class-string[]
      */
-    public function getAdapterClassNames()
+    public function getAdapterClassNames(): array
     {
         return [
             \get_class($this->primary),

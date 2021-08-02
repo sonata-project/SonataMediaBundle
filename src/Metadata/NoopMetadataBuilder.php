@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 final class NoopMetadataBuilder implements MetadataBuilderInterface
 {
-    public function get(MediaInterface $media, $filename)
+    public function get(MediaInterface $media, string $filename): array
     {
         return [];
     }

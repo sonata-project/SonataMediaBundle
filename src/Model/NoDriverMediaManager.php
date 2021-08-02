@@ -35,9 +35,6 @@ final class NoDriverMediaManager implements MediaManagerInterface
     }
 
     /**
-     * @param int|null $limit
-     * @param int|null $offset
-     *
      * @return MediaInterface[]
      */
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
@@ -51,8 +48,6 @@ final class NoDriverMediaManager implements MediaManagerInterface
     }
 
     /**
-     * @param mixed $id
-     *
      * @return MediaInterface|null
      */
     public function find($id): ?object
@@ -65,19 +60,11 @@ final class NoDriverMediaManager implements MediaManagerInterface
         throw new NoDriverException();
     }
 
-    /**
-     * @param object $entity
-     * @param bool   $andFlush
-     */
     public function save($entity, $andFlush = true): void
     {
         throw new NoDriverException();
     }
 
-    /**
-     * @param object $entity
-     * @param bool   $andFlush
-     */
     public function delete($entity, $andFlush = true): void
     {
         throw new NoDriverException();

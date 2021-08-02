@@ -29,12 +29,12 @@ final class ForbiddenDownloadStrategy implements DownloadStrategyInterface
         $this->translator = $translator;
     }
 
-    public function isGranted(MediaInterface $media, Request $request)
+    public function isGranted(MediaInterface $media, Request $request): bool
     {
         return false;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->translator->trans('description.forbidden_download_strategy', [], 'SonataMediaBundle');
     }

@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 class UuidGenerator implements GeneratorInterface
 {
-    public function generatePath(MediaInterface $media)
+    public function generatePath(MediaInterface $media): string
     {
         $id = (string) $media->getId();
 

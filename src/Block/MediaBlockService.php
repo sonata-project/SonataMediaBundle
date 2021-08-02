@@ -184,7 +184,9 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     }
 
     /**
-     * @return array<array-key, array-key>
+     * @return array<int|string, int|string>
+     *
+     * @phpstan-return array<array-key, array-key>
      */
     protected function getFormatChoices(?MediaInterface $media = null): array
     {

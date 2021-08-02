@@ -21,7 +21,7 @@ use Gaufrette\Adapter\Local as BaseLocal;
 class Local extends BaseLocal
 {
     /**
-     * @return string
+     * @return string|false
      */
     public function getDirectory()
     {

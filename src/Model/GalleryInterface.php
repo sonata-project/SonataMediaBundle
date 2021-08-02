@@ -49,12 +49,16 @@ interface GalleryInterface
     public function getDefaultFormat(): ?string;
 
     /**
-     * @param Collection<array-key, GalleryItemInterface> $galleryItems
+     * @param Collection<int|string, GalleryItemInterface> $galleryItems
+     *
+     * @phpstan-param Collection<array-key, GalleryItemInterface> $galleryItems
      */
     public function setGalleryItems(Collection $galleryItems): void;
 
     /**
-     * @return Collection<array-key, GalleryItemInterface>
+     * @return Collection<int|string, GalleryItemInterface>
+     *
+     * @phpstan-return Collection<array-key, GalleryItemInterface>
      */
     public function getGalleryItems(): Collection;
 

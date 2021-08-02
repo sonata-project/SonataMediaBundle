@@ -29,12 +29,12 @@ final class PublicDownloadStrategy implements DownloadStrategyInterface
         $this->translator = $translator;
     }
 
-    public function isGranted(MediaInterface $media, Request $request)
+    public function isGranted(MediaInterface $media, Request $request): bool
     {
         return true;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->translator->trans('description.public_download_strategy', [], 'SonataMediaBundle');
     }

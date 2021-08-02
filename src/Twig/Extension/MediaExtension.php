@@ -55,7 +55,7 @@ final class MediaExtension extends AbstractExtension
         $this->twig = $twig;
     }
 
-    public function getTokenParsers()
+    public function getTokenParsers(): array
     {
         return [
             new MediaTokenParser(static::class),

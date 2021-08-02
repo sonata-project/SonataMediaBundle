@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Model;
 
 abstract class GalleryManager implements GalleryManagerInterface
 {
-    public function create()
+    public function create(): object
     {
         $class = $this->getClass();
 

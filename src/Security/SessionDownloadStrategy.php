@@ -43,17 +43,14 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
      */
     private $session;
 
-    /**
-     * @param int $times
-     */
-    public function __construct(TranslatorInterface $translator, SessionInterface $session, $times)
+    public function __construct(TranslatorInterface $translator, SessionInterface $session, int $times)
     {
         $this->translator = $translator;
         $this->session = $session;
         $this->times = $times;
     }
 
-    public function isGranted(MediaInterface $media, Request $request)
+    public function isGranted(MediaInterface $media, Request $request): bool
     {
         $times = $this->session->get($this->sessionKey, 0);
 
@@ -68,7 +65,7 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
         return true;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->translator->trans(
             'description.session_download_strategy',

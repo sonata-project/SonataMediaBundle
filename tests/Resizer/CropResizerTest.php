@@ -71,6 +71,7 @@ final class CropResizerTest extends TestCase
 
         $input = $this->createStub(File::class);
         $output = $this->createStub(File::class);
+        $output->method('getName')->willReturn('output');
 
         $image = $this->createMock(ImageInterface::class);
         $image->expects(0 === $scaleHeight && 0 === $scaleWidth ? static::never() : static::once())
@@ -146,6 +147,7 @@ final class CropResizerTest extends TestCase
 
         $input = $this->createStub(File::class);
         $output = $this->createStub(File::class);
+        $output->method('getName')->willReturn('output');
 
         $image = $this->createMock(ImageInterface::class);
         $image->expects(static::never())->method('thumbnail');

@@ -76,7 +76,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         $this->mimeTypes = $mimeTypes ?? new MimeTypes();
     }
 
-    public function get(MediaInterface $media, $filename)
+    public function get(MediaInterface $media, string $filename): array
     {
         return array_replace_recursive(
             $this->getDefaultMetadata(),
@@ -111,13 +111,11 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     /**
      * Gets the correct content-type.
      *
-     * @param string $filename path to the file inside the S3 bucket
-     *
      * @return array<string, string>
      *
      * @phpstan-return array{contentType: string}
      */
-    private function getContentType($filename)
+    private function getContentType(string $filename): array
     {
         $ext = pathinfo($filename, \PATHINFO_EXTENSION);
         $mimeTypes = $this->mimeTypes->getMimeTypes($ext);
