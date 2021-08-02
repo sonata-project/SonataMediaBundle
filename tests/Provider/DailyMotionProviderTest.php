@@ -211,7 +211,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @return iterable<array{0: string}>
+     * @phpstan-return iterable<array{string}>
      */
     public function dataTransformWithUrl(): iterable
     {
@@ -283,7 +283,6 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        self::assertIsArray($properties);
         self::assertSame(100, $properties['height']);
         self::assertSame(100, $properties['width']);
     }

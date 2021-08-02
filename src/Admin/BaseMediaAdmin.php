@@ -48,6 +48,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
     protected $classnameLabel = 'Media';
 
+    /**
+     * @phpstan-param class-string<\Sonata\MediaBundle\Model\MediaInterface> $class
+     */
     public function __construct(
         string $code,
         string $class,

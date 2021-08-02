@@ -23,11 +23,15 @@ use Sonata\MediaBundle\Model\MediaInterface;
 interface ResizerInterface
 {
     /**
+     * @param array<string, int|string|bool|array|null>|false $settings
+     *
      * @phpstan-param FormatOptions $settings
      */
     public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void;
 
     /**
+     * @param array<string, int|string|bool|array|null>|false $settings
+     *
      * @phpstan-param FormatOptions $settings
      */
     public function getBox(MediaInterface $media, array $settings): Box;

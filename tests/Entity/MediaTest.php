@@ -33,7 +33,7 @@ class MediaTest extends TestCase
     {
         $status = Media::getStatusList();
 
-        self::assertIsArray($status);
+        self::assertCount(5, $status);
     }
 
     public function testSetGet(): void

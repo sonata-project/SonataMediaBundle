@@ -91,6 +91,8 @@ final class CropResizer implements ResizerInterface
     }
 
     /**
+     * @param array<string, int|string|bool|array|null>|false $settings
+     *
      * @phpstan-param FormatOptions $settings
      */
     private function createTargetBox(array $settings): Box

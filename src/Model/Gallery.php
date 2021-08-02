@@ -147,9 +147,6 @@ abstract class Gallery implements GalleryInterface
         }
     }
 
-    /**
-     * Reorders $galleryItems based on their position.
-     */
     public function reorderGalleryItems(): void
     {
         $iterator = $this->getGalleryItems()->getIterator();

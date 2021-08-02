@@ -158,7 +158,6 @@ class ImageProviderTest extends AbstractProviderTest
 
         $properties = $provider->getHelperProperties($media, 'default_large');
 
-        self::assertIsArray($properties);
         self::assertSame('test.png', $properties['title']);
         self::assertSame(1000, $properties['width']);
         self::assertSame($srcSet, $properties['srcset']);

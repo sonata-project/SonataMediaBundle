@@ -67,6 +67,11 @@ class MediaAdminControllerTest extends TestCase
      */
     private $twig;
 
+    /**
+     * @psalm-suppress InternalMethod
+     *
+     * @see https://github.com/symfony/symfony/issues/42052
+     */
     protected function setUp(): void
     {
         $this->container = new Container();

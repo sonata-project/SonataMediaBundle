@@ -27,7 +27,7 @@ class ProviderDataTransformerTest extends TestCase
     {
         $pool = $this->createMock(Pool::class);
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass');
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class);
         self::assertSame('foo', $transformer->reverseTransform('foo'));
     }
 
@@ -42,7 +42,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn('xcs');
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass', [
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
         ]);
         $transformer->reverseTransform($media);
@@ -61,7 +61,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn('xcs');
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass', [
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
         ]);
         $transformer->reverseTransform($media);
@@ -81,7 +81,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->expects(self::once())->method('setProviderReference')->with(MediaInterface::MISSING_BINARY_REFERENCE);
         $media->expects(self::once())->method('setProviderStatus')->with(MediaInterface::STATUS_PENDING);
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass', [
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
             'empty_on_new' => false,
         ]);
@@ -99,7 +99,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn(null);
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass');
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class);
         self::assertSame($media, $transformer->reverseTransform($media));
     }
 
@@ -118,7 +118,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass', [
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
         ]);
         $transformer->reverseTransform($media);
@@ -137,7 +137,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass', [
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
         ]);
         $transformer->reverseTransform($media);
@@ -159,7 +159,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 
-        $transformer = new ProviderDataTransformer($pool, 'stdClass', [
+        $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
         ]);
         $transformer->setLogger($logger);

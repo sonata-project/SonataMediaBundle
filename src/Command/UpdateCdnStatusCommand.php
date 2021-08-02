@@ -147,9 +147,9 @@ EOF
                     if ($previousStatus === $cdnStatus) {
                         $this->log(sprintf('No changes (%u)', $cdnStatus));
                     } elseif (CDNInterface::STATUS_OK === $cdnStatus) {
-                        $this->log(sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus, $cdnStatus));
+                        $this->log(sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
                     } else {
-                        $this->log(sprintf('Updated status (%u => %u)', $previousStatus, $cdnStatus));
+                        $this->log(sprintf('Updated status (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
                     }
                 }
             } catch (\Throwable $e) {

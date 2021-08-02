@@ -61,4 +61,9 @@ interface GalleryInterface
     public function addGalleryItem(GalleryItemInterface $galleryItem): void;
 
     public function removeGalleryItem(GalleryItemInterface $galleryItem): void;
+
+    /**
+     * Reorders $galleryItems based on their position.
+     */
+    public function reorderGalleryItems(): void;
 }

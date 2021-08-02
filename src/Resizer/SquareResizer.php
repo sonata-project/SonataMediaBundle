@@ -73,7 +73,7 @@ final class SquareResizer implements ResizerInterface
             $crop = $higher - $lower;
 
             if ($crop > 0) {
-                $point = $higher === $size->getHeight() ? new Point(0, 0) : new Point($crop / 2, 0);
+                $point = $higher === $size->getHeight() ? new Point(0, 0) : new Point((int) ($crop / 2), 0);
                 $image->crop($point, new Box($lower, $lower));
                 $size = $image->getSize();
             }

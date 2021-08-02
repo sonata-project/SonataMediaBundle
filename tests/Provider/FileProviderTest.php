@@ -105,7 +105,6 @@ class FileProviderTest extends AbstractProviderTest
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        self::assertIsArray($properties);
         self::assertSame('test.png', $properties['title']);
     }
 
@@ -212,7 +211,7 @@ class FileProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @phpstan-return iterable<array{0: class-string, 1: MediaInterface}>
+     * @phpstan-return iterable<array{class-string, MediaInterface}>
      */
     public function mediaProvider(): iterable
     {

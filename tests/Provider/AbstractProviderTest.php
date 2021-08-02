@@ -53,6 +53,7 @@ abstract class AbstractProviderTest extends TestCase
 
     /**
      * @var MediaProviderInterface
+     *
      * @phpstan-var T
      */
     protected $provider;

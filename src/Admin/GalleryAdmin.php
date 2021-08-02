@@ -22,7 +22,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
- * @phpstan-extends AbstractAdmin<\Sonata\MediaBundle\Model\Gallery>
+ * @phpstan-extends AbstractAdmin<\Sonata\MediaBundle\Model\GalleryInterface>
  */
 final class GalleryAdmin extends AbstractAdmin
 {
@@ -33,6 +33,9 @@ final class GalleryAdmin extends AbstractAdmin
      */
     private $pool;
 
+    /**
+     * @phpstan-param class-string<\Sonata\MediaBundle\Model\GalleryInterface> $class
+     */
     public function __construct(string $code, string $class, string $baseControllerName, Pool $pool)
     {
         parent::__construct($code, $class, $baseControllerName);
