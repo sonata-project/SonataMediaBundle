@@ -135,9 +135,7 @@ abstract class Media implements MediaInterface
     protected $size;
 
     /**
-     * @var Collection<int|string, GalleryItemInterface>
-     *
-     * @phpstan-var Collection<array-key, GalleryItemInterface>
+     * @var Collection<int, GalleryItemInterface>
      */
     protected $galleryItems;
 

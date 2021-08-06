@@ -245,9 +245,7 @@ final class GalleryController
      *
      * @param int|string $id Gallery identifier
      *
-     * @return Collection<int|string, GalleryItemInterface>
-     *
-     * @phpstan-return Collection<array-key, GalleryItemInterface>
+     * @return Collection<int, GalleryItemInterface>
      */
     public function getGalleryGalleryItemsAction($id): Collection
     {
