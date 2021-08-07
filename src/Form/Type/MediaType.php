@@ -53,12 +53,11 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
     {
         $this->pool = $pool;
         $this->class = $class;
-        $this->logger = new NullLogger();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        \assert(null !== $this->logger);
+        $this->logger = $this->logger ?? new NullLogger();
 
         $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, [
             'provider' => $options['provider'],

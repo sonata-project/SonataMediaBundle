@@ -563,6 +563,14 @@
                 <source>form.label_class</source>
                 <target>Classe css</target>
             </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form_group.gallery</source>
+                <target>Galeria</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form_group.options</source>
+                <target>Opcions</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -32,7 +32,6 @@ final class ServiceProviderDataTransformer implements DataTransformerInterface, 
     public function __construct(MediaProviderInterface $provider)
     {
         $this->provider = $provider;
-        $this->logger = new NullLogger();
     }
 
     public function transform($value)
@@ -49,7 +48,7 @@ final class ServiceProviderDataTransformer implements DataTransformerInterface, 
         try {
             $this->provider->transform($value);
         } catch (\Throwable $e) {
-            \assert(null !== $this->logger);
+            $this->logger = $this->logger ?? new NullLogger();
 
             // #1107 We must never throw an exception here.
             // An exception here would prevent us to provide meaningful errors through the Form

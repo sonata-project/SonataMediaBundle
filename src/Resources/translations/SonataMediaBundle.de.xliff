@@ -583,6 +583,14 @@
                 <source>error.image_too_small</source>
                 <target>Bild erfordert eine Mindestgröße von %min_width% x %min_height%</target>
             </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form_group.gallery</source>
+                <target>form_group.gallery</target>
+            </trans-unit>
+            <trans-unit id="form.label_icon">
+                <source>form_group.options</source>
+                <target>form_group.options</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
