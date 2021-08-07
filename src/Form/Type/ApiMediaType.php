@@ -42,11 +42,9 @@ final class ApiMediaType extends AbstractType implements LoggerAwareInterface
     private $class;
 
     /**
-     * @param string $class
-     *
      * @phpstan-param class-string<\Sonata\MediaBundle\Model\MediaInterface> $class
      */
-    public function __construct(Pool $mediaPool, $class)
+    public function __construct(Pool $mediaPool, string $class)
     {
         $this->mediaPool = $mediaPool;
         $this->class = $class;

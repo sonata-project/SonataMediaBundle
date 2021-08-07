@@ -107,14 +107,9 @@ final class Pixlr
     }
 
     /**
-     * @param string $id
-     * @param string $mode
-     *
      * @throws NotFoundHttpException
-     *
-     * @return RedirectResponse
      */
-    public function editAction($id, $mode)
+    public function editAction(string $id, string $mode): Response
     {
         if (!\in_array($mode, ['express', 'editor'], true)) {
             throw new NotFoundHttpException('Invalid mode');
@@ -142,13 +137,7 @@ final class Pixlr
         return new RedirectResponse($url);
     }
 
-    /**
-     * @param string $hash
-     * @param string $id
-     *
-     * @return Response
-     */
-    public function exitAction($hash, $id)
+    public function exitAction(string $hash, string $id): Response
     {
         $media = $this->getMedia($id);
 
@@ -157,13 +146,7 @@ final class Pixlr
         return new Response($this->twig->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
     }
 
-    /**
-     * @param string $hash
-     * @param string $id
-     *
-     * @return Response
-     */
-    public function targetAction(Request $request, $hash, $id)
+    public function targetAction(Request $request, string $hash, string $id): Response
     {
         $media = $this->getMedia($id);
 
@@ -197,10 +180,7 @@ final class Pixlr
         return new Response($this->twig->render('@SonataMedia/Extra/pixlr_exit.html.twig'));
     }
 
-    /**
-     * @return bool
-     */
-    public function isEditable(MediaInterface $media)
+    public function isEditable(MediaInterface $media): bool
     {
         if (!$this->mediaAdmin->isGranted('EDIT', $media)) {
             return false;
@@ -216,13 +196,9 @@ final class Pixlr
     }
 
     /**
-     * @param string $id
-     *
      * @throws NotFoundHttpException
-     *
-     * @return Response
      */
-    public function openEditorAction($id)
+    public function openEditorAction(string $id): Response
     {
         $media = $this->getMedia($id);
 

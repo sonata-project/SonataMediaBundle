@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 final class PathGenerator implements GeneratorInterface
 {
-    public function generatePath(MediaInterface $media)
+    public function generatePath(MediaInterface $media): string
     {
         $segments = preg_split('#/#', (string) $media->getId(), -1, \PREG_SPLIT_NO_EMPTY);
 

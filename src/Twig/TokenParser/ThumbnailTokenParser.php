@@ -25,10 +25,7 @@ final class ThumbnailTokenParser extends AbstractTokenParser
      */
     private $extensionName;
 
-    /**
-     * @param string $extensionName
-     */
-    public function __construct($extensionName)
+    public function __construct(string $extensionName)
     {
         $this->extensionName = $extensionName;
     }

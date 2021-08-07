@@ -27,17 +27,13 @@ final class IdGenerator implements GeneratorInterface
      */
     private $secondLevel;
 
-    /**
-     * @param int $firstLevel
-     * @param int $secondLevel
-     */
-    public function __construct($firstLevel = 100000, $secondLevel = 1000)
+    public function __construct(int $firstLevel = 100000, int $secondLevel = 1000)
     {
         $this->firstLevel = $firstLevel;
         $this->secondLevel = $secondLevel;
     }
 
-    public function generatePath(MediaInterface $media)
+    public function generatePath(MediaInterface $media): string
     {
         $mediaId = (int) $media->getId();
 

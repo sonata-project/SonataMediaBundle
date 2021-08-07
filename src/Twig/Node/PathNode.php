@@ -24,12 +24,7 @@ final class PathNode extends Node
      */
     private $extensionName;
 
-    /**
-     * @param string $extensionName
-     * @param int    $lineno
-     * @param string $tag
-     */
-    public function __construct($extensionName, AbstractExpression $media, AbstractExpression $format, $lineno, $tag = null)
+    public function __construct(string $extensionName, AbstractExpression $media, AbstractExpression $format, int $lineno, ?string $tag = null)
     {
         $this->extensionName = $extensionName;
 

@@ -46,7 +46,7 @@ final class RolesDownloadStrategy implements DownloadStrategyInterface
         $this->translator = $translator;
     }
 
-    public function isGranted(MediaInterface $media, Request $request)
+    public function isGranted(MediaInterface $media, Request $request): bool
     {
         try {
             return $this->security->isGranted($this->roles);
@@ -56,7 +56,7 @@ final class RolesDownloadStrategy implements DownloadStrategyInterface
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->translator->trans('description.roles_download_strategy', ['%roles%' => '<code>'.implode('</code>, <code>', $this->roles).'</code>'], 'SonataMediaBundle');
     }

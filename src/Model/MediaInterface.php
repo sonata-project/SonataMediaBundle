@@ -135,12 +135,12 @@ interface MediaInterface
     public function setCategory(?object $category = null): void;
 
     /**
-     * @param Collection<array-key, GalleryItemInterface> $galleryItems
+     * @param Collection<int, GalleryItemInterface> $galleryItems
      */
     public function setGalleryItems(Collection $galleryItems): void;
 
     /**
-     * @return Collection<array-key, GalleryItemInterface>
+     * @return Collection<int, GalleryItemInterface>
      */
     public function getGalleryItems(): Collection;
 

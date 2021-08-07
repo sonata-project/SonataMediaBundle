@@ -35,9 +35,6 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
     }
 
     /**
-     * @param int|null $limit
-     * @param int|null $offset
-     *
      * @return GalleryInterface[]
      */
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
@@ -51,8 +48,6 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
     }
 
     /**
-     * @param mixed $id
-     *
      * @return GalleryInterface|null
      */
     public function find($id): ?object
@@ -65,19 +60,11 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
         throw new NoDriverException();
     }
 
-    /**
-     * @param object $entity
-     * @param bool   $andFlush
-     */
     public function save($entity, $andFlush = true): void
     {
         throw new NoDriverException();
     }
 
-    /**
-     * @param object $entity
-     * @param bool   $andFlush
-     */
     public function delete($entity, $andFlush = true): void
     {
         throw new NoDriverException();

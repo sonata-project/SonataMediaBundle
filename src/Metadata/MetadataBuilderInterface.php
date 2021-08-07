@@ -20,9 +20,7 @@ interface MetadataBuilderInterface
     /**
      * Get metadata for media object.
      *
-     * @param string $filename
-     *
      * @return array<string, mixed>
      */
-    public function get(MediaInterface $media, $filename);
+    public function get(MediaInterface $media, string $filename): array;
 }

@@ -56,6 +56,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(File::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
+        $file->method('getName')->willReturn('name');
         $filesystem->method('get')->willReturn($file);
 
         $cdn = new Server('/uploads/media');

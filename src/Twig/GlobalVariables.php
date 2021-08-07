@@ -47,10 +47,7 @@ final class GlobalVariables
         return null !== $this->pixlr ? $this->pixlr : false;
     }
 
-    /**
-     * @return Pool
-     */
-    public function getPool()
+    public function getPool(): Pool
     {
         return $this->pool;
     }

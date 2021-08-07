@@ -20,7 +20,7 @@ use Sonata\Form\Serializer\BaseSerializerHandler;
  */
 final class MediaSerializerHandler extends BaseSerializerHandler
 {
-    public static function getType()
+    public static function getType(): string
     {
         return 'sonata_media_media_id';
     }

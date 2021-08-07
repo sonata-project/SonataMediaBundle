@@ -44,7 +44,9 @@ final class FormatterMediaExtension extends AbstractExtension
     }
 
     /**
-     * @return array<class-string, string[]>
+     * @return array<string, string[]>
+     *
+     * @phpstan-return array<class-string, string[]>
      */
     public function getAllowedMethods(): array
     {
@@ -95,27 +97,27 @@ final class FormatterMediaExtension extends AbstractExtension
         return $this->getTwigExtension()->path($media, $format);
     }
 
-    public function getNodeVisitors()
+    public function getNodeVisitors(): array
     {
         return $this->getTwigExtension()->getNodeVisitors();
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->getTwigExtension()->getFilters();
     }
 
-    public function getTests()
+    public function getTests(): array
     {
         return $this->getTwigExtension()->getTests();
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return $this->getTwigExtension()->getFunctions();
     }
 
-    public function getOperators()
+    public function getOperators(): array
     {
         return $this->getTwigExtension()->getOperators();
     }

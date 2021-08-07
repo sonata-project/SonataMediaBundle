@@ -25,7 +25,7 @@ final class ValidMediaFormat extends Constraint
      */
     public $message = 'The format is not valid';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'sonata.media.validator.format';
     }

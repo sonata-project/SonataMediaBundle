@@ -299,7 +299,7 @@ final class MediaController
      *
      * @return FOSRestView|FormInterface
      */
-    public function putMediumAction($id, Request $request)
+    public function putMediumAction($id, Request $request): object
     {
         $medium = $this->getMedium($id);
 
@@ -340,7 +340,7 @@ final class MediaController
      *
      * @return FOSRestView|FormInterface
      */
-    public function postProviderMediumAction(string $provider, Request $request)
+    public function postProviderMediumAction(string $provider, Request $request): object
     {
         $medium = $this->mediaManager->create();
         $medium->setProviderName($provider);
@@ -412,7 +412,7 @@ final class MediaController
      *
      * @return FOSRestView|FormInterface
      */
-    private function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider)
+    private function handleWriteMedium(Request $request, MediaInterface $media, MediaProviderInterface $provider): object
     {
         $form = $this->formFactory->createNamed('', ApiMediaType::class, $media, [
             'provider_name' => $provider->getName(),

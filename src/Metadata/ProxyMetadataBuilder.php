@@ -46,7 +46,7 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
         $this->amazonMetadataBuilder = $amazonMetadataBuilder;
     }
 
-    public function get(MediaInterface $media, $filename)
+    public function get(MediaInterface $media, string $filename): array
     {
         $providerName = $media->getProviderName();
 
