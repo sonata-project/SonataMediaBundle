@@ -587,14 +587,6 @@
                 <source>error.image_too_small</source>
                 <target>Immagine troppo piccola, la grandezza richiesta è minimo %min_width% x %min_height%.</target>
             </trans-unit>
-            <trans-unit id="form_group.gallery">
-                <source>form_group.gallery</source>
-                <target>form_group.gallery</target>
-            </trans-unit>
-            <trans-unit id="form_group.options">
-                <source>form_group.options</source>
-                <target>form_group.options</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
