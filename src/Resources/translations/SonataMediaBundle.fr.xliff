@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
     <body>
@@ -505,7 +505,7 @@
       </trans-unit>
       <trans-unit id="no_galleries_found">
         <source>no_galleries_found</source>
-        <target>Aucune galerie trouvée</target>
+        <target>Aucune galerie trouvée.</target>
       </trans-unit>
       <trans-unit id="view_all_galleries">
         <source>view_all_galleries</source>
