@@ -41,7 +41,7 @@ class FixMediaContextCommandTest extends TestCase
     private $tester;
 
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -57,7 +57,7 @@ class FixMediaContextCommandTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default');
         $this->contextManager = $this->createMock(ContextManagerInterface::class);
         $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
 
@@ -71,7 +71,7 @@ class FixMediaContextCommandTest extends TestCase
 
     public function testExecuteWithDisabledClassification(): void
     {
-        $pool = $this->createStub(Pool::class);
+        $pool = new Pool('default');
 
         $command = new FixMediaContextCommand($pool, null, null);
 
@@ -87,13 +87,7 @@ class FixMediaContextCommandTest extends TestCase
 
     public function testExecuteWithExisting(): void
     {
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
-        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->addContext('foo');
 
         $contextModel = new Context();
 
@@ -109,13 +103,7 @@ class FixMediaContextCommandTest extends TestCase
 
     public function testExecuteWithNew(): void
     {
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
-        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->addContext('foo');
 
         $contextModel = new Context();
 

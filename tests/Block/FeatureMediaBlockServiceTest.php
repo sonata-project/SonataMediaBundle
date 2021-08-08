@@ -32,7 +32,7 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
 
         $this->blockService = new FeatureMediaBlockService(
             $this->twig,
-            $this->createStub(Pool::class),
+            new Pool('default'),
             $this->createStub(AdminInterface::class),
             $this->createStub(ManagerInterface::class)
         );

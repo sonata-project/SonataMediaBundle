@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BaseMediaAdminTest extends TestCase
 {
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -62,7 +62,7 @@ class BaseMediaAdminTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default_context');
         $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
         $this->contextManager = $this->createMock(ContextManagerInterface::class);
         $this->request = new Request();
@@ -119,8 +119,9 @@ class BaseMediaAdminTest extends TestCase
 
         $this->contextManager->method('find')->with('context')->willReturn($context);
         $this->categoryManager->method('getRootCategoriesForContext')->with($context)->willReturn([$category]);
-        $this->pool->method('getDefaultContext')->willReturn('default_context');
-        $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider, $provider]);
+        $this->pool->addProvider('provider1', $provider);
+        $this->pool->addProvider('provider2', $provider);
+        $this->pool->addContext('context', ['provider1', 'provider2']);
 
         $persistentParameters = $this->mediaAdmin->getPersistentParameters();
 
@@ -145,8 +146,8 @@ class BaseMediaAdminTest extends TestCase
         $this->request->query->set('context', 'context');
         $this->request->query->set('uniqid', ['providerName' => 'providerName']);
 
-        $this->pool->method('getDefaultContext')->willReturn('default_context');
-        $this->pool->method('getProvidersByContext')->with('context')->willReturn([$provider]);
+        $this->pool->addProvider('provider', $provider);
+        $this->pool->addContext('context', ['provider']);
         $this->contextManager->method('find')->with('context')->willReturn($context);
         $this->categoryManager->method('getRootCategoriesForContext')->with($context)->willReturn([$category]);
     }

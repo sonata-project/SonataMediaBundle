@@ -51,9 +51,9 @@ class SimpleResizerTest extends TestCase
             'height' => null,
             'width' => 90,
             'quality' => 100,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
     }
@@ -71,10 +71,10 @@ class SimpleResizerTest extends TestCase
         $resizer->resize($media, $file, $file, 'bar', [
             'width' => null,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
     }
@@ -112,9 +112,9 @@ class SimpleResizerTest extends TestCase
             'height' => null,
             'width' => 90,
             'quality' => 100,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
     }
@@ -153,150 +153,150 @@ class SimpleResizerTest extends TestCase
         yield [ManipulatorInterface::THUMBNAIL_INSET, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(75, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_INSET, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_INSET, [
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_INSET, [
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(567, 200), new Box(90, 32)];
 
         yield [ManipulatorInterface::THUMBNAIL_INSET, [
             'width' => 100,
             'height' => 100,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(567, 200), new Box(100, 35)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(120, 100), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, [
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND, [
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(567, 50), new Box(90, 8)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(120, 100), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, [
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, [
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
         yield [ManipulatorInterface::THUMBNAIL_OUTBOUND | ManipulatorInterface::THUMBNAIL_FLAG_UPSCALE, [
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(567, 50), new Box(90, 8)];
     }

@@ -26,7 +26,7 @@ use Sonata\MediaBundle\Provider\Pool;
 class MediaBlockServiceTest extends BlockServiceTestCase
 {
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -39,7 +39,7 @@ class MediaBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default');
 
         $this->blockService = new MediaBlockService(
             $this->twig,
@@ -55,7 +55,7 @@ class MediaBlockServiceTest extends BlockServiceTestCase
         $media = $this->createMock(MediaInterface::class);
         $blockContext = $this->createMock(BlockContextInterface::class);
 
-        $this->configureGetFormatChoices($media, ['format1' => 'format1']);
+        $this->configureFormat($media, 'format1');
         $blockContext->method('getBlock')->willReturn($block);
         $blockContext->method('getSetting')->willReturnMap([
             ['format', 'format'],
@@ -99,14 +99,18 @@ class MediaBlockServiceTest extends BlockServiceTestCase
         ], $blockContext);
     }
 
-    /**
-     * @param array<string, string> $choices
-     */
-    private function configureGetFormatChoices(MockObject $media, array $choices): void
+    private function configureFormat(MockObject $media, string $format): void
     {
         $media->method('getContext')->with()->willReturn('context');
 
-        $this->pool->method('hasContext')->with('context')->willReturn(true);
-        $this->pool->method('getFormatNamesByContext')->with('context')->willReturn($choices);
+        $this->pool->addContext('context', [], [$format => [
+            'width' => null,
+            'height' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => false,
+            'resizer' => false,
+            'resizer_options' => [],
+        ]]);
     }
 }

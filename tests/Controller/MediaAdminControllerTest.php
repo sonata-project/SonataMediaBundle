@@ -25,6 +25,7 @@ use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Category;
 use Sonata\MediaBundle\Tests\App\Entity\Context;
@@ -90,14 +91,14 @@ class MediaAdminControllerTest extends TestCase
 
     public function testCreateActionToSelectProvider(): void
     {
-        $pool = $this->createMock(Pool::class);
+        $pool = new Pool('default_context');
 
         $this->configureRender(
             '@SonataMedia/MediaAdmin/select_provider.html.twig',
             'renderResponse'
         );
-        $pool->method('getProvidersByContext')->with('context')->willReturn(['provider']);
-        $pool->method('getDefaultContext')->willReturn('default_context');
+        $pool->addProvider('provider', $this->createStub(MediaProviderInterface::class));
+        $pool->addContext('context', ['provider']);
         $this->admin->expects(self::once())->method('checkAccess')->with('create');
         $this->container->set('sonata.media.pool', $pool);
         $this->request->query->set('context', 'context');
@@ -254,9 +255,8 @@ class MediaAdminControllerTest extends TestCase
     private function configureRender(string $template, string $rendered): void
     {
         $response = $this->createStub(Response::class);
-        $pool = $this->createStub(Pool::class);
+        $pool = new Pool('context');
 
-        $pool->method('getDefaultContext')->willReturn('context');
         $response->method('getContent')->willReturn($rendered);
 
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);

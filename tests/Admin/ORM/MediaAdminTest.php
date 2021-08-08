@@ -32,7 +32,7 @@ class MediaAdminTest extends TestCase
             'media',
             BaseMedia::class,
             'SonataMediaBundle:MediaAdmin',
-            $this->createStub(Pool::class),
+            new Pool('default'),
             $this->createStub(CategoryManagerInterface::class)
         );
     }

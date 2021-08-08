@@ -34,7 +34,7 @@ use Twig\Environment;
 class MediaControllerTest extends TestCase
 {
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -60,7 +60,7 @@ class MediaControllerTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default');
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
         $this->container = new Container();
 
@@ -83,6 +83,7 @@ class MediaControllerTest extends TestCase
 
         $request = $this->createStub(Request::class);
         $media = $this->createStub(Media::class);
+        $media->method('getContext')->willReturn('context');
 
         $this->configureGetCurrentRequest($request);
         $this->configureGetMedia(1, $media);
@@ -102,7 +103,8 @@ class MediaControllerTest extends TestCase
         $this->configureDownloadSecurity($media, $request, true);
         $this->configureGetProvider($media, $provider);
         $this->configureGetCurrentRequest($request);
-        $this->pool->method('getDownloadMode')->with($media)->willReturn('mode');
+
+        $media->method('getContext')->willReturn('context');
         $provider->method('getDownloadResponse')->with($media, 'format', 'mode')->willReturn($response);
         $response->expects(self::once())->method('prepare')->with($request);
 
@@ -127,6 +129,8 @@ class MediaControllerTest extends TestCase
         $media = $this->createStub(Media::class);
         $request = $this->createStub(Request::class);
 
+        $media->method('getContext')->willReturn('context');
+
         $this->configureGetMedia(1, $media);
         $this->configureGetCurrentRequest($request);
         $this->configureDownloadSecurity($media, $request, false);
@@ -144,12 +148,19 @@ class MediaControllerTest extends TestCase
         $this->configureDownloadSecurity($media, $request, true);
         $this->configureRender('@SonataMedia/Media/view.html.twig', [
             'media' => $media,
-            'formats' => ['format'],
+            'formats' => ['format' => [
+                'width' => null,
+                'height' => null,
+                'quality' => 80,
+                'format' => 'jpg',
+                'constraint' => false,
+                'resizer' => false,
+                'resizer_options' => [],
+            ]],
             'format' => 'format',
         ], 'renderResponse');
+
         $media->method('getContext')->willReturn('context');
-        $this->pool->method('hasContext')->with('context')->willReturn(true);
-        $this->pool->method('getFormatNamesByContext')->with('context')->willReturn(['format']);
 
         $response = $this->controller->viewAction($request, 1, 'format');
 
@@ -168,7 +179,20 @@ class MediaControllerTest extends TestCase
     ): void {
         $strategy = $this->createMock(DownloadStrategyInterface::class);
 
-        $this->pool->method('getDownloadStrategy')->with($media)->willReturn($strategy);
+        $this->pool->addContext('context', [], ['format' => [
+            'width' => null,
+            'height' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => false,
+            'resizer' => false,
+            'resizer_options' => [],
+        ]], [
+            'mode' => 'mode',
+            'strategy' => 'download',
+        ]);
+        $this->pool->addDownloadStrategy('download', $strategy);
+
         $strategy->method('isGranted')->with($media, $request)->willReturn($isGranted);
     }
 
@@ -184,7 +208,7 @@ class MediaControllerTest extends TestCase
         object $media,
         MediaProviderInterface $provider
     ): void {
-        $this->pool->method('getProvider')->with('provider')->willReturn($provider);
+        $this->pool->addProvider('provider', $provider);
         $media->method('getProviderName')->willReturn('provider');
     }
 
