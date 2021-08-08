@@ -21,7 +21,7 @@ namespace Sonata\MediaBundle\Provider;
 interface ImageProviderInterface
 {
     /**
-     * @return array<string, int|string|bool|array|null>[]
+     * @return array<array<string, int|string|bool|array|null>>
      *
      * @phpstan-return FormatOptions[]
      */
