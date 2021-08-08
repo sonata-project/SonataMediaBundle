@@ -52,12 +52,10 @@ final class ApiMediaType extends AbstractType implements LoggerAwareInterface
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->logger = $this->logger ?? new NullLogger();
-
         $dataTransformer = new ProviderDataTransformer($this->mediaPool, $this->class, [
             'empty_on_new' => false,
         ]);
-        $dataTransformer->setLogger($this->logger);
+        $dataTransformer->setLogger($this->logger ?? new NullLogger());
 
         $builder->addModelTransformer($dataTransformer, true);
 
