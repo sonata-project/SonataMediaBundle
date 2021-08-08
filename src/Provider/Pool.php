@@ -106,8 +106,8 @@ final class Pool
     }
 
     /**
-     * @param string[]             $providers
-     * @param array<string, array> $formats
+     * @param string[]              $providers
+     * @param array<string, array>  $formats
      * @param array<string, string> $download
      *
      * @phpstan-param array<string, FormatOptions> $formats
