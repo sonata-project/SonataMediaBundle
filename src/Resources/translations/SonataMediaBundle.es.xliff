@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es" datatype="plaintext" original="file.ext">
     <body>
@@ -410,6 +410,10 @@
       <trans-unit id="list.label_size">
         <source>list.label_size</source>
         <target>Tamaño</target>
+      </trans-unit>
+      <trans-unit id="no_provider_available">
+        <source>no_provider_available</source>
+        <target>Proveedores no disponibles</target>
       </trans-unit>
     </body>
   </file>
