@@ -101,9 +101,9 @@ final class CropResizerTest extends TestCase
             'width' => $targetWidth,
             'height' => $targetHeight,
             'quality' => self::QUALITY,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
     }
@@ -166,9 +166,9 @@ final class CropResizerTest extends TestCase
             'width' => $targetWidth,
             'height' => $targetHeight,
             'quality' => self::QUALITY,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
     }
@@ -208,9 +208,9 @@ final class CropResizerTest extends TestCase
             'width' => $targetWidth,
             'height' => $targetHeight,
             'quality' => 80,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
 

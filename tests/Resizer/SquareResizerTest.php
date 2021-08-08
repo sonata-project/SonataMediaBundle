@@ -40,10 +40,10 @@ class SquareResizerTest extends TestCase
         $resizer->resize($media, $file, $file, 'bar', [
             'width' => null,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
     }
@@ -82,40 +82,40 @@ class SquareResizerTest extends TestCase
         yield [[
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(90, 90)];
 
         yield [[
             'width' => 90,
             'height' => 90,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(50, 50)];
 
         yield [[
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(50, 50)];
 
         yield [[
             'width' => 90,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ], new Box(567, 50), new Box(90, 7)];
     }

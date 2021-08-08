@@ -28,10 +28,10 @@ class FormatValidatorTest extends TestCase
         $pool->addContext('test', [], ['format1' => [
             'width' => null,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]]);
 
@@ -54,10 +54,10 @@ class FormatValidatorTest extends TestCase
         $pool->addContext('test', [], ['format1' => [
             'width' => null,
             'height' => null,
-            'quality' => null,
-            'format' => null,
-            'constraint' => null,
-            'resizer' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => true,
+            'resizer' => false,
             'resizer_options' => [],
         ]]);
 

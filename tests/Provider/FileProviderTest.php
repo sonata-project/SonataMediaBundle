@@ -44,8 +44,7 @@ class FileProviderTest extends AbstractProviderTest
     {
         $resizer = $this->createMock(ResizerInterface::class);
 
-        $adapter = $this->createMock(Local::class);
-        $adapter->method('getDirectory')->willReturn(realpath(__DIR__).'/../Fixtures');
+        $adapter = new Local(realpath(__DIR__).'/../Fixtures');
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->onlyMethods(['get'])
@@ -93,9 +92,9 @@ class FileProviderTest extends AbstractProviderTest
             'width' => 100,
             'height' => 100,
             'quality' => 80,
-            'format' => null,
+            'format' => 'jpg',
             'constraint' => true,
-            'resizer' => null,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
         $media = new Media();
@@ -136,9 +135,9 @@ class FileProviderTest extends AbstractProviderTest
             'width' => 200,
             'height' => 100,
             'quality' => 80,
-            'format' => null,
+            'format' => 'jpg',
             'constraint' => true,
-            'resizer' => null,
+            'resizer' => false,
             'resizer_options' => [],
         ]);
 

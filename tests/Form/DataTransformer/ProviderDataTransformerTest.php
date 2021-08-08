@@ -25,7 +25,7 @@ class ProviderDataTransformerTest extends TestCase
 {
     public function testReverseTransformFakeValue(): void
     {
-        $pool = $this->createMock(Pool::class);
+        $pool = new Pool('default');
 
         $transformer = new ProviderDataTransformer($pool, MediaInterface::class);
         self::assertSame('foo', $transformer->reverseTransform('foo'));

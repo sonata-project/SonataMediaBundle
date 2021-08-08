@@ -36,7 +36,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
 
         $this->blockService = new GalleryBlockService(
             $this->twig,
-            $this->createStub(Pool::class),
+            new Pool('default'),
             $this->createStub(AdminInterface::class),
             $this->createStub(ManagerInterface::class)
         );

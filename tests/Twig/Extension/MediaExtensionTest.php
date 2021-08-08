@@ -55,7 +55,7 @@ class MediaExtensionTest extends TestCase
 
     public function testThumbnailHasAllNecessaryAttributes(): void
     {
-        $mediaExtension = new MediaExtension($this->getMediaService(), $this->getMediaManager(), $this->getEnvironment());
+        $mediaExtension = new MediaExtension($this->getMediaPool(), $this->getMediaManager(), $this->getEnvironment());
 
         $media = $this->getMedia();
         $format = 'png';
@@ -88,14 +88,14 @@ class MediaExtensionTest extends TestCase
     }
 
     /**
-     * @return MockObject&Pool
+     * @return Pool
      */
-    public function getMediaService(): object
+    public function getMediaPool(): object
     {
-        $mediaService = $this->createMock(Pool::class);
-        $mediaService->method('getProvider')->willReturn($this->getProvider());
+        $mediaPool = new Pool('default');
+        $mediaPool->addProvider('provider', $this->getProvider());
 
-        return $mediaService;
+        return $mediaPool;
     }
 
     /**
@@ -163,6 +163,7 @@ class MediaExtensionTest extends TestCase
     {
         if (null === $this->media) {
             $this->media = $this->createMock(Media::class);
+            $this->media->method('getProviderName')->willReturn('provider');
             $this->media->method('getProviderStatus')->willReturn(MediaInterface::STATUS_OK);
         }
 

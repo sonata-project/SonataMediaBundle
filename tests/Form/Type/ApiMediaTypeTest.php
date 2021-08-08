@@ -29,8 +29,8 @@ class ApiMediaTypeTest extends AbstractTypeTest
     {
         $provider = $this->createMock(MediaProviderInterface::class);
 
-        $mediaPool = $this->createMock(Pool::class);
-        $mediaPool->expects(self::once())->method('getProvider')->willReturn($provider);
+        $mediaPool = new Pool('default');
+        $mediaPool->addProvider('sonata.media.provider.image', $provider);
 
         $type = new ApiMediaType($mediaPool, Media::class);
 

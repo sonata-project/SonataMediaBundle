@@ -27,10 +27,10 @@ use Symfony\Component\HttpFoundation\Response;
  * @phpstan-type FormatOptions = array{
  *  width: int|null,
  *  height: int|null,
- *  quality: int|null,
- *  format: string|null,
- *  constraint: bool|null,
- *  resizer: string|null,
+ *  quality: int,
+ *  format: string,
+ *  constraint: bool,
+ *  resizer: string|false,
  *  resizer_options: array<string, string|bool|int|null>,
  * }
  */

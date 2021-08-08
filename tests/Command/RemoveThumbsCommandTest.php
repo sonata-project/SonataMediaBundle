@@ -47,7 +47,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
     private $tester;
 
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -61,7 +61,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         parent::setUp();
 
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default');
 
         $this->command = new RemoveThumbsCommand($this->pool, $this->mediaManager);
 
@@ -76,12 +76,6 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_foo.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_2_bar.ext');
-
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
 
         $formats = [
             'small' => [],
@@ -101,15 +95,8 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             ->method('getFilesystem')
             ->willReturn($this->createMock(Filesystem::class));
 
-        $this->pool->expects(self::once())
-            ->method('getContexts')
-            ->willReturn(['foo' => $context]);
-        $this->pool->expects(self::once())
-            ->method('getProviders')
-            ->willReturn(['fooprovider' => $fileProvider]);
-        $this->pool->expects(self::once())
-            ->method('getProvider')
-            ->willReturn($fileProvider);
+        $this->pool->addContext('foo');
+        $this->pool->addProvider('fooprovider', $fileProvider);
 
         $medias = [];
 

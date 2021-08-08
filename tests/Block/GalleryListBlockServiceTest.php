@@ -30,7 +30,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
     private $galleryManager;
 
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -39,7 +39,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
         parent::setUp();
 
         $this->galleryManager = $this->createMock(GalleryManagerInterface::class);
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default');
     }
 
     public function testExecute(): void

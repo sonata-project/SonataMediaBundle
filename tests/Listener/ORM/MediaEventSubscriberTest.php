@@ -36,12 +36,8 @@ class MediaEventSubscriberTest extends TestCase
     {
         $provider = $this->createMock(MediaProviderInterface::class);
 
-        $pool = $this->getMockBuilder(Pool::class)
-            ->onlyMethods(['getProvider'])
-            ->setConstructorArgs(['default'])
-            ->getMock();
-
-        $pool->method('getProvider')->willReturn($provider);
+        $pool = new Pool('default');
+        $pool->addProvider('provider', $provider);
 
         $category = $this->createMock(CategoryInterface::class);
         $catManager = $this->createMock(CategoryManagerInterface::class);
@@ -55,6 +51,7 @@ class MediaEventSubscriberTest extends TestCase
         self::assertContains(Events::onClear, $subscriber->getSubscribedEvents());
 
         $media1 = $this->createMock(Media::class);
+        $media1->method('getProviderName')->willReturn('provider');
         $media1->method('getContext')->willReturn('context');
 
         $args1 = $this->createMock(LifecycleEventArgs::class);
@@ -65,6 +62,7 @@ class MediaEventSubscriberTest extends TestCase
         $subscriber->onClear();
 
         $media2 = $this->createMock(Media::class);
+        $media2->method('getProviderName')->willReturn('provider');
         $media2->method('getContext')->willReturn('context');
 
         $args2 = $this->createMock(LifecycleEventArgs::class);

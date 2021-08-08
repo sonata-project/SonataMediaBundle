@@ -93,7 +93,7 @@ class GalleryAdminControllerTest extends TestCase
         $datagrid = $this->createMock(DatagridInterface::class);
         $form = $this->createStub(Form::class);
         $formView = $this->createStub(FormView::class);
-        $pool = $this->createStub(Pool::class);
+        $pool = new Pool('default');
 
         $this->configureSetFormTheme($formView, ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
@@ -175,7 +175,7 @@ class GalleryAdminControllerTest extends TestCase
     private function configureRender(string $template, string $rendered): void
     {
         $response = $this->createStub(Response::class);
-        $pool = $this->createStub(Pool::class);
+        $pool = new Pool('default');
 
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
         $this->container->set('sonata.media.pool', $pool);

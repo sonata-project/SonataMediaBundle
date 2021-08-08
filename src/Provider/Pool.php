@@ -18,11 +18,14 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @phpstan-import-type FormatOptions from MediaProviderInterface
+ *
+ * @phpstan-type DownloadOptions = array{
+ *   strategy?: string,
+ *   mode?: string,
+ * }
  */
-class Pool
+final class Pool
 {
     /**
      * @var array<string, MediaProviderInterface>
@@ -35,7 +38,7 @@ class Pool
      * @phpstan-var array<string, array{
      *     providers: string[],
      *     formats: array<string, FormatOptions>,
-     *     download: array<string, mixed>
+     *     download: DownloadOptions
      * }>
      */
     private $contexts = [];
@@ -105,9 +108,10 @@ class Pool
     /**
      * @param string[]             $providers
      * @param array<string, array> $formats
-     * @param array<string, mixed> $download
+     * @param array<string, string> $download
      *
      * @phpstan-param array<string, FormatOptions> $formats
+     * @phpstan-param DownloadOptions $download
      */
     public function addContext(string $name, array $providers = [], array $formats = [], array $download = []): void
     {
@@ -137,7 +141,7 @@ class Pool
      * @phpstan-return array{
      *     providers: string[],
      *     formats: array<string, FormatOptions>,
-     *     download: array<string, mixed>
+     *     download: DownloadOptions
      * }
      */
     public function getContext(string $name): array
@@ -157,7 +161,7 @@ class Pool
      * @phpstan-return array<string, array{
      *     providers: string[],
      *     formats: array<string, FormatOptions>,
-     *     download: array<string, mixed>
+     *     download: DownloadOptions
      * }>
      */
     public function getContexts(): array
@@ -222,19 +226,19 @@ class Pool
             throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId()));
         }
 
-        $context = $this->getContext($mediaContext);
+        $download = $this->getContext($mediaContext)['download'];
 
-        $id = $context['download']['strategy'];
-
-        if (!isset($context['download']['mode'])) {
-            throw new \RuntimeException(sprintf('Unable to retrieve the download mode from context %s.', $mediaContext));
+        if (!isset($download['strategy'])) {
+            throw new \RuntimeException(sprintf('Unable to retrieve the download strategy from context %s.', $mediaContext));
         }
 
-        if (!isset($this->downloadStrategies[$id])) {
-            throw new \RuntimeException(sprintf('Unable to retrieve the download security %s', $id));
+        $strategy = $download['strategy'];
+
+        if (!isset($this->downloadStrategies[$strategy])) {
+            throw new \RuntimeException(sprintf('Unable to retrieve the download security %s', $strategy));
         }
 
-        return $this->downloadStrategies[$id];
+        return $this->downloadStrategies[$strategy];
     }
 
     /**
@@ -248,13 +252,13 @@ class Pool
             throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId()));
         }
 
-        $context = $this->getContext($mediaContext);
+        $download = $this->getContext($mediaContext)['download'];
 
-        if (!isset($context['download']['mode'])) {
-            throw new \RuntimeException('Unable to retrieve the download mode.');
+        if (!isset($download['mode'])) {
+            throw new \RuntimeException(sprintf('Unable to retrieve the download mode from context %s.', $mediaContext));
         }
 
-        return $context['download']['mode'];
+        return $download['mode'];
     }
 
     public function getDefaultContext(): string

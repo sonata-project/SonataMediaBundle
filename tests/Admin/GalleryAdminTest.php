@@ -31,7 +31,7 @@ class GalleryAdminTest extends TestCase
             'media',
             BaseGallery::class,
             'SonataMediaBundle:GalleryAdmin',
-            $this->createStub(Pool::class)
+            new Pool('default')
         );
     }
 

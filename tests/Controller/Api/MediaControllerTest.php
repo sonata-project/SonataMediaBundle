@@ -88,6 +88,7 @@ class MediaControllerTest extends TestCase
     {
         $media = $this->createMock(MediaInterface::class);
         $media->method('getContext')->willReturn('context');
+        $media->method('getProviderName')->willReturn('provider');
 
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects(self::once())->method('find')->willReturn($media);
@@ -95,10 +96,17 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects(self::exactly(2))->method('getHelperProperties')->willReturn(['foo' => 'bar']);
 
-        $pool = $this->createMock(Pool::class);
-        $pool->method('getProvider')->willReturn($provider);
-        $pool->expects(self::once())->method('hasContext')->willReturn(true);
-        $pool->expects(self::once())->method('getFormatNamesByContext')->willReturn(['format_name1' => 'value1']);
+        $pool = new Pool('default');
+        $pool->addProvider('provider', $provider);
+        $pool->addContext('context', [], ['format_name1' => [
+            'width' => null,
+            'height' => null,
+            'quality' => 80,
+            'format' => 'jpg',
+            'constraint' => false,
+            'resizer' => false,
+            'resizer_options' => [],
+        ]]);
 
         $controller = $this->createMediaController($manager, $pool);
 
@@ -122,6 +130,8 @@ class MediaControllerTest extends TestCase
     public function testGetMediumBinariesAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
+        $media->method('getContext')->willReturn('default');
+        $media->method('getProviderName')->willReturn('provider');
 
         $binaryResponse = $this->createMock(BinaryFileResponse::class);
 
@@ -131,8 +141,9 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects(self::once())->method('getDownloadResponse')->willReturn($binaryResponse);
 
-        $pool = $this->createMock(Pool::class);
-        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
+        $pool = new Pool('default');
+        $pool->addContext('default', [], [], ['mode' => 'mode']);
+        $pool->addProvider('provider', $provider);
 
         $controller = $this->createMediaController($manager, $pool);
 
@@ -155,6 +166,7 @@ class MediaControllerTest extends TestCase
     public function testPutMediumAction(): void
     {
         $medium = $this->createMock(MediaInterface::class);
+        $medium->method('getProviderName')->willReturn('provider');
 
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects(self::once())->method('find')->willReturn($medium);
@@ -162,8 +174,8 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects(self::once())->method('getName');
 
-        $pool = $this->createMock(Pool::class);
-        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
+        $pool = new Pool('default');
+        $pool->addProvider('provider', $provider);
 
         $form = $this->createMock(Form::class);
         $form->expects(self::once())->method('handleRequest');
@@ -181,6 +193,7 @@ class MediaControllerTest extends TestCase
     public function testPutMediumInvalidFormAction(): void
     {
         $medium = $this->createMock(MediaInterface::class);
+        $medium->method('getProviderName')->willReturn('provider');
 
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects(self::once())->method('find')->willReturn($medium);
@@ -188,8 +201,8 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects(self::once())->method('getName');
 
-        $pool = $this->createMock(Pool::class);
-        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
+        $pool = new Pool('default');
+        $pool->addProvider('provider', $provider);
 
         $form = $this->createMock(Form::class);
         $form->expects(self::once())->method('handleRequest');
@@ -214,8 +227,8 @@ class MediaControllerTest extends TestCase
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects(self::once())->method('getName');
 
-        $pool = $this->createMock(Pool::class);
-        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
+        $pool = new Pool('default');
+        $pool->addProvider('providerName', $provider);
 
         $form = $this->createMock(Form::class);
         $form->expects(self::once())->method('handleRequest');
@@ -240,8 +253,7 @@ class MediaControllerTest extends TestCase
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects(self::once())->method('create')->willReturn($medium);
 
-        $pool = $this->createMock(Pool::class);
-        $pool->expects(self::once())->method('getProvider')->will(self::throwException(new \RuntimeException('exception on getProvder')));
+        $pool = new Pool('default');
 
         $controller = $this->createMediaController($manager, $pool);
         $controller->postProviderMediumAction('non existing provider', new Request());
@@ -255,7 +267,7 @@ class MediaControllerTest extends TestCase
         $manager = $this->createMock(MediaManagerInterface::class);
         $manager->expects(self::once())->method('find')->willReturn($media);
 
-        $pool = $this->createMock(Pool::class);
+        $pool = new Pool('default');
 
         $controller = $this->createMediaController($manager, $pool);
 
@@ -271,7 +283,7 @@ class MediaControllerTest extends TestCase
             $manager = $this->createMock(MediaManagerInterface::class);
         }
         if (null === $pool) {
-            $pool = $this->createMock(Pool::class);
+            $pool = new Pool('default');
         }
         if (null === $factory) {
             $factory = $this->createMock(FormFactoryInterface::class);

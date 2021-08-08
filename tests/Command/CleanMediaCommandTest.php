@@ -47,7 +47,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     private $tester;
 
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -57,7 +57,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     private $mediaManager;
 
     /**
-     * @var MockObject&Local
+     * @var Local
      */
     private $fileSystemLocal;
 
@@ -65,11 +65,9 @@ class CleanMediaCommandTest extends FilesystemTestCase
     {
         parent::setUp();
 
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default');
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
-        $this->fileSystemLocal = $this->createMock(Local::class);
-
-        $this->fileSystemLocal->expects(self::once())->method('getDirectory')->willReturn($this->workspace);
+        $this->fileSystemLocal = new Local($this->workspace);
 
         $this->command = new CleanMediaCommand($this->fileSystemLocal, $this->pool, $this->mediaManager);
 
@@ -81,13 +79,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
     public function testExecuteDirectoryNotExists(): void
     {
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
-        $this->pool->expects(self::once())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->addContext('foo');
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
@@ -100,13 +92,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     {
         $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
 
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
-        $this->pool->expects(self::once())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->addContext('foo');
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
@@ -121,17 +107,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
         $provider = $this->createMock(FileProvider::class);
         $provider->method('getName')->willReturn('fooprovider');
 
-        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
-        $this->pool->method('getProviders')->willReturn([$provider]);
+        $this->pool->addContext('foo');
+        $this->pool->addProvider('provider', $provider);
 
         $media = $this->createMock(MediaInterface::class);
 
@@ -155,17 +135,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
         $provider = $this->createMock(FileProvider::class);
         $provider->method('getName')->willReturn('fooprovider');
 
-        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
-        $this->pool->method('getProviders')->willReturn([$provider]);
+        $this->pool->addContext('foo');
+        $this->pool->addProvider('provider', $provider);
 
         $media = $this->createMock(MediaInterface::class);
 
@@ -198,17 +172,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
         $provider = $this->createMock(FileProvider::class);
         $provider->method('getName')->willReturn('fooprovider');
 
-        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
-        $this->pool->method('getProviders')->willReturn([$provider]);
+        $this->pool->addContext('foo');
+        $this->pool->addProvider('provider', $provider);
 
         $this->mediaManager->expects(self::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])
@@ -236,17 +204,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $context = [
-            'providers' => [],
-            'formats' => [],
-            'download' => [],
-        ];
-
         $provider = $this->createMock(FileProvider::class);
         $provider->method('getName')->willReturn('fooprovider');
 
-        $this->pool->method('getContexts')->willReturn(['foo' => $context]);
-        $this->pool->method('getProviders')->willReturn([$provider]);
+        $this->pool->addContext('foo');
+        $this->pool->addProvider('provider', $provider);
 
         $this->mediaManager->expects(self::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])

@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Form\Type\MediaType;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Component\Form\Forms;
@@ -29,7 +29,7 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 class MediaTypeTest extends AbstractTypeTest
 {
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     protected $mediaPool;
 
@@ -42,8 +42,13 @@ class MediaTypeTest extends AbstractTypeTest
     {
         parent::setUp();
 
-        $this->mediaPool = $this->createMock(Pool::class);
+        $this->mediaPool = new Pool('default');
         $this->mediaType = new MediaType($this->mediaPool, Media::class);
+
+        $this->mediaPool->addProvider('provider_a', $this->createStub(MediaProviderInterface::class));
+        $this->mediaPool->addProvider('provider_b', $this->createStub(MediaProviderInterface::class));
+        $this->mediaPool->addContext('video');
+        $this->mediaPool->addContext('pic');
 
         $this->factory = Forms::createFormFactoryBuilder()
             ->addType($this->mediaType)
@@ -53,15 +58,6 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testMissingFormOptions(): void
     {
-        $this->mediaPool->method('getProviderList')->willReturn([
-            'provider_a' => 'provider_a',
-            'provider_b' => 'provider_b',
-        ]);
-        $this->mediaPool->method('getContexts')->willReturn([
-            'video' => [],
-            'pic' => [],
-        ]);
-
         $this->expectException(MissingOptionsException::class);
         $this->expectExceptionMessage(
             'The required options "context", "provider" are missing.'
@@ -75,15 +71,6 @@ class MediaTypeTest extends AbstractTypeTest
      */
     public function testMissingFormContextOption(): void
     {
-        $this->mediaPool->method('getProviderList')->willReturn([
-            'provider_a' => 'provider_a',
-            'provider_b' => 'provider_b',
-        ]);
-        $this->mediaPool->method('getContexts')->willReturn([
-            'video' => [],
-            'pic' => [],
-        ]);
-
         $this->expectException(MissingOptionsException::class);
 
         $this->factory->create($this->getFormType(), null, [
@@ -93,15 +80,6 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testMissingFormProviderOption(): void
     {
-        $this->mediaPool->method('getProviderList')->willReturn([
-            'provider_a' => 'provider_a',
-            'provider_b' => 'provider_b',
-        ]);
-        $this->mediaPool->method('getContexts')->willReturn([
-            'video' => [],
-            'pic' => [],
-        ]);
-
         $this->expectException(MissingOptionsException::class);
 
         $this->factory->create($this->getFormType(), null, [
@@ -111,15 +89,6 @@ class MediaTypeTest extends AbstractTypeTest
 
     public function testInvalidFormProviderOption(): void
     {
-        $this->mediaPool->method('getProviderList')->willReturn([
-            'provider_a' => 'provider_a',
-            'provider_b' => 'provider_b',
-        ]);
-        $this->mediaPool->method('getContexts')->willReturn([
-            'video' => [],
-            'pic' => [],
-        ]);
-
         $this->expectException(InvalidOptionsException::class);
         $this->expectExceptionMessage(
             'The option "provider" with value "provider_c" is invalid. Accepted values are: "provider_a", "provider_b".'
@@ -136,15 +105,6 @@ class MediaTypeTest extends AbstractTypeTest
      */
     public function testInvalidFormContextOption(): void
     {
-        $this->mediaPool->method('getProviderList')->willReturn([
-            'provider_a' => 'provider_a',
-            'provider_b' => 'provider_b',
-        ]);
-        $this->mediaPool->method('getContexts')->willReturn([
-            'video' => [],
-            'pic' => [],
-        ]);
-
         $this->expectException(InvalidOptionsException::class);
         $this->expectExceptionMessage(
             'The option "context" with value "photo" is invalid. Accepted values are: "video", "pic".'
