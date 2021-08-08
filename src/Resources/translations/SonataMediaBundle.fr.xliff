@@ -571,13 +571,13 @@
                 <source>error.image_too_small</source>
                 <target>Image trop petite, la taille minimum requise est de %min_width% x %min_height%.</target>
             </trans-unit>
-            <trans-unit id="form.label_icon">
+            <trans-unit id="form_group.gallery">
                 <source>form_group.gallery</source>
-                <target>form_group.gallery</target>
+                <target>Gallerie</target>
             </trans-unit>
-            <trans-unit id="form.label_icon">
+            <trans-unit id="form_group.options">
                 <source>form_group.options</source>
-                <target>form_group.options</target>
+                <target>Options</target>
             </trans-unit>
         </body>
     </file>
