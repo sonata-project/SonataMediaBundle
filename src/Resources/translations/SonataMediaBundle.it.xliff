@@ -14,10 +14,6 @@
         <source>gallery</source>
         <target>Gallerie</target>
       </trans-unit>
-      <trans-unit id="options">
-        <source>Options</source>
-        <target>Opzioni</target>
-      </trans-unit>
       <trans-unit id="sonata_media">
         <source>sonata_media</source>
         <target>Libreria</target>
