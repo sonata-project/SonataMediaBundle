@@ -5,6 +5,9 @@ parameters:
     level: 0
     bootstrapFiles:
         - vendor/bin/.phpunit/phpunit/vendor/autoload.php
+    scanFiles:
+        # NEXT_MAJOR: Remove the scanFiles part
+        - .phpstan/stubs/MetadataInterface.file
     paths:
         - src
         - tests
