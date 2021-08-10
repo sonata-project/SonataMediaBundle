@@ -168,6 +168,14 @@ class Pool
     public function getContext($name)
     {
         if (!$this->hasContext($name)) {
+            // NEXT_MAJOR: Remove the deprecation and uncomment the exception.
+            @trigger_error(sprintf(
+                'Calling %s() with a context that does not exist is deprecated since sonata-project/media-bundle 3.x'
+                .' and will not be supported in version 4.0.',
+                __METHOD__,
+            ), \E_USER_DEPRECATED);
+            // throw new \LogicException(sprintf('Pool does not have context %s, did you configure all your contexts?', $name));
+
             return null;
         }
 
