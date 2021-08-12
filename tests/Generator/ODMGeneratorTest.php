@@ -30,7 +30,7 @@ class ODMGeneratorTest extends TestCase
         $media->setContext('user');
 
         $media->setId('550e8400-e29b-41d4-a716-446655440000');
-        $this->assertSame('user/550e/84', $generator->generatePath($media));
+        self::assertSame('user/550e/84', $generator->generatePath($media));
     }
 
     public function testWithValueObjectStringable(): void
@@ -49,6 +49,6 @@ class ODMGeneratorTest extends TestCase
         };
         $media->setId($vo);
 
-        $this->assertSame('user/550e/84', $generator->generatePath($media));
+        self::assertSame('user/550e/84', $generator->generatePath($media));
     }
 }

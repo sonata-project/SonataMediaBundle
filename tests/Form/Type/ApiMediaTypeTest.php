@@ -29,12 +29,12 @@ class ApiMediaTypeTest extends AbstractTypeTest
         $provider = $this->createMock(MediaProviderInterface::class);
 
         $mediaPool = $this->createMock(Pool::class);
-        $mediaPool->expects($this->once())->method('getProvider')->willReturn($provider);
+        $mediaPool->expects(self::once())->method('getProvider')->willReturn($provider);
 
         $type = new ApiMediaType($mediaPool, 'testclass');
 
         $builder = $this->createMock(FormBuilder::class);
-        $builder->expects($this->once())->method('addModelTransformer');
+        $builder->expects(self::once())->method('addModelTransformer');
 
         $type->buildForm($builder, ['provider_name' => 'sonata.media.provider.image']);
     }

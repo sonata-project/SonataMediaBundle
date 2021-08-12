@@ -53,13 +53,13 @@ class MediaEventSubscriberTest extends TestCase
         $container->set('sonata.media.pool', $pool);
         $container->set('sonata.media.manager.category', $catManager);
 
-        $catManager->expects($this->exactly(2))
+        $catManager->expects(self::exactly(2))
             ->method('getRootCategories')
             ->willReturn(['context' => $category]);
 
         $subscriber = new MediaEventSubscriber($container);
 
-        $this->assertContains(Events::onClear, $subscriber->getSubscribedEvents());
+        self::assertContains(Events::onClear, $subscriber->getSubscribedEvents());
 
         $media1 = $this->createMock(Media::class);
         $media1->method('getContext')->willReturn('context');

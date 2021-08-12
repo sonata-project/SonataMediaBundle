@@ -37,15 +37,15 @@ class MediaControllerTest extends TestCase
         $mManager = $this->createMock(MediaManagerInterface::class);
         $media = $this->createMock(MediaInterface::class);
 
-        $mManager->expects($this->once())->method('getPager')->willReturn([$media]);
+        $mManager->expects(self::once())->method('getPager')->willReturn([$media]);
 
         $mController = $this->createMediaController($mManager);
 
         $paramFetcher = $this->createMock(ParamFetcherInterface::class);
-        $paramFetcher->expects($this->exactly(3))->method('get');
-        $paramFetcher->expects($this->once())->method('all')->willReturn([]);
+        $paramFetcher->expects(self::exactly(3))->method('get');
+        $paramFetcher->expects(self::once())->method('all')->willReturn([]);
 
-        $this->assertSame([$media], $mController->getMediaAction($paramFetcher));
+        self::assertSame([$media], $mController->getMediaAction($paramFetcher));
     }
 
     public function testGetMediumAction(): void
@@ -53,11 +53,11 @@ class MediaControllerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('find')->willReturn($media);
+        $manager->expects(self::once())->method('find')->willReturn($media);
 
         $controller = $this->createMediaController($manager);
 
-        $this->assertSame($media, $controller->getMediumAction(1));
+        self::assertSame($media, $controller->getMediumAction(1));
     }
 
     /**
@@ -89,14 +89,14 @@ class MediaControllerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('find')->willReturn($media);
+        $manager->expects(self::once())->method('find')->willReturn($media);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->exactly(2))->method('getHelperProperties')->willReturn(['foo' => 'bar']);
+        $provider->expects(self::exactly(2))->method('getHelperProperties')->willReturn(['foo' => 'bar']);
 
         $pool = $this->createMock(Pool::class);
         $pool->method('getProvider')->willReturn($provider);
-        $pool->expects($this->once())->method('getFormatNamesByContext')->willReturn(['format_name1' => 'value1']);
+        $pool->expects(self::once())->method('getFormatNamesByContext')->willReturn(['format_name1' => 'value1']);
 
         $controller = $this->createMediaController($manager, $pool);
 
@@ -114,7 +114,7 @@ class MediaControllerTest extends TestCase
                 ],
             ],
         ];
-        $this->assertSame($expected, $controller->getMediumFormatsAction(1));
+        self::assertSame($expected, $controller->getMediumFormatsAction(1));
     }
 
     public function testGetMediumBinariesAction(): void
@@ -124,30 +124,30 @@ class MediaControllerTest extends TestCase
         $binaryResponse = $this->createMock(BinaryFileResponse::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('find')->willReturn($media);
+        $manager->expects(self::once())->method('find')->willReturn($media);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->once())->method('getDownloadResponse')->willReturn($binaryResponse);
+        $provider->expects(self::once())->method('getDownloadResponse')->willReturn($binaryResponse);
 
         $pool = $this->createMock(Pool::class);
-        $pool->expects($this->once())->method('getProvider')->willReturn($provider);
+        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
 
         $controller = $this->createMediaController($manager, $pool);
 
-        $this->assertSame($binaryResponse, $controller->getMediumBinaryAction(1, 'format', new Request()));
+        self::assertSame($binaryResponse, $controller->getMediumBinaryAction(1, 'format', new Request()));
     }
 
     public function testDeleteMediumAction(): void
     {
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('delete');
-        $manager->expects($this->once())->method('find')->willReturn($this->createMock(MediaInterface::class));
+        $manager->expects(self::once())->method('delete');
+        $manager->expects(self::once())->method('find')->willReturn($this->createMock(MediaInterface::class));
 
         $controller = $this->createMediaController($manager);
 
         $expected = ['deleted' => true];
 
-        $this->assertSame($expected, $controller->deleteMediumAction(1));
+        self::assertSame($expected, $controller->deleteMediumAction(1));
     }
 
     public function testPutMediumAction(): void
@@ -155,25 +155,25 @@ class MediaControllerTest extends TestCase
         $medium = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('find')->willReturn($medium);
+        $manager->expects(self::once())->method('find')->willReturn($medium);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->once())->method('getName');
+        $provider->expects(self::once())->method('getName');
 
         $pool = $this->createMock(Pool::class);
-        $pool->expects($this->once())->method('getProvider')->willReturn($provider);
+        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
 
         $form = $this->createMock(Form::class);
-        $form->expects($this->once())->method('handleRequest');
-        $form->expects($this->once())->method('isValid')->willReturn(true);
-        $form->expects($this->once())->method('getData')->willReturn($medium);
+        $form->expects(self::once())->method('handleRequest');
+        $form->expects(self::once())->method('isValid')->willReturn(true);
+        $form->expects(self::once())->method('getData')->willReturn($medium);
 
         $factory = $this->createMock(FormFactoryInterface::class);
-        $factory->expects($this->once())->method('createNamed')->willReturn($form);
+        $factory->expects(self::once())->method('createNamed')->willReturn($form);
 
         $controller = $this->createMediaController($manager, $pool, $factory);
 
-        $this->assertInstanceOf(View::class, $controller->putMediumAction(1, new Request()));
+        self::assertInstanceOf(View::class, $controller->putMediumAction(1, new Request()));
     }
 
     public function testPutMediumInvalidFormAction(): void
@@ -181,51 +181,51 @@ class MediaControllerTest extends TestCase
         $medium = $this->createMock(MediaInterface::class);
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('find')->willReturn($medium);
+        $manager->expects(self::once())->method('find')->willReturn($medium);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->once())->method('getName');
+        $provider->expects(self::once())->method('getName');
 
         $pool = $this->createMock(Pool::class);
-        $pool->expects($this->once())->method('getProvider')->willReturn($provider);
+        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
 
         $form = $this->createMock(Form::class);
-        $form->expects($this->once())->method('handleRequest');
-        $form->expects($this->once())->method('isValid')->willReturn(false);
+        $form->expects(self::once())->method('handleRequest');
+        $form->expects(self::once())->method('isValid')->willReturn(false);
 
         $factory = $this->createMock(FormFactoryInterface::class);
-        $factory->expects($this->once())->method('createNamed')->willReturn($form);
+        $factory->expects(self::once())->method('createNamed')->willReturn($form);
 
         $controller = $this->createMediaController($manager, $pool, $factory);
 
-        $this->assertInstanceOf(Form::class, $controller->putMediumAction(1, new Request()));
+        self::assertInstanceOf(Form::class, $controller->putMediumAction(1, new Request()));
     }
 
     public function testPostProviderMediumAction(): void
     {
         $medium = $this->createMock(MediaInterface::class);
-        $medium->expects($this->once())->method('setProviderName');
+        $medium->expects(self::once())->method('setProviderName');
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('create')->willReturn($medium);
+        $manager->expects(self::once())->method('create')->willReturn($medium);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->once())->method('getName');
+        $provider->expects(self::once())->method('getName');
 
         $pool = $this->createMock(Pool::class);
-        $pool->expects($this->once())->method('getProvider')->willReturn($provider);
+        $pool->expects(self::once())->method('getProvider')->willReturn($provider);
 
         $form = $this->createMock(Form::class);
-        $form->expects($this->once())->method('handleRequest');
-        $form->expects($this->once())->method('isValid')->willReturn(true);
-        $form->expects($this->once())->method('getData')->willReturn($medium);
+        $form->expects(self::once())->method('handleRequest');
+        $form->expects(self::once())->method('isValid')->willReturn(true);
+        $form->expects(self::once())->method('getData')->willReturn($medium);
 
         $factory = $this->createMock(FormFactoryInterface::class);
-        $factory->expects($this->once())->method('createNamed')->willReturn($form);
+        $factory->expects(self::once())->method('createNamed')->willReturn($form);
 
         $controller = $this->createMediaController($manager, $pool, $factory);
 
-        $this->assertInstanceOf(View::class, $controller->postProviderMediumAction('providerName', new Request()));
+        self::assertInstanceOf(View::class, $controller->postProviderMediumAction('providerName', new Request()));
     }
 
     public function testPostProviderActionNotFound(): void
@@ -233,13 +233,13 @@ class MediaControllerTest extends TestCase
         $this->expectException(NotFoundHttpException::class);
 
         $medium = $this->createMock(MediaInterface::class);
-        $medium->expects($this->once())->method('setProviderName');
+        $medium->expects(self::once())->method('setProviderName');
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('create')->willReturn($medium);
+        $manager->expects(self::once())->method('create')->willReturn($medium);
 
         $pool = $this->createMock(Pool::class);
-        $pool->expects($this->once())->method('getProvider')->will($this->throwException(new \RuntimeException('exception on getProvder')));
+        $pool->expects(self::once())->method('getProvider')->will(self::throwException(new \RuntimeException('exception on getProvder')));
 
         $controller = $this->createMediaController($manager, $pool);
         $controller->postProviderMediumAction('non existing provider', new Request());
@@ -248,16 +248,16 @@ class MediaControllerTest extends TestCase
     public function testPutMediumBinaryContentAction(): void
     {
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->once())->method('setBinaryContent');
+        $media->expects(self::once())->method('setBinaryContent');
 
         $manager = $this->createMock(MediaManagerInterface::class);
-        $manager->expects($this->once())->method('find')->willReturn($media);
+        $manager->expects(self::once())->method('find')->willReturn($media);
 
         $pool = $this->createMock(Pool::class);
 
         $controller = $this->createMediaController($manager, $pool);
 
-        $this->assertSame($media, $controller->putMediumBinaryContentAction(1, new Request()));
+        self::assertSame($media, $controller->putMediumBinaryContentAction(1, new Request()));
     }
 
     protected function createMediaController(

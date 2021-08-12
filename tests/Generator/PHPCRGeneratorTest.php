@@ -30,12 +30,12 @@ class PHPCRGeneratorTest extends TestCase
         $media->setContext('user');
 
         $media->setId('nodename');
-        $this->assertSame('user', $generator->generatePath($media));
+        self::assertSame('user', $generator->generatePath($media));
 
         $media->setId('/media/nodename');
-        $this->assertSame('user/media', $generator->generatePath($media));
+        self::assertSame('user/media', $generator->generatePath($media));
 
         $media->setId('/media/sub/path/nodename');
-        $this->assertSame('user/media/sub/path', $generator->generatePath($media));
+        self::assertSame('user/media/sub/path', $generator->generatePath($media));
     }
 }

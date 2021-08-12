@@ -38,14 +38,14 @@ class MediaManagerTest extends TestCase
         $media = new Media();
         $this->manager->save($media, 'default', 'media.test');
 
-        $this->assertSame('default', $media->getContext());
-        $this->assertSame('media.test', $media->getProviderName());
+        self::assertSame('default', $media->getContext());
+        self::assertSame('media.test', $media->getProviderName());
 
         $media = new Media();
         $this->manager->save($media, true);
 
-        $this->assertNull($media->getContext());
-        $this->assertNull($media->getProviderName());
+        self::assertNull($media->getContext());
+        self::assertNull($media->getProviderName());
     }
 
     public function testSaveException(): void

@@ -29,7 +29,7 @@ class ForbiddenDownloadStrategyTest extends TestCase
         $translator = $this->createStub(TranslatorInterface::class);
 
         $strategy = new ForbiddenDownloadStrategy($translator);
-        $this->assertFalse($strategy->isGranted($media, $request));
+        self::assertFalse($strategy->isGranted($media, $request));
     }
 
     /**
@@ -43,6 +43,6 @@ class ForbiddenDownloadStrategyTest extends TestCase
         $translator = $this->createStub(LegacyTranslatorInterface::class);
 
         $strategy = new ForbiddenDownloadStrategy($translator);
-        $this->assertFalse($strategy->isGranted($media, $request));
+        self::assertFalse($strategy->isGranted($media, $request));
     }
 }

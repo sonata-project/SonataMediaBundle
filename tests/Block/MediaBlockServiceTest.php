@@ -59,13 +59,13 @@ class MediaBlockServiceTest extends BlockServiceTestCase
             ['format', 'format'],
             ['mediaId', $media],
         ]);
-        $blockContext->expects($this->once())->method('setSetting')->with('format', 'format1');
+        $blockContext->expects(self::once())->method('setSetting')->with('format', 'format1');
         $blockContext->method('getSettings')->willReturn([]);
         $blockContext->method('getTemplate')->willReturn('template');
         $block->method('getSetting')->with('mediaId')->willReturn($media);
 
         $this->twig
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('render')
             ->with('template', [
                 'media' => $media,

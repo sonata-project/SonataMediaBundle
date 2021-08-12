@@ -30,15 +30,15 @@ class DefaultGeneratorTest extends TestCase
         $media->setContext('user');
 
         $media->setId(10);
-        $this->assertSame('user/0001/01', $generator->generatePath($media));
+        self::assertSame('user/0001/01', $generator->generatePath($media));
 
         $media->setId(10000);
-        $this->assertSame('user/0001/11', $generator->generatePath($media));
+        self::assertSame('user/0001/11', $generator->generatePath($media));
 
         $media->setId(12341230);
-        $this->assertSame('user/0124/42', $generator->generatePath($media));
+        self::assertSame('user/0124/42', $generator->generatePath($media));
 
         $media->setId(999999999);
-        $this->assertSame('user/10000/100', $generator->generatePath($media));
+        self::assertSame('user/10000/100', $generator->generatePath($media));
     }
 }

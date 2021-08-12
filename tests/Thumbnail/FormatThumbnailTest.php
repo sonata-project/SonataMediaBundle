@@ -38,19 +38,19 @@ class FormatThumbnailTest extends TestCase
         ];
 
         $resizer = $this->createMock(ResizerInterface::class);
-        $resizer->expects($this->exactly(2))->method('resize')->willReturn(true);
+        $resizer->expects(self::exactly(2))->method('resize')->willReturn(true);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects($this->once())->method('requireThumbnails')->willReturn(true);
-        $provider->expects($this->once())->method('getReferenceFile')->willReturn($referenceFile);
-        $provider->expects($this->once())->method('getFormats')->willReturn($formats);
-        $provider->expects($this->exactly(2))->method('getResizer')->willReturn($resizer);
-        $provider->expects($this->exactly(2))->method('generatePrivateUrl')->willReturn('/my/private/path');
-        $provider->expects($this->exactly(2))->method('getFilesystem')->willReturn($filesystem);
+        $provider->expects(self::once())->method('requireThumbnails')->willReturn(true);
+        $provider->expects(self::once())->method('getReferenceFile')->willReturn($referenceFile);
+        $provider->expects(self::once())->method('getFormats')->willReturn($formats);
+        $provider->expects(self::exactly(2))->method('getResizer')->willReturn($resizer);
+        $provider->expects(self::exactly(2))->method('generatePrivateUrl')->willReturn('/my/private/path');
+        $provider->expects(self::exactly(2))->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->exactly(6))->method('getContext')->willReturn('mycontext');
-        $media->expects($this->exactly(2))->method('getExtension')->willReturn('png');
+        $media->expects(self::exactly(6))->method('getContext')->willReturn('mycontext');
+        $media->expects(self::exactly(2))->method('getExtension')->willReturn('png');
 
         $thumbnail->generate($provider, $media);
     }

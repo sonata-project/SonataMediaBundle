@@ -83,12 +83,12 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $media->setContext('default');
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Dailymotion","provider_url":"http:\/\/www.dailymotion.com","title":"Thomas Rabaix - les tests fonctionnels - Symfony Live 2009","author_name":"Guillaume Pon\u00e7on","author_url":"http:\/\/www.dailymotion.com\/phptv","width":480,"height":270,"html":"<iframe src=\"http:\/\/www.dailymotion.com\/embed\/video\/x9wjql\" width=\"480\" height=\"270\" frameborder=\"0\"><\/iframe>","thumbnail_url":"http:\/\/ak2.static.dailymotion.com\/static\/video\/711\/536\/16635117:jpeg_preview_large.jpg?20100801072241","thumbnail_width":426.666666667,"thumbnail_height":240}', true));
 
-        $this->assertSame('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $this->provider->getReferenceImage($media));
+        self::assertSame('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $this->provider->getReferenceImage($media));
 
         $media->setId(1023458);
 
-        $this->assertSame('default/0011/24', $this->provider->generatePath($media));
-        $this->assertSame('/uploads/media/default/0011/24/thumb_1023458_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
+        self::assertSame('default/0011/24', $this->provider->generatePath($media));
+        self::assertSame('/uploads/media/default/0011/24/thumb_1023458_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail(): void
@@ -96,10 +96,10 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $request = $this->createStub(RequestInterface::class);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->once())->method('createRequest')->willReturn($request);
+        $requestFactory->expects(self::once())->method('createRequest')->willReturn($request);
 
         $client = $this->createMock(ClientInterface::class);
-        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))->willReturn($this->createResponse('content'));
+        $client->expects(self::once())->method('sendRequest')->with(self::equalTo($request))->willReturn($this->createResponse('content'));
 
         $provider = $this->getProvider($client, $requestFactory);
 
@@ -112,15 +112,15 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $media->setId(1023458);
 
-        $this->assertTrue($provider->requireThumbnails());
+        self::assertTrue($provider->requireThumbnails());
 
         $provider->addFormat('big', ['width' => 200, 'height' => null, 'constraint' => true]);
 
-        $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
+        self::assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
         $provider->generateThumbnails($media);
 
-        $this->assertSame('default/0011/24/thumb_1023458_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        self::assertSame('default/0011/24/thumb_1023458_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testTransformWithSig(): void
@@ -128,10 +128,10 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $request = $this->createStub(RequestInterface::class);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->once())->method('createRequest')->willReturn($request);
+        $requestFactory->expects(self::once())->method('createRequest')->willReturn($request);
 
         $client = $this->createMock(ClientInterface::class);
-        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
+        $client->expects(self::once())->method('sendRequest')->with(self::equalTo($request))
             ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt')));
 
         $provider = $this->getProvider($client, $requestFactory);
@@ -145,8 +145,8 @@ class DailyMotionProviderTest extends AbstractProviderTest
         // pre persist the media
         $provider->transform($media);
 
-        $this->assertSame('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
-        $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
+        self::assertSame('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
+        self::assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     /**
@@ -157,10 +157,10 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $request = $this->createStub(RequestInterface::class);
 
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
-        $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
+        $messageFactory->expects(self::once())->method('createRequest')->willReturn($request);
 
         $client = $this->createMock(ClientInterface::class);
-        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
+        $client->expects(self::once())->method('sendRequest')->with(self::equalTo($request))
             ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt')));
 
         $provider = $this->getProvider($client, $messageFactory);
@@ -174,8 +174,8 @@ class DailyMotionProviderTest extends AbstractProviderTest
         // pre persist the media
         $provider->transform($media);
 
-        $this->assertSame('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
-        $this->assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
+        self::assertSame('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
+        self::assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     public function dataTransformWithUrl(): array
@@ -199,7 +199,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $response->setContent(file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt'));
 
         $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('call')->will($this->throwException(new \RuntimeException('First error on get', 12)));
+        $browser->expects(self::once())->method('call')->will(self::throwException(new \RuntimeException('First error on get', 12)));
 
         $provider = $this->getProvider($browser);
 
@@ -225,7 +225,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
             ->willReturn('message');
 
         $form = $this->createMock(FormMapper::class);
-        $form->expects($this->exactly(8))
+        $form->expects(self::exactly(8))
             ->method('add')
             ->willReturn(null);
 
@@ -246,15 +246,15 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        $this->assertIsArray($properties);
-        $this->assertSame(100, $properties['height']);
-        $this->assertSame(100, $properties['width']);
+        self::assertIsArray($properties);
+        self::assertSame(100, $properties['height']);
+        self::assertSame(100, $properties['width']);
     }
 
     public function testGetReferenceUrl(): void
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertSame('http://www.dailymotion.com/video/123456', $this->provider->getReferenceUrl($media));
+        self::assertSame('http://www.dailymotion.com/video/123456', $this->provider->getReferenceUrl($media));
     }
 }

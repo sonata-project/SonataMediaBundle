@@ -98,22 +98,22 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         $fileProvider
             ->method('getName')
             ->willReturn('fooprovider');
-        $fileProvider->expects($this->once())
+        $fileProvider->expects(self::once())
             ->method('getFormats')
             ->willReturn($formats);
-        $fileProvider->expects($this->exactly(2))
+        $fileProvider->expects(self::exactly(2))
             ->method('removeThumbnails');
-        $fileProvider->expects($this->exactly(2))
+        $fileProvider->expects(self::exactly(2))
             ->method('getFilesystem')
             ->willReturn($this->createMock(Filesystem::class));
 
-        $this->pool->expects($this->once())
+        $this->pool->expects(self::once())
             ->method('getContexts')
             ->willReturn(['foo' => $context]);
-        $this->pool->expects($this->once())
+        $this->pool->expects(self::once())
             ->method('getProviders')
             ->willReturn(['fooprovider' => $fileProvider]);
-        $this->pool->expects($this->once())
+        $this->pool->expects(self::once())
             ->method('getProvider')
             ->willReturn($fileProvider);
 
@@ -142,7 +142,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             return $medias;
         };
 
-        $this->mediaManager->expects($this->exactly(2))
+        $this->mediaManager->expects(self::exactly(2))
             ->method('findBy')
             ->willReturnCallback($findByReturnCallback);
 
@@ -150,8 +150,8 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $statusCode = $this->tester->execute(['command' => $this->command->getName()]);
 
-        $this->assertStringEndsWith('Done (total medias processed: 2).'.\PHP_EOL, $this->tester->getDisplay());
+        self::assertStringEndsWith('Done (total medias processed: 2).'.\PHP_EOL, $this->tester->getDisplay());
 
-        $this->assertSame(0, $statusCode);
+        self::assertSame(0, $statusCode);
     }
 }

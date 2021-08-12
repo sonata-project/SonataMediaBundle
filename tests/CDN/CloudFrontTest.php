@@ -29,7 +29,7 @@ final class CloudFrontTest extends TestCase
     protected function setUp(): void
     {
         if (class_exists(Sdk::class)) {
-            $this->markTestSkipped('This test requires aws/aws-sdk-php 2.x.');
+            self::markTestSkipped('This test requires aws/aws-sdk-php 2.x.');
         }
 
         parent::setUp();
@@ -40,29 +40,29 @@ final class CloudFrontTest extends TestCase
         $client = $this->createMock(CloudFrontClientSpy::class);
         $cloudFront = new CloudFront($client, 'xxxxxxxxxxxxxx', '/foo');
 
-        $this->assertSame('/foo/bar.jpg', $cloudFront->getPath('bar.jpg', true));
+        self::assertSame('/foo/bar.jpg', $cloudFront->getPath('bar.jpg', true));
 
         $path = '/mypath/file.jpg';
 
-        $client->expects($this->exactly(3))
+        $client->expects(self::exactly(3))
             ->method('createInvalidation')
             ->willReturn(new CloudFrontResult([
                 'Id' => 'invalidation_id',
                 'Status' => 'InProgress',
             ]));
 
-        $this->assertSame('invalidation_id', $cloudFront->flushByString($path));
-        $this->assertSame('invalidation_id', $cloudFront->flush($path));
-        $this->assertSame('invalidation_id', $cloudFront->flushPaths([$path]));
+        self::assertSame('invalidation_id', $cloudFront->flushByString($path));
+        self::assertSame('invalidation_id', $cloudFront->flush($path));
+        self::assertSame('invalidation_id', $cloudFront->flushPaths([$path]));
 
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('getInvalidation')
             ->willReturn(new CloudFrontResult([
                 'Id' => 'invalidation_id',
                 'Status' => 'InProgress',
             ]));
 
-        $this->assertSame(CloudFront::STATUS_WAITING, $cloudFront->getFlushStatus('invalidation_id'));
+        self::assertSame(CloudFront::STATUS_WAITING, $cloudFront->getFlushStatus('invalidation_id'));
     }
 
     public function testCreateInvalidationException(): void
@@ -70,7 +70,7 @@ final class CloudFrontTest extends TestCase
         $client = $this->createMock(CloudFrontClientSpy::class);
         $cloudFront = new CloudFront($client, 'xxxxxxxxxxxxxx', '/foo');
 
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('createInvalidation')
             ->willThrowException(new CloudFrontException('An exception occurred.', $this->createStub(CommandInterface::class)));
 

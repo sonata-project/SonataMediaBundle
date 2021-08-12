@@ -38,7 +38,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
     public function testExecute(): void
     {
         $pager = $this->createMock(PagerInterface::class);
-        $this->galleryManager->expects($this->once())->method('getPager')->willReturn($pager);
+        $this->galleryManager->expects(self::once())->method('getPager')->willReturn($pager);
 
         $block = new Block();
 
@@ -56,7 +56,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
         $blockService = new GalleryListBlockService($this->twig, null, $this->galleryManager, $this->pool);
 
         $this->twig
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('render')
             ->with('@SonataMedia/Block/block_gallery_list.html.twig', [
                 'context' => $blockContext,
