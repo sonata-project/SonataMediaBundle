@@ -22,12 +22,12 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 abstract class Media implements MediaInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description;
 
@@ -37,17 +37,17 @@ abstract class Media implements MediaInterface
     protected $enabled = false;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $providerName;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $providerStatus;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $providerReference;
 
@@ -57,62 +57,62 @@ abstract class Media implements MediaInterface
     protected $providerMetadata = [];
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $width;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $height;
 
     /**
-     * @var float
+     * @var float|null
      */
     protected $length;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $copyright;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $authorName;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $context;
 
     /**
      * @var bool
      */
-    protected $cdnIsFlushable;
+    protected $cdnIsFlushable = false;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $cdnFlushIdentifier;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $cdnFlushAt;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $cdnStatus;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $createdAt;
 
@@ -122,17 +122,17 @@ abstract class Media implements MediaInterface
     protected $binaryContent;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $previousProviderReference;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $contentType;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $size;
 
@@ -142,7 +142,7 @@ abstract class Media implements MediaInterface
     protected $galleryHasMedias;
 
     /**
-     * @var CategoryInterface
+     * @var CategoryInterface|null
      */
     protected $category;
 
@@ -566,7 +566,7 @@ abstract class Media implements MediaInterface
     public function getExtension()
     {
         $providerReference = $this->getProviderReference();
-        if (!$providerReference) {
+        if (null === $providerReference) {
             return null;
         }
 

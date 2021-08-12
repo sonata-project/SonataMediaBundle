@@ -16,9 +16,13 @@ namespace Sonata\MediaBundle\Admin\PHPCR;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\MediaBundle\Admin\GalleryAdmin as BaseGalleryAdmin;
+use Sonata\MediaBundle\Model\GalleryInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-template T of GalleryInterface
+ * @phpstan-extends BaseGalleryAdmin<T>
  */
 class GalleryAdmin extends BaseGalleryAdmin
 {
@@ -39,7 +43,7 @@ class GalleryAdmin extends BaseGalleryAdmin
 
     public function createQuery($context = 'list')
     {
-        $query = $this->getModelManager()->createQuery($this->getClass(), 'a', $this->root);
+        $query = $this->getModelManager()->createQuery($this->getClass());
 
         foreach ($this->extensions as $extension) {
             $extension->configureQuery($this, $query, $context);

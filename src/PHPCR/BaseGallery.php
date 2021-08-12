@@ -18,7 +18,8 @@ use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 
 /**
- * Bundle\MediaBundle\Document\BaseGallery.
+ * @phpstan-template T of GalleryHasMediaInterface
+ * @phpstan-extends Gallery<T>
  */
 abstract class BaseGallery extends Gallery
 {
@@ -44,10 +45,12 @@ abstract class BaseGallery extends Gallery
 
     public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
+        \assert($galleryHasMedia instanceof BaseGalleryHasMedia);
+
         $galleryHasMedia->setGallery($this);
 
         // set nodename of GalleryHasMedia
-        if (!$galleryHasMedia->getNodename()) {
+        if (null === $galleryHasMedia->getNodename()) {
             $galleryHasMedia->setNodename(
                 'media'.($this->galleryHasMedias->count() + 1)
             );

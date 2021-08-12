@@ -18,11 +18,15 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Type\CollectionType;
+use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-template T of GalleryInterface
+ * @phpstan-extends AbstractAdmin<T>
  */
 class GalleryAdmin extends AbstractAdmin
 {
@@ -37,6 +41,8 @@ class GalleryAdmin extends AbstractAdmin
      * @param string $code
      * @param string $class
      * @param string $baseControllerName
+     *
+     * @phpstan-param class-string<T> $class
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool)
     {

@@ -501,7 +501,7 @@ class GalleryController
      */
     protected function handleWriteGallery($request, $id = null)
     {
-        $gallery = $id ? $this->getGallery($id) : null;
+        $gallery = null !== $id ? $this->getGallery($id) : null;
 
         $form = $this->formFactory->createNamed(null, ApiGalleryType::class, $gallery, [
             'csrf_protection' => false,

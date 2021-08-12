@@ -232,7 +232,7 @@ class Pixlr
     {
         $media = $this->mediaManager->findOneBy(['id' => $id]);
 
-        if (!$media) {
+        if (null === $media) {
             throw new NotFoundHttpException('Media not found');
         }
 

@@ -120,7 +120,7 @@ abstract class BaseVideoProvider extends BaseProvider
             $referenceFile = $this->getFilesystem()->get($key);
         } else {
             $referenceFile = $this->getFilesystem()->get($key, true);
-            $metadata = $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
+            $metadata = null !== $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
 
             $response = $this->sendRequest('GET', $this->getReferenceImage($media));
 

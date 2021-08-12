@@ -27,12 +27,16 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Provider\BaseVideoProvider;
 use Sonata\MediaBundle\Provider\DailyMotionProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
+/**
+ * @property BaseVideoProvider $provider
+ */
 class DailyMotionProviderTest extends AbstractProviderTest
 {
     public function getProvider(?object $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface

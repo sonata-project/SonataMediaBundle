@@ -73,7 +73,7 @@ final class RoutingTest extends WebTestCase
 
             static::assertSame($name, $match['_route']);
 
-            if ($matchingFormat) {
+            if ('' !== $matchingFormat) {
                 static::assertSame(ltrim($matchingFormat, '.'), $match['_format']);
             }
 
@@ -84,7 +84,7 @@ final class RoutingTest extends WebTestCase
 
             static::assertSame($name, $match['_route']);
 
-            if ($matchingFormat) {
+            if ('' !== $matchingFormat) {
                 static::assertSame(ltrim($matchingFormat, '.'), $match['_format']);
             }
         }

@@ -36,7 +36,7 @@ class ImageProviderTest extends AbstractProviderTest
     {
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('resize')->willReturn(true);
-        if ($box) {
+        if (null !== $box) {
             $resizer->method('getBox')->will($box);
         }
 

@@ -101,7 +101,7 @@ abstract class BaseProvider implements MediaProviderInterface
         }
 
         // Check if the medium already has a pending CDN flush.
-        if ($media->getCdnFlushIdentifier()) {
+        if (null !== $media->getCdnFlushIdentifier()) {
             $cdnStatus = $this->getCdn()->getFlushStatus($media->getCdnFlushIdentifier());
             // Update the flush status.
             $media->setCdnStatus($cdnStatus);

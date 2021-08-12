@@ -28,14 +28,14 @@ use Twig\TwigFunction;
 class FormatterMediaExtension extends AbstractExtension implements ExtensionInterface
 {
     /**
-     * @var AbstractExtension
+     * @var MediaExtension
      */
     protected $twigExtension;
 
     /**
      * NEXT_MAJOR: Remove dependencies.
      */
-    public function __construct(ExtensionInterface $twigExtension)
+    public function __construct(MediaExtension $twigExtension)
     {
         $this->twigExtension = $twigExtension;
     }
@@ -76,7 +76,7 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @return ExtensionInterface
+     * @return MediaExtension
      */
     public function getTwigExtension()
     {

@@ -19,6 +19,11 @@ use Sonata\MediaBundle\Exception\NoDriverException;
  * @internal
  *
  * @author Andrey F. Mindubaev <covex.mobile@gmail.com>
+ *
+ * @phpstan-template T of GalleryInterface
+ * @phpstan-implements GalleryManagerInterface<T>
+ * @phpstan-template M of MediaInterface
+ * @phpstan-implements MediaManagerInterface<M>
  */
 final class NoDriverManager implements GalleryManagerInterface, MediaManagerInterface
 {

@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+/**
+ * @phpstan-template T of GalleryInterface
+ * @phpstan-implements GalleryManagerInterface<T>
+ */
 abstract class GalleryManager implements GalleryManagerInterface
 {
     public function create()

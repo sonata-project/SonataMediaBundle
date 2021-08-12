@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Tests\Provider;
 
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
-use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
@@ -458,11 +458,11 @@ class FileProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @return Stub&ConstraintViolationBuilderInterface
+     * @return ConstraintViolationBuilderInterface&MockObject
      */
     private function createConstraintBuilder(): object
     {
-        $constraintBuilder = $this->createStub(ConstraintViolationBuilderInterface::class);
+        $constraintBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $constraintBuilder
             ->method('atPath')
             ->willReturnSelf();

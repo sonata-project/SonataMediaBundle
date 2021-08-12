@@ -13,10 +13,14 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 /**
  * NEXT_MAJOR: Replace the `reorderGalleryHasMedia()` method with `reorderGalleryItems()`.
  *
  * @method void reorderGalleryHasMedia()
+ *
+ * @phpstan-template T of GalleryHasMediaInterface
  */
 interface GalleryInterface
 {
@@ -33,9 +37,11 @@ interface GalleryInterface
     public function setName($name);
 
     /**
-     * @return string
+     * Get name.
+     *
+     * @return string|null $name
      */
-    public function getContext();
+    public function getName();
 
     /**
      * @param string $context
@@ -43,46 +49,30 @@ interface GalleryInterface
     public function setContext($context);
 
     /**
-     * Get name.
-     *
-     * @return string $name
+     * @return string|null
      */
-    public function getName();
+    public function getContext();
 
     /**
-     * Set enabled.
-     *
      * @param bool $enabled
      */
     public function setEnabled($enabled);
 
     /**
-     * Get enabled.
-     *
      * @return bool $enabled
      */
     public function getEnabled();
 
-    /**
-     * Set updated_at.
-     */
     public function setUpdatedAt(?\DateTime $updatedAt = null);
 
     /**
-     * Get updated_at.
-     *
      * @return \DateTime|null $updatedAt
      */
     public function getUpdatedAt();
 
-    /**
-     * Set created_at.
-     */
     public function setCreatedAt(?\DateTime $createdAt = null);
 
     /**
-     * Get created_at.
-     *
      * @return \DateTime|null $createdAt
      */
     public function getCreatedAt();
@@ -93,23 +83,29 @@ interface GalleryInterface
     public function setDefaultFormat($defaultFormat);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDefaultFormat();
 
     /**
-     * @param array $galleryHasMedias
+     * @param iterable<GalleryHasMediaInterface> $galleryHasMedias
+     *
+     * @phpstan-param iterable<T> $galleryHasMedias
      */
     public function setGalleryHasMedias($galleryHasMedias);
 
     /**
-     * @return GalleryHasMediaInterface[]
+     * @return Collection<int, GalleryHasMediaInterface>
+     *
+     * @phpstan-return Collection<int, T>
      */
     public function getGalleryHasMedias();
 
     /**
      * @deprecated implement addGalleryHasMedia method instead, it will be provided with the next major release
      * NEXT_MAJOR: remove this method
+     *
+     * @phpstan-param T $galleryHasMedia
      */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
 }

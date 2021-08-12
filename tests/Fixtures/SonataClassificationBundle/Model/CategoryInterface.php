@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\ClassificationBundle\Model;
 
+/**
+ * @phpstan-template T of ContextInterface
+ */
 interface CategoryInterface
 {
     /**
@@ -20,10 +23,15 @@ interface CategoryInterface
      */
     public function getId();
 
+    /**
+     * @phpstan-return T|null
+     */
     public function getContext(): ?ContextInterface;
 
     /**
      * @return static
+     *
+     * @phpstan-param T $context
      */
     public function setContext(ContextInterface $context);
 

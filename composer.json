@@ -65,6 +65,7 @@
     },
     "conflict": {
         "aws/aws-sdk-php": "<3.0 || >= 4.0",
+        "doctrine/annotations": "<1.11",
         "doctrine/dbal": "<2.11",
         "doctrine/mongodb-odm": "<2.0",
         "doctrine/orm": "<2.5",
@@ -103,6 +104,7 @@
         "phpstan/phpstan-symfony": "^0.12.21",
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.16",
+        "psalm/plugin-symfony": "^3.0",
         "sensio/framework-extra-bundle": "^6.1",
         "sonata-project/admin-bundle": "^3.98.2",
         "sonata-project/block-bundle": "^3.17",

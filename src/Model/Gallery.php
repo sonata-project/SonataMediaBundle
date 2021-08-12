@@ -19,16 +19,19 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 /**
  * NEXT_MAJOR: remove GalleryMediaCollectionInterface interface. Move its content into GalleryInterface.
+ *
+ * @phpstan-template T of GalleryHasMediaInterface
+ * @phpstan-implements GalleryInterface<T>
  */
 abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $context;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
@@ -53,7 +56,9 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
-     * @var GalleryHasMediaInterface[]|Collection
+     * @var Collection<int, GalleryHasMediaInterface>
+     *
+     * @phpstan-var Collection<int, T>
      */
     protected $galleryHasMedias;
 
@@ -142,6 +147,11 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         return $this->defaultFormat;
     }
 
+    /**
+     * @param iterable<GalleryHasMediaInterface> $galleryHasMedias
+     *
+     * @phpstan-param iterable<T> $galleryHasMedias
+     */
     public function setGalleryHasMedias($galleryHasMedias)
     {
         $this->galleryHasMedias = new ArrayCollection();
@@ -151,11 +161,19 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         }
     }
 
+    /**
+     * @return Collection<int, GalleryHasMediaInterface>
+     *
+     * @phpstan-return Collection<int, T>
+     */
     public function getGalleryHasMedias()
     {
         return $this->galleryHasMedias;
     }
 
+    /**
+     * @phpstan-param T $galleryHasMedia
+     */
     public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
@@ -163,6 +181,9 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         $this->galleryHasMedias[] = $galleryHasMedia;
     }
 
+    /**
+     * @phpstan-param T $galleryHasMedia
+     */
     public function removeGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
         $this->galleryHasMedias->removeElement($galleryHasMedia);
@@ -173,6 +194,8 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
      *
      * @deprecated use addGalleryHasMedia method instead
      * NEXT_MAJOR: remove this method with the next major release
+     *
+     * @phpstan-param T $galleryHasMedia
      */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
     {
@@ -206,10 +229,10 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     public function reorderGalleryHasMedia()
     {
         $galleryHasMedias = $this->getGalleryHasMedias();
+        $iterator = $galleryHasMedias->getIterator();
 
-        if ($galleryHasMedias instanceof \IteratorAggregate) {
+        if ($iterator instanceof \ArrayIterator) {
             // reorder
-            $iterator = $galleryHasMedias->getIterator();
 
             $iterator->uasort(static function (GalleryHasMediaInterface $a, GalleryHasMediaInterface $b): int {
                 return $a->getPosition() <=> $b->getPosition();

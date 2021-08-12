@@ -20,10 +20,15 @@ use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\CategoryManagerInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
+/**
+ * @phpstan-template T of MediaInterface
+ * @phpstan-extends AbstractAdmin<T>
+ */
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
     /**
@@ -36,13 +41,17 @@ abstract class BaseMediaAdmin extends AbstractAdmin
      */
     protected $categoryManager;
 
+    /**
+     * @var string
+     */
     protected $classnameLabel = 'Media';
 
     /**
-     * @param string                   $code
-     * @param string                   $class
-     * @param string                   $baseControllerName
-     * @param CategoryManagerInterface $categoryManager
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
+     *
+     * @phpstan-param class-string<T> $class
      */
     public function __construct($code, $class, $baseControllerName, Pool $pool, ?CategoryManagerInterface $categoryManager = null)
     {
@@ -68,7 +77,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         $filter = $this->getRequest()->get('filter');
-        if (null !== $filter && \array_key_exists('context', $this->getRequest()->get('filter'))) {
+        if (null !== $filter && \array_key_exists('context', $filter)) {
             $context = $filter['context']['value'];
         } else {
             $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
@@ -121,7 +130,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             if (null !== $this->categoryManager && null !== $categoryId = $this->getPersistentParameter('category')) {
                 $category = $this->categoryManager->find($categoryId);
 
-                if ($category && $category->getContext()->getId() === $context) {
+                if (null !== $category && $category->getContext()->getId() === $context) {
                     $media->setCategory($category);
                 }
             }
@@ -140,6 +149,8 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
     /**
      * @final since sonata-project/media-bundle 3.36.0
+     *
+     * @param MediaInterface $object
      */
     public function getObjectMetadata($object)
     {
@@ -164,13 +175,11 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form)
     {
-        $media = $this->getSubject();
+        $media = $this->hasSubject() ? $this->getSubject() : $this->getNewInstance();
+        // NEXT_MAJOR: Remove the previous line and uncomment the following one.
+        // $media = $this->getSubject();
 
-        if (!$media) {
-            $media = $this->getNewInstance();
-        }
-
-        if (!$media || !$media->getProviderName()) {
+        if (null === $media->getProviderName()) {
             return;
         }
 
@@ -180,7 +189,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $provider = $this->pool->getProvider($media->getProviderName());
 
-        if ($media->getId()) {
+        if (null !== $media->getId()) {
             $provider->buildEditForm($form);
         } else {
             $provider->buildCreateForm($form);

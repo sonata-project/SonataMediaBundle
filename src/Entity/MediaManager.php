@@ -16,25 +16,30 @@ namespace Sonata\MediaBundle\Entity;
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\Doctrine\Entity\BaseEntityManager;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-template T of MediaInterface
+ * @phpstan-extends BaseEntityManager<T>
+ * @phpstan-implements MediaManagerInterface<T>
  */
 class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
+    /**
+     * Warning: previous method signature was:
+     * `save(MediaInterface $media, ?string $context = null, ?string $providerName = null)`.
+     */
     public function save($entity, $andFlush = true)
     {
-        /*
-         * Warning: previous method signature was : save(MediaInterface $media, $context = null, $providerName = null)
-         */
-
-        // BC compatibility for $context parameter
+        // BC compatibility for argument 2.
         if ($andFlush && \is_string($andFlush)) {
             $entity->setContext($andFlush);
         }
 
-        // BC compatibility for $providerName parameter
+        // BC compatibility for argument 3.
         if (3 === \func_num_args()) {
             $entity->setProviderName(func_get_arg(2));
         }
@@ -42,7 +47,7 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
         if (\is_bool($andFlush)) {
             parent::save($entity, $andFlush);
         } else {
-            // BC compatibility with previous signature
+            // BC compatibility with previous signature.
             parent::save($entity, true);
         }
     }

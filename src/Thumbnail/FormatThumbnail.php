@@ -132,7 +132,7 @@ class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInterface
 
         foreach ($formats as $format) {
             $path = $provider->generatePrivateUrl($media, $format);
-            if ($path && $provider->getFilesystem()->has($path)) {
+            if ($provider->getFilesystem()->has($path)) {
                 $provider->getFilesystem()->delete($path);
             }
         }

@@ -18,6 +18,9 @@ use Sonata\Doctrine\Model\PageableManagerInterface;
 
 /**
  * NEXT_MAJOR: Remove PageableManagerInterface extension.
+ *
+ * @phpstan-template T of GalleryInterface
+ * @phpstan-extends ManagerInterface<T>
  */
 interface GalleryManagerInterface extends ManagerInterface, PageableManagerInterface
 {

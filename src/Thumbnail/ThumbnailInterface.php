@@ -20,11 +20,15 @@ interface ThumbnailInterface
 {
     /**
      * @param string $format
+     *
+     * @return string
      */
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 
     /**
      * @param string $format
+     *
+     * @return string
      */
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format);
 

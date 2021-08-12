@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
+use Sonata\Doctrine\Model\ClearableManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -92,13 +93,14 @@ class SyncThumbsCommand extends BaseCommand
         $batchesLimit = (int) $input->getOption('batchesLimit');
         $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
+        $manager = $this->getMediaManager();
 
         while (true) {
             ++$batchCounter;
 
             try {
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
-                $medias = $this->getMediaManager()->findBy(
+                $medias = $manager->findBy(
                     [
                         'providerName' => $providerName,
                         'context' => $context,
@@ -136,12 +138,14 @@ class SyncThumbsCommand extends BaseCommand
                 if (!$this->processMedia($media, $provider)) {
                     continue;
                 }
-                //clean filesystem registry for saving memory
+                // Clean filesystem registry for saving memory.
                 $fsRegister->setValue($filesystem, []);
             }
 
-            //clear entity manager for saving memory
-            $this->getMediaManager()->getObjectManager()->clear();
+            if ($manager instanceof ClearableManagerInterface) {
+                // Clear entity manager for saving memory.
+                $manager->clear();
+            }
 
             if ($batchesLimit > 0 && $batchCounter === $batchesLimit) {
                 break;
