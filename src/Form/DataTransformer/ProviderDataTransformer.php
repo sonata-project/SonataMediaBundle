@@ -31,6 +31,8 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
      * NEXT_MAJOR: Make this property private.
      *
      * @var string
+     *
+     * @phpstan-var class-string
      */
     public $class;
 
@@ -46,6 +48,8 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
 
     /**
      * @param string $class
+     *
+     * @phpstan-param class-string $class
      */
     public function __construct(Pool $pool, $class, array $options = [])
     {

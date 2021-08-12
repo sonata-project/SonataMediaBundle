@@ -14,12 +14,21 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\PHPCR;
 
 use Sonata\Doctrine\Document\BasePHPCRManager;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-template T of MediaInterface
+ * @phpstan-extends BasePHPCRManager<T>
  */
 class MediaManager extends BasePHPCRManager
 {
+    /**
+     * @param MediaInterface $entity
+     *
+     * @phpstan-param T $entity
+     */
     public function save($entity, $andFlush = true)
     {
         // BC compatibility for $context parameter

@@ -158,7 +158,7 @@ class FixMediaContextCommandTest extends TestCase
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        static::assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
 
         static::assertSame(0, $output);
     }

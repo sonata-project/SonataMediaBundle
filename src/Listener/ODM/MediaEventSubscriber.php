@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Listener\ODM;
 
 use Doctrine\Common\EventArgs;
+use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Events;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -35,6 +36,9 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         ];
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
         $em = $args->getDocumentManager();
@@ -45,6 +49,9 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     protected function getMedia(EventArgs $args)
     {
         $media = $args->getDocument();

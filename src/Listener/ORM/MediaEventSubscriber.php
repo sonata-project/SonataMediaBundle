@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Listener\ORM;
 
 use Doctrine\Common\EventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
@@ -25,7 +26,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     /**
-     * @var CategoryInterface[]
+     * @var CategoryInterface[]|null
      */
     protected $rootCategories;
 
@@ -47,6 +48,9 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         $this->rootCategories = null;
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
         $em = $args->getEntityManager();
@@ -57,6 +61,9 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     protected function getMedia(EventArgs $args)
     {
         $media = $args->getEntity();
@@ -65,7 +72,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
             return null;
         }
 
-        if ($this->container->has('sonata.media.manager.category') && !$media->getCategory()) {
+        if ($this->container->has('sonata.media.manager.category') && null === $media->getCategory()) {
             $media->setCategory($this->getRootCategory($media));
         }
 
@@ -79,7 +86,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
      */
     protected function getRootCategory(MediaInterface $media)
     {
-        if (!$this->rootCategories) {
+        if (null === $this->rootCategories) {
             $this->rootCategories = $this->container->get('sonata.media.manager.category')->getRootCategories(false);
         }
 

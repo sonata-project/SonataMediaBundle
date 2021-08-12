@@ -47,7 +47,7 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
 
     public function __toString()
     {
-        return $this->getGallery().' | '.$this->getMedia();
+        return (string) ($this->getGallery() ?? '').' | '.(string) ($this->getMedia() ?? '');
     }
 
     public function setCreatedAt(?\DateTime $createdAt = null)

@@ -15,10 +15,14 @@ namespace Sonata\MediaBundle\Tests\App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Entity\BaseGallery;
+use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="media__gallery")
+ *
+ * @phpstan-template T of GalleryHasMediaInterface
+ * @phpstan-extends BaseGallery<T>
  */
 class Gallery extends BaseGallery
 {

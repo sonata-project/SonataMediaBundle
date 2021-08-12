@@ -23,12 +23,12 @@ use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 class Pool
 {
     /**
-     * @var array
+     * @var MediaProviderInterface[]
      */
     protected $providers = [];
 
     /**
-     * @var array
+     * @var array<string, array<string, array>>
      */
     protected $contexts = [];
 
@@ -60,7 +60,7 @@ class Pool
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      *
      * @throws \RuntimeException
      *
@@ -68,7 +68,7 @@ class Pool
      */
     public function getProvider($name)
     {
-        if (!$name) {
+        if (null === $name) {
             throw new \InvalidArgumentException('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
         }
         if ([] === $this->providers) {
@@ -201,7 +201,7 @@ class Pool
     {
         $context = $this->getContext($name);
 
-        if (!$context) {
+        if (null === $context) {
             return null;
         }
 
@@ -217,7 +217,7 @@ class Pool
     {
         $context = $this->getContext($name);
 
-        if (!$context) {
+        if (null === $context) {
             return null;
         }
 
@@ -316,7 +316,7 @@ class Pool
 
     public function validate(ErrorElement $errorElement, MediaInterface $media)
     {
-        if (!$media->getProviderName()) {
+        if (null === $media->getProviderName()) {
             return;
         }
 

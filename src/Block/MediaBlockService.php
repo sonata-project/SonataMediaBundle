@@ -85,7 +85,7 @@ class MediaBlockService extends AbstractBlockService
      */
     public function getMediaAdmin()
     {
-        if (!$this->mediaAdmin) {
+        if (null === $this->mediaAdmin) {
             $this->mediaAdmin = $this->container->get('sonata.media.admin.media');
         }
 

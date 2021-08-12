@@ -119,7 +119,7 @@ class CleanMediaCommand extends Command
      */
     private function getProviders(): array
     {
-        if (!$this->providers) {
+        if (null === $this->providers) {
             $this->providers = [];
 
             foreach ($this->mediaPool->getProviders() as $provider) {

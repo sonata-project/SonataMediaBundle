@@ -337,7 +337,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         // this is the original name
-        if (!$media->getName()) {
+        if (null === $media->getName()) {
             throw new \RuntimeException('Please define a valid media\'s name');
         }
     }
@@ -355,7 +355,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         // this is the name used to store the file
-        if (!$media->getProviderReference() ||
+        if (null === $media->getProviderReference() ||
             MediaInterface::MISSING_BINARY_REFERENCE === $media->getProviderReference()
         ) {
             $media->setProviderReference($this->generateReferenceName($media));
@@ -372,14 +372,14 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     /**
      * Set the file contents for an image.
      *
-     * @param string $contents path to contents, defaults to MediaInterface BinaryContent
+     * @param string|null $contents path to contents, defaults to MediaInterface BinaryContent
      */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
         $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
         $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
 
-        if ($contents) {
+        if (null !== $contents) {
             $file->setContent($contents, $metadata);
 
             return;
@@ -415,7 +415,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
      */
     protected function generateBinaryFromRequest(MediaInterface $media)
     {
-        if (!$media->getContentType()) {
+        if (null === $media->getContentType()) {
             throw new \RuntimeException(
                 'You must provide the content type value for your media before setting the binary content'
             );
@@ -434,7 +434,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $extensions = $guesser->getExtensions($media->getContentType());
         $extension = $extensions[0] ?? null;
 
-        if (!$extension) {
+        if (null === $extension) {
             throw new \RuntimeException(
                 sprintf('Unable to guess extension for content type %s', $media->getContentType())
             );

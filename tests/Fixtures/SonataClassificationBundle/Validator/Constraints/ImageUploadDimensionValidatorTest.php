@@ -17,6 +17,7 @@ use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
 use Sonata\MediaBundle\Validator\Constraints\ImageUploadDimension;
@@ -31,12 +32,12 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     public const TEST_CONTEXT = 'test';
 
     /**
-     * @var ImagineInterface
+     * @var ImagineInterface&Stub
      */
     private $imagineAdapter;
 
     /**
-     * @var ImageProvider
+     * @var ImageProvider&MockObject
      */
     private $imageProvider;
 
@@ -124,7 +125,7 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     }
 
     /**
-     * @return ImageInterface&MockObject
+     * @return ImageInterface&Stub
      */
     private function mockImage(int $width, int $height): ImageInterface
     {
@@ -139,14 +140,14 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     }
 
     /**
-     * @return MockObject&MediaInterface
+     * @return MediaInterface&Stub
      */
     private function mockMedia(): MediaInterface
     {
         $binaryContent = $this->createStub(UploadedFile::class);
         $binaryContent->method('getPathname')->willReturn(tmpfile());
 
-        $media = $this->createStub(MediaInterface::class);
+        $media = $this->createMock(MediaInterface::class);
         $media->method('getContext')->willReturn(self::TEST_CONTEXT);
         $media->method('getBinaryContent')->willReturn($binaryContent);
 

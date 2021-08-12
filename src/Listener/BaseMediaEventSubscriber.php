@@ -142,11 +142,15 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     /**
      * @final since sonata-project/media-bundle 3.36.0
      *
-     * @return MediaProviderInterface
+     * @return MediaProviderInterface|null
      */
     protected function getProvider(EventArgs $args)
     {
         $media = $this->getMedia($args);
+
+        if (!$media instanceof MediaInterface) {
+            return null;
+        }
 
         return $this->getPool()->getProvider($media->getProviderName());
     }

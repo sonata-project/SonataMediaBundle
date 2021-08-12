@@ -21,6 +21,8 @@ use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-extends BaseEntityManager<GalleryInterface>
  */
 class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {

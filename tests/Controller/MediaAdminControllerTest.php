@@ -172,6 +172,9 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->method('getCode')->willReturn('admin_code');
     }
 
+    /**
+     * @phpstan-param class-string $class
+     */
     private function configureCreateAction(string $class): void
     {
         $object = $this->createStub(Media::class);

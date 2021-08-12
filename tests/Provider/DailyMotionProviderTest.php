@@ -33,6 +33,9 @@ use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
+/**
+ * @property DailyMotionProvider $provider
+ */
 class DailyMotionProviderTest extends AbstractProviderTest
 {
     public function getProvider(?object $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface

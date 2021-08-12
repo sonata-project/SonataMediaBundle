@@ -18,6 +18,8 @@ use Sonata\Doctrine\Model\PageableManagerInterface;
 
 /**
  * NEXT_MAJOR: Remove PageableManagerInterface extension.
+ *
+ * @phpstan-extends ManagerInterface<MediaInterface>
  */
 interface MediaManagerInterface extends ManagerInterface, PageableManagerInterface
 {

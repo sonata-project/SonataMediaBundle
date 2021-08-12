@@ -58,7 +58,7 @@ class PantherPortal implements CDNInterface
     protected $siteId;
 
     /**
-     * @var \SoapClient
+     * @var \SoapClient|null
      */
     protected $client;
 
@@ -112,7 +112,7 @@ class PantherPortal implements CDNInterface
     /**
      * For testing only.
      *
-     * @param $client
+     * @param \SoapClient $client
      */
     public function setClient($client)
     {
@@ -126,7 +126,7 @@ class PantherPortal implements CDNInterface
 
     private function getClient(): \SoapClient
     {
-        if (!$this->client) {
+        if (null === $this->client) {
             $this->client = new \SoapClient($this->wsdl);
         }
 
