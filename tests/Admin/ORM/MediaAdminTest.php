@@ -36,6 +36,6 @@ class MediaAdminTest extends TestCase
 
     public function testItIsInstantiable(): void
     {
-        $this->assertNotNull($this->mediaAdmin);
+        self::assertNotNull($this->mediaAdmin);
     }
 }

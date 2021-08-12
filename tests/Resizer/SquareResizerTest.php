@@ -44,7 +44,7 @@ class SquareResizerTest extends TestCase
         $adapter = $this->createMock(ImagineInterface::class);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects($this->once())->method('getBox')->willReturn($mediaSize);
+        $media->expects(self::once())->method('getBox')->willReturn($mediaSize);
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
@@ -52,10 +52,10 @@ class SquareResizerTest extends TestCase
 
         $box = $resizer->getBox($media, $settings);
 
-        $this->assertInstanceOf(Box::class, $box);
+        self::assertInstanceOf(Box::class, $box);
 
-        $this->assertSame($expected->getWidth(), $box->getWidth());
-        $this->assertSame($expected->getHeight(), $box->getHeight());
+        self::assertSame($expected->getWidth(), $box->getWidth());
+        self::assertSame($expected->getHeight(), $box->getHeight());
     }
 
     public static function getBoxSettings(): array

@@ -25,36 +25,36 @@ class ReplicateTest extends TestCase
         $slave = $this->createMock(Adapter::class);
         $replicate = new Replicate($master, $slave);
 
-        $master->expects($this->once())->method('mtime')->willReturn('master');
-        $slave->expects($this->never())->method('mtime');
-        $this->assertSame('master', $replicate->mtime('foo'));
+        $master->expects(self::once())->method('mtime')->willReturn('master');
+        $slave->expects(self::never())->method('mtime');
+        self::assertSame('master', $replicate->mtime('foo'));
 
-        $master->expects($this->once())->method('delete')->willReturn('master');
-        $slave->expects($this->once())->method('delete')->willReturn('master');
+        $master->expects(self::once())->method('delete')->willReturn('master');
+        $slave->expects(self::once())->method('delete')->willReturn('master');
         $replicate->delete('foo');
 
-        $master->expects($this->once())->method('keys')->willReturn([]);
-        $slave->expects($this->never())->method('keys')->willReturn([]);
-        $this->assertIsArray($replicate->keys());
+        $master->expects(self::once())->method('keys')->willReturn([]);
+        $slave->expects(self::never())->method('keys')->willReturn([]);
+        self::assertIsArray($replicate->keys());
 
-        $master->expects($this->once())->method('exists')->willReturn(true);
-        $slave->expects($this->never())->method('exists');
-        $this->assertTrue($replicate->exists('foo'));
+        $master->expects(self::once())->method('exists')->willReturn(true);
+        $slave->expects(self::never())->method('exists');
+        self::assertTrue($replicate->exists('foo'));
 
-        $master->expects($this->once())->method('write')->willReturn(123);
-        $slave->expects($this->once())->method('write')->willReturn(123);
-        $this->assertTrue($replicate->write('foo', 'contents'));
+        $master->expects(self::once())->method('write')->willReturn(123);
+        $slave->expects(self::once())->method('write')->willReturn(123);
+        self::assertTrue($replicate->write('foo', 'contents'));
 
-        $master->expects($this->once())->method('read')->willReturn('master content');
-        $slave->expects($this->never())->method('read');
-        $this->assertSame('master content', $replicate->read('foo'));
+        $master->expects(self::once())->method('read')->willReturn('master content');
+        $slave->expects(self::never())->method('read');
+        self::assertSame('master content', $replicate->read('foo'));
 
-        $master->expects($this->once())->method('rename');
-        $slave->expects($this->once())->method('rename');
+        $master->expects(self::once())->method('rename');
+        $slave->expects(self::once())->method('rename');
         $replicate->rename('foo', 'bar');
 
-        $master->expects($this->once())->method('isDirectory');
-        $slave->expects($this->never())->method('isDirectory');
+        $master->expects(self::once())->method('isDirectory');
+        $slave->expects(self::never())->method('isDirectory');
         $replicate->isDirectory('foo');
     }
 }

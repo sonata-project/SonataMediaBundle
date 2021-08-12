@@ -33,6 +33,6 @@ class BreadcrumbTest extends BlockServiceTestCase
             $this->createStub(FactoryInterface::class)
         );
 
-        $this->assertTrue($blockService->handleContext('context'));
+        self::assertTrue($blockService->handleContext('context'));
     }
 }

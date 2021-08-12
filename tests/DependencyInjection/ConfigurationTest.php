@@ -43,12 +43,12 @@ class ConfigurationTest extends TestCase
 
     public function testProcess(): void
     {
-        $this->assertArrayHasKey('resizers', $this->config);
-        $this->assertArrayHasKey('default', $this->config['resizers']);
-        $this->assertSame('sonata.media.resizer.simple', $this->config['resizers']['default']);
+        self::assertArrayHasKey('resizers', $this->config);
+        self::assertArrayHasKey('default', $this->config['resizers']);
+        self::assertSame('sonata.media.resizer.simple', $this->config['resizers']['default']);
 
-        $this->assertArrayHasKey('adapters', $this->config);
-        $this->assertArrayHasKey('default', $this->config['adapters']);
-        $this->assertSame('sonata.media.adapter.image.gd', $this->config['adapters']['default']);
+        self::assertArrayHasKey('adapters', $this->config);
+        self::assertArrayHasKey('default', $this->config['adapters']);
+        self::assertSame('sonata.media.adapter.image.gd', $this->config['adapters']['default']);
     }
 }

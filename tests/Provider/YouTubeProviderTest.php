@@ -87,10 +87,10 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $media->setId(1023457);
 
-        $this->assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
+        self::assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $provider->getReferenceImage($media));
 
-        $this->assertSame('default/0011/24', $provider->generatePath($media));
-        $this->assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
+        self::assertSame('default/0011/24', $provider->generatePath($media));
+        self::assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail(): void
@@ -98,10 +98,10 @@ class YouTubeProviderTest extends AbstractProviderTest
         $request = $this->createStub(RequestInterface::class);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->once())->method('createRequest')->willReturn($request);
+        $requestFactory->expects(self::once())->method('createRequest')->willReturn($request);
 
         $client = $this->createMock(ClientInterface::class);
-        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))->willReturn($this->createResponse('content'));
+        $client->expects(self::once())->method('sendRequest')->with(self::equalTo($request))->willReturn($this->createResponse('content'));
 
         $provider = $this->getProvider($client, $requestFactory);
 
@@ -113,15 +113,15 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $media->setId(1023457);
 
-        $this->assertTrue($provider->requireThumbnails());
+        self::assertTrue($provider->requireThumbnails());
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
+        self::assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
         $provider->generateThumbnails($media);
 
-        $this->assertSame('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        self::assertSame('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testTransformWithSig(): void
@@ -129,10 +129,10 @@ class YouTubeProviderTest extends AbstractProviderTest
         $request = $this->createStub(RequestInterface::class);
 
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
-        $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
+        $messageFactory->expects(self::once())->method('createRequest')->willReturn($request);
 
         $client = $this->createMock(ClientInterface::class);
-        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
+        $client->expects(self::once())->method('sendRequest')->with(self::equalTo($request))
             ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt')));
 
         $provider = $this->getProvider($client, $messageFactory);
@@ -146,8 +146,8 @@ class YouTubeProviderTest extends AbstractProviderTest
         // pre persist the media
         $provider->transform($media);
 
-        $this->assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
-        $this->assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+        self::assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
+        self::assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     /**
@@ -158,10 +158,10 @@ class YouTubeProviderTest extends AbstractProviderTest
         $request = $this->createStub(RequestInterface::class);
 
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
-        $messageFactory->expects($this->once())->method('createRequest')->willReturn($request);
+        $messageFactory->expects(self::once())->method('createRequest')->willReturn($request);
 
         $client = $this->createMock(ClientInterface::class);
-        $client->expects($this->once())->method('sendRequest')->with($this->equalTo($request))
+        $client->expects(self::once())->method('sendRequest')->with(self::equalTo($request))
             ->willReturn($this->createResponse(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt')));
 
         $provider = $this->getProvider($client, $messageFactory);
@@ -175,8 +175,8 @@ class YouTubeProviderTest extends AbstractProviderTest
         // pre persist the media
         $provider->transform($media);
 
-        $this->assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
-        $this->assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+        self::assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
+        self::assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     public static function getUrls(): array
@@ -206,7 +206,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $response->setContent(file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt'));
 
         $browser = $this->createMock(Browser::class);
-        $browser->expects($this->once())->method('call')->will($this->throwException(new \RuntimeException('First error on get', 12)));
+        $browser->expects(self::once())->method('call')->will(self::throwException(new \RuntimeException('First error on get', 12)));
 
         $provider = $this->getProvider($browser);
 
@@ -232,7 +232,7 @@ class YouTubeProviderTest extends AbstractProviderTest
             ->willReturn('message');
 
         $form = $this->createMock(FormMapper::class);
-        $form->expects($this->exactly(8))
+        $form->expects(self::exactly(8))
             ->method('add')
             ->willReturn(null);
 
@@ -255,26 +255,26 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $properties = $provider->getHelperProperties($media, 'admin');
 
-        $this->assertIsArray($properties);
-        $this->assertSame(100, $properties['player_parameters']['height']);
-        $this->assertSame(100, $properties['player_parameters']['width']);
+        self::assertIsArray($properties);
+        self::assertSame(100, $properties['player_parameters']['height']);
+        self::assertSame(100, $properties['player_parameters']['width']);
     }
 
     public function testGetReferenceUrl(): void
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        $this->assertSame('https://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
+        self::assertSame('https://www.youtube.com/watch?v=123456', $this->getProvider()->getReferenceUrl($media));
     }
 
     public function testMetadata(): void
     {
         $provider = $this->getProvider();
 
-        $this->assertSame('youtube', $provider->getProviderMetadata()->getTitle());
-        $this->assertSame('youtube.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-youtube', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        self::assertSame('youtube', $provider->getProviderMetadata()->getTitle());
+        self::assertSame('youtube.description', $provider->getProviderMetadata()->getDescription());
+        self::assertNotNull($provider->getProviderMetadata()->getImage());
+        self::assertSame('fa fa-youtube', $provider->getProviderMetadata()->getOption('class'));
+        self::assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 }

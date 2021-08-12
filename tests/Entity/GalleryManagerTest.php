@@ -30,14 +30,14 @@ class GalleryManagerTest extends TestCase
     public function testGetPager(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($this->never())->method('andWhere');
-                $qb->expects($this->once())->method('orderBy')->with(
-                    $this->equalTo('g.name'),
-                    $this->equalTo('ASC')
+            ->getGalleryManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::never())->method('andWhere');
+                $qb->expects(self::once())->method('orderBy')->with(
+                    self::equalTo('g.name'),
+                    self::equalTo('ASC')
                 );
-                $qb->expects($this->once())->method('setParameters')->with($this->equalTo([]));
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo([]));
             })
             ->getPager([], 1);
     }
@@ -56,20 +56,20 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithMultipleSort(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($this->never())->method('andWhere');
-                $qb->expects($this->exactly(2))->method('orderBy')->with(
-                    $this->logicalOr(
-                        $this->equalTo('g.name'),
-                        $this->equalTo('g.context')
+            ->getGalleryManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::never())->method('andWhere');
+                $qb->expects(self::exactly(2))->method('orderBy')->with(
+                    self::logicalOr(
+                        self::equalTo('g.name'),
+                        self::equalTo('g.context')
                     ),
-                    $this->logicalOr(
-                        $this->equalTo('ASC'),
-                        $this->equalTo('DESC')
+                    self::logicalOr(
+                        self::equalTo('ASC'),
+                        self::equalTo('DESC')
                     )
                 );
-                $qb->expects($this->once())->method('setParameters')->with($this->equalTo([]));
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo([]));
             })
             ->getPager([], 1, 10, [
                 'name' => 'ASC',
@@ -80,10 +80,10 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
-                $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => true]));
+            ->getGalleryManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::once())->method('andWhere')->with(self::equalTo('g.enabled = :enabled'));
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo(['enabled' => true]));
             })
             ->getPager(['enabled' => true], 1);
     }
@@ -91,10 +91,10 @@ class GalleryManagerTest extends TestCase
     public function testGetPagerWithNoEnabledGalleries(): void
     {
         $this
-            ->getGalleryManager(function (MockObject $qb): void {
-                $qb->expects($this->once())->method('getRootAliases')->willReturn(['g']);
-                $qb->expects($this->once())->method('andWhere')->with($this->equalTo('g.enabled = :enabled'));
-                $qb->expects($this->once())->method('setParameters')->with($this->equalTo(['enabled' => false]));
+            ->getGalleryManager(static function (MockObject $qb): void {
+                $qb->expects(self::once())->method('getRootAliases')->willReturn(['g']);
+                $qb->expects(self::once())->method('andWhere')->with(self::equalTo('g.enabled = :enabled'));
+                $qb->expects(self::once())->method('setParameters')->with(self::equalTo(['enabled' => false]));
             })
             ->getPager(['enabled' => false], 1);
     }

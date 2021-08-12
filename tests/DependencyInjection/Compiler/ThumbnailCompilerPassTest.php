@@ -36,7 +36,7 @@ final class ThumbnailCompilerPassTest extends TestCase
 
         (new ThumbnailCompilerPass())->process($container);
 
-        $this->assertSame($expected, $thumbnailDefinition->hasMethodCall('addResizer'));
+        self::assertSame($expected, $thumbnailDefinition->hasMethodCall('addResizer'));
     }
 
     public function processProvider(): array

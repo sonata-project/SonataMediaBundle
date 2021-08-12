@@ -39,7 +39,7 @@ final class SessionDownloadStrategyTest extends TestCase
             ->willReturn(1);
 
         $strategy = new SessionDownloadStrategy($translator, $session, 0);
-        $this->assertFalse($strategy->isGranted($media, $request));
+        self::assertFalse($strategy->isGranted($media, $request));
     }
 
     public function testIsGrantedTrue(): void
@@ -54,7 +54,7 @@ final class SessionDownloadStrategyTest extends TestCase
             ->willReturn(0);
 
         $strategy = new SessionDownloadStrategy($translator, $session, 1);
-        $this->assertTrue($strategy->isGranted($media, $request));
+        self::assertTrue($strategy->isGranted($media, $request));
     }
 
     /**
@@ -74,13 +74,13 @@ final class SessionDownloadStrategyTest extends TestCase
             ->method('get')
             ->willReturn(0);
 
-        $container->expects($this->once())
+        $container->expects(self::once())
             ->method('get')
             ->willReturn($session);
 
         $strategy = new SessionDownloadStrategy($translator, $container, 1);
 
-        $this->assertTrue($strategy->isGranted($media, $request));
+        self::assertTrue($strategy->isGranted($media, $request));
     }
 
     public function testTypeError(): void
@@ -108,7 +108,7 @@ final class SessionDownloadStrategyTest extends TestCase
             ->willReturn(1);
 
         $strategy = new SessionDownloadStrategy($translator, $session, 0);
-        $this->assertFalse($strategy->isGranted($media, $request));
+        self::assertFalse($strategy->isGranted($media, $request));
     }
 
     /**
@@ -127,7 +127,7 @@ final class SessionDownloadStrategyTest extends TestCase
             ->willReturn(0);
 
         $strategy = new SessionDownloadStrategy($translator, $session, 1);
-        $this->assertTrue($strategy->isGranted($media, $request));
+        self::assertTrue($strategy->isGranted($media, $request));
     }
 
     /**
@@ -147,13 +147,13 @@ final class SessionDownloadStrategyTest extends TestCase
             ->method('get')
             ->willReturn(0);
 
-        $container->expects($this->once())
+        $container->expects(self::once())
             ->method('get')
             ->willReturn($session);
 
         $strategy = new SessionDownloadStrategy($translator, $container, 1);
 
-        $this->assertTrue($strategy->isGranted($media, $request));
+        self::assertTrue($strategy->isGranted($media, $request));
     }
 
     /**
@@ -185,6 +185,6 @@ final class SessionDownloadStrategyTest extends TestCase
             ->willReturn(1);
 
         $strategy = new SessionDownloadStrategy($translator, $session, '0');
-        $this->assertFalse($strategy->isGranted($media, $request));
+        self::assertFalse($strategy->isGranted($media, $request));
     }
 }

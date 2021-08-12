@@ -26,11 +26,11 @@ class ConsumerThumbnailTest extends TestCase
     public function testGenerateDispatchesEvents(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $dispatcher->expects($this->exactly(2))
+        $dispatcher->expects(self::exactly(2))
             ->method('addListener')
             ->withConsecutive(
-                ['kernel.finish_request', $this->anything()],
-                ['console.terminate', $this->anything()]
+                ['kernel.finish_request', self::anything()],
+                ['console.terminate', self::anything()]
             );
 
         $consumer = new ConsumerThumbnail(

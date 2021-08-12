@@ -85,21 +85,21 @@ class ImageProviderTest extends AbstractProviderTest
         $media->setId(1023456);
         $media->setContext('default');
 
-        $this->assertSame('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
+        self::assertSame('default/0011/24/ASDASDAS.png', $provider->getReferenceImage($media));
 
-        $this->assertSame('default/0011/24', $provider->generatePath($media));
-        $this->assertSame('/uploads/media/default/0011/24/thumb_1023456_big.png', $provider->generatePublicUrl($media, 'big'));
-        $this->assertSame('/uploads/media/default/0011/24/ASDASDAS.png', $provider->generatePublicUrl($media, 'reference'));
+        self::assertSame('default/0011/24', $provider->generatePath($media));
+        self::assertSame('/uploads/media/default/0011/24/thumb_1023456_big.png', $provider->generatePublicUrl($media, 'big'));
+        self::assertSame('/uploads/media/default/0011/24/ASDASDAS.png', $provider->generatePublicUrl($media, 'reference'));
 
-        $this->assertSame('default/0011/24/ASDASDAS.png', $provider->generatePrivateUrl($media, 'reference'));
-        $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
+        self::assertSame('default/0011/24/ASDASDAS.png', $provider->generatePrivateUrl($media, 'reference'));
+        self::assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testHelperOptions(): void
     {
         $this->expectException(\LogicException::class);
 
-        $provider = $this->getProvider([], [], $this->returnValue(new Box(50, 50)));
+        $provider = $this->getProvider([], [], self::returnValue(new Box(50, 50)));
         $media = new Media();
 
         $provider->getHelperProperties($media, 'any_format', ['srcset' => [], 'picture' => []]);
@@ -114,7 +114,7 @@ class ImageProviderTest extends AbstractProviderTest
         $provider = $this->getProvider(
             [],
             [],
-            $this->onConsecutiveCalls(
+            self::onConsecutiveCalls(
                 $largeBox, // first properties call
                 $mediumBox,
                 $largeBox,
@@ -147,51 +147,51 @@ class ImageProviderTest extends AbstractProviderTest
 
         $properties = $provider->getHelperProperties($media, 'default_large');
 
-        $this->assertIsArray($properties);
-        $this->assertSame('test.png', $properties['title']);
-        $this->assertSame(1000, $properties['width']);
-        $this->assertSame($srcSet, $properties['srcset']);
-        $this->assertSame(
+        self::assertIsArray($properties);
+        self::assertSame('test.png', $properties['title']);
+        self::assertSame(1000, $properties['width']);
+        self::assertSame($srcSet, $properties['srcset']);
+        self::assertSame(
             '/uploads/media/default/0001/01/thumb_10_default_large.png',
             $properties['src']
         );
-        $this->assertSame('(max-width: 1000px) 100vw, 1000px', $properties['sizes']);
+        self::assertSame('(max-width: 1000px) 100vw, 1000px', $properties['sizes']);
 
         $properties = $provider->getHelperProperties($media, 'default_large', ['srcset' => ['default_medium']]);
-        $this->assertSame($srcSet, $properties['srcset']);
-        $this->assertSame(
+        self::assertSame($srcSet, $properties['srcset']);
+        self::assertSame(
             '/uploads/media/default/0001/01/thumb_10_default_large.png',
             $properties['src']
         );
-        $this->assertSame('(max-width: 500px) 100vw, 500px', $properties['sizes']);
+        self::assertSame('(max-width: 500px) 100vw, 500px', $properties['sizes']);
 
         $properties = $provider->getHelperProperties($media, 'admin', [
             'width' => 150,
         ]);
-        $this->assertArrayNotHasKey('sizes', $properties);
-        $this->assertArrayNotHasKey('srcset', $properties);
+        self::assertArrayNotHasKey('sizes', $properties);
+        self::assertArrayNotHasKey('srcset', $properties);
 
-        $this->assertSame(150, $properties['width']);
+        self::assertSame(150, $properties['width']);
 
         $properties = $provider->getHelperProperties($media, 'default_large', ['picture' => ['default_medium', 'default_large'], 'class' => 'some-class']);
-        $this->assertArrayHasKey('picture', $properties);
-        $this->assertArrayNotHasKey('srcset', $properties);
-        $this->assertArrayNotHasKey('sizes', $properties);
-        $this->assertArrayHasKey('source', $properties['picture']);
-        $this->assertArrayHasKey('img', $properties['picture']);
-        $this->assertArrayHasKey('class', $properties['picture']['img']);
-        $this->assertArrayHasKey('media', $properties['picture']['source'][0]);
-        $this->assertSame('(max-width: 500px)', $properties['picture']['source'][0]['media']);
+        self::assertArrayHasKey('picture', $properties);
+        self::assertArrayNotHasKey('srcset', $properties);
+        self::assertArrayNotHasKey('sizes', $properties);
+        self::assertArrayHasKey('source', $properties['picture']);
+        self::assertArrayHasKey('img', $properties['picture']);
+        self::assertArrayHasKey('class', $properties['picture']['img']);
+        self::assertArrayHasKey('media', $properties['picture']['source'][0]);
+        self::assertSame('(max-width: 500px)', $properties['picture']['source'][0]['media']);
 
         $properties = $provider->getHelperProperties($media, 'default_large', ['picture' => ['(max-width: 200px)' => 'default_medium', 'default_large'], 'class' => 'some-class']);
-        $this->assertArrayHasKey('picture', $properties);
-        $this->assertArrayNotHasKey('srcset', $properties);
-        $this->assertArrayNotHasKey('sizes', $properties);
-        $this->assertArrayHasKey('source', $properties['picture']);
-        $this->assertArrayHasKey('img', $properties['picture']);
-        $this->assertArrayHasKey('class', $properties['picture']['img']);
-        $this->assertArrayHasKey('media', $properties['picture']['source'][0]);
-        $this->assertSame('(max-width: 200px)', $properties['picture']['source'][0]['media']);
+        self::assertArrayHasKey('picture', $properties);
+        self::assertArrayNotHasKey('srcset', $properties);
+        self::assertArrayNotHasKey('sizes', $properties);
+        self::assertArrayHasKey('source', $properties['picture']);
+        self::assertArrayHasKey('img', $properties['picture']);
+        self::assertArrayHasKey('class', $properties['picture']['img']);
+        self::assertArrayHasKey('media', $properties['picture']['source'][0]);
+        self::assertSame('(max-width: 200px)', $properties['picture']['source'][0]['media']);
     }
 
     public function testThumbnail(): void
@@ -204,15 +204,15 @@ class ImageProviderTest extends AbstractProviderTest
         $media->setId(1023456);
         $media->setContext('default');
 
-        $this->assertTrue($provider->requireThumbnails());
+        self::assertTrue($provider->requireThumbnails());
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $this->assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
+        self::assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
 
         $provider->generateThumbnails($media);
 
-        $this->assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
+        self::assertSame('default/0011/24/thumb_1023456_big.png', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testEvent(): void
@@ -231,8 +231,8 @@ class ImageProviderTest extends AbstractProviderTest
         $provider->transform($media);
         $provider->prePersist($media);
 
-        $this->assertSame('logo.png', $media->getName(), '::getName() return the file name');
-        $this->assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
+        self::assertSame('logo.png', $media->getName(), '::getName() return the file name');
+        self::assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
         // post persist the media
         $provider->postPersist($media);
@@ -249,18 +249,18 @@ class ImageProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($file);
 
-        $this->assertNull($provider->transform($media));
-        $this->assertNull($media->getWidth(), 'Width staid null');
+        self::assertNull($provider->transform($media));
+        self::assertNull($media->getWidth(), 'Width staid null');
     }
 
     public function testMetadata(): void
     {
         $provider = $this->getProvider();
 
-        $this->assertSame('image', $provider->getProviderMetadata()->getTitle());
-        $this->assertSame('image.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-picture-o', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        self::assertSame('image', $provider->getProviderMetadata()->getTitle());
+        self::assertSame('image.description', $provider->getProviderMetadata()->getDescription());
+        self::assertNotNull($provider->getProviderMetadata()->getImage());
+        self::assertSame('fa fa-picture-o', $provider->getProviderMetadata()->getOption('class'));
+        self::assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 }

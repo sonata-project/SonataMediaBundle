@@ -41,7 +41,7 @@ class BaseProviderTest extends AbstractProviderTest
         $cdn = $this->createStub(CDNInterface::class);
         $cdn->method('flushPaths')->willReturn((string) mt_rand());
         $cdn->method('getFlushStatus')
-            ->will($this->onConsecutiveCalls(
+            ->will(self::onConsecutiveCalls(
                 CDNInterface::STATUS_OK,
                 CDNInterface::STATUS_TO_FLUSH,
                 CDNInterface::STATUS_WAITING,
@@ -56,7 +56,7 @@ class BaseProviderTest extends AbstractProviderTest
         $thumbnail = $this->createStub(ThumbnailInterface::class);
 
         $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail);
-        $this->assertInstanceOf(BaseProvider::class, $provider);
+        self::assertInstanceOf(BaseProvider::class, $provider);
 
         return $provider;
     }
@@ -68,28 +68,28 @@ class BaseProviderTest extends AbstractProviderTest
             'edit' => 'edit.twig',
         ]);
 
-        $this->assertIsArray($provider->getTemplates());
-        $this->assertSame('edit.twig', $provider->getTemplate('edit'));
+        self::assertIsArray($provider->getTemplates());
+        self::assertSame('edit.twig', $provider->getTemplate('edit'));
 
-        $this->assertInstanceOf(CDNInterface::class, $provider->getCdn());
+        self::assertInstanceOf(CDNInterface::class, $provider->getCdn());
 
         $provider->addFormat('small', []);
 
-        $this->assertIsArray($provider->getFormat('small'));
+        self::assertIsArray($provider->getFormat('small'));
 
         $media = new Media();
         $media->setContext('test');
 
-        $this->assertSame('admin', $provider->getFormatName($media, 'admin'));
-        $this->assertSame('reference', $provider->getFormatName($media, 'reference'));
-        $this->assertSame('test_small', $provider->getFormatName($media, 'small'));
-        $this->assertSame('test_small', $provider->getFormatName($media, 'test_small'));
+        self::assertSame('admin', $provider->getFormatName($media, 'admin'));
+        self::assertSame('reference', $provider->getFormatName($media, 'reference'));
+        self::assertSame('test_small', $provider->getFormatName($media, 'small'));
+        self::assertSame('test_small', $provider->getFormatName($media, 'test_small'));
     }
 
     public function testGetCdnPath(): void
     {
         $provider = $this->getProvider();
-        $this->assertSame('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
+        self::assertSame('/uploads/media/my_file.txt', $provider->getCdnPath('my_file.txt', false));
     }
 
     public function testFlushCdn(): void
@@ -102,44 +102,44 @@ class BaseProviderTest extends AbstractProviderTest
         $media->setCdnIsFlushable(true);
 
         $media->setContext('test');
-        $this->assertNull($media->getCdnFlushIdentifier());
-        $this->assertNull($media->getCdnStatus());
+        self::assertNull($media->getCdnFlushIdentifier());
+        self::assertNull($media->getCdnStatus());
         $provider->flushCdn($media);
-        $this->assertTrue($media->getCdnIsFlushable());
-        $this->assertNotNull($media->getCdnFlushIdentifier());
-        $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
+        self::assertTrue($media->getCdnIsFlushable());
+        self::assertNotNull($media->getCdnFlushIdentifier());
+        self::assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
 
         $media->setContext('other');
         $provider->flushCdn($media);
-        $this->assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
-        $this->assertNull($media->getCdnFlushIdentifier());
+        self::assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
+        self::assertNull($media->getCdnFlushIdentifier());
 
         $media->setContext('test');
         $provider->flushCdn($media);
-        $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
-        $this->assertNotNull($media->getCdnFlushIdentifier());
+        self::assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
+        self::assertNotNull($media->getCdnFlushIdentifier());
 
         $media->setContext('other');
         $provider->flushCdn($media);
-        $this->assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
-        $this->assertNotNull($media->getCdnFlushIdentifier());
+        self::assertSame(CDNInterface::STATUS_TO_FLUSH, $media->getCdnStatus());
+        self::assertNotNull($media->getCdnFlushIdentifier());
         $provider->flushCdn($media);
-        $this->assertSame(CDNInterface::STATUS_WAITING, $media->getCdnStatus());
-        $this->assertNotNull($media->getCdnFlushIdentifier());
+        self::assertSame(CDNInterface::STATUS_WAITING, $media->getCdnStatus());
+        self::assertNotNull($media->getCdnFlushIdentifier());
         $provider->flushCdn($media);
-        $this->assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
-        $this->assertNull($media->getCdnFlushIdentifier());
+        self::assertSame(CDNInterface::STATUS_OK, $media->getCdnStatus());
+        self::assertNull($media->getCdnFlushIdentifier());
     }
 
     public function testMetadata(): void
     {
         $provider = $this->getProvider();
 
-        $this->assertSame('test', $provider->getProviderMetadata()->getTitle());
-        $this->assertSame('test.description', $provider->getProviderMetadata()->getDescription());
-        $this->assertNotNull($provider->getProviderMetadata()->getImage());
-        $this->assertSame('fa fa-file', $provider->getProviderMetadata()->getOption('class'));
-        $this->assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        self::assertSame('test', $provider->getProviderMetadata()->getTitle());
+        self::assertSame('test.description', $provider->getProviderMetadata()->getDescription());
+        self::assertNotNull($provider->getProviderMetadata()->getImage());
+        self::assertSame('fa fa-file', $provider->getProviderMetadata()->getOption('class'));
+        self::assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 
     public function testPostRemove(): void
@@ -156,13 +156,13 @@ class BaseProviderTest extends AbstractProviderTest
 
         $provider->preRemove($media);
 
-        $this->assertArrayHasKey($hash, $prop->getValue($provider));
+        self::assertArrayHasKey($hash, $prop->getValue($provider));
 
         $media->setId(null); // Emulate an object detached from the EntityManager.
         $provider->postRemove($media);
 
-        $this->assertArrayNotHasKey($hash, $prop->getValue($provider));
-        $this->assertSame('/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
+        self::assertArrayNotHasKey($hash, $prop->getValue($provider));
+        self::assertSame('/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
 
         $prop->setAccessible(false);
     }

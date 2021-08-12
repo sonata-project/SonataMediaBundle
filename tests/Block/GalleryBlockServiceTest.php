@@ -53,7 +53,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         $gallery->method('getGalleryHasMedias')->willReturn([]);
 
         $this->twig
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('render')
             ->with('template', [
                 'gallery' => $gallery,

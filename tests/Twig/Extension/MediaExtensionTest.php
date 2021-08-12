@@ -59,14 +59,14 @@ class MediaExtensionTest extends TestCase
         ];
 
         $provider = $this->getProvider();
-        $provider->expects($this->once())->method('generatePublicUrl')->with($media, $format)
+        $provider->expects(self::once())->method('generatePublicUrl')->with($media, $format)
             ->willReturn('http://some.url.com');
 
         $template = $this->getTemplate();
-        $template->expects($this->once())
+        $template->expects(self::once())
             ->method('render')
             ->with(
-                $this->equalTo(
+                self::equalTo(
                     [
                         'media' => $media,
                         'options' => [

@@ -37,7 +37,7 @@ class RolesDownloadStrategyTest extends TestCase
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
-        $this->assertTrue($strategy->isGranted($media, $request));
+        self::assertTrue($strategy->isGranted($media, $request));
     }
 
     public function testIsGrantedFalse(): void
@@ -54,7 +54,7 @@ class RolesDownloadStrategyTest extends TestCase
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
-        $this->assertFalse($strategy->isGranted($media, $request));
+        self::assertFalse($strategy->isGranted($media, $request));
     }
 
     /**
@@ -75,7 +75,7 @@ class RolesDownloadStrategyTest extends TestCase
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
-        $this->assertTrue($strategy->isGranted($media, $request));
+        self::assertTrue($strategy->isGranted($media, $request));
     }
 
     /**
@@ -96,6 +96,6 @@ class RolesDownloadStrategyTest extends TestCase
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
-        $this->assertFalse($strategy->isGranted($media, $request));
+        self::assertFalse($strategy->isGranted($media, $request));
     }
 }
