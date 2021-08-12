@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 
 /**
  * @method void                   setCategory(?CategoryInterface $category)
@@ -28,6 +29,9 @@ interface MediaInterface
     public const STATUS_ERROR = 4;
     public const STATUS_ENCODING = 5;
 
+    // NEXY_MAJOR: Uncomment this method.
+    // public function __toString();
+
     public const MISSING_BINARY_REFERENCE = 'missing_binary_content';
 
     // NEXY_MAJOR: Uncomment this method.
@@ -35,6 +39,8 @@ interface MediaInterface
 
     /**
      * @param mixed $binaryContent
+     *
+     * @return void
      */
     public function setBinaryContent($binaryContent);
 
@@ -45,18 +51,22 @@ interface MediaInterface
 
     /**
      * Reset the binary content.
+     *
+     * @return void
      */
     public function resetBinaryContent();
 
     /**
      * @param string $name
-     * @param null   $default
+     * @param mixed  $default
      */
     public function getMetadataValue($name, $default = null);
 
     /**
      * @param string $name
      * @param mixed  $value
+     *
+     * @return void
      */
     public function setMetadataValue($name, $value);
 
@@ -64,6 +74,8 @@ interface MediaInterface
      * Remove a named data from the metadata.
      *
      * @param string $name
+     *
+     * @return void
      */
     public function unsetMetadataValue($name);
 
@@ -73,299 +85,257 @@ interface MediaInterface
     public function getId();
 
     /**
-     * Set name.
-     *
      * @param string $name
+     *
+     * @return void
      */
     public function setName($name);
 
     /**
-     * Get name.
-     *
-     * @return string $name
+     * @return string|null
      */
     public function getName();
 
     /**
-     * Set description.
-     *
      * @param string $description
+     *
+     * @return void
      */
     public function setDescription($description);
 
     /**
-     * Get description.
-     *
-     * @return string $description
+     * @return string|null
      */
     public function getDescription();
 
     /**
-     * Set enabled.
-     *
      * @param bool $enabled
+     *
+     * @return void
      */
     public function setEnabled($enabled);
 
     /**
-     * Get enabled.
-     *
-     * @return bool $enabled
+     * @return bool
      */
     public function getEnabled();
 
     /**
-     * Set provider_name.
-     *
      * @param string $providerName
+     *
+     * @return void
      */
     public function setProviderName($providerName);
 
     /**
-     * Get provider_name.
-     *
-     * @return string $providerName
+     * @return string|null
      */
     public function getProviderName();
 
     /**
-     * Set provider_status.
-     *
      * @param int $providerStatus
+     *
+     * @return void
      */
     public function setProviderStatus($providerStatus);
 
     /**
-     * Get provider_status.
-     *
-     * @return int $providerStatus
+     * @return int|null
      */
     public function getProviderStatus();
 
     /**
-     * Set provider_reference.
-     *
      * @param string $providerReference
+     *
+     * @return void
      */
     public function setProviderReference($providerReference);
 
     /**
-     * Get provider_reference.
-     *
-     * @return string $providerReference
+     * @return string|null
      */
     public function getProviderReference();
 
     /**
-     * Set provider_metadata.
+     * @return void
      */
     public function setProviderMetadata(array $providerMetadata = []);
 
     /**
-     * Get provider_metadata.
-     *
-     * @return array $providerMetadata
+     * @return array
      */
     public function getProviderMetadata();
 
     /**
-     * Set width.
-     *
      * @param int $width
+     *
+     * @return void
      */
     public function setWidth($width);
 
     /**
-     * Get width.
-     *
-     * @return int $width
+     * @return int|null
      */
     public function getWidth();
 
     /**
-     * Set height.
-     *
      * @param int $height
+     *
+     * @return void
      */
     public function setHeight($height);
 
     /**
-     * Get height.
-     *
-     * @return int $height
+     * @return int|null
      */
     public function getHeight();
 
     /**
-     * Set length.
-     *
      * @param float $length
+     *
+     * @return void
      */
     public function setLength($length);
 
     /**
-     * Get length.
-     *
-     * @return float $length
+     * @return float|null
      */
     public function getLength();
 
     /**
-     * Set copyright.
-     *
      * @param string $copyright
+     *
+     * @return void
      */
     public function setCopyright($copyright);
 
     /**
-     * Get copyright.
-     *
-     * @return string $copyright
+     * @return string|null
      */
     public function getCopyright();
 
     /**
-     * Set authorName.
-     *
      * @param string $authorName
+     *
+     * @return void
      */
     public function setAuthorName($authorName);
 
     /**
-     * Get authorName.
-     *
-     * @return string $authorName
+     * @return string|null
      */
     public function getAuthorName();
 
     /**
-     * Set context.
-     *
      * @param string $context
+     *
+     * @return void
      */
     public function setContext($context);
 
     /**
-     * Get context.
-     *
-     * @return string|null $context
+     * @return string|null
      */
     public function getContext();
 
     /**
-     * Set cdnIsFlushable.
-     *
      * @param bool $cdnIsFlushable
+     *
+     * @return void
      */
     public function setCdnIsFlushable($cdnIsFlushable);
 
     /**
-     * Get cdn_is_flushable.
-     *
-     * @return bool $cdnIsFlushable
+     * @return bool
      */
     public function getCdnIsFlushable();
 
     /**
-     * Set cdn_flush_identifier.
-     *
      * @param string $cdnFlushIdentifier
+     *
+     * @return void
      */
     public function setCdnFlushIdentifier($cdnFlushIdentifier);
 
     /**
-     * Get cdn_flush_identifier.
-     *
-     * @return string $cdnFlushIdentifier
+     * @return string|null
      */
     public function getCdnFlushIdentifier();
 
     /**
-     * Set cdn_flush_at.
-     *
      * @param \DateTime $cdnFlushAt
+     *
+     * @return void
      */
     public function setCdnFlushAt(?\DateTime $cdnFlushAt = null);
 
     /**
-     * Get cdn_flush_at.
-     *
-     * @return \DateTime $cdnFlushAt
+     * @return \DateTime|null
      */
     public function getCdnFlushAt();
 
     /**
-     * Set updated_at.
-     *
      * @param \DateTime $updatedAt
+     *
+     * @return void
      */
     public function setUpdatedAt(?\DateTime $updatedAt = null);
 
     /**
-     * Get updated_at.
-     *
-     * @return \DateTime $updatedAt
+     * @return \DateTime|null
      */
     public function getUpdatedAt();
 
     /**
-     * Set created_at.
-     *
      * @param \DateTime $createdAt
+     *
+     * @return void
      */
     public function setCreatedAt(?\DateTime $createdAt = null);
 
     /**
-     * Get created_at.
-     *
-     * @return \DateTime $createdAt
+     * @return \DateTime|null
      */
     public function getCreatedAt();
 
     /**
-     * Set content_type.
-     *
      * @param string $contentType
+     *
+     * @return void
      */
     public function setContentType($contentType);
 
     /**
-     * @return string
-     */
-    public function getExtension();
-
-    /**
-     * Get content_type.
-     *
-     * @return string $contentType
+     * @return string|null
      */
     public function getContentType();
 
     /**
-     * Set size.
-     *
+     * @return string|null
+     */
+    public function getExtension();
+
+    /**
      * @param int $size
+     *
+     * @return void
      */
     public function setSize($size);
 
     /**
-     * Get size.
-     *
-     * @return int $size
+     * @return int|null
      */
     public function getSize();
 
     /**
-     * Set cdn_status.
-     *
      * @param int $cdnStatus
+     *
+     * @return void
      */
     public function setCdnStatus($cdnStatus);
 
     /**
-     * Get cdn_status.
-     *
-     * @return int $cdnStatus
+     * @return int|null
      */
     public function getCdnStatus();
 
@@ -376,6 +346,8 @@ interface MediaInterface
 
     /**
      * @param GalleryHasMediaInterface[] $galleryHasMedias
+     *
+     * @return void
      */
     public function setGalleryHasMedias($galleryHasMedias);
 
@@ -388,4 +360,10 @@ interface MediaInterface
      * @return string
      */
     public function getPreviousProviderReference();
+
+    // NEXT_MAJOR: Uncomment this method.
+    // public function setCategory(?CategoryInterface $category);
+
+    // NEXT_MAJOR: Uncomment this method.
+    // public function getCategory(): ?CategoryInterface;
 }

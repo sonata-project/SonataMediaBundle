@@ -15,9 +15,13 @@ namespace Sonata\MediaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Gallery;
+use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 
 /**
  * Bundle\MediaBundle\Document\BaseGallery.
+ *
+ * @phpstan-template T of GalleryHasMediaInterface
+ * @phpstan-extends Gallery<T>
  */
 abstract class BaseGallery extends Gallery
 {

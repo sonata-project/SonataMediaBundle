@@ -19,11 +19,14 @@ use Sonata\ClassificationBundle\Model\CategoryManagerInterface as ManagerInterfa
 /**
  * @author Joao Albuquerque <albuquerque.joao.filipe@gmail.com>
  * @author Christian Gripp <mail@core23.de>
+ *
+ * @phpstan-template T of CategoryInterface
+ * @phpstan-implements CategoryManagerInterface<T>
  */
 final class CategoryManager implements CategoryManagerInterface
 {
     /**
-     * @var ManagerInterface
+     * @var ManagerInterface|null
      */
     private $categoryManager;
 

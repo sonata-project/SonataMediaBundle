@@ -9,3 +9,13 @@ parameters:
             message: "#^Call to static method getInstance\\(\\) on an unknown class Sonata\\\\EasyExtendsBundle\\\\Mapper\\\\DoctrineCollector\\.$#"
             count: 1
             path: src/DependencyInjection/SonataMediaExtension.php
+
+        -
+            message: "#^Call to an undefined method Sonata\\\\ClassificationBundle\\\\Model\\\\CategoryManagerInterface\\:\\:getRootCategories\\(\\)\\.$#"
+            count: 1
+            path: src/Model/CategoryManager.php
+
+        -
+            message: "#^Call to an undefined method Sonata\\\\ClassificationBundle\\\\Model\\\\CategoryManagerInterface\\:\\:getRootCategory\\(\\)\\.$#"
+            count: 1
+            path: src/Model/CategoryManager.php

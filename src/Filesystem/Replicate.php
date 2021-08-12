@@ -20,6 +20,7 @@ use Gaufrette\Adapter\StreamFactory;
 use Gaufrette\Filesystem;
 use Gaufrette\Stream;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -63,7 +64,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         $this->slave = $secondary;
         $this->primary = $primary;
         $this->secondary = $secondary;
-        $this->logger = $logger;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function delete($key)
@@ -73,9 +74,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         try {
             $this->secondary->delete($key);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -83,9 +82,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         try {
             $this->primary->delete($key);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -127,9 +124,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         try {
             $return = $this->primary->write($key, $content);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -137,9 +132,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         try {
             $return = $this->secondary->write($key, $content);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -159,9 +152,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         try {
             $this->primary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
 
             $ok = false;
         }
@@ -169,9 +160,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         try {
             $this->secondary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
-            if ($this->logger) {
-                $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
-            }
+            $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
 
             $ok = false;
         }

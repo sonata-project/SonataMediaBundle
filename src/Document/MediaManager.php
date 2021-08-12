@@ -14,10 +14,14 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Document;
 
 use Sonata\Doctrine\Document\BaseDocumentManager;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-template T of MediaInterface
+ * @phpstan-extends BaseDocumentManager<T>
  */
 class MediaManager extends BaseDocumentManager implements MediaManagerInterface
 {

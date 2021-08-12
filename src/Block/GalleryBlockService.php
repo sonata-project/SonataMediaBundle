@@ -45,7 +45,7 @@ use Twig\Environment;
 class GalleryBlockService extends AbstractBlockService
 {
     /**
-     * @var ManagerInterface
+     * @var AdminInterface|null
      */
     protected $galleryAdmin;
 
@@ -85,7 +85,7 @@ class GalleryBlockService extends AbstractBlockService
      */
     public function getGalleryAdmin()
     {
-        if (!$this->galleryAdmin) {
+        if (null === $this->galleryAdmin) {
             $this->galleryAdmin = $this->container->get('sonata.media.admin.gallery');
         }
 

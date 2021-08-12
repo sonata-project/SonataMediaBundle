@@ -61,26 +61,14 @@ class AddMediaCommand extends BaseCommand
 
         $media = $this->getMediaManager()->create();
         $media->setBinaryContent($binaryContent);
+        $media->setDescription($input->getOption('description'));
+        $media->setCopyright($input->getOption('copyright'));
+        $media->setAuthorName($input->getOption('author'));
+        $media->setEnabled(\in_array($input->getOption('enabled'), [1, true, 'true'], true));
+        $media->setContext($context);
+        $media->setProviderName($provider);
 
-        if ($input->getOption('description')) {
-            $media->setDescription($input->getOption('description'));
-        }
-
-        if ($input->getOption('copyright')) {
-            $media->setCopyright($input->getOption('copyright'));
-        }
-
-        if ($input->getOption('author')) {
-            $media->setAuthorName($input->getOption('author'));
-        }
-
-        if (\in_array($input->getOption('enabled'), [1, true, 'true'], true)) {
-            $media->setEnabled(true);
-        } else {
-            $media->setEnabled(false);
-        }
-
-        $this->getMediaManager()->save($media, $context, $provider);
+        $this->getMediaManager()->save($media);
 
         $output->writeln('done!');
 

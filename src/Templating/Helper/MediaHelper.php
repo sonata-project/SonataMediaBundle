@@ -53,15 +53,15 @@ class MediaHelper extends Helper
     /**
      * Returns the provider view for the provided media.
      *
-     * @param MediaInterface $media
-     * @param string         $format
-     * @param array          $options
+     * @param MediaInterface|null $media
+     * @param string              $format
+     * @param array               $options
      *
      * @return string
      */
     public function media($media, $format, $options = [])
     {
-        if (!$media) {
+        if (null === $media) {
             return '';
         }
 
@@ -81,15 +81,15 @@ class MediaHelper extends Helper
     /**
      * Returns the thumbnail for the provided media.
      *
-     * @param MediaInterface $media
-     * @param string         $format
-     * @param array          $options
+     * @param MediaInterface|null $media
+     * @param string              $format
+     * @param array               $options
      *
      * @return string
      */
     public function thumbnail($media, $format, $options = [])
     {
-        if (!$media) {
+        if (null === $media) {
             return '';
         }
 
@@ -113,14 +113,14 @@ class MediaHelper extends Helper
     }
 
     /**
-     * @param MediaInterface $media
-     * @param string         $format
+     * @param MediaInterface|null $media
+     * @param string              $format
      *
      * @return string
      */
     public function path($media, $format)
     {
-        if (!$media) {
+        if (null === $media) {
             return '';
         }
 

@@ -40,7 +40,7 @@ class MediaController extends Controller
     /**
      * @param string $id
      *
-     * @return MediaInterface
+     * @return MediaInterface|null
      */
     public function getMedia($id)
     {
@@ -90,7 +90,7 @@ class MediaController extends Controller
 
         $media = $this->getMedia($id);
 
-        if (!$media) {
+        if (null === $media) {
             throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
         }
 
@@ -138,7 +138,7 @@ class MediaController extends Controller
 
         // get the file
         $media = $this->getMedia($matches[3]);
-        if (!$media) {
+        if (null === $media) {
             throw new NotFoundHttpException();
         }
 

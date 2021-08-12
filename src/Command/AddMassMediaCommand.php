@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Command;
 
 use Doctrine\Persistence\ManagerRegistry;
+use Sonata\Doctrine\Model\ClearableManagerInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Input\InputInterface;
@@ -120,7 +121,11 @@ class AddMassMediaCommand extends BaseCommand
     protected function optimize()
     {
         if (null !== $this->managerRegistry) {
-            $this->managerRegistry->getManager()->getUnitOfWork()->clear();
+            $manager = $this->managerRegistry->getManager();
+
+            if ($manager instanceof ClearableManagerInterface) {
+                $manager->clear();
+            }
         }
     }
 }

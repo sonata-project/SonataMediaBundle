@@ -28,6 +28,9 @@ use Symfony\Component\Form\FormBuilder;
 
 class BaseProviderTest extends AbstractProviderTest
 {
+    /**
+     * @return TestProvider
+     */
     public function getProvider(): MediaProviderInterface
     {
         $adapter = $this->createMock(Adapter::class);

@@ -15,6 +15,11 @@ namespace Sonata\ClassificationBundle\Model;
 
 use Sonata\Doctrine\Model\ManagerInterface;
 
+/**
+ * @phpstan-template T of object
+ *
+ * @phpstan-extends ManagerInterface<T>
+ */
 interface ContextManagerInterface extends ManagerInterface
 {
 }

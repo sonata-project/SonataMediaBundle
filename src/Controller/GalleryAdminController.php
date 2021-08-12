@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Controller;
 
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Form\FormView;
@@ -21,6 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-template T of AdminInterface
+ * @phpstan-extends Controller<T>
  */
 class GalleryAdminController extends Controller
 {

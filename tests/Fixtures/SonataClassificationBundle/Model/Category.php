@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\ClassificationBundle\Model;
 
+/**
+ * @phpstan-template T of ContextInterface
+ *
+ * @phpstan-implements CategoryInterface<T>
+ */
 class Category implements CategoryInterface
 {
     /**
@@ -22,6 +27,8 @@ class Category implements CategoryInterface
 
     /**
      * @var ContextInterface|null
+     *
+     * @phpstan-var T|null
      */
     private $context;
 

@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Model\GalleryHasMedia;
 abstract class BaseGalleryHasMedia extends GalleryHasMedia
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $nodename;
 
@@ -35,7 +35,7 @@ abstract class BaseGalleryHasMedia extends GalleryHasMedia
     /**
      * Get node name.
      *
-     * @return string
+     * @return string|null
      */
     public function getNodename()
     {

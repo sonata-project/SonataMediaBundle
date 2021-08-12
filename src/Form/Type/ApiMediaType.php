@@ -41,11 +41,15 @@ class ApiMediaType extends AbstractType implements LoggerAwareInterface
 
     /**
      * @var string
+     *
+     * @phpstan-var class-string
      */
     protected $class;
 
     /**
      * @param string $class
+     *
+     * @phpstan-param class-string $class
      */
     public function __construct(Pool $mediaPool, $class)
     {

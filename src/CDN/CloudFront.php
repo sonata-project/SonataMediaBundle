@@ -87,7 +87,7 @@ class CloudFront implements CDNInterface
     protected $distributionId;
 
     /**
-     * @var CloudFrontClient
+     * @var CloudFrontClient|null
      */
     protected $client;
 
@@ -270,7 +270,7 @@ class CloudFront implements CDNInterface
             __METHOD__
         ), \E_USER_DEPRECATED);
 
-        if (!$this->client) {
+        if (null === $this->client) {
             $config = [
                 'key' => $this->region,
                 'secret' => $this->version,

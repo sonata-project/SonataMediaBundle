@@ -27,6 +27,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Provider\BaseVideoProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
@@ -35,6 +36,9 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 class VimeoProviderTest extends AbstractProviderTest
 {
+    /**
+     * @return BaseVideoProvider
+     */
     public function getProvider(?object $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
         if (null === $client) {

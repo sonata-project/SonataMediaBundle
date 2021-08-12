@@ -15,9 +15,13 @@ namespace Sonata\MediaBundle\Admin\ODM;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\MediaBundle\Admin\BaseMediaAdmin as Admin;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @phpstan-template T of MediaInterface
+ * @phpstan-extends Admin<T>
  */
 class MediaAdmin extends Admin
 {

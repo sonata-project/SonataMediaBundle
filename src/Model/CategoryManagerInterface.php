@@ -18,6 +18,8 @@ use Sonata\ClassificationBundle\Model\CategoryInterface;
 /**
  * @author Joao Albuquerque <albuquerque.joao.filipe@gmail.com>
  * @author Christian Gripp <mail@core23.de>
+ *
+ * @phpstan-template T of CategoryInterface
  */
 interface CategoryManagerInterface
 {
@@ -25,6 +27,8 @@ interface CategoryManagerInterface
      * @param string $context
      *
      * @return CategoryInterface|null
+     *
+     * @phpstan-return T|null
      */
     public function getRootCategory($context);
 
@@ -32,23 +36,31 @@ interface CategoryManagerInterface
      * @param bool|true $loadChildren
      *
      * @return CategoryInterface[]
+     *
+     * @phpstan-return T[]
      */
     public function getRootCategories($loadChildren);
 
     /**
      * @param int $categoryId
      *
-     * @return CategoryInterface[]
+     * @return CategoryInterface|null
+     *
+     * @phpstan-return T|null
      */
     public function find($categoryId);
 
     /**
      * @return CategoryInterface[]
+     *
+     * @phpstan-return T[]
      */
     public function findBy(array $criteria);
 
     /**
      * @return CategoryInterface|null
+     *
+     * @phpstan-return T|null
      */
     public function findOneBy(array $criteria);
 
@@ -56,6 +68,8 @@ interface CategoryManagerInterface
      * Create an empty category instance.
      *
      * @return CategoryInterface
+     *
+     * @phpstan-return T
      */
     public function create();
 
@@ -63,6 +77,8 @@ interface CategoryManagerInterface
      * Save a category.
      *
      * @param CategoryInterface $category The category to save
+     *
+     * @phpstan-param T $category
      */
     public function save($category);
 }

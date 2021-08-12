@@ -28,7 +28,7 @@ interface ResizableThumbnailInterface
     public function addResizer($id, ResizerInterface $resizer);
 
     /**
-     * @param string id
+     * @param string $id
      */
     public function hasResizer($id): bool;
 

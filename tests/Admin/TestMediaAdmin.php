@@ -14,7 +14,12 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Admin;
 
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
+use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * @phpstan-template T of MediaInterface
+ * @phpstan-extends BaseMediaAdmin<T>
+ */
 class TestMediaAdmin extends BaseMediaAdmin
 {
 }
