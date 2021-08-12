@@ -46,7 +46,7 @@ jobs:
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
-                      variant: 'sonata-project/admin-bundle:"dev-master"'
+                      variant: 'sonata-project/admin-bundle:"^4@rc"'
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
