@@ -39,7 +39,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('sonata.media.pool'),
                 '%sonata.media.admin.media.entity%',
             ])
-            // NEXT_MAJOR: make symfony/monolog-bundle a require dependency and remove nullOnInvalid
             ->call('setLogger', [(new ReferenceConfigurator('logger'))->nullOnInvalid()])
 
         ->set('sonata.media.api.form.type.gallery', ApiGalleryType::class)

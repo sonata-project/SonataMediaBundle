@@ -75,12 +75,9 @@ final class GalleryAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        // define group zoning
         $form
-            // NEXT_MAJOR: Change Gallery key to `form_group.gallery` and update translations files.
-            ->with('Gallery', ['class' => 'col-md-9'])->end()
-            // NEXT_MAJOR: Change Options key to `form_group.options` and update translations files.
-            ->with('Options', ['class' => 'col-md-3'])->end();
+            ->with('form_group.gallery', ['class' => 'col-md-9'])->end()
+            ->with('form_group.options', ['class' => 'col-md-3'])->end();
 
         $context = $this->getPersistentParameter('context') ?? $this->pool->getDefaultContext();
 
@@ -95,7 +92,7 @@ final class GalleryAdmin extends AbstractAdmin
         }
 
         $form
-            ->with('Options')
+            ->with('form_group.options')
                 ->add('context', ChoiceType::class, [
                     'choices' => $contexts,
                     'choice_translation_domain' => 'SonataMediaBundle',
@@ -106,7 +103,7 @@ final class GalleryAdmin extends AbstractAdmin
                     ->add('defaultFormat', ChoiceType::class, ['choices' => $formats])
                 ->ifEnd()
             ->end()
-            ->with('Gallery')
+            ->with('form_group.gallery')
                 ->add('galleryItems', CollectionType::class, ['by_reference' => false], [
                     'edit' => 'inline',
                     'inline' => 'table',

@@ -51,8 +51,6 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         $this->pool = $pool;
         $this->options = $this->getOptions($options);
         $this->class = $class;
-
-        $this->logger = new NullLogger();
     }
 
     public function transform($value)
@@ -107,12 +105,12 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         try {
             $provider->transform($newMedia);
         } catch (\Throwable $e) {
-            \assert(null !== $this->logger);
+            $logger = $this->logger ?? new NullLogger();
 
             // #1107 We must never throw an exception here.
             // An exception here would prevent us to provide meaningful errors through the Form
             // Error message inspired from Monolog\ErrorHandler
-            $this->logger->error(
+            $logger->error(
                 sprintf('Caught Exception %s: "%s" at %s line %s', \get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()),
                 ['exception' => $e]
             );
