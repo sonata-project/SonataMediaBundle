@@ -17,14 +17,14 @@ Symfony SonataMediaBundle
 [![Monthly Downloads](https://poser.pugx.org/sonata-project/media-bundle/d/monthly)](https://packagist.org/packages/sonata-project/media-bundle)
 [![Daily Downloads](https://poser.pugx.org/sonata-project/media-bundle/d/daily)](https://packagist.org/packages/sonata-project/media-bundle)
 
-Branch | Github Actions | Code Coverage |
------- | -------------- | ------------- |
-3.x    | [![Test][test_stable_badge]][test_stable_link]     | [![Coverage Status][coverage_stable_badge]][coverage_stable_link]     |
-master | [![Test][test_unstable_badge]][test_unstable_link] | [![Coverage Status][coverage_unstable_badge]][coverage_unstable_link] |
+Branch | Github Actions | Code Coverage | Documentation |
+------ | -------------- | ------------- | ------------- |
+3.x    | [![Test][test_stable_badge]][test_stable_link]     | [![Coverage Status][coverage_stable_badge]][coverage_stable_link]     | [![Documentation Status][documentation_stable_badge]][documentation_stable_link]     |
+master | [![Test][test_unstable_badge]][test_unstable_link] | [![Coverage Status][coverage_unstable_badge]][coverage_unstable_link] | [![Documentation Status][documentation_unstable_badge]][documentation_unstable_link] |
 
 ## Documentation
 
-Check out the documentation on the [official website](https://sonata-project.org/bundles/media).
+Check out the documentation on the [official website](https://docs.sonata-project.org/projects/SonataMediaBundle).
 
 ## Support
 
@@ -48,3 +48,8 @@ This package is available under the [MIT license](LICENSE).
 [coverage_unstable_link]: https://codecov.io/gh/sonata-project/SonataMediaBundle/branch/master
 [shepherd_stable_badge]: https://shepherd.dev/github/sonata-project/SonataMediaBundle/coverage.svg
 [shepherd_stable_link]: https://shepherd.dev/github/sonata-project/SonataMediaBundle
+
+[documentation_stable_badge]: https://readthedocs.org/projects/sonata-project-sonatamediabundle/badge/?version=3.x
+[documentation_stable_link]: https://docs.sonata-project.org/projects/SonataMediaBundle/en/3.x/?badge=3.x
+[documentation_unstable_badge]: https://readthedocs.org/projects/sonata-project-sonatamediabundle/badge/?version=master
+[documentation_unstable_link]: https://docs.sonata-project.org/projects/SonataMediaBundle/en/master/?badge=master
