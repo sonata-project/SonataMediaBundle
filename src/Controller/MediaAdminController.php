@@ -28,7 +28,7 @@ class MediaAdminController extends Controller
     {
         $this->admin->checkAccess('create');
 
-        if (!$request->get('provider') && $request->isMethod('get')) {
+        if (null === $request->get('provider') && $request->isMethod('get')) {
             $pool = $this->get('sonata.media.pool');
 
             return $this->render('@SonataMedia/MediaAdmin/select_provider.html.twig', [
@@ -54,16 +54,14 @@ class MediaAdminController extends Controller
     {
         $this->admin->checkAccess('list');
 
-        if ($listMode = $request->get('_list_mode', 'mosaic')) {
-            $this->admin->setListMode($listMode);
-        }
+        $this->admin->setListMode($request->get('_list_mode', 'mosaic'));
 
         $datagrid = $this->admin->getDatagrid();
 
-        $filters = $request->get('filter');
+        $filters = $request->get('filter', []);
 
         // set the default context
-        if (!$filters || !\array_key_exists('context', $filters)) {
+        if ([] === $filters || !\array_key_exists('context', $filters)) {
             $context = $this->admin->getPersistentParameter('context', $this->get('sonata.media.pool')->getDefaultContext());
         } else {
             $context = $filters['context']['value'];
@@ -76,16 +74,16 @@ class MediaAdminController extends Controller
             $rootCategory = $this->get('sonata.media.manager.category')->getRootCategory($context);
         }
 
-        if (null !== $rootCategory && !$filters) {
+        if (null !== $rootCategory && [] === $filters) {
             $datagrid->setValue('category', null, $rootCategory->getId());
         }
-        if ($this->has('sonata.media.manager.category') && $request->get('category')) {
+        if ($this->has('sonata.media.manager.category') && null !== $request->get('category')) {
             $category = $this->get('sonata.media.manager.category')->findOneBy([
                 'id' => (int) $request->get('category'),
                 'context' => $context,
             ]);
 
-            if (!empty($category)) {
+            if (null !== $category) {
                 $datagrid->setValue('category', null, $category->getId());
             } else {
                 $datagrid->setValue('category', null, $rootCategory->getId());

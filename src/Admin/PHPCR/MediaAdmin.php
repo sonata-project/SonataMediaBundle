@@ -50,7 +50,7 @@ class MediaAdmin extends Admin
 
     public function id($model)
     {
-        return $this->getUrlsafeIdentifier($model);
+        return $this->getUrlSafeIdentifier($model);
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)

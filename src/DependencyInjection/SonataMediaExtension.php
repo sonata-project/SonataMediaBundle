@@ -333,6 +333,8 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         if ($container->hasDefinition('sonata.media.cdn.cloudfront') && isset($config['cdn']['cloudfront'])) {
+            $cloudFrontConfig = [];
+
             if (isset($config['cdn']['cloudfront']['region'])) {
                 $cloudFrontConfig['region'] = $config['cdn']['cloudfront']['region'];
             }

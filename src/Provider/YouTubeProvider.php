@@ -251,7 +251,7 @@ class YouTubeProvider extends BaseVideoProvider
 
     protected function fixBinaryContent(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -274,7 +274,7 @@ class YouTubeProvider extends BaseVideoProvider
     {
         $this->fixBinaryContent($media);
 
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 

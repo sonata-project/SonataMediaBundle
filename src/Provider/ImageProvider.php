@@ -76,7 +76,7 @@ class ImageProvider extends FileProvider
         $mediaWidth = $box->getWidth();
 
         $params = [
-            'alt' => $media->getDescription() ?: $media->getName(),
+            'alt' => $media->getDescription() ?? $media->getName(),
             'title' => $media->getName(),
             'src' => $this->generatePublicUrl($media, $format),
             'width' => $mediaWidth,

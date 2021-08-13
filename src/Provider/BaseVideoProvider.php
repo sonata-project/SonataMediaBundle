@@ -176,7 +176,7 @@ abstract class BaseVideoProvider extends BaseProvider
 
     public function postPersist(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -216,7 +216,7 @@ abstract class BaseVideoProvider extends BaseProvider
 
         $metadata = json_decode($response, true);
 
-        if (!$metadata) {
+        if (null === $metadata) {
             throw new \RuntimeException('Unable to decode the video information for :'.$url);
         }
 

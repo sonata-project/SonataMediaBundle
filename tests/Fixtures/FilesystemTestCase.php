@@ -82,7 +82,7 @@ class FilesystemTestCase extends TestCase
 
     protected function tearDown(): void
     {
-        if (!empty($this->longPathNamesWindows)) {
+        if ([] !== $this->longPathNamesWindows) {
             foreach ($this->longPathNamesWindows as $path) {
                 exec('DEL '.$path);
             }

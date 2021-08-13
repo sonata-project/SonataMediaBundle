@@ -131,7 +131,7 @@ class VimeoProvider extends BaseVideoProvider
 
     protected function fixBinaryContent(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -144,7 +144,7 @@ class VimeoProvider extends BaseVideoProvider
     {
         $this->fixBinaryContent($media);
 
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 

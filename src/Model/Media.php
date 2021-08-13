@@ -151,7 +151,7 @@ abstract class Media implements MediaInterface
 
     public function __toString()
     {
-        return $this->getName() ?: 'n/a';
+        return $this->getName() ?? 'n/a';
     }
 
     // NEXT_MAJOR: Remove this method
@@ -495,7 +495,7 @@ abstract class Media implements MediaInterface
      */
     public function isStatusErroneous($context)
     {
-        if ($this->getBinaryContent() && self::STATUS_ERROR === $this->getProviderStatus()) {
+        if (null !== $this->getBinaryContent() && self::STATUS_ERROR === $this->getProviderStatus()) {
             // NEXT_MAJOR: Restore type hint
             if (!$context instanceof ExecutionContextInterface) {
                 throw new \InvalidArgumentException('Argument 1 should be an instance of Symfony\Component\Validator\ExecutionContextInterface');

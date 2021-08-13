@@ -132,7 +132,7 @@ class DailyMotionProvider extends BaseVideoProvider
 
     protected function fixBinaryContent(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 
@@ -145,7 +145,7 @@ class DailyMotionProvider extends BaseVideoProvider
     {
         $this->fixBinaryContent($media);
 
-        if (!$media->getBinaryContent()) {
+        if (null === $media->getBinaryContent()) {
             return;
         }
 

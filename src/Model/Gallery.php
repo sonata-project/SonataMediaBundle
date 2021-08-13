@@ -59,7 +59,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
 
     public function __toString()
     {
-        return $this->getName() ?: '-';
+        return $this->getName() ?? '-';
     }
 
     public function setName($name)
