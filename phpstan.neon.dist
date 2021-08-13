@@ -5,6 +5,8 @@ parameters:
     level: 0
     bootstrapFiles:
         - vendor/bin/.phpunit/phpunit/vendor/autoload.php
+    symfony:
+        console_application_loader: ./phpstan-console-application.php
     scanFiles:
         # NEXT_MAJOR: Remove the scanFiles part
         - .phpstan/stubs/MetadataInterface.file
@@ -12,3 +14,7 @@ parameters:
         - src
         - tests
     treatPhpDocTypesAsCertain: false
+    checkGenericClassInNonGenericObjectType: true
+    checkMissingIterableValueType: true
+    checkMissingVarTagTypehint: true
+    checkMissingTypehints: true
