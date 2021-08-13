@@ -43,7 +43,7 @@ class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockServic
     {
         $menu = $this->getRootMenu($blockContext);
 
-        if ($gallery = $blockContext->getBlock()->getSetting('gallery')) {
+        if (null !== $gallery = $blockContext->getBlock()->getSetting('gallery')) {
             $menu->addChild($gallery->getName(), [
                 'route' => 'sonata_media_gallery_view',
                 'routeParameters' => [

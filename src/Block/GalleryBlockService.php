@@ -205,7 +205,7 @@ class GalleryBlockService extends AbstractBlockService
             'gallery' => $gallery,
             'block' => $blockContext->getBlock(),
             'settings' => $blockContext->getSettings(),
-            'elements' => $gallery ? $this->buildElements($gallery) : [],
+            'elements' => null !== $gallery ? $this->buildElements($gallery) : [],
         ], $response);
     }
 
@@ -213,7 +213,7 @@ class GalleryBlockService extends AbstractBlockService
     {
         $gallery = $block->getSetting('galleryId');
 
-        if ($gallery) {
+        if (null !== $gallery) {
             $gallery = $this->galleryManager->findOneBy(['id' => $gallery]);
         }
 

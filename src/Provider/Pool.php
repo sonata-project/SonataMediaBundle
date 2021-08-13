@@ -71,7 +71,7 @@ class Pool
         if (!$name) {
             throw new \InvalidArgumentException('Provider name cannot be empty, did you forget to call setProviderName() in your Media object?');
         }
-        if (empty($this->providers)) {
+        if ([] === $this->providers) {
             throw new \RuntimeException(sprintf('Unable to retrieve provider named "%s" since there are no providers configured yet.', $name));
         }
         if (!isset($this->providers[$name])) {
@@ -237,8 +237,8 @@ class Pool
             return $providers;
         }
 
-        foreach ($this->getProviderNamesByContext($name) as $name) {
-            $providers[] = $this->getProvider($name);
+        foreach ($this->getProviderNamesByContext($name) as $providerName) {
+            $providers[] = $this->getProvider($providerName);
         }
 
         return $providers;

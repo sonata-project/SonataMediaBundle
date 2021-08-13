@@ -94,7 +94,7 @@ class AddMassMediaCommand extends BaseCommand
             return \STDIN;
         }
 
-        if (!$input->getOption('file')) {
+        if (null === $input->getOption('file')) {
             throw new \RuntimeException('Please provide a CSV file argument or CSV input stream');
         }
 

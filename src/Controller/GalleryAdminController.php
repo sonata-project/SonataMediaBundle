@@ -49,7 +49,7 @@ class GalleryAdminController extends Controller
     {
         $this->admin->checkAccess('list');
 
-        if ($listMode = $request->get('_list_mode')) {
+        if (null !== $listMode = $request->get('_list_mode')) {
             $this->admin->setListMode($listMode);
         }
 

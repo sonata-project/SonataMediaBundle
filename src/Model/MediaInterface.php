@@ -240,7 +240,7 @@ interface MediaInterface
     /**
      * Get context.
      *
-     * @return string $context
+     * @return string|null $context
      */
     public function getContext();
 

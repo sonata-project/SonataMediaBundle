@@ -236,7 +236,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
                 $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
             }
 
-            return new StreamedResponse(static function () use ($file) {
+            return new StreamedResponse(static function () use ($file): void {
                 echo $file->getContent();
             }, 200, $headers);
         }
@@ -268,7 +268,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             throw new \RuntimeException(sprintf('Invalid binary content type: %s', \get_class($media->getBinaryContent())));
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getSize() ?: 0)) {
+        if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getSize() ?? 0)) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation(
@@ -321,10 +321,10 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     protected function fixFilename(MediaInterface $media)
     {
         if ($media->getBinaryContent() instanceof UploadedFile) {
-            $media->setName($media->getName() ?: $media->getBinaryContent()->getClientOriginalName());
+            $media->setName($media->getName() ?? $media->getBinaryContent()->getClientOriginalName());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getClientOriginalName());
         } elseif ($media->getBinaryContent() instanceof File) {
-            $media->setName($media->getName() ?: $media->getBinaryContent()->getBasename());
+            $media->setName($media->getName() ?? $media->getBinaryContent()->getBasename());
             $media->setMetadataValue('filename', $media->getBinaryContent()->getBasename());
         }
 
@@ -379,7 +379,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
         $binaryContent = $media->getBinaryContent();
         if ($binaryContent instanceof File) {
-            $path = $binaryContent->getRealPath() ?: $binaryContent->getPathname();
+            $path = false !== $binaryContent->getRealPath() ? $binaryContent->getRealPath() : $binaryContent->getPathname();
             $file->setContent(file_get_contents($path), $metadata);
 
             return;

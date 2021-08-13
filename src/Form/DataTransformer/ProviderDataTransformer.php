@@ -74,11 +74,12 @@ class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareIn
         $binaryContent = $value->getBinaryContent();
 
         // no binary
-        if (empty($binaryContent)) {
+        if (null === $binaryContent) {
             // and no media id
             if (null === $value->getId() && $this->options['empty_on_new']) {
                 return;
-            } elseif ($value->getId()) {
+            }
+            if (null !== $value->getId()) {
                 return $value;
             }
 

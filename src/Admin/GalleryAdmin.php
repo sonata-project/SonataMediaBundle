@@ -92,7 +92,7 @@ class GalleryAdmin extends AbstractAdmin
 
         $context = $this->getPersistentParameter('context');
 
-        if (!$context) {
+        if (null === $context) {
             $context = $this->pool->getDefaultContext();
         }
 
@@ -102,7 +102,7 @@ class GalleryAdmin extends AbstractAdmin
         }
 
         $contexts = [];
-        foreach ((array) $this->pool->getContexts() as $contextItem => $format) {
+        foreach ($this->pool->getContexts() as $contextItem => $format) {
             $contexts[$contextItem] = $contextItem;
         }
 

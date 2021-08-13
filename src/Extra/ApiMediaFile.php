@@ -21,12 +21,12 @@ use Symfony\Component\HttpFoundation\File\File;
 class ApiMediaFile extends File
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $extension;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $mimetype;
 
@@ -50,7 +50,7 @@ class ApiMediaFile extends File
 
     public function getExtension()
     {
-        return $this->extension ?: parent::getExtension();
+        return $this->extension ?? parent::getExtension();
     }
 
     /**
@@ -61,9 +61,9 @@ class ApiMediaFile extends File
         $this->extension = $extension;
     }
 
-    public function getMimetype()
+    public function getMimeType()
     {
-        return $this->mimetype ?: parent::getMimeType();
+        return $this->mimetype ?? parent::getMimeType();
     }
 
     /**
@@ -76,6 +76,6 @@ class ApiMediaFile extends File
 
     public function guessExtension()
     {
-        return $this->extension ?: parent::guessExtension();
+        return $this->extension ?? parent::guessExtension();
     }
 }

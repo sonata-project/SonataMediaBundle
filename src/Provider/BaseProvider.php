@@ -92,7 +92,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function flushCdn(MediaInterface $media)
     {
-        if (!$media->getId() || !$media->getCdnIsFlushable()) {
+        if (null === $media->getId() || !$media->getCdnIsFlushable()) {
             // If the medium is new or if it isn't marked as flushable, skip the CDN flush process.
             return;
         }
@@ -125,7 +125,7 @@ abstract class BaseProvider implements MediaProviderInterface
             }
         }
 
-        if (!empty($flushPaths)) {
+        if ([] !== $flushPaths) {
             $cdnFlushIdentifier = $this->getCdn()->flushPaths($flushPaths);
             $media->setCdnFlushIdentifier($cdnFlushIdentifier);
             $media->setCdnStatus(CDNInterface::STATUS_TO_FLUSH);

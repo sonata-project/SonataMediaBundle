@@ -80,7 +80,6 @@ class MediaAdminControllerTest extends TestCase
         $pool->method('getDefaultContext')->willReturn('default_context');
         $this->admin->expects(self::once())->method('checkAccess')->with('create');
         $this->container->set('sonata.media.pool', $pool);
-        $this->request->query->set('provider', false);
         $this->request->query->set('context', 'context');
 
         $response = $this->controller->createAction($this->request);
@@ -101,7 +100,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin
             ->method('getIdParameter')
             ->willReturn('id');
-        $this->request->query->set('provider', true);
+        $this->request->query->set('provider', 'provider');
         $response = $this->controller->createAction($this->request);
 
         self::assertInstanceOf(Response::class, $response);
@@ -138,7 +137,7 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->expects(self::once())->method('checkAccess')->with('list');
         $this->admin->expects(self::once())->method('setListMode')->with('mosaic');
         $this->admin->method('getDatagrid')->willReturn($datagrid);
-        $this->admin->method('getPersistentParameter')->with('context', 'context')->willReturn('another_context');
+        $this->admin->method('getPersistentParameter')->with('context')->willReturn('another_context');
         $this->admin->method('getFilterTheme')->willReturn(['filterTheme']);
         $this->request->query->set('_list_mode', 'mosaic');
         $this->request->query->set('filter', []);

@@ -68,7 +68,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         $filter = $this->getRequest()->get('filter');
-        if ($filter && \array_key_exists('context', $this->getRequest()->get('filter'))) {
+        if (null !== $filter && \array_key_exists('context', $this->getRequest()->get('filter'))) {
             $context = $filter['context']['value'];
         } else {
             $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
@@ -92,7 +92,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $categoryId = $this->getRequest()->get('category');
 
-        if (null !== $this->categoryManager && !$categoryId) {
+        if (null !== $this->categoryManager && null === $categoryId) {
             $categoryId = $this->categoryManager->getRootCategory($context)->getId();
         }
 
@@ -118,7 +118,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
             $media->setContext($context = $this->getRequest()->get('context'));
 
-            if (null !== $this->categoryManager && $categoryId = $this->getPersistentParameter('category')) {
+            if (null !== $this->categoryManager && null !== $categoryId = $this->getPersistentParameter('category')) {
                 $category = $this->categoryManager->find($categoryId);
 
                 if ($category && $category->getContext()->getId() === $context) {
