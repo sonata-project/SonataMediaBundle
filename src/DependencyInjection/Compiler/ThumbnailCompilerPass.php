@@ -43,7 +43,7 @@ class ThumbnailCompilerPass implements CompilerPassInterface
 
         if (!is_a($resolvedClass, ResizableThumbnailInterface::class, true)) {
             @trigger_error(sprintf(
-                'Not implementing %s on a format thumbnail that uses resizers is deprecated since sonata-project/media-bundle 3.x'
+                'Not implementing %s on a thumbnail format that uses resizers is deprecated since sonata-project/media-bundle 3.x.'
                 .' and will not work on 4.0. Please implement the interface on %s',
                 ResizableThumbnailInterface::class,
                 $resolvedClass
