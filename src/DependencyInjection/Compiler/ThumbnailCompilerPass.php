@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection\Compiler;
 
+use Sonata\MediaBundle\Thumbnail\ResizableThumbnailInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,25 +26,17 @@ final class ThumbnailCompilerPass implements CompilerPassInterface
             return;
         }
 
-        $definition = $container->getDefinition(
-            'sonata.media.thumbnail.format'
-        );
+        $definition = $container->getDefinition('sonata.media.thumbnail.format');
+        $resolvedClass = $container->getParameterBag()->resolveValue($definition->getClass());
 
-        $reflectionClass = new \ReflectionClass($container->getParameterBag()->resolveValue($definition->getClass()));
-
-        if (!$reflectionClass->hasMethod('addResizer') || !$reflectionClass->getMethod('addResizer')->isPublic()) {
+        if (!is_a($resolvedClass, ResizableThumbnailInterface::class, true)) {
             return;
         }
 
-        $taggedServices = $container->findTaggedServiceIds(
-            'sonata.media.resizer'
-        );
+        $taggedServices = $container->findTaggedServiceIds('sonata.media.resizer');
 
         foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall(
-                'addResizer',
-                [$id, new Reference($id)]
-            );
+            $definition->addMethodCall('addResizer', [$id, new Reference($id)]);
         }
     }
 }

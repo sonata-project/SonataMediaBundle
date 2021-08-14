@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 
-final class FormatThumbnail implements ThumbnailInterface
+final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInterface
 {
     /**
      * @var string
@@ -41,9 +41,6 @@ final class FormatThumbnail implements ThumbnailInterface
         }
     }
 
-    /**
-     * @throws \LogicException
-     */
     public function getResizer(string $id): ResizerInterface
     {
         if (!isset($this->resizers[$id])) {
@@ -92,8 +89,10 @@ final class FormatThumbnail implements ThumbnailInterface
         }
 
         foreach ($provider->getFormats() as $format => $settings) {
-            if (substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext() ||
-                MediaProviderInterface::FORMAT_ADMIN === $format) {
+            if (
+                substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext() ||
+                MediaProviderInterface::FORMAT_ADMIN === $format
+            ) {
                 $resizer = false !== $settings['resizer'] ? $this->getResizer($settings['resizer']) : $provider->getResizer();
 
                 if (null === $resizer) {
