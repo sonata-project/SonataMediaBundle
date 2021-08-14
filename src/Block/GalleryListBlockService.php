@@ -58,6 +58,11 @@ class GalleryListBlockService extends AbstractBlockService
         $this->pool = $pool;
     }
 
+    public function getName()
+    {
+        return 'Media Gallery List';
+    }
+
     /**
      * NEXT_MAJOR: Remove this method.
      *
