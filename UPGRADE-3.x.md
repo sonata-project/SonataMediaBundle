@@ -1,6 +1,17 @@
 UPGRADE 3.x
 ===========
 
+UPGRADE FROM 3.x to 3.x
+=======================
+
+### ResizableThumbnailInterface
+
+This interface is added to provide a clearer Api for FormatThumbnail. It allows to know if a Thumbnail can be generated with custom Resizers, not the ones provided by
+the file provider.
+
+If you have custom Thumbnail generator, please implement this interface if you need
+custom resizers.
+
 UPGRADE FROM 3.31 to 3.32
 =========================
 
