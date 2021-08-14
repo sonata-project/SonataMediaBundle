@@ -75,7 +75,8 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
             // and no media id
             if (null === $value->getId() && true === $this->options['empty_on_new']) {
                 return;
-            } elseif (null !== $value->getId()) {
+            }
+            if (null !== $value->getId()) {
                 return $value;
             }
 
