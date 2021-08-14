@@ -20,7 +20,7 @@ use Sonata\MediaBundle\Resizer\ResizerInterface;
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class FormatThumbnail implements ThumbnailInterface
+class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInterface
 {
     /**
      * @var string
@@ -40,9 +40,6 @@ class FormatThumbnail implements ThumbnailInterface
         $this->defaultFormat = $defaultFormat;
     }
 
-    /**
-     * @param string $id
-     */
     public function addResizer($id, ResizerInterface $resizer)
     {
         if (!isset($this->resizers[$id])) {
@@ -50,13 +47,11 @@ class FormatThumbnail implements ThumbnailInterface
         }
     }
 
-    /**
-     * @param string $id
-     *
-     * @throws \Exception
-     *
-     * @return ResizerInterface
-     */
+    public function hasResizer($id): bool
+    {
+        return isset($this->resizers[$id]);
+    }
+
     public function getResizer($id)
     {
         if (!isset($this->resizers[$id])) {
@@ -105,9 +100,11 @@ class FormatThumbnail implements ThumbnailInterface
         }
 
         foreach ($provider->getFormats() as $format => $settings) {
-            if (substr($format, 0, \strlen($media->getContext())) === $media->getContext() ||
-                MediaProviderInterface::FORMAT_ADMIN === $format) {
-                $resizer = (isset($settings['resizer']) && ($settings['resizer'])) ?
+            if (
+                substr($format, 0, \strlen($media->getContext())) === $media->getContext() ||
+                MediaProviderInterface::FORMAT_ADMIN === $format
+            ) {
+                $resizer = (isset($settings['resizer']) && ($settings['resizer'])) && $this->hasResizer($settings['resizer']) ?
                     $this->getResizer($settings['resizer']) :
                     $provider->getResizer();
                 $resizer->resize(

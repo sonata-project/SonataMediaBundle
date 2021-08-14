@@ -20,12 +20,24 @@ use Sonata\MediaBundle\Resizer\ResizerInterface;
  */
 interface ResizableThumbnailInterface
 {
-    public function addResizer(string $id, ResizerInterface $resizer): void;
+    /**
+     * @param string $id
+     *
+     * @return void
+     */
+    public function addResizer($id, ResizerInterface $resizer);
 
-    public function hasResizer(string $id): bool;
+    /**
+     * @param string id
+     */
+    public function hasResizer($id): bool;
 
     /**
      * @throws \LogicException if resizer is not found
+     *
+     * @param string $id
+     *
+     * @return ResizerInterface
      */
-    public function getResizer(string $id): ResizerInterface;
+    public function getResizer($id);
 }
