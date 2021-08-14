@@ -133,11 +133,10 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
             'context' => $blockContext,
             'settings' => $blockContext->getSettings(),
             'block' => $blockContext->getBlock(),
-            'pager' => $this->galleryManager->getPager(
+            'galleries' => $this->galleryManager->findBy(
                 $criteria,
-                1,
-                $blockContext->getSetting('number'),
-                [$order => $sortDirection]
+                [$order => $sortDirection],
+                $blockContext->getSetting('number')
             ),
         ], $response);
     }
