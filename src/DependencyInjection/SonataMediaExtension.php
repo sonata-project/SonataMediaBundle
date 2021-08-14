@@ -261,7 +261,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             'fieldName' => 'media',
             'targetEntity' => $config['class']['media'],
             'cascade' => [
-                 'persist',
+                'persist',
             ],
             'mappedBy' => null,
             'inversedBy' => 'galleryHasMedias',
@@ -299,9 +299,9 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
                 'inversedBy' => null,
                 'joinColumns' => [
                     [
-                     'name' => 'category_id',
-                     'referencedColumnName' => 'id',
-                     'onDelete' => 'SET NULL',
+                        'name' => 'category_id',
+                        'referencedColumnName' => 'id',
+                        'onDelete' => 'SET NULL',
                     ],
                 ],
                 'orphanRemoval' => false,
@@ -351,7 +351,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $cloudFrontClass = CloudFrontVersion3::class;
 
             $container->getDefinition('sonata.media.cdn.cloudfront.client')
-                    ->replaceArgument(0, $cloudFrontConfig);
+                ->replaceArgument(0, $cloudFrontConfig);
 
             $container->getDefinition('sonata.media.cdn.cloudfront')
                 ->setClass($cloudFrontClass)
@@ -413,11 +413,11 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
             $container->getDefinition('sonata.media.metadata.amazon')
                 ->replaceArgument(0, [
-                        'acl' => $config['filesystem']['s3']['acl'],
-                        'storage' => $config['filesystem']['s3']['storage'],
-                        'encryption' => $config['filesystem']['s3']['encryption'],
-                        'meta' => $config['filesystem']['s3']['meta'],
-                        'cache_control' => $config['filesystem']['s3']['cache_control'],
+                    'acl' => $config['filesystem']['s3']['acl'],
+                    'storage' => $config['filesystem']['s3']['storage'],
+                    'encryption' => $config['filesystem']['s3']['encryption'],
+                    'meta' => $config['filesystem']['s3']['meta'],
+                    'cache_control' => $config['filesystem']['s3']['cache_control'],
                 ]);
 
             $arguments = [
@@ -461,8 +461,16 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $container->removeDefinition('sonata.media.filesystem.mogilefs');
         }
 
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
-            (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))) {
+        // NEXT_MAJOR: Remove this section and everything related to openstack/rackspace
+        if (
+            $container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
+            (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))
+        ) {
+            @trigger_error(
+                'Integration with openStack / rackSpace is deprecated without replacement since sonata-project/media-bundle 3.x',
+                \E_USER_DEPRECATED
+            );
+
             if (isset($config['filesystem']['openstack'])) {
                 $container->setParameter('sonata.media.adapter.filesystem.opencloud.class', 'OpenCloud\OpenStack');
                 $settings = 'openstack';
