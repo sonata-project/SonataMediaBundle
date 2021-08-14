@@ -33,9 +33,9 @@ interface ResizableThumbnailInterface
     public function hasResizer($id): bool;
 
     /**
-     * @throws \LogicException if resizer is not found
-     *
      * @param string $id
+     *
+     * @throws \LogicException if resizer is not found
      *
      * @return ResizerInterface
      */
