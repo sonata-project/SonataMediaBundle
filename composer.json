@@ -119,7 +119,6 @@
         "friendsofsymfony/rest-bundle": "If you want to expose a ReST API.",
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...).",
         "nelmio/api-doc-bundle": "If you want to provide OAS documentation for the ReST API.",
-        "rackspace/php-opencloud": "If you want to use OpenStack/Rackspace APIs.",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities.",
         "sonata-project/notification-bundle": "If you want to generate thumbnails asynchronously.",
