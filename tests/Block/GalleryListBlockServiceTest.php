@@ -33,6 +33,18 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
 
         $this->galleryManager = $this->createMock(GalleryManagerInterface::class);
         $this->pool = $this->createMock(Pool::class);
+
+        $this->blockService = new GalleryListBlockService(
+            $this->twig,
+            null,
+            $this->galleryManager,
+            $this->pool
+        );
+    }
+
+    public function testName(): void
+    {
+        self::assertSame('Media Gallery List', $this->blockService->getName());
     }
 
     public function testExecute(): void
@@ -53,8 +65,6 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
 
         $blockContext = new BlockContext($block, $settings);
 
-        $blockService = new GalleryListBlockService($this->twig, null, $this->galleryManager, $this->pool);
-
         $this->twig
             ->expects(self::once())
             ->method('render')
@@ -65,13 +75,12 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
                 'settings' => $settings,
             ]);
 
-        $blockService->execute($blockContext);
+        $this->blockService->execute($blockContext);
     }
 
     public function testDefaultSettings(): void
     {
-        $blockService = new GalleryListBlockService($this->twig, null, $this->galleryManager, $this->pool);
-        $blockContext = $this->getBlockContext($blockService);
+        $blockContext = $this->getBlockContext($this->blockService);
 
         $this->assertSettings([
             'number' => 15,

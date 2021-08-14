@@ -29,6 +29,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FeatureMediaBlockService extends MediaBlockService
 {
+    public function getName()
+    {
+        return 'Feature Media';
+    }
+
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

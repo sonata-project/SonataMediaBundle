@@ -92,6 +92,11 @@ class GalleryBlockService extends AbstractBlockService
         return $this->galleryAdmin;
     }
 
+    public function getName()
+    {
+        return 'Media Gallery';
+    }
+
     public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
