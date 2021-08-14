@@ -467,7 +467,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))
         ) {
             @trigger_error(
-                'Integration with openStack / rackSpace is deprecated without replacement since sonata-project/media-bundle 3.x',
+                'Integration with OpenStack / Rackspace is deprecated without replacement since sonata-project/media-bundle 3.x',
                 \E_USER_DEPRECATED
             );
 
