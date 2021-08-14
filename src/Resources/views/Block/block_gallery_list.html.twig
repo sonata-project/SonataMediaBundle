@@ -19,7 +19,7 @@
 
         <div class="panel-body">
             <div class="list-group">
-                {% for gallery in pager.getResults() %}
+                {% for gallery in galleries %}
                     {% if settings.mode == 'admin' and sonata_admin is defined %}
                         <a href="{{ sonata_admin.url('sonata.media.admin.gallery', 'edit', { 'id': gallery.id, 'context': gallery.context }) }}" class="list-group-item">
                             {% if gallery.enabled %}
