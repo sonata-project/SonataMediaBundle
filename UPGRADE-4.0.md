@@ -1,6 +1,12 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### FormatThumbnail now implements ResizableThumbnailInterface
+
+  FormatThumbnail had `addResizer` and `getResizer` methods, without implementing
+  any interface. Those methods are using on `ThumbnailCompilerPass` to add the
+  different resizers. Now those methods are on an interface to expose a clear API.
+
 ### Integration with classification-bundle
 
   In SonataMediaBundle 4.0 we improved the integration with SonataClassificationBundle, you don't need

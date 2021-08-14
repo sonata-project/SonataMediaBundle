@@ -41,6 +41,11 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
         }
     }
 
+    public function hasResizer(string $id): bool
+    {
+        return isset($this->resizers[$id]);
+    }
+
     public function getResizer(string $id): ResizerInterface
     {
         if (!isset($this->resizers[$id])) {
@@ -93,7 +98,9 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
                 substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext() ||
                 MediaProviderInterface::FORMAT_ADMIN === $format
             ) {
-                $resizer = false !== $settings['resizer'] ? $this->getResizer($settings['resizer']) : $provider->getResizer();
+                $resizer = false !== $settings['resizer'] && $this->hasResizer($settings['resizer']) ?
+                    $this->getResizer($settings['resizer']) :
+                    $provider->getResizer();
 
                 if (null === $resizer) {
                     continue;

@@ -19,6 +19,8 @@ interface ResizableThumbnailInterface
 {
     public function addResizer(string $id, ResizerInterface $resizer): void;
 
+    public function hasResizer(string $id): bool;
+
     /**
      * @throws \LogicException if resizer is not found
      */
