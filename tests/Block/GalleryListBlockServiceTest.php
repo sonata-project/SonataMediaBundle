@@ -17,7 +17,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
-use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Block\GalleryListBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -44,8 +43,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
 
     public function testExecute(): void
     {
-        $pager = $this->createMock(PagerInterface::class);
-        $this->galleryManager->expects(self::once())->method('getPager')->willReturn($pager);
+        $this->galleryManager->expects(self::once())->method('findBy')->willReturn([]);
 
         $block = new Block();
 
@@ -67,7 +65,7 @@ class GalleryListBlockServiceTest extends BlockServiceTestCase
             ->method('render')
             ->with('@SonataMedia/Block/block_gallery_list.html.twig', [
                 'context' => $blockContext,
-                'pager' => $pager,
+                'galleries' => [],
                 'block' => $block,
                 'settings' => $settings,
             ]);
