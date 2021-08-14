@@ -60,11 +60,13 @@ class TestProvider extends BaseProvider
     public function getReferenceImage(MediaInterface $media): string
     {
         // A copy of the code from \Sonata\MediaBundle\Provider\FileProvider::getReferenceImage()
-        $this->prevReferenceImage = sprintf(
-            '%s/%s',
-            $this->generatePath($media),
-            $media->getProviderReference()
-        );
+        $providerReference = $media->getProviderReference();
+
+        if (null === $providerReference) {
+            return '';
+        }
+
+        $this->prevReferenceImage = sprintf('%s/%s', $this->generatePath($media), $providerReference);
 
         return $this->prevReferenceImage;
     }

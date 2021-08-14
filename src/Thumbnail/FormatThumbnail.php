@@ -58,12 +58,16 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
-            $path = $provider->getReferenceImage($media);
-        } else {
-            $path = sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $media->getId(), $format, $this->getExtension($media));
+            return $provider->getReferenceImage($media);
         }
 
-        return $path;
+        $id = $media->getId();
+
+        if (null === $id) {
+            return '';
+        }
+
+        return sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));
     }
 
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
@@ -72,13 +76,13 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
             return $provider->getReferenceImage($media);
         }
 
-        return sprintf(
-            '%s/thumb_%s_%s.%s',
-            $provider->generatePath($media),
-            $media->getId(),
-            $format,
-            $this->getExtension($media)
-        );
+        $id = $media->getId();
+
+        if (null === $id) {
+            return '';
+        }
+
+        return sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));
     }
 
     public function generate(MediaProviderInterface $provider, MediaInterface $media): void

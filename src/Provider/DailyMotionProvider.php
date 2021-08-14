@@ -120,7 +120,13 @@ final class DailyMotionProvider extends BaseVideoProvider
 
     public function getReferenceUrl(MediaInterface $media): string
     {
-        return sprintf('http://www.dailymotion.com/video/%s', $media->getProviderReference());
+        $providerReference = $media->getProviderReference();
+
+        if (null === $providerReference) {
+            return '';
+        }
+
+        return sprintf('http://www.dailymotion.com/video/%s', $providerReference);
     }
 
     protected function doTransform(MediaInterface $media): void

@@ -27,7 +27,9 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 abstract class BaseProvider implements MediaProviderInterface
 {
     /**
-     * @var array<string, FormatOptions>
+     * @var array<string, array<string, int|string|bool|array|null>>
+     *
+     * @phpstan-var array<string, FormatOptions>
      */
     protected $formats = [];
 

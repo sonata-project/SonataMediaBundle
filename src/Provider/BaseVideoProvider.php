@@ -94,20 +94,32 @@ abstract class BaseVideoProvider extends BaseProvider
 
     public function generatePublicUrl(MediaInterface $media, string $format): string
     {
+        $id = $media->getId();
+
+        if (null === $id) {
+            return '';
+        }
+
         return $this->getCdn()->getPath(sprintf(
             '%s/thumb_%s_%s.jpg',
             $this->generatePath($media),
-            $media->getId(),
+            $id,
             $format
         ), $media->getCdnIsFlushable());
     }
 
     public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
+        $id = $media->getId();
+
+        if (null === $id) {
+            return '';
+        }
+
         return sprintf(
             '%s/thumb_%s_%s.jpg',
             $this->generatePath($media),
-            $media->getId(),
+            $id,
             $format
         );
     }
@@ -176,7 +188,7 @@ abstract class BaseVideoProvider extends BaseProvider
             $response = $this->sendRequest('GET', $url);
         } catch (\RuntimeException $e) {
             throw new \RuntimeException(
-                'Unable to retrieve the video information for :'.$url,
+                sprintf('Unable to retrieve the video information for: %s', $url),
                 \is_int($e->getCode()) ? $e->getCode() : 0,
                 $e
             );
@@ -185,7 +197,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $metadata = json_decode($response, true);
 
         if (null === $metadata) {
-            throw new \RuntimeException('Unable to decode the video information for :'.$url);
+            throw new \RuntimeException(sprintf('Unable to decode the video information for: %s', $url));
         }
 
         return $metadata;
@@ -202,8 +214,8 @@ abstract class BaseVideoProvider extends BaseProvider
 
         if (isset($options['width']) || isset($options['height'])) {
             $settings = [
-                'width' => $options['width'] ?? null,
-                'height' => $options['height'] ?? null,
+                'width' => isset($options['width']) && \is_int($options['width']) ? $options['width'] : null,
+                'height' => isset($options['height']) && \is_int($options['height']) ? $options['height'] : null,
                 'quality' => 80,
                 'format' => 'jpg',
                 'constraint' => true,

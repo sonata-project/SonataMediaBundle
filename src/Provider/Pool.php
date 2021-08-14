@@ -223,7 +223,7 @@ final class Pool
         $mediaContext = $media->getContext();
 
         if (null === $mediaContext) {
-            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId()));
+            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId() ?? ''));
         }
 
         $download = $this->getContext($mediaContext)['download'];
@@ -249,7 +249,7 @@ final class Pool
         $mediaContext = $media->getContext();
 
         if (null === $mediaContext) {
-            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId()));
+            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId() ?? ''));
         }
 
         $download = $this->getContext($mediaContext)['download'];

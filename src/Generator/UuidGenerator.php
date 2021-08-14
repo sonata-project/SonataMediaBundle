@@ -21,6 +21,6 @@ class UuidGenerator implements GeneratorInterface
     {
         $id = (string) $media->getId();
 
-        return sprintf('%s/%04s/%02s', $media->getContext(), substr($id, 0, 4), substr($id, 4, 2));
+        return sprintf('%s/%04s/%02s', $media->getContext() ?? '', substr($id, 0, 4), substr($id, 4, 2));
     }
 }

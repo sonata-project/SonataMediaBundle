@@ -80,11 +80,13 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
     public function getReferenceImage(MediaInterface $media): string
     {
-        return sprintf(
-            '%s/%s',
-            $this->generatePath($media),
-            $media->getProviderReference()
-        );
+        $providerReference = $media->getProviderReference();
+
+        if (null === $providerReference) {
+            return '';
+        }
+
+        return sprintf('%s/%s', $this->generatePath($media), $providerReference);
     }
 
     public function getReferenceFile(MediaInterface $media): GaufretteFile
@@ -185,7 +187,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
 
             if (false === $path) {
-                throw new \RuntimeException(sprintf('Unable to generate temporary file name for media %s.', $media->getId()));
+                throw new \RuntimeException(sprintf('Unable to generate temporary file name for media %s.', $media->getId() ?? ''));
             }
 
             $fileObject = new \SplFileObject($path, 'w');
@@ -257,13 +259,17 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             throw new \RuntimeException(sprintf('Cannot use X-Sendfile or X-Accel-Redirect with non %s.', Local::class));
         }
 
-        $filename = sprintf(
-            '%s/%s',
-            $adapter->getDirectory(),
-            $this->generatePrivateUrl($media, $format)
-        );
+        $directory = $adapter->getDirectory();
 
-        return new BinaryFileResponse($filename, 200, $headers);
+        if (false === $directory) {
+            throw new \RuntimeException('Cannot retrieve directory from the adapter.');
+        }
+
+        return new BinaryFileResponse(
+            sprintf('%s/%s', $directory, $this->generatePrivateUrl($media, $format)),
+            200,
+            $headers
+        );
     }
 
     public function validate(ErrorElement $errorElement, MediaInterface $media): void
@@ -293,7 +299,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         if (!\in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), $this->allowedExtensions, true)) {
             $errorElement
                 ->with('binaryContent')
-                ->addViolation('Invalid extensions')
+                    ->addViolation('Invalid extensions')
                 ->end();
         }
 
@@ -320,7 +326,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
         // if the binary content is a filename => convert to a valid File
         if (!is_file($media->getBinaryContent())) {
-            throw new \RuntimeException('The file does not exist : '.$media->getBinaryContent());
+            throw new \RuntimeException(sprintf('The file does not exist: %s', $media->getBinaryContent()));
         }
 
         $binaryContent = new File($media->getBinaryContent());
@@ -359,7 +365,8 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         // this is the name used to store the file
-        if (null === $media->getProviderReference() ||
+        if (
+            null === $media->getProviderReference() ||
             MediaInterface::MISSING_BINARY_REFERENCE === $media->getProviderReference()
         ) {
             $media->setProviderReference($this->generateReferenceName($media));
@@ -378,7 +385,20 @@ class FileProvider extends BaseProvider implements FileProviderInterface
      */
     protected function setFileContents(MediaInterface $media, ?string $contents = null): void
     {
-        $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
+        $providerReference = $media->getProviderReference();
+
+        if (null === $providerReference) {
+            throw new \RuntimeException(sprintf(
+                'Unable to generate path to file without provider reference for media "%s".',
+                (string) $media
+            ));
+        }
+
+        $file = $this->getFilesystem()->get(
+            sprintf('%s/%s', $this->generatePath($media), $providerReference),
+            true
+        );
+
         $metadata = null !== $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
 
         if (null !== $contents) {
@@ -393,7 +413,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             $fileContents = file_get_contents($path);
 
             if (false === $fileContents) {
-                throw new \RuntimeException(sprintf('Unable to get file contents for media %s', $media->getId()));
+                throw new \RuntimeException(sprintf('Unable to get file contents for media %s', $media->getId() ?? ''));
             }
 
             $file->setContent($fileContents, $metadata);
@@ -440,7 +460,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
         if (null === $extension) {
             throw new \RuntimeException(
-                sprintf('Unable to guess extension for content type %s', $media->getContentType())
+                sprintf('Unable to guess extension for content type %s', $media->getContentType() ?? '')
             );
         }
 

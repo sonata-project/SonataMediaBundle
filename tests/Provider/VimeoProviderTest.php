@@ -230,7 +230,7 @@ class VimeoProviderTest extends AbstractProviderTest
     public function testGetMetadataException(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to retrieve the video information for :012341231');
+        $this->expectExceptionMessage('Unable to retrieve the video information for: 012341231');
         $this->expectExceptionCode(12);
 
         $client = $this->createMock(ClientInterface::class);

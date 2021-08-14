@@ -117,7 +117,7 @@ final class RemoveThumbsCommand extends Command
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log('Error: '.$e->getMessage());
+                $this->log(sprintf('Error: %s', $e->getMessage()));
 
                 break;
             }
@@ -128,16 +128,14 @@ final class RemoveThumbsCommand extends Command
             }
 
             $totalMediasCount += $batchMediasCount;
-            $this->log(
-                sprintf(
-                    'Loaded %s medias (batch #%d, offset %d) for removing thumbs (provider: %s, format: %s)',
-                    $batchMediasCount,
-                    $batchCounter,
-                    $batchOffset,
-                    $provider->getName(),
-                    $format
-                )
-            );
+            $this->log(sprintf(
+                'Loaded %s medias (batch #%d, offset %d) for removing thumbs (provider: %s, format: %s)',
+                $batchMediasCount,
+                $batchCounter,
+                $batchOffset,
+                $provider->getName(),
+                $format
+            ));
 
             foreach ($medias as $media) {
                 if (!$this->processMedia($media, $provider, $context, $format)) {
@@ -152,7 +150,7 @@ final class RemoveThumbsCommand extends Command
             }
         } while (true);
 
-        $this->log("Done (total medias processed: {$totalMediasCount}).");
+        $this->log(sprintf('Done (total medias processed: %s).', $totalMediasCount));
 
         return 0;
     }
@@ -213,7 +211,11 @@ final class RemoveThumbsCommand extends Command
 
     private function processMedia(MediaInterface $media, MediaProviderInterface $provider, string $context, string $format): bool
     {
-        $this->log('Deleting thumbs for '.$media->getName().' - '.$media->getId());
+        $this->log(sprintf(
+            'Deleting thumbs for %s - %s',
+            $media->getName() ?? '',
+            $media->getId() ?? ''
+        ));
 
         try {
             if ($format === $context.'_all') {
@@ -224,7 +226,7 @@ final class RemoveThumbsCommand extends Command
         } catch (\Exception $e) {
             $this->log(sprintf(
                 '<error>Unable to remove thumbnails, media: %s - %s </error>',
-                $media->getId(),
+                $media->getId() ?? '',
                 $e->getMessage()
             ));
 

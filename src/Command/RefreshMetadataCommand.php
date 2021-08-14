@@ -102,12 +102,20 @@ final class RefreshMetadataCommand extends Command
         ));
 
         foreach ($medias as $media) {
-            $this->log('Refresh media '.$media->getName().' - '.$media->getId());
+            $this->log(sprintf(
+                'Refresh media %s - %s',
+                $media->getName() ?? '',
+                $media->getId() ?? ''
+            ));
 
             try {
                 $provider->updateMetadata($media, false);
             } catch (\Exception $e) {
-                $this->log(sprintf('<error>Unable to update metadata, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+                $this->log(sprintf(
+                    '<error>Unable to update metadata, media: %s - %s </error>',
+                    $media->getId() ?? '',
+                    $e->getMessage()
+                ));
 
                 continue;
             }
@@ -115,7 +123,11 @@ final class RefreshMetadataCommand extends Command
             try {
                 $this->mediaManager->save($media);
             } catch (\Exception $e) {
-                $this->log(sprintf('<error>Unable saving media, media: %s - %s </error>', $media->getId(), $e->getMessage()));
+                $this->log(sprintf(
+                    '<error>Unable saving media, media: %s - %s </error>',
+                    $media->getId() ?? '',
+                    $e->getMessage()
+                ));
 
                 continue;
             }

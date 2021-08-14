@@ -152,7 +152,11 @@ abstract class Gallery implements GalleryInterface
         $iterator = $this->getGalleryItems()->getIterator();
 
         if (!$iterator instanceof \ArrayIterator) {
-            throw new \RuntimeException(sprintf('The gallery %s cannot be reordered, $galleryItems should implement %s', $this->getId(), \ArrayIterator::class));
+            throw new \RuntimeException(sprintf(
+                'The gallery %s cannot be reordered, $galleryItems should implement %s',
+                $this->getId() ?? '',
+                \ArrayIterator::class
+            ));
         }
 
         $iterator->uasort(static function (GalleryItemInterface $a, GalleryItemInterface $b): int {

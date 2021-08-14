@@ -235,7 +235,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     public function testGetMetadataException(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to retrieve the video information for :BDYAbAtaDzA');
+        $this->expectExceptionMessage('Unable to retrieve the video information for: BDYAbAtaDzA');
         $this->expectExceptionCode(12);
 
         $client = $this->createMock(ClientInterface::class);

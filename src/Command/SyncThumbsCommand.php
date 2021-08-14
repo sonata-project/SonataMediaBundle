@@ -182,8 +182,8 @@ final class SyncThumbsCommand extends Command
     {
         $this->log(sprintf(
             'Generating thumbs for %s - %s',
-            $media->getName(),
-            $media->getId()
+            $media->getName() ?? '',
+            $media->getId() ?? ''
         ));
 
         try {
@@ -191,7 +191,7 @@ final class SyncThumbsCommand extends Command
         } catch (\Exception $e) {
             $this->log(sprintf(
                 '<error>Unable to remove old thumbnails, media: %s - %s </error>',
-                $media->getId(),
+                $media->getId() ?? '',
                 $e->getMessage()
             ));
 
@@ -203,7 +203,7 @@ final class SyncThumbsCommand extends Command
         } catch (\Exception $e) {
             $this->log(sprintf(
                 '<error>Unable to generate new thumbnails, media: %s - %s </error>',
-                $media->getId(),
+                $media->getId() ?? '',
                 $e->getMessage()
             ));
 

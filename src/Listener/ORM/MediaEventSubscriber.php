@@ -98,7 +98,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         $context = $media->getContext();
 
         if (null === $context) {
-            throw new \RuntimeException(sprintf('There is no context on media %s', $media->getId()));
+            throw new \RuntimeException(sprintf('There is no context on media %s', $media->getId() ?? ''));
         }
 
         if (null === $this->rootCategories || !\array_key_exists($context, $this->rootCategories)) {
