@@ -40,7 +40,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('providers.php');
         $loader->load('http_client.php');
         $loader->load('media.php');
@@ -123,7 +123,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $formats = [];
 
             foreach ($settings['formats'] as $format => $value) {
-                $formats[$name . '_' . $format] = $value;
+                $formats[$name.'_'.$format] = $value;
             }
 
             $strategies[] = $settings['download']['strategy'];
