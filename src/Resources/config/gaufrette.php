@@ -54,6 +54,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('sonata.media.adapter.filesystem.s3'),
             ])
 
+        ->set('sonata.media.filesystem.ftp', Filesystem::class)
+            ->args([
+                new ReferenceConfigurator('sonata.media.adapter.filesystem.ftp'),
+            ])
+
         ->set('sonata.media.filesystem.replicate', Filesystem::class)
             ->args([
                 new ReferenceConfigurator('sonata.media.adapter.filesystem.replicate'),
