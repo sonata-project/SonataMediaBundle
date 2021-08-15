@@ -1,3 +1,0 @@
-test_page:
-    path: /u_truncate_test
-    controller: Sonata\MediaBundle\Tests\App\Controller\TruncateController:test
