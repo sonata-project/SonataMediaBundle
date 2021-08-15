@@ -335,35 +335,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');
         }
-
-        if (
-            $container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
-            (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))
-        ) {
-            if (isset($config['filesystem']['openstack'])) {
-                $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection.rackspace');
-                $settings = 'openstack';
-            } else {
-                $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection.openstack');
-                $settings = 'rackspace';
-            }
-
-            $container->getDefinition(sprintf('sonata.media.adapter.filesystem.opencloud.connection.%s', $settings))
-                ->replaceArgument(0, $config['filesystem'][$settings]['url'])
-                ->replaceArgument(1, $config['filesystem'][$settings]['secret']);
-            $container->getDefinition('sonata.media.adapter.filesystem.opencloud')
-                ->replaceArgument(1, $config['filesystem'][$settings]['containerName'])
-                ->replaceArgument(2, $config['filesystem'][$settings]['create_container']);
-            $container->getDefinition('sonata.media.adapter.filesystem.opencloud.objectstore')
-                ->replaceArgument(1, $config['filesystem'][$settings]['region'])
-                ->setFactory([new Reference(sprintf('sonata.media.adapter.filesystem.opencloud.connection.%s', $settings)), 'ObjectStore']);
-        } else {
-            $container->removeDefinition('sonata.media.adapter.filesystem.opencloud');
-            $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection.rackspace');
-            $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection.openstack');
-            $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.objectstore');
-            $container->removeDefinition('sonata.media.filesystem.opencloud');
-        }
     }
 
     /**

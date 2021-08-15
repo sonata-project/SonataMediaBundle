@@ -1,6 +1,15 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### Sonata\MediaBundle\Thumbnail\ResizableThumbnailInterface
+
+  This interface is added to provide a clearer API for `FormatThumbnail`. It allows to know if a `Thumbnail` object can be generated with custom `Resizer` instances, not the ones provided by
+  the file provider.
+
+### Removed OpenStack / Rackspace integration
+
+  This integration is removed because the php packages are not up to date.
+
 ### Integration with classification-bundle
 
   In SonataMediaBundle 4.0 we improved the integration with SonataClassificationBundle, you don't need

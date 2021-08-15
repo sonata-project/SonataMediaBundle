@@ -6,15 +6,3 @@ parameters:
         - # https://github.com/phpstan/phpstan-strict-rules/issues/130
             message: '#^Call to static method PHPUnit\\Framework\\Assert::.* will always evaluate to true\.$#'
             path: tests/
-        - # TODO: Remove this integration, the last version of this dependency is too old to be installed
-            message: "#^Class OpenCloud\\\\ObjectSource\\\\Service not found\\.$#"
-            count: 1
-            path: src/Resources/config/gaufrette.php
-        - # TODO: Remove this integration, the last version of this dependency is too old to be installed
-            message: "#^Class OpenCloud\\\\OpenStack not found\\.$#"
-            count: 1
-            path: src/Resources/config/gaufrette.php
-        - # TODO: Remove this integration, the last version of this dependency is too old to be installed
-            message: "#^Class OpenCloud\\\\Rackspace not found\\.$#"
-            count: 1
-            path: src/Resources/config/gaufrette.php
