@@ -17,6 +17,22 @@ custom resizers.
 This integration is deprecated because the php packages are not up to date. On master
 this integration will be removed. There is no replacement for it.
 
+### Deprecate direct session injection
+
+`$session` property in `Security/SessionDownloadStrategy` is deprecated. Use `RequestStack` `$requestStack` instead.
+
+Before:
+
+```php
+    $downloadStrategy = new SessionDownloadStrategy($translator, $session, $times);
+```
+
+After:
+
+```php
+    $downloadStrategy = new SessionDownloadStrategy($translator, $requestStack, $times);
+```
+
 UPGRADE FROM 3.31 to 3.32
 =========================
 
