@@ -15,7 +15,9 @@ namespace Sonata\MediaBundle\Security;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -52,14 +54,22 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
 
     /**
      * @var SessionInterface
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, will be removed in 4.0.
+     * NEXT_MAJOR : remove this property
      */
     private $session;
 
     /**
-     * @param ContainerInterface|SessionInterface $sessionOrContainer
-     * @param int                                 $times
+     * @var RequestStack
      */
-    public function __construct(object $translator, object $sessionOrContainer, $times)
+    private $requestStack;
+
+    /**
+     * @param ContainerInterface|SessionInterface|RequestStack $sessionOrContainerOrRequestStack
+     * @param int                                              $times
+     */
+    public function __construct(object $translator, object $sessionOrContainerOrRequestStack, $times)
     {
         if (!$translator instanceof TranslatorInterface) {
             if (!$translator instanceof LegacyTranslatorInterface) {
@@ -86,25 +96,35 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
             );
         }
 
-        // NEXT_MAJOR: Remove these checks and declare `SessionInterface` for argument 2.
-        if ($sessionOrContainer instanceof SessionInterface) {
-            $this->session = $sessionOrContainer;
-        } elseif ($sessionOrContainer instanceof ContainerInterface) {
+        // NEXT_MAJOR: Remove these checks and declare `RequestStack` for argument 2.
+        if ($sessionOrContainerOrRequestStack instanceof RequestStack) {
+            $this->requestStack = $sessionOrContainerOrRequestStack;
+        } elseif ($sessionOrContainerOrRequestStack instanceof ContainerInterface) {
             @trigger_error(sprintf(
-                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.1'
+                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
                 .' and will throw a "\TypeError" error in 4.0.',
-                SessionInterface::class,
+                RequestStack::class,
                 __METHOD__
             ), \E_USER_DEPRECATED);
 
-            $this->session = $sessionOrContainer->get('session');
+            $this->session = $sessionOrContainerOrRequestStack->get('session');
+        } elseif ($sessionOrContainerOrRequestStack instanceof SessionInterface) {
+            @trigger_error(sprintf(
+                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                .' and will throw a "\TypeError" error in 4.0.',
+                RequestStack::class,
+                __METHOD__
+            ), \E_USER_DEPRECATED);
+
+            $this->session = $sessionOrContainerOrRequestStack;
         } else {
             throw new \TypeError(sprintf(
-                'Argument 2 passed to "%s()" MUST be an instance of "%s" or "%s", "%s" given.',
+                'Argument 2 passed to "%s()" MUST be an instance of "%s" or "%s" or "%s", "%s" given.',
                 __METHOD__,
+                RequestStack::class,
                 SessionInterface::class,
                 ContainerInterface::class,
-                \get_class($sessionOrContainer)
+                \get_class($sessionOrContainerOrRequestStack)
             ));
         }
 
@@ -114,7 +134,9 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
 
     public function isGranted(MediaInterface $media, Request $request)
     {
-        $times = $this->session->get($this->sessionKey, 0);
+        $session = $this->getSession();
+
+        $times = $session->get($this->sessionKey, 0);
 
         if ($times >= $this->times) {
             return false;
@@ -122,7 +144,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
 
         ++$times;
 
-        $this->session->set($this->sessionKey, $times);
+        $session->set($this->sessionKey, $times);
 
         return true;
     }
@@ -147,5 +169,26 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
             ],
             'SonataMediaBundle'
         );
+    }
+
+    private function getSession(): SessionInterface
+    {
+        // NEXT_MAJOR: Remove this condition, we will always have RequestStack
+        if (null !== $this->requestStack) {
+            // TODO: Remove this condition when Symfony < 5.3 support is removed
+            if (method_exists($this->requestStack, 'getSession')) {
+                return $this->requestStack->getSession();
+            }
+
+            $currentRequest = $this->requestStack->getCurrentRequest();
+
+            if (null === $currentRequest) {
+                throw new SessionNotFoundException();
+            }
+
+            return $currentRequest->getSession();
+        }
+
+        return $this->session;
     }
 }
