@@ -42,11 +42,6 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         );
     }
 
-    public function testName(): void
-    {
-        self::assertSame('Media Gallery', $this->blockService->getName());
-    }
-
     public function testExecute(): void
     {
         $block = $this->createMock(Block::class);

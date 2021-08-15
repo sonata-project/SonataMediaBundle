@@ -38,11 +38,6 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
         );
     }
 
-    public function testName(): void
-    {
-        self::assertSame('Feature Media', $this->blockService->getName());
-    }
-
     public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);
