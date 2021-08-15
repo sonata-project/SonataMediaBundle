@@ -15,7 +15,7 @@ custom resizers.
 ### Deprecate OpenStack / Rackspace integration
 
 This integration is deprecated because the php packages are not up to date. On master
-this deprecation will be removed. There is no replacement for it.
+this integration will be removed. There is no replacement for it.
 
 UPGRADE FROM 3.31 to 3.32
 =========================
