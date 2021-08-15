@@ -4,6 +4,11 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Sonata\MediaBundle\Filesystem\Replicate
+
+Added implementation for `Gaufrette\Adapter\FileFactory` and `Gaufrette\Adapter\StreamFactory`.
+Method `createFileStream()` is deprecated in favor of `createStream()`.
+
 ### Sonata\MediaBundle\Thumbnail\ResizableThumbnailInterface
 
 This interface is added to provide a clearer API for `FormatThumbnail`. It allows to know if a `Thumbnail` object can be generated with custom `Resizer` instances, not the ones provided by
