@@ -120,24 +120,6 @@ Full configuration options:
                 master: sonata.media.adapter.filesystem.s3
                 slave: sonata.media.adapter.filesystem.local
 
-            rackspace:
-               url:
-               secret:
-                 username:
-                 apiKey:
-               region:
-               containerName: media
-               create_container: false
-
-            openstack:
-               url:
-               secret:
-                 username:
-                 password:
-               region:
-               containerName: media
-               create_container: false
-
         providers:
             file:
                 service:    sonata.media.provider.file

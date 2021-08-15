@@ -1,6 +1,22 @@
 UPGRADE 3.x
 ===========
 
+UPGRADE FROM 3.x to 3.x
+=======================
+
+### Sonata\MediaBundle\Thumbnail\ResizableThumbnailInterface
+
+This interface is added to provide a clearer API for `FormatThumbnail`. It allows to know if a `Thumbnail` object can be generated with custom `Resizer` instances, not the ones provided by
+the file provider.
+
+If you have custom `Thumbnail` generator, please implement this interface if you need
+custom resizers.
+
+### Deprecate OpenStack / Rackspace integration
+
+This integration is deprecated because the php packages are not up to date. On master
+this integration will be removed. There is no replacement for it.
+
 UPGRADE FROM 3.31 to 3.32
 =========================
 

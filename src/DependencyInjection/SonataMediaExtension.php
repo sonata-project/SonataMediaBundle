@@ -40,7 +40,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('providers.php');
         $loader->load('http_client.php');
         $loader->load('media.php');
@@ -123,7 +123,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $formats = [];
 
             foreach ($settings['formats'] as $format => $value) {
-                $formats[$name.'_'.$format] = $value;
+                $formats[$name . '_' . $format] = $value;
             }
 
             $strategies[] = $settings['download']['strategy'];
@@ -233,7 +233,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $cloudFrontClass = CloudFrontVersion3::class;
 
             $container->getDefinition('sonata.media.cdn.cloudfront.client')
-                    ->replaceArgument(0, $cloudFrontConfig);
+                ->replaceArgument(0, $cloudFrontConfig);
 
             $container->getDefinition('sonata.media.cdn.cloudfront')
                 ->setClass($cloudFrontClass)
@@ -336,8 +336,10 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $container->removeDefinition('sonata.media.filesystem.replicate');
         }
 
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
-            (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))) {
+        if (
+            $container->hasDefinition('sonata.media.adapter.filesystem.opencloud') &&
+            (isset($config['filesystem']['openstack']) || isset($config['filesystem']['rackspace']))
+        ) {
             if (isset($config['filesystem']['openstack'])) {
                 $container->removeDefinition('sonata.media.adapter.filesystem.opencloud.connection.rackspace');
                 $settings = 'openstack';
