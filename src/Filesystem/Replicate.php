@@ -14,14 +14,17 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Filesystem;
 
 use Gaufrette\Adapter as AdapterInterface;
+use Gaufrette\Adapter\FileFactory;
 use Gaufrette\Adapter\MetadataSupporter;
+use Gaufrette\Adapter\StreamFactory;
 use Gaufrette\Filesystem;
+use Gaufrette\Stream;
 use Psr\Log\LoggerInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
  */
-class Replicate implements AdapterInterface, MetadataSupporter
+class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, StreamFactory
 {
     /**
      * @var AdapterInterface
@@ -39,7 +42,7 @@ class Replicate implements AdapterInterface, MetadataSupporter
     /**
      * @var LoggerInterface
      *
-     * NEXT_MAJOR change visibiity to private
+     * NEXT_MAJOR change visibility to private
      */
     protected $logger;
 
@@ -53,12 +56,9 @@ class Replicate implements AdapterInterface, MetadataSupporter
      */
     private $secondary;
 
-    /**
-     * @param LoggerInterface $logger
-     */
     public function __construct(AdapterInterface $primary, AdapterInterface $secondary, ?LoggerInterface $logger = null)
     {
-        // NEXT_MAJOR: remove master nad slave
+        // NEXT_MAJOR: remove master and slave.
         $this->master = $primary;
         $this->slave = $secondary;
         $this->primary = $primary;
@@ -192,7 +192,9 @@ class Replicate implements AdapterInterface, MetadataSupporter
     {
         if ($this->primary instanceof MetadataSupporter) {
             return $this->primary->getMetadata($key);
-        } elseif ($this->secondary instanceof MetadataSupporter) {
+        }
+
+        if ($this->secondary instanceof MetadataSupporter) {
             return $this->secondary->getMetadata($key);
         }
 
@@ -203,6 +205,8 @@ class Replicate implements AdapterInterface, MetadataSupporter
      * Gets the class names as an array for both adapters.
      *
      * @return string[]
+     *
+     * @phpstan-return class-string<AdapterInterface>[]
      */
     public function getAdapterClassNames()
     {
@@ -214,16 +218,65 @@ class Replicate implements AdapterInterface, MetadataSupporter
 
     public function createFile($key, Filesystem $filesystem)
     {
-        return $this->primary->createFile($key, $filesystem);
+        if ($this->primary instanceof FileFactory) {
+            return $this->primary->createFile($key, $filesystem);
+        }
+
+        if ($this->secondary instanceof FileFactory) {
+            return $this->secondary->createFile($key, $filesystem);
+        }
+
+        throw new \LogicException(sprintf('None of the adapters implement %s.', FileFactory::class));
     }
 
+    /**
+     * @param string $key
+     *
+     * @return Stream
+     */
+    public function createStream($key)
+    {
+        if ($this->primary instanceof StreamFactory) {
+            return $this->primary->createStream($key);
+        }
+
+        if ($this->secondary instanceof StreamFactory) {
+            return $this->secondary->createStream($key);
+        }
+
+        throw new \LogicException(sprintf('None of the adapters implement %s.', StreamFactory::class));
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, use "createStream()" instead.
+     *
+     * @param string $key
+     *
+     * @return Stream
+     */
     public function createFileStream($key, Filesystem $filesystem)
     {
-        return $this->primary->createFileStream($key, $filesystem);
+        @trigger_error(sprintf(
+            'Method "%s()" is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use "createStream()" instead.',
+            __METHOD__
+        ), \E_USER_DEPRECATED);
+
+        return $this->createStream($key);
     }
 
     public function listDirectory($directory = '')
     {
+        if (!method_exists($this->primary, 'listDirectory')) {
+            throw new \BadMethodCallException(sprintf(
+                'Method "%s()" is not supported by the primary adapter "%s".',
+                __METHOD__,
+                \get_class($this->primary)
+            ));
+        }
+
         return $this->primary->listDirectory($directory);
     }
 
