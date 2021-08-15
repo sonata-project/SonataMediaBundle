@@ -29,6 +29,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FeatureMediaBlockService extends MediaBlockService
 {
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getName()
     {
         return 'Feature Media';

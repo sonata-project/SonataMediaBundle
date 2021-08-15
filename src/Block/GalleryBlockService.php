@@ -92,6 +92,9 @@ class GalleryBlockService extends AbstractBlockService
         return $this->galleryAdmin;
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getName()
     {
         return 'Media Gallery';
