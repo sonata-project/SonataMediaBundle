@@ -186,7 +186,13 @@ class Pixlr
             return false;
         }
 
-        return \in_array(strtolower($media->getExtension()), $this->validFormats, true);
+        $extension = $media->getExtension();
+
+        if (null === $extension) {
+            return false;
+        }
+
+        return \in_array(strtolower($extension), $this->validFormats, true);
     }
 
     /**
