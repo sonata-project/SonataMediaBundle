@@ -42,7 +42,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.security.session_strategy', SessionDownloadStrategy::class)
             ->args([
                 new ReferenceConfigurator('translator'),
-                new ReferenceConfigurator('session'),
+                new ReferenceConfigurator('request_stack'),
                 1,
             ])
 

@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Security;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -29,6 +31,11 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
     private $translator;
 
     /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
      * @var int
      */
     private $times;
@@ -38,21 +45,18 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
      */
     private $sessionKey = 'sonata/media/session/times';
 
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    public function __construct(TranslatorInterface $translator, SessionInterface $session, int $times)
+    public function __construct(TranslatorInterface $translator, RequestStack $requestStack, int $times)
     {
         $this->translator = $translator;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->times = $times;
     }
 
     public function isGranted(MediaInterface $media, Request $request): bool
     {
-        $times = $this->session->get($this->sessionKey, 0);
+        $session = $this->getSession();
+
+        $times = $session->get($this->sessionKey, 0);
 
         if ($times >= $this->times) {
             return false;
@@ -60,7 +64,7 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
 
         ++$times;
 
-        $this->session->set($this->sessionKey, $times);
+        $session->set($this->sessionKey, $times);
 
         return true;
     }
@@ -75,5 +79,21 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
             ],
             'SonataMediaBundle'
         );
+    }
+
+    private function getSession(): SessionInterface
+    {
+        // TODO: Remove this condition when Symfony < 5.3 support is removed
+        if (method_exists($this->requestStack, 'getSession')) {
+            return $this->requestStack->getSession();
+        }
+
+        $currentRequest = $this->requestStack->getCurrentRequest();
+
+        if (null === $currentRequest) {
+            throw new SessionNotFoundException();
+        }
+
+        return $currentRequest->getSession();
     }
 }
