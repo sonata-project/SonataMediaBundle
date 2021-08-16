@@ -84,6 +84,7 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
     private function getSession(): SessionInterface
     {
         // TODO: Remove this condition when Symfony < 5.3 support is removed
+        // @phpstan-ignore-next-line
         if (method_exists($this->requestStack, 'getSession')) {
             return $this->requestStack->getSession();
         }
