@@ -110,23 +110,23 @@ class GalleryListBlockService extends AbstractBlockService
                 ['mode', ChoiceType::class, [
                     'label' => 'form.label_mode',
                     'choices' => [
-                        'public' => 'form.label_mode_public',
-                        'admin' => 'form.label_mode_admin',
+                        'form.label_mode_public' => 'public',
+                        'form.label_mode_admin' => 'admin',
                     ],
                 ]],
                 ['order', ChoiceType::class,  [
                     'label' => 'form.label_order',
                     'choices' => [
-                        'name' => 'form.label_order_name',
-                        'createdAt' => 'form.label_order_created_at',
-                        'updatedAt' => 'form.label_order_updated_at',
+                        'form.label_order_name' => 'name',
+                        'form.label_order_created_at' => 'createdAt',
+                        'form.label_order_updated_at' => 'updatedAt',
                     ],
                 ]],
                 ['sort', ChoiceType::class, [
                     'label' => 'form.label_sort',
                     'choices' => [
-                        'desc' => 'form.label_sort_desc',
-                        'asc' => 'form.label_sort_asc',
+                        'form.label_sort_desc' => 'desc',
+                        'form.label_sort_asc' => 'asc',
                     ],
                 ]],
             ],
