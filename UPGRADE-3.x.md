@@ -8,6 +8,7 @@ UPGRADE FROM 3.x to 3.x
 
 Added implementation for `Gaufrette\Adapter\FileFactory` and `Gaufrette\Adapter\StreamFactory`.
 Method `createFileStream()` is deprecated in favor of `createStream()`.
+Argument 3 (`?array $metadata = null`) in method `write()` is deprecated.
 
 ### Sonata\MediaBundle\Thumbnail\ResizableThumbnailInterface
 

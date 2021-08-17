@@ -108,13 +108,24 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         return $this->primary->exists($key);
     }
 
+    /**
+     * NEXT_MAJOR: Remove argument 3.
+     */
     public function write($key, $content, ?array $metadata = null)
     {
+        if (3 === \func_num_args()) {
+            @trigger_error(sprintf(
+                'Argument 3 in "%s()" method is deprecated since sonata-project/media-bundle 3.x'
+                .' and will be removed in version 4.0.',
+                __METHOD__
+            ), \E_USER_DEPRECATED);
+        }
+
         $ok = true;
         $return = false;
 
         try {
-            $return = $this->primary->write($key, $content, $metadata);
+            $return = $this->primary->write($key, $content);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
@@ -124,7 +135,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
         }
 
         try {
-            $return = $this->secondary->write($key, $content, $metadata);
+            $return = $this->secondary->write($key, $content);
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
