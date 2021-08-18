@@ -3,45 +3,45 @@ UPGRADE FROM 3.x to 4.0
 
 ### Removed unused JavaScript
 
-  SonataMediaBundle 3 included a JavaScript dependency: Nivo Gallery. This dependency is not used on Sonata code,
-  so in SonataMediaBundle 4 this dependency is removed. If you rely on it, please consider adding it to your own
-  `package.json` instead.
+SonataMediaBundle 3 included a JavaScript dependency: Nivo Gallery. This dependency is not used on Sonata code,
+so in SonataMediaBundle 4 this dependency is removed. If you rely on it, please consider adding it to your own
+`package.json` instead.
 
 ### Sonata\MediaBundle\Thumbnail\ResizableThumbnailInterface
 
-  This interface is added to provide a clearer API for `FormatThumbnail`. It allows to know if a `Thumbnail` object can be generated with custom `Resizer` instances, not the ones provided by
-  the file provider.
+This interface is added to provide a clearer API for `FormatThumbnail`. It allows to know if a `Thumbnail` object can be generated with custom `Resizer` instances, not the ones provided by
+the file provider.
 
 ### Removed OpenStack / Rackspace integration
 
-  This integration is removed because the php packages are not up to date.
+This integration is removed because the php packages are not up to date.
 
 ### Integration with classification-bundle
 
-  In SonataMediaBundle 4.0 we improved the integration with SonataClassificationBundle, you don't need
-  to configure the `classification_manager` anymore.
+In SonataMediaBundle 4.0 we improved the integration with SonataClassificationBundle, you don't need
+to configure the `classification_manager` anymore.
 
 ### Container parameters
 
-  We have been using container parameters as undocumented extension points for things like classes and configurations.
+We have been using container parameters as undocumented extension points for things like classes and configurations.
 
-  In SonataMediaBundle 4.0 those are completely removed and we encourage you to use the default
-  dependency injection override to change the default values for the removed service configurations if you need to.
+In SonataMediaBundle 4.0 those are completely removed and we encourage you to use the default
+dependency injection override to change the default values for the removed service configurations if you need to.
 
-  If you need to change something that you believe it should be handled somehow in configuration,
-  please open an issue and we will discuss it.
+If you need to change something that you believe it should be handled somehow in configuration,
+please open an issue and we will discuss it.
 
 ### SimpleResizer and SquareResizer
 
-  Previously the mode that could be configured for those resizer was a string, now it is an int.
-  The default configuration is still the same but with the int value that represents `inset`.
+Previously the mode that could be configured for those resizer was a string, now it is an int.
+The default configuration is still the same but with the int value that represents `inset`.
 
-  You can take a look at this class constants: `Imagine\Image\ManipulatorInterface` to see the
-  available options.
+You can take a look at this class constants: `Imagine\Image\ManipulatorInterface` to see the
+available options.
 
 ### Sonata\DatagridBundle\Pager\PageableInterface
 
-  Usages of `Sonata\Doctrine\Model\PageableManagerInterface` were replaced in favor of `Sonata\DatagridBundle\Pager\PageableInterface`.
+Usages of `Sonata\Doctrine\Model\PageableManagerInterface` were replaced in favor of `Sonata\DatagridBundle\Pager\PageableInterface`.
 
 ### Dependencies
 
