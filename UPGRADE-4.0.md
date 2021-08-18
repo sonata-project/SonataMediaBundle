@@ -1,6 +1,12 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### Removed unused JavaScript
+
+  SonataMediaBundle 3 included a JavaScript dependency: Nivo Gallery. This dependency is not used on Sonata code,
+  so in SonataMediaBundle 4 this dependency is removed. If you rely on it, please consider adding it to your own
+  `package.json` instead.
+
 ### Sonata\MediaBundle\Thumbnail\ResizableThumbnailInterface
 
   This interface is added to provide a clearer API for `FormatThumbnail`. It allows to know if a `Thumbnail` object can be generated with custom `Resizer` instances, not the ones provided by
