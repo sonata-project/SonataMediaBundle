@@ -13,12 +13,28 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
+/**
+ * @method int|string|null getId()
+ * @method void            setGalleryItems(Collection $galleryItems)
+ * @method Collection      getGalleryItems()
+ * @method void            addGalleryItem(GalleryItemInterface $galleryItem)
+ * @method void            removeGalleryItem(GalleryItemInterface $galleryItem)
+ * @method void            reorderGalleryItems()
+ */
 interface GalleryInterface
 {
     /**
      * @return string
      */
     public function __toString();
+
+    // NEXT_MAJOR: Uncomment this method.
+    // /**
+    // * @return int|string|null
+    // */
+    // public function getId();
 
     /**
      * Set name.
@@ -93,18 +109,51 @@ interface GalleryInterface
     public function getDefaultFormat();
 
     /**
-     * @param array $galleryHasMedias
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `setGalleryItems()` instead.
+     *
+     * @param iterable<GalleryHasMediaInterface> $galleryHasMedias
      */
     public function setGalleryHasMedias($galleryHasMedias);
 
     /**
-     * @return GalleryHasMediaInterface[]
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `getGalleryItems()` instead.
+     *
+     * @return Collection<GalleryHasMediaInterface>
      */
     public function getGalleryHasMedias();
 
     /**
-     * @deprecated implement addGalleryHasMedia method instead, it will be provided with the next major release
-     * NEXT_MAJOR: remove this method
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `addGalleryItem()` instead.
      */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
+
+    // NEXT_MAJOR: Uncomment this method.
+    // /**
+    //  * @param iterable<int, GalleryItemInterface> $galleryItems
+    //  */
+    // public function setGalleryItems(iterable $galleryItems): void;
+
+    // NEXT_MAJOR: Uncomment this method.
+    // /**
+    //  * @return Collection<int, GalleryItemInterface>
+    //  */
+    // public function getGalleryItems(): Collection;
+
+    // NEXT_MAJOR: Uncomment this method.
+    // public function addGalleryItem(GalleryItemInterface $galleryItem): void;
+
+    // NEXT_MAJOR: Uncomment this method.
+    // public function removeGalleryItem(GalleryItemInterface $galleryItem): void;
+
+    // NEXT_MAJOR: Uncomment this method.
+    // /**
+    //  * Reorders $galleryItems based on their position.
+    //  */
+    // public function reorderGalleryItems(): void;
 }

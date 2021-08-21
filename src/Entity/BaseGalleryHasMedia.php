@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\Entity;
 
 use Sonata\MediaBundle\Model\GalleryHasMedia;
 
+/**
+ * @deprecated since sonata-project/media-bundle 3.x. Use `BaseGalleryItem` instead.
+ */
 abstract class BaseGalleryHasMedia extends GalleryHasMedia
 {
     public function prePersist()

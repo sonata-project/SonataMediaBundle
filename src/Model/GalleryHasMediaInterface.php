@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+/**
+ * NEXT_MAJOR: Remove this class.
+ *
+ * @deprecated since sonata-project/media-bundle 3.x. Use `GalleryItemInterface` instead.
+ */
 interface GalleryHasMediaInterface
 {
     /**

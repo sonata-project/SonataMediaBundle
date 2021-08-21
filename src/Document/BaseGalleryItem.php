@@ -13,20 +13,17 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Document;
 
-use Sonata\MediaBundle\Model\GalleryHasMedia;
+use Sonata\MediaBundle\Model\GalleryItem;
 
-/**
- * @deprecated since sonata-project/media-bundle 3.x. Use `BaseGalleryItem` instead.
- */
-abstract class BaseGalleryHasMedia extends GalleryHasMedia
+abstract class BaseGalleryItem extends GalleryItem
 {
-    public function prePersist()
+    public function prePersist(): void
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->updatedAt = new \DateTime();
     }

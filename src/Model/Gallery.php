@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 /**
- * NEXT_MAJOR: remove GalleryMediaCollectionInterface interface. Move its content into GalleryInterface.
+ * NEXT_MAJOR: Remove the `GalleryMediaCollectionInterface` implementation.
  */
 abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterface
 {
@@ -53,9 +53,16 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
-     * @var GalleryHasMediaInterface[]|Collection
+     * @deprecated since sonata-project/media-bundle 3.x. Use `$galleryItems` instead.
+     *
+     * @var Collection<int, GalleryHasMediaInterface>
      */
     protected $galleryHasMedias;
+
+    /**
+     * @var Collection<int, GalleryItemInterface>
+     */
+    protected $galleryItems;
 
     public function __toString()
     {
@@ -112,8 +119,19 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         return $this->defaultFormat;
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `setGalleryItems()` instead.
+     */
     public function setGalleryHasMedias($galleryHasMedias)
     {
+        @trigger_error(sprintf(
+            'The "%s()" method is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use "setGalleryItems()" method instead.',
+            __METHOD__
+        ), \E_USER_DEPRECATED);
+
         $this->galleryHasMedias = new ArrayCollection();
 
         foreach ($galleryHasMedias as $galleryHasMedia) {
@@ -121,37 +139,98 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         }
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `getGalleryItems()` instead.
+     */
     public function getGalleryHasMedias()
     {
+        @trigger_error(sprintf(
+            'The "%s()" method is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use "getGalleryItems()" method instead.',
+            __METHOD__
+        ), \E_USER_DEPRECATED);
+
         return $this->galleryHasMedias;
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `addGalleryItem()` instead.
+     */
     public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
+        @trigger_error(sprintf(
+            'The "%s()" method is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use "addGalleryItem()" method instead.',
+            __METHOD__
+        ), \E_USER_DEPRECATED);
+
         $galleryHasMedia->setGallery($this);
 
         $this->galleryHasMedias[] = $galleryHasMedia;
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `removeGalleryItem()` instead.
+     */
     public function removeGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
+        @trigger_error(sprintf(
+            'The "%s()" method is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use "removeGalleryItem()" method instead.',
+            __METHOD__
+        ), \E_USER_DEPRECATED);
+
         $this->galleryHasMedias->removeElement($galleryHasMedia);
     }
 
     /**
-     * {@inheritdoc}
+     * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated use addGalleryHasMedia method instead
-     * NEXT_MAJOR: remove this method with the next major release
+     * @deprecated since sonata-project/media-bundle 3.x. Use `addGalleryItem()` instead.
      */
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
     {
-        @trigger_error(
-            'The '.__METHOD__.' is deprecated and will be removed with next major release.'
-            .'Use `addGalleryHasMedia` method instead.',
-            \E_USER_DEPRECATED
-        );
+        @trigger_error(sprintf(
+            'The "%s()" method is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use "addGalleryItem()" method instead.',
+            __METHOD__
+        ), \E_USER_DEPRECATED);
+
         $this->addGalleryHasMedia($galleryHasMedia);
+    }
+
+    public function setGalleryItems(iterable $galleryItems): void
+    {
+        $this->galleryItems = new ArrayCollection();
+
+        foreach ($galleryItems as $galleryItem) {
+            $this->addGalleryItem($galleryItem);
+        }
+    }
+
+    public function getGalleryItems(): Collection
+    {
+        return $this->galleryItems;
+    }
+
+    public function addGalleryItem(GalleryItemInterface $galleryItem): void
+    {
+        $galleryItem->setGallery($this);
+
+        $this->galleryItems[] = $galleryItem;
+    }
+
+    public function removeGalleryItem(GalleryItemInterface $galleryItem): void
+    {
+        if ($this->galleryItems->contains($galleryItem)) {
+            $this->galleryItems->removeElement($galleryItem);
+        }
     }
 
     public function setContext($context)
@@ -166,9 +245,19 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
 
     /**
      * Reorders $galleryHasMedia items based on their position.
+     *
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x. Use `reorderGalleryItems()` instead.
      */
     public function reorderGalleryHasMedia()
     {
+        @trigger_error(sprintf(
+            'The "%s()" method is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use "reorderGalleryItems()" method instead.',
+            __METHOD__
+        ), \E_USER_DEPRECATED);
+
         $galleryHasMedias = $this->getGalleryHasMedias();
 
         if ($galleryHasMedias instanceof \IteratorAggregate) {
@@ -181,5 +270,25 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
 
             $this->setGalleryHasMedias($iterator);
         }
+    }
+
+    public function reorderGalleryItems(): void
+    {
+        $iterator = $this->getGalleryItems()->getIterator();
+
+        if (!$iterator instanceof \ArrayIterator) {
+            throw new \TypeError(sprintf(
+                'The gallery %s cannot be reordered, "%s::$galleryItems" MUST implement "%s".',
+                $this->getId(),
+                __CLASS__,
+                \ArrayIterator::class
+            ));
+        }
+
+        $iterator->uasort(static function (GalleryItemInterface $a, GalleryItemInterface $b): int {
+            return $a->getPosition() <=> $b->getPosition();
+        });
+
+        $this->setGalleryItems(new ArrayCollection(iterator_to_array($iterator)));
     }
 }

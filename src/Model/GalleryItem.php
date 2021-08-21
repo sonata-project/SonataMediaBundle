@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
-/**
- * @deprecated since sonata-project/media-bundle 3.x. Use `GalleryItem` instead.
- */
-abstract class GalleryHasMedia implements GalleryHasMediaInterface
+abstract class GalleryItem implements GalleryItemInterface
 {
     /**
      * @var MediaInterface|null
@@ -34,12 +31,12 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
     protected $position = 0;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     protected $updatedAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeInterface|null
      */
     protected $createdAt;
 
@@ -48,68 +45,68 @@ abstract class GalleryHasMedia implements GalleryHasMediaInterface
      */
     protected $enabled = false;
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getGallery().' | '.$this->getMedia();
     }
 
-    public function setCreatedAt(?\DateTime $createdAt = null)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    public function setGallery(?GalleryInterface $gallery = null)
+    public function setGallery(?GalleryInterface $gallery = null): void
     {
         $this->gallery = $gallery;
     }
 
-    public function getGallery()
+    public function getGallery(): ?GalleryInterface
     {
         return $this->gallery;
     }
 
-    public function setMedia(?MediaInterface $media = null)
+    public function setMedia(?MediaInterface $media = null): void
     {
         $this->media = $media;
     }
 
-    public function getMedia()
+    public function getMedia(): ?MediaInterface
     {
         return $this->media;
     }
 
-    public function setPosition($position)
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null)
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }
