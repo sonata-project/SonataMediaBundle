@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Listener\ODM;
 use Doctrine\Common\EventArgs;
 use Doctrine\ODM\MongoDB\Events;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -46,6 +47,12 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
 
     protected function getMedia(EventArgs $args)
     {
-        return $args->getDocument();
+        $media = $args->getDocument();
+
+        if (!$media instanceof MediaInterface) {
+            return null;
+        }
+
+        return $media;
     }
 }

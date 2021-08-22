@@ -210,9 +210,17 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
+        if (self::FORMAT_REFERENCE === $format) {
             return $this->getReferenceImage($media);
         }
+
+        // throw new \InvalidArgumentException(sprintf(
+        //     'Argument 2 passed to "%s()" only accepts the value "%s", "%s" given.',
+        //     __METHOD__,
+        //     self::FORMAT_REFERENCE,
+        //     $format
+        // ));
+        // NEXT_MAJOR: Uncomment the previous exception and remove the `return false` statement.
 
         return false;
     }

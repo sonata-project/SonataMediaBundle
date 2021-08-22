@@ -4,6 +4,11 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Sonata\MediaBundle\Listener\BaseMediaEventSubscriber::getMedia() and its inheritances
+
+Method `getMedia()` returns `null` if the related medium does not implement `Sonata\MediaBundle\Model\MediaInterface`.
+Before this change, under the same situation this method was returning the invalid object.
+
 ### Sonata\MediaBundle\Filesystem\Replicate
 
 Added implementation for `Gaufrette\Adapter\FileFactory` and `Gaufrette\Adapter\StreamFactory`.

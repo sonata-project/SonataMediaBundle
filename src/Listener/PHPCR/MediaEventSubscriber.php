@@ -14,8 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Listener\PHPCR;
 
 use Doctrine\Common\EventArgs;
+use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\ODM\PHPCR\Event;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -34,10 +37,12 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         ];
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     protected function recomputeSingleEntityChangeSet(EventArgs $args)
     {
-        /* @var $args \Doctrine\Persistence\Event\LifecycleEventArgs */
-        /** @var $dm \Doctrine\ODM\PHPCR\DocumentManager */
+        /** @var DocumentManager $dm */
         $dm = $args->getObjectManager();
 
         $dm->getUnitOfWork()->computeSingleDocumentChangeSet(
@@ -45,8 +50,17 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     protected function getMedia(EventArgs $args)
     {
-        return $args->getObject();
+        $media = $args->getObject();
+
+        if (!$media instanceof MediaInterface) {
+            return null;
+        }
+
+        return $media;
     }
 }
