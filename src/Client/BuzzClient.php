@@ -37,6 +37,10 @@ final class BuzzClient implements ClientInterface
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        return $this->browser->sendRequest($request);
+        if (method_exists($this->browser, 'sendRequest')) {
+            return $this->browser->sendRequest($request);
+        }
+
+        return $this->browser->send($request);
     }
 }
