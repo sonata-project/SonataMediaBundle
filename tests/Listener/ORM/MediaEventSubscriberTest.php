@@ -63,6 +63,7 @@ class MediaEventSubscriberTest extends TestCase
 
         $media1 = $this->createMock(Media::class);
         $media1->method('getContext')->willReturn('context');
+        $media1->method('getProviderName')->willReturn('provider');
 
         $args1 = $this->createMock(LifecycleEventArgs::class);
         $args1->method('getEntity')->willReturn($media1);
@@ -73,6 +74,7 @@ class MediaEventSubscriberTest extends TestCase
 
         $media2 = $this->createMock(Media::class);
         $media2->method('getContext')->willReturn('context');
+        $media2->method('getProviderName')->willReturn('provider');
 
         $args2 = $this->createMock(LifecycleEventArgs::class);
         $args2->method('getEntity')->willReturn($media2);

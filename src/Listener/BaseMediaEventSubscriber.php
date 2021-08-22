@@ -42,66 +42,82 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     public function postUpdate(EventArgs $args)
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->postUpdate($this->getMedia($args));
+        $this->getProvider($args)->postUpdate($media);
     }
 
     public function postRemove(EventArgs $args)
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->postRemove($this->getMedia($args));
+        $this->getProvider($args)->postRemove($media);
     }
 
     public function postPersist(EventArgs $args)
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->postPersist($this->getMedia($args));
+        $this->getProvider($args)->postPersist($media);
     }
 
     public function preUpdate(EventArgs $args)
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->transform($this->getMedia($args));
-        $provider->preUpdate($this->getMedia($args));
+        $provider = $this->getProvider($args);
+
+        $provider->transform($media);
+        $provider->preUpdate($media);
 
         $this->recomputeSingleEntityChangeSet($args);
     }
 
     public function preRemove(EventArgs $args)
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->preRemove($this->getMedia($args));
+        $this->getProvider($args)->preRemove($this->getMedia($args));
     }
 
     public function prePersist(EventArgs $args)
     {
-        if (!($provider = $this->getProvider($args))) {
+        $media = $this->getMedia($args);
+
+        if (null === $media) {
             return;
         }
 
-        $provider->transform($this->getMedia($args));
-        $provider->prePersist($this->getMedia($args));
+        $provider = $this->getProvider($args);
+
+        $provider->transform($media);
+        $provider->prePersist($media);
     }
 
     abstract protected function recomputeSingleEntityChangeSet(EventArgs $args);
 
     /**
-     * @return MediaInterface
+     * @return MediaInterface|null
      */
     abstract protected function getMedia(EventArgs $args);
 
@@ -111,10 +127,6 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     protected function getProvider(EventArgs $args)
     {
         $media = $this->getMedia($args);
-
-        if (!$media instanceof MediaInterface) {
-            return;
-        }
 
         return $this->getPool()->getProvider($media->getProviderName());
     }

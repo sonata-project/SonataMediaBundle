@@ -62,7 +62,7 @@ class MediaEventSubscriber extends BaseMediaEventSubscriber
         $media = $args->getEntity();
 
         if (!$media instanceof MediaInterface) {
-            return $media;
+            return null;
         }
 
         if ($this->container->has('sonata.media.manager.category') && !$media->getCategory()) {
