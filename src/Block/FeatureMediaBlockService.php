@@ -75,8 +75,8 @@ final class FeatureMediaBlockService extends MediaBlockService
                 ['orientation', ChoiceType::class, [
                     'required' => false,
                     'choices' => [
-                        'left' => 'form.label_orientation_left',
-                        'right' => 'form.label_orientation_right',
+                        'form.label_orientation_left' => 'left',
+                        'form.label_orientation_right' => 'right',
                     ],
                     'label' => 'form.label_orientation',
                 ]],

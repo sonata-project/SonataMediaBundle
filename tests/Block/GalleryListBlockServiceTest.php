@@ -21,10 +21,10 @@ use Sonata\MediaBundle\Block\GalleryListBlockService;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
-class GalleryListBlockServiceTest extends BlockServiceTestCase
+final class GalleryListBlockServiceTest extends BlockServiceTestCase
 {
     /**
-     * @var MockObject&GalleryManagerInterface
+     * @var GalleryManagerInterface&MockObject
      */
     private $galleryManager;
 

@@ -18,6 +18,7 @@ use Gaufrette\Adapter\FileFactory;
 use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Adapter\StreamFactory;
 use Gaufrette\Filesystem;
+use Gaufrette\Stream;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -86,10 +87,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $this->primary->exists($key);
     }
 
-    /**
-     * @param array<string, mixed>|null $metadata
-     */
-    public function write($key, $content, ?array $metadata = null)
+    public function write($key, $content)
     {
         $ok = true;
         $return = false;
@@ -184,7 +182,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      *
      * @return string[]
      *
-     * @phpstan-return class-string[]
+     * @phpstan-return class-string<Adapter>[]
      */
     public function getAdapterClassNames(): array
     {
@@ -204,9 +202,14 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
             return $this->secondary->createFile($key, $filesystem);
         }
 
-        throw new \LogicException(sprintf('None of the adapters implements %s.', FileFactory::class));
+        throw new \LogicException(sprintf('None of the adapters implement %s.', FileFactory::class));
     }
 
+    /**
+     * @param string $key
+     *
+     * @return Stream
+     */
     public function createStream($key)
     {
         if ($this->primary instanceof StreamFactory) {
@@ -217,7 +220,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
             return $this->secondary->createStream($key);
         }
 
-        throw new \LogicException(sprintf('None of the adapters implements %s.', StreamFactory::class));
+        throw new \LogicException(sprintf('None of the adapters implement %s.', StreamFactory::class));
     }
 
     public function isDirectory($key)
