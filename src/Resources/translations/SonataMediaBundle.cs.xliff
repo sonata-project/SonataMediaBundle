@@ -323,10 +323,6 @@
         <source>list.label_custom</source>
         <target>Custom</target>
       </trans-unit>
-      <trans-unit id="list.label_author">
-        <source>list.label_author</source>
-        <target>list.label_author</target>
-      </trans-unit>
       <trans-unit id="sidemenu.link_edit_media">
         <source>sidemenu.link_edit_media</source>
         <target>Upravit</target>
