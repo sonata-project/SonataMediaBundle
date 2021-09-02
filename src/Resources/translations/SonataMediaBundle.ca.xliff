@@ -102,10 +102,6 @@
         <source>filter.label_provider_name</source>
         <target>Nom proveïdor</target>
       </trans-unit>
-      <trans-unit id="filter.label_category">
-        <source>filter.label_category</source>
-        <target>filter.label_category</target>
-      </trans-unit>
       <trans-unit id="filter.label_author_name">
         <source>filter.label_author_name</source>
         <target>Nom autor</target>
@@ -322,10 +318,6 @@
       <trans-unit id="list.label_custom">
         <source>list.label_custom</source>
         <target>Personalitzar</target>
-      </trans-unit>
-      <trans-unit id="list.label_author">
-        <source>list.label_author</source>
-        <target>list.label_author</target>
       </trans-unit>
       <trans-unit id="sidemenu.link_edit_media">
         <source>sidemenu.link_edit_media</source>
