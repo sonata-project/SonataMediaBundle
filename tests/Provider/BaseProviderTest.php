@@ -165,6 +165,7 @@ class BaseProviderTest extends AbstractProviderTest
         $provider = $this->getProvider();
         $media = new Media();
         $media->setId(1399);
+        $media->setContext('default');
         $media->setProviderReference('1f981a048e7d8b671415d17e9633abc0059df394.png');
         $hash = spl_object_hash($media);
 
@@ -176,7 +177,7 @@ class BaseProviderTest extends AbstractProviderTest
         $provider->postRemove($media);
 
         self::assertArrayNotHasKey($hash, $prop->getValue($provider));
-        self::assertSame('/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
+        self::assertSame('default/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
 
         $prop->setAccessible(false);
     }

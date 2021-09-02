@@ -17,5 +17,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 interface GeneratorInterface
 {
+    /**
+     * @throws \InvalidArgumentException if path cannot be generated for $media
+     */
     public function generatePath(MediaInterface $media): string;
 }

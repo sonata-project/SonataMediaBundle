@@ -97,7 +97,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $id = $media->getId();
 
         if (null === $id) {
-            return '';
+            throw new \InvalidArgumentException('Unable to generate public url for media without id.');
         }
 
         return $this->getCdn()->getPath(sprintf(
@@ -113,7 +113,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $id = $media->getId();
 
         if (null === $id) {
-            return '';
+            throw new \InvalidArgumentException('Unable to generate public url for media without id.');
         }
 
         return sprintf(
@@ -174,6 +174,8 @@ abstract class BaseVideoProvider extends BaseProvider
 
     /**
      * Get provider reference url.
+     *
+     * @throws \InvalidArgumentException if $media reference url cannot be generated
      */
     abstract public function getReferenceUrl(MediaInterface $media): string;
 

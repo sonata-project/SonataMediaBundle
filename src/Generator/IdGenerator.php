@@ -38,12 +38,24 @@ final class IdGenerator implements GeneratorInterface
         $id = $media->getId();
 
         if (!is_numeric($id)) {
-            return '';
+            throw new \InvalidArgumentException(sprintf(
+                'Unable to generate path for media without numeric id using %s.',
+                self::class
+            ));
+        }
+
+        $context = $media->getContext();
+
+        if (null === $context) {
+            throw new \InvalidArgumentException(sprintf(
+                'Unable to generate path for media without context using %s.',
+                self::class
+            ));
         }
 
         $repFirstLevel = (int) ($id / $this->firstLevel);
         $repSecondLevel = (int) (($id - ($repFirstLevel * $this->firstLevel)) / $this->secondLevel);
 
-        return sprintf('%s/%04s/%02s', $media->getContext() ?? '', $repFirstLevel + 1, $repSecondLevel + 1);
+        return sprintf('%s/%04s/%02s', $context, $repFirstLevel + 1, $repSecondLevel + 1);
     }
 }

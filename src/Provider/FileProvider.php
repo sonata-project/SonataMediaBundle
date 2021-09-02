@@ -83,7 +83,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         $providerReference = $media->getProviderReference();
 
         if (null === $providerReference) {
-            return '';
+            throw new \InvalidArgumentException('Unable to generate reference image for media without provider reference.');
         }
 
         return sprintf('%s/%s', $this->generatePath($media), $providerReference);
@@ -187,7 +187,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
 
             if (false === $path) {
-                throw new \RuntimeException(sprintf('Unable to generate temporary file name for media %s.', $media->getId() ?? ''));
+                throw new \InvalidArgumentException(sprintf('Unable to generate temporary file name for media %s.', $media->getId() ?? ''));
             }
 
             $fileObject = new \SplFileObject($path, 'w');
@@ -226,7 +226,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             return $this->getReferenceImage($media);
         }
 
-        return '';
+        throw new \InvalidArgumentException('Unable to generate private url for media.');
     }
 
     public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response

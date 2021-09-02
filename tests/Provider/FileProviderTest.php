@@ -100,6 +100,7 @@ class FileProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
+        $media->setContext('default');
         $media->setId(10);
         $media->setHeight(100);
 
@@ -124,6 +125,8 @@ class FileProviderTest extends AbstractProviderTest
     {
         $media = new Media();
         $media->setName('test.png');
+        $media->setProviderReference('ASDASDAS.png');
+        $media->setContext('default');
         $media->setId(1023456);
 
         $this->provider->generateThumbnails($media);
@@ -144,6 +147,9 @@ class FileProviderTest extends AbstractProviderTest
         $file = __DIR__.'/../Fixtures/file.txt';
 
         $media = new Media();
+        $media->setId(123);
+        $media->setContext('default');
+
         $this->provider->preUpdate($media);
         self::assertNull($media->getProviderReference());
 
@@ -172,8 +178,12 @@ class FileProviderTest extends AbstractProviderTest
         self::assertSame('file.txt', $media->getName(), '::getName() return the file name');
         self::assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        self::assertEmpty($this->provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return empty on non reference formate');
         self::assertNotNull($this->provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unable to generate private url for media.');
+
+        $this->provider->generatePrivateUrl($media, 'big');
     }
 
     public function testDownload(): void

@@ -235,7 +235,7 @@ final class YouTubeProvider extends BaseVideoProvider
         $providerReference = $media->getProviderReference();
 
         if (null === $providerReference) {
-            return '';
+            throw new \InvalidArgumentException('Unable to generate reference url for media without provider reference.');
         }
 
         return sprintf('https://www.youtube.com/watch?v=%s', $providerReference);
