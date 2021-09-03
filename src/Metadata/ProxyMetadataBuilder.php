@@ -60,7 +60,7 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
             throw new \RuntimeException(sprintf(
                 'Provider %s for media %s does not implement %s.',
                 $providerName,
-                $media->getId(),
+                $media->getId() ?? '',
                 MediaProviderInterface::class
             ));
         }

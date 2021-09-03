@@ -29,7 +29,14 @@ final class PathGenerator implements GeneratorInterface
             $path = '';
         }
 
-        $context = $media->getContext() ?? '';
+        $context = $media->getContext();
+
+        if (null === $context) {
+            throw new \InvalidArgumentException(sprintf(
+                'Unable to generate path for media without context using %s.',
+                self::class
+            ));
+        }
 
         return '' !== $path ? sprintf('%s/%s', $context, $path) : $context;
     }

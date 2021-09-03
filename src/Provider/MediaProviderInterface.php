@@ -84,6 +84,8 @@ interface MediaProviderInterface
 
     /**
      * return the reference image of the media, can be the video thumbnail or the original uploaded picture.
+     *
+     * @throws \InvalidArgumentException if $media reference image cannot be generated
      */
     public function getReferenceImage(MediaInterface $media): string;
 
@@ -127,11 +129,15 @@ interface MediaProviderInterface
 
     /**
      * Generate the public path.
+     *
+     * @throws \InvalidArgumentException if $media public url cannot be generated
      */
     public function generatePublicUrl(MediaInterface $media, string $format): string;
 
     /**
      * Generate the private path.
+     *
+     * @throws \InvalidArgumentException if $media private url cannot be generated
      */
     public function generatePrivateUrl(MediaInterface $media, string $format): string;
 

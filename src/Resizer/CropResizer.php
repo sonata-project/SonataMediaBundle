@@ -49,16 +49,16 @@ final class CropResizer implements ResizerInterface
         if (!isset($settings['width'])) {
             throw new \InvalidArgumentException(sprintf(
                 'The "width" parameter is missing in context "%s" for provider "%s".',
-                $media->getContext(),
-                $media->getProviderName()
+                $media->getContext() ?? '',
+                $media->getProviderName() ?? ''
             ));
         }
 
         if (!isset($settings['height'])) {
             throw new \InvalidArgumentException(sprintf(
                 'The "height" parameter is missing in context "%s" for provider "%s".',
-                $media->getContext(),
-                $media->getProviderName()
+                $media->getContext() ?? '',
+                $media->getProviderName() ?? ''
             ));
         }
 

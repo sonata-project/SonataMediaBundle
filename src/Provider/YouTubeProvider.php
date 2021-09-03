@@ -119,7 +119,7 @@ final class YouTubeProvider extends BaseVideoProvider
 
             // Values: 0 or 1. Default is 0. Setting to 1 enables the fullscreen button. This has no
             // effect on the Chromeless Player. Note that you must include some extra arguments to
-           // your embed code for this to work.
+            // your embed code for this to work.
             'fs' => 1,
 
             // Values: A positive integer. This parameter causes the player to begin playing the video
@@ -232,7 +232,13 @@ final class YouTubeProvider extends BaseVideoProvider
 
     public function getReferenceUrl(MediaInterface $media): string
     {
-        return sprintf('https://www.youtube.com/watch?v=%s', $media->getProviderReference());
+        $providerReference = $media->getProviderReference();
+
+        if (null === $providerReference) {
+            throw new \InvalidArgumentException('Unable to generate reference url for media without provider reference.');
+        }
+
+        return sprintf('https://www.youtube.com/watch?v=%s', $providerReference);
     }
 
     protected function doTransform(MediaInterface $media): void

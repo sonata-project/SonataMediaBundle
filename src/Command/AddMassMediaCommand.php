@@ -132,7 +132,7 @@ final class AddMassMediaCommand extends Command
 
         try {
             $this->mediaManager->save($media);
-            $output->writeln(sprintf(' > %s - %s', $media->getId(), $media->getName()));
+            $output->writeln(sprintf(' > %s - %s', $media->getId() ?? '', $media->getName() ?? ''));
         } catch (\Exception $e) {
             $output->writeln(sprintf('<error>%s</error> : %s', $e->getMessage(), json_encode($data)));
         }

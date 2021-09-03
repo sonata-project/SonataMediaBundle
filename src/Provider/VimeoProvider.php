@@ -119,7 +119,13 @@ final class VimeoProvider extends BaseVideoProvider
 
     public function getReferenceUrl(MediaInterface $media): string
     {
-        return sprintf('https://vimeo.com/%s', $media->getProviderReference());
+        $providerReference = $media->getProviderReference();
+
+        if (null === $providerReference) {
+            throw new \InvalidArgumentException('Unable to generate reference url for media without provider reference.');
+        }
+
+        return sprintf('https://vimeo.com/%s', $providerReference);
     }
 
     protected function fixBinaryContent(MediaInterface $media): void

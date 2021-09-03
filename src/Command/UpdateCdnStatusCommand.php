@@ -120,7 +120,11 @@ EOF
             $cdn = $provider->getCdn();
             $flushIdentifier = $media->getCdnFlushIdentifier();
 
-            $this->log(sprintf('Refresh CDN status for media "%s" (%s) ', $media->getName(), $media->getId()), false);
+            $this->log(sprintf(
+                'Refresh CDN status for media "%s" (%s) ',
+                $media->getName() ?? '',
+                $media->getId() ?? ''
+            ), false);
 
             if (null === $flushIdentifier) {
                 $this->log('<error>Skipping since the medium does not have a pending flush.</error>');
@@ -155,7 +159,7 @@ EOF
             } catch (\Throwable $e) {
                 $this->log(sprintf(
                     '<error>Unable update CDN status, media: %s - %s </error>',
-                    $media->getId(),
+                    $media->getId() ?? '',
                     $e->getMessage()
                 ));
 
@@ -167,7 +171,7 @@ EOF
             } catch (\Throwable $e) {
                 $this->log(sprintf(
                     '<error>Unable to update medium: %s - %s </error>',
-                    $media->getId(),
+                    $media->getId() ?? '',
                     $e->getMessage()
                 ));
 

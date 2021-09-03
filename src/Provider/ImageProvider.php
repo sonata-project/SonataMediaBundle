@@ -179,7 +179,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                 $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
 
                 if (false === $path) {
-                    throw new \LogicException(sprintf('Unable to update metadata for media %s.', $media->getId()));
+                    throw new \LogicException(sprintf('Unable to update metadata for media %s.', $media->getId() ?? ''));
                 }
 
                 $fileObject = new \SplFileObject($path, 'w');
@@ -244,8 +244,10 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
             return;
         }
 
-        if (!\in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), $this->allowedExtensions, true)
-            || !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes, true)) {
+        if (
+            !\in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), $this->allowedExtensions, true)
+            || !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes, true)
+        ) {
             return;
         }
 

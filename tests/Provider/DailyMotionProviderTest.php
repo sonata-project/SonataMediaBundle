@@ -226,7 +226,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
     public function testGetMetadataException(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to retrieve the video information for :x9wjql');
+        $this->expectExceptionMessage('Unable to retrieve the video information for: x9wjql');
         $this->expectExceptionCode(12);
 
         $client = $this->createMock(ClientInterface::class);

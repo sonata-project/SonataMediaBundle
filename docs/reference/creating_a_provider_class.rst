@@ -134,13 +134,13 @@ is going to be used to store ``Media`` information::
         $metadata = @file_get_contents($url);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to retrieve vimeo video information for :'.$url);
+            throw new \RuntimeException(sprintf('Unable to retrieve vimeo video information for: %s', $url));
         }
 
         $metadata = json_decode($metadata, true);
 
         if (!$metadata) {
-            throw new \RuntimeException('Unable to decode vimeo video information for :'.$url);
+            throw new \RuntimeException(sprintf('Unable to decode vimeo video information for: %s', $url));
         }
 
         return $metadata;

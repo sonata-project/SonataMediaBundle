@@ -44,7 +44,7 @@ class PantherPortalTest extends TestCase
     public function testException(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to flush : Failed!!');
+        $this->expectExceptionMessage('Unable to flush: Failed!!');
 
         $client = $this->createMock(ClientSpy::class);
         $client->expects(self::once())->method('flush')->willReturn('Failed!!');

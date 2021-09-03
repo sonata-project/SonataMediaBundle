@@ -77,6 +77,10 @@ final class CleanMediaCommand extends Command
         $filesystem = new Filesystem();
         $baseDirectory = $this->filesystemLocal->getDirectory();
 
+        if (false === $baseDirectory) {
+            throw new \RuntimeException('Unable to find upload directory, did you configure it?');
+        }
+
         $output->writeln(sprintf('<info>Scanning upload directory: %s</info>', $baseDirectory));
 
         foreach ($this->mediaPool->getContexts() as $contextName => $context) {
