@@ -80,12 +80,12 @@ class FileProviderTest extends AbstractProviderTest
         $media->setContext('default');
 
         $media->setId(1023456);
-        self::assertSame('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
+        static::assertSame('default/0011/24/ASDASD.txt', $provider->getReferenceImage($media));
 
-        self::assertSame('default/0011/24', $provider->generatePath($media));
+        static::assertSame('default/0011/24', $provider->generatePath($media));
 
         // default icon image
-        self::assertSame('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
+        static::assertSame('/uploads/media/sonatamedia/files/big/file.png', $provider->generatePublicUrl($media, 'big'));
     }
 
     public function testHelperProperties(): void
@@ -101,8 +101,8 @@ class FileProviderTest extends AbstractProviderTest
 
         $properties = $provider->getHelperProperties($media, 'admin');
 
-        self::assertIsArray($properties);
-        self::assertSame('test.png', $properties['title']);
+        static::assertIsArray($properties);
+        static::assertSame('test.png', $properties['title']);
     }
 
     public function testForm(): void
@@ -115,7 +115,7 @@ class FileProviderTest extends AbstractProviderTest
             ->willReturn('message');
 
         $form = $this->createMock(FormMapper::class);
-        $form->expects(self::exactly(8))
+        $form->expects(static::exactly(8))
             ->method('add')
             ->willReturn(null);
 
@@ -147,13 +147,13 @@ class FileProviderTest extends AbstractProviderTest
 
         $media = new Media();
         $provider->preUpdate($media);
-        self::assertNull($media->getProviderReference());
+        static::assertNull($media->getProviderReference());
 
         $media->setBinaryContent($file);
         $provider->transform($media);
 
-        self::assertInstanceOf(\DateTime::class, $media->getUpdatedAt());
-        self::assertNotNull($media->getProviderReference());
+        static::assertInstanceOf(\DateTime::class, $media->getUpdatedAt());
+        static::assertNotNull($media->getProviderReference());
 
         $provider->postUpdate($media);
 
@@ -166,11 +166,11 @@ class FileProviderTest extends AbstractProviderTest
         // pre persist the media
         $provider->transform($media);
 
-        self::assertSame('file.txt', $media->getName(), '::getName() return the file name');
-        self::assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
+        static::assertSame('file.txt', $media->getName(), '::getName() return the file name');
+        static::assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
-        self::assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false on non reference formate');
-        self::assertNotNull($provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
+        static::assertFalse($provider->generatePrivateUrl($media, 'big'), '::generatePrivateUrl() return false on non reference formate');
+        static::assertNotNull($provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
     }
 
     public function testDownload(): void
@@ -187,7 +187,7 @@ class FileProviderTest extends AbstractProviderTest
 
         $response = $provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
 
-        self::assertInstanceOf(BinaryFileResponse::class, $response);
+        static::assertInstanceOf(BinaryFileResponse::class, $response);
     }
 
     /**
@@ -247,11 +247,11 @@ class FileProviderTest extends AbstractProviderTest
 
         $binaryContent = $this->createMock(File::class);
 
-        $binaryContent->expects(self::atLeastOnce())
+        $binaryContent->expects(static::atLeastOnce())
             ->method('getRealPath')
             ->willReturn(__DIR__.'/../Fixtures/file.txt');
 
-        $binaryContent->expects(self::never())
+        $binaryContent->expects(static::never())
             ->method('getPathname');
 
         $media
@@ -284,11 +284,11 @@ class FileProviderTest extends AbstractProviderTest
 
         $binaryContent = $this->createMock(File::class);
 
-        $binaryContent->expects(self::atLeastOnce())
+        $binaryContent->expects(static::atLeastOnce())
             ->method('getRealPath')
             ->willReturn(false);
 
-        $binaryContent->expects(self::atLeastOnce())
+        $binaryContent->expects(static::atLeastOnce())
             ->method('getPathname')
             ->willReturn(__DIR__.'/../Fixtures/file.txt');
 
@@ -322,9 +322,9 @@ class FileProviderTest extends AbstractProviderTest
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('buildViolation')
-            ->with(self::stringContains('The file is too big, max size:'))
+            ->with(static::stringContains('The file is too big, max size:'))
             ->willReturn($this->createConstraintBuilder());
 
         $upload = $this->getMockBuilder(UploadedFile::class)
@@ -351,9 +351,9 @@ class FileProviderTest extends AbstractProviderTest
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('buildViolation')
-            ->with(self::stringContains('The file is too big, max size:'))
+            ->with(static::stringContains('The file is too big, max size:'))
             ->willReturn($this->createConstraintBuilder());
 
         $upload = $this->getMockBuilder(UploadedFile::class)
@@ -380,7 +380,7 @@ class FileProviderTest extends AbstractProviderTest
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
-            ->expects(self::never())
+            ->expects(static::never())
             ->method('buildViolation');
 
         $upload = $this->getMockBuilder(UploadedFile::class)
@@ -408,11 +408,11 @@ class FileProviderTest extends AbstractProviderTest
         $errorElement = $this->createErrorElement($executionContext);
         $constraintBuilder = $this->createConstraintBuilder();
         $constraintBuilder
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('setParameters')
             ->with(['%type%' => 'bar/baz']);
         $executionContext
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('buildViolation')
             ->with('Invalid mime type : %type%')
             ->willReturn($constraintBuilder);
@@ -440,11 +440,11 @@ class FileProviderTest extends AbstractProviderTest
     {
         $provider = $this->getProvider();
 
-        self::assertSame('file', $provider->getProviderMetadata()->getTitle());
-        self::assertSame('file.description', $provider->getProviderMetadata()->getDescription());
-        self::assertNotNull($provider->getProviderMetadata()->getImage());
-        self::assertSame('fa fa-file-text-o', $provider->getProviderMetadata()->getOption('class'));
-        self::assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
+        static::assertSame('file', $provider->getProviderMetadata()->getTitle());
+        static::assertSame('file.description', $provider->getProviderMetadata()->getDescription());
+        static::assertNotNull($provider->getProviderMetadata()->getImage());
+        static::assertSame('fa fa-file-text-o', $provider->getProviderMetadata()->getOption('class'));
+        static::assertSame('SonataMediaBundle', $provider->getProviderMetadata()->getDomain());
     }
 
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement

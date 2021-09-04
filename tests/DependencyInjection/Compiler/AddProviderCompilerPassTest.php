@@ -92,14 +92,14 @@ class AddProviderCompilerPassTest extends TestCase
         foreach ($calls as $call) {
             if ('addFormat' === $call[0]) {
                 $callFound = true;
-                self::assertSame(
+                static::assertSame(
                     $expectedCall,
                     $call[1],
                     'Format config of "foo_provider" doesn\'t match the expected config.'
                 );
             }
         }
-        self::assertTrue(
+        static::assertTrue(
             $callFound,
             'Expected "addFormat" method call on "foo_provider" service was not registered.'
         );

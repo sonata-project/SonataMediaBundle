@@ -60,7 +60,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->mediaManager = $mediaManager = $this->createMock(MediaManagerInterface::class);
 
         $this->fileSystemLocal = $fileSystemLocal = $this->createMock(Local::class);
-        $this->fileSystemLocal->expects(self::once())->method('getDirectory')->willReturn($this->workspace);
+        $this->fileSystemLocal->expects(static::once())->method('getDirectory')->willReturn($this->workspace);
 
         $this->command = new CleanMediaCommand($this->fileSystemLocal, $this->pool, $this->mediaManager);
 
@@ -78,13 +78,13 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $this->pool->expects(self::once())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->expects(static::once())->method('getContexts')->willReturn(['foo' => $context]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@\'.+\' does not exist\s+done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@\'.+\' does not exist\s+done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecuteEmptyDirectory(): void
@@ -97,13 +97,13 @@ class CleanMediaCommandTest extends FilesystemTestCase
             'download' => [],
         ];
 
-        $this->pool->expects(self::once())->method('getContexts')->willReturn(['foo' => $context]);
+        $this->pool->expects(static::once())->method('getContexts')->willReturn(['foo' => $context]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@Context: foo\s+done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@Context: foo\s+done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecuteFilesExists(): void
@@ -126,18 +126,18 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $media = $this->createMock(MediaInterface::class);
 
-        $this->mediaManager->expects(self::once())->method('findOneBy')
-            ->with(self::equalTo(['id' => 1, 'context' => 'foo']))
+        $this->mediaManager->expects(static::once())->method('findOneBy')
+            ->with(static::equalTo(['id' => 1, 'context' => 'foo']))
             ->willReturn([$media]);
-        $this->mediaManager->expects(self::once())->method('findBy')
-            ->with(self::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+        $this->mediaManager->expects(static::once())->method('findBy')
+            ->with(static::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
             ->willReturn([$media]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@Context: foo\s+done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@Context: foo\s+done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecuteFilesExistsVerbose(): void
@@ -160,11 +160,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $media = $this->createMock(MediaInterface::class);
 
-        $this->mediaManager->expects(self::once())->method('findOneBy')
-            ->with(self::equalTo(['id' => 1, 'context' => 'foo']))
+        $this->mediaManager->expects(static::once())->method('findOneBy')
+            ->with(static::equalTo(['id' => 1, 'context' => 'foo']))
             ->willReturn([$media]);
-        $this->mediaManager->expects(self::once())->method('findBy')
-            ->with(self::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+        $this->mediaManager->expects(static::once())->method('findBy')
+            ->with(static::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
             ->willReturn([$media]);
 
         $output = $this->tester->execute(
@@ -180,7 +180,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             ],
             $this->tester->getDisplay()
         );
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecuteDryRun(): void
@@ -201,11 +201,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
         $this->pool->method('getProviders')->willReturn([$provider]);
 
-        $this->mediaManager->expects(self::once())->method('findOneBy')
-            ->with(self::equalTo(['id' => 1, 'context' => 'foo']))
+        $this->mediaManager->expects(static::once())->method('findOneBy')
+            ->with(static::equalTo(['id' => 1, 'context' => 'foo']))
             ->willReturn(null);
-        $this->mediaManager->expects(self::once())->method('findBy')
-            ->with(self::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+        $this->mediaManager->expects(static::once())->method('findBy')
+            ->with(static::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
             ->willReturn([]);
 
         $output = $this->tester->execute(['command' => $this->command->getName(), '--dry-run' => true]);
@@ -218,7 +218,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             ],
             $this->tester->getDisplay()
         );
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecute(): void
@@ -239,11 +239,11 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->pool->method('getContexts')->willReturn(['foo' => $context]);
         $this->pool->method('getProviders')->willReturn([$provider]);
 
-        $this->mediaManager->expects(self::once())->method('findOneBy')
-            ->with(self::equalTo(['id' => 1, 'context' => 'foo']))
+        $this->mediaManager->expects(static::once())->method('findOneBy')
+            ->with(static::equalTo(['id' => 1, 'context' => 'foo']))
             ->willReturn(null);
-        $this->mediaManager->expects(self::once())->method('findBy')
-            ->with(self::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
+        $this->mediaManager->expects(static::once())->method('findBy')
+            ->with(static::equalTo(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']]))
             ->willReturn([]);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
@@ -256,7 +256,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             ],
             $this->tester->getDisplay()
         );
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     /**
@@ -278,7 +278,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             }
         }
 
-        self::assertTrue($found, sprintf(
+        static::assertTrue($found, sprintf(
             'Unable to find "%s" in "%s" with extractor "%s"',
             implode('", "', $expected),
             $output,

@@ -32,6 +32,6 @@ class GalleryHasMediaAdminTest extends TestCase
 
     public function testItIsInstantiable(): void
     {
-        self::assertNotNull($this->mediaAdmin);
+        static::assertNotNull($this->mediaAdmin);
     }
 }

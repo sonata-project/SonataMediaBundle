@@ -56,13 +56,13 @@ final class GalleryListBlockServiceTest extends BlockServiceTestCase
 
     public function testName(): void
     {
-        self::assertSame('Media Gallery List', $this->blockService->getName());
+        static::assertSame('Media Gallery List', $this->blockService->getName());
     }
 
     public function testExecute(): void
     {
         $pager = $this->createMock(PagerInterface::class);
-        $this->galleryManager->expects(self::once())->method('getPager')->willReturn($pager);
+        $this->galleryManager->expects(static::once())->method('getPager')->willReturn($pager);
 
         $block = new Block();
 
@@ -78,7 +78,7 @@ final class GalleryListBlockServiceTest extends BlockServiceTestCase
         $blockContext = new BlockContext($block, $settings);
 
         $this->twig
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('render')
             ->with('@SonataMedia/Block/block_gallery_list.html.twig', [
                 'context' => $blockContext,

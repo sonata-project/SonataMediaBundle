@@ -31,7 +31,7 @@ class ImagineCompatibleResizerTraitTest extends TestCase
 
         $convertedMode = $method->invokeArgs($objectWithTrait, [$mode]);
 
-        self::assertSame($result, $convertedMode);
+        static::assertSame($result, $convertedMode);
     }
 
     public static function getModes(): array
