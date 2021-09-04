@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Provider\ImageProvider;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Provider\YouTubeProvider;
+use Sonata\MediaBundle\Thumbnail\FileThumbnail;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -38,6 +39,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.thumbnail.liip_imagine', LiipImagineThumbnail::class)
             ->args([
                 new ReferenceConfigurator('liip_imagine.cache.manager'),
+            ])
+
+        ->set('sonata.media.thumbnail.file', FileThumbnail::class)
+            ->args([
+                new ReferenceConfigurator('assets.packages'),
             ])
 
         ->set('sonata.media.provider.image', ImageProvider::class)
@@ -65,7 +71,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '',
                 '',
                 '',
-                new ReferenceConfigurator('sonata.media.thumbnail.format'),
+                new ReferenceConfigurator('sonata.media.thumbnail.file'),
                 '',
                 '',
                 new ReferenceConfigurator('sonata.media.metadata.proxy'),

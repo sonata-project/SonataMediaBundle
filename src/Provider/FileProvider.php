@@ -202,13 +202,10 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
-            $path = $this->getReferenceImage($media);
-        } else {
-            // @todo: fix the asset path
-            $path = sprintf('sonatamedia/files/%s/file.png', $format);
+            $this->getCdn()->getPath($this->getReferenceImage($media), $media->getCdnIsFlushable());
         }
 
-        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
+        return $this->thumbnail->generatePublicUrl($this, $media, $format);
     }
 
     public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
@@ -226,7 +223,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             return $this->getReferenceImage($media);
         }
 
-        throw new \InvalidArgumentException('Unable to generate private url for media.');
+        return $this->thumbnail->generatePrivateUrl($this, $media, $format);
     }
 
     public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
