@@ -94,17 +94,17 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = new Context();
 
-        $this->contextManager->expects(self::once())->method('findOneBy')->with(self::equalTo(['id' => 'foo']))->willReturn($contextModel);
+        $this->contextManager->expects(static::once())->method('findOneBy')->with(static::equalTo(['id' => 'foo']))->willReturn($contextModel);
 
         $category = new Category();
 
-        $this->categoryManager->expects(self::once())->method('getRootCategory')->with(self::equalTo($contextModel))->willReturn($category);
+        $this->categoryManager->expects(static::once())->method('getRootCategory')->with(static::equalTo($contextModel))->willReturn($category);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecuteWithEmptyRoot(): void
@@ -119,19 +119,19 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = new Context();
 
-        $this->contextManager->expects(self::once())->method('findOneBy')->with(self::equalTo(['id' => 'foo']))->willReturn($contextModel);
+        $this->contextManager->expects(static::once())->method('findOneBy')->with(static::equalTo(['id' => 'foo']))->willReturn($contextModel);
 
         $category = new Category();
 
-        $this->categoryManager->expects(self::once())->method('getRootCategory')->with(self::equalTo($contextModel))->willReturn(null);
-        $this->categoryManager->expects(self::once())->method('create')->willReturn($category);
-        $this->categoryManager->expects(self::once())->method('save')->with(self::equalTo($category));
+        $this->categoryManager->expects(static::once())->method('getRootCategory')->with(static::equalTo($contextModel))->willReturn(null);
+        $this->categoryManager->expects(static::once())->method('create')->willReturn($category);
+        $this->categoryManager->expects(static::once())->method('save')->with(static::equalTo($category));
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecuteWithNew(): void
@@ -146,20 +146,20 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = new Context();
 
-        $this->contextManager->expects(self::once())->method('findOneBy')->with(self::equalTo(['id' => 'foo']))->willReturn(null);
-        $this->contextManager->expects(self::once())->method('create')->willReturn($contextModel);
-        $this->contextManager->expects(self::once())->method('save')->with(self::equalTo($contextModel));
+        $this->contextManager->expects(static::once())->method('findOneBy')->with(static::equalTo(['id' => 'foo']))->willReturn(null);
+        $this->contextManager->expects(static::once())->method('create')->willReturn($contextModel);
+        $this->contextManager->expects(static::once())->method('save')->with(static::equalTo($contextModel));
 
         $category = new Category();
 
-        $this->categoryManager->expects(self::once())->method('getRootCategory')->with(self::equalTo($contextModel))->willReturn(null);
-        $this->categoryManager->expects(self::once())->method('create')->willReturn($category);
-        $this->categoryManager->expects(self::once())->method('save')->with(self::equalTo($category));
+        $this->categoryManager->expects(static::once())->method('getRootCategory')->with(static::equalTo($contextModel))->willReturn(null);
+        $this->categoryManager->expects(static::once())->method('create')->willReturn($category);
+        $this->categoryManager->expects(static::once())->method('save')->with(static::equalTo($category));
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@ > default category for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 }

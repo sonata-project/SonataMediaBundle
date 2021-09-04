@@ -24,16 +24,16 @@ class MediaTest extends TestCase
 
         $media->setProviderMetadata(['thumbnail_url' => 'http://pasloin.com/thumb.png']);
 
-        self::assertSame($media->getMetadataValue('thumbnail_url'), 'http://pasloin.com/thumb.png', '::getMetadataValue() return the good value');
-        self::assertSame($media->getMetadataValue('thumbnail_url1', 'default'), 'default', '::getMetadataValue() return the default');
-        self::assertNull($media->getMetadataValue('thumbnail_url1'), '::getMetadataValue() return the null value');
+        static::assertSame($media->getMetadataValue('thumbnail_url'), 'http://pasloin.com/thumb.png', '::getMetadataValue() return the good value');
+        static::assertSame($media->getMetadataValue('thumbnail_url1', 'default'), 'default', '::getMetadataValue() return the default');
+        static::assertNull($media->getMetadataValue('thumbnail_url1'), '::getMetadataValue() return the null value');
     }
 
     public function testStatusList(): void
     {
         $status = Media::getStatusList();
 
-        self::assertIsArray($status);
+        static::assertIsArray($status);
     }
 
     public function testSetGet(): void
@@ -56,22 +56,22 @@ class MediaTest extends TestCase
         $media->setContentType('sonata/media');
         $media->setCreatedAt(new \DateTime());
 
-        self::assertSame(12, $media->getSize());
-        self::assertSame('description', $media->getDescription());
-        self::assertTrue($media->getEnabled());
-        self::assertSame('name', $media->getProviderName());
-        self::assertSame(2, $media->getLength());
-        self::assertSame($category, $media->getCategory());
-        self::assertSame('copyleft', $media->getCopyright());
-        self::assertSame('Thomas', $media->getAuthorName());
-        self::assertTrue($media->getCdnIsFlushable());
-        self::assertSame('identifier_123', $media->getCdnFlushIdentifier());
-        self::assertInstanceOf('DateTime', $media->getCdnFlushAt());
-        self::assertInstanceOf('DateTime', $media->getCreatedAt());
-        self::assertSame('sonata/media', $media->getContentType());
-        self::assertSame('MediaBundle', (string) $media);
+        static::assertSame(12, $media->getSize());
+        static::assertSame('description', $media->getDescription());
+        static::assertTrue($media->getEnabled());
+        static::assertSame('name', $media->getProviderName());
+        static::assertSame(2, $media->getLength());
+        static::assertSame($category, $media->getCategory());
+        static::assertSame('copyleft', $media->getCopyright());
+        static::assertSame('Thomas', $media->getAuthorName());
+        static::assertTrue($media->getCdnIsFlushable());
+        static::assertSame('identifier_123', $media->getCdnFlushIdentifier());
+        static::assertInstanceOf('DateTime', $media->getCdnFlushAt());
+        static::assertInstanceOf('DateTime', $media->getCreatedAt());
+        static::assertSame('sonata/media', $media->getContentType());
+        static::assertSame('MediaBundle', (string) $media);
 
-        self::assertNull($media->getMetadataValue('foo'));
+        static::assertNull($media->getMetadataValue('foo'));
     }
 
     public function testGetMediaFileExtension(): void
@@ -79,13 +79,13 @@ class MediaTest extends TestCase
         $media = new Media();
 
         $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1');
-        self::assertSame('png', $media->getExtension(), 'extension should not contain query strings');
+        static::assertSame('png', $media->getExtension(), 'extension should not contain query strings');
 
         $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png#some-hash');
-        self::assertSame('png', $media->getExtension(), 'extension should not contain hashes');
+        static::assertSame('png', $media->getExtension(), 'extension should not contain hashes');
 
         $media->setProviderReference('https://sonata-project.org/bundles/sonatageneral/images/logo-small.png?some-query-string=1#with-some-hash');
-        self::assertSame('png', $media->getExtension(), 'extension should not contain query strings or hashes');
+        static::assertSame('png', $media->getExtension(), 'extension should not contain query strings or hashes');
     }
 
     public function testSetCategoryWithoutAnActualCategory(): void

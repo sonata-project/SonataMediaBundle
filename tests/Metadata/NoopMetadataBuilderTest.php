@@ -26,6 +26,6 @@ class NoopMetadataBuilderTest extends TestCase
 
         $noopmetadatabuilder = new NoopMetadataBuilder();
 
-        self::assertSame([], $noopmetadatabuilder->get($media, $filename));
+        static::assertSame([], $noopmetadatabuilder->get($media, $filename));
     }
 }

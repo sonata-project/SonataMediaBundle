@@ -42,7 +42,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
 
     public function testName(): void
     {
-        self::assertSame('Media Gallery', $this->blockService->getName());
+        static::assertSame('Media Gallery', $this->blockService->getName());
     }
 
     public function testExecute(): void
@@ -58,7 +58,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         $gallery->method('getGalleryHasMedias')->willReturn([]);
 
         $this->twig
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('render')
             ->with('template', [
                 'gallery' => $gallery,

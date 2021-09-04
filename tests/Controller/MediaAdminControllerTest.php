@@ -78,14 +78,14 @@ class MediaAdminControllerTest extends TestCase
         );
         $pool->method('getProvidersByContext')->with('context')->willReturn(['provider']);
         $pool->method('getDefaultContext')->willReturn('default_context');
-        $this->admin->expects(self::once())->method('checkAccess')->with('create');
+        $this->admin->expects(static::once())->method('checkAccess')->with('create');
         $this->container->set('sonata.media.pool', $pool);
         $this->request->query->set('context', 'context');
 
         $response = $this->controller->createAction($this->request);
 
-        self::assertInstanceOf(Response::class, $response);
-        self::assertSame('renderResponse', $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertSame('renderResponse', $response->getContent());
     }
 
     public function testCreateAction(): void
@@ -93,7 +93,7 @@ class MediaAdminControllerTest extends TestCase
         $this->configureCreateAction(Media::class);
         $this->configureRender('template', 'renderResponse');
         $this->admin
-            ->expects(self::atLeastOnce())
+            ->expects(static::atLeastOnce())
             ->method('checkAccess')
             ->with('create');
 
@@ -103,8 +103,8 @@ class MediaAdminControllerTest extends TestCase
         $this->request->query->set('provider', 'provider');
         $response = $this->controller->createAction($this->request);
 
-        self::assertInstanceOf(Response::class, $response);
-        self::assertSame('renderResponse', $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertSame('renderResponse', $response->getContent());
     }
 
     public function testListAction(): void
@@ -120,7 +120,7 @@ class MediaAdminControllerTest extends TestCase
         $this->configureSetFormTheme($formView, ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
-        $datagrid->expects(self::exactly(3))->method('setValue')->withConsecutive(
+        $datagrid->expects(static::exactly(3))->method('setValue')->withConsecutive(
             ['context', null, 'another_context'],
             ['category', null, 1]
         );
@@ -134,8 +134,8 @@ class MediaAdminControllerTest extends TestCase
         $form->method('createView')->willReturn($formView);
         $this->container->set('sonata.media.pool', $pool);
         $this->container->set('sonata.media.manager.category', $categoryManager);
-        $this->admin->expects(self::once())->method('checkAccess')->with('list');
-        $this->admin->expects(self::once())->method('setListMode')->with('mosaic');
+        $this->admin->expects(static::once())->method('checkAccess')->with('list');
+        $this->admin->expects(static::once())->method('setListMode')->with('mosaic');
         $this->admin->method('getDatagrid')->willReturn($datagrid);
         $this->admin->method('getPersistentParameter')->with('context')->willReturn('another_context');
         $this->admin->method('getFilterTheme')->willReturn(['filterTheme']);
@@ -145,8 +145,8 @@ class MediaAdminControllerTest extends TestCase
 
         $response = $this->controller->listAction($this->request);
 
-        self::assertInstanceOf(Response::class, $response);
-        self::assertSame('renderResponse', $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertSame('renderResponse', $response->getContent());
     }
 
     private function configureCRUDController(): void
@@ -168,7 +168,7 @@ class MediaAdminControllerTest extends TestCase
             ['list', 'templateList'],
         ]);
         $this->admin->method('isChild')->willReturn(false);
-        $this->admin->expects(self::once())->method('setRequest')->with($this->request);
+        $this->admin->expects(static::once())->method('setRequest')->with($this->request);
         $this->admin->method('getCode')->willReturn('admin_code');
     }
 
@@ -182,12 +182,12 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->method('hasActiveSubClass')->willReturn(false);
         $this->admin->method('getClass')->willReturn($class);
         $this->admin->method('getNewInstance')->willReturn($object);
-        $this->admin->expects(self::once())->method('setSubject')->with($object);
+        $this->admin->expects(static::once())->method('setSubject')->with($object);
         $this->admin->method('getForm')->willReturn($form);
         $this->admin->method('getFormTheme')->willReturn(['formTheme']);
         $form->method('createView')->willReturn($formView);
-        $form->expects(self::once())->method('setData')->with($object);
-        $form->expects(self::once())->method('handleRequest')->with($this->request);
+        $form->expects(static::once())->method('setData')->with($object);
+        $form->expects(static::once())->method('handleRequest')->with($this->request);
         $form->method('isSubmitted')->willReturn(false);
         $form->method('all')->willReturn(['field' => null]);
     }
@@ -208,7 +208,7 @@ class MediaAdminControllerTest extends TestCase
 
         $this->twig->method('getRuntime')->with($rendererClass)->willReturn($twigRenderer);
 
-        $twigRenderer->expects(self::once())->method('setTheme')->with($formView, $formTheme);
+        $twigRenderer->expects(static::once())->method('setTheme')->with($formView, $formTheme);
     }
 
     private function configureSetCsrfToken(string $intention): void
@@ -229,6 +229,6 @@ class MediaAdminControllerTest extends TestCase
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
         $this->container->set('sonata.media.pool', $pool);
         $response->method('getContent')->willReturn($rendered);
-        $this->twig->method('render')->with($template, self::isType('array'))->willReturn($rendered);
+        $this->twig->method('render')->with($template, static::isType('array'))->willReturn($rendered);
     }
 }
