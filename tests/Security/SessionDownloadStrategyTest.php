@@ -44,7 +44,7 @@ final class SessionDownloadStrategyTest extends TestCase
 
         $strategy = new SessionDownloadStrategy($translator, $requestStack, 0);
 
-        self::assertFalse($strategy->isGranted($media, $request));
+        static::assertFalse($strategy->isGranted($media, $request));
     }
 
     public function testIsGrantedTrue(): void
@@ -65,6 +65,6 @@ final class SessionDownloadStrategyTest extends TestCase
 
         $strategy = new SessionDownloadStrategy($translator, $requestStack, 1);
 
-        self::assertTrue($strategy->isGranted($media, $request));
+        static::assertTrue($strategy->isGranted($media, $request));
     }
 }

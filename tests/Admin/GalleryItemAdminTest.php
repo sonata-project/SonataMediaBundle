@@ -35,6 +35,6 @@ class GalleryItemAdminTest extends TestCase
 
     public function testItIsInstantiable(): void
     {
-        self::assertNotNull($this->galleryItemAdmin);
+        static::assertNotNull($this->galleryItemAdmin);
     }
 }

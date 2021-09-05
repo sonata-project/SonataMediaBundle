@@ -25,8 +25,8 @@ class MediaTest extends TestCase
 
         $media->setMetadataValue('name', 'value');
         $metadata = $metadataProperty->getValue($media);
-        self::assertArrayHasKey('name', $metadata, 'name metadata should be stored in the empty array');
-        self::assertSame('value', $metadata['name'], 'the string value should be returned');
+        static::assertArrayHasKey('name', $metadata, 'name metadata should be stored in the empty array');
+        static::assertSame('value', $metadata['name'], 'the string value should be returned');
 
         $cropData = [
             'x' => 10,
@@ -36,9 +36,9 @@ class MediaTest extends TestCase
         ];
         $media->setMetadataValue('crop', $cropData);
         $metadata = $metadataProperty->getValue($media);
-        self::assertArrayHasKey('crop', $metadata, 'crop should be stored in the existing array');
-        self::assertArrayHasKey('name', $metadata, 'name metadata should still be in the array');
-        self::assertSame($cropData, $metadata['crop'], 'the crop data array should be returned');
+        static::assertArrayHasKey('crop', $metadata, 'crop should be stored in the existing array');
+        static::assertArrayHasKey('name', $metadata, 'name metadata should still be in the array');
+        static::assertSame($cropData, $metadata['crop'], 'the crop data array should be returned');
 
         return $media;
     }
@@ -52,16 +52,16 @@ class MediaTest extends TestCase
 
         $media->unsetMetadataValue('crop');
         $metadata = $metadataProperty->getValue($media);
-        self::assertArrayNotHasKey('crop', $metadata, 'crop should not be in the metadata');
+        static::assertArrayNotHasKey('crop', $metadata, 'crop should not be in the metadata');
 
         $media->unsetMetadataValue('name');
         $metadata = $metadataProperty->getValue($media);
-        self::assertEmpty($metadata, 'crop should not be in the metadata');
+        static::assertEmpty($metadata, 'crop should not be in the metadata');
 
         try {
             $media->unsetMetadataValue('bullshit');
         } catch (\InvalidArgumentException $expected) {
-            self::fail('an invalid key should be ignored');
+            static::fail('an invalid key should be ignored');
         }
     }
 

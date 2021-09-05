@@ -28,18 +28,18 @@ class ServiceProviderDataTransformerTest extends TestCase
         );
 
         $value = new \stdClass();
-        self::assertSame($value, $transformer->transform($value));
+        static::assertSame($value, $transformer->transform($value));
     }
 
     public function testReverseTransformSkipsProviderIfNotMedia(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(self::never())->method('transform');
+        $provider->expects(static::never())->method('transform');
 
         $transformer = new ServiceProviderDataTransformer($provider);
 
         $media = new \stdClass();
-        self::assertSame($media, $transformer->reverseTransform($media));
+        static::assertSame($media, $transformer->reverseTransform($media));
     }
 
     public function testReverseTransformForwardsToProvider(): void
@@ -47,10 +47,10 @@ class ServiceProviderDataTransformerTest extends TestCase
         $media = $this->createStub(MediaInterface::class);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(self::once())->method('transform')->with($media);
+        $provider->expects(static::once())->method('transform')->with($media);
 
         $transformer = new ServiceProviderDataTransformer($provider);
-        self::assertSame($media, $transformer->reverseTransform($media));
+        static::assertSame($media, $transformer->reverseTransform($media));
     }
 
     public function testReverseTransformWithThrowingProviderNoThrow(): void
@@ -58,7 +58,7 @@ class ServiceProviderDataTransformerTest extends TestCase
         $media = $this->createStub(MediaInterface::class);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(self::once())->method('transform')->with($media)->willThrowException(new \Exception());
+        $provider->expects(static::once())->method('transform')->with($media)->willThrowException(new \Exception());
 
         $transformer = new ServiceProviderDataTransformer($provider);
         $transformer->reverseTransform($media);
@@ -70,11 +70,11 @@ class ServiceProviderDataTransformerTest extends TestCase
 
         $exception = new \Exception('foo');
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(self::once())->method('transform')->with($media)->willThrowException($exception);
+        $provider->expects(static::once())->method('transform')->with($media)->willThrowException($exception);
 
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects(self::once())->method('error')->with(
-            self::stringStartsWith('Caught Exception Exception: "foo" at'),
+        $logger->expects(static::once())->method('error')->with(
+            static::stringStartsWith('Caught Exception Exception: "foo" at'),
             ['exception' => $exception]
         );
 

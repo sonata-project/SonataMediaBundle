@@ -86,12 +86,12 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         $fileProvider
             ->method('getName')
             ->willReturn('fooprovider');
-        $fileProvider->expects(self::once())
+        $fileProvider->expects(static::once())
             ->method('getFormats')
             ->willReturn($formats);
-        $fileProvider->expects(self::exactly(2))
+        $fileProvider->expects(static::exactly(2))
             ->method('removeThumbnails');
-        $fileProvider->expects(self::exactly(2))
+        $fileProvider->expects(static::exactly(2))
             ->method('getFilesystem')
             ->willReturn($this->createMock(Filesystem::class));
 
@@ -123,7 +123,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             return $medias;
         };
 
-        $this->mediaManager->expects(self::exactly(2))
+        $this->mediaManager->expects(static::exactly(2))
             ->method('findBy')
             ->willReturnCallback($findByReturnCallback);
 
@@ -131,8 +131,8 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
         $statusCode = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertStringEndsWith('Done (total medias processed: 2).'.\PHP_EOL, $this->tester->getDisplay());
+        static::assertStringEndsWith('Done (total medias processed: 2).'.\PHP_EOL, $this->tester->getDisplay());
 
-        self::assertSame(0, $statusCode);
+        static::assertSame(0, $statusCode);
     }
 }

@@ -34,7 +34,7 @@ class NoDriverMediaManagerTest extends TestCase
 
     public function testIsInstanceOfMediaManagerInterface(): void
     {
-        self::assertInstanceOf(MediaManagerInterface::class, new NoDriverMediaManager());
+        static::assertInstanceOf(MediaManagerInterface::class, new NoDriverMediaManager());
     }
 
     /**

@@ -28,6 +28,6 @@ class PublicDownloadStrategyTest extends TestCase
         $translator = $this->createStub(TranslatorInterface::class);
 
         $strategy = new PublicDownloadStrategy($translator);
-        self::assertTrue($strategy->isGranted($media, $request));
+        static::assertTrue($strategy->isGranted($media, $request));
     }
 }

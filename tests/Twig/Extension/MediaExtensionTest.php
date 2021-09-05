@@ -66,11 +66,11 @@ class MediaExtensionTest extends TestCase
 
         $provider = $this->getProvider();
         $provider->method('getTemplate')->with('helper_thumbnail')->willReturn('template');
-        $provider->expects(self::once())->method('generatePublicUrl')->with($media, $format)
+        $provider->expects(static::once())->method('generatePublicUrl')->with($media, $format)
             ->willReturn('http://some.url.com');
 
         $template = $this->getTemplate();
-        $template->expects(self::once())
+        $template->expects(static::once())
             ->method('render')
             ->with(
                 [

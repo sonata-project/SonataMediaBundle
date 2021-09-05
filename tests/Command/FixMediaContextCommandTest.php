@@ -91,14 +91,14 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = new Context();
 
-        $this->contextManager->expects(self::once())->method('find')->with('foo')->willReturn($contextModel);
-        $this->categoryManager->expects(self::once())->method('getRootCategoriesForContext')->with($contextModel);
+        $this->contextManager->expects(static::once())->method('find')->with('foo')->willReturn($contextModel);
+        $this->categoryManager->expects(static::once())->method('getRootCategoriesForContext')->with($contextModel);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@Done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 
     public function testExecuteWithNew(): void
@@ -107,16 +107,16 @@ class FixMediaContextCommandTest extends TestCase
 
         $contextModel = new Context();
 
-        $this->contextManager->expects(self::once())->method('find')->with('foo')->willReturn(null);
-        $this->contextManager->expects(self::once())->method('create')->willReturn($contextModel);
-        $this->contextManager->expects(self::once())->method('save')->with($contextModel);
+        $this->contextManager->expects(static::once())->method('find')->with('foo')->willReturn(null);
+        $this->contextManager->expects(static::once())->method('create')->willReturn($contextModel);
+        $this->contextManager->expects(static::once())->method('save')->with($contextModel);
 
-        $this->categoryManager->expects(self::once())->method('getRootCategoriesForContext')->with($contextModel);
+        $this->categoryManager->expects(static::once())->method('getRootCategoriesForContext')->with($contextModel);
 
         $output = $this->tester->execute(['command' => $this->command->getName()]);
 
-        self::assertMatchesRegularExpression('@ > default context for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
+        static::assertMatchesRegularExpression('@ > default context for \'foo\' is missing, creating one\s+Done!@', $this->tester->getDisplay());
 
-        self::assertSame(0, $output);
+        static::assertSame(0, $output);
     }
 }

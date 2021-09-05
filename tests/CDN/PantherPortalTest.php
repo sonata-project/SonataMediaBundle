@@ -24,12 +24,12 @@ class PantherPortalTest extends TestCase
     public function testPortal(): void
     {
         $client = $this->createMock(ClientSpy::class);
-        $client->expects(self::exactly(3))->method('flush')->willReturn('Flush successfully submitted.');
+        $client->expects(static::exactly(3))->method('flush')->willReturn('Flush successfully submitted.');
 
         $panther = new PantherPortal('/foo', 'login', 'pass', '42');
         $panther->setClient($client);
 
-        self::assertSame('/foo/bar.jpg', $panther->getPath('bar.jpg', true));
+        static::assertSame('/foo/bar.jpg', $panther->getPath('bar.jpg', true));
 
         $path = '/mypath/file.jpg';
 
@@ -47,7 +47,7 @@ class PantherPortalTest extends TestCase
         $this->expectExceptionMessage('Unable to flush: Failed!!');
 
         $client = $this->createMock(ClientSpy::class);
-        $client->expects(self::once())->method('flush')->willReturn('Failed!!');
+        $client->expects(static::once())->method('flush')->willReturn('Failed!!');
 
         $panther = new PantherPortal('/foo', 'login', 'pass', '42');
         $panther->setClient($client);

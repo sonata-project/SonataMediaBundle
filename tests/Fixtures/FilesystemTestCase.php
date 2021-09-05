@@ -53,10 +53,10 @@ class FilesystemTestCase extends TestCase
         if ('\\' === \DIRECTORY_SEPARATOR) {
             self::$linkOnWindows = true;
             $originFile = tempnam(sys_get_temp_dir(), 'li');
-            self::assertNotFalse($originFile);
+            static::assertNotFalse($originFile);
 
             $targetFile = tempnam(sys_get_temp_dir(), 'li');
-            self::assertNotFalse($targetFile);
+            static::assertNotFalse($targetFile);
 
             if (true !== @link($originFile, $targetFile)) {
                 $report = error_get_last();
@@ -69,10 +69,10 @@ class FilesystemTestCase extends TestCase
 
             self::$symlinkOnWindows = true;
             $originDir = tempnam(sys_get_temp_dir(), 'sl');
-            self::assertNotFalse($originDir);
+            static::assertNotFalse($originDir);
 
             $targetDir = tempnam(sys_get_temp_dir(), 'sl');
-            self::assertNotFalse($targetDir);
+            static::assertNotFalse($targetDir);
 
             if (true !== @symlink($originDir, $targetDir)) {
                 $report = error_get_last();
@@ -94,7 +94,7 @@ class FilesystemTestCase extends TestCase
 
         $realpath = realpath($this->workspace);
 
-        self::assertNotFalse($realpath);
+        static::assertNotFalse($realpath);
 
         $this->workspace = $realpath;
     }
@@ -115,7 +115,7 @@ class FilesystemTestCase extends TestCase
     protected function assertFilePermissions(int $expectedFilePerms, string $filePath): void
     {
         $actualFilePerms = (int) substr(sprintf('%o', fileperms($filePath)), -3);
-        self::assertSame(
+        static::assertSame(
             $expectedFilePerms,
             $actualFilePerms,
             sprintf('File permissions for %s must be %s. Actual %s', $filePath, $expectedFilePerms, $actualFilePerms)
@@ -128,7 +128,7 @@ class FilesystemTestCase extends TestCase
 
         $infos = stat($filepath);
 
-        self::assertNotFalse($infos);
+        static::assertNotFalse($infos);
 
         $datas = posix_getpwuid($infos[4]);
 
@@ -141,7 +141,7 @@ class FilesystemTestCase extends TestCase
 
         $infos = stat($filepath);
 
-        self::assertNotFalse($infos);
+        static::assertNotFalse($infos);
 
         $datas = posix_getgrgid($infos[5]);
 
@@ -149,43 +149,43 @@ class FilesystemTestCase extends TestCase
             return $datas['name'];
         }
 
-        self::markTestSkipped('Unable to retrieve file group name');
+        static::markTestSkipped('Unable to retrieve file group name');
     }
 
     protected function markAsSkippedIfLinkIsMissing(): void
     {
         if (!\function_exists('link')) {
-            self::markTestSkipped('link is not supported');
+            static::markTestSkipped('link is not supported');
         }
 
         if ('\\' === \DIRECTORY_SEPARATOR && false === self::$linkOnWindows) {
-            self::markTestSkipped('link requires "Create hard links" privilege on windows');
+            static::markTestSkipped('link requires "Create hard links" privilege on windows');
         }
     }
 
     protected function markAsSkippedIfSymlinkIsMissing(bool $relative = false): void
     {
         if ('\\' === \DIRECTORY_SEPARATOR && false === self::$symlinkOnWindows) {
-            self::markTestSkipped('symlink requires "Create symbolic links" privilege on Windows');
+            static::markTestSkipped('symlink requires "Create symbolic links" privilege on Windows');
         }
 
         // https://bugs.php.net/69473
         if ($relative && '\\' === \DIRECTORY_SEPARATOR && 1 === \PHP_ZTS) {
-            self::markTestSkipped('symlink does not support relative paths on thread safe Windows PHP versions');
+            static::markTestSkipped('symlink does not support relative paths on thread safe Windows PHP versions');
         }
     }
 
     protected function markAsSkippedIfChmodIsMissing(): void
     {
         if ('\\' === \DIRECTORY_SEPARATOR) {
-            self::markTestSkipped('chmod is not supported on Windows');
+            static::markTestSkipped('chmod is not supported on Windows');
         }
     }
 
     protected function markAsSkippedIfPosixIsMissing(): void
     {
         if (!\function_exists('posix_isatty')) {
-            self::markTestSkipped('Function posix_isatty is required.');
+            static::markTestSkipped('Function posix_isatty is required.');
         }
     }
 }

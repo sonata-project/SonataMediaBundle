@@ -78,10 +78,6 @@
         <source>description.forbidden_download_strategy</source>
         <target>A tartalmat senki sem tekintheti meg.</target>
       </trans-unit>
-      <trans-unit id="description.session_download_strategy">
-        <source>description.session_download_strategy</source>
-        <target>description.session_download_strategy</target>
-      </trans-unit>
       <trans-unit id="filter.label_name">
         <source>filter.label_name</source>
         <target>Név</target>
@@ -454,110 +450,6 @@
       <trans-unit id="sonata.media.block.gallery">
         <source>sonata.media.block.gallery</source>
         <target>Galéria</target>
-      </trans-unit>
-      <trans-unit id="form.label_title">
-        <source>form.label_title</source>
-        <target>form.label_title</target>
-      </trans-unit>
-      <trans-unit id="form.label_content">
-        <source>form.label_content</source>
-        <target>form.label_content</target>
-      </trans-unit>
-      <trans-unit id="form.label_orientation">
-        <source>form.label_orientation</source>
-        <target>form.label_orientation</target>
-      </trans-unit>
-      <trans-unit id="form.label_gallery">
-        <source>form.label_gallery</source>
-        <target>form.label_gallery</target>
-      </trans-unit>
-      <trans-unit id="form.label_format">
-        <source>form.label_format</source>
-        <target>form.label_format</target>
-      </trans-unit>
-      <trans-unit id="form.label_pause_time">
-        <source>form.label_pause_time</source>
-        <target>form.label_pause_time</target>
-      </trans-unit>
-      <trans-unit id="form.label_start_paused">
-        <source>form.label_start_paused</source>
-        <target>form.label_start_paused</target>
-      </trans-unit>
-      <trans-unit id="form.label_orientation_left">
-        <source>form.label_orientation_left</source>
-        <target>form.label_orientation_left</target>
-      </trans-unit>
-      <trans-unit id="form.label_orientation_right">
-        <source>form.label_orientation_right</source>
-        <target>form.label_orientation_right</target>
-      </trans-unit>
-      <trans-unit id="sonata.media.block.gallery_list">
-        <source>sonata.media.block.gallery_list</source>
-        <target>sonata.media.block.gallery_list</target>
-      </trans-unit>
-      <trans-unit id="label_gallery_enabled">
-        <source>label_gallery_enabled</source>
-        <target>label_gallery_enabled</target>
-      </trans-unit>
-      <trans-unit id="label_gallery_disabled">
-        <source>label_gallery_disabled</source>
-        <target>label_gallery_disabled</target>
-      </trans-unit>
-      <trans-unit id="no_galleries_found">
-        <source>no_galleries_found</source>
-        <target>no_galleries_found</target>
-      </trans-unit>
-      <trans-unit id="view_all_galleries">
-        <source>view_all_galleries</source>
-        <target>view_all_galleries</target>
-      </trans-unit>
-      <trans-unit id="form.label_mode">
-        <source>form.label_mode</source>
-        <target>form.label_mode</target>
-      </trans-unit>
-      <trans-unit id="form.label_number">
-        <source>form.label_number</source>
-        <target>form.label_number</target>
-      </trans-unit>
-      <trans-unit id="form.label_order">
-        <source>form.label_order</source>
-        <target>form.label_order</target>
-      </trans-unit>
-      <trans-unit id="form.label_order_name">
-        <source>form.label_order_name</source>
-        <target>form.label_order_name</target>
-      </trans-unit>
-      <trans-unit id="form.label_order_created_at">
-        <source>form.label_order_created_at</source>
-        <target>form.label_order_created_at</target>
-      </trans-unit>
-      <trans-unit id="form.label_order_updated_at">
-        <source>form.label_order_updated_at</source>
-        <target>form.label_order_updated_at</target>
-      </trans-unit>
-      <trans-unit id="form.label_sort">
-        <source>form.label_sort</source>
-        <target>form.label_sort</target>
-      </trans-unit>
-      <trans-unit id="form.label_sort_asc">
-        <source>form.label_sort_asc</source>
-        <target>form.label_sort_asc</target>
-      </trans-unit>
-      <trans-unit id="form.label_sort_desc">
-        <source>form.label_sort_desc</source>
-        <target>form.label_sort_desc</target>
-      </trans-unit>
-      <trans-unit id="form.label_mode_public">
-        <source>form.label_mode_public</source>
-        <target>form.label_mode_public</target>
-      </trans-unit>
-      <trans-unit id="form.label_mode_admin">
-        <source>form.label_mode_admin</source>
-        <target>form.label_mode_admin</target>
-      </trans-unit>
-      <trans-unit id="form.label_class">
-        <source>form.label_class</source>
-        <target>form.label_class</target>
       </trans-unit>
     </body>
   </file>

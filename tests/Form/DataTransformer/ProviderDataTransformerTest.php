@@ -28,7 +28,7 @@ class ProviderDataTransformerTest extends TestCase
         $pool = new Pool('default');
 
         $transformer = new ProviderDataTransformer($pool, MediaInterface::class);
-        self::assertSame('foo', $transformer->reverseTransform('foo'));
+        static::assertSame('foo', $transformer->reverseTransform('foo'));
     }
 
     public function testReverseTransformUnknownProvider(): void
@@ -38,7 +38,7 @@ class ProviderDataTransformerTest extends TestCase
         $pool = new Pool('default');
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects(self::exactly(3))->method('getProviderName')->willReturn('unknown');
+        $media->expects(static::exactly(3))->method('getProviderName')->willReturn('unknown');
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn('xcs');
 
@@ -51,13 +51,13 @@ class ProviderDataTransformerTest extends TestCase
     public function testReverseTransformValidProvider(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(self::once())->method('transform');
+        $provider->expects(static::once())->method('transform');
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects(self::exactly(3))->method('getProviderName')->willReturn('default');
+        $media->expects(static::exactly(3))->method('getProviderName')->willReturn('default');
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn('xcs');
 
@@ -78,14 +78,14 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getId')->willReturn(null);
         $media->method('getBinaryContent')->willReturn(null);
         $media->method('getProviderName')->willReturn('default');
-        $media->expects(self::once())->method('setProviderReference')->with(MediaInterface::MISSING_BINARY_REFERENCE);
-        $media->expects(self::once())->method('setProviderStatus')->with(MediaInterface::STATUS_PENDING);
+        $media->expects(static::once())->method('setProviderReference')->with(MediaInterface::MISSING_BINARY_REFERENCE);
+        $media->expects(static::once())->method('setProviderStatus')->with(MediaInterface::STATUS_PENDING);
 
         $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
             'empty_on_new' => false,
         ]);
-        self::assertSame($media, $transformer->reverseTransform($media));
+        static::assertSame($media, $transformer->reverseTransform($media));
     }
 
     public function testReverseTransformWithMediaAndNoBinaryContent(): void
@@ -100,7 +100,7 @@ class ProviderDataTransformerTest extends TestCase
         $media->method('getBinaryContent')->willReturn(null);
 
         $transformer = new ProviderDataTransformer($pool, MediaInterface::class);
-        self::assertSame($media, $transformer->reverseTransform($media));
+        static::assertSame($media, $transformer->reverseTransform($media));
     }
 
     /**
@@ -127,13 +127,13 @@ class ProviderDataTransformerTest extends TestCase
     public function testReverseTransformWithThrowingProviderNoThrow(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(self::once())->method('transform')->will(self::throwException(new \Exception()));
+        $provider->expects(static::once())->method('transform')->will(static::throwException(new \Exception()));
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects(self::exactly(3))->method('getProviderName')->willReturn('default');
+        $media->expects(static::exactly(3))->method('getProviderName')->willReturn('default');
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 
@@ -146,16 +146,16 @@ class ProviderDataTransformerTest extends TestCase
     public function testReverseTransformWithThrowingProviderLogsException(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(self::once())->method('transform')->will(self::throwException(new \Exception()));
+        $provider->expects(static::once())->method('transform')->will(static::throwException(new \Exception()));
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
 
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects(self::once())->method('error');
+        $logger->expects(static::once())->method('error');
 
         $media = $this->createMock(MediaInterface::class);
-        $media->expects(self::exactly(3))->method('getProviderName')->willReturn('default');
+        $media->expects(static::exactly(3))->method('getProviderName')->willReturn('default');
         $media->method('getId')->willReturn(1);
         $media->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
 

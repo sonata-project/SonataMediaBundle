@@ -86,7 +86,7 @@ abstract class AbstractProviderTest extends TestCase
     public function testBuildEditForm(): void
     {
         $this->formBuilder
-            ->expects(self::atLeastOnce())
+            ->expects(static::atLeastOnce())
             ->method('add');
 
         $this->provider->buildEditForm($this->form);
@@ -95,7 +95,7 @@ abstract class AbstractProviderTest extends TestCase
     public function testBuildCreateForm(): void
     {
         $this->formBuilder
-            ->expects(self::atLeastOnce())
+            ->expects(static::atLeastOnce())
             ->method('add');
 
         $this->provider->buildCreateForm($this->form);
@@ -104,7 +104,7 @@ abstract class AbstractProviderTest extends TestCase
     public function testBuildMediaType(): void
     {
         $this->formBuilder
-            ->expects(self::atLeastOnce())
+            ->expects(static::atLeastOnce())
             ->method('add');
 
         $this->provider->buildMediaType($this->formBuilder);
@@ -116,7 +116,7 @@ abstract class AbstractProviderTest extends TestCase
         $stream->method('getContents')->willReturn($content);
 
         $response = $this->createMock(ResponseInterface::class);
-        $response->expects(self::once())->method('getBody')->willReturn($stream);
+        $response->expects(static::once())->method('getBody')->willReturn($stream);
 
         return $response;
     }

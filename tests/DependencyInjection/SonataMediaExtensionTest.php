@@ -85,7 +85,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService($serviceId);
         if (\extension_loaded($extension)) {
-            self::assertInstanceOf($type, $this->container->get($serviceId));
+            static::assertInstanceOf($type, $this->container->get($serviceId));
         }
     }
 
@@ -144,7 +144,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService($serviceId);
         if (\extension_loaded('gd')) {
-            self::assertInstanceOf($type, $this->container->get($serviceId));
+            static::assertInstanceOf($type, $this->container->get($serviceId));
         }
     }
 
@@ -161,7 +161,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        self::assertSame(
+        static::assertSame(
             $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
             ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
         );
@@ -171,12 +171,12 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $fakeContainer = $this->createMock(ContainerBuilder::class);
 
-        $fakeContainer->expects(self::once())
+        $fakeContainer->expects(static::once())
             ->method('getParameter')
             ->with('kernel.bundles')
             ->willReturn($this->container->getParameter('kernel.bundles'));
 
-        $fakeContainer->expects(self::once())
+        $fakeContainer->expects(static::once())
             ->method('getExtensionConfig')
             ->with('sonata_admin')
             ->willReturn([[
@@ -195,7 +195,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
             $extension->load($configs, $this->container);
         }
 
-        self::assertSame(
+        static::assertSame(
             $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
             ['ROLE_FOO', 'ROLE_BAR']
         );
@@ -210,12 +210,12 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     public function testLoadWithFilesystemConfigurationV3(array $expected, array $configs): void
     {
         if (!class_exists(Sdk::class)) {
-            self::markTestSkipped('This test requires aws/aws-sdk-php 3.x.');
+            static::markTestSkipped('This test requires aws/aws-sdk-php 3.x.');
         }
 
         $this->load($configs);
 
-        self::assertSame(
+        static::assertSame(
             $expected,
             $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0)
         );
@@ -337,7 +337,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ]);
 
         $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront.client', CloudFrontClient::class);
-        self::assertSame(
+        static::assertSame(
             $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getArgument(0),
             [
                 'region' => 'cloudfront_region',
@@ -348,7 +348,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 ],
             ]
         );
-        self::assertNull($this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getFactory());
+        static::assertNull($this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getFactory());
         $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront', CloudFrontVersion3::class);
     }
 

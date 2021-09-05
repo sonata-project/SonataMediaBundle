@@ -106,11 +106,11 @@ class MediaControllerTest extends TestCase
 
         $media->method('getContext')->willReturn('context');
         $provider->method('getDownloadResponse')->with($media, 'format', 'mode')->willReturn($response);
-        $response->expects(self::once())->method('prepare')->with($request);
+        $response->expects(static::once())->method('prepare')->with($request);
 
         $result = $this->controller->downloadAction($request, 1, 'format');
 
-        self::assertSame($response, $result);
+        static::assertSame($response, $result);
     }
 
     public function testViewActionWithNotFoundMedia(): void
@@ -164,8 +164,8 @@ class MediaControllerTest extends TestCase
 
         $response = $this->controller->viewAction($request, 1, 'format');
 
-        self::assertInstanceOf(Response::class, $response);
-        self::assertSame('renderResponse', $response->getContent());
+        static::assertInstanceOf(Response::class, $response);
+        static::assertSame('renderResponse', $response->getContent());
     }
 
     /**

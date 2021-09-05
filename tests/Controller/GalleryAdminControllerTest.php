@@ -85,7 +85,7 @@ class GalleryAdminControllerTest extends TestCase
 
     public function testItIsInstantiable(): void
     {
-        self::assertNotNull($this->controller);
+        static::assertNotNull($this->controller);
     }
 
     public function testListAction(): void
@@ -98,11 +98,11 @@ class GalleryAdminControllerTest extends TestCase
         $this->configureSetFormTheme($formView, ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
-        $datagrid->expects(self::once())->method('setValue')->with('context', null, 'context');
+        $datagrid->expects(static::once())->method('setValue')->with('context', null, 'context');
         $datagrid->method('getForm')->willReturn($form);
         $form->method('createView')->willReturn($formView);
-        $this->admin->expects(self::once())->method('checkAccess')->with('list');
-        $this->admin->expects(self::once())->method('setListMode')->with('list');
+        $this->admin->expects(static::once())->method('checkAccess')->with('list');
+        $this->admin->expects(static::once())->method('setListMode')->with('list');
         $this->admin->method('getDatagrid')->willReturn($datagrid);
         $this->admin->method('getPersistentParameter')->with('context')->willReturn('context');
         $this->admin->method('getFilterTheme')->willReturn(['filterTheme']);
@@ -139,7 +139,7 @@ class GalleryAdminControllerTest extends TestCase
         $this->admin->method('getTemplateRegistry')->willReturn($mutableTemplateRegistry);
 
         $this->admin->method('isChild')->willReturn(false);
-        $this->admin->expects(self::once())->method('setRequest')->with($this->request);
+        $this->admin->expects(static::once())->method('setRequest')->with($this->request);
         $this->admin->method('getCode')->willReturn('admin_code');
     }
 
@@ -169,7 +169,7 @@ class GalleryAdminControllerTest extends TestCase
         $twigRenderer = $this->createMock(FormRenderer::class);
 
         $this->twig->method('getRuntime')->with(FormRenderer::class)->willReturn($twigRenderer);
-        $twigRenderer->expects(self::once())->method('setTheme')->with($formView, $formTheme);
+        $twigRenderer->expects(static::once())->method('setTheme')->with($formView, $formTheme);
     }
 
     private function configureRender(string $template, string $rendered): void
@@ -180,6 +180,6 @@ class GalleryAdminControllerTest extends TestCase
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
         $this->container->set('sonata.media.pool', $pool);
         $response->method('getContent')->willReturn($rendered);
-        $this->twig->method('render')->with($template, self::isType('array'))->willReturn($rendered);
+        $this->twig->method('render')->with($template, static::isType('array'))->willReturn($rendered);
     }
 }

@@ -31,12 +31,12 @@ final class ProxyMetadataBuilderTest extends TestCase
     public function testProxyAmazon(): void
     {
         $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(self::once())
+        $amazon->expects(static::once())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(self::never())
+        $noop->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
@@ -71,18 +71,18 @@ final class ProxyMetadataBuilderTest extends TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
-        self::assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyLocal(): void
     {
         $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(self::never())
+        $amazon->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(self::once())
+        $noop->expects(static::once())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
@@ -108,18 +108,18 @@ final class ProxyMetadataBuilderTest extends TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
-        self::assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyNoProvider(): void
     {
         $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(self::never())
+        $amazon->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(self::never())
+        $noop->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
@@ -145,18 +145,18 @@ final class ProxyMetadataBuilderTest extends TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
-        self::assertSame([], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame([], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithAmazon(): void
     {
         $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(self::once())
+        $amazon->expects(static::once())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(self::never())
+        $noop->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
@@ -193,18 +193,18 @@ final class ProxyMetadataBuilderTest extends TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
-        self::assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
     }
 
     public function testProxyReplicateWithoutAmazon(): void
     {
         $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(self::never())
+        $amazon->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
 
         $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(self::once())
+        $noop->expects(static::once())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
@@ -232,7 +232,7 @@ final class ProxyMetadataBuilderTest extends TestCase
 
         $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
 
-        self::assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
     }
 
     /**

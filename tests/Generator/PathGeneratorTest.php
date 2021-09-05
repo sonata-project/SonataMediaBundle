@@ -27,12 +27,12 @@ final class PathGeneratorTest extends TestCase
         $media->setContext('user');
 
         $media->setId('nodename');
-        self::assertSame('user', $generator->generatePath($media));
+        static::assertSame('user', $generator->generatePath($media));
 
         $media->setId('/media/nodename');
-        self::assertSame('user/media', $generator->generatePath($media));
+        static::assertSame('user/media', $generator->generatePath($media));
 
         $media->setId('/media/sub/path/nodename');
-        self::assertSame('user/media/sub/path', $generator->generatePath($media));
+        static::assertSame('user/media/sub/path', $generator->generatePath($media));
     }
 }

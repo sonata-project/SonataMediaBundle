@@ -78,17 +78,9 @@
         <source>description.forbidden_download_strategy</source>
         <target>Медиата е недостъпна.</target>
       </trans-unit>
-      <trans-unit id="description.session_download_strategy">
-        <source>description.session_download_strategy</source>
-        <target>description.session_download_strategy</target>
-      </trans-unit>
       <trans-unit id="filter.label_name">
         <source>filter.label_name</source>
         <target>Име</target>
-      </trans-unit>
-      <trans-unit id="form.label_category">
-        <source>form.label_category</source>
-        <target>form.label_category</target>
       </trans-unit>
       <trans-unit id="filter.label_provider_reference">
         <source>filter.label_provider_reference</source>
@@ -105,26 +97,6 @@
       <trans-unit id="filter.label_provider_name">
         <source>filter.label_provider_name</source>
         <target>Име на източника</target>
-      </trans-unit>
-      <trans-unit id="filter.label_category">
-        <source>filter.label_category</source>
-        <target>filter.label_category</target>
-      </trans-unit>
-      <trans-unit id="filter.label_author_name">
-        <source>filter.label_author_name</source>
-        <target>filter.label_author_name</target>
-      </trans-unit>
-      <trans-unit id="filter.label_width">
-        <source>filter.label_width</source>
-        <target>filter.label_width</target>
-      </trans-unit>
-      <trans-unit id="filter.label_height">
-        <source>filter.label_height</source>
-        <target>filter.label_height</target>
-      </trans-unit>
-      <trans-unit id="filter.label_content_type">
-        <source>filter.label_content_type</source>
-        <target>filter.label_content_type</target>
       </trans-unit>
       <trans-unit id="form.label_enabled">
         <source>form.label_enabled</source>
@@ -307,10 +279,6 @@
         <source>list.label_name</source>
         <target>Име</target>
       </trans-unit>
-      <trans-unit id="list.label_author_name">
-        <source>list.label_author_name</source>
-        <target>list.label_author_name</target>
-      </trans-unit>
       <trans-unit id="list.label_context">
         <source>list.label_context</source>
         <target>Контекст</target>
@@ -326,10 +294,6 @@
       <trans-unit id="list.label_custom">
         <source>list.label_custom</source>
         <target>Ръчно</target>
-      </trans-unit>
-      <trans-unit id="list.label_author">
-        <source>list.label_author</source>
-        <target>list.label_author</target>
       </trans-unit>
       <trans-unit id="sidemenu.link_edit_media">
         <source>sidemenu.link_edit_media</source>
@@ -403,26 +367,6 @@
         <source>no_linked_media</source>
         <target>Няма медиа към този обект</target>
       </trans-unit>
-      <trans-unit id="widget_label_type">
-        <source>widget_label_type</source>
-        <target>widget_label_type</target>
-      </trans-unit>
-      <trans-unit id="widget_label_context">
-        <source>widget_label_context</source>
-        <target>widget_label_context</target>
-      </trans-unit>
-      <trans-unit id="widget_headline_information">
-        <source>widget_headline_information</source>
-        <target>widget_headline_information</target>
-      </trans-unit>
-      <trans-unit id="widget_label_unlink">
-        <source>widget_label_unlink</source>
-        <target>widget_label_unlink</target>
-      </trans-unit>
-      <trans-unit id="widget_label_binary_content">
-        <source>widget_label_binary_content</source>
-        <target>widget_label_binary_content</target>
-      </trans-unit>
       <trans-unit id="sonata_media_gallery_index">
         <source>sonata_media_gallery_index</source>
         <target>Галерия</target>
@@ -434,122 +378,6 @@
       <trans-unit id="list.label_size">
         <source>list.label_size</source>
         <target>Размер</target>
-      </trans-unit>
-      <trans-unit id="sonata.media.block.media">
-        <source>sonata.media.block.media</source>
-        <target>sonata.media.block.media</target>
-      </trans-unit>
-      <trans-unit id="sonata.media.block.feature_media">
-        <source>sonata.media.block.feature_media</source>
-        <target>sonata.media.block.feature_media</target>
-      </trans-unit>
-      <trans-unit id="sonata.media.block.gallery">
-        <source>sonata.media.block.gallery</source>
-        <target>sonata.media.block.gallery</target>
-      </trans-unit>
-      <trans-unit id="form.label_title">
-        <source>form.label_title</source>
-        <target>form.label_title</target>
-      </trans-unit>
-      <trans-unit id="form.label_content">
-        <source>form.label_content</source>
-        <target>form.label_content</target>
-      </trans-unit>
-      <trans-unit id="form.label_orientation">
-        <source>form.label_orientation</source>
-        <target>form.label_orientation</target>
-      </trans-unit>
-      <trans-unit id="form.label_gallery">
-        <source>form.label_gallery</source>
-        <target>form.label_gallery</target>
-      </trans-unit>
-      <trans-unit id="form.label_format">
-        <source>form.label_format</source>
-        <target>form.label_format</target>
-      </trans-unit>
-      <trans-unit id="form.label_pause_time">
-        <source>form.label_pause_time</source>
-        <target>form.label_pause_time</target>
-      </trans-unit>
-      <trans-unit id="form.label_start_paused">
-        <source>form.label_start_paused</source>
-        <target>form.label_start_paused</target>
-      </trans-unit>
-      <trans-unit id="form.label_orientation_left">
-        <source>form.label_orientation_left</source>
-        <target>form.label_orientation_left</target>
-      </trans-unit>
-      <trans-unit id="form.label_orientation_right">
-        <source>form.label_orientation_right</source>
-        <target>form.label_orientation_right</target>
-      </trans-unit>
-      <trans-unit id="sonata.media.block.gallery_list">
-        <source>sonata.media.block.gallery_list</source>
-        <target>sonata.media.block.gallery_list</target>
-      </trans-unit>
-      <trans-unit id="label_gallery_enabled">
-        <source>label_gallery_enabled</source>
-        <target>label_gallery_enabled</target>
-      </trans-unit>
-      <trans-unit id="label_gallery_disabled">
-        <source>label_gallery_disabled</source>
-        <target>label_gallery_disabled</target>
-      </trans-unit>
-      <trans-unit id="no_galleries_found">
-        <source>no_galleries_found</source>
-        <target>no_galleries_found</target>
-      </trans-unit>
-      <trans-unit id="view_all_galleries">
-        <source>view_all_galleries</source>
-        <target>view_all_galleries</target>
-      </trans-unit>
-      <trans-unit id="form.label_mode">
-        <source>form.label_mode</source>
-        <target>form.label_mode</target>
-      </trans-unit>
-      <trans-unit id="form.label_number">
-        <source>form.label_number</source>
-        <target>form.label_number</target>
-      </trans-unit>
-      <trans-unit id="form.label_order">
-        <source>form.label_order</source>
-        <target>form.label_order</target>
-      </trans-unit>
-      <trans-unit id="form.label_order_name">
-        <source>form.label_order_name</source>
-        <target>form.label_order_name</target>
-      </trans-unit>
-      <trans-unit id="form.label_order_created_at">
-        <source>form.label_order_created_at</source>
-        <target>form.label_order_created_at</target>
-      </trans-unit>
-      <trans-unit id="form.label_order_updated_at">
-        <source>form.label_order_updated_at</source>
-        <target>form.label_order_updated_at</target>
-      </trans-unit>
-      <trans-unit id="form.label_sort">
-        <source>form.label_sort</source>
-        <target>form.label_sort</target>
-      </trans-unit>
-      <trans-unit id="form.label_sort_asc">
-        <source>form.label_sort_asc</source>
-        <target>form.label_sort_asc</target>
-      </trans-unit>
-      <trans-unit id="form.label_sort_desc">
-        <source>form.label_sort_desc</source>
-        <target>form.label_sort_desc</target>
-      </trans-unit>
-      <trans-unit id="form.label_mode_public">
-        <source>form.label_mode_public</source>
-        <target>form.label_mode_public</target>
-      </trans-unit>
-      <trans-unit id="form.label_mode_admin">
-        <source>form.label_mode_admin</source>
-        <target>form.label_mode_admin</target>
-      </trans-unit>
-      <trans-unit id="form.label_class">
-        <source>form.label_class</source>
-        <target>form.label_class</target>
       </trans-unit>
     </body>
   </file>

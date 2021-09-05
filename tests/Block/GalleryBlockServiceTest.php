@@ -55,7 +55,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         $gallery->method('getGalleryItems')->willReturn(new ArrayCollection());
 
         $this->twig
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('render')
             ->with('template', [
                 'gallery' => $gallery,

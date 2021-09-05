@@ -43,7 +43,7 @@ final class GalleryListBlockServiceTest extends BlockServiceTestCase
 
     public function testExecute(): void
     {
-        $this->galleryManager->expects(self::once())->method('findBy')->willReturn([]);
+        $this->galleryManager->expects(static::once())->method('findBy')->willReturn([]);
 
         $block = new Block();
 
@@ -61,7 +61,7 @@ final class GalleryListBlockServiceTest extends BlockServiceTestCase
         $blockService = new GalleryListBlockService($this->twig, $this->galleryManager, $this->pool);
 
         $this->twig
-            ->expects(self::once())
+            ->expects(static::once())
             ->method('render')
             ->with('@SonataMedia/Block/block_gallery_list.html.twig', [
                 'context' => $blockContext,
