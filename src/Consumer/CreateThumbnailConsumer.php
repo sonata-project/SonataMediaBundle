@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Consumer;
 use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Sonata\MediaBundle\Thumbnail\GenerableThumbnailInterface;
 use Sonata\NotificationBundle\Consumer\ConsumerEvent;
 use Sonata\NotificationBundle\Consumer\ConsumerInterface;
 use Sonata\NotificationBundle\Exception\HandlingException;
@@ -73,11 +73,11 @@ final class CreateThumbnailConsumer implements ConsumerInterface
         }
     }
 
-    private function getThumbnail(ConsumerEvent $event): ThumbnailInterface
+    private function getThumbnail(ConsumerEvent $event): GenerableThumbnailInterface
     {
         $thumbnail = $this->container->get($event->getMessage()->getValue('thumbnailId'));
 
-        if (!$thumbnail instanceof ThumbnailInterface) {
+        if (!$thumbnail instanceof GenerableThumbnailInterface) {
             throw new HandlingException(sprintf(
                 'Invalid thumbnail instance requested - id: %s',
                 $event->getMessage()->getValue('thumbnailId')

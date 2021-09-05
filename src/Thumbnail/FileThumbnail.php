@@ -35,7 +35,7 @@ final class FileThumbnail implements ThumbnailInterface
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_ADMIN !== $format) {
-            throw new \RuntimeException(sprintf('Unable to generate thumbnail for the given format %s.', $format));
+            throw new \InvalidArgumentException(sprintf('Unsupported format "%s".', $format));
         }
 
         return $this->packages->getUrl('bundles/sonatamedia/file.png');
@@ -43,16 +43,6 @@ final class FileThumbnail implements ThumbnailInterface
 
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
-        throw new \RuntimeException('Unable to generate private thumbnail url for media files.');
-    }
-
-    public function generate(MediaProviderInterface $provider, MediaInterface $media): void
-    {
-        // nothing to generate, as the thumbnails for files are already generated
-    }
-
-    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void
-    {
-        // feature not available
+        throw new \BadMethodCallException('Unable to generate private thumbnail url for media files.');
     }
 }

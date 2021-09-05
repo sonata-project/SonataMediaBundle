@@ -19,6 +19,7 @@ use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
+use Sonata\MediaBundle\Thumbnail\GenerableThumbnailInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 
 /**
@@ -123,8 +124,10 @@ abstract class BaseProvider implements MediaProviderInterface
         $flushPaths = [];
 
         foreach ($this->getFormats() as $format => $settings) {
-            if (MediaProviderInterface::FORMAT_ADMIN === $format ||
-                substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext()) {
+            if (
+                MediaProviderInterface::FORMAT_ADMIN === $format ||
+                substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext()
+            ) {
                 $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
             }
         }
@@ -153,12 +156,16 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function generateThumbnails(MediaInterface $media): void
     {
-        $this->thumbnail->generate($this, $media);
+        if ($this->thumbnail instanceof GenerableThumbnailInterface) {
+            $this->thumbnail->generate($this, $media);
+        }
     }
 
     public function removeThumbnails(MediaInterface $media, $formats = null): void
     {
-        $this->thumbnail->delete($this, $media, $formats);
+        if ($this->thumbnail instanceof GenerableThumbnailInterface) {
+            $this->thumbnail->delete($this, $media, $formats);
+        }
     }
 
     public function getFormatName(MediaInterface $media, string $format): string
@@ -190,7 +197,7 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->clones[$hash] = clone $media;
 
         if ($this->requireThumbnails()) {
-            $this->thumbnail->delete($this, $media);
+            $this->removeThumbnails($media);
         }
     }
 

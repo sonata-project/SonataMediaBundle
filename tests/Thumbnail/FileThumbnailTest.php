@@ -20,7 +20,7 @@ use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FileThumbnail;
 use Symfony\Component\Asset\Packages;
 
-class FileThumbnailTest extends TestCase
+final class FileThumbnailTest extends TestCase
 {
     /**
      * @var MockObject&Packages
@@ -48,17 +48,17 @@ class FileThumbnailTest extends TestCase
 
         $publicUrl = $this->thumbnail->generatePublicUrl($provider, $media, 'admin');
 
-        self::assertSame('bundles/sonatamedia/file.png', $publicUrl);
+        static::assertSame('bundles/sonatamedia/file.png', $publicUrl);
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to generate thumbnail for the given format random.');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unsupported format "random".');
 
         $this->thumbnail->generatePublicUrl($provider, $media, 'random');
     }
 
     public function testGeneratePrivateUrl(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(\BadMethodCallException::class);
         $this->expectExceptionMessage('Unable to generate private thumbnail url for media files.');
 
         $this->thumbnail->generatePrivateUrl($this->createStub(FileProviderInterface::class), new Media(), 'random');

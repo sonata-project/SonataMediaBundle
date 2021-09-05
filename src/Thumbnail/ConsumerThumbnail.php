@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\NotificationBundle\Backend\BackendInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-final class ConsumerThumbnail implements ThumbnailInterface
+final class ConsumerThumbnail implements ThumbnailInterface, GenerableThumbnailInterface
 {
     /**
      * @var string
@@ -60,12 +60,13 @@ final class ConsumerThumbnail implements ThumbnailInterface
 
     public function generate(MediaProviderInterface $provider, MediaInterface $media): void
     {
-        $backend = $this->backend;
-        $id = $this->id;
+        if (!$this->thumbnail instanceof GenerableThumbnailInterface) {
+            return;
+        }
 
-        $publish = static function () use ($backend, $media, $id): void {
-            $backend->createAndPublish('sonata.media.create_thumbnail', [
-                'thumbnailId' => $id,
+        $publish = function () use ($media): void {
+            $this->backend->createAndPublish('sonata.media.create_thumbnail', [
+                'thumbnailId' => $this->id,
                 'mediaId' => $media->getId(),
 
                 // force this value as the message is sent inside a transaction,
@@ -80,6 +81,8 @@ final class ConsumerThumbnail implements ThumbnailInterface
 
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void
     {
-        $this->thumbnail->delete($provider, $media, $formats);
+        if ($this->thumbnail instanceof GenerableThumbnailInterface) {
+            $this->thumbnail->delete($provider, $media, $formats);
+        }
     }
 }

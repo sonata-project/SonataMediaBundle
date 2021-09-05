@@ -42,9 +42,9 @@ class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider(): MediaProviderInterface
     {
-        $resizer = $this->createMock(ResizerInterface::class);
-        $thumbnail = $this->createMock(ThumbnailInterface::class);
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $resizer = $this->createStub(ResizerInterface::class);
+        $thumbnail = $this->createStub(ThumbnailInterface::class);
+        $metadata = $this->createStub(MetadataBuilderInterface::class);
 
         $adapter = new Local(realpath(__DIR__).'/../Fixtures');
         $cdn = new Server('/uploads/media');

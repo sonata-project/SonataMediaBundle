@@ -16,9 +16,15 @@ namespace Sonata\MediaBundle\Thumbnail;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
-interface ThumbnailInterface
+/**
+ * @author Jordi Sala Morales <jordism91@gmail.com>
+ */
+interface GenerableThumbnailInterface
 {
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string;
+    public function generate(MediaProviderInterface $provider, MediaInterface $media): void;
 
-    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string;
+    /**
+     * @param string|string[] $formats
+     */
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void;
 }
