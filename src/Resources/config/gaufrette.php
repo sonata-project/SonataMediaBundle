@@ -66,7 +66,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.metadata.proxy', ProxyMetadataBuilder::class)
             ->args([
-                new ReferenceConfigurator('service_container'),
+                new ReferenceConfigurator('sonata.media.pool'),
                 (new ReferenceConfigurator('sonata.media.metadata.noop'))->nullOnInvalid(),
                 (new ReferenceConfigurator('sonata.media.metadata.amazon'))->nullOnInvalid(),
             ])

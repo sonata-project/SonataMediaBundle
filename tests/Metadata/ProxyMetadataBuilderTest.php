@@ -16,30 +16,56 @@ namespace Sonata\MediaBundle\Tests\Metadata;
 use Aws\S3\S3Client;
 use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Filesystem;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
-use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\App\Entity\Media;
 
 final class ProxyMetadataBuilderTest extends TestCase
 {
+    /**
+     * @var Stub&Filesystem
+     */
+    private $filesystem;
+
+    /**
+     * @var MockObject&MetadataBuilderInterface
+     */
+    private $noop;
+
+    /**
+     * @var MockObject&MetadataBuilderInterface
+     */
+    private $amazon;
+
+    /**
+     * @var ProxyMetadataBuilder
+     */
+    private $proxyMetadataBuilder;
+
+    protected function setUp(): void
+    {
+        $this->filesystem = $this->createStub(Filesystem::class);
+        $this->noop = $this->createMock(MetadataBuilderInterface::class);
+        $this->amazon = $this->createMock(MetadataBuilderInterface::class);
+
+        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider->method('getFilesystem')->willReturn($this->filesystem);
+
+        $pool = new Pool('default_context');
+        $pool->addProvider('sonata.media.provider.image', $provider);
+
+        $this->proxyMetadataBuilder = new ProxyMetadataBuilder($pool, $this->noop, $this->amazon);
+    }
+
     public function testProxyAmazon(): void
     {
-        $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(static::once())
-            ->method('get')
-            ->willReturn(['key' => 'amazon']);
-
-        $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(static::never())
-            ->method('get')
-            ->willReturn(['key' => 'noop']);
-
         $amazonclient = new S3Client([
             'credentials' => [
                 'key' => 'XXXXXXXXXXXX',
@@ -48,118 +74,65 @@ final class ProxyMetadataBuilderTest extends TestCase
             'region' => 'us-west-1',
             'version' => '2006-03-01',
         ]);
-
-        // adapter cannot be mocked
         $adapter = new AwsS3($amazonclient, '');
+        $media = new Media();
+        $media->setProviderName('sonata.media.provider.image');
 
-        $filesystem = $this->createStub(Filesystem::class);
-        $filesystem->method('getAdapter')->willReturn($adapter);
+        $this->filesystem->method('getAdapter')->willReturn($adapter);
+        $this->amazon->expects(static::once())
+            ->method('get')
+            ->willReturn(['key' => 'amazon']);
+        $this->noop->expects(static::never())
+            ->method('get')
+            ->willReturn(['key' => 'noop']);
 
-        $provider = $this->createStub(MediaProviderInterface::class);
-        $provider->method('getFilesystem')->willReturn($filesystem);
-
-        $media = $this->createStub(MediaInterface::class);
-        $media
-            ->method('getProviderName')
-            ->willReturn('sonata.media.provider.image');
-
-        $filename = '/test/folder/testfile.png';
-
-        $container = $this->getContainer([
-            'sonata.media.provider.image' => $provider,
-        ]);
-
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
-
-        static::assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(
+            ['key' => 'amazon'],
+            $this->proxyMetadataBuilder->get($media, '/test/folder/testfile.png')
+        );
     }
 
     public function testProxyLocal(): void
     {
-        $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(static::never())
+        $adapter = new Local('');
+        $media = new Media();
+        $media->setProviderName('sonata.media.provider.image');
+
+        $this->filesystem->method('getAdapter')->willReturn($adapter);
+        $this->amazon->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
-
-        $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(static::once())
+        $this->noop->expects(static::once())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        //adapter cannot be mocked
-        $adapter = new Local('');
-
-        $filesystem = $this->createStub(Filesystem::class);
-        $filesystem->method('getAdapter')->willReturn($adapter);
-
-        $provider = $this->createStub(MediaProviderInterface::class);
-        $provider->method('getFilesystem')->willReturn($filesystem);
-
-        $media = $this->createStub(MediaInterface::class);
-        $media
-            ->method('getProviderName')
-            ->willReturn('sonata.media.provider.image');
-
-        $filename = '/test/folder/testfile.png';
-
-        $container = $this->getContainer([
-            'sonata.media.provider.image' => $provider,
-        ]);
-
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
-
-        static::assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(
+            ['key' => 'noop'],
+            $this->proxyMetadataBuilder->get($media, '/test/folder/testfile.png')
+        );
     }
 
     public function testProxyNoProvider(): void
     {
-        $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(static::never())
+        $adapter = new Local('');
+        $media = new Media();
+
+        $this->filesystem->method('getAdapter')->willReturn($adapter);
+        $this->amazon->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
-
-        $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(static::never())
+        $this->noop->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        // adapter cannot be mocked
-        $adapter = new Local('');
-
-        $filesystem = $this->createStub(Filesystem::class);
-        $filesystem->method('getAdapter')->willReturn($adapter);
-
-        $provider = $this->createStub(MediaProviderInterface::class);
-        $provider->method('getFilesystem')->willReturn($filesystem);
-
-        $media = $this->createStub(MediaInterface::class);
-        $media
-            ->method('getProviderName')
-            ->willReturn('wrongprovider');
-
-        $filename = '/test/folder/testfile.png';
-
-        $container = $this->getContainer([
-            'sonata.media.provider.image' => $provider,
-        ]);
-
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
-
-        static::assertSame([], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(
+            [],
+            $this->proxyMetadataBuilder->get($media, '/test/folder/testfile.png')
+        );
     }
 
     public function testProxyReplicateWithAmazon(): void
     {
-        $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(static::once())
-            ->method('get')
-            ->willReturn(['key' => 'amazon']);
-
-        $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(static::never())
-            ->method('get')
-            ->willReturn(['key' => 'noop']);
-
         $amazonclient = new S3Client([
             'credentials' => [
                 'key' => 'XXXXXXXXXXXX',
@@ -168,84 +141,44 @@ final class ProxyMetadataBuilderTest extends TestCase
             'region' => 'us-west-1',
             'version' => '2006-03-01',
         ]);
+        $adapter = new Replicate(
+            new AwsS3($amazonclient, ''),
+            new Local('')
+        );
+        $media = new Media();
+        $media->setProviderName('sonata.media.provider.image');
 
-        // adapter cannot be mocked
-        $adapter1 = new AwsS3($amazonclient, '');
-        $adapter2 = new Local('');
-        $adapter = new Replicate($adapter1, $adapter2);
+        $this->filesystem->method('getAdapter')->willReturn($adapter);
+        $this->amazon->expects(static::once())
+            ->method('get')
+            ->willReturn(['key' => 'amazon']);
+        $this->noop->expects(static::never())
+            ->method('get')
+            ->willReturn(['key' => 'noop']);
 
-        $filesystem = $this->createStub(Filesystem::class);
-        $filesystem->method('getAdapter')->willReturn($adapter);
-
-        $provider = $this->createStub(MediaProviderInterface::class);
-        $provider->method('getFilesystem')->willReturn($filesystem);
-
-        $media = $this->createStub(MediaInterface::class);
-        $media
-            ->method('getProviderName')
-            ->willReturn('sonata.media.provider.image');
-
-        $filename = '/test/folder/testfile.png';
-
-        $container = $this->getContainer([
-            'sonata.media.provider.image' => $provider,
-        ]);
-
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
-
-        static::assertSame(['key' => 'amazon'], $proxymetadatabuilder->get($media, $filename));
+        static::assertSame(
+            ['key' => 'amazon'],
+            $this->proxyMetadataBuilder->get($media, '/test/folder/testfile.png')
+        );
     }
 
     public function testProxyReplicateWithoutAmazon(): void
     {
-        $amazon = $this->createMock(MetadataBuilderInterface::class);
-        $amazon->expects(static::never())
+        $adapter = new Replicate(new Local(''), new Local(''));
+        $media = new Media();
+        $media->setProviderName('sonata.media.provider.image');
+
+        $this->filesystem->method('getAdapter')->willReturn($adapter);
+        $this->amazon->expects(static::never())
             ->method('get')
             ->willReturn(['key' => 'amazon']);
-
-        $noop = $this->createMock(MetadataBuilderInterface::class);
-        $noop->expects(static::once())
+        $this->noop->expects(static::once())
             ->method('get')
             ->willReturn(['key' => 'noop']);
 
-        // adapter cannot be mocked
-        $adapter1 = new Local('');
-        $adapter2 = new Local('');
-        $adapter = new Replicate($adapter1, $adapter2);
-
-        $filesystem = $this->createStub(Filesystem::class);
-        $filesystem->method('getAdapter')->willReturn($adapter);
-
-        $provider = $this->createStub(MediaProviderInterface::class);
-        $provider->method('getFilesystem')->willReturn($filesystem);
-
-        $media = $this->createStub(MediaInterface::class);
-        $media
-            ->method('getProviderName')
-            ->willReturn('sonata.media.provider.image');
-
-        $filename = '/test/folder/testfile.png';
-
-        $container = $this->getContainer([
-            'sonata.media.provider.image' => $provider,
-        ]);
-
-        $proxymetadatabuilder = new ProxyMetadataBuilder($container, $noop, $amazon);
-
-        static::assertSame(['key' => 'noop'], $proxymetadatabuilder->get($media, $filename));
-    }
-
-    /**
-     * @param array<string, object> $services
-     */
-    private function getContainer(array $services): ContainerInterface
-    {
-        $container = new Container();
-
-        foreach ($services as $serviceId => $service) {
-            $container->set($serviceId, $service);
-        }
-
-        return $container;
+        static::assertSame(
+            ['key' => 'noop'],
+            $this->proxyMetadataBuilder->get($media, '/test/folder/testfile.png')
+        );
     }
 }

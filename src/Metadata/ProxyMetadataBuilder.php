@@ -17,14 +17,14 @@ use Gaufrette\Adapter\AwsS3;
 use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sonata\MediaBundle\Provider\Pool;
 
 final class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
     /**
-     * @var ContainerInterface
+     * @var Pool
      */
-    private $container;
+    private $pool;
 
     /**
      * @var MetadataBuilderInterface|null
@@ -37,11 +37,11 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
     private $amazonMetadataBuilder;
 
     public function __construct(
-        ContainerInterface $container,
+        Pool $pool,
         ?MetadataBuilderInterface $noopMetadataBuilder = null,
         ?MetadataBuilderInterface $amazonMetadataBuilder = null
     ) {
-        $this->container = $container;
+        $this->pool = $pool;
         $this->noopMetadataBuilder = $noopMetadataBuilder;
         $this->amazonMetadataBuilder = $amazonMetadataBuilder;
     }
@@ -50,22 +50,11 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
     {
         $providerName = $media->getProviderName();
 
-        if (null === $providerName || !$this->container->has($providerName)) {
+        if (null === $providerName) {
             return [];
         }
 
-        $provider = $this->container->get($providerName);
-
-        if (!$provider instanceof MediaProviderInterface) {
-            throw new \RuntimeException(sprintf(
-                'Provider %s for media %s does not implement %s.',
-                $providerName,
-                $media->getId() ?? '',
-                MediaProviderInterface::class
-            ));
-        }
-
-        $meta = $this->getAmazonBuilder($media, $provider, $filename);
+        $meta = $this->getAmazonBuilder($media, $this->pool->getProvider($providerName), $filename);
 
         if (null !== $meta) {
             return $meta;
