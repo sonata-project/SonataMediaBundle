@@ -79,24 +79,21 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
      *
      * @phpstan-param class-string $type
      */
-    public function testAdapter(string $serviceId, string $extension, string $type): void
+    public function testAdapter(string $serviceId, string $type): void
     {
         $this->load();
 
-        $this->assertContainerBuilderHasService($serviceId);
-        if (\extension_loaded($extension)) {
-            static::assertInstanceOf($type, $this->container->get($serviceId));
-        }
+        $this->assertContainerBuilderHasService($serviceId, $type);
     }
 
     /**
-     * @phpstan-return iterable<array{string, string, class-string}>
+     * @phpstan-return iterable<array{string, class-string}>
      */
     public function dataAdapter(): iterable
     {
-        yield ['sonata.media.adapter.image.gd', 'gd', GdImagine::class];
-        yield ['sonata.media.adapter.image.gmagick', 'gmagick', GmagicImagine::class];
-        yield ['sonata.media.adapter.image.imagick', 'imagick', ImagicImagine::class];
+        yield ['sonata.media.adapter.image.gd', GdImagine::class];
+        yield ['sonata.media.adapter.image.gmagick', GmagicImagine::class];
+        yield ['sonata.media.adapter.image.imagick', ImagicImagine::class];
     }
 
     public function testDefaultResizer(): void
@@ -142,10 +139,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        $this->assertContainerBuilderHasService($serviceId);
-        if (\extension_loaded('gd')) {
-            static::assertInstanceOf($type, $this->container->get($serviceId));
-        }
+        $this->assertContainerBuilderHasService($serviceId, $type);
     }
 
     /**
