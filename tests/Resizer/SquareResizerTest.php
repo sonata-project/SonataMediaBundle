@@ -43,7 +43,7 @@ class SquareResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
     }
@@ -85,7 +85,7 @@ class SquareResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(90, 90)];
 
@@ -95,7 +95,7 @@ class SquareResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(50, 50)];
 
@@ -105,7 +105,7 @@ class SquareResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(50, 50)];
 
@@ -115,7 +115,7 @@ class SquareResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(567, 50), new Box(90, 7)];
     }

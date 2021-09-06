@@ -53,7 +53,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 100,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
     }
@@ -74,7 +74,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
     }
@@ -114,7 +114,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 100,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
     }
@@ -156,7 +156,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(75, 90)];
 
@@ -166,7 +166,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
@@ -176,7 +176,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
@@ -186,7 +186,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(567, 200), new Box(90, 32)];
 
@@ -196,7 +196,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(567, 200), new Box(100, 35)];
 
@@ -206,7 +206,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(90, 90)];
 
@@ -216,7 +216,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(120, 100), new Box(90, 90)];
 
@@ -226,7 +226,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
@@ -236,7 +236,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
@@ -246,7 +246,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(567, 50), new Box(90, 8)];
 
@@ -256,7 +256,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(100, 120), new Box(90, 90)];
 
@@ -266,7 +266,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(120, 100), new Box(90, 90)];
 
@@ -276,7 +276,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
@@ -286,7 +286,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(50, 50), new Box(90, 90)];
 
@@ -296,7 +296,7 @@ class SimpleResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ], new Box(567, 50), new Box(90, 8)];
     }

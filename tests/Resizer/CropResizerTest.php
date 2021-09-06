@@ -103,7 +103,7 @@ final class CropResizerTest extends TestCase
             'quality' => self::QUALITY,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
     }
@@ -168,7 +168,7 @@ final class CropResizerTest extends TestCase
             'quality' => self::QUALITY,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
     }
@@ -210,7 +210,7 @@ final class CropResizerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 
