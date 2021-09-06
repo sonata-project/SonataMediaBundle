@@ -109,7 +109,7 @@ class MediaBlockServiceTest extends BlockServiceTestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => false,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]]);
     }

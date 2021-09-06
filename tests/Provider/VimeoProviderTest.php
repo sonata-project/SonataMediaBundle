@@ -119,7 +119,7 @@ class VimeoProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 
@@ -153,7 +153,7 @@ class VimeoProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 
@@ -196,7 +196,7 @@ class VimeoProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 
@@ -244,7 +244,7 @@ class VimeoProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 
@@ -276,7 +276,7 @@ class VimeoProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 

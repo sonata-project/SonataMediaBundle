@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
  *  quality: int,
  *  format: string,
  *  constraint: bool,
- *  resizer: string|false,
+ *  resizer: string|null,
  *  resizer_options: array<string, string|bool|int|null>,
  * }
  */

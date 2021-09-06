@@ -154,7 +154,7 @@ class MediaControllerTest extends TestCase
                 'quality' => 80,
                 'format' => 'jpg',
                 'constraint' => false,
-                'resizer' => false,
+                'resizer' => null,
                 'resizer_options' => [],
             ]],
             'format' => 'format',
@@ -185,7 +185,7 @@ class MediaControllerTest extends TestCase
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => false,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]], [
             'mode' => 'mode',

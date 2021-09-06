@@ -221,7 +221,7 @@ abstract class BaseVideoProvider extends BaseProvider
                 'quality' => 80,
                 'format' => 'jpg',
                 'constraint' => true,
-                'resizer' => false,
+                'resizer' => null,
                 'resizer_options' => [],
             ];
         } else {

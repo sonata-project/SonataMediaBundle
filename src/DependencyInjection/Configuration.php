@@ -61,6 +61,13 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('quality')->defaultValue(90)->end()
                         ->scalarNode('format')->defaultValue('jpg')->end()
                         ->scalarNode('constraint')->defaultValue(true)->end()
+                        ->scalarNode('resizer')->defaultNull()->end()
+                        ->arrayNode('resizer_options')
+                            ->info('options directly passed to selected resizer. e.g. {use_crop: true, crop_gravity: center}')
+                            ->defaultValue([])
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')
+                        ->end()
                     ->end()
                 ->end()
             ->end();

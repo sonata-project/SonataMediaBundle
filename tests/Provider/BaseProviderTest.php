@@ -79,7 +79,7 @@ class BaseProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 
@@ -107,7 +107,7 @@ class BaseProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 

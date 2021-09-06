@@ -94,7 +94,7 @@ class FileProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
         $media = new Media();
@@ -140,7 +140,7 @@ class FileProviderTest extends AbstractProviderTest
             'quality' => 80,
             'format' => 'jpg',
             'constraint' => true,
-            'resizer' => false,
+            'resizer' => null,
             'resizer_options' => [],
         ]);
 
