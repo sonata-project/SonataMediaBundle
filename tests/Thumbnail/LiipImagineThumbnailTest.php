@@ -59,7 +59,6 @@ class LiipImagineThumbnailTest extends TestCase
             null
         )->willReturn('cache/media/default/0011/24/ASDASDAS.png');
 
-        $thumbnail->generate($provider, $media);
         static::assertSame('default/0011/24/ASDASDAS.png', $thumbnail->generatePublicUrl(
             $provider,
             $media,

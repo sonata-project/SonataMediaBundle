@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Sonata\NotificationBundle\Backend\BackendInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -35,7 +35,7 @@ class ConsumerThumbnailTest extends TestCase
 
         $consumer = new ConsumerThumbnail(
             'foo',
-            $this->createStub(ThumbnailInterface::class),
+            new FormatThumbnail('format'),
             $this->createStub(BackendInterface::class),
             $dispatcher
         );

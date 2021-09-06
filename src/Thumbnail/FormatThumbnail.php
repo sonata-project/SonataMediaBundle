@@ -17,7 +17,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 
-final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInterface
+final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInterface, GenerableThumbnailInterface
 {
     /**
      * @var string
@@ -64,7 +64,7 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
         $id = $media->getId();
 
         if (null === $id) {
-            return '';
+            throw new \InvalidArgumentException('Unable to generate public url for image without id.');
         }
 
         return sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));
@@ -79,7 +79,7 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
         $id = $media->getId();
 
         if (null === $id) {
-            return '';
+            throw new \InvalidArgumentException('Unable to generate private url for image without id.');
         }
 
         return sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));

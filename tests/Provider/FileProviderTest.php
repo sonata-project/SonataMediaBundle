@@ -26,7 +26,7 @@ use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
-use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -42,9 +42,13 @@ class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider(): MediaProviderInterface
     {
-        $resizer = $this->createMock(ResizerInterface::class);
+        $resizer = $this->createStub(ResizerInterface::class);
+        $thumbnail = $this->createStub(ThumbnailInterface::class);
+        $metadata = $this->createStub(MetadataBuilderInterface::class);
 
         $adapter = new Local(realpath(__DIR__).'/../Fixtures');
+        $cdn = new Server('/uploads/media');
+        $generator = new IdGenerator();
 
         $filesystem = $this->getMockBuilder(Filesystem::class)
             ->onlyMethods(['get'])
@@ -53,16 +57,10 @@ class FileProviderTest extends AbstractProviderTest
         $file = $this->getMockBuilder(GaufretteFile::class)
             ->setConstructorArgs(['foo', $filesystem])
             ->getMock();
+
         $file->method('getName')->willReturn('name');
         $filesystem->method('get')->willReturn($file);
-
-        $cdn = new Server('/uploads/media');
-
-        $generator = new IdGenerator();
-
-        $thumbnail = new FormatThumbnail('jpg');
-
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $thumbnail->method('generatePublicUrl')->willReturn('/bundles/sonatamedia/file.png');
 
         $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail, ['txt'], ['foo/bar'], $metadata);
         $provider->setResizer($resizer);
@@ -76,14 +74,11 @@ class FileProviderTest extends AbstractProviderTest
         $media->setName('test.txt');
         $media->setProviderReference('ASDASD.txt');
         $media->setContext('default');
-
         $media->setId(1023456);
+
         static::assertSame('default/0011/24/ASDASD.txt', $this->provider->getReferenceImage($media));
-
         static::assertSame('default/0011/24', $this->provider->generatePath($media));
-
-        // default icon image
-        static::assertSame('/uploads/media/sonatamedia/files/big/file.png', $this->provider->generatePublicUrl($media, 'big'));
+        static::assertSame('/bundles/sonatamedia/file.png', $this->provider->generatePublicUrl($media, 'admin'));
     }
 
     public function testHelperProperties(): void
@@ -177,11 +172,7 @@ class FileProviderTest extends AbstractProviderTest
 
         static::assertSame('file.txt', $media->getName(), '::getName() return the file name');
         static::assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
-
         static::assertNotNull($this->provider->generatePrivateUrl($media, 'reference'), '::generatePrivateUrl() return path for reference formate');
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unable to generate private url for media.');
 
         $this->provider->generatePrivateUrl($media, 'big');
     }

@@ -50,14 +50,4 @@ final class LiipImagineThumbnail implements ThumbnailInterface
 
         return $provider->getReferenceImage($media);
     }
-
-    public function generate(MediaProviderInterface $provider, MediaInterface $media): void
-    {
-        // nothing to generate, as generated on demand
-    }
-
-    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void
-    {
-        // feature not available
-    }
 }
