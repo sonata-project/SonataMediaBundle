@@ -15,6 +15,11 @@ namespace Sonata\MediaBundle\Model;
 
 use Imagine\Image\Box;
 
+/**
+ * @method void                   setCategory(?CategoryInterface $category)
+ * @method CategoryInterface|null getCategory()
+ * @method string                 __toString()
+ */
 interface MediaInterface
 {
     public const STATUS_OK = 1;
@@ -24,6 +29,9 @@ interface MediaInterface
     public const STATUS_ENCODING = 5;
 
     public const MISSING_BINARY_REFERENCE = 'missing_binary_content';
+
+    // NEXY_MAJOR: Uncomment this method.
+    // public function __toString(): string;
 
     /**
      * @param mixed $binaryContent

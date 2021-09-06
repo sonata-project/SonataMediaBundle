@@ -15,6 +15,11 @@ namespace Sonata\ClassificationBundle\Model;
 
 interface ContextInterface
 {
+    /**
+     * @return mixed
+     */
+    public function getId();
+
     public function getName(): ?string;
 
     /**

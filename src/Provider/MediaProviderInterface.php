@@ -16,11 +16,15 @@ namespace Sonata\MediaBundle\Provider;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
+use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @method CDNInterface getCdn()
+ */
 interface MediaProviderInterface
 {
     // This format is used to display thumbnails in Sonata Admin
@@ -207,4 +211,7 @@ interface MediaProviderInterface
      * @param bool $force
      */
     public function updateMetadata(MediaInterface $media, $force = false);
+
+    // NEXT_MAJOR: Uncomment this method.
+    // public function getCdn(): CDNInterface;
 }

@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+/**
+ * NEXT_MAJOR: Replace the `reorderGalleryHasMedia()` method with `reorderGalleryItems()`.
+ *
+ * @method void reorderGalleryHasMedia()
+ */
 interface GalleryInterface
 {
     /**

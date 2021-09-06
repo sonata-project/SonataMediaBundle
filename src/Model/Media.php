@@ -19,9 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * @method void setCategory($category)
- */
 abstract class Media implements MediaInterface
 {
     /**
