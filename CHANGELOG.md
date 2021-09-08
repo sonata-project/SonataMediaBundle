@@ -2,6 +2,35 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.33.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.32.0...3.33.0) - 2021-09-08
+### Added
+- [[#2096](https://github.com/sonata-project/SonataMediaBundle/pull/2096)] Missing method declarations in interfaces and abstract classes, through `@method` annotation in order to respect BC ([@phansys](https://github.com/phansys))
+- [[#2044](https://github.com/sonata-project/SonataMediaBundle/pull/2044)] Method `Sonata\MediaBundle\Filesystem\Replicate::createStream()` ([@phansys](https://github.com/phansys))
+- [[#2044](https://github.com/sonata-project/SonataMediaBundle/pull/2044)] Implemented `Gaufrette\Adapter\StreamFactory` in `Sonata\MediaBundle\Filesystem\Replicate` ([@phansys](https://github.com/phansys))
+- [[#2042](https://github.com/sonata-project/SonataMediaBundle/pull/2042)] Added name for blocks so they can be recognized on SonataPageBundle ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2040](https://github.com/sonata-project/SonataMediaBundle/pull/2040)] Added `ResizableThumbnailInterface` ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2036](https://github.com/sonata-project/SonataMediaBundle/pull/2036)] PHPStan configuration and dependencies backported from `master` branch ([@phansys](https://github.com/phansys))
+
+### Changed
+- [[#2082](https://github.com/sonata-project/SonataMediaBundle/pull/2082)] Return `null` from `BaseMediaEventSubscriber::getMedia()` if the related media does not implement `MediaInterface` ([@phansys](https://github.com/phansys))
+
+### Deprecated
+- [[#2077](https://github.com/sonata-project/SonataMediaBundle/pull/2077)] Unused argument 3 in `Replicate::write()` ([@phansys](https://github.com/phansys))
+- [[#2044](https://github.com/sonata-project/SonataMediaBundle/pull/2044)] `Sonata\MediaBundle\Filesystem\Replicate::createFileStream()` in favor of `createStream()` ([@phansys](https://github.com/phansys))
+- [[#2072](https://github.com/sonata-project/SonataMediaBundle/pull/2072)] Direct injection of `SessionInterface` on `SessionDownloadStrategy`, we use `RequestStack` to avoid deprecations ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2043](https://github.com/sonata-project/SonataMediaBundle/pull/2043)] Deprecated integration with openStack / rackSpace ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2021](https://github.com/sonata-project/SonataMediaBundle/pull/2021)] Deprecate `getContext()` from Pool without first having that context ([@jordisala1991](https://github.com/jordisala1991))
+
+### Fixed
+- [[#2082](https://github.com/sonata-project/SonataMediaBundle/pull/2082)] Return type at `BaseMediaEventSubscriber::getProvider()` ([@phansys](https://github.com/phansys))
+- [[#2088](https://github.com/sonata-project/SonataMediaBundle/pull/2088)] Removed placeholder for translations ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2083](https://github.com/sonata-project/SonataMediaBundle/pull/2083)] Call to undefined function `Buzz\Browser::sendRequest()` with "kriswallsmith/buzz" <0.16 ([@phansys](https://github.com/phansys))
+- [[#2075](https://github.com/sonata-project/SonataMediaBundle/pull/2075)] Fix display of choices form types inside blocks ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2044](https://github.com/sonata-project/SonataMediaBundle/pull/2044)] Missing implementation for `Gaufrette\Adapter\FileFactory` interface at `Sonata\MediaBundle\Filesystem\Replicate` ([@phansys](https://github.com/phansys))
+- [[#2044](https://github.com/sonata-project/SonataMediaBundle/pull/2044)] Call to undefined method `Adapter::createFileStream()` ([@phansys](https://github.com/phansys))
+- [[#2044](https://github.com/sonata-project/SonataMediaBundle/pull/2044)] Call to undefined method `Adapter::listDirectory()` ([@phansys](https://github.com/phansys))
+- [[#2076](https://github.com/sonata-project/SonataMediaBundle/pull/2076)] Fixed adding new Media with Pixlr enabled ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.32.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.31.2...3.32.0) - 2021-06-13
 ### Added
 - [[#1974](https://github.com/sonata-project/SonataMediaBundle/pull/1974)] Addded support for `nelmio/api-doc-bundle` >= 3.9 ([@jordisala1991](https://github.com/jordisala1991))
