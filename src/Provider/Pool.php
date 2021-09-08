@@ -170,7 +170,7 @@ class Pool
         if (!$this->hasContext($name)) {
             // NEXT_MAJOR: Remove the deprecation and uncomment the exception.
             @trigger_error(sprintf(
-                'Calling %s() with a context that does not exist is deprecated since sonata-project/media-bundle 3.x'
+                'Calling %s() with a context that does not exist is deprecated since sonata-project/media-bundle 3.33'
                 .' and will not be supported in version 4.0.',
                 __METHOD__,
             ), \E_USER_DEPRECATED);

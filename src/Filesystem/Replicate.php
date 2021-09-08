@@ -115,7 +115,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
     {
         if (3 === \func_num_args()) {
             @trigger_error(sprintf(
-                'Argument 3 in "%s()" method is deprecated since sonata-project/media-bundle 3.x'
+                'Argument 3 in "%s()" method is deprecated since sonata-project/media-bundle 3.33'
                 .' and will be removed in version 4.0.',
                 __METHOD__
             ), \E_USER_DEPRECATED);
@@ -261,7 +261,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
     /**
      * NEXT_MAJOR: Remove this method.
      *
-     * @deprecated since sonata-project/media-bundle 3.x, use "createStream()" instead.
+     * @deprecated since sonata-project/media-bundle 3.33, use "createStream()" instead.
      *
      * @param string $key
      *
@@ -270,7 +270,7 @@ class Replicate implements AdapterInterface, FileFactory, MetadataSupporter, Str
     public function createFileStream($key, Filesystem $filesystem)
     {
         @trigger_error(sprintf(
-            'Method "%s()" is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            'Method "%s()" is deprecated since sonata-project/media-bundle 3.33 and will be removed'
             .' in version 4.0. Use "createStream()" instead.',
             __METHOD__
         ), \E_USER_DEPRECATED);

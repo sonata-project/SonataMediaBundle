@@ -55,7 +55,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
     /**
      * @var SessionInterface
      *
-     * @deprecated since sonata-project/media-bundle 3.x, will be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.33, will be removed in 4.0.
      * NEXT_MAJOR : remove this property
      */
     private $session;
@@ -101,7 +101,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
             $this->requestStack = $sessionOrContainerOrRequestStack;
         } elseif ($sessionOrContainerOrRequestStack instanceof ContainerInterface) {
             @trigger_error(sprintf(
-                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.33'
                 .' and will throw a "\TypeError" error in 4.0.',
                 RequestStack::class,
                 __METHOD__
@@ -110,7 +110,7 @@ class SessionDownloadStrategy implements DownloadStrategyInterface
             $this->session = $sessionOrContainerOrRequestStack->get('session');
         } elseif ($sessionOrContainerOrRequestStack instanceof SessionInterface) {
             @trigger_error(sprintf(
-                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                'Passing other type than "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.33'
                 .' and will throw a "\TypeError" error in 4.0.',
                 RequestStack::class,
                 __METHOD__

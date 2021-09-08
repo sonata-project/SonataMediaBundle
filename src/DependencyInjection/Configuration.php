@@ -268,7 +268,7 @@ class Configuration implements ConfigurationInterface
                                         ->ifTrue(static function (int $v): bool {
                                             return 3 === $v && !class_exists(Sdk::class);
                                         })
-                                        ->thenInvalid('Can not use %s for "sdk_version" since the installed version of aws/aws-sdk-php is not 3.x.')
+                                        ->thenInvalid('Can not use %s for "sdk_version" since the installed version of aws/aws-sdk-php is not 3.33.')
                                     ->end()
                                     ->values([2, 3])
                                 ->end()
