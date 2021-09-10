@@ -12,7 +12,6 @@ file that was distributed with this source code.
 {% extends '@SonataAdmin/CRUD/base_list_flat_inner_row.html.twig' %}
 
 {% block row %}
-
     <div class="col-sm-12">
         <div class="pull-left">
             {% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
@@ -28,14 +27,14 @@ file that was distributed with this source code.
             <strong>{{ object.name }}</strong>
         {% endif %}
 
+        <br/>
 
-        <br />
         {% if object.width %} {{ object.width }}{% if object.height %}x{{ object.height }}{% endif %}px{% endif %}
         {% if object.length > 0 %}
             ({{ object.length }})
         {% endif %}
 
-        <br />
+        <br/>
 
         {% if object.authorname is not empty %}
            {{ object.authorname }}
@@ -48,12 +47,5 @@ file that was distributed with this source code.
         {% if object.copyright is not empty %}
             &copy; {{ object.copyright }}
         {% endif  %}
-
-        {#{% set enabled_field_description = admin.getListFieldDescription('enabled') %}#}
-        {#{% set url = path('sonata_admin_set_object_field_value', { 'context': 'list', 'field': enabled_field_description.name, 'objectId': admin.id(object), 'code': admin.code(object) })  %}#}
-        {#<span {% block field_span_attributes %}class="x-editable" data-type="{{ enabled_field_description.type|sonata_xeditable_type }}" data-value="{{ object.enabled }}" data-title="{{ enabled_field_description.label|trans({}, enabled_field_description.translationDomain) }}" data-pk="{{ admin.id(object) }}" data-url="{{ url }}" {% endblock %}>#}
-            {#{{ block('field') }}#}
-        {#</span>#}
-
     </div>
-{% endblock %}
+{% endblock row %}

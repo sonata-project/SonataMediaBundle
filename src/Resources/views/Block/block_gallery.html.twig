@@ -8,7 +8,8 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
-{% extends '@SonataBlock/Block/block_base.html.twig' %}
+
+{% extends sonata_block.templates.block_base %}
 
 {% block block %}
     {% if settings.format %}
@@ -32,7 +33,6 @@ file that was distributed with this source code.
                  data-interval="{{ settings.pauseTime }}"
                  {% if settings.startPaused != 1 %}data-ride="carousel"{% endif %}
             >
-
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
                     {% for element in elements %}
@@ -57,7 +57,7 @@ file that was distributed with this source code.
             </div>
         </div>
     {% endif %}
-{% endblock %}
+{% endblock block %}
 
 {% block element_indicator %}
     <li data-target="#carousel-{{ block.id }}" data-slide-to="{{ loop.index0 }}"{% if loop.first %} class="active"{% endif %}></li>
