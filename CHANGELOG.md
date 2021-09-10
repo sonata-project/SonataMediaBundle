@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.33.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.33.0...3.33.1) - 2021-09-10
+### Fixed
+- [[#2101](https://github.com/sonata-project/SonataMediaBundle/pull/2101)] Fixed missing upload after submit of MediaType field ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.33.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.32.0...3.33.0) - 2021-09-08
 ### Added
 - [[#2096](https://github.com/sonata-project/SonataMediaBundle/pull/2096)] Missing method declarations in interfaces and abstract classes, through `@method` annotation in order to respect BC ([@phansys](https://github.com/phansys))
