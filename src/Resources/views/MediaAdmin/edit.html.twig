@@ -35,7 +35,7 @@ file that was distributed with this source code.
             margin-bottom: 0;
         }
     </style>
-{% endblock %}
+{% endblock stylesheets %}
 
 {% block form %}
     <div class="row">
@@ -90,7 +90,7 @@ file that was distributed with this source code.
                                 <tr>
                                     <th><a href="{{ path('sonata_media_download', {'id': object|sonata_urlsafeid }) }}">{{ 'label.protected_download_url'|trans({}, 'SonataMediaBundle') }}</a></th>
                                     <td>
-                                        <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{{ path('sonata_media_download', {'id': object|sonata_urlsafeid }) }}" />
+                                        <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{{ path('sonata_media_download', {'id': object|sonata_urlsafeid }) }}"/>
                                         <span class="label label-warning">{{ 'label.protected_download_url_notice'|trans({}, 'SonataMediaBundle') }}</span> {{ sonata_media.pool.downloadStrategy(object).description|raw }}
                                     </td>
                                 </tr>
@@ -99,7 +99,7 @@ file that was distributed with this source code.
                                         <a href="{% path object, 'reference' %}" target="_blank">reference</a>
                                     </th>
                                     <td>
-                                        <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{% path object, 'reference' %}" />
+                                        <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{% path object, 'reference' %}"/>
                                     </td>
                                 </tr>
 
@@ -109,7 +109,7 @@ file that was distributed with this source code.
                                             <a href="{% path object, name %}" target="_blank">{{ name }}</a>
                                         </th>
                                         <td>
-                                            <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{% path object, name %}" />
+                                            <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{% path object, name %}"/>
                                         </td>
                                     </tr>
                                 {% endfor %}

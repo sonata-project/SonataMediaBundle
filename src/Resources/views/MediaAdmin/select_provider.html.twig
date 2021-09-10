@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 {% extends '@SonataAdmin/CRUD/action.html.twig' %}
 
-{% block title %}{{ 'title_select_provider'|trans({}, 'SonataMediaBundle') }}{% endblock %}
+{% block title %}{{ 'title_select_provider'|trans({}, 'SonataMediaBundle') }}{% endblock title %}
 
 {% block content %}
     <div class="box box-success">
@@ -33,7 +33,7 @@ file that was distributed with this source code.
                             <i class="{{ provider.providerMetadata.option('class') }}"></i>
                         {% else %}
                             <img src="{{ asset(provider.providerMetadata.image) }}" style="max-height: 20px; max-width: 100px;"/>
-                            <br />
+                            <br/>
                         {% endif %}
                         {{ provider.providerMetadata.title|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}
                     </a>
@@ -44,4 +44,4 @@ file that was distributed with this source code.
             <div class="clearfix"></div>
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

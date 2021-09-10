@@ -13,4 +13,4 @@ file that was distributed with this source code.
 
 {% block field %}
     <a href="{{ admin.generateUrl(route, {'id' : object|sonata_urlsafeid }) }}">{% thumbnail attribute(object, field_description.name ), 'admin' with {'width': 75, 'height': 60} %}</a>
-{% endblock %}
+{% endblock field %}
