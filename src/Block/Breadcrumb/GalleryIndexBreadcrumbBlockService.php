@@ -16,11 +16,15 @@ namespace Sonata\MediaBundle\Block\Breadcrumb;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 
 /**
+ * NEXT_MAJOR: remove this file.
+ *
  * BlockService for view gallery.
  *
  * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {

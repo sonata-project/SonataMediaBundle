@@ -75,15 +75,24 @@ class MediaController extends Controller
     }
 
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * @param string $id
      * @param string $format
      *
      * @throws NotFoundHttpException
      *
      * @return Response
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
      */
     public function viewAction($id, $format = MediaProviderInterface::FORMAT_REFERENCE)
     {
+        @trigger_error(
+            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            \E_USER_DEPRECATED
+        );
+
         $media = $this->getMedia($id);
 
         if (!$media) {
