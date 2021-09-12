@@ -97,6 +97,11 @@ class MediaControllerTest extends TestCase
         static::assertSame($response, $result);
     }
 
+    /**
+     * NEXT_MAJOR: Remove this test.
+     *
+     * @group legacy
+     */
     public function testViewActionWithNotFoundMedia(): void
     {
         $this->expectException(NotFoundHttpException::class);
@@ -106,6 +111,11 @@ class MediaControllerTest extends TestCase
         $this->controller->viewAction(1);
     }
 
+    /**
+     * NEXT_MAJOR: Remove this test.
+     *
+     * @group legacy
+     */
     public function testViewActionAccessDenied(): void
     {
         $this->expectException(AccessDeniedException::class);
@@ -122,6 +132,11 @@ class MediaControllerTest extends TestCase
         $this->controller->viewAction(1);
     }
 
+    /**
+     * NEXT_MAJOR: Remove this test.
+     *
+     * @group legacy
+     */
     public function testViewActionRendersView(): void
     {
         $media = $this->createStub(Media::class);

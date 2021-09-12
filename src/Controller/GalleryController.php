@@ -23,10 +23,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class GalleryController extends Controller
 {
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * @return Response
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
      */
     public function indexAction()
     {
+        @trigger_error(
+            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            \E_USER_DEPRECATED
+        );
+
         $galleries = $this->get('sonata.media.manager.gallery')->findBy([
             'enabled' => true,
         ]);
@@ -37,14 +46,23 @@ class GalleryController extends Controller
     }
 
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * @param string $id
      *
      * @throws NotFoundHttpException
      *
      * @return Response
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
      */
     public function viewAction($id)
     {
+        @trigger_error(
+            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            \E_USER_DEPRECATED
+        );
+
         $gallery = $this->get('sonata.media.manager.gallery')->findOneBy([
             'id' => $id,
             'enabled' => true,
