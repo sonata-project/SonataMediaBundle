@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Twig\Environment;
 
 class MediaControllerTest extends TestCase
 {
@@ -114,76 +113,6 @@ class MediaControllerTest extends TestCase
     }
 
     /**
-     * NEXT_MAJOR: Remove this test.
-     *
-     * @group legacy
-     */
-    public function testViewActionWithNotFoundMedia(): void
-    {
-        $this->expectException(NotFoundHttpException::class);
-
-        $this->configureGetMedia(1, null);
-
-        $this->controller->viewAction(new Request(), 1);
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this test.
-     *
-     * @group legacy
-     */
-    public function testViewActionAccessDenied(): void
-    {
-        $this->expectException(AccessDeniedException::class);
-
-        $media = $this->createStub(Media::class);
-        $request = $this->createStub(Request::class);
-
-        $media->method('getContext')->willReturn('context');
-
-        $this->configureGetMedia(1, $media);
-        $this->configureGetCurrentRequest($request);
-        $this->configureDownloadSecurity($media, $request, false);
-
-        $this->controller->viewAction($request, 1);
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this test.
-     *
-     * @group legacy
-     */
-    public function testViewActionRendersView(): void
-    {
-        $media = $this->createStub(Media::class);
-        $request = $this->createStub(Request::class);
-
-        $this->configureGetMedia(1, $media);
-        $this->configureGetCurrentRequest($request);
-        $this->configureDownloadSecurity($media, $request, true);
-        $this->configureRender('@SonataMedia/Media/view.html.twig', [
-            'media' => $media,
-            'formats' => ['format' => [
-                'width' => null,
-                'height' => null,
-                'quality' => 80,
-                'format' => 'jpg',
-                'constraint' => false,
-                'resizer' => null,
-                'resizer_options' => [],
-            ]],
-            'format' => 'format',
-        ], 'renderResponse');
-
-        $media->method('getContext')->willReturn('context');
-
-        $response = $this->controller->viewAction($request, 1, 'format');
-
-        static::assertInstanceOf(Response::class, $response);
-        static::assertSame('renderResponse', $response->getContent());
-    }
-
-    /**
      * @param Stub&Media   $media
      * @param Stub&Request $request
      */
@@ -233,21 +162,5 @@ class MediaControllerTest extends TestCase
 
         $this->container->set('request_stack', $requestStack);
         $requestStack->method('getCurrentRequest')->willReturn($request);
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    private function configureRender(
-        string $template,
-        array $data,
-        string $rendered
-    ): void {
-        $twig = $this->createMock(Environment::class);
-        $response = $this->createStub(Response::class);
-
-        $this->container->set('twig', $twig);
-        $response->method('getContent')->willReturn($rendered);
-        $twig->method('render')->with($template, $data)->willReturn($rendered);
     }
 }

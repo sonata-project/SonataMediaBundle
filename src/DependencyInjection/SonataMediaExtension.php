@@ -73,10 +73,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $loader->load('block.php');
         }
 
-        if (isset($bundles['SonataSeoBundle'])) {
-            $loader->load('seo_block.php');
-        }
-
         if (!isset($bundles['LiipImagineBundle'])) {
             $container->removeDefinition('sonata.media.thumbnail.liip_imagine');
         }

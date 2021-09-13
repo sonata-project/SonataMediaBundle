@@ -23,14 +23,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $containerConfigurator->services()
 
-        ->set('sonata.media.controller.gallery', GalleryController::class)
-            ->public()
-            ->args([
-                new ReferenceConfigurator('sonata.media.manager.gallery'),
-            ])
-            ->tag('container.service_subscriber')
-            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
-
         ->set('sonata.media.controller.media', MediaController::class)
             ->public()
             ->args([

@@ -23,7 +23,6 @@ use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
-use Sonata\SeoBundle\SonataSeoBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -59,7 +58,6 @@ final class AppKernel extends Kernel
             new SonataDoctrineBundle(),
             new SonataDoctrineORMAdminBundle(),
             new SonataMediaBundle(),
-            new SonataSeoBundle(),
             new TwigBundle(),
         ];
     }
