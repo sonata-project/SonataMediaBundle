@@ -62,6 +62,8 @@ final class UpdateCdnStatusCommand extends Command
 
     /**
      * @param ManagerInterface<MediaInterface> $mediaManager
+     *
+     * @internal This class should only be used through the console
      */
     public function __construct(Pool $mediaPool, ManagerInterface $mediaManager)
     {

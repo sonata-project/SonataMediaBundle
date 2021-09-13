@@ -50,6 +50,9 @@ final class CleanMediaCommand extends Command
      */
     private $providers;
 
+    /**
+     * @internal This class should only be used through the console
+     */
     public function __construct(Local $filesystemLocal, Pool $mediaPool, MediaManagerInterface $mediaManager)
     {
         parent::__construct();

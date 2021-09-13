@@ -17,8 +17,6 @@ use Sonata\MediaBundle\Extra\Pixlr;
 use Sonata\MediaBundle\Provider\Pool;
 
 /**
- * GlobalVariables.
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
 final class GlobalVariables

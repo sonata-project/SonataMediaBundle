@@ -40,6 +40,9 @@ final class FixMediaContextCommand extends Command
      */
     private $contextManager;
 
+    /**
+     * @internal This class should only be used through the console
+     */
     public function __construct(Pool $mediaPool, ?CategoryManagerInterface $categoryManager = null, ?ContextManagerInterface $contextManager = null)
     {
         parent::__construct();

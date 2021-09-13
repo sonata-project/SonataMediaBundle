@@ -26,6 +26,9 @@ final class FormatterMediaExtension extends AbstractExtension
      */
     private $twigExtension;
 
+    /**
+     * @internal This class should only be used through Twig
+     */
     public function __construct(MediaExtension $twigExtension)
     {
         $this->twigExtension = $twigExtension;

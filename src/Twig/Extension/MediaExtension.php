@@ -47,6 +47,8 @@ final class MediaExtension extends AbstractExtension
 
     /**
      * @param ManagerInterface<MediaInterface> $mediaManager
+     *
+     * @internal This class should only be used through Twig
      */
     public function __construct(Pool $mediaPool, ManagerInterface $mediaManager, Environment $twig)
     {
