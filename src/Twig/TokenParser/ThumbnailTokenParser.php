@@ -18,6 +18,9 @@ use Twig\Node\Expression\ArrayExpression;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
+/**
+ * @internal
+ */
 final class ThumbnailTokenParser extends AbstractTokenParser
 {
     /**

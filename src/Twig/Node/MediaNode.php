@@ -17,6 +17,9 @@ use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
+/**
+ * @internal
+ */
 final class MediaNode extends Node
 {
     /**

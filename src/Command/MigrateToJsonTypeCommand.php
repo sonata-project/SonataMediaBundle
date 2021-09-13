@@ -29,6 +29,9 @@ final class MigrateToJsonTypeCommand extends Command
      */
     private $entityManager;
 
+    /**
+     * @internal This class should only be used through the console
+     */
     public function __construct(?EntityManagerInterface $entityManager = null)
     {
         parent::__construct();

@@ -33,6 +33,8 @@ final class AddMediaCommand extends Command
 
     /**
      * @param ManagerInterface<MediaInterface> $mediaManager
+     *
+     * @internal This class should only be used through the console
      */
     public function __construct(ManagerInterface $mediaManager)
     {
