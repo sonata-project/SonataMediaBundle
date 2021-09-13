@@ -19,7 +19,6 @@ Optional dependencies:
 And the persistence bundle (choose one):
 
 * `SonataDoctrineOrmAdminBundle <https://sonata-project.org/bundles/doctrine-orm-admin>`_
-* `SonataDoctrinePHPCRAdminBundle <https://sonata-project.org/bundles/doctrine-phpcr-admin>`_
 * `SonataDoctrineMongoDBAdminBundle <https://sonata-project.org/bundles/mongo-admin>`_
 
 Follow also their configuration step; you will find everything you need in
@@ -212,84 +211,6 @@ The only thing left is to update your schema::
 
     bin/console doctrine:schema:update --force
 
-Doctrine PHPCR Configuration
-----------------------------
-
-Add the bundle in the config mapping definition (or enable `auto_mapping`_)::
-
-    # config/packages/doctrine_phpcr.yaml
-
-    doctrine_phpcr:
-        odm:
-            mappings:
-                SonataMediaBundle:
-                    prefix: Sonata\MediaBundle\PHPCR
-
-Then you have to create the corresponding documents, ``src/PHPCR/SonataMediaMedia``::
-
-    // src/PHPCR/SonataMediaMedia.php
-
-    use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
-    use Sonata\MediaBundle\PHPCR\BaseMedia;
-
-    /**
-     * @PHPCR\Document
-     */
-    class SonataMediaMedia extends BaseMedia
-    {
-        /**
-         * @PHPCR\Id
-         */
-        protected $id;
-    }
-
-``src/PHPCR/SonataMediaGallery``::
-
-    // src/PHPCR/SonataMediaGallery.php
-
-    use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
-    use Sonata\MediaBundle\PHPCR\BaseGallery;
-
-    /**
-     * @PHPCR\Document
-     */
-    class SonataMediaGallery extends BaseGallery
-    {
-        /**
-         * @PHPCR\Id
-         */
-        protected $id;
-    }
-
-and ``src/PHPCR/SonataMediaGalleryItem``::
-
-    // src/PHPCR/SonataMediaGalleryItem.php
-
-    use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
-    use Sonata\MediaBundle\PHPCR\BaseGalleryItem;
-
-    /**
-     * @PHPCR\Document
-     */
-    class SonataMediaGalleryItem extends BaseGalleryItem
-    {
-        /**
-         * @PHPCR\Id
-         */
-        protected $id;
-    }
-
-And then configure ``SonataMediaBundle`` to use the newly generated classes::
-
-    # config/packages/sonata_media.yaml
-
-    sonata_media:
-        db_driver: doctrine_phpcr
-        class:
-            media: App\PHPCR\SonataMediaMedia
-            gallery: App\PHPCR\SonataMediaGallery
-            gallery_item: App\PHPCR\SonataMediaGalleryItem
-
 Doctrine MongoDB Configuration
 ------------------------------
 
@@ -373,10 +294,6 @@ Add SonataMediaBundle routes
 .. code-block:: yaml
 
     # config/routes.yaml
-
-    gallery:
-        resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
-        prefix: /media/gallery
 
     media:
         resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
