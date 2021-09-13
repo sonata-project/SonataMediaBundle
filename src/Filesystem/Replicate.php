@@ -223,7 +223,12 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         throw new \LogicException(sprintf('None of the adapters implement %s.', StreamFactory::class));
     }
 
-    public function listDirectory($directory = '')
+    /**
+     * @return array<string, string[]>
+     *
+     * @phpstan-return array{keys: string[], dirs: string[]}
+     */
+    public function listDirectory(string $directory = ''): array
     {
         if (!method_exists($this->primary, 'listDirectory')) {
             throw new \BadMethodCallException(sprintf(

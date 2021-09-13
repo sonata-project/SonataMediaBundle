@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
-use Sonata\MediaBundle\Controller\GalleryController;
 use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\Controller\MediaController;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
