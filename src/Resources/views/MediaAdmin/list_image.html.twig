@@ -13,4 +13,4 @@ file that was distributed with this source code.
 
 {% block field %}
     <a href="{{ admin.generateObjectUrl(route_name, object) }}">{% thumbnail attribute(object, field_description.name ), 'admin' with {'width': 75, 'height': 60} %}</a>
-{% endblock %}
+{% endblock field %}

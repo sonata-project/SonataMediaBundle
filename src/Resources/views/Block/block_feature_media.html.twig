@@ -8,12 +8,11 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
+
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
-
     <div class="sonata-media-block-feature-media-container {{ settings.class }}">
-
         <div class="sonata-media-block-feature-media-container-{{ settings.orientation }}">
             {% if media and settings.format %}
                 {% media media, settings.format %}
@@ -41,4 +40,4 @@ file that was distributed with this source code.
 
         <div style="clear: both"></div>
     </div>
-{% endblock %}
+{% endblock block %}

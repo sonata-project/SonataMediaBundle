@@ -4,6 +4,23 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Media and Gallery Controllers
+
+`viewAction()` and `indexAction()` from media and gallery controllers are deprecated now.
+There is no provided replacement since those actions are suposed to be implemented in app side if you need them.
+
+### Breadcrumbs classes
+
+Breadcrumbs are deprecated, if your application uses them on the frontend side, you should use `sonata-project/seo-bundle` to implement them instead.
+
+UPGRADE FROM 3.32 to 3.33
+=========================
+
+### Sonata\MediaBundle\Listener\BaseMediaEventSubscriber::getMedia() and its inheritances
+
+Method `getMedia()` returns `null` if the related medium does not implement `Sonata\MediaBundle\Model\MediaInterface`.
+Before this change, under the same situation this method was returning the invalid object.
+
 ### Sonata\MediaBundle\Filesystem\Replicate
 
 Added implementation for `Gaufrette\Adapter\FileFactory` and `Gaufrette\Adapter\StreamFactory`.

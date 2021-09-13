@@ -17,9 +17,13 @@ use Knp\Menu\ItemInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 
 /**
+ * NEXT_MAJOR: remove this file.
+ *
  * BlockService for view gallery.
  *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 final class GalleryIndexBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {

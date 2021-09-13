@@ -15,7 +15,7 @@ file that was distributed with this source code.
     <div class="row-fluid clearfix">
         {{ sonata_block_render_event('breadcrumb', { 'context': 'gallery_view', 'gallery': gallery, 'current_uri': app.request.requestUri }) }}
     </div>
-{% endblock %}
+{% endblock sonata_page_breadcrumb %}
 
 <h1>{{ gallery.name }}</h1>
 

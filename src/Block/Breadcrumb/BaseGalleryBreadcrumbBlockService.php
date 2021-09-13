@@ -18,9 +18,13 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\SeoBundle\Block\Breadcrumb\BaseBreadcrumbMenuBlockService;
 
 /**
+ * NEXT_MAJOR: remove this file.
+ *
  * Abstract class for media breadcrumbs.
  *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 abstract class BaseGalleryBreadcrumbBlockService extends BaseBreadcrumbMenuBlockService
 {

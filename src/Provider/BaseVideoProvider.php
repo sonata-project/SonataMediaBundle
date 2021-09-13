@@ -29,6 +29,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
+/**
+ * @method string getReferenceUrl(MediaInterface $media)
+ */
 abstract class BaseVideoProvider extends BaseProvider
 {
     /**

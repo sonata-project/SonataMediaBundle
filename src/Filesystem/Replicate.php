@@ -223,6 +223,19 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         throw new \LogicException(sprintf('None of the adapters implement %s.', StreamFactory::class));
     }
 
+    public function listDirectory($directory = '')
+    {
+        if (!method_exists($this->primary, 'listDirectory')) {
+            throw new \BadMethodCallException(sprintf(
+                'Method "%s()" is not supported by the primary adapter "%s".',
+                __METHOD__,
+                \get_class($this->primary)
+            ));
+        }
+
+        return $this->primary->listDirectory($directory);
+    }
+
     public function isDirectory($key)
     {
         return $this->primary->isDirectory($key);

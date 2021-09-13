@@ -13,7 +13,7 @@ file that was distributed with this source code.
 
 {% block sonata_mosaic_default_view %}
     <span class="mosaic-box-label label label-primary pull-right">{{ object.providerName|trans({}, 'SonataMediaBundle') }}</span>
-{% endblock %}
+{% endblock sonata_mosaic_default_view %}
 
 {% block sonata_mosaic_hover_view %}
     <span class="mosaic-box-label label label-primary pull-right">{{ object.providerName|trans({}, 'SonataMediaBundle') }}</span>
@@ -23,7 +23,7 @@ file that was distributed with this source code.
         ({{ object.length }})
     {% endif %}
 
-    <br />
+    <br/>
 
     {% if object.authorname is not empty %}
        {{ object.authorname }}
@@ -35,9 +35,8 @@ file that was distributed with this source code.
 
     {% if object.copyright is not empty %}
         &copy; {{ object.copyright }}
-    {% endif  %}
-
-{% endblock %}
+    {% endif %}
+{% endblock sonata_mosaic_hover_view %}
 
 {% block sonata_mosaic_description %}
     {% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
@@ -47,4 +46,4 @@ file that was distributed with this source code.
     {% else %}
         {{ meta.title|u.truncate(40) }}
     {% endif %}
-{% endblock %}
+{% endblock sonata_mosaic_description %}

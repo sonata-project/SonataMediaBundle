@@ -219,7 +219,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
     public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
-        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
+        if (self::FORMAT_REFERENCE === $format) {
             return $this->getReferenceImage($media);
         }
 
