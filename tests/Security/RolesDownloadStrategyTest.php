@@ -32,8 +32,8 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (array $roles): bool {
-                return \in_array('ROLE_ADMIN', $roles, true);
+            ->willReturnCallback(static function (string $role): bool {
+                return 'ROLE_ADMIN' === $role;
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
@@ -49,8 +49,8 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (array $roles): bool {
-                return \in_array('FOO', $roles, true);
+            ->willReturnCallback(static function (string $role): bool {
+                return 'FOO' === $role;
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
@@ -70,8 +70,8 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (array $roles): bool {
-                return \in_array('ROLE_ADMIN', $roles, true);
+            ->willReturnCallback(static function (string $role): bool {
+                return 'ROLE_ADMIN' === $role;
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
@@ -91,8 +91,8 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (array $roles): bool {
-                return \in_array('FOO', $roles, true);
+            ->willReturnCallback(static function (string $role): bool {
+                return 'FOO' === $role;
             });
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
