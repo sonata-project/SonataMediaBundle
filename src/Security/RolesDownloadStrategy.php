@@ -78,11 +78,16 @@ class RolesDownloadStrategy implements DownloadStrategyInterface
     public function isGranted(MediaInterface $media, Request $request)
     {
         try {
-            return $this->security->isGranted($this->roles);
+            foreach ($this->roles as $role) {
+                if ($this->security->isGranted($role)) {
+                    return true;
+                }
+            }
         } catch (AuthenticationCredentialsNotFoundException $e) {
             // The token is not set in an AuthorizationCheckerInterface object
-            return false;
         }
+
+        return false;
     }
 
     public function getDescription()
