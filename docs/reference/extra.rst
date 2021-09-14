@@ -1,37 +1,10 @@
 Extra
 =====
 
-The SonataMediaBundle provides some integration with externals services. For now only Pixlr is available.
-
-Pixlr Integration
------------------
-
-Edit the ``sonata_media`` configuration:
-
-.. code-block:: yaml
-
-    # config/packages/sonata_media.yaml
-
-    sonata_media:
-        pixlr:
-            enabled:  true
-            secret:   theSecretHash
-            referrer: Application Name
-
-Add the pixlr routing file
-
-.. code-block:: yaml
-
-    # config/routes.yaml
-
-    sonata_media_pixlr:
-        resource: '@SonataMediaBundle/Resources/config/routing/pixlr.xml'
-        prefix: /admin/media
-
-And now, you can edit any pictures from the admin section.
+The SonataMediaBundle provides some integration with externals bundles.
 
 Sonata Notification Bundle Integration
-======================================
+--------------------------------------
 
 The bundle provides a specific consumer to generate thumbnails through an asynchronous task. So there no processing
 time for the user after uploading a file.
@@ -55,7 +28,7 @@ for each provider:
                 thumbnail:  sonata.media.thumbnail.consumer.format
 
 Liip Imagine Bundle Integration
-===============================
+-------------------------------
 
 The bundle provides a support for LiipImagineBundle through a specific Thumbnail service. The service generates a valid
 url handles by the bundle. The main advantage of LiipImagineBundle is that no thumbnail images will be stored along the
@@ -111,13 +84,13 @@ You also need to alter the ``sonata_media`` configuration to use the ``sonata.me
     The ``SonataMediaBundle:Media:liipImagineFilter`` is a specific controller to link the MediaBundle with LiipImagineBundle
 
 CKEditor Integration
-====================
+--------------------
 
 There are two ways to integrate ``CKEditor`` with ``SonataMediaBundle``: first way is by using ``CoopTilleulsCKEditorSonataMediaBundle`` for just creating
 a simple HTML CKEditor field type and another for using ``SonataFormatterBundle`` that will let you choose field editor type.
 
 Medias in CKEditor with CoopTilleulsCKEditorSonataMediaBundle
--------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `CoopTilleulsCKEditorSonataMediaBundle <https://github.com/coopTilleuls/CoopTilleulsCKEditorSonataMediaBundle>`_ allows to browse and upload files managed by SonataMedia directly from the UI of the `CKEditor <http://ckeditor.com/>`_ WYSIWYG editor.
 
@@ -218,7 +191,7 @@ Last step takes place in your admin class, you just have to specify the ``ckedit
 Afterwards you can browse and upload your medias using ``SonataMediaBundle``.
 
 Sonata Multiupload Bundle
-=========================
+-------------------------
 
 This bundle allows you a multiple upload of Media's. It provides JavaScript
 side mimetype and file extension validation.

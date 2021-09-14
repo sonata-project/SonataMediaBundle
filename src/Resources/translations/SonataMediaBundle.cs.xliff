@@ -262,31 +262,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Varování</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Upravit pomocí Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Důležité</span> tímto zpřístupníte médium <strong>externí službě</strong>. <br />
-                        Nepoužívejte prosím tuto funkci, pokud se jedná o důvěrná data.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong>Pixlr Express Editor</strong> <br />
-                        Jednoduché rozhraní pro rychlé úpravy
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong>Pixlr Advanced Editor</strong> <br />
-                        Pouze pro pokročilé uživatele
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Vše</target>

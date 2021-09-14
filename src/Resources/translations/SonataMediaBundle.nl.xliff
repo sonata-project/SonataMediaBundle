@@ -258,31 +258,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Waarschuwing</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Bewerk dit media item met Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Let op</span> je maakt dit item zichtbaar voor een <strong>externe service</strong>. <br />
-                        Indien het om een vertrouwelijke informatie gaat dien je deze service niet te gebruiken.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Snelle Editor</strong> <br />
-                        Simpele interface voor snelle bewerkingen
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Uitgebreide Editor</strong> <br />
-                        Alleen voor ervaren gebruikers
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Allemaal</target>

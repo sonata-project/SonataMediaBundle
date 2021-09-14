@@ -222,31 +222,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Uwaga</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Edytuj te media poprzez Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Ważne</span> jeśli masz zamiar wystawiać media na <strong> zewnętrzną usługę </ strong>. <br />
-                         Jeśli pracujesz nad poufnymi materiałami, proszę nie używać tej usługi.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Ekspresowy edytor</strong> <br />
-                        Prosty interfejs do szybkiej edycji
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Zaawansowany edytor</strong> <br />
-                        Tylko dla doświadczonych użytkowników
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Wszystkie</target>

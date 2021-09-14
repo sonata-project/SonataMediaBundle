@@ -76,7 +76,6 @@ final class Configuration implements ConfigurationInterface
         $this->addCdnSection($rootNode);
         $this->addFilesystemSection($rootNode);
         $this->addProvidersSection($rootNode);
-        $this->addExtraSection($rootNode);
         $this->addModelSection($rootNode);
         $this->addHttpClientSection($rootNode);
         $this->addResizerSection($rootNode);
@@ -387,33 +386,6 @@ final class Configuration implements ConfigurationInterface
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
                             ->end()
                         ->end()
-                    ->end()
-                ->end()
-            ->end();
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this method.
-     *
-     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
-     */
-    private function addExtraSection(ArrayNodeDefinition $node): void
-    {
-        $node
-            ->children()
-                ->arrayNode('pixlr')
-                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                        'The node "%node%" is deprecated and will be removed in version 4.0.',
-                        '3.x'
-                    ))
-                    ->info('More info at https://pixlr.com/')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('enabled')->defaultValue(false)->end()
-                        ->scalarNode('secret')->defaultValue(sha1(uniqid((string) random_int(1, 9999), true)))->end()
-                        ->scalarNode('referrer')->defaultValue('Sonata Media')->end()
                     ->end()
                 ->end()
             ->end();

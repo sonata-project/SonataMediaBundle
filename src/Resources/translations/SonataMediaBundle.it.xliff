@@ -274,31 +274,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Attenzione</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Modifica con Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Importante</span> se esponi questo elemento ad un <strong>servizio esterno</strong>. <br />
-                        Se lavori con materiale riservato, non usare questo servizio.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>Editor rapido</source>
-        <target><![CDATA[
-                        <strong>Pixlr Express Editor</strong> <br />
-                        Interfaccia semplice per modifiche veloci
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong>Pixlr Editor Avanzato</strong> <br />
-                        Solo per utenti esperti
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Tutti</target>

@@ -262,31 +262,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Opozorilo</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Urejanje s pomočjo strani Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Pomembno</span> medijske vsebine boste izpostavili <strong>zunanjim storitvam</strong>.<br />
-                        Če so vsebine zasebne narave, prosimo ne uporabljajte te storitve.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong>Express Editor</strong> <br />
-                        Enostaven vmesnik za hitro urejanje
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong>Napredni urejevalnik Pixlr</strong> <br />
-                        Napredno
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Vsi</target>

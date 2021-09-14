@@ -230,31 +230,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Įspėjimas</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Redaguoti su Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Svarbu</span> jūs atskleisite media <strong>išorinei paslaugai</strong>. <br />
-                        Jeigu dirbate su konfidencialia informacija, prašome nesinaudoti šia paslauga.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Skubus redaktorius</strong> <br />
-                        Paprasta sąsaja greitam redagavimui
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Pažengęs redaktorius</strong> <br />
-                        Tik pažengusiems vartotojams
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Visi</target>

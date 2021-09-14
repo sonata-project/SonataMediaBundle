@@ -262,31 +262,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Figyelmeztetés</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Média szerkesztése Pixlr-el</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Fontos</span> a médiát <strong>külső szolgáltatás</string> számára teszi elérhetőve. <br />
-                        Ha bizalmas anyaggal dolgozik, kérjük, ne használja ezt a szolgáltatást!
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Gyorsszerkesztő</strong> <br />
-                        Egyszerű felület a gyors szerkesztésre
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong style="color: white">Fejlett szerkesztő</strong> <br />
-                        Csak haladó felhasználóknak
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Összes</target>

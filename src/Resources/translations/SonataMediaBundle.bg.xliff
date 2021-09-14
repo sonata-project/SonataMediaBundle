@@ -238,31 +238,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Внимание</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Промени с Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Important</span> ще подадете медиата <strong>външен сервиз</strong>. <br />
-                        Ако работите с поверителни материали не използвайте този сервиз.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong>Pixlr Express Editor</strong> <br />
-                        Интерфейс за бърза промяна
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong>Pixlr Advanced Editor</strong> <br />
-                        За напреднали
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Всички</target>

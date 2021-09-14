@@ -234,31 +234,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Попередження</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Редагувати медіа за допомогою Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-<span class="label label-warning">Важливо</span> ви збираєтесь відправити медіа на <strong>сторонній сервіс</strong>. <br />
-Якщо ви працюєте з конфіденційними матеріалами, будь ласка не використовуйте цю функцію.
-]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-<strong style="color: white">Експрес редактор</strong> <br />
-Простий інтерфейс для швидкого редагування
-]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-<strong style="color: white">Розширений редактор</strong> <br />
-Тільки для досвідчених користувачів
-]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Всі провайдери</target>

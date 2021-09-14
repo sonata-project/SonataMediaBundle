@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Twig;
 
-use Sonata\MediaBundle\Extra\Pixlr;
 use Sonata\MediaBundle\Provider\Pool;
 
 /**
@@ -26,27 +25,9 @@ final class GlobalVariables
      */
     private $pool;
 
-    /**
-     * @var Pixlr|null
-     */
-    private $pixlr;
-
-    public function __construct(Pool $pool, ?Pixlr $pixlr = null)
+    public function __construct(Pool $pool)
     {
         $this->pool = $pool;
-        $this->pixlr = $pixlr;
-    }
-
-    /**
-     * NEXT_MAJOR: remove this method.
-     *
-     * @return Pixlr|bool
-     *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
-     */
-    public function getPixlr()
-    {
-        return null !== $this->pixlr ? $this->pixlr : false;
     }
 
     public function getPool(): Pool

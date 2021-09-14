@@ -32,7 +32,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.twig.global', GlobalVariables::class)
             ->args([
                 new ReferenceConfigurator('sonata.media.pool'),
-                (new ReferenceConfigurator('sonata.media.extra.pixlr'))->nullOnInvalid(),
             ])
 
         ->set('sonata.media.formatter.twig', FormatterMediaExtension::class)

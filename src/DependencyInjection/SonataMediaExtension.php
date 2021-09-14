@@ -46,7 +46,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $loader->load('media.php');
         $loader->load('twig.php');
         $loader->load('security.php');
-        $loader->load('extra.php');
         $loader->load('form.php');
         $loader->load('gaufrette.php');
         $loader->load('validators.php');
@@ -146,7 +145,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $container->setParameter('sonata.media.resizer.square.adapter.mode', $config['resizer']['square']['mode']);
 
         $this->configureParameterClass($container, $config);
-        $this->configureExtra($container, $config);
         $this->configureHttpClient($container, $config);
         $this->configureProviders($container, $config);
         $this->configureAdapters($container, $config);
@@ -330,20 +328,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');
-        }
-    }
-
-    /**
-     * @param array<string, mixed> $config
-     */
-    public function configureExtra(ContainerBuilder $container, array $config): void
-    {
-        if ($config['pixlr']['enabled']) {
-            $container->getDefinition('sonata.media.extra.pixlr')
-                ->replaceArgument(0, $config['pixlr']['referrer'])
-                ->replaceArgument(1, $config['pixlr']['secret']);
-        } else {
-            $container->removeDefinition('sonata.media.extra.pixlr');
         }
     }
 

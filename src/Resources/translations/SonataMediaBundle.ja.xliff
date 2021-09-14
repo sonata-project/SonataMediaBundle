@@ -234,31 +234,6 @@
         <source>label.protected_download_url_notice</source>
         <target>注意</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Pixlrでメディアを編集</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">重要</span> <strong>外部サービス</strong>にメディアを公開しようとしています。<br />
-                        もし機密性のある素材ならば、このサービスを使用しないでください。
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong>Pixlr Express Editor</strong> <br />
-                        Simple interface for quick editing
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong>Pixlrアドバンスド エディター</strong> <br />
-                        Experimented users only
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>すべて</target>

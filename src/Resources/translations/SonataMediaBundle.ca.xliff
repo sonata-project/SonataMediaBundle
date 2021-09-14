@@ -258,31 +258,6 @@
         <source>label.protected_download_url_notice</source>
         <target>Avís</target>
       </trans-unit>
-      <trans-unit id="label.edit_with_pixlr">
-        <source>label.edit_with_pixlr</source>
-        <target>Editar amb Pixlr</target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_warning">
-        <source>label.pixlr_warning</source>
-        <target><![CDATA[
-                        <span class="label label-warning">Important</span> Estàs exposant la imatge a un <strong>servei extern</strong>
-                        Si estàs treballant amb materials confidencials, si us plau no utilitzis aquest servei.
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_express_editor">
-        <source>label.pixlr_express_editor</source>
-        <target><![CDATA[
-                        <strong>Editor de Pixlr Express</strong> <br />
-                        Interfície simple per edició ràpida
-                    ]]></target>
-      </trans-unit>
-      <trans-unit id="label.pixlr_advanced_editor">
-        <source>label.pixlr_advanced_editor</source>
-        <target><![CDATA[
-                        <strong>Editor Pixlr Avançat</strong> <br />
-                        Per usuaris experts
-                    ]]></target>
-      </trans-unit>
       <trans-unit id="link.all_providers">
         <source>link.all_providers</source>
         <target>Tots</target>
