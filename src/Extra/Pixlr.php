@@ -27,7 +27,11 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
+ * NEXT_MAJOR: Remove this file.
+ *
  * @final since sonata-project/media-bundle 3.21.0
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class Pixlr
 {

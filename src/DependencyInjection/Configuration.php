@@ -441,11 +441,18 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     private function addExtraSection(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
                 ->arrayNode('pixlr')
+                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                        'The node "%node%" is deprecated and will be removed in version 4.0.',
+                        '3.x'
+                    ))
                     ->info('More info at https://pixlr.com/')
                     ->addDefaultsIfNotSet()
                     ->children()
