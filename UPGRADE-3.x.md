@@ -4,6 +4,11 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Deprecate Pixlr integration
+
+Integration with Pixlr is deprecated now. There is no replacement since
+the bundle is trying to focus on media management and not on the edit part.
+
 ### Media and Gallery Controllers
 
 `viewAction()` and `indexAction()` from media and gallery controllers are deprecated now.

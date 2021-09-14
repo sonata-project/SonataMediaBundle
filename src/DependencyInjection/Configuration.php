@@ -393,6 +393,8 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
      * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
      *
      * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
@@ -402,6 +404,10 @@ final class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('pixlr')
+                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                        'The node "%node%" is deprecated and will be removed in version 4.0.',
+                        '3.x'
+                    ))
                     ->info('More info at https://pixlr.com/')
                     ->addDefaultsIfNotSet()
                     ->children()

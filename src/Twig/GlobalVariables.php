@@ -38,7 +38,11 @@ final class GlobalVariables
     }
 
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * @return Pixlr|bool
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
      */
     public function getPixlr()
     {

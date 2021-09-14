@@ -28,6 +28,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
+/**
+ * NEXT_MAJOR: Remove this file.
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+ */
 final class Pixlr
 {
     /**
