@@ -30,7 +30,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
+ * NEXT_MAJOR: Remove this class.
+ *
  * @author Hugo Briand <briand@ekino.com>
+ *
+ * @group legacy
  */
 class GalleryControllerTest extends TestCase
 {

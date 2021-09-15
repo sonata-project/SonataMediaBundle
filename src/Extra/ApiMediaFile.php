@@ -16,7 +16,9 @@ namespace Sonata\MediaBundle\Extra;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
+ * NEXT_MAJOR: Remove this file.
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class ApiMediaFile extends File
 {

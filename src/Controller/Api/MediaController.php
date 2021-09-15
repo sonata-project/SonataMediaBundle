@@ -36,11 +36,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
+ * NEXT_MAJOR: Remove this file.
+ *
  * Note: Media is plural, medium is singular (at least according to FOSRestBundle route generator).
  *
- * @final since sonata-project/media-bundle 3.21.0
- *
  * @author Hugo Briand <briand@ekino.com>
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class MediaController
 {

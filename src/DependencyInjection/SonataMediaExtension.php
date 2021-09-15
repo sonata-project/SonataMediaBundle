@@ -55,11 +55,13 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $loader->load('form.xml');
         $loader->load('gaufrette.xml');
         $loader->load('validators.xml');
+        // NEXT_MAJOR: Remove next line and the file.
         $loader->load('serializer.xml');
         $loader->load('command.xml');
 
         $bundles = $container->getParameter('kernel.bundles');
 
+        // NEXT_MAJOR: Remove this condition and remove all configuration files related to this.
         if (isset($bundles['FOSRestBundle'], $bundles['NelmioApiDocBundle'])) {
             $loader->load(sprintf('api_form_%s.xml', $config['db_driver']));
 
