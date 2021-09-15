@@ -16,9 +16,13 @@ namespace Sonata\MediaBundle\Serializer;
 use Sonata\Form\Serializer\BaseSerializerHandler;
 
 /**
+ * NEXT_MAJOR: Remove this file and the serializer configuration for Media.
+ *
  * @final since sonata-project/media-bundle 3.21.0
  *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class MediaSerializerHandler extends BaseSerializerHandler
 {

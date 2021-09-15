@@ -4,6 +4,12 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Deprecate API
+
+Integration with FOSRest, JMS Serializer and Nelmio Api Docs is deprecated, the ReST API provided with this bundle will be removed on 4.0.
+
+If you are relying on this, consider moving to other solution like [API Platform](https://api-platform.com/) instead.
+
 ### Deprecate Pixlr integration
 
 Integration with Pixlr is deprecated now. There is no replacement since

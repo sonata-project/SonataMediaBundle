@@ -47,6 +47,11 @@ class MediaManager extends BaseEntityManager implements MediaManagerInterface
         }
     }
 
+    /**
+     * NEXT_MAJOR: remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
     public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         $query = $this->getRepository()

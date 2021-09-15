@@ -24,9 +24,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
+ * NEXT_MAJOR: Remove this file.
  *
  * @author Hugo Briand <briand@ekino.com>
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class ApiMediaType extends AbstractType implements LoggerAwareInterface
 {

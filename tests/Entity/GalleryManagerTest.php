@@ -21,7 +21,11 @@ use Sonata\MediaBundle\Entity\BaseGallery;
 use Sonata\MediaBundle\Entity\GalleryManager;
 
 /**
+ * NEXT_MAJOR: Remove this class.
+ *
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
+ *
+ * @group legacy
  */
 class GalleryManagerTest extends TestCase
 {
