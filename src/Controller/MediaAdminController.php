@@ -40,7 +40,7 @@ final class MediaAdminController extends CRUDController
         $this->admin->checkAccess('create');
 
         if (null === $request->get('provider') && $request->isMethod('get')) {
-            $pool = $this->get('sonata.media.pool');
+            $pool = $this->container->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
             return $this->renderWithExtraParams('@SonataMedia/MediaAdmin/select_provider.html.twig', [
@@ -73,7 +73,7 @@ final class MediaAdminController extends CRUDController
 
         // set the default context
         if ([] === $filters || !\array_key_exists('context', $filters)) {
-            $pool = $this->get('sonata.media.pool');
+            $pool = $this->container->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
             $context = $this->admin->getPersistentParameter('context') ?? $pool->getDefaultContext();
@@ -84,10 +84,13 @@ final class MediaAdminController extends CRUDController
         $datagrid->setValue('context', null, $context);
 
         $rootCategory = null;
-        if ($this->has('sonata.media.manager.category') && $this->has('sonata.media.manager.context')) {
-            $categoryManager = $this->get('sonata.media.manager.category');
+        if (
+            $this->container->has('sonata.media.manager.category') &&
+            $this->container->has('sonata.media.manager.context')
+        ) {
+            $categoryManager = $this->container->get('sonata.media.manager.category');
             \assert($categoryManager instanceof CategoryManagerInterface);
-            $contextManager = $this->get('sonata.media.manager.context');
+            $contextManager = $this->container->get('sonata.media.manager.context');
             \assert($contextManager instanceof ContextManagerInterface);
 
             $rootCategories = $categoryManager->getRootCategoriesForContext($contextManager->find($context));
@@ -118,8 +121,8 @@ final class MediaAdminController extends CRUDController
 
         $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
-        if ($this->has('sonata.admin.admin_exporter')) {
-            $exporter = $this->get('sonata.admin.admin_exporter');
+        if ($this->container->has('sonata.admin.admin_exporter')) {
+            $exporter = $this->container->get('sonata.admin.admin_exporter');
             \assert($exporter instanceof AdminExporter);
             $exportFormats = $exporter->getAvailableFormats($this->admin);
         }

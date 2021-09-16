@@ -17,6 +17,7 @@ use Gaufrette\Adapter;
 use Gaufrette\Adapter\FileFactory;
 use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Adapter\StreamFactory;
+use Gaufrette\File;
 use Gaufrette\Filesystem;
 use Gaufrette\Stream;
 use Psr\Log\LoggerInterface;
@@ -46,7 +47,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         $this->logger = $logger ?? new NullLogger();
     }
 
-    public function delete($key)
+    public function delete($key): bool
     {
         $ok = true;
 
@@ -69,6 +70,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $ok;
     }
 
+    /**
+     * @return int|bool
+     */
     public function mtime($key)
     {
         return $this->primary->mtime($key);
@@ -77,16 +81,19 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     /**
      * @return string[]
      */
-    public function keys()
+    public function keys(): array
     {
         return $this->primary->keys();
     }
 
-    public function exists($key)
+    public function exists($key): bool
     {
         return $this->primary->exists($key);
     }
 
+    /**
+     * @return int|bool
+     */
     public function write($key, $content)
     {
         $ok = true;
@@ -111,12 +118,15 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $ok && false !== $return;
     }
 
+    /**
+     * @return string|bool
+     */
     public function read($key)
     {
         return $this->primary->read($key);
     }
 
-    public function rename($sourceKey, $targetKey)
+    public function rename($sourceKey, $targetKey): bool
     {
         $ok = true;
 
@@ -192,7 +202,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         ];
     }
 
-    public function createFile($key, Filesystem $filesystem)
+    public function createFile($key, Filesystem $filesystem): File
     {
         if ($this->primary instanceof FileFactory) {
             return $this->primary->createFile($key, $filesystem);
@@ -207,10 +217,8 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
 
     /**
      * @param string $key
-     *
-     * @return Stream
      */
-    public function createStream($key)
+    public function createStream($key): Stream
     {
         if ($this->primary instanceof StreamFactory) {
             return $this->primary->createStream($key);
@@ -241,7 +249,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $this->primary->listDirectory($directory);
     }
 
-    public function isDirectory($key)
+    public function isDirectory($key): bool
     {
         return $this->primary->isDirectory($key);
     }

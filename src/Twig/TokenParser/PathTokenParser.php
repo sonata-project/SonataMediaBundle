@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Twig\TokenParser;
 
 use Sonata\MediaBundle\Twig\Node\PathNode;
+use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -37,7 +38,7 @@ final class PathTokenParser extends AbstractTokenParser
      *
      * @see https://github.com/twigphp/Twig/issues/3443
      */
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $media = $this->parser->getExpressionParser()->parseExpression();
 
@@ -50,7 +51,7 @@ final class PathTokenParser extends AbstractTokenParser
         return new PathNode($this->extensionName, $media, $format, $token->getLine(), $this->getTag());
     }
 
-    public function getTag()
+    public function getTag(): string
     {
         return 'path';
     }

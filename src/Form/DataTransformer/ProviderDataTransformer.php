@@ -53,6 +53,9 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         $this->class = $class;
     }
 
+    /**
+     * @return mixed
+     */
     public function transform($value)
     {
         if (null === $value) {
@@ -62,6 +65,9 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         return $value;
     }
 
+    /**
+     * @return mixed
+     */
     public function reverseTransform($value)
     {
         if (!$value instanceof MediaInterface) {

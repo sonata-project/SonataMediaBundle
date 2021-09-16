@@ -53,7 +53,7 @@ class ReplicateTest extends TestCase
         $slave->expects(static::once())->method('rename');
         $replicate->rename('foo', 'bar');
 
-        $master->expects(static::once())->method('isDirectory');
+        $master->expects(static::once())->method('isDirectory')->willReturn(true);
         $slave->expects(static::never())->method('isDirectory');
         $replicate->isDirectory('foo');
     }

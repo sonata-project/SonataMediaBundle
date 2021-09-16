@@ -21,7 +21,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,
