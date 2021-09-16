@@ -267,7 +267,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     {
         $this->formBuilder->expects(static::exactly(8))
             ->method('add')
-            ->willReturn(null);
+            ->willReturnSelf();
 
         $this->provider->buildCreateForm($this->form);
         $this->provider->buildEditForm($this->form);

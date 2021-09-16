@@ -71,12 +71,12 @@ final class ApiMediaType extends AbstractType implements LoggerAwareInterface
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ApiDoctrineMediaType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'sonata_media_api_form_media';
     }

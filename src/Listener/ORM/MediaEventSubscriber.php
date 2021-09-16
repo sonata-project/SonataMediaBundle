@@ -41,7 +41,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         $this->categoryManager = $categoryManager;
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,

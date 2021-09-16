@@ -49,8 +49,8 @@ final class GalleryAdminController extends CRUDController
 
         $this->setFormTheme($formView, $this->admin->getFilterTheme());
 
-        if ($this->has('sonata.admin.admin_exporter')) {
-            $exporter = $this->get('sonata.admin.admin_exporter');
+        if ($this->container->has('sonata.admin.admin_exporter')) {
+            $exporter = $this->container->get('sonata.admin.admin_exporter');
             \assert($exporter instanceof AdminExporter);
             $exportFormats = $exporter->getAvailableFormats($this->admin);
         }

@@ -34,11 +34,17 @@ final class ServiceProviderDataTransformer implements DataTransformerInterface, 
         $this->provider = $provider;
     }
 
+    /**
+     * @return mixed
+     */
     public function transform($value)
     {
         return $value;
     }
 
+    /**
+     * @return mixed
+     */
     public function reverseTransform($value)
     {
         if (!$value instanceof MediaInterface) {

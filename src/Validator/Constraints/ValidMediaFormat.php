@@ -30,6 +30,9 @@ final class ValidMediaFormat extends Constraint
         return 'sonata.media.validator.format';
     }
 
+    /**
+     * @return string|string[]
+     */
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;

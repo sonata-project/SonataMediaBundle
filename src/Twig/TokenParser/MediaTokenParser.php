@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Twig\TokenParser;
 
 use Sonata\MediaBundle\Twig\Node\MediaNode;
 use Twig\Node\Expression\ArrayExpression;
+use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -38,7 +39,7 @@ final class MediaTokenParser extends AbstractTokenParser
      *
      * @see https://github.com/twigphp/Twig/issues/3443
      */
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $media = $this->parser->getExpressionParser()->parseExpression();
 
@@ -60,7 +61,7 @@ final class MediaTokenParser extends AbstractTokenParser
         return new MediaNode($this->extensionName, $media, $format, $attributes, $token->getLine(), $this->getTag());
     }
 
-    public function getTag()
+    public function getTag(): string
     {
         return 'media';
     }
