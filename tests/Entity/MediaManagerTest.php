@@ -21,7 +21,11 @@ use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Entity\MediaManager;
 
 /**
+ * NEXT_MAJOR: Remove this class.
+ *
  * @author Benoit de Jacobet <benoit.de-jacobet@ekino.com>
+ *
+ * @group legacy
  */
 class MediaManagerTest extends TestCase
 {

@@ -49,6 +49,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $loader->load('form.php');
         $loader->load('gaufrette.php');
         $loader->load('validators.php');
+        // NEXT_MAJOR: Remove next line and the file.
         $loader->load('serializer.php');
         $loader->load('commands.php');
         $loader->load('controllers.php');
@@ -56,6 +57,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $bundles = $container->getParameter('kernel.bundles');
         \assert(\is_array($bundles));
 
+        // NEXT_MAJOR: Remove this condition and remove all configuration files related to this.
         if (isset($bundles['FOSRestBundle'], $bundles['NelmioApiDocBundle'])) {
             $loader->load(sprintf('api_form_%s.php', $config['db_driver']));
 

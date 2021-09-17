@@ -24,6 +24,11 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
  */
 final class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
+    /**
+     * NEXT_MAJOR: remove this method.
+     *
+     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     */
     public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
     {
         $query = $this->getRepository()
