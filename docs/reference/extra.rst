@@ -118,7 +118,7 @@ Now, just create a field with ckeditor as type and your done::
     }
 
 Medias in CKEditor with SonataFormatterBundle
----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `SonataFormatterBundle <https://github.com/sonata-project/SonataFormatterBundle>`_ allows to
 browse and upload files managed by SonataMedia directly from the UI of the

@@ -30,7 +30,6 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
@@ -226,21 +225,13 @@ class FileProviderTest extends AbstractProviderTest
 
         static::assertNotFalse($content);
 
-        $request = new Request([], [], [], [], [], [], $content);
+        $media = new Media();
+        $media->setBinaryContent($file);
+        $media->setContentType('foo');
+        $media->setId(1023456);
 
-        $media1 = new Media();
-        $media1->setBinaryContent($file);
-        $media1->setContentType('foo');
-        $media1->setId(1023456);
-
-        $media2 = new Media();
-        $media2->setBinaryContent($request);
-        $media2->setContentType('text/plain');
-        $media2->setId(1023456);
-
-        yield [File::class, $media1];
-        yield [File::class, $media1];
-        yield [File::class, $media2];
+        yield [File::class, $media];
+        yield [File::class, $media];
     }
 
     public function testBinaryContentWithRealPath(): void

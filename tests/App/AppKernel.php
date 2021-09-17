@@ -14,10 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\App;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use FOS\RestBundle\FOSRestBundle;
-use JMS\SerializerBundle\JMSSerializerBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
-use Nelmio\ApiDocBundle\NelmioApiDocBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
 use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
@@ -47,11 +44,8 @@ final class AppKernel extends Kernel
     {
         return [
             new DoctrineBundle(),
-            new FOSRestBundle(),
             new FrameworkBundle(),
-            new JMSSerializerBundle(),
             new KnpMenuBundle(),
-            new NelmioApiDocBundle(),
             new SecurityBundle(),
             new SonataAdminBundle(),
             new SonataBlockBundle(),
@@ -86,13 +80,11 @@ final class AppKernel extends Kernel
     {
         if ($routes instanceof RouteCollectionBuilder) {
             $routes->import(__DIR__.'/Resources/config/routing/routes.yml', '/', 'yaml');
-            $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml', '/', 'yaml');
 
             return;
         }
 
         $routes->import(__DIR__.'/Resources/config/routing/routes.yml');
-        $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml');
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void

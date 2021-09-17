@@ -69,21 +69,6 @@ sonata_media:
             version: 2006-03-01
             endpoint: null
 
-fos_rest:
-    param_fetcher_listener: true
-    body_listener: true
-    format_listener:
-        enabled: true
-        rules:
-            priorities: 'json'
-            fallback_format: 'json'
-            prefer_extension: false
-    view:
-        view_response_listener: true
-    body_converter:
-        enabled: false
-        validate: true
-
 doctrine:
     dbal:
         driver: pdo_sqlite

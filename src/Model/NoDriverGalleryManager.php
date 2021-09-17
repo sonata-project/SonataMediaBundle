@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Model;
 
 use Doctrine\DBAL\Connection;
-use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\MediaBundle\Exception\NoDriverException;
 
 /**
@@ -76,11 +75,6 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
     }
 
     public function getConnection(): Connection
-    {
-        throw new NoDriverException();
-    }
-
-    public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
     {
         throw new NoDriverException();
     }

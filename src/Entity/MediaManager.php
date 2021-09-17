@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Entity;
 
-use Sonata\DatagridBundle\Pager\Doctrine\Pager;
-use Sonata\DatagridBundle\Pager\PagerInterface;
-use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
@@ -24,44 +21,4 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
  */
 final class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {
-    /**
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
-     */
-    public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
-    {
-        $query = $this->getRepository()
-            ->createQueryBuilder('m')
-            ->select('m');
-
-        $fields = $this->getEntityManager()->getClassMetadata($this->class)->getFieldNames();
-        foreach ($sort as $field => $direction) {
-            if (!\in_array($field, $fields, true)) {
-                throw new \RuntimeException(sprintf("Invalid sort field '%s' in '%s' class", $field, $this->class));
-            }
-        }
-
-        foreach ($sort as $field => $direction) {
-            $query->orderBy(sprintf('m.%s', $field), strtoupper($direction));
-        }
-
-        $parameters = [];
-
-        if (isset($criteria['enabled'])) {
-            $query->andWhere('m.enabled = :enabled');
-            $parameters['enabled'] = $criteria['enabled'];
-        }
-
-        $query->setParameters($parameters);
-
-        /** @var PagerInterface<\Sonata\MediaBundle\Model\MediaInterface> */
-        $pager = new Pager();
-        $pager->setMaxPerPage($limit);
-        $pager->setQuery(new ProxyQuery($query));
-        $pager->setPage($page);
-        $pager->init();
-
-        return $pager;
-    }
 }

@@ -13,15 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
-use Sonata\DatagridBundle\Pager\PageableInterface;
 use Sonata\Doctrine\Model\ManagerInterface;
 
 /**
- * NEXT_MAJOR: Remove PageableManagerInterface extension.
- *
  * @phpstan-extends ManagerInterface<\Sonata\MediaBundle\Model\GalleryInterface>
- * @phpstan-extends PageableInterface<\Sonata\MediaBundle\Model\GalleryInterface>
  */
-interface GalleryManagerInterface extends ManagerInterface, PageableInterface
+interface GalleryManagerInterface extends ManagerInterface
 {
 }

@@ -52,6 +52,5 @@ class NoDriverMediaManagerTest extends TestCase
         yield ['delete', [null]];
         yield ['getTableName', []];
         yield ['getConnection', []];
-        yield ['getPager', [[], 1]];
     }
 }

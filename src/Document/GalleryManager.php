@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Document;
 
-use Sonata\DatagridBundle\Pager\PagerInterface;
 use Sonata\Doctrine\Document\BaseDocumentManager;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
@@ -22,13 +21,4 @@ use Sonata\MediaBundle\Model\GalleryManagerInterface;
  */
 final class GalleryManager extends BaseDocumentManager implements GalleryManagerInterface
 {
-    /**
-     * NEXT_MAJOR: remove this method.
-     *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
-     */
-    public function getPager(array $criteria, int $page, int $limit = 10, array $sort = []): PagerInterface
-    {
-        throw new \BadMethodCallException('Not implemented yet.');
-    }
 }

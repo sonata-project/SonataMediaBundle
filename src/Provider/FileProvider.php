@@ -18,7 +18,6 @@ use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
-use Sonata\MediaBundle\Extra\ApiMediaFile;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
@@ -30,10 +29,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -127,15 +124,10 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
     public function buildMediaType(FormBuilderInterface $formBuilder): void
     {
-        if ('api' === $formBuilder->getOption('context')) {
-            $formBuilder->add('binaryContent', FileType::class);
-            $formBuilder->add('contentType');
-        } else {
-            $formBuilder->add('binaryContent', FileType::class, [
-                'required' => false,
-                'label' => 'widget_label_binary_content',
-            ]);
-        }
+        $formBuilder->add('binaryContent', FileType::class, [
+            'required' => false,
+            'label' => 'widget_label_binary_content',
+        ]);
     }
 
     public function postPersist(MediaInterface $media): void
@@ -314,13 +306,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             return;
         }
 
-        if ($media->getBinaryContent() instanceof Request) {
-            $this->generateBinaryFromRequest($media);
-            $this->updateMetadata($media);
-
-            return;
-        }
-
         // if the binary content is a filename => convert to a valid File
         if (!is_file($media->getBinaryContent())) {
             throw new \RuntimeException(sprintf('The file does not exist: %s', $media->getBinaryContent()));
@@ -427,51 +412,5 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     protected function generateMediaUniqId(MediaInterface $media): string
     {
         return sha1($media->getName().uniqid().random_int(11111, 99999));
-    }
-
-    /**
-     * Set media binary content according to request content.
-     */
-    protected function generateBinaryFromRequest(MediaInterface $media): void
-    {
-        $contentType = $media->getContentType();
-
-        if (null === $contentType) {
-            throw new \RuntimeException(
-                'You must provide the content type value for your media before setting the binary content'
-            );
-        }
-
-        $request = $media->getBinaryContent();
-
-        if (!$request instanceof Request) {
-            throw new \RuntimeException('Expected Request in binary content');
-        }
-
-        $content = $request->getContent();
-
-        // Create unique id for media reference
-        $guesser = MimeTypes::getDefault();
-        $extensions = $guesser->getExtensions($contentType);
-        $extension = $extensions[0] ?? null;
-
-        if (null === $extension) {
-            throw new \RuntimeException(
-                sprintf('Unable to guess extension for content type %s', $media->getContentType() ?? '')
-            );
-        }
-
-        $handle = tmpfile();
-
-        if (false === $handle) {
-            throw new \RuntimeException('Unable to generate temporary file.');
-        }
-
-        fwrite($handle, $content);
-        $file = new ApiMediaFile($handle);
-        $file->setExtension($extension);
-        $file->setMimetype($contentType);
-
-        $media->setBinaryContent($file);
     }
 }
