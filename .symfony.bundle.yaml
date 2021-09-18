@@ -4,16 +4,16 @@
 
 branches:
     - 3.x
-    - master
+    - 4.x
 
 maintained_branches:
     - 3.x
-    - master
+    - 4.x
 
 doc_dir: 'docs/'
 
 current_branch: 3.x
 
-dev_branch: master
+dev_branch: 4.x
 
 # dev_branch_alias:
