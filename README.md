@@ -20,7 +20,7 @@ Symfony SonataMediaBundle
 Branch | Github Actions | Code Coverage | Documentation |
 ------ | -------------- | ------------- | ------------- |
 3.x    | [![Test][test_stable_badge]][test_stable_link]     | [![Coverage Status][coverage_stable_badge]][coverage_stable_link]     | [![Documentation Status][documentation_stable_badge]][documentation_stable_link]     |
-master | [![Test][test_unstable_badge]][test_unstable_link] | [![Coverage Status][coverage_unstable_badge]][coverage_unstable_link] | [![Documentation Status][documentation_unstable_badge]][documentation_unstable_link] |
+4.x | [![Test][test_unstable_badge]][test_unstable_link] | [![Coverage Status][coverage_unstable_badge]][coverage_unstable_link] | [![Documentation Status][documentation_unstable_badge]][documentation_unstable_link] |
 
 ## Documentation
 
@@ -39,17 +39,17 @@ This package is available under the [MIT license](LICENSE).
 
 [test_stable_badge]: https://github.com/sonata-project/SonataMediaBundle/workflows/Test/badge.svg?branch=3.x
 [test_stable_link]: https://github.com/sonata-project/SonataMediaBundle/actions?query=workflow:test+branch:3.x
-[test_unstable_badge]: https://github.com/sonata-project/SonataMediaBundle/workflows/Test/badge.svg?branch=master
-[test_unstable_link]: https://github.com/sonata-project/SonataMediaBundle/actions?query=workflow:test+branch:master
+[test_unstable_badge]: https://github.com/sonata-project/SonataMediaBundle/workflows/Test/badge.svg?branch=4.x
+[test_unstable_link]: https://github.com/sonata-project/SonataMediaBundle/actions?query=workflow:test+branch:4.x
 
 [coverage_stable_badge]: https://codecov.io/gh/sonata-project/SonataMediaBundle/branch/3.x/graph/badge.svg
 [coverage_stable_link]: https://codecov.io/gh/sonata-project/SonataMediaBundle/branch/3.x
-[coverage_unstable_badge]: https://codecov.io/gh/sonata-project/SonataMediaBundle/branch/master/graph/badge.svg
-[coverage_unstable_link]: https://codecov.io/gh/sonata-project/SonataMediaBundle/branch/master
+[coverage_unstable_badge]: https://codecov.io/gh/sonata-project/SonataMediaBundle/branch/4.x/graph/badge.svg
+[coverage_unstable_link]: https://codecov.io/gh/sonata-project/SonataMediaBundle/branch/4.x
 [shepherd_stable_badge]: https://shepherd.dev/github/sonata-project/SonataMediaBundle/coverage.svg
 [shepherd_stable_link]: https://shepherd.dev/github/sonata-project/SonataMediaBundle
 
 [documentation_stable_badge]: https://readthedocs.org/projects/sonata-project-sonatamediabundle/badge/?version=3.x
 [documentation_stable_link]: https://docs.sonata-project.org/projects/SonataMediaBundle/en/3.x/?badge=3.x
-[documentation_unstable_badge]: https://readthedocs.org/projects/sonata-project-sonatamediabundle/badge/?version=master
-[documentation_unstable_link]: https://docs.sonata-project.org/projects/SonataMediaBundle/en/master/?badge=master
+[documentation_unstable_badge]: https://readthedocs.org/projects/sonata-project-sonatamediabundle/badge/?version=4.x
+[documentation_unstable_link]: https://docs.sonata-project.org/projects/SonataMediaBundle/en/4.x/?badge=4.x
