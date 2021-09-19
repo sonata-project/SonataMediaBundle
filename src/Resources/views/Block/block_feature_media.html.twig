@@ -12,15 +12,9 @@ file that was distributed with this source code.
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
-    <div class="sonata-media-block-feature-media-container {{ settings.class }}">
-        <div class="sonata-media-block-feature-media-container-{{ settings.orientation }}">
-            {% if media and settings.format %}
-                {% media media, settings.format %}
-            {% else %}
-                {# no media selected or format defined... #}
-            {% endif %}
-        </div>
+    {% sonata_template_box 'This is the feature media block. Feel free to override it.' %}
 
+    <div class="{{ settings.class }}">
         {% if settings.title %}
             <h3>
                 {% if settings.icon %}
@@ -34,10 +28,7 @@ file that was distributed with this source code.
             </h3>
         {% endif %}
 
-        <div class="sonata-media-block-feature-media-content">
-            {{ settings.content }}
-        </div>
-
-        <div style="clear: both"></div>
+        {% media media, settings.format|default('reference') %}
+        {{ settings.content }}
     </div>
 {% endblock block %}

@@ -10,13 +10,15 @@ file that was distributed with this source code.
 #}
 
 {% if options.html5 %}
-    <iframe width="{{ options.player_parameters.width }}" height="{{ options.player_parameters.height }}" src="//www.youtube.com/embed/{{ media.providerreference }}?{{ options.player_url_parameters }}" frameborder="{{ options.player_parameters.border }}"{% if options.player_parameters.allowFullScreen %} allowfullscreen{% endif %}></iframe>
+    <iframe
+        width="{{ options.player_parameters.width }}"
+        height="{{ options.player_parameters.height }}"
+        src="//www.youtube.com/embed/{{ media.providerReference }}?{{ options.player_url_parameters }}"
+        frameborder="{{ options.player_parameters.border }}"
+        {% if options.player_parameters.allowFullScreen %} allowfullscreen{% endif %}>
+    </iframe>
 {% else %}
-    {% if options.player_parameters.allowFullScreen %}
-        {% set allowFullScreen = "true" %}
-    {% else %}
-        {% set allowFullScreen = "false" %}
-    {% endif %}
+    {% set allowFullScreen = options.player_parameters.allowFullScreen ? 'true' : 'false' %}
     <object width="{{ options.player_parameters.width }}" height="{{ options.player_parameters.height }}">
         <param name="movie" value="//www.youtube.com/v/{{ media.providerreference }}?{{ options.player_url_parameters }}"></param>
         <param name="allowFullScreen" value="{{ allowFullScreen }}"></param>

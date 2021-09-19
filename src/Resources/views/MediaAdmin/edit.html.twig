@@ -58,11 +58,11 @@ file that was distributed with this source code.
                                 <tr>
                                     <th>{{ 'label.cdn'|trans({}, 'SonataMediaBundle') }}</th>
                                     <td>
-                                        {% if object.cdnisflushable %}
+                                        {% if object.cdnIsFlushable %}
                                             {{ 'label.to_be_flushed'|trans({}, 'SonataMediaBundle') }}
                                         {% else %}
                                             {{ 'label.flushed_at'|trans({}, 'SonataMediaBundle') }}
-                                            {{ object.cdnflushat|date }}
+                                            {{ object.cdnFlushAt|date }}
                                         {% endif %}
                                     </td>
                                 </tr>
