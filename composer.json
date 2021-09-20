@@ -110,11 +110,6 @@
     "config": {
         "sort-packages": true
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "4.x-dev"
-        }
-    },
     "autoload": {
         "psr-4": {
             "Sonata\\MediaBundle\\": "src/"
