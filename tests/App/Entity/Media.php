@@ -23,16 +23,20 @@ use Sonata\MediaBundle\Entity\BaseMedia;
 class Media extends BaseMedia
 {
     /**
+     * @var int|null
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     protected $id;
 
-    /**
-     * Get id.
-     */
-    public function getId(): int
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
     {
         return $this->id;
     }

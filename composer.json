@@ -111,6 +111,7 @@
         "sonata-project/seo-bundle": "^2.5",
         "symfony/browser-kit": "^4.4 || ^5.2",
         "symfony/http-client": "^4.4 || ^5.2",
+        "symfony/messenger": "^4.4 || ^5.3",
         "symfony/phpunit-bridge": "^5.2",
         "symfony/security-csrf": "^4.4 || ^5.2",
         "vimeo/psalm": "^4.7.2"
@@ -124,6 +125,7 @@
         "sonata-project/notification-bundle": "If you want to generate thumbnails asynchronously.",
         "sonata-project/seo-bundle": "If you're sensible to SEO.",
         "symfony/http-client": "If you want to load external content.",
+        "symfony/messenger": "If you want to generate thumbnails asynchronously.",
         "symfony/monolog-bundle": "If you want to log exceptions produced when dealing with images.",
         "tilleuls/ckeditor-sonata-media-bundle": "If you want to use CKEditor.",
         "twig/extra-bundle": "Auto configures the Twig Intl extension."

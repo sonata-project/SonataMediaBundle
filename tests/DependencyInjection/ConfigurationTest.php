@@ -46,6 +46,16 @@ class ConfigurationTest extends TestCase
         ], 'resizers');
     }
 
+    public function testMessengerConfiguration(): void
+    {
+        $this->assertProcessedConfigurationEquals([], [
+            'messenger' => [
+                'enabled' => false,
+                'bus' => 'messenger.default_bus',
+            ],
+        ], 'messenger');
+    }
+
     protected function getConfiguration(): ConfigurationInterface
     {
         return new Configuration();
