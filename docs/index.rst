@@ -35,6 +35,7 @@ As the infrastructure is not standard, the ``MediaBundle`` abstracts the
    reference/command_line
    reference/advanced_configuration
    reference/amazon_s3
+   reference/messenger
    reference/extra
    reference/api
    reference/troubleshooting
