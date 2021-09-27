@@ -47,6 +47,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('actions.xml');
         $loader->load('provider.xml');
         $loader->load('media.xml');
         $loader->load('twig.xml');
