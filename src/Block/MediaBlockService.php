@@ -37,22 +37,22 @@ use Twig\Environment;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class MediaBlockService extends AbstractBlockService implements EditableBlockService
+final class MediaBlockService extends AbstractBlockService implements EditableBlockService
 {
     /**
      * @var Pool
      */
-    protected $pool;
+    private $pool;
 
     /**
      * @var AdminInterface<MediaInterface>
      */
-    protected $mediaAdmin;
+    private $mediaAdmin;
 
     /**
      * @var ManagerInterface<MediaInterface>
      */
-    protected $mediaManager;
+    private $mediaManager;
 
     /**
      * @param AdminInterface<MediaInterface>   $mediaAdmin
@@ -148,10 +148,16 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
 
     public function load(BlockInterface $block): void
     {
-        $media = $block->getSetting('mediaId', null);
+        $mediaId = $block->getSetting('mediaId');
 
-        if (\is_int($media)) {
-            $media = $this->mediaManager->findOneBy(['id' => $media]);
+        if (null === $mediaId || $mediaId instanceof MediaInterface) {
+            return;
+        }
+
+        $media = $this->mediaManager->findOneBy(['id' => $mediaId]);
+
+        if (null === $media) {
+            return;
         }
 
         $block->setSetting('mediaId', $media);
@@ -186,7 +192,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
     /**
      * @return array<string, string>
      */
-    protected function getFormatChoices(?MediaInterface $media = null): array
+    private function getFormatChoices(?MediaInterface $media = null): array
     {
         if (!$media instanceof MediaInterface) {
             return [];
@@ -208,7 +214,7 @@ class MediaBlockService extends AbstractBlockService implements EditableBlockSer
         return $formatChoices;
     }
 
-    protected function getMediaBuilder(FormMapper $form): FormBuilderInterface
+    private function getMediaBuilder(FormMapper $form): FormBuilderInterface
     {
         $fieldDescription = $this->mediaAdmin->createFieldDescription('media', [
             'translation_domain' => 'SonataMediaBundle',

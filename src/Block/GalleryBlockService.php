@@ -183,10 +183,16 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
 
     public function load(BlockInterface $block): void
     {
-        $gallery = $block->getSetting('galleryId');
+        $galleryId = $block->getSetting('galleryId');
 
-        if (null !== $gallery) {
-            $gallery = $this->galleryManager->findOneBy(['id' => $gallery]);
+        if (null === $galleryId || $galleryId instanceof GalleryInterface) {
+            return;
+        }
+
+        $gallery = $this->galleryManager->findOneBy(['id' => $galleryId]);
+
+        if (null === $gallery) {
+            return;
         }
 
         $block->setSetting('galleryId', $gallery);
