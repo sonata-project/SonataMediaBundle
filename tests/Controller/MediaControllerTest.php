@@ -15,9 +15,9 @@ namespace Sonata\MediaBundle\Tests\Controller;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Controller\MediaController;
 use Sonata\MediaBundle\Model\Media;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
@@ -30,12 +30,30 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Twig\Environment;
 
+/**
+ * NEXT_MAJOR: Remove this class.
+ */
 class MediaControllerTest extends TestCase
 {
     /**
-     * @var Container
+     * @var MockObject&Pool
      */
-    protected $container;
+    protected $pool;
+
+    /**
+     * @var MockObject&MediaManagerInterface
+     */
+    protected $mediaManager;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var MockObject&Environment
+     */
+    protected $twig;
 
     /**
      * @var MediaController
@@ -44,53 +62,41 @@ class MediaControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->container = new Container();
+        $this->pool = $this->createMock(Pool::class);
+        $this->mediaManager = $this->createMock(MediaManagerInterface::class);
+        $this->request = new Request();
+        $this->twig = $this->createMock(Environment::class);
+
+        $requestStack = new RequestStack();
+        $requestStack->push($this->request);
+
+        $container = new Container();
+        $container->set('sonata.media.pool', $this->pool);
+        $container->set('sonata.media.manager.media', $this->mediaManager);
+        $container->set('request_stack', $requestStack);
+        $container->set('twig', $this->twig);
 
         $this->controller = new MediaController();
-        $this->controller->setContainer($this->container);
+        $this->controller->setContainer($container);
     }
 
-    public function testDownloadActionWithNotFoundMedia(): void
-    {
-        $this->expectException(NotFoundHttpException::class);
-
-        $this->configureGetMedia(1, null);
-
-        $this->controller->downloadAction(1);
-    }
-
-    public function testDownloadActionAccessDenied(): void
-    {
-        $this->expectException(AccessDeniedException::class);
-
-        $request = $this->createStub(Request::class);
-        $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
-
-        $this->configureGetCurrentRequest($request);
-        $this->configureGetMedia(1, $media);
-        $this->configureDownloadSecurity($pool, $media, $request, false);
-        $this->container->set('sonata.media.pool', $pool);
-
-        $this->controller->downloadAction(1);
-    }
-
+    /**
+     * NEXT_MAJOR: Remove this test.
+     *
+     * @group legacy
+     */
     public function testDownloadActionBinaryFile(): void
     {
         $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
-        $provider = $this->createStub(MediaProviderInterface::class);
-        $request = $this->createStub(Request::class);
+        $provider = $this->createMock(MediaProviderInterface::class);
         $response = $this->createMock(BinaryFileResponse::class);
 
         $this->configureGetMedia(1, $media);
-        $this->configureDownloadSecurity($pool, $media, $request, true);
-        $this->configureGetProvider($pool, $media, $provider);
-        $this->configureGetCurrentRequest($request);
-        $this->container->set('sonata.media.pool', $pool);
-        $pool->method('getDownloadMode')->with($media)->willReturn('mode');
+        $this->configureDownloadStrategy($media, true);
+        $this->configureGetProvider($media, $provider);
+        $this->pool->method('getDownloadMode')->with($media)->willReturn('mode');
         $provider->method('getDownloadResponse')->with($media, 'format', 'mode')->willReturn($response);
-        $response->expects(static::once())->method('prepare')->with($request);
+        $response->expects(static::once())->method('prepare')->with($this->request);
 
         $result = $this->controller->downloadAction(1, 'format');
 
@@ -121,13 +127,9 @@ class MediaControllerTest extends TestCase
         $this->expectException(AccessDeniedException::class);
 
         $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
-        $request = $this->createStub(Request::class);
 
         $this->configureGetMedia(1, $media);
-        $this->configureGetCurrentRequest($request);
-        $this->configureDownloadSecurity($pool, $media, $request, false);
-        $this->container->set('sonata.media.pool', $pool);
+        $this->configureDownloadStrategy($media, false);
 
         $this->controller->viewAction(1);
     }
@@ -140,20 +142,16 @@ class MediaControllerTest extends TestCase
     public function testViewActionRendersView(): void
     {
         $media = $this->createStub(Media::class);
-        $pool = $this->createStub(Pool::class);
-        $request = $this->createStub(Request::class);
 
         $this->configureGetMedia(1, $media);
-        $this->configureGetCurrentRequest($request);
-        $this->configureDownloadSecurity($pool, $media, $request, true);
+        $this->configureDownloadStrategy($media, true);
         $this->configureRender('@SonataMedia/Media/view.html.twig', [
             'media' => $media,
             'formats' => ['format'],
             'format' => 'format',
         ], 'renderResponse');
-        $this->container->set('sonata.media.pool', $pool);
         $media->method('getContext')->willReturn('context');
-        $pool->method('getFormatNamesByContext')->with('context')->willReturn(['format']);
+        $this->pool->method('getFormatNamesByContext')->with('context')->willReturn(['format']);
 
         $response = $this->controller->viewAction(1, 'format');
 
@@ -161,41 +159,28 @@ class MediaControllerTest extends TestCase
         static::assertSame('renderResponse', $response->getContent());
     }
 
-    private function configureDownloadSecurity(
-        MockObject $pool,
+    private function configureDownloadStrategy(
         Media $media,
-        Request $request,
         bool $isGranted
     ): void {
-        $strategy = $this->createStub(DownloadStrategyInterface::class);
+        $strategy = $this->createMock(DownloadStrategyInterface::class);
 
-        $pool->method('getDownloadSecurity')->with($media)->willReturn($strategy);
-        $strategy->method('isGranted')->with($media, $request)->willReturn($isGranted);
+        $this->pool->method('getDownloadStrategy')->with($media)->willReturn($strategy);
+        $this->pool->method('getDownloadSecurity')->with($media)->willReturn($strategy);
+        $strategy->method('isGranted')->with($media, $this->request)->willReturn($isGranted);
     }
 
     private function configureGetMedia(int $id, ?Media $media): void
     {
-        $mediaManager = $this->createStub(BaseEntityManager::class);
-
-        $this->container->set('sonata.media.manager.media', $mediaManager);
-        $mediaManager->method('find')->with($id)->willReturn($media);
+        $this->mediaManager->method('find')->with($id)->willReturn($media);
     }
 
     private function configureGetProvider(
-        MockObject $pool,
         MockObject $media,
         MediaProviderInterface $provider
     ): void {
-        $pool->method('getProvider')->with('provider')->willReturn($provider);
+        $this->pool->method('getProvider')->with('provider')->willReturn($provider);
         $media->method('getProviderName')->willReturn('provider');
-    }
-
-    private function configureGetCurrentRequest(Request $request): void
-    {
-        $requestStack = $this->createStub(RequestStack::class);
-
-        $this->container->set('request_stack', $requestStack);
-        $requestStack->method('getCurrentRequest')->willReturn($request);
     }
 
     private function configureRender(
@@ -203,11 +188,9 @@ class MediaControllerTest extends TestCase
         array $data,
         string $rendered
     ): void {
-        $twig = $this->createStub(Environment::class);
         $response = $this->createStub(Response::class);
 
-        $this->container->set('twig', $twig);
         $response->method('getContent')->willReturn($rendered);
-        $twig->method('render')->with($template, $data)->willReturn($rendered);
+        $this->twig->method('render')->with($template, $data)->willReturn($rendered);
     }
 }
