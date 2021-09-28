@@ -27,6 +27,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -173,6 +174,10 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         $this->configureProviders($container, $config);
         $this->configureAdapters($container, $config);
         $this->configureResizers($container, $config);
+
+        if ($this->isConfigEnabled($container, $config['messenger'])) {
+            $this->registerMessengerConfiguration($container, $config['messenger'], $loader);
+        }
     }
 
     public function configureProviders(ContainerBuilder $container, array $config)
@@ -662,5 +667,21 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
         $container->setAlias('sonata.media.http.client', $config['http']['client']);
         $container->setAlias('sonata.media.http.message_factory', $config['http']['message_factory']);
+    }
+
+    /**
+     * @param array<string, string> $config
+     *
+     * @phpstan-param array{generate_thumbnails_bus: string} $config
+     */
+    private function registerMessengerConfiguration(ContainerBuilder $container, array $config, XmlFileLoader $loader): void
+    {
+        if (!interface_exists(MessageBusInterface::class)) {
+            throw new \LogicException('Messenger support cannot be enabled as the Messenger component is not installed. Try running "composer require symfony/messenger".');
+        }
+
+        $loader->load('messenger.xml');
+
+        $container->setAlias('sonata.media.messenger.generate_thumbnails_bus', $config['generate_thumbnails_bus']);
     }
 }

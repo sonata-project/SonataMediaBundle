@@ -81,6 +81,7 @@ class Configuration implements ConfigurationInterface
         $this->addHttpClientSection($node);
         $this->addResizerSection($node);
         $this->addAdapterSection($node);
+        $this->addMessengerSection($node);
 
         return $treeBuilder;
     }
@@ -560,6 +561,20 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('default')->defaultValue('sonata.media.adapter.image.gd')->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function addMessengerSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('messenger')
+                    ->canBeEnabled()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('generate_thumbnails_bus')->isRequired()->defaultValue('messenger.default_bus')->end()
                     ->end()
                 ->end()
             ->end();

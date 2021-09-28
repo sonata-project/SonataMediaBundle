@@ -174,6 +174,10 @@ Full configuration options:
             nyholm.psr7.psr17_factory:
                 class: Nyholm\Psr7\Factory\Psr17Factory
 
+        messenger:
+            enabled: false
+            generate_thumbnails_bus: messenger.default_bus
+
     jms_serializer:
         metadata:
             directories:
