@@ -22,10 +22,10 @@ use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -52,19 +52,18 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     private $galleryAdmin;
 
     /**
-     * @var ManagerInterface<GalleryInterface>
+     * @var GalleryManagerInterface
      */
     private $galleryManager;
 
     /**
-     * @param AdminInterface<GalleryInterface>   $galleryAdmin
-     * @param ManagerInterface<GalleryInterface> $galleryManager
+     * @param AdminInterface<GalleryInterface> $galleryAdmin
      */
     public function __construct(
         Environment $twig,
         Pool $pool,
         AdminInterface $galleryAdmin,
-        ManagerInterface $galleryManager
+        GalleryManagerInterface $galleryManager
     ) {
         parent::__construct($twig);
 
@@ -183,10 +182,16 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
 
     public function load(BlockInterface $block): void
     {
-        $gallery = $block->getSetting('galleryId');
+        $galleryId = $block->getSetting('galleryId');
 
-        if (null !== $gallery) {
-            $gallery = $this->galleryManager->findOneBy(['id' => $gallery]);
+        if (null === $galleryId || $galleryId instanceof GalleryInterface) {
+            return;
+        }
+
+        $gallery = $this->galleryManager->findOneBy(['id' => $galleryId]);
+
+        if (null === $gallery) {
+            return;
         }
 
         $block->setSetting('galleryId', $gallery);

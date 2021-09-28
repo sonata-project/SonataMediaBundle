@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Twig\Extension;
 
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
@@ -36,7 +36,7 @@ final class MediaExtension extends AbstractExtension
     private $resources = [];
 
     /**
-     * @var ManagerInterface<MediaInterface>
+     * @var MediaManagerInterface
      */
     private $mediaManager;
 
@@ -46,11 +46,9 @@ final class MediaExtension extends AbstractExtension
     private $twig;
 
     /**
-     * @param ManagerInterface<MediaInterface> $mediaManager
-     *
      * @internal This class should only be used through Twig
      */
-    public function __construct(Pool $mediaPool, ManagerInterface $mediaManager, Environment $twig)
+    public function __construct(Pool $mediaPool, MediaManagerInterface $mediaManager, Environment $twig)
     {
         $this->mediaPool = $mediaPool;
         $this->mediaManager = $mediaManager;

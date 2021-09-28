@@ -15,9 +15,9 @@ namespace Sonata\MediaBundle\Tests\Twig\Extension;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
@@ -101,11 +101,11 @@ class MediaExtensionTest extends TestCase
     }
 
     /**
-     * @return MockObject&ManagerInterface<MediaInterface>
+     * @return MockObject&MediaManagerInterface
      */
     public function getMediaManager(): object
     {
-        return $this->createMock(ManagerInterface::class);
+        return $this->createMock(MediaManagerInterface::class);
     }
 
     /**

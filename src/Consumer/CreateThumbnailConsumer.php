@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Consumer;
 
-use Sonata\Doctrine\Model\ManagerInterface;
-use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Thumbnail\GenerableThumbnailInterface;
 use Sonata\NotificationBundle\Consumer\ConsumerEvent;
@@ -25,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class CreateThumbnailConsumer implements ConsumerInterface
 {
     /**
-     * @var ManagerInterface<MediaInterface>
+     * @var MediaManagerInterface
      */
     private $mediaManager;
 
@@ -39,10 +38,7 @@ final class CreateThumbnailConsumer implements ConsumerInterface
      */
     private $container;
 
-    /**
-     * @param ManagerInterface<MediaInterface> $mediaManager
-     */
-    public function __construct(ManagerInterface $mediaManager, Pool $pool, ContainerInterface $container)
+    public function __construct(MediaManagerInterface $mediaManager, Pool $pool, ContainerInterface $container)
     {
         $this->mediaManager = $mediaManager;
         $this->pool = $pool;

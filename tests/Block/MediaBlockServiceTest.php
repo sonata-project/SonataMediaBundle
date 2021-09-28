@@ -18,9 +18,9 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Block\MediaBlockService;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
 class MediaBlockServiceTest extends BlockServiceTestCase
@@ -45,7 +45,7 @@ class MediaBlockServiceTest extends BlockServiceTestCase
             $this->twig,
             $this->pool,
             $this->createStub(AdminInterface::class),
-            $this->createStub(ManagerInterface::class)
+            $this->createStub(MediaManagerInterface::class)
         );
     }
 
