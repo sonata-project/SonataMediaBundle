@@ -22,10 +22,10 @@ use Sonata\BlockBundle\Form\Mapper\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -51,19 +51,18 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
     private $mediaAdmin;
 
     /**
-     * @var ManagerInterface<MediaInterface>
+     * @var MediaManagerInterface
      */
     private $mediaManager;
 
     /**
-     * @param AdminInterface<MediaInterface>   $mediaAdmin
-     * @param ManagerInterface<MediaInterface> $mediaManager
+     * @param AdminInterface<MediaInterface> $mediaAdmin
      */
     public function __construct(
         Environment $twig,
         Pool $pool,
         AdminInterface $mediaAdmin,
-        ManagerInterface $mediaManager
+        MediaManagerInterface $mediaManager
     ) {
         parent::__construct($twig);
 

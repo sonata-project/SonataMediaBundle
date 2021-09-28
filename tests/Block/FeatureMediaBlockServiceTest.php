@@ -15,8 +15,8 @@ namespace Sonata\MediaBundle\Tests\Block;
 
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Block\FeatureMediaBlockService;
+use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
 class FeatureMediaBlockServiceTest extends BlockServiceTestCase
@@ -34,7 +34,7 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
             $this->twig,
             new Pool('default'),
             $this->createStub(AdminInterface::class),
-            $this->createStub(ManagerInterface::class)
+            $this->createStub(MediaManagerInterface::class)
         );
     }
 

@@ -18,9 +18,9 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
-use Sonata\Doctrine\Model\ManagerInterface;
 use Sonata\MediaBundle\Block\GalleryBlockService;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryBlockServiceTest extends BlockServiceTestCase
@@ -38,7 +38,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
             $this->twig,
             new Pool('default'),
             $this->createStub(AdminInterface::class),
-            $this->createStub(ManagerInterface::class)
+            $this->createStub(GalleryManagerInterface::class)
         );
     }
 
