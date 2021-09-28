@@ -45,4 +45,26 @@ To handle async messages, make sure you configure messenger with an async transp
             routing:
                 'Sonata\MediaBundle\Messenger\GenerateThumbnailsMessage': async
 
+You can also change the default bus for generate thumbnails:
+
+.. code-block:: yaml
+
+    # config/packages/sonata_media.yaml
+
+    sonata_media:
+        messenger:
+            enabled: true
+            generate_thumbnails_bus: my.defined.bus
+
+I which case, make sure you define that bus on messenger configuration:
+
+.. code-block:: yaml
+
+    # config/packages/messenger.yaml
+
+    framework:
+        messenger:
+            buses:
+                my.defined.bus:
+
 .. _`Symfony Messenger`: https://symfony.com/doc/current/messenger.html

@@ -672,7 +672,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
     /**
      * @param array<string, string> $config
      *
-     * @phpstan-param array{bus: string} $config
+     * @phpstan-param array{generate_thumbnails_bus: string} $config
      */
     private function registerMessengerConfiguration(ContainerBuilder $container, array $config, XmlFileLoader $loader): void
     {
@@ -682,6 +682,6 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
         $loader->load('messenger.xml');
 
-        $container->setAlias('sonata.media.messenger.bus', $config['bus']);
+        $container->setAlias('sonata.media.messenger.generate_thumbnails_bus', $config['generate_thumbnails_bus']);
     }
 }

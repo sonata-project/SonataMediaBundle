@@ -574,7 +574,7 @@ class Configuration implements ConfigurationInterface
                     ->canBeEnabled()
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('bus')->isRequired()->defaultValue('messenger.default_bus')->end()
+                        ->scalarNode('generate_thumbnails_bus')->isRequired()->defaultValue('messenger.default_bus')->end()
                     ->end()
                 ->end()
             ->end();

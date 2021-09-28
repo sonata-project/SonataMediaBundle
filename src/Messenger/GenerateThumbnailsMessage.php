@@ -15,16 +15,18 @@ namespace Sonata\MediaBundle\Messenger;
 
 /**
  * @author Jordi Sala Morales <jordism91@gmail.com>
+ *
+ * @psalm-pure
  */
 final class GenerateThumbnailsMessage
 {
     /**
-     * @var int|string|null
+     * @var int|string
      */
     private $mediaId;
 
     /**
-     * @param int|string|null $mediaId
+     * @param int|string $mediaId
      */
     public function __construct($mediaId)
     {
@@ -32,7 +34,7 @@ final class GenerateThumbnailsMessage
     }
 
     /**
-     * @return int|string|null
+     * @return int|string
      */
     public function getMediaId()
     {

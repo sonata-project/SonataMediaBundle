@@ -51,7 +51,7 @@ class ConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals([], [
             'messenger' => [
                 'enabled' => false,
-                'bus' => 'messenger.default_bus',
+                'generate_thumbnails_bus' => 'messenger.default_bus',
             ],
         ], 'messenger');
     }
