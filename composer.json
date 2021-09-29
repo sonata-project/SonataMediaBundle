@@ -12,7 +12,7 @@
         "file",
         "upload"
     ],
-    "homepage": "https://sonata-project.org/bundles/media",
+    "homepage": "https://docs.sonata-project.org/projects/SonataMediaBundle",
     "license": "MIT",
     "authors": [
         {
