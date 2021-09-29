@@ -76,6 +76,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             }
         }
 
+        // NEXT_MAJOR: Remove this condition and remove all configuration files related to this.
         if (isset($bundles['SonataNotificationBundle'])) {
             $loader->load('consumer.xml');
         }

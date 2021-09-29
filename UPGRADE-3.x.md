@@ -4,6 +4,12 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Deprecate Async processing with SonataNotificationBundle
+
+Integration with SonataNotificationBundle is deprecated. It was used for async processing of thumbnail generation.
+
+You can use the new integration with [Symfony Messenger](https://symfony.com/doc/current/messenger.html) instead.
+
 ### Deprecate API
 
 Integration with FOSRest, JMS Serializer and Nelmio Api Docs is deprecated, the ReST API provided with this bundle will be removed on 4.0.
