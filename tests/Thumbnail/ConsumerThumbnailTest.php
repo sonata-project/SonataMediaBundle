@@ -21,6 +21,11 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Sonata\NotificationBundle\Backend\BackendInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * NEXT_MAJOR: Remove this class.
+ *
+ * @group legacy
+ */
 class ConsumerThumbnailTest extends TestCase
 {
     public function testGenerateDispatchesEvents(): void
