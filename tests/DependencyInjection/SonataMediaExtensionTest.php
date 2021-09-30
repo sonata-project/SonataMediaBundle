@@ -21,8 +21,12 @@ use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
+use Sonata\MediaBundle\Messenger\GenerateThumbnailsHandler;
+use Sonata\MediaBundle\Model\CategoryManager;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
+use Sonata\MediaBundle\Thumbnail\MessengerThumbnail;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
@@ -344,6 +348,28 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
         static::assertNull($this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getFactory());
         $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront', CloudFrontVersion3::class);
+    }
+
+    public function testMessengerEnabled(): void
+    {
+        $this->load([
+            'messenger' => [
+                'enabled' => true,
+                'generate_thumbnails_bus' => 'my.custom.bus',
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasService('sonata.media.messenger.generate_thumbnails', GenerateThumbnailsHandler::class);
+        $this->assertContainerBuilderHasService('sonata.media.thumbnail.messenger', MessengerThumbnail::class);
+        $this->assertContainerBuilderHasAlias('sonata.media.messenger.generate_thumbnails_bus', 'my.custom.bus');
+    }
+
+    public function testMessengerDisabled(): void
+    {
+        $this->load([]);
+
+        $this->assertContainerBuilderNotHasService('sonata.media.messenger.generate_thumbnails');
+        $this->assertContainerBuilderNotHasService('sonata.media.thumbnail.messenger');
     }
 
     /**

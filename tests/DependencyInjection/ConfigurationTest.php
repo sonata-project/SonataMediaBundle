@@ -13,42 +13,51 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
+use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\DependencyInjection\Configuration;
-use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @var array<string, mixed>
-     */
-    private $config;
+    use ConfigurationTestCaseTrait;
 
-    protected function setUp(): void
+    public function testMinimalConfigurationRequired(): void
     {
-        $configs = [
+        $this->assertConfigurationIsInvalid([]);
+        $this->assertConfigurationIsValid([
             'sonata_media' => [
-                'db_driver' => 'doctrine_orm',
                 'default_context' => 'default',
-                'http' => [
-                    'client' => 'sonata.media.http.base_client',
-                    'message_factory' => 'sonata.media.http.base_message_factory',
-                ],
             ],
-        ];
-        $processor = new Processor();
-        $configuration = new Configuration();
-        $this->config = $processor->processConfiguration($configuration, $configs);
+        ]);
     }
 
-    public function testProcess(): void
+    public function testDefaultAdapter(): void
     {
-        static::assertArrayHasKey('resizers', $this->config);
-        static::assertArrayHasKey('default', $this->config['resizers']);
-        static::assertSame('sonata.media.resizer.simple', $this->config['resizers']['default']);
+        $this->assertProcessedConfigurationEquals([], [
+            'adapters' => ['default' => 'sonata.media.adapter.image.gd'],
+        ], 'adapters');
+    }
 
-        static::assertArrayHasKey('adapters', $this->config);
-        static::assertArrayHasKey('default', $this->config['adapters']);
-        static::assertSame('sonata.media.adapter.image.gd', $this->config['adapters']['default']);
+    public function testDefaultResizer(): void
+    {
+        $this->assertProcessedConfigurationEquals([], [
+            'resizers' => ['default' => 'sonata.media.resizer.simple'],
+        ], 'resizers');
+    }
+
+    public function testMessengerConfiguration(): void
+    {
+        $this->assertProcessedConfigurationEquals([], [
+            'messenger' => [
+                'enabled' => false,
+                'generate_thumbnails_bus' => 'messenger.default_bus',
+            ],
+        ], 'messenger');
+    }
+
+    protected function getConfiguration(): ConfigurationInterface
+    {
+        return new Configuration();
     }
 }

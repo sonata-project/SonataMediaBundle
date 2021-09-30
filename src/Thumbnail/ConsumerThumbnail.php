@@ -18,6 +18,11 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\NotificationBundle\Backend\BackendInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * NEXT_MAJOR: remove this file.
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+ */
 final class ConsumerThumbnail implements ThumbnailInterface, GenerableThumbnailInterface
 {
     /**
