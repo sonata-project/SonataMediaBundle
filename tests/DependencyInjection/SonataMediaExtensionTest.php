@@ -22,11 +22,9 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Sonata\MediaBundle\Messenger\GenerateThumbnailsHandler;
-use Sonata\MediaBundle\Model\CategoryManager;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 use Sonata\MediaBundle\Thumbnail\MessengerThumbnail;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 

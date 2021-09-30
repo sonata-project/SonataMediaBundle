@@ -491,6 +491,11 @@ final class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
     private function addMessengerSection(ArrayNodeDefinition $node): void
     {
         $node

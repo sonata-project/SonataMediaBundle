@@ -21,7 +21,7 @@ use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Sonata\MediaBundle\Thumbnail\GenerableThumbnailInterface;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 
 /**
@@ -30,7 +30,7 @@ use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 final class GenerateThumbnailsHandlerTest extends TestCase
 {
     /**
-     * @var MockObject&ThumbnailInterface
+     * @var MockObject&GenerableThumbnailInterface
      */
     private $thumbnail;
 
@@ -40,7 +40,7 @@ final class GenerateThumbnailsHandlerTest extends TestCase
     private $mediaManager;
 
     /**
-     * @var MockObject&Pool
+     * @var Pool
      */
     private $pool;
 
@@ -51,9 +51,9 @@ final class GenerateThumbnailsHandlerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->thumbnail = $this->createMock(ThumbnailInterface::class);
+        $this->thumbnail = $this->createMock(GenerableThumbnailInterface::class);
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
-        $this->pool = $this->createMock(Pool::class);
+        $this->pool = new Pool('default_context');
 
         $this->handler = new GenerateThumbnailsHandler($this->thumbnail, $this->mediaManager, $this->pool);
     }
@@ -82,7 +82,6 @@ final class GenerateThumbnailsHandlerTest extends TestCase
         $media->setProviderName('provider_name');
 
         $this->mediaManager->method('find')->with(25)->willReturn($media);
-        $this->pool->method('getProvider')->with('provider_name')->willThrowException(new \InvalidArgumentException());
 
         $this->expectException(UnrecoverableMessageHandlingException::class);
         $this->expectExceptionMessage('Provider "provider_name" not found.');
@@ -102,9 +101,8 @@ final class GenerateThumbnailsHandlerTest extends TestCase
 
         $provider = $this->createStub(MediaProviderInterface::class);
 
+        $this->pool->addProvider('provider_name', $provider);
         $this->mediaManager->method('find')->with($id)->willReturn($media);
-        $this->pool->method('getProvider')->with('provider_name')
-            ->willReturn($provider);
 
         $this->thumbnail->expects(static::once())->method('generate')->with($provider, $media);
 

@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class MessengerThumbnail implements ThumbnailInterface
+final class MessengerThumbnail implements ThumbnailInterface, GenerableThumbnailInterface
 {
     /**
      * @var ThumbnailInterface
@@ -36,17 +36,17 @@ final class MessengerThumbnail implements ThumbnailInterface
         $this->bus = $bus;
     }
 
-    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         return $this->thumbnail->generatePublicUrl($provider, $media, $format);
     }
 
-    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         return $this->thumbnail->generatePrivateUrl($provider, $media, $format);
     }
 
-    public function generate(MediaProviderInterface $provider, MediaInterface $media)
+    public function generate(MediaProviderInterface $provider, MediaInterface $media): void
     {
         $mediaId = $media->getId();
 
@@ -57,8 +57,10 @@ final class MessengerThumbnail implements ThumbnailInterface
         $this->bus->dispatch(new GenerateThumbnailsMessage($mediaId));
     }
 
-    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
+    public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null): void
     {
-        return $this->thumbnail->delete($provider, $media, $formats);
+        if ($this->thumbnail instanceof GenerableThumbnailInterface) {
+            $this->thumbnail->delete($provider, $media, $formats);
+        }
     }
 }

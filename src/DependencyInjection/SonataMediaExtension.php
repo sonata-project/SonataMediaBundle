@@ -57,11 +57,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $bundles = $container->getParameter('kernel.bundles');
         \assert(\is_array($bundles));
 
-        // NEXT_MAJOR: Remove this condition and remove all configuration files related to this.
-        if (isset($bundles['SonataNotificationBundle'])) {
-            $loader->load('consumers.php');
-        }
-
         if (isset($bundles['SonataBlockBundle'])) {
             $loader->load('block.php');
         }
@@ -458,13 +453,13 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
      *
      * @phpstan-param array{generate_thumbnails_bus: string} $config
      */
-    private function registerMessengerConfiguration(ContainerBuilder $container, array $config, XmlFileLoader $loader): void
+    private function registerMessengerConfiguration(ContainerBuilder $container, array $config, PhpFileLoader $loader): void
     {
         if (!interface_exists(MessageBusInterface::class)) {
             throw new \LogicException('Messenger support cannot be enabled as the Messenger component is not installed. Try running "composer require symfony/messenger".');
         }
 
-        $loader->load('messenger.xml');
+        $loader->load('messenger.php');
 
         $container->setAlias('sonata.media.messenger.generate_thumbnails_bus', $config['generate_thumbnails_bus']);
     }

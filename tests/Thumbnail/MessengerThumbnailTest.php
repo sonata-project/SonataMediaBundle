@@ -17,8 +17,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
+use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Sonata\MediaBundle\Thumbnail\MessengerThumbnail;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -28,7 +28,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final class MessengerThumbnailTest extends TestCase
 {
     /**
-     * @var MockObject&ThumbnailInterface
+     * @var FormatThumbnail
      */
     private $innerThumbnail;
 
@@ -44,7 +44,7 @@ final class MessengerThumbnailTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->innerThumbnail = $this->createMock(ThumbnailInterface::class);
+        $this->innerThumbnail = new FormatThumbnail('foo');
         $this->bus = $this->createMock(MessageBusInterface::class);
 
         $this->thumbnail = new MessengerThumbnail($this->innerThumbnail, $this->bus);
@@ -52,28 +52,30 @@ final class MessengerThumbnailTest extends TestCase
 
     public function testGeneratePublicUrl(): void
     {
-        $this->innerThumbnail->expects(static::once())->method('generatePublicUrl')->willReturn('public_url');
+        $media = new Media();
+        $media->setId(25);
 
         $publicUrl = $this->thumbnail->generatePublicUrl(
             $this->createStub(MediaProviderInterface::class),
-            new Media(),
+            $media,
             'format'
         );
 
-        static::assertSame('public_url', $publicUrl);
+        static::assertSame('/thumb_25_format.foo', $publicUrl);
     }
 
     public function testGeneratePrivateUrl(): void
     {
-        $this->innerThumbnail->expects(static::once())->method('generatePrivateUrl')->willReturn('private_url');
+        $media = new Media();
+        $media->setId(25);
 
         $publicUrl = $this->thumbnail->generatePrivateUrl(
             $this->createStub(MediaProviderInterface::class),
-            new Media(),
+            $media,
             'format'
         );
 
-        static::assertSame('private_url', $publicUrl);
+        static::assertSame('/thumb_25_format.foo', $publicUrl);
     }
 
     public function testGenerateThumbnailsWithoutId(): void
@@ -100,16 +102,15 @@ final class MessengerThumbnailTest extends TestCase
         );
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testDeleteThumbnails(): void
     {
-        $this->innerThumbnail->expects(static::once())->method('delete')->willReturn('private_url');
-
-        $publicUrl = $this->thumbnail->delete(
+        $this->thumbnail->delete(
             $this->createStub(MediaProviderInterface::class),
             new Media(),
             'format'
         );
-
-        static::assertSame('private_url', $publicUrl);
     }
 }

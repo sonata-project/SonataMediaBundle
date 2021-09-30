@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Messenger;
 
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
-use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Sonata\MediaBundle\Thumbnail\GenerableThumbnailInterface;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -25,7 +25,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class GenerateThumbnailsHandler implements MessageHandlerInterface
 {
     /**
-     * @var ThumbnailInterface
+     * @var GenerableThumbnailInterface
      */
     private $thumbnail;
 
@@ -40,7 +40,7 @@ final class GenerateThumbnailsHandler implements MessageHandlerInterface
     private $pool;
 
     public function __construct(
-        ThumbnailInterface $thumbnail,
+        GenerableThumbnailInterface $thumbnail,
         MediaManagerInterface $mediaManager,
         Pool $pool
     ) {

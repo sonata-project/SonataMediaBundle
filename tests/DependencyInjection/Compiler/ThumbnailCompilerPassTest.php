@@ -15,8 +15,8 @@ namespace Sonata\MediaBundle\Tests\DependencyInjection\Compiler;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\DependencyInjection\Compiler\ThumbnailCompilerPass;
-use Sonata\MediaBundle\Thumbnail\ConsumerThumbnail;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Sonata\MediaBundle\Thumbnail\MessengerThumbnail;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -47,7 +47,7 @@ final class ThumbnailCompilerPassTest extends TestCase
     public function processProvider(): iterable
     {
         yield [true, FormatThumbnail::class];
-        yield [false, ConsumerThumbnail::class];
+        yield [false, MessengerThumbnail::class];
         yield [true, '%foo%', new ParameterBag(['foo' => FormatThumbnail::class])];
         yield [false, '%bar%', new ParameterBag(['bar' => TestUncallableAddResizerMethod::class])];
     }

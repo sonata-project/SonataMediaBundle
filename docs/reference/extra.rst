@@ -3,30 +3,6 @@ Extra
 
 The SonataMediaBundle provides some integration with externals bundles.
 
-Sonata Notification Bundle Integration
---------------------------------------
-
-The bundle provides a specific consumer to generate thumbnails through an asynchronous task. So there no processing
-time for the user after uploading a file.
-
-In order to use this feature, you need to install the Sonata Notification Bundle and change the thumbnail configuration
-for each provider:
-
-.. code-block:: yaml
-
-    # config/packages/sonata_media.yaml
-
-    sonata_media:
-        providers:
-            image:
-                thumbnail:  sonata.media.thumbnail.consumer.format
-            vimeo:
-                thumbnail:  sonata.media.thumbnail.consumer.format
-            youtube:
-                thumbnail:  sonata.media.thumbnail.consumer.format
-            dailymotion:
-                thumbnail:  sonata.media.thumbnail.consumer.format
-
 Liip Imagine Bundle Integration
 -------------------------------
 

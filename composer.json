@@ -71,8 +71,7 @@
         "sonata-project/admin-bundle": "<4.0",
         "sonata-project/block-bundle": "<4.0",
         "sonata-project/classification-bundle": "<4.0",
-        "sonata-project/doctrine-orm-admin-bundle": "<4.0",
-        "sonata-project/notification-bundle": "<4.0"
+        "sonata-project/doctrine-orm-admin-bundle": "<4.0"
     },
     "require-dev": {
         "aws/aws-sdk-php": "^3.0",
@@ -94,7 +93,6 @@
         "sonata-project/block-bundle": "^4.0",
         "sonata-project/classification-bundle": "^4.0@dev",
         "sonata-project/doctrine-orm-admin-bundle": "^4.0",
-        "sonata-project/notification-bundle": "^4.0@dev",
         "symfony/browser-kit": "^4.4 || ^5.3",
         "symfony/messenger": "^4.4 || ^5.3",
         "symfony/phpunit-bridge": "^5.3",
@@ -105,7 +103,6 @@
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...).",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities.",
-        "sonata-project/notification-bundle": "If you want to generate thumbnails asynchronously.",
         "symfony/messenger": "If you want to generate thumbnails asynchronously.",
         "twig/extra-bundle": "Auto configures the Twig Intl extension."
     },

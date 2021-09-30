@@ -11,9 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Psr\Container\ContainerInterface;
-use Sonata\MediaBundle\Controller\GalleryAdminController;
-use Sonata\MediaBundle\Controller\MediaAdminController;
+use Sonata\MediaBundle\Action\MediaDownloadAction;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -21,13 +19,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $containerConfigurator->services()
 
-        ->set('sonata.media.controller.media.admin', MediaAdminController::class)
+        ->set('sonata.media.action.media_download', MediaDownloadAction::class)
             ->public()
-            ->tag('container.service_subscriber')
-            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
-
-        ->set('sonata.media.controller.gallery.admin', GalleryAdminController::class)
-            ->public()
-            ->tag('container.service_subscriber')
-            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
+            ->args([
+                new ReferenceConfigurator('sonata.media.manager.media'),
+                new ReferenceConfigurator('sonata.media.pool'),
+            ]);
 };
