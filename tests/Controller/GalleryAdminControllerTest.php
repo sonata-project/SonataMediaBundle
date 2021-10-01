@@ -83,11 +83,6 @@ class GalleryAdminControllerTest extends TestCase
         $this->controller->configureAdmin($this->request);
     }
 
-    public function testItIsInstantiable(): void
-    {
-        static::assertNotNull($this->controller);
-    }
-
     public function testListAction(): void
     {
         $datagrid = $this->createMock(DatagridInterface::class);

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.7.3@38c452ae584467e939d55377aaf83b5a26f19dd1">
-    <file src="src/Consumer/CreateThumbnailConsumer.php">
-        <ContainerDependency occurrences="1">
-            <code>ContainerInterface $container</code>
-        </ContainerDependency>
-    </file>
-</files>

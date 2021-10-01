@@ -51,11 +51,6 @@ final class SyncThumbsCommand extends Command
     private $quiet = false;
 
     /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    /**
      * @internal This class should only be used through the console
      */
     public function __construct(Pool $mediaPool, MediaManagerInterface $mediaManager)
@@ -81,30 +76,10 @@ final class SyncThumbsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $helper = $this->getHelper('question');
-
-        $providerName = $input->getArgument('providerName');
-        if (null === $providerName) {
-            $providers = array_keys($this->mediaPool->getProviders());
-            $question = new ChoiceQuestion('Please select the provider', $providers, 0);
-            $question->setErrorMessage('Provider %s is invalid.');
-
-            $providerName = $helper->ask($input, $output, $question);
-        }
-
-        $context = $input->getArgument('context');
-        if (null === $context) {
-            $contexts = array_keys($this->mediaPool->getContexts());
-            $question = new ChoiceQuestion('Please select the context', $contexts, 0);
-            $question->setErrorMessage('Context %s is invalid.');
-
-            $context = $helper->ask($input, $output, $question);
-        }
-
         $this->quiet = $input->getOption('quiet');
-        $this->output = $output;
 
-        $provider = $this->mediaPool->getProvider($providerName);
+        $provider = $this->getProvider($input, $output);
+        $context = $this->getContext($input, $output);
 
         $filesystem = $provider->getFilesystem();
         $fsReflection = new \ReflectionClass($filesystem);
@@ -124,7 +99,7 @@ final class SyncThumbsCommand extends Command
                 $batchOffset = $startOffset + ($batchCounter - 1) * $batchSize;
                 $medias = $this->mediaManager->findBy(
                     [
-                        'providerName' => $providerName,
+                        'providerName' => $provider->getName(),
                         'context' => $context,
                     ],
                     [
@@ -134,7 +109,7 @@ final class SyncThumbsCommand extends Command
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log(sprintf('Error: %s', $e->getMessage()));
+                $this->log($output, sprintf('Error: %s', $e->getMessage()));
 
                 break;
             }
@@ -145,17 +120,17 @@ final class SyncThumbsCommand extends Command
             }
 
             $totalMediasCount += $batchMediasCount;
-            $this->log(sprintf(
+            $this->log($output, sprintf(
                 'Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)',
                 $batchMediasCount,
                 $batchCounter,
                 $batchOffset,
-                $providerName,
+                $provider->getName(),
                 $context
             ));
 
             foreach ($medias as $media) {
-                if (!$this->processMedia($media, $provider)) {
+                if (!$this->processMedia($output, $media, $provider)) {
                     continue;
                 }
 
@@ -173,14 +148,14 @@ final class SyncThumbsCommand extends Command
             }
         } while (true);
 
-        $this->log(sprintf('Done (total medias processed: %s).', $totalMediasCount));
+        $this->log($output, sprintf('Done (total medias processed: %s).', $totalMediasCount));
 
         return 0;
     }
 
-    private function processMedia(MediaInterface $media, MediaProviderInterface $provider): bool
+    private function processMedia(OutputInterface $output, MediaInterface $media, MediaProviderInterface $provider): bool
     {
-        $this->log(sprintf(
+        $this->log($output, sprintf(
             'Generating thumbs for %s - %s',
             $media->getName() ?? '',
             $media->getId() ?? ''
@@ -189,7 +164,7 @@ final class SyncThumbsCommand extends Command
         try {
             $provider->removeThumbnails($media);
         } catch (\Exception $e) {
-            $this->log(sprintf(
+            $this->log($output, sprintf(
                 '<error>Unable to remove old thumbnails, media: %s - %s </error>',
                 $media->getId() ?? '',
                 $e->getMessage()
@@ -201,7 +176,7 @@ final class SyncThumbsCommand extends Command
         try {
             $provider->generateThumbnails($media);
         } catch (\Exception $e) {
-            $this->log(sprintf(
+            $this->log($output, sprintf(
                 '<error>Unable to generate new thumbnails, media: %s - %s </error>',
                 $media->getId() ?? '',
                 $e->getMessage()
@@ -213,13 +188,43 @@ final class SyncThumbsCommand extends Command
         return true;
     }
 
+    private function getProvider(InputInterface $input, OutputInterface $output): MediaProviderInterface
+    {
+        $providerName = $input->getArgument('providerName');
+
+        if (null === $providerName) {
+            $providerName = $this->getHelper('question')->ask(
+                $input,
+                $output,
+                new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
+            );
+        }
+
+        return $this->mediaPool->getProvider($providerName);
+    }
+
+    private function getContext(InputInterface $input, OutputInterface $output): string
+    {
+        $context = $input->getArgument('context');
+
+        if (null === $context) {
+            $context = $this->getHelper('question')->ask(
+                $input,
+                $output,
+                new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
+            );
+        }
+
+        return $context;
+    }
+
     /**
      * Write a message to the output.
      */
-    private function log(string $message): void
+    private function log(OutputInterface $output, string $message): void
     {
         if (false === $this->quiet) {
-            $this->output->writeln($message);
+            $output->writeln($message);
         }
     }
 }

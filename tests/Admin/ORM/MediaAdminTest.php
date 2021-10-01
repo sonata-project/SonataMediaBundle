@@ -37,8 +37,8 @@ class MediaAdminTest extends TestCase
         );
     }
 
-    public function testItIsInstantiable(): void
+    public function testItDoesNotHaveSubject(): void
     {
-        static::assertNotNull($this->mediaAdmin);
+        static::assertFalse($this->mediaAdmin->hasSubject());
     }
 }

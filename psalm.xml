@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://getpsalm.org/schema/config" errorLevel="3" findUnusedPsalmSuppress="true" resolveFromConfigFile="true" xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd" autoloader="vendor/bin/.phpunit/phpunit/vendor/autoload.php" errorBaseline="psalm-baseline.xml">
+<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://getpsalm.org/schema/config" errorLevel="2" findUnusedPsalmSuppress="true" resolveFromConfigFile="true" xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd" autoloader="vendor/bin/.phpunit/phpunit/vendor/autoload.php">
     <projectFiles>
         <directory name="src"/>
         <directory name="tests"/>
@@ -11,4 +11,9 @@
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>
+    <issueHandlers>
+        <!-- Psalm equivalent of PHPStan config `treatPhpDocTypesAsCertain: false` -->
+        <DocblockTypeContradiction errorLevel="suppress"/>
+        <RedundantConditionGivenDocblockType errorLevel="suppress"/>
+    </issueHandlers>
 </psalm>

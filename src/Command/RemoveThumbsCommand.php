@@ -51,16 +51,6 @@ final class RemoveThumbsCommand extends Command
     private $quiet = false;
 
     /**
-     * @var InputInterface
-     */
-    private $input;
-
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    /**
      * @internal This class should only be used through the console
      */
     public function __construct(Pool $mediaPool, MediaManagerInterface $mediaManager)
@@ -88,17 +78,15 @@ final class RemoveThumbsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->quiet = $input->getOption('quiet');
-        $this->input = $input;
-        $this->output = $output;
 
-        $provider = $this->getProvider();
-        $context = $this->getContext();
-        $format = $this->getFormat($provider, $context);
+        $provider = $this->getProvider($input, $output);
+        $context = $this->getContext($input, $output);
+        $format = $this->getFormat($input, $output, $provider, $context);
 
         $batchCounter = 0;
-        $batchSize = (int) $this->input->getOption('batchSize');
-        $batchesLimit = (int) $this->input->getOption('batchesLimit');
-        $startOffset = (int) $this->input->getOption('startOffset');
+        $batchSize = (int) $input->getOption('batchSize');
+        $batchesLimit = (int) $input->getOption('batchesLimit');
+        $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
         do {
             ++$batchCounter;
@@ -117,7 +105,7 @@ final class RemoveThumbsCommand extends Command
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log(sprintf('Error: %s', $e->getMessage()));
+                $this->log($output, sprintf('Error: %s', $e->getMessage()));
 
                 break;
             }
@@ -128,7 +116,7 @@ final class RemoveThumbsCommand extends Command
             }
 
             $totalMediasCount += $batchMediasCount;
-            $this->log(sprintf(
+            $this->log($output, sprintf(
                 'Loaded %s medias (batch #%d, offset %d) for removing thumbs (provider: %s, format: %s)',
                 $batchMediasCount,
                 $batchCounter,
@@ -138,7 +126,7 @@ final class RemoveThumbsCommand extends Command
             ));
 
             foreach ($medias as $media) {
-                if (!$this->processMedia($media, $provider, $context, $format)) {
+                if (!$this->processMedia($output, $media, $provider, $context, $format)) {
                     continue;
                 }
                 //clean filesystem registry for saving memory
@@ -150,19 +138,19 @@ final class RemoveThumbsCommand extends Command
             }
         } while (true);
 
-        $this->log(sprintf('Done (total medias processed: %s).', $totalMediasCount));
+        $this->log($output, sprintf('Done (total medias processed: %s).', $totalMediasCount));
 
         return 0;
     }
 
-    private function getProvider(): MediaProviderInterface
+    private function getProvider(InputInterface $input, OutputInterface $output): MediaProviderInterface
     {
-        $providerName = $this->input->getArgument('providerName');
+        $providerName = $input->getArgument('providerName');
 
         if (null === $providerName) {
             $providerName = $this->getQuestionHelper()->ask(
-                $this->input,
-                $this->output,
+                $input,
+                $output,
                 new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
             );
         }
@@ -170,14 +158,14 @@ final class RemoveThumbsCommand extends Command
         return $this->mediaPool->getProvider($providerName);
     }
 
-    private function getContext(): string
+    private function getContext(InputInterface $input, OutputInterface $output): string
     {
-        $context = $this->input->getArgument('context');
+        $context = $input->getArgument('context');
 
         if (null === $context) {
             $context = $this->getQuestionHelper()->ask(
-                $this->input,
-                $this->output,
+                $input,
+                $output,
                 new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
             );
         }
@@ -185,17 +173,17 @@ final class RemoveThumbsCommand extends Command
         return $context;
     }
 
-    private function getFormat(MediaProviderInterface $provider, string $context): string
+    private function getFormat(InputInterface $input, OutputInterface $output, MediaProviderInterface $provider, string $context): string
     {
-        $format = $this->input->getArgument('format');
+        $format = $input->getArgument('format');
 
         if (null === $format) {
             $formats = array_keys($provider->getFormats());
             $formats[] = '<ALL THUMBNAILS>';
 
             $format = $this->getQuestionHelper()->ask(
-                $this->input,
-                $this->output,
+                $input,
+                $output,
                 new ChoiceQuestion('Please select the format', $formats)
             );
 
@@ -209,9 +197,9 @@ final class RemoveThumbsCommand extends Command
         return $format;
     }
 
-    private function processMedia(MediaInterface $media, MediaProviderInterface $provider, string $context, string $format): bool
+    private function processMedia(OutputInterface $output, MediaInterface $media, MediaProviderInterface $provider, string $context, string $format): bool
     {
-        $this->log(sprintf(
+        $this->log($output, sprintf(
             'Deleting thumbs for %s - %s',
             $media->getName() ?? '',
             $media->getId() ?? ''
@@ -224,7 +212,7 @@ final class RemoveThumbsCommand extends Command
 
             $provider->removeThumbnails($media, $format);
         } catch (\Exception $e) {
-            $this->log(sprintf(
+            $this->log($output, sprintf(
                 '<error>Unable to remove thumbnails, media: %s - %s </error>',
                 $media->getId() ?? '',
                 $e->getMessage()
@@ -239,10 +227,10 @@ final class RemoveThumbsCommand extends Command
     /**
      * Write a message to the output.
      */
-    private function log(string $message): void
+    private function log(OutputInterface $output, string $message): void
     {
         if (false === $this->quiet) {
-            $this->output->writeln($message);
+            $output->writeln($message);
         }
     }
 

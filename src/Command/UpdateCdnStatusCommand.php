@@ -50,16 +50,6 @@ final class UpdateCdnStatusCommand extends Command
     private $quiet = false;
 
     /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    /**
-     * @var InputInterface
-     */
-    private $input;
-
-    /**
      * @internal This class should only be used through the console
      */
     public function __construct(Pool $mediaPool, MediaManagerInterface $mediaManager)
@@ -101,11 +91,9 @@ EOF
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->quiet = $input->getOption('quiet');
-        $this->input = $input;
-        $this->output = $output;
 
-        $provider = $this->getProvider();
-        $context = $this->getContext();
+        $provider = $this->getProvider($input, $output);
+        $context = $this->getContext($input, $output);
 
         $medias = $this->mediaManager->findBy([
             'providerName' => $provider->getName(),
@@ -113,20 +101,20 @@ EOF
             'cdnIsFlushable' => true,
         ]);
 
-        $this->log(sprintf('Loaded %s media for CDN status update (provider: %s, context: %s)', \count($medias), $provider->getName(), $context));
+        $this->log($output, sprintf('Loaded %s media for CDN status update (provider: %s, context: %s)', \count($medias), $provider->getName(), $context));
 
         foreach ($medias as $media) {
             $cdn = $provider->getCdn();
             $flushIdentifier = $media->getCdnFlushIdentifier();
 
-            $this->log(sprintf(
+            $this->log($output, sprintf(
                 'Refresh CDN status for media "%s" (%s) ',
                 $media->getName() ?? '',
                 $media->getId() ?? ''
             ), false);
 
             if (null === $flushIdentifier) {
-                $this->log('<error>Skipping since the medium does not have a pending flush.</error>');
+                $this->log($output, '<error>Skipping since the medium does not have a pending flush.</error>');
 
                 continue;
             }
@@ -146,17 +134,17 @@ EOF
 
                 $media->setCdnStatus($cdnStatus);
 
-                if (OutputInterface::VERBOSITY_VERBOSE <= $this->output->getVerbosity()) {
+                if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
                     if ($previousStatus === $cdnStatus) {
-                        $this->log(sprintf('No changes (%u)', $cdnStatus));
+                        $this->log($output, sprintf('No changes (%u)', $cdnStatus));
                     } elseif (CDNInterface::STATUS_OK === $cdnStatus) {
-                        $this->log(sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
+                        $this->log($output, sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
                     } else {
-                        $this->log(sprintf('Updated status (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
+                        $this->log($output, sprintf('Updated status (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
                     }
                 }
             } catch (\Throwable $e) {
-                $this->log(sprintf(
+                $this->log($output, sprintf(
                     '<error>Unable update CDN status, media: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()
@@ -168,7 +156,7 @@ EOF
             try {
                 $this->mediaManager->save($media);
             } catch (\Throwable $e) {
-                $this->log(sprintf(
+                $this->log($output, sprintf(
                     '<error>Unable to update medium: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()
@@ -178,7 +166,7 @@ EOF
             }
         }
 
-        $this->log('Done!');
+        $this->log($output, 'Done!');
 
         return 0;
     }
@@ -186,25 +174,25 @@ EOF
     /**
      * Write a message to the output.
      */
-    private function log(string $message, bool $newLine = true): void
+    private function log(OutputInterface $output, string $message, bool $newLine = true): void
     {
         if (false === $this->quiet) {
             if ($newLine) {
-                $this->output->writeln($message);
+                $output->writeln($message);
             } else {
-                $this->output->write($message);
+                $output->write($message);
             }
         }
     }
 
-    private function getProvider(): MediaProviderInterface
+    private function getProvider(InputInterface $input, OutputInterface $output): MediaProviderInterface
     {
-        $providerName = $this->input->getArgument('providerName');
+        $providerName = $input->getArgument('providerName');
 
         if (null === $providerName) {
             $providerName = $this->getHelper('question')->ask(
-                $this->input,
-                $this->output,
+                $input,
+                $output,
                 new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
             );
         }
@@ -212,14 +200,14 @@ EOF
         return $this->mediaPool->getProvider($providerName);
     }
 
-    private function getContext(): string
+    private function getContext(InputInterface $input, OutputInterface $output): string
     {
-        $context = $this->input->getArgument('context');
+        $context = $input->getArgument('context');
 
         if (null === $context) {
             $context = $this->getHelper('question')->ask(
-                $this->input,
-                $this->output,
+                $input,
+                $output,
                 new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
             );
         }
