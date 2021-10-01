@@ -21,6 +21,8 @@ use Twig\TokenParser\AbstractTokenParser;
 
 /**
  * @internal
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 final class ThumbnailTokenParser extends AbstractTokenParser
 {

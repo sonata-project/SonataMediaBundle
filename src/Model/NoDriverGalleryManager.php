@@ -33,9 +33,6 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
         throw new NoDriverException();
     }
 
-    /**
-     * @return GalleryInterface[]
-     */
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
         throw new NoDriverException();
@@ -46,9 +43,6 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
         throw new NoDriverException();
     }
 
-    /**
-     * @return GalleryInterface|null
-     */
     public function find($id): ?object
     {
         throw new NoDriverException();

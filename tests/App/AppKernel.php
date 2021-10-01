@@ -74,6 +74,8 @@ final class AppKernel extends Kernel
     /**
      * TODO: Drop RouteCollectionBuilder when support for Symfony < 5.1 is dropped.
      *
+     * @psalm-suppress DeprecatedClass
+     *
      * @param RoutingConfigurator|RouteCollectionBuilder $routes
      */
     protected function configureRoutes($routes): void

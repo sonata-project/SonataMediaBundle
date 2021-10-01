@@ -68,7 +68,10 @@ final class SimpleResizer implements ResizerInterface
     {
         $size = $media->getBox();
 
-        if (null === $settings['width'] && null === $settings['height']) {
+        $width = $settings['width'];
+        $height = $settings['height'];
+
+        if (null === $width && null === $height) {
             throw new \RuntimeException(sprintf(
                 'Width/Height parameter is missing in context "%s" for provider "%s". Please add at least one parameter.',
                 $media->getContext() ?? '',
@@ -76,25 +79,21 @@ final class SimpleResizer implements ResizerInterface
             ));
         }
 
-        if (null === $settings['height']) {
-            \assert(null !== $settings['width']);
-
-            $settings['height'] = (int) round($settings['width'] * $size->getHeight() / $size->getWidth());
+        if (null === $height) {
+            $height = (int) round($width * $size->getHeight() / $size->getWidth());
         }
 
-        if (null === $settings['width']) {
-            $settings['width'] = (int) round($settings['height'] * $size->getWidth() / $size->getHeight());
+        if (null === $width) {
+            $width = (int) round($height * $size->getWidth() / $size->getHeight());
         }
 
-        return $this->computeBox($media, $settings);
+        return $this->computeBox($media, $width, $height);
     }
 
     /**
-     * @param array<string, mixed> $settings
-     *
      * @throws InvalidArgumentException
      */
-    private function computeBox(MediaInterface $media, array $settings): Box
+    private function computeBox(MediaInterface $media, int $width, int $height): Box
     {
         if (!(0 !== ($this->mode & ManipulatorInterface::THUMBNAIL_INSET) || 0 !== ($this->mode & ManipulatorInterface::THUMBNAIL_OUTBOUND))) {
             throw new InvalidArgumentException('Invalid mode specified');
@@ -103,8 +102,8 @@ final class SimpleResizer implements ResizerInterface
         $size = $media->getBox();
 
         $ratios = [
-            $settings['width'] / $size->getWidth(),
-            $settings['height'] / $size->getHeight(),
+            $width / $size->getWidth(),
+            $height / $size->getHeight(),
         ];
 
         if (0 !== ($this->mode & ManipulatorInterface::THUMBNAIL_INSET)) {
@@ -116,8 +115,8 @@ final class SimpleResizer implements ResizerInterface
         $scaledBox = $size->scale($ratio);
 
         return new Box(
-            min($scaledBox->getWidth(), $settings['width']),
-            min($scaledBox->getHeight(), $settings['height'])
+            min($scaledBox->getWidth(), $width),
+            min($scaledBox->getHeight(), $height)
         );
     }
 }

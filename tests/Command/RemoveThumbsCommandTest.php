@@ -113,9 +113,9 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         $findByReturnCallback = static function (
             array $criteria,
             ?array $orderBy = null,
-            $limit = null,
-            $offset = null
-        ) use ($medias) {
+            ?int $limit = null,
+            ?int $offset = null
+        ) use ($medias): array {
             if (null !== $offset && $offset > 0) {
                 return [];
             }

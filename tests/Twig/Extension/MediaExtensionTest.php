@@ -31,27 +31,27 @@ use Twig\TemplateWrapper;
 class MediaExtensionTest extends TestCase
 {
     /**
-     * @var MockObject&MediaProviderInterface
+     * @var (MockObject&MediaProviderInterface)|null
      */
     private $provider;
 
     /**
-     * @var MockObject&Template
+     * @var (MockObject&Template)|null
      */
     private $template;
 
     /**
-     * @var TemplateWrapper
+     * @var TemplateWrapper|null
      */
     private $templateWrapper;
 
     /**
-     * @var MockObject&Environment
+     * @var (MockObject&Environment)|null
      */
     private $environment;
 
     /**
-     * @var MockObject&Media
+     * @var (MockObject&Media)|null
      */
     private $media;
 

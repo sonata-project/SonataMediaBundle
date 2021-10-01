@@ -71,6 +71,8 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     }
 
     /**
+     * @param string $key
+     *
      * @return int|bool
      */
     public function mtime($key)
@@ -92,6 +94,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     }
 
     /**
+     * @param string $key
+     * @param string $content
+     *
      * @return int|bool
      */
     public function write($key, $content)
@@ -119,6 +124,8 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     }
 
     /**
+     * @param string $key
+     *
      * @return string|bool
      */
     public function read($key)
@@ -158,6 +165,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     }
 
     /**
+     * @param string  $key
      * @param mixed[] $content
      */
     public function setMetadata($key, $content): void
@@ -172,6 +180,8 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     }
 
     /**
+     * @param string $key
+     *
      * @return mixed[]
      */
     public function getMetadata($key)

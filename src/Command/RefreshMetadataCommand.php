@@ -49,16 +49,6 @@ final class RefreshMetadataCommand extends Command
     private $quiet = false;
 
     /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    /**
-     * @var InputInterface
-     */
-    private $input;
-
-    /**
      * @internal This class should only be used through the console
      */
     public function __construct(Pool $mediaPool, MediaManagerInterface $mediaManager)
@@ -82,18 +72,16 @@ final class RefreshMetadataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->quiet = $input->getOption('quiet');
-        $this->input = $input;
-        $this->output = $output;
 
-        $provider = $this->getProvider();
-        $context = $this->getContext();
+        $provider = $this->getProvider($input, $output);
+        $context = $this->getContext($input, $output);
 
         $medias = $this->mediaManager->findBy([
             'providerName' => $provider->getName(),
             'context' => $context,
         ]);
 
-        $this->log(sprintf(
+        $this->log($output, sprintf(
             'Loaded %s medias for generating thumbs (provider: %s, context: %s)',
             \count($medias),
             $provider->getName(),
@@ -101,7 +89,7 @@ final class RefreshMetadataCommand extends Command
         ));
 
         foreach ($medias as $media) {
-            $this->log(sprintf(
+            $this->log($output, sprintf(
                 'Refresh media %s - %s',
                 $media->getName() ?? '',
                 $media->getId() ?? ''
@@ -110,7 +98,7 @@ final class RefreshMetadataCommand extends Command
             try {
                 $provider->updateMetadata($media, false);
             } catch (\Exception $e) {
-                $this->log(sprintf(
+                $this->log($output, sprintf(
                     '<error>Unable to update metadata, media: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()
@@ -122,7 +110,7 @@ final class RefreshMetadataCommand extends Command
             try {
                 $this->mediaManager->save($media);
             } catch (\Exception $e) {
-                $this->log(sprintf(
+                $this->log($output, sprintf(
                     '<error>Unable saving media, media: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()
@@ -132,7 +120,7 @@ final class RefreshMetadataCommand extends Command
             }
         }
 
-        $this->log('Done!');
+        $this->log($output, 'Done!');
 
         return 0;
     }
@@ -140,21 +128,21 @@ final class RefreshMetadataCommand extends Command
     /**
      * Write a message to the output.
      */
-    private function log(string $message): void
+    private function log(OutputInterface $output, string $message): void
     {
         if (false === $this->quiet) {
-            $this->output->writeln($message);
+            $output->writeln($message);
         }
     }
 
-    private function getProvider(): MediaProviderInterface
+    private function getProvider(InputInterface $input, OutputInterface $output): MediaProviderInterface
     {
-        $providerName = $this->input->getArgument('providerName');
+        $providerName = $input->getArgument('providerName');
 
         if (null === $providerName) {
             $providerName = $this->getQuestionHelper()->ask(
-                $this->input,
-                $this->output,
+                $input,
+                $output,
                 new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
             );
         }
@@ -162,14 +150,14 @@ final class RefreshMetadataCommand extends Command
         return $this->mediaPool->getProvider($providerName);
     }
 
-    private function getContext(): string
+    private function getContext(InputInterface $input, OutputInterface $output): string
     {
-        $context = $this->input->getArgument('context');
+        $context = $input->getArgument('context');
 
         if (null === $context) {
             $context = $this->getQuestionHelper()->ask(
-                $this->input,
-                $this->output,
+                $input,
+                $output,
                 new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
             );
         }

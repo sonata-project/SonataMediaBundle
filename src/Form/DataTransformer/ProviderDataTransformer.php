@@ -54,6 +54,8 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     }
 
     /**
+     * @param mixed $value
+     *
      * @return mixed
      */
     public function transform($value)
@@ -66,6 +68,8 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     }
 
     /**
+     * @param mixed $value
+     *
      * @return mixed
      */
     public function reverseTransform($value)

@@ -20,6 +20,8 @@ use Twig\TokenParser\AbstractTokenParser;
 
 /**
  * @internal
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 final class PathTokenParser extends AbstractTokenParser
 {

@@ -33,8 +33,8 @@ class GalleryItemAdminTest extends TestCase
         );
     }
 
-    public function testItIsInstantiable(): void
+    public function testItDoesNotHaveSubject(): void
     {
-        static::assertNotNull($this->galleryItemAdmin);
+        static::assertFalse($this->galleryItemAdmin->hasSubject());
     }
 }
