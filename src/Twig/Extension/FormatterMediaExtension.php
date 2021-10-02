@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Twig\Extension;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Twig\MediaRuntime;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
+use Twig\TwigFunction;
 
 /**
  * @final since sonata-project/media-bundle 3.21.0
@@ -30,11 +32,17 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
      */
     protected $twigExtension;
 
+    /**
+     * NEXT_MAJOR: Remove dependencies.
+     */
     public function __construct(ExtensionInterface $twigExtension)
     {
         $this->twigExtension = $twigExtension;
     }
 
+    /**
+     * NEXT_MAJOR: return empty array.
+     */
     public function getAllowedTags()
     {
         return [
@@ -48,11 +56,14 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
     {
         return [
             MediaInterface::class => [
-                'getproviderreference',
+                'getProviderReference',
             ],
         ];
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getTokenParsers()
     {
         return [
@@ -63,6 +74,8 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
      * @return ExtensionInterface
      */
     public function getTwigExtension()
@@ -71,6 +84,8 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
      * @param int    $media
      * @param string $format
      * @param array  $options
@@ -83,6 +98,8 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
      * @param int    $media
      * @param string $format
      * @param array  $options
@@ -95,6 +112,8 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
      * @param int    $media
      * @param string $format
      *
@@ -105,16 +124,25 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
         return $this->getTwigExtension()->path($media, $format);
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getNodeVisitors()
     {
         return $this->getTwigExtension()->getNodeVisitors();
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getFilters()
     {
         return $this->getTwigExtension()->getFilters();
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getTests()
     {
         return $this->getTwigExtension()->getTests();
@@ -122,9 +150,16 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
 
     public function getFunctions()
     {
-        return $this->getTwigExtension()->getFunctions();
+        return [
+            new TwigFunction('sonata_media', [MediaRuntime::class, 'media']),
+            new TwigFunction('sonata_thumbnail', [MediaRuntime::class, 'thumbnail']),
+            new TwigFunction('sonata_path', [MediaRuntime::class, 'path']),
+        ];
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getOperators()
     {
         return $this->getTwigExtension()->getOperators();
@@ -137,7 +172,11 @@ class FormatterMediaExtension extends AbstractExtension implements ExtensionInte
 
     public function getAllowedFunctions()
     {
-        return [];
+        return [
+            'sonata_media',
+            'sonata_thumbnail',
+            'sonata_path',
+        ];
     }
 
     public function getAllowedProperties()
