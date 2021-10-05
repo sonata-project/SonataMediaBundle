@@ -452,7 +452,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('pixlr')
                     ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
                         'The node "%node%" is deprecated and will be removed in version 4.0.',
-                        '3.x'
+                        '3.34'
                     ))
                     ->info('More info at https://pixlr.com/')
                     ->addDefaultsIfNotSet()

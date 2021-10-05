@@ -1,8 +1,8 @@
 UPGRADE 3.x
 ===========
 
-UPGRADE FROM 3.x to 3.x
-=======================
+UPGRADE FROM 3.33 to 3.34
+=========================
 
 ### Deprecated custom Twig tags in favour of Twig functions
 

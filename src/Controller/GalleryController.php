@@ -27,12 +27,12 @@ class GalleryController extends Controller
      *
      * @return Response
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.34, to be removed in 4.0.
      */
     public function indexAction()
     {
         @trigger_error(
-            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            'The '.__METHOD__.' method is deprecated since 3.34, to be removed in 4.0.',
             \E_USER_DEPRECATED
         );
 
@@ -54,12 +54,12 @@ class GalleryController extends Controller
      *
      * @return Response
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.34, to be removed in 4.0.
      */
     public function viewAction($id)
     {
         @trigger_error(
-            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            'The '.__METHOD__.' method is deprecated since 3.34, to be removed in 4.0.',
             \E_USER_DEPRECATED
         );
 
