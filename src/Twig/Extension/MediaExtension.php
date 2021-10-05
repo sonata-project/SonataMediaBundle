@@ -100,7 +100,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
     public function media($media, $format, $options = [])
     {
         @trigger_error(
-            'Render media through media twig tag is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            'Render media through media twig tag is deprecated since sonata-project/media-bundle 3.34 and will be removed'
             .' in version 4.0. Use "sonata_media()" twig function instead.',
             \E_USER_DEPRECATED
         );
@@ -126,7 +126,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
     public function thumbnail($media, $format, $options = [])
     {
         @trigger_error(
-            'Render media through thumbnail twig tag is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            'Render media through thumbnail twig tag is deprecated since sonata-project/media-bundle 3.34 and will be removed'
             .' in version 4.0. Use "sonata_thumbnail()" twig function instead.',
             \E_USER_DEPRECATED
         );
@@ -165,7 +165,7 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
     public function path($media, $format)
     {
         @trigger_error(
-            'Render media through path twig tag is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            'Render media through path twig tag is deprecated since sonata-project/media-bundle 3.34 and will be removed'
             .' in version 4.0. Use "sonata_path()" twig function instead.',
             \E_USER_DEPRECATED
         );

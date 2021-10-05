@@ -25,7 +25,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * NEXT_MAJOR: Remove this class.
  *
- * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+ * @deprecated since sonata-project/media-bundle 3.34, to be removed in 4.0.
  */
 class MediaController extends Controller
 {
@@ -57,7 +57,7 @@ class MediaController extends Controller
      *
      * @return Response
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.34, to be removed in 4.0.
      */
     public function downloadAction($id, $format = MediaProviderInterface::FORMAT_REFERENCE)
     {
@@ -79,12 +79,12 @@ class MediaController extends Controller
      *
      * @return Response
      *
-     * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+     * @deprecated since sonata-project/media-bundle 3.34, to be removed in 4.0.
      */
     public function viewAction($id, $format = MediaProviderInterface::FORMAT_REFERENCE)
     {
         @trigger_error(
-            'The '.__METHOD__.' method is deprecated since 3.x, to be removed in 4.0.',
+            'The '.__METHOD__.' method is deprecated since 3.34, to be removed in 4.0.',
             \E_USER_DEPRECATED
         );
 

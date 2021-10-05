@@ -31,7 +31,7 @@ use Symfony\Component\Templating\EngineInterface;
  *
  * @final since sonata-project/media-bundle 3.21.0
  *
- * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+ * @deprecated since sonata-project/media-bundle 3.34, to be removed in 4.0.
  */
 class Pixlr
 {

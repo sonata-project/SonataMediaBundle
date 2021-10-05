@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Sylvain Deloux <sylvain.deloux@ekino.com>
  *
- * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+ * @deprecated since sonata-project/media-bundle 3.34, to be removed in 4.0.
  */
 class GalleryViewBreadcrumbBlockService extends BaseGalleryBreadcrumbBlockService
 {
