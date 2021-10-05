@@ -96,7 +96,7 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
                 # thumbnails and don't need to create static one using this bundle.
                 #
                 # You can use the helper `media` with `reference` as format to access the media
-                # {% media media, 'reference' %}
+                # {{ sonata_media(media, 'reference') }}
                 formats:
                     small: { width: 100 , quality: 70  }
                     big:   { width: 500 , quality: 70  }

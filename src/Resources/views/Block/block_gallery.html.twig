@@ -65,7 +65,7 @@ file that was distributed with this source code.
 
 {% block element_display %}
     <div class="item{% if loop.first %} active{% endif %}">
-        {% media element.media, settings.format %}
+        {{ sonata_media(element.media, settings.format) }}
         <div class="carousel-caption">
             <h4>{{ element.title }}</h4>
             <p>{{ element.caption }}</p>

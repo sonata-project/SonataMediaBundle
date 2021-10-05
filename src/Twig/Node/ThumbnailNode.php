@@ -18,7 +18,7 @@ use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
+ * NEXT_MAJOR: Remove this class.
  */
 class ThumbnailNode extends Node
 {
