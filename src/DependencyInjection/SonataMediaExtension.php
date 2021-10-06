@@ -52,7 +52,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $loader->load('gaufrette.php');
         $loader->load('validators.php');
         $loader->load('commands.php');
-        $loader->load('controllers.php');
 
         $bundles = $container->getParameter('kernel.bundles');
         \assert(\is_array($bundles));
@@ -76,6 +75,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $loader->load(sprintf('%s.php', $config['db_driver']));
 
         if (isset($bundles['SonataAdminBundle'])) {
+            $loader->load('controllers.php');
             $loader->load(sprintf('%s_admin.php', $config['db_driver']));
 
             $sonataRoles = [];
