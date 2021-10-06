@@ -79,7 +79,7 @@ final class MediaRuntime implements RuntimeExtensionInterface
      * Returns the thumbnail for the provided media.
      *
      * @param int|string|MediaInterface|null $media
-     * @param array<string, mixed>          $options
+     * @param array<string, mixed>           $options
      */
     public function thumbnail($media, string $format, array $options = []): string
     {
