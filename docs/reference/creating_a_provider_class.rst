@@ -265,8 +265,8 @@ added to the provider pool.
             - '@sonata.media.cdn.server'
             - '@sonata.media.generator.default'
             - '@sonata.media.thumbnail.format'
-            - '@sonata.media.http.client'
-            - '@sonata.media.metadata.proxy'
+            # - '@sonata.media.http.client' // It's an optional parameter.
+            # - '@sonata.media.metadata.proxy' // This parameter is required when you are using PSR client.
         calls:
             -
                 - setTemplates
