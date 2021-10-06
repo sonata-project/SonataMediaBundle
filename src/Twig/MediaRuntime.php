@@ -47,8 +47,8 @@ final class MediaRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * @param int|string|MediaInterface $media
-     * @param array<string, mixed>      $options
+     * @param int|string|MediaInterface|null $media
+     * @param array<string, mixed>           $options
      */
     public function media($media, string $format, array $options = []): string
     {
@@ -78,8 +78,8 @@ final class MediaRuntime implements RuntimeExtensionInterface
     /**
      * Returns the thumbnail for the provided media.
      *
-     * @param MediaInterface|int|string $media
-     * @param array<string, mixed>      $options
+     * @param int|stringMediaInterface|null $media
+     * @param array<string, mixed>          $options
      */
     public function thumbnail($media, string $format, array $options = []): string
     {
@@ -122,7 +122,7 @@ final class MediaRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * @param MediaInterface|int|string $media
+     * @param int|string|MediaInterface|null $media
      */
     public function path($media, string $format): string
     {
@@ -140,11 +140,11 @@ final class MediaRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * @param MediaInterface|int|string $media
+     * @param int|string|MediaInterface|null $media
      */
     private function getMedia($media): ?MediaInterface
     {
-        if (!$media instanceof MediaInterface) {
+        if (!$media instanceof MediaInterface && null !== $media) {
             $media = $this->mediaManager->find($media);
         }
 

@@ -23,6 +23,7 @@ use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 use Sonata\MediaBundle\Twig\MediaRuntime;
 use Twig\Environment;
+use Twig\Node\Node;
 use Twig\TwigFunction;
 
 /**
@@ -74,6 +75,9 @@ class MediaExtensionTest extends TestCase
         static::assertSame([MediaRuntime::class, 'media'], $functions[0]->getCallable());
         static::assertSame([MediaRuntime::class, 'thumbnail'], $functions[1]->getCallable());
         static::assertSame([MediaRuntime::class, 'path'], $functions[2]->getCallable());
+
+        static::assertSame(['html'], $functions[0]->getSafe(new Node()));
+        static::assertSame(['html'], $functions[1]->getSafe(new Node()));
     }
 
     /**
