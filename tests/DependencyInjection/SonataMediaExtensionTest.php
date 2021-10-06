@@ -19,7 +19,13 @@ use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagicImagine;
 use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Sonata\MediaBundle\Admin\GalleryAdmin;
+use Sonata\MediaBundle\Admin\GalleryItemAdmin;
+use Sonata\MediaBundle\Admin\ODM\MediaAdmin as ODMMediaAdmin;
+use Sonata\MediaBundle\Admin\ORM\MediaAdmin as ORMMediaAdmin;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
+use Sonata\MediaBundle\Controller\GalleryAdminController;
+use Sonata\MediaBundle\Controller\MediaAdminController;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Sonata\MediaBundle\Messenger\GenerateThumbnailsHandler;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
@@ -155,12 +161,36 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
     public function testLoadWithSonataAdminDefaults(): void
     {
-        $this->load();
+        $this->load(['db_driver' => 'no_driver']);
 
         static::assertSame(
             $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
             ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
         );
+
+        $this->assertContainerBuilderHasService('sonata.media.controller.media.admin', MediaAdminController::class);
+        $this->assertContainerBuilderHasService('sonata.media.controller.gallery.admin', GalleryAdminController::class);
+        $this->assertContainerBuilderNotHasService('sonata.media.admin.media');
+        $this->assertContainerBuilderNotHasService('sonata.media.admin.gallery');
+        $this->assertContainerBuilderNotHasService('sonata.media.admin.gallery_item');
+    }
+
+    public function testLoadWithSonataAdminOrm(): void
+    {
+        $this->load(['db_driver' => 'doctrine_orm']);
+
+        $this->assertContainerBuilderHasService('sonata.media.admin.media', ORMMediaAdmin::class);
+        $this->assertContainerBuilderHasService('sonata.media.admin.gallery', GalleryAdmin::class);
+        $this->assertContainerBuilderHasService('sonata.media.admin.gallery_item', GalleryItemAdmin::class);
+    }
+
+    public function testLoadWithSonataAdminMongoDB(): void
+    {
+        $this->load(['db_driver' => 'doctrine_mongodb']);
+
+        $this->assertContainerBuilderHasService('sonata.media.admin.media', ODMMediaAdmin::class);
+        $this->assertContainerBuilderHasService('sonata.media.admin.gallery', GalleryAdmin::class);
+        $this->assertContainerBuilderHasService('sonata.media.admin.gallery_item', GalleryItemAdmin::class);
     }
 
     public function testLoadWithSonataAdminCustomConfiguration(): void
