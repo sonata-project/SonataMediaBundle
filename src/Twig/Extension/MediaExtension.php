@@ -62,8 +62,8 @@ class MediaExtension extends AbstractExtension implements InitRuntimeInterface
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('sonata_media', [MediaRuntime::class, 'media']),
-            new TwigFunction('sonata_thumbnail', [MediaRuntime::class, 'thumbnail']),
+            new TwigFunction('sonata_media', [MediaRuntime::class, 'media'], ['is_safe' => ['html']]),
+            new TwigFunction('sonata_thumbnail', [MediaRuntime::class, 'thumbnail'], ['is_safe' => ['html']]),
             new TwigFunction('sonata_path', [MediaRuntime::class, 'path']),
         ];
     }
