@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.34.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.34.0...3.34.1) - 2021-10-06
+### Fixed
+- [[#2149](https://github.com/sonata-project/SonataMediaBundle/pull/2149)] Fixed MediaRuntime definition. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.34.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.33.1...3.34.0) - 2021-10-05
 ### Added
 - [[#2145](https://github.com/sonata-project/SonataMediaBundle/pull/2145)] Added twig functions to load medias, thumbnails or paths ([@jordisala1991](https://github.com/jordisala1991))
