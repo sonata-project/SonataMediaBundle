@@ -19,6 +19,8 @@ use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
 /**
+ * NEXT_MAJOR: Remove this class.
+ *
  * @internal
  *
  * @psalm-suppress PropertyNotSetInConstructor

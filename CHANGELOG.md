@@ -2,6 +2,28 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.34.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.34.0...3.34.1) - 2021-10-06
+### Fixed
+- [[#2149](https://github.com/sonata-project/SonataMediaBundle/pull/2149)] Fixed MediaRuntime definition ([@jordisala1991](https://github.com/jordisala1991))
+
+## [3.34.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.33.1...3.34.0) - 2021-10-05
+### Added
+- [[#2145](https://github.com/sonata-project/SonataMediaBundle/pull/2145)] Added twig functions to load medias, thumbnails or paths ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2138](https://github.com/sonata-project/SonataMediaBundle/pull/2138)] Added new Action to download medias ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2131](https://github.com/sonata-project/SonataMediaBundle/pull/2131)] Added optional integration with Symfony messenger to handle async thumbnail generation ([@jordisala1991](https://github.com/jordisala1991))
+
+### Deprecated
+- [[#2145](https://github.com/sonata-project/SonataMediaBundle/pull/2145)] Deprecated using twig tags to load media, thumbnails or paths ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2138](https://github.com/sonata-project/SonataMediaBundle/pull/2138)] Deprecated download medias through `MediaController` downloadAction. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2139](https://github.com/sonata-project/SonataMediaBundle/pull/2139)] Deprecated SonataNotificationBundle integration. Use Symfony Messenger integration instead. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2118](https://github.com/sonata-project/SonataMediaBundle/pull/2118)] Deprecated ReST API with FOSRest, Nelmio Api Docs and JMS Serializer. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2113](https://github.com/sonata-project/SonataMediaBundle/pull/2113)] Deprecated Pixlr integration. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2105](https://github.com/sonata-project/SonataMediaBundle/pull/2105)] Deprecate controller actions for showing media and galleries. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2105](https://github.com/sonata-project/SonataMediaBundle/pull/2105)] Deprecate breadcrumb classes. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Fixed
+- [[#2116](https://github.com/sonata-project/SonataMediaBundle/pull/2116)] Fixed deprecation when downloading media through `downloadAction()` ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.33.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.33.0...3.33.1) - 2021-09-10
 ### Fixed
 - [[#2101](https://github.com/sonata-project/SonataMediaBundle/pull/2101)] Fixed missing upload after submit of MediaType field ([@jordisala1991](https://github.com/jordisala1991))

@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Twig\Extension;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Twig\MediaRuntime;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 final class FormatterMediaExtension extends AbstractExtension
 {
@@ -27,6 +29,8 @@ final class FormatterMediaExtension extends AbstractExtension
     private $twigExtension;
 
     /**
+     * NEXT_MAJOR: Remove dependencies.
+     *
      * @internal This class should only be used through Twig
      */
     public function __construct(MediaExtension $twigExtension)
@@ -35,6 +39,8 @@ final class FormatterMediaExtension extends AbstractExtension
     }
 
     /**
+     * NEXT_MAJOR: return empty array.
+     *
      * @return string[]
      */
     public function getAllowedTags(): array
@@ -55,11 +61,14 @@ final class FormatterMediaExtension extends AbstractExtension
     {
         return [
             MediaInterface::class => [
-                'getproviderreference',
+                'getProviderReference',
             ],
         ];
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getTokenParsers(): array
     {
         return [
@@ -69,14 +78,19 @@ final class FormatterMediaExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getTwigExtension(): MediaExtension
     {
         return $this->twigExtension;
     }
 
     /**
-     * @param int|string           $media
-     * @param array<string, mixed> $options
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @param int|string|MediaInterface|null $media
+     * @param array<string, mixed>           $options
      */
     public function media($media, string $format, array $options = []): string
     {
@@ -84,8 +98,10 @@ final class FormatterMediaExtension extends AbstractExtension
     }
 
     /**
-     * @param int|string           $media
-     * @param array<string, mixed> $options
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @param int|string|MediaInterface|null $media
+     * @param array<string, mixed>           $options
      */
     public function thumbnail($media, string $format, array $options = []): string
     {
@@ -93,23 +109,34 @@ final class FormatterMediaExtension extends AbstractExtension
     }
 
     /**
-     * @param int|string $media
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @param int|string|MediaInterface|null $media
      */
     public function path($media, string $format): string
     {
         return $this->getTwigExtension()->path($media, $format);
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getNodeVisitors(): array
     {
         return $this->getTwigExtension()->getNodeVisitors();
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getFilters(): array
     {
         return $this->getTwigExtension()->getFilters();
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getTests(): array
     {
         return $this->getTwigExtension()->getTests();
@@ -117,11 +144,46 @@ final class FormatterMediaExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return $this->getTwigExtension()->getFunctions();
+        return [
+            new TwigFunction('sonata_media', [MediaRuntime::class, 'media'], ['is_safe' => ['html']]),
+            new TwigFunction('sonata_thumbnail', [MediaRuntime::class, 'thumbnail'], ['is_safe' => ['html']]),
+            new TwigFunction('sonata_path', [MediaRuntime::class, 'path']),
+        ];
     }
 
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getOperators(): array
     {
         return $this->getTwigExtension()->getOperators();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedFilters(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedFunctions(): array
+    {
+        return [
+            'sonata_media',
+            'sonata_thumbnail',
+            'sonata_path',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedProperties(): array
+    {
+        return [];
     }
 }

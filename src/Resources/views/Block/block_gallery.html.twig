@@ -30,7 +30,7 @@ file that was distributed with this source code.
 
         {% for element in elements %}
             <div>
-                {% media element.media, settings.format|default('reference') %}
+                {{ sonata_media(element.media, settings.format|default('reference')) }}
                 <h4>{{ element.title }}</h4>
                 <p>{{ element.caption }}</p>
             </div>

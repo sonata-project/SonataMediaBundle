@@ -28,7 +28,7 @@ file that was distributed with this source code.
             </h3>
         {% endif %}
 
-        {% media media, settings.format|default('reference') %}
+        {{ sonata_media(media, settings.format|default('reference')) }}
         {{ settings.content }}
     </div>
 {% endblock block %}

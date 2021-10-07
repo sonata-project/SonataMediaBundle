@@ -1,8 +1,28 @@
 UPGRADE 3.x
 ===========
 
-UPGRADE FROM 3.x to 3.x
-=======================
+UPGRADE FROM 3.33 to 3.34
+=========================
+
+### Deprecated custom Twig tags in favour of Twig functions
+
+The following custom twig tags are now deprecated and replaced with functions.
+
+Before:
+
+```twig
+    {% media media, 'large' with {'sizes': '(min-width: 20em) 50vw, 100vw'} %}
+    {% thumbnail media, 'small' %}
+    {% path media, 'small' %}
+```
+
+After:
+
+```twig
+    {{ sonata_media(media, 'large', {'sizes': '(min-width: 20em) 50vw, 100vw'}) }}
+    {{ sonata_thumbnail(media, 'small') }}
+    {{ sonata_path(media, 'small') }}
+```
 
 ### Deprecate Async processing with SonataNotificationBundle
 

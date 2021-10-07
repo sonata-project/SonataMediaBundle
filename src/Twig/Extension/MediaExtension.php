@@ -16,24 +16,20 @@ namespace Sonata\MediaBundle\Twig\Extension;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Twig\MediaRuntime;
 use Sonata\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\PathTokenParser;
 use Sonata\MediaBundle\Twig\TokenParser\ThumbnailTokenParser;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\TemplateWrapper;
+use Twig\TwigFunction;
 
 final class MediaExtension extends AbstractExtension
 {
     /**
      * @var Pool
      */
-    private $mediaPool;
-
-    /**
-     * @var array<string, TemplateWrapper>
-     */
-    private $resources = [];
+    private $pool;
 
     /**
      * @var MediaManagerInterface
@@ -46,15 +42,29 @@ final class MediaExtension extends AbstractExtension
     private $twig;
 
     /**
+     * NEXT_MAJOR: Remove dependencies.
+     *
      * @internal This class should only be used through Twig
      */
-    public function __construct(Pool $mediaPool, MediaManagerInterface $mediaManager, Environment $twig)
+    public function __construct(Pool $pool, MediaManagerInterface $mediaManager, Environment $twig)
     {
-        $this->mediaPool = $mediaPool;
+        $this->pool = $pool;
         $this->mediaManager = $mediaManager;
         $this->twig = $twig;
     }
 
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('sonata_media', [MediaRuntime::class, 'media'], ['is_safe' => ['html']]),
+            new TwigFunction('sonata_thumbnail', [MediaRuntime::class, 'thumbnail'], ['is_safe' => ['html']]),
+            new TwigFunction('sonata_path', [MediaRuntime::class, 'path']),
+        ];
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
     public function getTokenParsers(): array
     {
         return [
@@ -65,130 +75,66 @@ final class MediaExtension extends AbstractExtension
     }
 
     /**
-     * @param MediaInterface|int|string $media
-     * @param array<string, mixed>      $options
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @param int|string|MediaInterface|null $media
+     * @param array<string, mixed>           $options
      */
     public function media($media, string $format, array $options = []): string
     {
-        $media = $this->getMedia($media);
+        @trigger_error(
+            'Render media through media twig tag is deprecated since sonata-project/media-bundle 3.34 and will be removed'
+            .' in version 4.0. Use "sonata_media()" twig function instead.',
+            \E_USER_DEPRECATED
+        );
 
-        if (null === $media) {
-            return '';
-        }
-
-        $provider = $this->mediaPool->getProvider($media->getProviderName());
-
-        $format = $provider->getFormatName($media, $format);
-        $options = $provider->getHelperProperties($media, $format, $options);
-        $template = $provider->getTemplate('helper_view');
-
-        if (null === $template) {
-            return '';
-        }
-
-        return $this->render($template, [
-            'media' => $media,
-            'format' => $format,
-            'options' => $options,
-        ]);
+        return (new MediaRuntime(
+            $this->pool,
+            $this->mediaManager,
+            $this->twig
+        ))->media($media, $format, $options);
     }
 
     /**
+     * NEXT_MAJOR: Remove this method.
+     *
      * Returns the thumbnail for the provided media.
      *
-     * @param MediaInterface|int|string $media
-     * @param array<string, mixed>      $options
+     * @param int|string|MediaInterface|null $media
+     * @param array<string, mixed>           $options
      */
     public function thumbnail($media, string $format, array $options = []): string
     {
-        $media = $this->getMedia($media);
+        @trigger_error(
+            'Render media through thumbnail twig tag is deprecated since sonata-project/media-bundle 3.34 and will be removed'
+            .' in version 4.0. Use "sonata_thumbnail()" twig function instead.',
+            \E_USER_DEPRECATED
+        );
 
-        if (null === $media) {
-            return '';
-        }
-
-        $provider = $this->mediaPool->getProvider($media->getProviderName());
-
-        $format = $provider->getFormatName($media, $format);
-        $formatDefinition = $provider->getFormat($format);
-        $template = $provider->getTemplate('helper_thumbnail');
-
-        if (null === $template) {
-            return '';
-        }
-
-        // build option
-        $defaultOptions = [
-            'title' => $media->getName(),
-            'alt' => $media->getName(),
-        ];
-
-        if (false !== $formatDefinition && null !== $formatDefinition['width']) {
-            $defaultOptions['width'] = $formatDefinition['width'];
-        }
-        if (false !== $formatDefinition && null !== $formatDefinition['height']) {
-            $defaultOptions['height'] = $formatDefinition['height'];
-        }
-
-        $options = array_merge($defaultOptions, $options);
-
-        $options['src'] = $provider->generatePublicUrl($media, $format);
-
-        return $this->render($template, [
-            'media' => $media,
-            'options' => $options,
-        ]);
+        return (new MediaRuntime(
+            $this->pool,
+            $this->mediaManager,
+            $this->twig
+        ))->thumbnail($media, $format, $options);
     }
 
     /**
-     * @param MediaInterface|int|string $media
+     * NEXT_MAJOR: Remove this method.
+     *
+     * @param int|string|MediaInterface|null $media
      */
     public function path($media, string $format): string
     {
-        $media = $this->getMedia($media);
+        @trigger_error(
+            'Render media through path twig tag is deprecated since sonata-project/media-bundle 3.34 and will be removed'
+            .' in version 4.0. Use "sonata_path()" twig function instead.',
+            \E_USER_DEPRECATED
+        );
 
-        if (null === $media) {
-            return '';
-        }
-
-        $provider = $this->mediaPool->getProvider($media->getProviderName());
-
-        $format = $provider->getFormatName($media, $format);
-
-        return $provider->generatePublicUrl($media, $format);
-    }
-
-    /**
-     * @param array<string, mixed> $parameters
-     */
-    private function render(string $template, array $parameters = []): string
-    {
-        if (!isset($this->resources[$template])) {
-            $this->resources[$template] = $this->twig->load($template);
-        }
-
-        return $this->resources[$template]->render($parameters);
-    }
-
-    /**
-     * @param MediaInterface|int|string $media
-     */
-    private function getMedia($media): ?MediaInterface
-    {
-        if (!$media instanceof MediaInterface && \strlen((string) $media) > 0) {
-            $media = $this->mediaManager->findOneBy([
-                'id' => $media,
-            ]);
-        }
-
-        if (!$media instanceof MediaInterface) {
-            return null;
-        }
-
-        if (MediaInterface::STATUS_OK !== $media->getProviderStatus()) {
-            return null;
-        }
-
-        return $media;
+        return (new MediaRuntime(
+            $this->pool,
+            $this->mediaManager,
+            $this->twig
+        ))->path($media, $format);
     }
 }

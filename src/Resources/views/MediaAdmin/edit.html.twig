@@ -40,7 +40,7 @@ file that was distributed with this source code.
                         <div class="box-body table-responsive">
 
                             <div class="text-center">
-                                {% media object, 'reference' with {'class': 'img-responsive img-rounded'} %}
+                                {{ sonata_media(object, 'reference', {'class': 'img-responsive img-rounded'}) }}
                             </div>
 
                             <table class="table">

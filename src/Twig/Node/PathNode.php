@@ -18,6 +18,8 @@ use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
 /**
+ * NEXT_MAJOR: Remove this class.
+ *
  * @internal
  */
 final class PathNode extends Node

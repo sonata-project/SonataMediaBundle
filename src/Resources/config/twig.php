@@ -14,6 +14,7 @@ declare(strict_types=1);
 use Sonata\MediaBundle\Twig\Extension\FormatterMediaExtension;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
 use Sonata\MediaBundle\Twig\GlobalVariables;
+use Sonata\MediaBundle\Twig\MediaRuntime;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -23,6 +24,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.twig.extension', MediaExtension::class)
             ->tag('twig.extension')
+            ->args([
+                new ReferenceConfigurator('sonata.media.pool'),
+                new ReferenceConfigurator('sonata.media.manager.media'),
+                new ReferenceConfigurator('twig'),
+            ])
+
+        ->set('sonata.media.twig.runtime', MediaRuntime::class)
+            ->tag('twig.runtime')
             ->args([
                 new ReferenceConfigurator('sonata.media.pool'),
                 new ReferenceConfigurator('sonata.media.manager.media'),

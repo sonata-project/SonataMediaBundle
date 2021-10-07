@@ -31,6 +31,10 @@ use Sonata\MediaBundle\Messenger\GenerateThumbnailsHandler;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 use Sonata\MediaBundle\Thumbnail\MessengerThumbnail;
+use Sonata\MediaBundle\Twig\Extension\FormatterMediaExtension;
+use Sonata\MediaBundle\Twig\Extension\MediaExtension;
+use Sonata\MediaBundle\Twig\GlobalVariables;
+use Sonata\MediaBundle\Twig\MediaRuntime;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
@@ -398,6 +402,16 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderNotHasService('sonata.media.messenger.generate_thumbnails');
         $this->assertContainerBuilderNotHasService('sonata.media.thumbnail.messenger');
+    }
+
+    public function testTwigExtensions(): void
+    {
+        $this->load([]);
+
+        $this->assertContainerBuilderHasService('sonata.media.twig.extension', MediaExtension::class);
+        $this->assertContainerBuilderHasService('sonata.media.twig.global', GlobalVariables::class);
+        $this->assertContainerBuilderHasService('sonata.media.twig.runtime', MediaRuntime::class);
+        $this->assertContainerBuilderHasService('sonata.media.formatter.twig', FormatterMediaExtension::class);
     }
 
     /**

@@ -15,15 +15,16 @@ namespace Sonata\MediaBundle\Tests\Twig\Extension;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Sonata\MediaBundle\Twig\Extension\MediaExtension;
+use Sonata\MediaBundle\Twig\MediaRuntime;
 use Twig\Environment;
-use Twig\Template;
-use Twig\TemplateWrapper;
+use Twig\Node\Node;
+use Twig\TwigFunction;
 
 /**
  * @author Geza Buza <bghome@gmail.com>
@@ -31,144 +32,83 @@ use Twig\TemplateWrapper;
 class MediaExtensionTest extends TestCase
 {
     /**
-     * @var (MockObject&MediaProviderInterface)|null
+     * @var MockObject&MediaProviderInterface
      */
     private $provider;
 
     /**
-     * @var (MockObject&Template)|null
+     * @var MockObject&Environment
      */
-    private $template;
+    private $twig;
 
     /**
-     * @var TemplateWrapper|null
+     * @var MediaExtension
      */
-    private $templateWrapper;
+    private $mediaExtension;
+
+    protected function setUp(): void
+    {
+        $this->twig = $this->createMock(Environment::class);
+        $this->provider = $this->createMock(MediaProviderInterface::class);
+
+        $pool = new Pool('default_context');
+        $pool->addProvider('provider', $this->provider);
+
+        $this->mediaExtension = new MediaExtension(
+            $pool,
+            $this->createStub(MediaManagerInterface::class),
+            $this->twig
+        );
+    }
+
+    public function testDefinesFunctions(): void
+    {
+        $functions = $this->mediaExtension->getFunctions();
+
+        static::assertContainsOnlyInstancesOf(TwigFunction::class, $functions);
+        static::assertCount(3, $functions);
+
+        static::assertSame('sonata_media', $functions[0]->getName());
+        static::assertSame('sonata_thumbnail', $functions[1]->getName());
+        static::assertSame('sonata_path', $functions[2]->getName());
+
+        static::assertSame([MediaRuntime::class, 'media'], $functions[0]->getCallable());
+        static::assertSame([MediaRuntime::class, 'thumbnail'], $functions[1]->getCallable());
+        static::assertSame([MediaRuntime::class, 'path'], $functions[2]->getCallable());
+
+        static::assertSame(['html'], $functions[0]->getSafe(new Node()));
+        static::assertSame(['html'], $functions[1]->getSafe(new Node()));
+    }
 
     /**
-     * @var (MockObject&Environment)|null
+     * NEXT_MAJOR: Remove this test.
+     *
+     * @group legacy
      */
-    private $environment;
-
-    /**
-     * @var (MockObject&Media)|null
-     */
-    private $media;
-
     public function testThumbnailHasAllNecessaryAttributes(): void
     {
-        $mediaExtension = new MediaExtension($this->getMediaPool(), $this->getMediaManager(), $this->getEnvironment());
+        $media = new Media();
+        $media->setProviderName('provider');
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
 
-        $media = $this->getMedia();
-        $format = 'png';
-        $options = [
-            'title' => 'Test title',
-            'alt' => 'Test title',
-        ];
-
-        $provider = $this->getProvider();
-        $provider->method('getTemplate')->with('helper_thumbnail')->willReturn('template');
-        $provider->expects(static::once())->method('generatePublicUrl')->with($media, $format)
+        $this->provider->method('getTemplate')->willReturn('template');
+        $this->provider->method('getFormatName')->willReturn('big');
+        $this->provider->method('getFormat')->willReturn(false);
+        $this->provider->expects(static::once())->method('generatePublicUrl')->with($media, 'big')
             ->willReturn('http://some.url.com');
 
-        $template = $this->getTemplate();
-        $template->expects(static::once())
-            ->method('render')
-            ->with(
-                [
-                    'media' => $media,
-                    'options' => [
-                        'title' => 'Test title',
-                        'alt' => 'Test title',
-                        'src' => 'http://some.url.com',
-                    ],
-                ]
-            )
-            ->willReturn('rendered thumbnail');
+        $this->twig->expects(static::once())->method('render')->with('template', [
+            'media' => $media,
+            'options' => [
+                'title' => 'Test title',
+                'alt' => 'Test title',
+                'src' => 'http://some.url.com',
+            ],
+        ])->willReturn('render');
 
-        $mediaExtension->thumbnail($media, $format, $options);
-    }
-
-    /**
-     * @return Pool
-     */
-    public function getMediaPool(): object
-    {
-        $mediaPool = new Pool('default');
-        $mediaPool->addProvider('provider', $this->getProvider());
-
-        return $mediaPool;
-    }
-
-    /**
-     * @return MockObject&MediaManagerInterface
-     */
-    public function getMediaManager(): object
-    {
-        return $this->createMock(MediaManagerInterface::class);
-    }
-
-    /**
-     * @return MockObject&MediaProviderInterface
-     */
-    public function getProvider(): object
-    {
-        if (null === $this->provider) {
-            $this->provider = $this->createMock(MediaProviderInterface::class);
-            $this->provider->method('getFormatName')->willReturnArgument(1);
-            $this->provider->method('getFormat')->willReturn(false);
-        }
-
-        return $this->provider;
-    }
-
-    /**
-     * @return MockObject&Template
-     */
-    public function getTemplate(): object
-    {
-        if (null === $this->template) {
-            $this->template = $this->createMock(Template::class);
-        }
-
-        return $this->template;
-    }
-
-    /**
-     * @psalm-suppress InternalMethod
-     *
-     * @see this class is not suposed to be created by hand but we are mocking twig here.
-     */
-    public function getTemplateWrapper(): TemplateWrapper
-    {
-        if (null === $this->templateWrapper) {
-            $this->templateWrapper = new TemplateWrapper($this->getEnvironment(), $this->getTemplate());
-        }
-
-        return $this->templateWrapper;
-    }
-
-    /**
-     * @return MockObject&Environment
-     */
-    public function getEnvironment(): object
-    {
-        if (null === $this->environment) {
-            $this->environment = $this->createMock(Environment::class);
-            $this->environment->method('load')->willReturn($this->getTemplateWrapper());
-        }
-
-        return $this->environment;
-    }
-
-    public function getMedia(): Media
-    {
-        if (null === $this->media) {
-            $this->media = $this->createMock(Media::class);
-            $this->media->method('getProviderName')->willReturn('provider');
-            $this->media->method('getProviderStatus')->willReturn(MediaInterface::STATUS_OK);
-        }
-
-        return $this->media;
+        $this->mediaExtension->thumbnail($media, 'big', [
+            'title' => 'Test title',
+            'alt' => 'Test title',
+        ]);
     }
 }
