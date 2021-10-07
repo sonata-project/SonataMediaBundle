@@ -167,8 +167,6 @@ final class CloudFrontVersion3 implements CDNInterface
      * Generates a caller reference.
      *
      * @see https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_InvalidationBatch.html.
-     *
-     * NEXT_MAJOR: Generate the reference based on the `MediaInterface::getUpdatedAt()` property for the given media.
      */
     private function getCallerReference(): string
     {
