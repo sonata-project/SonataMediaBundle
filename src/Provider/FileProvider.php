@@ -194,7 +194,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
-            $this->getCdn()->getPath($this->getReferenceImage($media), $media->getCdnIsFlushable());
+            return $this->getCdn()->getPath($this->getReferenceImage($media), $media->getCdnIsFlushable());
         }
 
         return $this->thumbnail->generatePublicUrl($this, $media, $format);

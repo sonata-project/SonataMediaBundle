@@ -78,6 +78,7 @@ class FileProviderTest extends AbstractProviderTest
         static::assertSame('default/0011/24/ASDASD.txt', $this->provider->getReferenceImage($media));
         static::assertSame('default/0011/24', $this->provider->generatePath($media));
         static::assertSame('/bundles/sonatamedia/file.png', $this->provider->generatePublicUrl($media, 'admin'));
+        static::assertSame('/uploads/media/default/0011/24/ASDASD.txt', $this->provider->generatePublicUrl($media, 'reference'));
     }
 
     public function testHelperProperties(): void
