@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping                           http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass name="Sonata\MediaBundle\Entity\BaseMedia">
-        <field name="name" column="name" type="string" nullable="false" length="255"/>
+        <field name="name" column="name" type="string" length="255"/>
         <field name="description" column="description" type="text" nullable="true" length="1024"/>
-        <field name="enabled" column="enabled" type="boolean" nullable="false"/>
-        <field name="providerName" column="provider_name" type="string" nullable="false" length="255"/>
-        <field name="providerStatus" column="provider_status" type="integer" nullable="false"/>
-        <field name="providerReference" column="provider_reference" type="string" nullable="false" length="255"/>
+        <field name="enabled" column="enabled" type="boolean"/>
+        <field name="providerName" column="provider_name" type="string" length="255"/>
+        <field name="providerStatus" column="provider_status" type="integer"/>
+        <field name="providerReference" column="provider_reference" type="string" length="255"/>
         <field name="providerMetadata" column="provider_metadata" type="json" nullable="true"/>
         <field name="width" column="width" type="integer" nullable="true"/>
         <field name="height" column="height" type="integer" nullable="true"/>
@@ -16,7 +16,7 @@
         <field name="copyright" column="copyright" type="string" nullable="true"/>
         <field name="authorName" column="author_name" type="string" nullable="true"/>
         <field name="context" column="context" type="string" nullable="true" length="64"/>
-        <field name="cdnIsFlushable" column="cdn_is_flushable" type="boolean" nullable="true"/>
+        <field name="cdnIsFlushable" column="cdn_is_flushable" type="boolean"/>
         <field name="cdnFlushIdentifier" column="cdn_flush_identifier" type="string" nullable="true" length="64"/>
         <field name="cdnFlushAt" column="cdn_flush_at" type="datetime" nullable="true"/>
         <field name="cdnStatus" column="cdn_status" type="integer" nullable="true"/>
