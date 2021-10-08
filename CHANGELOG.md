@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.34.2](https://github.com/sonata-project/SonataMediaBundle/compare/3.34.1...3.34.2) - 2021-10-08
+### Fixed
+- [[#2152](https://github.com/sonata-project/SonataMediaBundle/pull/2152)] Fixed safe output of `sonata_media` and `sonata_thumbnail` functions ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2152](https://github.com/sonata-project/SonataMediaBundle/pull/2152)] Fixed calling `sonata_media` and `sonata_thumbnail` functions with null media ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.34.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.34.0...3.34.1) - 2021-10-06
 ### Fixed
 - [[#2149](https://github.com/sonata-project/SonataMediaBundle/pull/2149)] Fixed MediaRuntime definition ([@jordisala1991](https://github.com/jordisala1991))
