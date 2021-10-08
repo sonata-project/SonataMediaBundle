@@ -62,6 +62,9 @@ class MediaRuntimeTest extends TestCase
         $this->mediaRuntime = new MediaRuntime($this->pool, $this->mediaManager, $this->twig);
     }
 
+    /**
+     * @group legacy
+     */
     public function testWithNullInput(): void
     {
         static::assertSame('', $this->mediaRuntime->media(null, 'big'));

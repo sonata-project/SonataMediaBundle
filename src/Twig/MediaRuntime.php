@@ -144,6 +144,20 @@ final class MediaRuntime implements RuntimeExtensionInterface
      */
     private function getMedia($media): ?MediaInterface
     {
+        // NEXT_MAJOR: Throw exception instead and remove references to null media being accepted.
+        if (!\is_int($media) && !\is_string($media) && !$media instanceof MediaInterface) {
+            @trigger_error(
+                'Using SonataMediaBundle custom Twig functions with a media that is not'
+                .' the identifier of the media or the media itself is deprecated since'
+                .' sonata-project/media-bundle 3.x and will be removed in version 4.0.',
+                \E_USER_DEPRECATED
+            );
+            // throw new \TypeError(sprintf(
+            //     'Media parameter must be either an identifier or the media itself for Twig functions, %s given.',
+            //     $media
+            // ));
+        }
+
         if (!$media instanceof MediaInterface && null !== $media) {
             $media = $this->mediaManager->find($media);
         }
