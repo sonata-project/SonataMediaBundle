@@ -21,7 +21,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @final since sonata-project/media-bundle 3.21.0
+ * NEXT_MAJOR: remove this file.
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class MigrateToJsonTypeCommand extends BaseCommand
 {
@@ -48,6 +50,12 @@ class MigrateToJsonTypeCommand extends BaseCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        @trigger_error(sprintf(
+            '%s is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Make sure you execute it to migrate to json type before upgrading to 4.0.',
+            __CLASS__
+        ), \E_USER_DEPRECATED);
+
         if (null === $this->entityManager) {
             throw new \LogicException(
                 'This command could not be executed since one of its dependencies is missing.'
