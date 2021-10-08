@@ -19,6 +19,11 @@ use Sonata\MediaBundle\Form\DataTransformer\ServiceProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
+/**
+ * NEXT_MAJOR: Remove this class.
+ *
+ * @group legacy
+ */
 class ServiceProviderDataTransformerTest extends TestCase
 {
     public function testTransformNoop(): void
