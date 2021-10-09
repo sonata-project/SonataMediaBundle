@@ -1,6 +1,17 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### Media migration
+
+Media ORM definition changed `cdnIsFlushable` from nullable to not nullable. Make sure to run a migration to upgrade
+your data before upgrading the schema.
+
+Assuming your media table is called `media__media`, you could execute:
+
+```sql
+UPDATE media__media SET cdnIsFlushable = false WHERE cdnIsFlushable IS NULL;
+```
+
 ### Removed unused JavaScript
 
 SonataMediaBundle 3 included a JavaScript dependency: Nivo Gallery. This dependency is not used on Sonata code,
