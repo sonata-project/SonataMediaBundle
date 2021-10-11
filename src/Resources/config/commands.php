@@ -15,7 +15,6 @@ use Sonata\MediaBundle\Command\AddMassMediaCommand;
 use Sonata\MediaBundle\Command\AddMediaCommand;
 use Sonata\MediaBundle\Command\CleanMediaCommand;
 use Sonata\MediaBundle\Command\FixMediaContextCommand;
-use Sonata\MediaBundle\Command\MigrateToJsonTypeCommand;
 use Sonata\MediaBundle\Command\RefreshMetadataCommand;
 use Sonata\MediaBundle\Command\RemoveThumbsCommand;
 use Sonata\MediaBundle\Command\SyncThumbsCommand;
@@ -53,12 +52,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('sonata.media.pool'),
                 (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
                 (new ReferenceConfigurator('sonata.media.manager.context'))->nullOnInvalid(),
-            ])
-
-        ->set('sonata.media.command.migrate_to_json_type', MigrateToJsonTypeCommand::class)
-            ->tag('console.command')
-            ->args([
-                (new ReferenceConfigurator('doctrine.orm.entity_manager'))->nullOnInvalid(),
             ])
 
         ->set('sonata.media.command.refresh_metadata', RefreshMetadataCommand::class)

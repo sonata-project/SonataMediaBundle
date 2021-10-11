@@ -47,8 +47,8 @@ final class MediaRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * @param int|string|MediaInterface|null $media
-     * @param array<string, mixed>           $options
+     * @param int|string|MediaInterface $media
+     * @param array<string, mixed>      $options
      */
     public function media($media, string $format, array $options = []): string
     {
@@ -78,8 +78,8 @@ final class MediaRuntime implements RuntimeExtensionInterface
     /**
      * Returns the thumbnail for the provided media.
      *
-     * @param int|string|MediaInterface|null $media
-     * @param array<string, mixed>           $options
+     * @param int|string|MediaInterface $media
+     * @param array<string, mixed>      $options
      */
     public function thumbnail($media, string $format, array $options = []): string
     {
@@ -122,7 +122,7 @@ final class MediaRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * @param int|string|MediaInterface|null $media
+     * @param int|string|MediaInterface $media
      */
     public function path($media, string $format): string
     {
@@ -140,25 +140,18 @@ final class MediaRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * @param int|string|MediaInterface|null $media
+     * @param int|string|MediaInterface $media
      */
     private function getMedia($media): ?MediaInterface
     {
-        // NEXT_MAJOR: Throw exception instead and remove references to null media being accepted.
         if (!\is_int($media) && !\is_string($media) && !$media instanceof MediaInterface) {
-            @trigger_error(
-                'Using SonataMediaBundle custom Twig functions with a media that is not'
-                .' the identifier of the media or the media itself is deprecated since'
-                .' sonata-project/media-bundle 3.x and will be removed in version 4.0.',
-                \E_USER_DEPRECATED
-            );
-            // throw new \TypeError(sprintf(
-            //     'Media parameter must be either an identifier or the media itself for Twig functions, %s given.',
-            //     $media
-            // ));
+            throw new \TypeError(sprintf(
+                'Media parameter must be either an identifier or the media itself for Twig functions, "%s" given.',
+                \is_object($media) ? 'instance of '.\get_class($media) : \gettype($media)
+            ));
         }
 
-        if (!$media instanceof MediaInterface && null !== $media) {
+        if (!$media instanceof MediaInterface) {
             $media = $this->mediaManager->find($media);
         }
 
