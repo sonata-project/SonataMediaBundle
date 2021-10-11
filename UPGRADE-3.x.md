@@ -1,6 +1,23 @@
 UPGRADE 3.x
 ===========
 
+UPGRADE FROM 3.x to 3.x
+=======================
+
+### Deprecate `null` media value on Twig functions
+
+Our custom twig functions (`sonata_media`, `sonata_thumbnail` and `sonata_path`) used to accept a null value and produce an empty result.
+
+This is deprecated and you should make sure you check for null before calling those functions.
+
+### Deprecated `MigrateToJsonTypeCommand`
+
+This command was introduced a long time ago to migrate from array to json. Make sure you migrate it before upgrading to SonataMediaBundle 4.0.
+
+### Deprecated `ServiceProviderDataTransformer`
+
+This class is deprecated because it is dead code. If you use it, please use `ProviderDataTransformer` instead.
+
 UPGRADE FROM 3.33 to 3.34
 =========================
 

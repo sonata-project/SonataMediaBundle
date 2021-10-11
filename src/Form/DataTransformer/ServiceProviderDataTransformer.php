@@ -20,6 +20,11 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * NEXT_MAJOR: remove this file.
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+ */
 final class ServiceProviderDataTransformer implements DataTransformerInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
@@ -51,6 +56,13 @@ final class ServiceProviderDataTransformer implements DataTransformerInterface, 
      */
     public function reverseTransform($value)
     {
+        @trigger_error(sprintf(
+            '%s is deprecated since sonata-project/media-bundle 3.x and will be removed'
+            .' in version 4.0. Use %s instead.',
+            __CLASS__,
+            ProviderDataTransformer::class
+        ), \E_USER_DEPRECATED);
+
         if (!$value instanceof MediaInterface) {
             return $value;
         }
