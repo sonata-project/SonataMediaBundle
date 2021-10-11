@@ -26,7 +26,7 @@
         }
     ],
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^7.4 || ^8.0",
         "imagine/imagine": "^1.0",
         "knplabs/gaufrette": "^0.10",
         "nyholm/psr7": "^1.4",
