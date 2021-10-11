@@ -32,35 +32,17 @@ namespace Sonata\MediaBundle\CDN;
  */
 final class PantherPortal implements CDNInterface
 {
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
-    /**
-     * @var string
-     */
-    private $username;
+    private string $username;
 
-    /**
-     * @var string
-     */
-    private $password;
+    private string $password;
 
-    /**
-     * @var string
-     */
-    private $siteId;
+    private string $siteId;
 
-    /**
-     * @var string
-     */
-    private $wsdl;
+    private string $wsdl;
 
-    /**
-     * @var \SoapClient|null
-     */
-    private $client;
+    private ?\SoapClient $client = null;
 
     public function __construct(string $path, string $username, string $password, string $siteId, string $wsdl = 'https://pantherportal.cdnetworks.com/wsdl/flush.wsdl')
     {

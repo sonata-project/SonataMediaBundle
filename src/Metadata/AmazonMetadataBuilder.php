@@ -58,12 +58,9 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      *
      * @phpstan-var AmazonSettings
      */
-    private $settings;
+    private array $settings;
 
-    /**
-     * @var MimeTypesInterface
-     */
-    private $mimeTypes;
+    private MimeTypesInterface $mimeTypes;
 
     /**
      * @param array<string, mixed> $settings

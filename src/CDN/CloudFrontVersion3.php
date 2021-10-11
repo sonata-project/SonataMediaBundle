@@ -54,20 +54,11 @@ final class CloudFrontVersion3 implements CDNInterface
         self::STATUS_WAITING => 'InProgress',
     ];
 
-    /**
-     * @var CloudFrontClient
-     */
-    private $client;
+    private CloudFrontClient $client;
 
-    /**
-     * @var string
-     */
-    private $distributionId;
+    private string $distributionId;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
     public function __construct(CloudFrontClient $client, string $distributionId, string $path)
     {

@@ -21,20 +21,11 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class MediaRuntime implements RuntimeExtensionInterface
 {
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
-    /**
-     * @var MediaManagerInterface
-     */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
-    /**
-     * @var Environment
-     */
-    private $twig;
+    private Environment $twig;
 
     public function __construct(
         Pool $pool,

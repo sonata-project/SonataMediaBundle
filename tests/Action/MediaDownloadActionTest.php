@@ -31,17 +31,11 @@ final class MediaDownloadActionTest extends TestCase
     /**
      * @var MockObject&MediaManagerInterface
      */
-    private $mediaManager;
+    private object $mediaManager;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
-    /**
-     * @var MediaDownloadAction
-     */
-    private $mediaDownloadAction;
+    private MediaDownloadAction $mediaDownloadAction;
 
     protected function setUp(): void
     {

@@ -22,10 +22,7 @@ use Symfony\Component\Asset\Packages;
  */
 final class FileThumbnail implements ThumbnailInterface
 {
-    /**
-     * @var Packages
-     */
-    private $packages;
+    private Packages $packages;
 
     public function __construct(Packages $packages)
     {

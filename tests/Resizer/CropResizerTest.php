@@ -36,12 +36,12 @@ final class CropResizerTest extends TestCase
     /**
      * @var MockObject&ImagineInterface
      */
-    private $adapter;
+    private MockObject $adapter;
 
     /**
      * @var Stub&MetadataBuilderInterface
      */
-    private $metadata;
+    private Stub $metadata;
 
     protected function setUp(): void
     {

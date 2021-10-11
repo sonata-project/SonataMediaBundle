@@ -19,40 +19,22 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 abstract class Gallery implements GalleryInterface
 {
-    /**
-     * @var string|null
-     */
-    protected $context;
+    protected ?string $context = null;
 
-    /**
-     * @var string|null
-     */
-    protected $name;
+    protected ?string $name = null;
 
-    /**
-     * @var bool
-     */
-    protected $enabled = false;
+    protected bool $enabled = false;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected $updatedAt;
+    protected ?\DateTimeInterface $updatedAt = null;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected $createdAt;
+    protected ?\DateTimeInterface $createdAt = null;
 
-    /**
-     * @var string|null
-     */
-    protected $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
+    protected string $defaultFormat = MediaProviderInterface::FORMAT_REFERENCE;
 
     /**
      * @var Collection<int, GalleryItemInterface>
      */
-    protected $galleryItems;
+    protected Collection $galleryItems;
 
     public function __toString(): string
     {
@@ -109,12 +91,12 @@ abstract class Gallery implements GalleryInterface
         return $this->createdAt;
     }
 
-    public function setDefaultFormat(?string $defaultFormat): void
+    public function setDefaultFormat(string $defaultFormat): void
     {
         $this->defaultFormat = $defaultFormat;
     }
 
-    public function getDefaultFormat(): ?string
+    public function getDefaultFormat(): string
     {
         return $this->defaultFormat;
     }

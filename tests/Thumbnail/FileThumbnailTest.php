@@ -25,12 +25,9 @@ final class FileThumbnailTest extends TestCase
     /**
      * @var MockObject&Packages
      */
-    private $packages;
+    private MockObject $packages;
 
-    /**
-     * @var FileThumbnail
-     */
-    private $thumbnail;
+    private FileThumbnail $thumbnail;
 
     protected function setUp(): void
     {

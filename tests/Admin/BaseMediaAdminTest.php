@@ -30,35 +30,26 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BaseMediaAdminTest extends TestCase
 {
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @var MockObject&CategoryManagerInterface
      */
-    private $categoryManager;
+    private MockObject $categoryManager;
 
     /**
      * @var MockObject&ContextManagerInterface
      */
-    private $contextManager;
+    private MockObject $contextManager;
 
-    /**
-     * @var Request
-     */
-    private $request;
+    private Request $request;
 
     /**
      * @var Stub&ModelManagerInterface<MediaInterface>
      */
-    private $modelManager;
+    private Stub $modelManager;
 
-    /**
-     * @var TestMediaAdmin
-     */
-    private $mediaAdmin;
+    private TestMediaAdmin $mediaAdmin;
 
     protected function setUp(): void
     {

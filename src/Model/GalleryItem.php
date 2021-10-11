@@ -15,35 +15,17 @@ namespace Sonata\MediaBundle\Model;
 
 abstract class GalleryItem implements GalleryItemInterface
 {
-    /**
-     * @var MediaInterface|null
-     */
-    protected $media;
+    protected ?MediaInterface $media = null;
 
-    /**
-     * @var GalleryInterface|null
-     */
-    protected $gallery;
+    protected ?GalleryInterface $gallery = null;
 
-    /**
-     * @var int
-     */
-    protected $position = 0;
+    protected int $position = 0;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected $updatedAt;
+    protected ?\DateTimeInterface $updatedAt = null;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected $createdAt;
+    protected ?\DateTimeInterface $createdAt = null;
 
-    /**
-     * @var bool
-     */
-    protected $enabled = false;
+    protected bool $enabled = false;
 
     public function __toString(): string
     {

@@ -25,35 +25,23 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class FixMediaContextCommandTest extends TestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
-    /**
-     * @var FixMediaContextCommand
-     */
-    private $command;
+    private FixMediaContextCommand $command;
 
-    /**
-     * @var CommandTester
-     */
-    private $tester;
+    private CommandTester $tester;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @var MockObject&ContextManagerInterface
      */
-    private $contextManager;
+    private MockObject $contextManager;
 
     /**
      * @var MockObject&CategoryManagerInterface
      */
-    private $categoryManager;
+    private MockObject $categoryManager;
 
     protected function setUp(): void
     {

@@ -19,15 +19,12 @@ use Sonata\MediaBundle\Resizer\ResizerInterface;
 
 final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInterface, GenerableThumbnailInterface
 {
-    /**
-     * @var string
-     */
-    private $defaultFormat;
+    private string $defaultFormat;
 
     /**
      * @var array<string, ResizerInterface>
      */
-    private $resizers = [];
+    private array $resizers = [];
 
     public function __construct(string $defaultFormat)
     {

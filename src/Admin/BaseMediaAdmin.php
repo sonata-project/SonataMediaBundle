@@ -31,20 +31,11 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
  */
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
-    /**
-     * @var Pool
-     */
-    protected $pool;
+    protected Pool $pool;
 
-    /**
-     * @var CategoryManagerInterface|null
-     */
-    protected $categoryManager;
+    protected ?CategoryManagerInterface $categoryManager = null;
 
-    /**
-     * @var ContextManagerInterface|null
-     */
-    protected $contextManager;
+    protected ?ContextManagerInterface $contextManager = null;
 
     protected $classnameLabel = 'Media';
 

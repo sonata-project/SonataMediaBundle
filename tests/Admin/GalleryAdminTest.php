@@ -20,10 +20,7 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdminTest extends TestCase
 {
-    /**
-     * @var GalleryAdmin
-     */
-    private $galleryAdmin;
+    private GalleryAdmin $galleryAdmin;
 
     protected function setUp(): void
     {

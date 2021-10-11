@@ -15,10 +15,7 @@ namespace Sonata\MediaBundle\CDN;
 
 final class Server implements CDNInterface
 {
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
     public function __construct(string $path)
     {

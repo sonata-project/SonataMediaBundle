@@ -22,15 +22,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class ImageUploadDimensionValidator extends ConstraintValidator
 {
-    /**
-     * @var ImagineInterface
-     */
-    private $imagineAdapter;
+    private ImagineInterface $imagineAdapter;
 
-    /**
-     * @var ImageProviderInterface
-     */
-    private $imageProvider;
+    private ImageProviderInterface $imageProvider;
 
     public function __construct(ImagineInterface $imagineAdapter, ImageProviderInterface $imageProvider)
     {

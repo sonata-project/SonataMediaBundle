@@ -31,35 +31,20 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CleanMediaCommandTest extends FilesystemTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
-    /**
-     * @var Command
-     */
-    private $command;
+    private Command $command;
 
-    /**
-     * @var CommandTester
-     */
-    private $tester;
+    private CommandTester $tester;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @var MockObject&MediaManagerInterface
      */
-    private $mediaManager;
+    private MockObject $mediaManager;
 
-    /**
-     * @var Local
-     */
-    private $fileSystemLocal;
+    private Local $fileSystemLocal;
 
     protected function setUp(): void
     {

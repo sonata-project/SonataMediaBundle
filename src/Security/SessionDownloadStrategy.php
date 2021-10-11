@@ -25,25 +25,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class SessionDownloadStrategy implements DownloadStrategyInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
+    private RequestStack $requestStack;
 
-    /**
-     * @var int
-     */
-    private $times;
+    private int $times;
 
-    /**
-     * @var string
-     */
-    private $sessionKey = 'sonata/media/session/times';
+    private string $sessionKey = 'sonata/media/session/times';
 
     public function __construct(TranslatorInterface $translator, RequestStack $requestStack, int $times)
     {

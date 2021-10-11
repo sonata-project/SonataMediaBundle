@@ -37,30 +37,21 @@ use Twig\Environment;
 
 class GalleryAdminControllerTest extends TestCase
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     /**
      * @var MockObject&AdminInterface<GalleryInterface>
      */
-    private $admin;
+    private MockObject $admin;
 
-    /**
-     * @var Request
-     */
-    private $request;
+    private Request $request;
 
-    /**
-     * @var GalleryAdminController
-     */
-    private $controller;
+    private GalleryAdminController $controller;
 
     /**
      * @var MockObject&Environment
      */
-    private $twig;
+    private MockObject $twig;
 
     /**
      * @psalm-suppress InternalMethod

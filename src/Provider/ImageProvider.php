@@ -25,10 +25,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class ImageProvider extends FileProvider implements ImageProviderInterface
 {
-    /**
-     * @var ImagineInterface
-     */
-    private $imagineAdapter;
+    private ImagineInterface $imagineAdapter;
 
     public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions, array $allowedMimeTypes, ImagineInterface $adapter, ?MetadataBuilderInterface $metadata = null)
     {

@@ -34,12 +34,12 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     /**
      * @var Stub&ImagineInterface
      */
-    private $imagineAdapter;
+    private Stub $imagineAdapter;
 
     /**
      * @var MockObject&ImageProviderInterface
      */
-    private $imageProvider;
+    private MockObject $imageProvider;
 
     protected function setUp(): void
     {

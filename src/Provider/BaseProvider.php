@@ -32,47 +32,29 @@ abstract class BaseProvider implements MediaProviderInterface
      *
      * @phpstan-var array<string, FormatOptions>
      */
-    protected $formats = [];
+    protected array $formats = [];
 
     /**
      * @var string[]
      */
-    protected $templates = [];
+    protected array $templates = [];
 
-    /**
-     * @var ResizerInterface|null
-     */
-    protected $resizer;
+    protected ?ResizerInterface $resizer = null;
 
-    /**
-     * @var Filesystem
-     */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
-    /**
-     * @var GeneratorInterface
-     */
-    protected $pathGenerator;
+    protected GeneratorInterface $pathGenerator;
 
-    /**
-     * @var CDNInterface
-     */
-    protected $cdn;
+    protected CDNInterface $cdn;
 
-    /**
-     * @var ThumbnailInterface
-     */
-    protected $thumbnail;
+    protected ThumbnailInterface $thumbnail;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
     /**
      * @var MediaInterface[]
      */
-    private $clones = [];
+    private array $clones = [];
 
     public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
     {

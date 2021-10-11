@@ -28,15 +28,9 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
  */
 class MediaTypeTest extends AbstractTypeTest
 {
-    /**
-     * @var Pool
-     */
-    protected $mediaPool;
+    protected Pool $mediaPool;
 
-    /**
-     * @var MediaType
-     */
-    protected $mediaType;
+    protected MediaType $mediaType;
 
     protected function setUp(): void
     {

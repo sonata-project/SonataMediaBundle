@@ -24,22 +24,17 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
-     * @var string
-     *
      * @phpstan-var class-string<MediaInterface>
      */
-    private $class;
+    private string $class;
 
     /**
      * @var array<string, mixed>
      */
-    private $options;
+    private array $options;
 
     /**
      * @param array<string, mixed> $options

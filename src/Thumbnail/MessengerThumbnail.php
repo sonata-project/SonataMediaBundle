@@ -20,15 +20,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class MessengerThumbnail implements ThumbnailInterface, GenerableThumbnailInterface
 {
-    /**
-     * @var ThumbnailInterface
-     */
-    private $thumbnail;
+    private ThumbnailInterface $thumbnail;
 
-    /**
-     * @var MessageBusInterface
-     */
-    private $bus;
+    private MessageBusInterface $bus;
 
     public function __construct(ThumbnailInterface $thumbnail, MessageBusInterface $bus)
     {

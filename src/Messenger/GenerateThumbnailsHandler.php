@@ -24,20 +24,11 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
  */
 final class GenerateThumbnailsHandler implements MessageHandlerInterface
 {
-    /**
-     * @var GenerableThumbnailInterface
-     */
-    private $thumbnail;
+    private GenerableThumbnailInterface $thumbnail;
 
-    /**
-     * @var MediaManagerInterface
-     */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     public function __construct(
         GenerableThumbnailInterface $thumbnail,

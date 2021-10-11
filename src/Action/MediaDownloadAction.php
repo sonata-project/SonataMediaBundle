@@ -24,15 +24,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 final class MediaDownloadAction
 {
-    /**
-     * @var MediaManagerInterface
-     */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     public function __construct(MediaManagerInterface $mediaManager, Pool $pool)
     {

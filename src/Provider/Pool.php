@@ -30,7 +30,7 @@ final class Pool
     /**
      * @var array<string, MediaProviderInterface>
      */
-    private $providers = [];
+    private array $providers = [];
 
     /**
      * @var array<string, string|array>
@@ -41,17 +41,14 @@ final class Pool
      *     download: DownloadOptions
      * }>
      */
-    private $contexts = [];
+    private array $contexts = [];
 
     /**
      * @var array<string, DownloadStrategyInterface>
      */
-    private $downloadStrategies = [];
+    private array $downloadStrategies = [];
 
-    /**
-     * @var string
-     */
-    private $defaultContext;
+    private string $defaultContext;
 
     public function __construct(string $context)
     {

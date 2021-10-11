@@ -21,32 +21,17 @@ class FilesystemTestCase extends TestCase
     /**
      * @var string[]
      */
-    protected $longPathNamesWindows = [];
+    protected array $longPathNamesWindows = [];
 
-    /**
-     * @var Filesystem
-     */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
-    /**
-     * @var string
-     */
-    protected $workspace;
+    protected string $workspace;
 
-    /**
-     * @var int
-     */
-    private $umask;
+    private int $umask;
 
-    /**
-     * @var bool|null Flag for hard links on Windows
-     */
-    private static $linkOnWindows;
+    private static bool $linkOnWindows = true;
 
-    /**
-     * @var bool|null Flag for symbolic links on Windows
-     */
-    private static $symlinkOnWindows;
+    private static bool $symlinkOnWindows = true;
 
     public static function setUpBeforeClass(): void
     {

@@ -39,20 +39,14 @@ use Twig\Environment;
  */
 final class MediaBlockService extends AbstractBlockService implements EditableBlockService
 {
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @var AdminInterface<MediaInterface>
      */
-    private $mediaAdmin;
+    private AdminInterface $mediaAdmin;
 
-    /**
-     * @var MediaManagerInterface
-     */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
     /**
      * @param AdminInterface<MediaInterface> $mediaAdmin

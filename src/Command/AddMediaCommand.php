@@ -25,10 +25,7 @@ final class AddMediaCommand extends Command
     protected static $defaultName = 'sonata:media:add';
     protected static $defaultDescription = 'Add a media into the database';
 
-    /**
-     * @var MediaManagerInterface
-     */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
     /**
      * @internal This class should only be used through the console
