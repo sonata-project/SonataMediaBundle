@@ -15,15 +15,9 @@ namespace Sonata\MediaBundle\CDN;
 
 final class Fallback implements CDNInterface
 {
-    /**
-     * @var CDNInterface
-     */
-    private $cdn;
+    private CDNInterface $cdn;
 
-    /**
-     * @var CDNInterface
-     */
-    private $fallback;
+    private CDNInterface $fallback;
 
     public function __construct(CDNInterface $cdn, CDNInterface $fallback)
     {

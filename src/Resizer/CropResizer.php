@@ -28,15 +28,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
  */
 final class CropResizer implements ResizerInterface
 {
-    /**
-     * @var ImagineInterface
-     */
-    private $adapter;
+    private ImagineInterface $adapter;
 
-    /**
-     * @var MetadataBuilderInterface
-     */
-    private $metadata;
+    private MetadataBuilderInterface $metadata;
 
     public function __construct(ImagineInterface $adapter, MetadataBuilderInterface $metadata)
     {

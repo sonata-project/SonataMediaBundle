@@ -19,10 +19,7 @@ use Sonata\MediaBundle\Entity\BaseGalleryItem;
 
 class GalleryItemAdminTest extends TestCase
 {
-    /**
-     * @var GalleryItemAdmin
-     */
-    private $galleryItemAdmin;
+    private GalleryItemAdmin $galleryItemAdmin;
 
     protected function setUp(): void
     {

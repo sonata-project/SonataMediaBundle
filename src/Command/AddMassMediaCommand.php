@@ -25,15 +25,12 @@ final class AddMassMediaCommand extends Command
     protected static $defaultName = 'sonata:media:add-multiple';
     protected static $defaultDescription = 'Add medias in mass into the database';
 
-    /**
-     * @var MediaManagerInterface
-     */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
     /**
      * @var string[]
      */
-    private $setters = [];
+    private array $setters = [];
 
     /**
      * @internal This class should only be used through the console

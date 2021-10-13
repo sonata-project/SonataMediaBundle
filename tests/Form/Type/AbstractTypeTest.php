@@ -23,20 +23,11 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 abstract class AbstractTypeTest extends TypeTestCase
 {
-    /**
-     * @var FormBuilder
-     */
-    protected $formBuilder;
+    protected FormBuilder $formBuilder;
 
-    /**
-     * @var FormTypeInterface
-     */
-    protected $formType;
+    protected FormTypeInterface $formType;
 
-    /**
-     * @var Pool
-     */
-    protected $mediaPool;
+    protected Pool $mediaPool;
 
     protected function setUp(): void
     {

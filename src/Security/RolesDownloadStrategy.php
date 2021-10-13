@@ -24,17 +24,11 @@ final class RolesDownloadStrategy implements DownloadStrategyInterface
     /**
      * @var string[]
      */
-    private $roles;
+    private array $roles;
 
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $security;
+    private AuthorizationCheckerInterface $security;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
     /**
      * @param string[] $roles

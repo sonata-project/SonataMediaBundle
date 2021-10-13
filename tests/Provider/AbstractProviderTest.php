@@ -39,24 +39,22 @@ abstract class AbstractProviderTest extends TestCase
     /**
      * @var MockObject&FormBuilderInterface
      */
-    protected $formBuilder;
+    protected MockObject $formBuilder;
 
     /**
      * @var FormMapper<MediaInterface>
      */
-    protected $form;
+    protected FormMapper $form;
 
     /**
      * @var MockObject&FormTypeInterface
      */
-    protected $formType;
+    protected MockObject $formType;
 
     /**
-     * @var MediaProviderInterface
-     *
      * @phpstan-var T
      */
-    protected $provider;
+    protected MediaProviderInterface $provider;
 
     protected function setUp(): void
     {

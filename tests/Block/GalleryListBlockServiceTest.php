@@ -26,12 +26,9 @@ final class GalleryListBlockServiceTest extends BlockServiceTestCase
     /**
      * @var GalleryManagerInterface&MockObject
      */
-    private $galleryManager;
+    private MockObject $galleryManager;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     protected function setUp(): void
     {

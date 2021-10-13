@@ -19,130 +19,67 @@ use Sonata\ClassificationBundle\Model\CategoryInterface;
 
 abstract class Media implements MediaInterface
 {
-    /**
-     * @var string|null
-     */
-    protected $name;
+    protected ?string $name = null;
 
-    /**
-     * @var string|null
-     */
-    protected $description;
+    protected ?string $description = null;
 
-    /**
-     * @var bool
-     */
-    protected $enabled = false;
+    protected bool $enabled = false;
 
-    /**
-     * @var string|null
-     */
-    protected $providerName;
+    protected ?string $providerName = null;
 
-    /**
-     * @var int|null
-     */
-    protected $providerStatus;
+    protected ?int $providerStatus = null;
 
-    /**
-     * @var string|null
-     */
-    protected $providerReference;
+    protected ?string $providerReference = null;
 
     /**
      * @var array<string, mixed>
      */
-    protected $providerMetadata = [];
+    protected array $providerMetadata = [];
 
-    /**
-     * @var int|null
-     */
-    protected $width;
+    protected ?int $width = null;
 
-    /**
-     * @var int|null
-     */
-    protected $height;
+    protected ?int $height = null;
 
-    /**
-     * @var float|null
-     */
-    protected $length;
+    protected ?float $length = null;
 
-    /**
-     * @var string|null
-     */
-    protected $copyright;
+    protected ?string $copyright = null;
 
-    /**
-     * @var string|null
-     */
-    protected $authorName;
+    protected ?string $authorName = null;
 
-    /**
-     * @var string|null
-     */
-    protected $context;
+    protected ?string $context = null;
 
-    /**
-     * @var int|null
-     */
-    protected $cdnStatus;
+    protected ?int $cdnStatus = null;
 
-    /**
-     * @var bool
-     */
-    protected $cdnIsFlushable = false;
+    protected bool $cdnIsFlushable = false;
 
-    /**
-     * @var string|null
-     */
-    protected $cdnFlushIdentifier;
+    protected ?string $cdnFlushIdentifier = null;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected $cdnFlushAt;
+    protected ?\DateTimeInterface $cdnFlushAt = null;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected $updatedAt;
+    protected ?\DateTimeInterface $updatedAt = null;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    protected $createdAt;
+    protected ?\DateTimeInterface $createdAt = null;
 
     /**
      * @var mixed
      */
     protected $binaryContent;
 
-    /**
-     * @var string|null
-     */
-    protected $previousProviderReference;
+    protected ?string $previousProviderReference = null;
 
-    /**
-     * @var string|null
-     */
-    protected $contentType;
+    protected ?string $contentType = null;
 
-    /**
-     * @var int|null
-     */
-    protected $size;
+    protected ?int $size = null;
 
     /**
      * @var Collection<int, GalleryItemInterface>
      */
-    protected $galleryItems;
+    protected Collection $galleryItems;
 
     /**
      * @var CategoryInterface|null
      */
-    protected $category;
+    protected ?object $category = null;
 
     public function __toString(): string
     {

@@ -39,17 +39,14 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     /**
      * @var string[]
      */
-    protected $allowedExtensions;
+    protected array $allowedExtensions;
 
     /**
      * @var string[]
      */
-    protected $allowedMimeTypes;
+    protected array $allowedMimeTypes;
 
-    /**
-     * @var MetadataBuilderInterface|null
-     */
-    protected $metadata;
+    protected ?MetadataBuilderInterface $metadata = null;
 
     /**
      * @param string[] $allowedExtensions

@@ -32,22 +32,19 @@ final class ProxyMetadataBuilderTest extends TestCase
     /**
      * @var Stub&Filesystem
      */
-    private $filesystem;
+    private Stub $filesystem;
 
     /**
      * @var MockObject&MetadataBuilderInterface
      */
-    private $noop;
+    private MockObject $noop;
 
     /**
      * @var MockObject&MetadataBuilderInterface
      */
-    private $amazon;
+    private MockObject $amazon;
 
-    /**
-     * @var ProxyMetadataBuilder
-     */
-    private $proxyMetadataBuilder;
+    private ProxyMetadataBuilder $proxyMetadataBuilder;
 
     protected function setUp(): void
     {

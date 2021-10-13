@@ -33,7 +33,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
     /**
      * @var array<string, mixed>
      */
-    private $sonataAdminConfig = [];
+    private array $sonataAdminConfig = [];
 
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -333,9 +333,17 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         \assert(\is_array($bundles));
 
         // Store SonataAdminBundle configuration for later use
-        if (isset($bundles['SonataAdminBundle'])) {
-            $this->sonataAdminConfig = current($container->getExtensionConfig('sonata_admin'));
+        if (!isset($bundles['SonataAdminBundle'])) {
+            return;
         }
+
+        $sonataAdminConfig = current($container->getExtensionConfig('sonata_admin'));
+
+        if (false === $sonataAdminConfig) {
+            return;
+        }
+
+        $this->sonataAdminConfig = $sonataAdminConfig;
     }
 
     /**

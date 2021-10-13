@@ -31,30 +31,18 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 final class RemoveThumbsCommandTest extends FilesystemTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
-    /**
-     * @var RemoveThumbsCommand
-     */
-    private $command;
+    private RemoveThumbsCommand $command;
 
-    /**
-     * @var CommandTester
-     */
-    private $tester;
+    private CommandTester $tester;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @var MockObject&MediaManagerInterface
      */
-    private $mediaManager;
+    private MockObject $mediaManager;
 
     protected function setUp(): void
     {

@@ -24,10 +24,7 @@ use Twig\TwigFunction;
  */
 class MediaExtensionTest extends TestCase
 {
-    /**
-     * @var MediaExtension
-     */
-    private $mediaExtension;
+    private MediaExtension $mediaExtension;
 
     protected function setUp(): void
     {

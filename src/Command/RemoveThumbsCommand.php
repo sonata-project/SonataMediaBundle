@@ -35,20 +35,11 @@ final class RemoveThumbsCommand extends Command
     protected static $defaultName = 'sonata:media:remove-thumbnails';
     protected static $defaultDescription = 'Remove uploaded image thumbs';
 
-    /**
-     * @var Pool
-     */
-    private $mediaPool;
+    private Pool $mediaPool;
 
-    /**
-     * @var MediaManagerInterface
-     */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
-    /**
-     * @var bool
-     */
-    private $quiet = false;
+    private bool $quiet = false;
 
     /**
      * @internal This class should only be used through the console

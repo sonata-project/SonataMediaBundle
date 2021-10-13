@@ -21,20 +21,11 @@ use Sonata\MediaBundle\Provider\Pool;
 
 final class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
-    /**
-     * @var MetadataBuilderInterface|null
-     */
-    private $noopMetadataBuilder;
+    private ?MetadataBuilderInterface $noopMetadataBuilder = null;
 
-    /**
-     * @var MetadataBuilderInterface|null
-     */
-    private $amazonMetadataBuilder;
+    private ?MetadataBuilderInterface $amazonMetadataBuilder = null;
 
     public function __construct(
         Pool $pool,

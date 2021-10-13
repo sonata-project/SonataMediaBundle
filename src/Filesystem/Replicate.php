@@ -25,20 +25,11 @@ use Psr\Log\NullLogger;
 
 final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSupporter
 {
-    /**
-     * @var Adapter
-     */
-    private $primary;
+    private Adapter $primary;
 
-    /**
-     * @var Adapter
-     */
-    private $secondary;
+    private Adapter $secondary;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(Adapter $primary, Adapter $secondary, ?LoggerInterface $logger = null)
     {

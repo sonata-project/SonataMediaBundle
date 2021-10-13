@@ -25,20 +25,11 @@ final class FixMediaContextCommand extends Command
     protected static $defaultName = 'sonata:media:fix-media-context';
     protected static $defaultDescription = 'Generate the default category for each media context';
 
-    /**
-     * @var Pool
-     */
-    private $mediaPool;
+    private Pool $mediaPool;
 
-    /**
-     * @var CategoryManagerInterface|null
-     */
-    private $categoryManager;
+    private ?CategoryManagerInterface $categoryManager = null;
 
-    /**
-     * @var ContextManagerInterface|null
-     */
-    private $contextManager;
+    private ?ContextManagerInterface $contextManager = null;
 
     /**
      * @internal This class should only be used through the console

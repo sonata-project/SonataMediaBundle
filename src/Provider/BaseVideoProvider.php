@@ -31,20 +31,11 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
-    /**
-     * @var MetadataBuilderInterface|null
-     */
-    protected $metadata;
+    protected ?MetadataBuilderInterface $metadata = null;
 
-    /**
-     * @var ClientInterface
-     */
-    private $client;
+    private ClientInterface $client;
 
-    /**
-     * @var RequestFactoryInterface
-     */
-    private $requestFactory;
+    private RequestFactoryInterface $requestFactory;
 
     public function __construct(
         string $name,

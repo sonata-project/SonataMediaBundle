@@ -28,10 +28,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
  */
 class PoolTest extends TestCase
 {
-    /**
-     * @var Pool
-     */
-    private $mediaPool;
+    private Pool $mediaPool;
 
     protected function setUp(): void
     {

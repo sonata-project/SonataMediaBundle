@@ -44,9 +44,9 @@ interface GalleryInterface
 
     public function getCreatedAt(): ?\DateTimeInterface;
 
-    public function setDefaultFormat(?string $defaultFormat): void;
+    public function setDefaultFormat(string $defaultFormat): void;
 
-    public function getDefaultFormat(): ?string;
+    public function getDefaultFormat(): string;
 
     /**
      * @param Collection<int, GalleryItemInterface> $galleryItems

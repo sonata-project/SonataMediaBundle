@@ -25,10 +25,7 @@ use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryBlockServiceTest extends BlockServiceTestCase
 {
-    /**
-     * @var GalleryBlockService
-     */
-    private $blockService;
+    private GalleryBlockService $blockService;
 
     protected function setUp(): void
     {

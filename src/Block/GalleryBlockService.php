@@ -41,20 +41,14 @@ use Twig\Environment;
  */
 final class GalleryBlockService extends AbstractBlockService implements EditableBlockService
 {
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @var AdminInterface<GalleryInterface>
      */
-    private $galleryAdmin;
+    private AdminInterface $galleryAdmin;
 
-    /**
-     * @var GalleryManagerInterface
-     */
-    private $galleryManager;
+    private GalleryManagerInterface $galleryManager;
 
     /**
      * @param AdminInterface<GalleryInterface> $galleryAdmin

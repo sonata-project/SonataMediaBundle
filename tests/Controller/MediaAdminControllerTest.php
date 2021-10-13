@@ -43,30 +43,21 @@ use Twig\Environment;
 
 class MediaAdminControllerTest extends TestCase
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     /**
      * @var MockObject&AdminInterface<MediaInterface>
      */
-    private $admin;
+    private MockObject $admin;
 
-    /**
-     * @var Request
-     */
-    private $request;
+    private Request $request;
 
-    /**
-     * @var MediaAdminController
-     */
-    private $controller;
+    private MediaAdminController $controller;
 
     /**
      * @var MockObject&Environment
      */
-    private $twig;
+    private MockObject $twig;
 
     /**
      * @psalm-suppress InternalMethod

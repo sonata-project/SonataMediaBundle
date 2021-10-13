@@ -17,15 +17,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 final class IdGenerator implements GeneratorInterface
 {
-    /**
-     * @var int
-     */
-    private $firstLevel;
+    private int $firstLevel;
 
-    /**
-     * @var int
-     */
-    private $secondLevel;
+    private int $secondLevel;
 
     public function __construct(int $firstLevel = 100000, int $secondLevel = 1000)
     {

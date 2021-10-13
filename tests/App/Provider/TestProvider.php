@@ -22,10 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TestProvider extends BaseProvider
 {
-    /**
-     * @var string|null
-     */
-    public $prevReferenceImage;
+    public ?string $prevReferenceImage = null;
 
     public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
     {

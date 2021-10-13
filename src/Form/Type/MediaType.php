@@ -32,24 +32,17 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
-     * @var string
-     *
      * @phpstan-var class-string<\Sonata\MediaBundle\Model\MediaInterface>
      */
-    private $class;
+    private string $class;
 
     /**
-     * @param string $class
-     *
      * @phpstan-param class-string<\Sonata\MediaBundle\Model\MediaInterface> $class
      */
-    public function __construct(Pool $pool, $class)
+    public function __construct(Pool $pool, string $class)
     {
         $this->pool = $pool;
         $this->class = $class;

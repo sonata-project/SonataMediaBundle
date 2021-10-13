@@ -26,10 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class YouTubeProvider extends BaseVideoProvider
 {
-    /**
-     * @var bool
-     */
-    private $html5;
+    private bool $html5;
 
     public function __construct(
         string $name,

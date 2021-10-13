@@ -24,15 +24,12 @@ use Sonata\MediaBundle\Provider\Pool;
 
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
-    /**
-     * @var CategoryManagerInterface|null
-     */
-    private $categoryManager;
+    private ?CategoryManagerInterface $categoryManager = null;
 
     /**
      * @var CategoryInterface[]|null
      */
-    private $rootCategories;
+    private ?array $rootCategories = null;
 
     public function __construct(Pool $pool, ?CategoryManagerInterface $categoryManager = null)
     {

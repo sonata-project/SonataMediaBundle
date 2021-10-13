@@ -28,10 +28,7 @@ final class GalleryAdmin extends AbstractAdmin
 {
     protected $classnameLabel = 'Gallery';
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @phpstan-param class-string<\Sonata\MediaBundle\Model\GalleryInterface> $class
