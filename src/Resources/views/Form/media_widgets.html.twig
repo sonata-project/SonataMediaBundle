@@ -12,7 +12,7 @@ file that was distributed with this source code.
 {% block sonata_media_type_widget %}
     <div class="row">
         <div class="col-md-4 pull-left">
-            {% if value is not empty and value.providerReference %}
+            {% if value is not null and value.providerReference %}
                 {% if sonata_admin_enabled is defined and sonata_admin_enabled and sonata_admin.admin is not same as(false) %}
                     <a href="{{ sonata_admin.admin.getConfigurationPool().adminByAdminCode('sonata.media.admin.media').generateObjectUrl('edit', value) }}">
                         <strong>{{ value.name }}</strong>
@@ -30,9 +30,9 @@ file that was distributed with this source code.
     </div>
     <div class="row">
         <div class="col-md-4 pull-left">
-            {% if value is not empty and value.providerReference %}
+            {% if value is not null and value.providerReference %}
                 <div class="pull-left" style="margin-right: 5px">
-                    {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
+                    {{ media_thumbnail(value, 'admin', {'class': 'img-polaroid media-object'}) }}
                 </div>
             {% else %}
                 <div class="pull-left" style="margin-right: 5px">
@@ -41,7 +41,7 @@ file that was distributed with this source code.
             {% endif %}
         </div>
         <div class="col-md-3 pull-left">
-            {% if value is not empty and value.providerReference %}
+            {% if value is not null and value.providerReference %}
                 <strong>{{ 'widget_label_type'|trans({}, 'SonataMediaBundle') }}:</strong> <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span>
                 <br/>
                 <strong>{{ 'widget_label_context'|trans({}, 'SonataMediaBundle') }}:</strong> <span type="label">{{ value.context|trans({}, 'SonataMediaBundle') }}</span>
