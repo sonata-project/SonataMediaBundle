@@ -67,7 +67,7 @@ class MigrateToJsonTypeCommand extends BaseCommand
         $table = $input->getOption('table');
         $column = $input->getOption('column');
         $columnId = $input->getOption('column_id');
-        $medias = $this->entityManager->getConnection()->fetchAll("SELECT * FROM $table");
+        $medias = $this->entityManager->getConnection()->fetchAllAssociative("SELECT * FROM $table");
 
         foreach ($medias as $media) {
             // if the row need to migrate

@@ -65,7 +65,7 @@
     },
     "conflict": {
         "aws/aws-sdk-php": "<3.0 || >= 4.0",
-        "doctrine/dbal": "<2.6",
+        "doctrine/dbal": "<2.11",
         "doctrine/mongodb-odm": "<2.0",
         "doctrine/orm": "<2.5",
         "doctrine/persistence": "<1.3",
