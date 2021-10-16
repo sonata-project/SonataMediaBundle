@@ -32,21 +32,52 @@ class FixMediaContextCommand extends Command
     private $mediaPool;
 
     /**
-     * @var CategoryManagerInterface|null
-     */
-    private $categoryManager;
-
-    /**
      * @var ContextManagerInterface|null
      */
     private $contextManager;
 
-    public function __construct(Pool $mediaPool, ?CategoryManagerInterface $categoryManager = null, ?ContextManagerInterface $contextManager = null)
+    /**
+     * NEXT_MAJOR: Remove the argument 3 and use `?ContextManagerInterface $contextManager = null` in argument 2.
+     */
+    public function __construct(Pool $mediaPool, ?object $contextManagerOrCategoryManager = null, ?ContextManagerInterface $contextManager = null)
     {
+        if (3 === \func_num_args()) {
+            @trigger_error(sprintf(
+                'The argument 3 in "%s()" is deprecated since sonata-project/media-bundle 3.x and will be removed in version 4.0.'
+                .' Pass this value as argument 2 instead.',
+                __METHOD__
+            ), \E_USER_DEPRECATED);
+        }
+
+        if (null !== $contextManagerOrCategoryManager) {
+            if (!$contextManagerOrCategoryManager instanceof ContextManagerInterface &&
+                !$contextManagerOrCategoryManager instanceof CategoryManagerInterface
+            ) {
+                throw new \TypeError(sprintf(
+                    'Argument 2 passed to "%s()" must be null or an instance of "%s" or "%s", instance of "%s" given.',
+                    __METHOD__,
+                    ContextManagerInterface::class,
+                    CategoryManagerInterface::class,
+                    \get_class($contextManagerOrCategoryManager)
+                ));
+            }
+
+            if ($contextManagerOrCategoryManager instanceof ContextManagerInterface) {
+                $contextManager = $contextManagerOrCategoryManager;
+            } else {
+                @trigger_error(sprintf(
+                    'Passing other type than null or "%s" as argument 2 to "%s()" is deprecated since sonata-project/media-bundle 3.x'
+                    .' and will be not allowed in version 4.0.',
+                    ContextManagerInterface::class,
+                    __METHOD__
+                ), \E_USER_DEPRECATED);
+            }
+        }
+        // NEXT_MAJOR: Remove the previous blocks.
+
         parent::__construct();
 
         $this->mediaPool = $mediaPool;
-        $this->categoryManager = $categoryManager;
         $this->contextManager = $contextManager;
     }
 
@@ -58,10 +89,10 @@ class FixMediaContextCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->categoryManager || null === $this->contextManager) {
+        if (null === $this->contextManager) {
             throw new \LogicException(
                 'This command could not be executed since some of its dependencies is missing.'
-                .' Are the services "sonata.media.manager.category" and "sonata.classification.manager.context" available?'
+                .' Is the service "sonata.classification.manager.context" available?'
             );
         }
 
@@ -79,19 +110,6 @@ class FixMediaContextCommand extends Command
                 $defaultContext->setEnabled(true);
 
                 $this->contextManager->save($defaultContext);
-            }
-
-            $defaultCategory = $this->categoryManager->getRootCategory($defaultContext);
-
-            if (!$defaultCategory) {
-                $output->writeln(sprintf(" > default category for '%s' is missing, creating one", $context));
-                $defaultCategory = $this->categoryManager->create();
-                $defaultCategory->setContext($defaultContext);
-                $defaultCategory->setName(ucfirst($context));
-                $defaultCategory->setEnabled(true);
-                $defaultCategory->setPosition(0);
-
-                $this->categoryManager->save($defaultCategory);
             }
         }
 
