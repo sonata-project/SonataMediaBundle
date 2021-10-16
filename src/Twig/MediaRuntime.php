@@ -149,7 +149,7 @@ final class MediaRuntime implements RuntimeExtensionInterface
             @trigger_error(
                 'Using SonataMediaBundle custom Twig functions with a media that is not'
                 .' the identifier of the media or the media itself is deprecated since'
-                .' sonata-project/media-bundle 3.x and will be removed in version 4.0.',
+                .' sonata-project/media-bundle 3.35 and will be removed in version 4.0.',
                 \E_USER_DEPRECATED
             );
             // throw new \TypeError(sprintf(

@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.35.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.34.2...3.35.0) - 2021-10-18
+### Deprecated
+- [[#2158](https://github.com/sonata-project/SonataMediaBundle/pull/2158)] Deprecated passing null value for the media parameter to twig functions ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2159](https://github.com/sonata-project/SonataMediaBundle/pull/2159)] Deprecated `MigrateToJsonTypeCommand` ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2159](https://github.com/sonata-project/SonataMediaBundle/pull/2159)] Deprecated `ServiceProviderDataTransformer` ([@jordisala1991](https://github.com/jordisala1991))
+
+### Fixed
+- [[#2171](https://github.com/sonata-project/SonataMediaBundle/pull/2171)] Docblock for `CategoryManagerInterface::getRootCategory()` to tell it can return `null` ([@phansys](https://github.com/phansys))
+- [[#2169](https://github.com/sonata-project/SonataMediaBundle/pull/2169)] Call to an undefined method `Connection::fetchAll()` when using `doctrine/dbal:3.x` ([@phansys](https://github.com/phansys))
+- [[#2166](https://github.com/sonata-project/SonataMediaBundle/pull/2166)] Fixed usage of deprecated custom twig tags ([@jordisala1991](https://github.com/jordisala1991))
+
+### Removed
+- [[#2169](https://github.com/sonata-project/SonataMediaBundle/pull/2169)] Support for `doctrine/dbal` < 2.11 ([@phansys](https://github.com/phansys))
+
 ## [3.34.2](https://github.com/sonata-project/SonataMediaBundle/compare/3.34.1...3.34.2) - 2021-10-08
 ### Fixed
 - [[#2152](https://github.com/sonata-project/SonataMediaBundle/pull/2152)] Fixed safe output of `sonata_media` and `sonata_thumbnail` functions ([@jordisala1991](https://github.com/jordisala1991))
