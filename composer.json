@@ -101,7 +101,8 @@
         "phpstan/phpstan-phpunit": "^0.12.16",
         "phpstan/phpstan-strict-rules": "^0.12.10",
         "phpstan/phpstan-symfony": "^0.12.21",
-        "psalm/plugin-phpunit": "^0.15",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.16",
         "sensio/framework-extra-bundle": "^6.1",
         "sonata-project/admin-bundle": "^3.98.2",
         "sonata-project/block-bundle": "^3.17",
@@ -148,13 +149,5 @@
             "Sonata\\MediaBundle\\Tests\\": "tests/",
             "Sonata\\ClassificationBundle\\": "tests/Fixtures/SonataClassificationBundle"
         }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/simple-phpunit install"
-        ],
-        "post-update-cmd": [
-            "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/simple-phpunit install"
-        ]
     }
 }

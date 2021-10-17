@@ -92,7 +92,8 @@ class SyncThumbsCommand extends BaseCommand
         $batchesLimit = (int) $input->getOption('batchesLimit');
         $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
-        do {
+
+        while (true) {
             ++$batchCounter;
 
             try {
@@ -145,7 +146,7 @@ class SyncThumbsCommand extends BaseCommand
             if ($batchesLimit > 0 && $batchCounter === $batchesLimit) {
                 break;
             }
-        } while (true);
+        }
 
         $this->log("Done (total medias processed: {$totalMediasCount}).");
 
