@@ -71,7 +71,7 @@ class FixMediaContextCommand extends Command
                 'id' => $context,
             ]);
 
-            if (!$defaultContext) {
+            if (null === $defaultContext) {
                 $output->writeln(sprintf(" > default context for '%s' is missing, creating one", $context));
                 $defaultContext = $this->contextManager->create();
                 $defaultContext->setId($context);
@@ -83,7 +83,7 @@ class FixMediaContextCommand extends Command
 
             $defaultCategory = $this->categoryManager->getRootCategory($defaultContext);
 
-            if (!$defaultCategory) {
+            if (null === $defaultCategory) {
                 $output->writeln(sprintf(" > default category for '%s' is missing, creating one", $context));
                 $defaultCategory = $this->categoryManager->create();
                 $defaultCategory->setContext($defaultContext);
