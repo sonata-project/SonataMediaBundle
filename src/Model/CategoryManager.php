@@ -32,7 +32,7 @@ final class CategoryManager implements CategoryManagerInterface
         $this->categoryManager = $categoryManager;
     }
 
-    public function getRootCategory($context): CategoryInterface
+    public function getRootCategory($context): ?CategoryInterface
     {
         return $this->categoryManager->getRootCategory($context);
     }

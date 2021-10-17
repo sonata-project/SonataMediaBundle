@@ -24,7 +24,7 @@ interface CategoryManagerInterface
     /**
      * @param string $context
      *
-     * @return CategoryInterface
+     * @return CategoryInterface|null
      */
     public function getRootCategory($context);
 
