@@ -83,7 +83,7 @@ final class SyncThumbsCommand extends Command
         $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
 
-        do {
+        while (true) {
             ++$batchCounter;
 
             try {
@@ -137,7 +137,7 @@ final class SyncThumbsCommand extends Command
             if ($batchesLimit > 0 && $batchCounter === $batchesLimit) {
                 break;
             }
-        } while (true);
+        }
 
         $this->log($output, sprintf('Done (total medias processed: %s).', $totalMediasCount));
 

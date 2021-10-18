@@ -75,20 +75,20 @@ file that was distributed with this source code.
                                 </tr>
                                 <tr>
                                     <th>
-                                        <a href="{% path object, 'reference' %}" target="_blank">reference</a>
+                                        <a href="{{ sonata_path(object, 'reference') }}" target="_blank">reference</a>
                                     </th>
                                     <td>
-                                        <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{% path object, 'reference' %}"/>
+                                        <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{{ sonata_path(object, 'reference') }}"/>
                                     </td>
                                 </tr>
 
                                 {% for name, format in sonata_media.pool.formatNamesByContext(object.context) %}
                                     <tr>
                                         <th>
-                                            <a href="{% path object, name %}" target="_blank">{{ name }}</a>
+                                            <a href="{{ sonata_path(object, name) }}" target="_blank">{{ name }}</a>
                                         </th>
                                         <td>
-                                            <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{% path object, name %}"/>
+                                            <input type="text" class="form-control" onClick="this.select();" readonly="readonly" value="{{ sonata_path(object, name) }}"/>
                                         </td>
                                     </tr>
                                 {% endfor %}

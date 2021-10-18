@@ -79,7 +79,8 @@ final class RemoveThumbsCommand extends Command
         $batchesLimit = (int) $input->getOption('batchesLimit');
         $startOffset = (int) $input->getOption('startOffset');
         $totalMediasCount = 0;
-        do {
+
+        while (true) {
             ++$batchCounter;
 
             try {
@@ -127,7 +128,7 @@ final class RemoveThumbsCommand extends Command
             if ($batchesLimit > 0 && $batchCounter === $batchesLimit) {
                 break;
             }
-        } while (true);
+        }
 
         $this->log($output, sprintf('Done (total medias processed: %s).', $totalMediasCount));
 

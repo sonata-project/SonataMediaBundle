@@ -27,6 +27,7 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
+        "doctrine/persistence": "^2.0",
         "imagine/imagine": "^1.0",
         "knplabs/gaufrette": "^0.10",
         "nyholm/psr7": "^1.4",
@@ -64,6 +65,7 @@
     },
     "conflict": {
         "aws/aws-sdk-php": "<3.0",
+        "doctrine/dbal": "<2.11",
         "doctrine/mongodb-odm": "<2.2",
         "doctrine/orm": "<2.9",
         "knplabs/knp-menu-bundle": "<3.0",
@@ -75,6 +77,7 @@
     },
     "require-dev": {
         "aws/aws-sdk-php": "^3.0",
+        "doctrine/dbal": "^2.11",
         "doctrine/mongodb-odm": "^2.2",
         "doctrine/orm": "^2.9",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
@@ -87,6 +90,7 @@
         "phpstan/phpstan-phpunit": "^0.12.16",
         "phpstan/phpstan-strict-rules": "^0.12.10",
         "phpstan/phpstan-symfony": "^0.12.21",
+        "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.16",
         "psalm/plugin-symfony": "^3.0",
         "sonata-project/admin-bundle": "^4.0",
@@ -118,13 +122,5 @@
         "psr-4": {
             "Sonata\\MediaBundle\\Tests\\": "tests/"
         }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/simple-phpunit install"
-        ],
-        "post-update-cmd": [
-            "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/simple-phpunit install"
-        ]
     }
 }

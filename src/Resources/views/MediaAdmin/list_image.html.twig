@@ -12,5 +12,11 @@ file that was distributed with this source code.
 {% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
 
 {% block field %}
-    <a href="{{ admin.generateObjectUrl(route_name, object) }}">{% thumbnail attribute(object, field_description.name ), 'admin' with {'width': 75, 'height': 60} %}</a>
+    {% set media = attribute(object, field_description.name) %}
+
+    {% if media is not null %}
+        <a href="{{ admin.generateObjectUrl(route_name, object) }}">
+            {{ media_thumbnail(media, 'admin', {'width': 75, 'height': 60}) }}
+        </a>
+    {% endif %}
 {% endblock field %}
