@@ -16,7 +16,7 @@ file that was distributed with this source code.
 
     {% if media is not null %}
         <a href="{{ admin.generateObjectUrl(route, object) }}">
-            {{ media_thumbnail(media, 'admin', {'width': 75, 'height': 60}) }}
+            {{ sonata_thumbnail(media, 'admin', {'width': 75, 'height': 60}) }}
         </a>
     {% endif %}
 {% endblock field %}
