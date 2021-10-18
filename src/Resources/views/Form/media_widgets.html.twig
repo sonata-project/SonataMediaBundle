@@ -32,7 +32,7 @@ file that was distributed with this source code.
         <div class="col-md-4 pull-left">
             {% if value is not null and value.providerReference %}
                 <div class="pull-left" style="margin-right: 5px">
-                    {{ media_thumbnail(value, 'admin', {'class': 'img-polaroid media-object'}) }}
+                    {{ sonata_thumbnail(value, 'admin', {'class': 'img-polaroid media-object'}) }}
                 </div>
             {% else %}
                 <div class="pull-left" style="margin-right: 5px">
