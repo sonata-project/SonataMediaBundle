@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0-alpha1](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.1...4.0.0-alpha1) - 2021-10-20
+### Added
+- [[#2164](https://github.com/sonata-project/SonataMediaBundle/pull/2164)] Added property type hints ([@jordisala1991](https://github.com/jordisala1991))
+
+### Changed
+- [[#2157](https://github.com/sonata-project/SonataMediaBundle/pull/2157)] `cdnIsFlushable` property on Media entity is non nullable now. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2137](https://github.com/sonata-project/SonataMediaBundle/pull/2137)] Changed `FeatureMediaBlockService` to not extend `MediaBlockService`. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2137](https://github.com/sonata-project/SonataMediaBundle/pull/2137)] Changed `MediaBlockService` to be final. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2125](https://github.com/sonata-project/SonataMediaBundle/pull/2125)] Block templates are suposed to be overriden by the application to add its specific design. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Fixed
+- [[#2156](https://github.com/sonata-project/SonataMediaBundle/pull/2156)] Missing CDN part when generating public URL for FileProvider with reference format ([@nicolas-anaxago](https://github.com/nicolas-anaxago))
+- [[#2150](https://github.com/sonata-project/SonataMediaBundle/pull/2150)] Fixed load controllers only when SonataAdminBundle is enabled. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Removed
+- [[#2164](https://github.com/sonata-project/SonataMediaBundle/pull/2164)] Removed support for PHP 7.3 ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.35.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.0...3.35.1) - 2021-10-18
 ### Fixed
 - [[#2175](https://github.com/sonata-project/SonataMediaBundle/pull/2175)] Fixed calling `media_thumbnail` instead of `sonata_thumbnail` ([@jordisala1991](https://github.com/jordisala1991))
