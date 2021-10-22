@@ -39,15 +39,15 @@ You also need to alter the ``sonata_media`` configuration to use the ``sonata.me
     sonata_media:
         providers:
             image:
-                thumbnail:  sonata.media.thumbnail.liip_imagine
+                thumbnail: sonata.media.thumbnail.liip_imagine
                 allowed_extensions: ['jpg', 'png', 'gif', 'jpeg'] # Optional
                 allowed_mime_types: ['image/pjpeg','image/jpeg','image/png','image/x-png', 'image/gif'] # Optional
             vimeo:
-                thumbnail:  sonata.media.thumbnail.liip_imagine
+                thumbnail: sonata.media.thumbnail.liip_imagine
             youtube:
-                thumbnail:  sonata.media.thumbnail.liip_imagine
+                thumbnail: sonata.media.thumbnail.liip_imagine
             dailymotion:
-                thumbnail:  sonata.media.thumbnail.liip_imagine
+                thumbnail: sonata.media.thumbnail.liip_imagine
 
         cdn:
             # The CDN part must point to the base root of your application with a valid htaccess to match non existant

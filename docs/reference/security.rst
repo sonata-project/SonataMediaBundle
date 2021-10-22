@@ -7,19 +7,19 @@ a download strategy interface, which can be set per context and authorize the me
 
 Built-in security strategy:
 
-* ``sonata.media.security.superadmin_strategy`` : DEFAULT - the user needs to have one of the following roles :
+* ``sonata.media.security.superadmin_strategy``: DEFAULT - the user needs to have one of the following roles:
   ``ROLE_SUPER_ADMIN`` or ``ROLE_ADMIN`` (although these roles can be configured in SonataAdminBundle)
-* ``sonata.media.security.public_strategy`` : no restriction, files are public
-* ``sonata.media.security.forbidden_strategy`` : not possible to retrieve the original file
-* ``sonata.media.security.connected_strategy`` : the need to have one of the following roles :
+* ``sonata.media.security.public_strategy``: no restriction, files are public
+* ``sonata.media.security.forbidden_strategy``: not possible to retrieve the original file
+* ``sonata.media.security.connected_strategy``: the need to have one of the following roles:
   ``IS_AUTHENTICATED_FULLY`` or ``IS_AUTHENTICATED_REMEMBERED``
 
 On top of that, there is 3 download modes which can be configured to download the media. The download mode depends on
 the HTTP server you used:
 
-* http : DEFAULT - use php to send the file
-* X-Sendfile : use the ``X-Sendfile`` flag (Apache + mod_xsendfile : https://tn123.org/mod_xsendfile/)
-* X-Accel-Redirect : use the ``X-Accel-Redirect`` flag (Nginx : http://wiki.nginx.org/X-accel)
+* http: DEFAULT - use php to send the file
+* X-Sendfile: use the ``X-Sendfile`` flag (Apache + mod_xsendfile: https://tn123.org/mod_xsendfile/)
+* X-Accel-Redirect: use the ``X-Accel-Redirect`` flag (Nginx: http://wiki.nginx.org/X-accel)
 
 .. note::
 
@@ -43,7 +43,7 @@ For the context ``default`` the user need to be a Super Admin to retrieve the fi
     sonata_media:
         db_driver: doctrine_orm
         contexts:
-            default:  # the default context is mandatory
+            default: # the default context is mandatory
                 download:
                     strategy: sonata.media.security.superadmin_strategy
                     mode: http
@@ -62,19 +62,19 @@ The related download route name is ``sonata_media_download``.
 Creating your own Security Download Strategy
 --------------------------------------------
 
-The Strategy class must implement the ``DownloadStrategyInterface`` which contains 2 main methods :
+The Strategy class must implement the ``DownloadStrategyInterface`` which contains 2 main methods:
 
-* isGranted : return true or false depends on the strategy logic
-* getDescription : explains the strategy
+* isGranted: return true or false depends on the strategy logic
+* getDescription: explains the strategy
 
-Let's create the following strategy : a media can be downloaded only by the given users::
+Let's create the following strategy: a media can be downloaded only by the given users::
 
     namespace Sonata\MediaBundle\Security;
 
     use Sonata\MediaBundle\Model\MediaInterface;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-    use Symfony\Component\Translation\TranslatorInterface;
+    use Symfony\Contracts\Translation\TranslatorInterface;
 
     class UsersDownloadStrategy implements DownloadStrategyInterface
     {
@@ -100,12 +100,12 @@ Let's create the following strategy : a media can be downloaded only by the give
             $this->users = $users;
         }
 
-        public function isGranted(MediaInterface $media, Request $request)
+        public function isGranted(MediaInterface $media, Request $request): bool
         {
             return in_array($this->tokenStorage->getToken()->getUsername(), $this->users);
         }
 
-        public function getDescription()
+        public function getDescription(): string
         {
             return $this->translator->trans(
                 'description.users_download_strategy',
@@ -115,10 +115,10 @@ Let's create the following strategy : a media can be downloaded only by the give
         }
     }
 
-Let's explain a bit :
+Let's explain a bit:
 
-* ``isGranted`` : the method test if granted user exists in allowed users for download
-* ``getDescription`` : return a translated message to explain what the current strategy does
+* ``isGranted``: the method test if granted user exists in allowed users for download
+* ``getDescription``: return a translated message to explain what the current strategy does
 
 The last important part is declaring the service.
 
@@ -130,7 +130,7 @@ The last important part is declaring the service.
 
         services:
             sonata.media.security.users_strategy:
-                class:     Sonata\MediaBundle\Security\UsersDownloadStrategy
+                class: Sonata\MediaBundle\Security\UsersDownloadStrategy
                 arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
 
     .. code-block:: xml

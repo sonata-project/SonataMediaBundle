@@ -17,18 +17,14 @@ For example, let's suppose you got a format called hq, and you want to set 1920 
 Please take a look at how the images are compressed by this function in the image class::
 
     /**
-     * Internal
+     * @internal
      *
      * Performs save or show operation using one of GD's image... functions
-     *
-     * @param string $format
-     * @param array  $options
-     * @param string $filename
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function saveOrOutput($format, array $options, $filename = null)
+    private function saveOrOutput(string $format, array $options, ?string $filename = null): void
     {
         if (!$this->supported($format)) {
             throw new InvalidArgumentException(sprintf(
@@ -77,15 +73,14 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
     # config/packages/sonata_media.yaml
 
     sonata_media:
-        # if you don't use default namespace configuration
-        #class:
-        #    media:        MyVendor\MediaBundle\Entity\Media
-        #    gallery:      MyVendor\MediaBundle\Entity\Gallery
-        #    gallery_item: MyVendor\MediaBundle\Entity\GalleryItem
+        class:
+            media: MyVendor\MediaBundle\Entity\Media
+            gallery: MyVendor\MediaBundle\Entity\Gallery
+            gallery_item: MyVendor\MediaBundle\Entity\GalleryItem
         default_context: default
         db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
         contexts:
-            default:  # the default context is mandatory
+            default: # the default context is mandatory
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -98,9 +93,9 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
                 # You can use the helper `media` with `reference` as format to access the media
                 # {{ sonata_media(media, 'reference') }}
                 formats:
-                    small: { width: 100 , quality: 70  }
-                    big:   { width: 500 , quality: 70  }
-                    hq:    { width: 1920, quality: 100 }
+                    small: { width: 100, quality: 70 }
+                    big: { width: 500, quality: 70 }
+                    hq: { width: 1920, quality: 100 }
 
         cdn:
             server:
@@ -108,5 +103,5 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
 
         filesystem:
             local:
-                directory:  '%kernel.project_dir%/web/uploads/media'
-                create:     false
+                directory: '%kernel.project_dir%/web/uploads/media'
+                create: false

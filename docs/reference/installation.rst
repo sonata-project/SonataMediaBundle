@@ -8,8 +8,7 @@ Installation
 Prerequisites
 -------------
 
-PHP ^7.2 and Symfony ^4.4 are needed to make this bundle work, there are
-also some Sonata dependencies that need to be installed and configured beforehand.
+There are some Sonata dependencies that need to be installed and configured beforehand.
 
 Optional dependencies:
 
@@ -29,30 +28,12 @@ their own installation chapter.
     If a dependency is already installed somewhere in your project or in
     another dependency, you won't need to install it again.
 
-Install Symfony Flex packs
---------------------------
-
-With this method you can directly setup all the entities required to make this bundle work
-with the different persistence bundles supported.
-
-If you picked ``SonataDoctrineOrmAdminBundle``, install the Sonata Media ORM pack::
-
-    composer require sonata-project/media-orm-pack
-
-If you picked ``SonataDoctrineMongoDBAdminBundle``, install the Sonata Media ODM pack::
-
-    composer require sonata-project/media-odm-pack
-
-Install without Symfony Flex packs
-----------------------------------
+Installation
+------------
 
 Add ``SonataMediaBundle`` via composer::
 
     composer require sonata-project/media-bundle
-
-To load external resources, e.g. Vimeo or YouTube, you must use a ``psr/http-client`` and ``psr/http-factory``::
-
-    composer require symfony/http-client nyholm/psr7
 
 Next, be sure to enable the bundles in your ``config/bundles.php`` file if they
 are not already enabled::
@@ -79,10 +60,10 @@ SonataMediaBundle Configuration
             media: App\Entity\SonataMediaMedia
             gallery: App\Entity\SonataMediaGallery
             gallery_item: App\Entity\SonataMediaGalleryItem
-        db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr it is mandatory to choose one here
+        db_driver: doctrine_orm # or doctrine_mongodb, it is mandatory to choose one here
         default_context: default # you need to set a context
         contexts:
-            default:  # the default context is mandatory
+            default: # the default context is mandatory
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -90,11 +71,11 @@ SonataMediaBundle Configuration
                     - sonata.media.provider.file
                     - sonata.media.provider.vimeo
                 formats:
-                    small: { width: 100 , quality: 70}
-                    big: { width: 500 , quality: 70}
+                    small: { width: 100, quality: 70 }
+                    big: { width: 500, quality: 70 }
         cdn:
             server:
-                path: /uploads/media # http://media.sonata-project.org/
+                path: /uploads/media
         filesystem:
             local:
                 directory: '%kernel.project_dir%/public/uploads/media'
