@@ -344,11 +344,11 @@ of options that need to be passed to the ``view_vimeo.html.twig`` template file:
             'js_swf_id' => uniqid('vimeo_player_'),
         ];
 
-        $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
+        $playerParameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
 
         $params = [
-            'src' => http_build_query($player_parameters),
-            'id' => $player_parameters['js_swf_id'],
+            'src' => http_build_query($playerParameters),
+            'id' => $playerParameters['js_swf_id'],
             'frameborder' => $options['frameborder'] ?? 0,
             'width' => $options['width'] ?? $media->getWidth(),
             'height' => $options['height'] ?? $media->getHeight(),

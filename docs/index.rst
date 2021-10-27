@@ -62,7 +62,7 @@ Available services
     - ``sonata.media.cdn.server``: The local HTTP server (default)
     - ``sonata.media.cdn.panther``: Panther Portal
     - ``sonata.media.cdn.cloudfront``: [AWS CloudFront](https://aws.amazon.com/cloudfront/)
-    - ``sonata.media.cdn.fallback``: Fallback, use the fallback (the http server) if the Media is not yet flushed on the CDN
+    - ``sonata.media.cdn.fallback``: Fallback, use the fallback (the HTTP server) if the media is not yet flushed on the CDN
 
 More services will be available in the future depending on your contributions! :)
 
