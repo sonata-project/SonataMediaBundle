@@ -63,7 +63,7 @@ Full configuration options:
 
         cdn:
             server:
-                path: /uploads/media # http://media.sonata-project.org
+                path: /uploads/media
 
             panther:
                 path: http://domain.pantherportal.com/uploads/media

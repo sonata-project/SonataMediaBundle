@@ -99,7 +99,7 @@ Finally your settings in your ``sonata_media`` parameters will look like this:
 
         cdn:
             server:
-                path: /uploads/media # http://media.sonata-project.org/
+                path: /uploads/media
 
         filesystem:
             local:
