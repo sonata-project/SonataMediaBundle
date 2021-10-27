@@ -57,7 +57,7 @@ You also need to add a new form theme template to twig configuration:
     # config/packages/twig.yaml
 
     twig:
-        debug:            '%kernel.debug%'
+        debug: '%kernel.debug%'
         strict_variables: '%kernel.debug%'
 
         form_themes:

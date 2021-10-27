@@ -24,13 +24,13 @@ for each provider:
             enabled: true
         providers:
             image:
-                thumbnail:  sonata.media.thumbnail.messenger
+                thumbnail: sonata.media.thumbnail.messenger
             vimeo:
-                thumbnail:  sonata.media.thumbnail.messenger
+                thumbnail: sonata.media.thumbnail.messenger
             youtube:
-                thumbnail:  sonata.media.thumbnail.messenger
+                thumbnail: sonata.media.thumbnail.messenger
             dailymotion:
-                thumbnail:  sonata.media.thumbnail.messenger
+                thumbnail: sonata.media.thumbnail.messenger
 
 To handle async messages, make sure you configure messenger with an async transport:
 
@@ -41,7 +41,7 @@ To handle async messages, make sure you configure messenger with an async transp
     framework:
         messenger:
             transports:
-                async: "%env(MESSENGER_TRANSPORT_DSN)%"
+                async: '%env(MESSENGER_TRANSPORT_DSN)%'
             routing:
                 'Sonata\MediaBundle\Messenger\GenerateThumbnailsMessage': async
 

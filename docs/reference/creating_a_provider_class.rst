@@ -18,8 +18,8 @@ asset:
 
 A provider class is always linked to a ``Filesystem`` and a ``CDN``. The
 filesystem abstraction uses the ``Gaufrette`` library. For now there is
-only 2 abstracted filesystem available : ``Local`` and ``FTP``. The ``CDN``
-is used to generated the media asset public url.
+only 2 abstracted filesystem available: ``Local`` and ``FTP``. The ``CDN``
+is used to generated the media asset public URL.
 
 By default the filesystem and the CDN use the local filesystem and the current
 server for the CDN.
@@ -48,31 +48,30 @@ Case Study
 Before starting, we need to collect information about some asset on vimeo.
 Take this video, for example:
 
-* video identifier format : 21216091
-* video player documentation : http://vimeo.com/api/docs/moogaloop
-* metadata : https://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
+* video identifier format: 21216091
+* video player documentation: https://developer.vimeo.com/player/sdk
 
 .. code-block:: json
 
-   {
-     "type":"video",
-     "version":"1.0",
-     "provider_name":"Vimeo",
-     "provider_url":"http:\/\/vimeo.com\/",
-     "title":"Blinky",
-     "author_name":"Ruairi Robinson",
-     "author_url":"http:\/\/vimeo.com\/ruairirobinson",
-     "is_plus":"1",
-     "html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>",
-     "width":"1920",
-     "height":"1080",
-     "duration":"771",
-     "description":"Soon every home will have a robot helper. \n\nDon't worry. \n\nIt's perfectly safe.\n\n\n\nWritten & Directed by Ruairi Robinson\n\nStarring Max Records from \"Where The Wild Things Are\".\n\nCinematography by Macgregor",
-     "thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg",
-     "thumbnail_width":1280,
-     "thumbnail_height":720,
-     "video_id":"21216091"
-   }
+    {
+        "type":"video",
+        "version":"1.0",
+        "provider_name":"Vimeo",
+        "provider_url":"http:\/\/vimeo.com\/",
+        "title":"Blinky",
+        "author_name":"Ruairi Robinson",
+        "author_url":"http:\/\/vimeo.com\/ruairirobinson",
+        "is_plus":"1",
+        "html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>",
+        "width":"1920",
+        "height":"1080",
+        "duration":"771",
+        "description":"Soon every home will have a robot helper. \n\nDon't worry. \n\nIt's perfectly safe.\n\n\n\nWritten & Directed by Ruairi Robinson\n\nStarring Max Records from \"Where The Wild Things Are\".\n\nCinematography by Macgregor",
+        "thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg",
+        "thumbnail_width":1280,
+        "thumbnail_height":720,
+        "video_id":"21216091"
+    }
 
 The metadata contains all information we want.
 
@@ -105,26 +104,29 @@ The ``MediaAdmin`` class, used by the ``AdminBundle``, does not know how
 to create the form as the form is unique per provider. So the ``MediaAdmin``
 delegates this definition to the related provider::
 
-    public function buildCreateForm(FormMapper $formMapper)
+    public function buildCreateForm(FormMapper $form): void
     {
-        $formMapper->add('binaryContent', [], ['type' => 'string']);
+        $form->add('binaryContent', [], ['type' => 'string']);
     }
 
-    public function buildEditForm(FormMapper $formMapper)
+    public function buildEditForm(FormMapper $form): void
     {
-        $formMapper->add('name');
-        $formMapper->add('enabled');
-        $formMapper->add('authorName');
-        $formMapper->add('cdnIsFlushable');
-        $formMapper->add('description');
-        $formMapper->add('copyright');
-        $formMapper->add('binaryContent', [], ['type' => 'string']);
+        $form->add('name');
+        $form->add('enabled');
+        $form->add('authorName');
+        $form->add('cdnIsFlushable');
+        $form->add('description');
+        $form->add('copyright');
+        $form->add('binaryContent', [], ['type' => 'string']);
     }
 
 Once the form is submitted, we retrieve the video metadata. The metadata
 is going to be used to store ``Media`` information::
 
-    public function getMetadata(MediaInterface $media)
+    /**
+     * @return mixed
+     */
+    private function getMetadata(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -148,14 +150,14 @@ is going to be used to store ``Media`` information::
 
 Now, we need to code the logic for the create mode. The ``$media`` contains
 data from the ``POST``. The ``AdminBundle`` always calls specific methods
-while saving an object :
+while saving an object:
 
 * ``prePersist`` / ``postPersist``
 * ``preUpdate`` / ``postUpdate``
 
 The ``MediaAdmin`` delegates this management to the media provider::
 
-    public function prePersist(MediaInterface $media)
+    public function prePersist(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -185,7 +187,7 @@ The ``MediaAdmin`` delegates this management to the media provider::
 
 The update method should only update data that cannot be managed by the user::
 
-    public function preUpdate(MediaInterface $media)
+    public function preUpdate(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -209,12 +211,12 @@ needs to generate the correct thumbnails.
 The ``postPersist`` and ``postUpdate`` must be implemented to generate valid
 thumbnails::
 
-    public function postUpdate(MediaInterface $media)
+    public function postUpdate(MediaInterface $media): void
     {
         $this->postPersist($media);
     }
 
-    public function postPersist(MediaInterface $media)
+    public function postPersist(MediaInterface $media): void
     {
         if (!$media->getBinaryContent()) {
             return;
@@ -227,13 +229,13 @@ The ``generateThumbnails`` method is defined in the ``BaseProvider`` class.
 This method required a ``getReferenceImage`` method that returns the reference
 image::
 
-    public function getReferenceImage(MediaInterface $media)
+    public function getReferenceImage(MediaInterface $media): string
     {
         return $media->getMetadataValue('thumbnail_url');
     }
 
 At this point, the provider class is almost finish: we can add and remove
-a vimeo video : thanks to the ``AdminBundle`` integration and the ``VimeoProvider``
+a vimeo video: thanks to the ``AdminBundle`` integration and the ``VimeoProvider``
 service.
 
 Video Provider
@@ -242,7 +244,7 @@ Video Provider
 When creating a video provider by extending the  ``BaseVideoProvider`` class, you have to implement the
 ``getReferenceUrl`` method. This method contains the external url to the video media::
 
-    public function getReferenceUrl(MediaInterface $media)
+    public function getReferenceUrl(MediaInterface $media): string
     {
         return sprintf('http://foobar.com/%s', $media->getProviderReference());
     }
@@ -306,13 +308,13 @@ provide a rich set of options to embed the media. The
 ``VideoProvider::getHelperProperties()`` method generates the correct set
 of options that need to be passed to the ``view_vimeo.html.twig`` template file::
 
-    public function getHelperProperties(Media $media, $format, $options = [])
+    public function getHelperProperties(Media $media, string $format, array $options = []): array
     {
-        // documentation : http://vimeo.com/api/docs/moogaloop
+        // documentation: http://vimeo.com/api/docs/moogaloop
         $defaults = [
             // (optional) Flash Player version of app. Defaults to 9 .NEW!
             // 10 - New Moogaloop. 9 - Old Moogaloop without newest features.
-            'fp_version'      => 10,
+            'fp_version' => 10,
 
             // (optional) Enable fullscreen capability. Defaults to true.
             'fullscreen' => true,
@@ -342,14 +344,14 @@ of options that need to be passed to the ``view_vimeo.html.twig`` template file:
             'js_swf_id' => uniqid('vimeo_player_'),
         ];
 
-        $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
+        $playerParameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : []);
 
         $params = [
-            'src'         => http_build_query($player_parameters),
-            'id'          => $player_parameters['js_swf_id'],
-            'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
-            'width'       => isset($options['width']) ? $options['width'] : $media->getWidth(),
-            'height'      => isset($options['height']) ? $options['height'] : $media->getHeight(),
+            'src' => http_build_query($playerParameters),
+            'id' => $playerParameters['js_swf_id'],
+            'frameborder' => $options['frameborder'] ?? 0,
+            'width' => $options['width'] ?? $media->getWidth(),
+            'height' => $options['height'] ?? $media->getHeight(),
         ];
 
         return $params;
@@ -361,7 +363,7 @@ From the vimeo's documentation, a video can be included like this:
 
     <iframe
         id="{{ options.id }}"
-        src="http://player.vimeo.com/video/{{ media.providerreference }}?{{ options.src }}"
+        src="http://player.vimeo.com/video/{{ media.providerReference }}?{{ options.src }}"
         width="{{ options.width }}"
         height="{{ options.height }}"
         frameborder="{{ options.frameborder }}">
