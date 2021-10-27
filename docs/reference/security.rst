@@ -11,15 +11,15 @@ Built-in security strategy:
   ``ROLE_SUPER_ADMIN`` or ``ROLE_ADMIN`` (although these roles can be configured in SonataAdminBundle)
 * ``sonata.media.security.public_strategy``: no restriction, files are public
 * ``sonata.media.security.forbidden_strategy``: not possible to retrieve the original file
-* ``sonata.media.security.connected_strategy``: the need to have one of the following roles:
+* ``sonata.media.security.connected_strategy``: the user needs to have one of the following roles:
   ``IS_AUTHENTICATED_FULLY`` or ``IS_AUTHENTICATED_REMEMBERED``
 
-On top of that, there is 3 download modes which can be configured to download the media. The download mode depends on
+On top of that, there are 3 download modes which can be configured to download the media. The download mode depends on
 the HTTP server you used:
 
 * http: DEFAULT - use php to send the file
 * X-Sendfile: use the ``X-Sendfile`` flag (Apache + mod_xsendfile: https://tn123.org/mod_xsendfile/)
-* X-Accel-Redirect: use the ``X-Accel-Redirect`` flag (Nginx: http://wiki.nginx.org/X-accel)
+* X-Accel-Redirect: use the ``X-Accel-Redirect`` flag (Nginx: https://www.nginx.com/resources/wiki/start/topics/examples/x-accel/#x-accel-redirect)
 
 .. note::
 
@@ -62,7 +62,7 @@ The related download route name is ``sonata_media_download``.
 Creating your own Security Download Strategy
 --------------------------------------------
 
-The Strategy class must implement the ``DownloadStrategyInterface`` which contains 2 main methods:
+The strategy class must implement the ``DownloadStrategyInterface`` which contains 2 main methods:
 
 * isGranted: return true or false depends on the strategy logic
 * getDescription: explains the strategy
@@ -117,7 +117,7 @@ Let's create the following strategy: a media can be downloaded only by the given
 
 Let's explain a bit:
 
-* ``isGranted``: the method test if granted user exists in allowed users for download
+* ``isGranted``: the method test if allowed users contains the authenticated user for download
 * ``getDescription``: return a translated message to explain what the current strategy does
 
 The last important part is declaring the service.

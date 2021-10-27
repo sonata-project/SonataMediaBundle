@@ -46,9 +46,9 @@ Available services
 
     - ``sonata.media.provider.image``: Image
     - ``sonata.media.provider.file``: File
-    - ``sonata.media.provider.dailymotion``: Dailymotion
-    - ``sonata.media.provider.vimeo``: Vimeo
-    - ``sonata.media.provider.youtube``: Youtube
+    - ``sonata.media.provider.dailymotion``: [Dailymotion](https://www.dailymotion.com/)
+    - ``sonata.media.provider.vimeo``: [Vimeo](https://vimeo.com/)
+    - ``sonata.media.provider.youtube``: [YouTube](https://www.youtube.com/)
 
  -  Filesystem
 
@@ -59,9 +59,9 @@ Available services
 
  - CDN
 
-    - ``sonata.media.cdn.server``: The local http server (default)
+    - ``sonata.media.cdn.server``: The local HTTP server (default)
     - ``sonata.media.cdn.panther``: Panther Portal
-    - ``sonata.media.cdn.cloudfront``: Amazon Cloudfront CDN
+    - ``sonata.media.cdn.cloudfront``: [AWS CloudFront](https://aws.amazon.com/cloudfront/)
     - ``sonata.media.cdn.fallback``: Fallback, use the fallback (the http server) if the Media is not yet flushed on the CDN
 
 More services will be available in the future depending on your contributions! :)

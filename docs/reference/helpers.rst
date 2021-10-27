@@ -77,8 +77,8 @@ Thumbnails for files
 The ``sonata.media.provider.file`` provider does not generate thumbnails.
 This provider tries to display a default thumbnail.
 
-The default thumbnail must be put in the ``bundles/sonatamedia/file.png``.
-It is automatically there when you install assets using
+The default thumbnail must be put in ``bundles/sonatamedia/file.png``.
+It is automatically available there when you install assets using
 
 .. code-block:: bash
 

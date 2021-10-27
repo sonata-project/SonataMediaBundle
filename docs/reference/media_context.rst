@@ -70,7 +70,7 @@ parameter will be used by the related controller::
             ->add('image', 'sonata_type_model_list', [], ['link_parameters' =>['context' => 'news']]);
     }
 
-If you look in the ``MediaAdmin`` class, the class defined a ``configurePersistentParameters``
+If you look in the ``MediaAdmin`` class, the class defined a ``configurePersistentParameters()``
 method. This method allows you to define persistent parameters across the
 ``MediaAdminController``. Depending on the action, the parameter can change
 the Admin behaviors::

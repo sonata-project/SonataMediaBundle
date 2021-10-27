@@ -19,7 +19,7 @@ asset:
 A provider class is always linked to a ``Filesystem`` and a ``CDN``. The
 filesystem abstraction uses the ``Gaufrette`` library. For now there is
 only 2 abstracted filesystem available: ``Local`` and ``FTP``. The ``CDN``
-is used to generated the media asset public url.
+is used to generated the media asset public URL.
 
 By default the filesystem and the CDN use the local filesystem and the current
 server for the CDN.
@@ -49,8 +49,7 @@ Before starting, we need to collect information about some asset on vimeo.
 Take this video, for example:
 
 * video identifier format: 21216091
-* video player documentation: http://vimeo.com/api/docs/moogaloop
-* metadata: https://vimeo.com/api/oembed.json?url=http://vimeo.com/21216091
+* video player documentation: https://developer.vimeo.com/player/sdk
 
 .. code-block:: json
 

@@ -30,7 +30,7 @@ or this::
 Retrieving metadata information
 -------------------------------
 
-The providers has a dedicated field where extra information can be saved: the providerMetadata field.
+The providers has a dedicated field where extra information can be saved: the ``providerMetadata`` field.
 
 You can retrieve a value very easily with the ``getMetadataValue`` method.
 

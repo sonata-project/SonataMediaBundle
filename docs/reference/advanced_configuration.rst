@@ -72,7 +72,7 @@ Full configuration options:
                 username:
 
             cloudfront:
-                path: http://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
+                path: https://xxxxxxxxxxxxxx.cloudfront.net/uploads/media
                 distribution_id:
                 key:
                 secret:
