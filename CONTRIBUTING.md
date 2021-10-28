@@ -215,20 +215,20 @@ Here is a short table resuming on which you have to start:
 
 Kind of modification | Backward Compatible (BC) | Type of release | Branch to target        | Label |
 -------------------- | ------------------------ | --------------- | ----------------------- | ----- |
-Bug fixes            | Yes                      | Patch           | `3.x`   |       |
-Bug fixes            | No (Only if no choice)   | Major           | `4.x` |       |
-Feature              | Yes                      | Minor           | `3.x`   |       |
-Feature              | No (Only if no choice)   | Major           | `4.x` |       |
-Deprecation          | Yes (Have to)            | Minor           | `3.x`   |       |
-Deprecation removal  | No (Can't be)            | Major           | `4.x` |       |
+Bug fixes            | Yes                      | Patch           | `4.x`   |       |
+Bug fixes            | No (Only if no choice)   | Major           | `5.x` |       |
+Feature              | Yes                      | Minor           | `4.x`   |       |
+Feature              | No (Only if no choice)   | Major           | `5.x` |       |
+Deprecation          | Yes (Have to)            | Minor           | `4.x`   |       |
+Deprecation removal  | No (Can't be)            | Major           | `5.x` |       |
 
 Notes:
-  * Branch `3.x` is the branch of the **latest stable** minor release and
+  * Branch `4.x` is the branch of the **latest stable** minor release and
   has to be used for Backward compatible PRs.
   * If you PR is not **Backward Compatible** but can be, it **MUST** be:
     * Changing a function/method signature? Prefer create a new one and deprecate the old one.
     * Code deletion? Don't. Please deprecate it instead.
-    * If your BC PR is accepted, you can do a new one on the `4.x` branch which removes the deprecated code.
+    * If your BC PR is accepted, you can do a new one on the `5.x` branch which removes the deprecated code.
     * SYMFONY DOC REF (same logic)?
 
 If you have a non-BC PR to propose, please try to create a related BC PR first.
