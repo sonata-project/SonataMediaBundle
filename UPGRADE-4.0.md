@@ -1,6 +1,30 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+### Replicate Filesystem
+
+Mentions to `master` and `slave` were completely replaced by `primary` and `secondary` so if you are using the replicate filesystem you will need to change the configuration.
+
+Before:
+
+```yaml
+sonata_media:
+    filesystem:
+        replicate:
+            master: sonata.media.adapter.filesystem.s3
+            slave: sonata.media.adapter.filesystem.local
+```
+
+After:
+
+```yaml
+sonata_media:
+    filesystem:
+        replicate:
+            primary: sonata.media.adapter.filesystem.s3
+            secondary: sonata.media.adapter.filesystem.local
+```
+
 ### Media migration
 
 Media ORM definition changed `cdnIsFlushable` from nullable to not nullable. Make sure to run a migration to upgrade
