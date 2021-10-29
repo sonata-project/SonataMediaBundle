@@ -113,8 +113,8 @@ Full configuration options:
                     key1: value1 #any amount of metas(sent as x-amz-meta-key1 = value1)
 
             replicate:
-                master: sonata.media.adapter.filesystem.s3
-                slave: sonata.media.adapter.filesystem.local
+                primary: sonata.media.adapter.filesystem.s3
+                secondary: sonata.media.adapter.filesystem.local
 
         providers:
             file:

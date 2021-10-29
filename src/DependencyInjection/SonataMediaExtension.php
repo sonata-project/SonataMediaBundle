@@ -316,8 +316,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.replicate')
-                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['master']))
-                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['slave']));
+                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['primary']))
+                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['secondary']));
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');

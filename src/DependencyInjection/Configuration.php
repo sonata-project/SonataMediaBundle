@@ -271,8 +271,8 @@ final class Configuration implements ConfigurationInterface
 
                         ->arrayNode('replicate')
                             ->children()
-                                ->scalarNode('master')->isRequired()->end()
-                                ->scalarNode('slave')->isRequired()->end()
+                                ->scalarNode('primary')->isRequired()->end()
+                                ->scalarNode('secondary')->isRequired()->end()
                             ->end()
                         ->end()
                     ->end()
