@@ -31,7 +31,9 @@ namespace Sonata\MediaBundle\CDN;
  *    Any requests until the rate limit is no longer exceeded will receive this response.
  */
 /**
- * @final since sonata-project/media-bundle 3.21.0
+ * NEXT_MAJOR: Remove this class.
+ *
+ * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
  */
 class PantherPortal implements CDNInterface
 {

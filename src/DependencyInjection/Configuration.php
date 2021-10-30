@@ -144,7 +144,12 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
+                        // NEXT_MAJOR: Remove this configuration.
                         ->arrayNode('panther')
+                            ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                'The node "%node%" is deprecated and will be removed in version 4.0',
+                                '3.x'
+                            ))
                             ->children()
                                 ->scalarNode('path')
                                     ->info('e.g. http://domain.pantherportal.com/uploads/media')
