@@ -172,7 +172,14 @@ class Configuration implements ConfigurationInterface
 
                         ->arrayNode('fallback')
                             ->children()
-                                ->scalarNode('master')->isRequired()->end()
+                                // NEXT_MAJOR: Remove master and make primary required
+                                ->scalarNode('master')
+                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                        'The "%node%" option is deprecated, use "primary" instead.',
+                                        '3.x'
+                                    ))
+                                ->end()
+                                ->scalarNode('primary')->end()
                                 ->scalarNode('fallback')->isRequired()->end()
                             ->end()
                         ->end()
@@ -295,10 +302,23 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
+                        // NEXT_MAJOR: Remove master and slave and make primary and secondary required
                         ->arrayNode('replicate')
                             ->children()
-                                ->scalarNode('master')->isRequired()->end()
-                                ->scalarNode('slave')->isRequired()->end()
+                                ->scalarNode('master')
+                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                        'The "%node%" option is deprecated, use "primary" instead.',
+                                        '3.x'
+                                    ))
+                                ->end()
+                                ->scalarNode('primary')->end()
+                                ->scalarNode('slave')
+                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
+                                        'The "%node%" option is deprecated, use "secondary" instead.',
+                                        '3.x'
+                                    ))
+                                ->end()
+                                ->scalarNode('secondary')->end()
                             ->end()
                         ->end()
                         ->arrayNode('openstack')

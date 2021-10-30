@@ -18,6 +18,34 @@ This command was introduced a long time ago to migrate from array to json. Make 
 
 This class is deprecated because it is dead code. If you use it, please use `ProviderDataTransformer` instead.
 
+### Deprecated using `master` and `slave` words in configuration
+
+Before:
+
+```yaml
+sonata_media:
+    cdn:
+        fallback:
+            master: sonata.media.cdn.panther
+    filesystem:
+        replicate:
+            master: sonata.media.adapter.filesystem.s3
+            slave: sonata.media.adapter.filesystem.local
+```
+
+After:
+
+```yaml
+sonata_media:
+    cdn:
+        fallback:
+            primary: sonata.media.cdn.panther
+    filesystem:
+        replicate:
+            primary: sonata.media.adapter.filesystem.s3
+            secondary: sonata.media.adapter.filesystem.local
+```
+
 UPGRADE FROM 3.33 to 3.34
 =========================
 

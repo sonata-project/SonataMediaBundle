@@ -81,7 +81,7 @@ Full configuration options:
                 version:
 
             fallback:
-                master:     sonata.media.cdn.panther
+                primary:     sonata.media.cdn.panther
                 fallback:   sonata.media.cdn.server
 
         filesystem:
@@ -118,8 +118,8 @@ Full configuration options:
                 domain:
 
             replicate:
-                master: sonata.media.adapter.filesystem.s3
-                slave: sonata.media.adapter.filesystem.local
+                primary: sonata.media.adapter.filesystem.s3
+                secondary: sonata.media.adapter.filesystem.local
 
         providers:
             file:
