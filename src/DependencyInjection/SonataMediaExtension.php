@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\DependencyInjection;
 
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
-use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -207,13 +206,10 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
                 'secret' => $config['cdn']['cloudfront']['secret'],
             ];
 
-            $cloudFrontClass = CloudFrontVersion3::class;
-
             $container->getDefinition('sonata.media.cdn.cloudfront.client')
                 ->replaceArgument(0, $cloudFrontConfig);
 
             $container->getDefinition('sonata.media.cdn.cloudfront')
-                ->setClass($cloudFrontClass)
                 ->replaceArgument(0, new Reference('sonata.media.cdn.cloudfront.client'))
                 ->replaceArgument(1, $config['cdn']['cloudfront']['distribution_id'])
                 ->replaceArgument(2, $config['cdn']['cloudfront']['path']);
