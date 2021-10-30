@@ -4,6 +4,10 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Deprecate PantherPortal CDN
+
+PantherPortal CDN no longer exists.
+
 ### Deprecate `null` media value on Twig functions
 
 Our custom twig functions (`sonata_media`, `sonata_thumbnail` and `sonata_path`) used to accept a null value and produce an empty result.

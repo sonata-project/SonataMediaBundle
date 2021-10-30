@@ -331,6 +331,7 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
             $container->removeDefinition('sonata.media.cdn.server');
         }
 
+        // NEXT_MAJOR: Remove this configuration and everything related to PantherPortal
         if ($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['panther'])) {
             $container->getDefinition('sonata.media.cdn.panther')
                 ->replaceArgument(0, $config['cdn']['panther']['path'])
