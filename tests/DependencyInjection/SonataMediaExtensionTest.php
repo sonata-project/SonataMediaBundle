@@ -414,25 +414,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('sonata.media.formatter.twig', FormatterMediaExtension::class);
     }
 
-    /**
-     * NEXT_MAJOR: Remove this test.
-     *
-     * @group legacy
-     */
-    public function testFallbackCDNWithDeprecatedConfiguration(): void
-    {
-        $this->load([
-            'cdn' => [
-                'fallback' => [
-                    'master' => 'sonata.media.cdn.cloudfront',
-                    'fallback' => 'sonata.media.cdn.server',
-                ],
-            ],
-        ]);
-
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.cdn.fallback', 0, 'sonata.media.cdn.cloudfront');
-    }
-
     public function testFallbackCDN(): void
     {
         $this->load([
@@ -445,26 +426,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ]);
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.cdn.fallback', 0, 'sonata.media.cdn.cloudfront');
-    }
-
-    /**
-     * NEXT_MAJOR: Remove this test.
-     *
-     * @group legacy
-     */
-    public function testReplicateFilesystemWithDeprecatedConfiguration(): void
-    {
-        $this->load([
-            'filesystem' => [
-                'replicate' => [
-                    'master' => 'sonata.media.adapter.filesystem.s3',
-                    'slave' => 'sonata.media.adapter.filesystem.local',
-                ],
-            ],
-        ]);
-
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 0, 'sonata.media.adapter.filesystem.s3');
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 1, 'sonata.media.adapter.filesystem.local');
     }
 
     public function testReplicateFilesystem(): void

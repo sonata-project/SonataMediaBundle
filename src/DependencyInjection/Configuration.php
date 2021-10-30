@@ -153,23 +153,6 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
-                        // NEXT_MAJOR: Remove this configuration.
-                        ->arrayNode('panther')
-                            ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                'The node "%node%" is deprecated and will be removed in version 4.0.',
-                                '3.x'
-                            ))
-                            ->children()
-                                ->scalarNode('path')
-                                    ->info('e.g. http://domain.pantherportal.com/uploads/media')
-                                    ->isRequired()
-                                ->end()
-                                ->scalarNode('site_id')->isRequired()->end()
-                                ->scalarNode('password')->isRequired()->end()
-                                ->scalarNode('username')->isRequired()->end()
-                            ->end()
-                        ->end()
-
                         ->arrayNode('cloudfront')
                             ->children()
                                 ->scalarNode('path')
@@ -186,14 +169,7 @@ final class Configuration implements ConfigurationInterface
 
                         ->arrayNode('fallback')
                             ->children()
-                                // NEXT_MAJOR: Remove master and make primary required
-                                ->scalarNode('master')
-                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                        'The "%node%" option is deprecated, use "primary" instead.',
-                                        '3.x'
-                                    ))
-                                ->end()
-                                ->scalarNode('primary')->end()
+                                ->scalarNode('primary')->isRequired()->end()
                                 ->scalarNode('fallback')->isRequired()->end()
                             ->end()
                         ->end()
@@ -284,20 +260,8 @@ final class Configuration implements ConfigurationInterface
                         // NEXT_MAJOR: Remove master and slave and make primary and secondary required
                         ->arrayNode('replicate')
                             ->children()
-                                ->scalarNode('master')
-                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                        'The "%node%" option is deprecated, use "primary" instead.',
-                                        '3.x'
-                                    ))
-                                ->end()
-                                ->scalarNode('primary')->end()
-                                ->scalarNode('slave')
-                                    ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                        'The "%node%" option is deprecated, use "secondary" instead.',
-                                        '3.x'
-                                    ))
-                                ->end()
-                                ->scalarNode('secondary')->end()
+                                ->scalarNode('primary')->isRequired()->end()
+                                ->scalarNode('secondary')->isRequired()->end()
                             ->end()
                         ->end()
                     ->end()

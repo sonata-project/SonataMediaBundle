@@ -16,7 +16,6 @@ use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagickImagine;
 use Imagine\Imagick\Imagine as ImagickImagine;
 use Sonata\MediaBundle\CDN\Fallback;
-use Sonata\MediaBundle\CDN\PantherPortal;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Resizer\CropResizer;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
@@ -60,9 +59,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.cdn.server', Server::class)
             ->args([''])
-
-        ->set('sonata.media.cdn.panther', PantherPortal::class)
-            ->args(['', '', '', ''])
 
         ->set('sonata.media.cdn.cloudfront.client', CloudFrontClient::class)
             ->args([[]])
