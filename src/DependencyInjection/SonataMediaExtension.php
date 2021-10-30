@@ -373,8 +373,9 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
+            // NEXT_MAJOR: Do not fallback to master
             $container->getDefinition('sonata.media.cdn.fallback')
-                ->replaceArgument(0, new Reference($config['cdn']['fallback']['master']))
+                ->replaceArgument(0, new Reference($config['cdn']['fallback']['primary'] ?? $config['cdn']['fallback']['master']))
                 ->replaceArgument(1, new Reference($config['cdn']['fallback']['fallback']));
         } else {
             $container->removeDefinition('sonata.media.cdn.fallback');
@@ -453,9 +454,10 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
         }
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
+            // NEXT_MAJOR: Do not fallback to master and slave
             $container->getDefinition('sonata.media.adapter.filesystem.replicate')
-                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['master']))
-                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['slave']));
+                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['primary'] ?? $config['filesystem']['replicate']['master']))
+                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['secondary'] ?? $config['filesystem']['replicate']['slave']));
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');
