@@ -147,7 +147,7 @@ class Configuration implements ConfigurationInterface
                         // NEXT_MAJOR: Remove this configuration.
                         ->arrayNode('panther')
                             ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
-                                'The node "%node%" is deprecated and will be removed in version 4.0',
+                                'The node "%node%" is deprecated and will be removed in version 4.0.',
                                 '3.x'
                             ))
                             ->children()

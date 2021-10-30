@@ -6,7 +6,7 @@ UPGRADE FROM 3.x to 3.x
 
 ### Deprecate PantherPortal CDN
 
-PantherPortal CDN no longer exist.
+PantherPortal CDN no longer exists.
 
 ### Deprecate `null` media value on Twig functions
 
