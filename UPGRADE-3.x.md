@@ -30,7 +30,7 @@ Before:
 sonata_media:
     cdn:
         fallback:
-            master: sonata.media.cdn.panther
+            master: sonata.media.cdn.cloudfront
     filesystem:
         replicate:
             master: sonata.media.adapter.filesystem.s3
@@ -43,7 +43,7 @@ After:
 sonata_media:
     cdn:
         fallback:
-            primary: sonata.media.cdn.panther
+            primary: sonata.media.cdn.cloudfront
     filesystem:
         replicate:
             primary: sonata.media.adapter.filesystem.s3
