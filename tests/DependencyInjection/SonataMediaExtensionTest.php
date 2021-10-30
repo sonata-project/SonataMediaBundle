@@ -415,6 +415,74 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
+     * NEXT_MAJOR: Remove this test.
+     *
+     * @group legacy
+     */
+    public function testFallbackCDNWithDeprecatedConfiguration(): void
+    {
+        $this->load([
+            'cdn' => [
+                'fallback' => [
+                    'master' => 'sonata.media.cdn.cloudfront',
+                    'fallback' => 'sonata.media.cdn.server',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.cdn.fallback', 0, 'sonata.media.cdn.cloudfront');
+    }
+
+    public function testFallbackCDN(): void
+    {
+        $this->load([
+            'cdn' => [
+                'fallback' => [
+                    'primary' => 'sonata.media.cdn.cloudfront',
+                    'fallback' => 'sonata.media.cdn.server',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.cdn.fallback', 0, 'sonata.media.cdn.cloudfront');
+    }
+
+    /**
+     * NEXT_MAJOR: Remove this test.
+     *
+     * @group legacy
+     */
+    public function testReplicateFilesystemWithDeprecatedConfiguration(): void
+    {
+        $this->load([
+            'filesystem' => [
+                'replicate' => [
+                    'master' => 'sonata.media.adapter.filesystem.s3',
+                    'slave' => 'sonata.media.adapter.filesystem.local',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 0, 'sonata.media.adapter.filesystem.s3');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 1, 'sonata.media.adapter.filesystem.local');
+    }
+
+    public function testReplicateFilesystem(): void
+    {
+        $this->load([
+            'filesystem' => [
+                'replicate' => [
+                    'primary' => 'sonata.media.adapter.filesystem.s3',
+                    'secondary' => 'sonata.media.adapter.filesystem.local',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 0, 'sonata.media.adapter.filesystem.s3');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 1, 'sonata.media.adapter.filesystem.local');
+    }
+
+    /**
      * @return array<string, mixed>
      */
     protected function getMinimalConfiguration(): array

@@ -80,7 +80,7 @@ Full configuration options:
                 version:
 
             fallback:
-                master: sonata.media.cdn.panther
+                primary: sonata.media.cdn.panther
                 fallback: sonata.media.cdn.server
 
         filesystem:
@@ -113,8 +113,8 @@ Full configuration options:
                     key1: value1 #any amount of metas(sent as x-amz-meta-key1 = value1)
 
             replicate:
-                master: sonata.media.adapter.filesystem.s3
-                slave: sonata.media.adapter.filesystem.local
+                primary: sonata.media.adapter.filesystem.s3
+                secondary: sonata.media.adapter.filesystem.local
 
         providers:
             file:
