@@ -15,6 +15,7 @@ use Aws\CloudFront\CloudFrontClient;
 use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagickImagine;
 use Imagine\Imagick\Imagine as ImagickImagine;
+use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Sonata\MediaBundle\CDN\Fallback;
 use Sonata\MediaBundle\CDN\PantherPortal;
 use Sonata\MediaBundle\CDN\Server;
@@ -67,8 +68,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.cdn.cloudfront.client', CloudFrontClient::class)
             ->args([[]])
 
-        // The class for "sonata.media.cdn.cloudfront" service is set dynamically at `SonataMediaExtension`
-        ->set('sonata.media.cdn.cloudfront')
+        ->set('sonata.media.cdn.cloudfront', CloudFrontVersion3::class)
             ->args(['', '', ''])
 
         ->set('sonata.media.cdn.fallback', Fallback::class)
