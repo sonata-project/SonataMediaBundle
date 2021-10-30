@@ -257,7 +257,6 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
-                        // NEXT_MAJOR: Remove master and slave and make primary and secondary required
                         ->arrayNode('replicate')
                             ->children()
                                 ->scalarNode('primary')->isRequired()->end()
