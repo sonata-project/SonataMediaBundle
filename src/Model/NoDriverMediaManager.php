@@ -67,6 +67,12 @@ final class NoDriverMediaManager implements MediaManagerInterface
         throw new NoDriverException();
     }
 
+    /**
+     * Do not add return typehint to this method, it forces a dependency with
+     * Doctrine DBAL that we do not want here. This method will probably be
+     * deprecated on sonata-project/doctrine-extensions because it is only for
+     * Doctrine ORM.
+     */
     public function getConnection()
     {
         throw new NoDriverException();
