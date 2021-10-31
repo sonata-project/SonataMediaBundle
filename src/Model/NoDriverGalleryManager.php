@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
-use Doctrine\DBAL\Connection;
 use Sonata\MediaBundle\Exception\NoDriverException;
 
 /**
@@ -68,7 +67,7 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
         throw new NoDriverException();
     }
 
-    public function getConnection(): Connection
+    public function getConnection()
     {
         throw new NoDriverException();
     }
