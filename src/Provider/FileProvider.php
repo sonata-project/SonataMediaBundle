@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\File as GaufretteFile;
-use Gaufrette\Filesystem;
+use Gaufrette\FilesystemInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -52,7 +52,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
      * @param string[] $allowedExtensions
      * @param string[] $allowedMimeTypes
      */
-    public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = [], array $allowedMimeTypes = [], ?MetadataBuilderInterface $metadata = null)
+    public function __construct(string $name, FilesystemInterface $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = [], array $allowedMimeTypes = [], ?MetadataBuilderInterface $metadata = null)
     {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
 

@@ -18,7 +18,7 @@ use Gaufrette\Adapter\FileFactory;
 use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Adapter\StreamFactory;
 use Gaufrette\File;
-use Gaufrette\Filesystem;
+use Gaufrette\FilesystemInterface;
 use Gaufrette\Stream;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -203,7 +203,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         ];
     }
 
-    public function createFile($key, Filesystem $filesystem): File
+    public function createFile($key, FilesystemInterface $filesystem): File
     {
         if ($this->primary instanceof FileFactory) {
             return $this->primary->createFile($key, $filesystem);

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\File;
-use Gaufrette\Filesystem;
+use Gaufrette\FilesystemInterface;
 use Imagine\Image\Box;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -39,7 +39,7 @@ abstract class BaseVideoProvider extends BaseProvider
 
     public function __construct(
         string $name,
-        Filesystem $filesystem,
+        FilesystemInterface $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,

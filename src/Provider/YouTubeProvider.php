@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\Filesystem;
+use Gaufrette\FilesystemInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -30,7 +30,7 @@ final class YouTubeProvider extends BaseVideoProvider
 
     public function __construct(
         string $name,
-        Filesystem $filesystem,
+        FilesystemInterface $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,

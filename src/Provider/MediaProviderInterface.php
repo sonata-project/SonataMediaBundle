@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Provider;
 
 use Gaufrette\File;
-use Gaufrette\Filesystem;
+use Gaufrette\FilesystemInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -175,7 +175,7 @@ interface MediaProviderInterface
 
     public function getResizer(): ?ResizerInterface;
 
-    public function getFilesystem(): Filesystem;
+    public function getFilesystem(): FilesystemInterface;
 
     public function getCdn(): CDNInterface;
 
