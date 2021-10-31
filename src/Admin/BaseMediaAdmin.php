@@ -75,7 +75,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $object->setContext($parameters['context']);
     }
 
-    protected function configurePersistentParameters(): array
+    final protected function configurePersistentParameters(): array
     {
         $parameters = [];
 
@@ -124,7 +124,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         ]);
     }
 
-    protected function alterNewInstance(object $object): void
+    final protected function alterNewInstance(object $object): void
     {
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {

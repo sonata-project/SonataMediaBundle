@@ -32,62 +32,62 @@ abstract class GalleryItem implements GalleryItemInterface
         return $this->getGallery().' | '.$this->getMedia();
     }
 
-    public function setEnabled(bool $enabled): void
+    final public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    public function getEnabled(): bool
+    final public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    public function setGallery(?GalleryInterface $gallery = null): void
+    final public function setGallery(?GalleryInterface $gallery = null): void
     {
         $this->gallery = $gallery;
     }
 
-    public function getGallery(): ?GalleryInterface
+    final public function getGallery(): ?GalleryInterface
     {
         return $this->gallery;
     }
 
-    public function setMedia(?MediaInterface $media = null): void
+    final public function setMedia(?MediaInterface $media = null): void
     {
         $this->media = $media;
     }
 
-    public function getMedia(): ?MediaInterface
+    final public function getMedia(): ?MediaInterface
     {
         return $this->media;
     }
 
-    public function setPosition(int $position): void
+    final public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    public function getPosition(): int
+    final public function getPosition(): int
     {
         return $this->position;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
+    final public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    final public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    final public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    final public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
