@@ -40,6 +40,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         return $this->container->get('sonata.media.pool');
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function postUpdate(EventArgs $args)
     {
         $media = $this->getMedia($args);
@@ -51,6 +54,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($args)->postUpdate($media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function postRemove(EventArgs $args)
     {
         $media = $this->getMedia($args);
@@ -62,6 +68,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($args)->postRemove($media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function postPersist(EventArgs $args)
     {
         $media = $this->getMedia($args);
@@ -73,6 +82,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($args)->postPersist($media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function preUpdate(EventArgs $args)
     {
         $media = $this->getMedia($args);
@@ -89,6 +101,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->recomputeSingleEntityChangeSet($args);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function preRemove(EventArgs $args)
     {
         $media = $this->getMedia($args);
@@ -100,6 +115,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($args)->preRemove($this->getMedia($args));
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function prePersist(EventArgs $args)
     {
         $media = $this->getMedia($args);
@@ -122,6 +140,8 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     abstract protected function getMedia(EventArgs $args);
 
     /**
+     * @final since sonata-project/media-bundle 3.x
+     *
      * @return MediaProviderInterface
      */
     protected function getProvider(EventArgs $args)

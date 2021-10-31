@@ -62,51 +62,81 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         return $this->getName() ?? '-';
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getEnabled()
     {
         return $this->enabled;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setUpdatedAt(?\DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCreatedAt(?\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setDefaultFormat($defaultFormat)
     {
         $this->defaultFormat = $defaultFormat;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getDefaultFormat()
     {
         return $this->defaultFormat;
@@ -154,11 +184,17 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
         $this->addGalleryHasMedia($galleryHasMedia);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setContext($context)
     {
         $this->context = $context;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getContext()
     {
         return $this->context;

@@ -200,6 +200,9 @@ abstract class Media implements MediaInterface
         ];
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setBinaryContent($binaryContent)
     {
         $this->previousProviderReference = $this->providerReference;
@@ -207,16 +210,25 @@ abstract class Media implements MediaInterface
         $this->binaryContent = $binaryContent;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function resetBinaryContent()
     {
         $this->binaryContent = null;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getBinaryContent()
     {
         return $this->binaryContent;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getMetadataValue($name, $default = null)
     {
         $metadata = $this->getProviderMetadata();
@@ -224,6 +236,9 @@ abstract class Media implements MediaInterface
         return $metadata[$name] ?? $default;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setMetadataValue($name, $value)
     {
         $metadata = $this->getProviderMetadata();
@@ -231,6 +246,9 @@ abstract class Media implements MediaInterface
         $this->setProviderMetadata($metadata);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function unsetMetadataValue($name)
     {
         $metadata = $this->getProviderMetadata();
@@ -238,196 +256,313 @@ abstract class Media implements MediaInterface
         $this->setProviderMetadata($metadata);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getEnabled()
     {
         return $this->enabled;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setProviderName($providerName)
     {
         $this->providerName = $providerName;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getProviderName()
     {
         return $this->providerName;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setProviderStatus($providerStatus)
     {
         $this->providerStatus = $providerStatus;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getProviderStatus()
     {
         return $this->providerStatus;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setProviderReference($providerReference)
     {
         $this->providerReference = $providerReference;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getProviderReference()
     {
         return $this->providerReference;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setProviderMetadata(array $providerMetadata = [])
     {
         $this->providerMetadata = $providerMetadata;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getProviderMetadata()
     {
         return $this->providerMetadata;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setWidth($width)
     {
         $this->width = $width;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getWidth()
     {
         return $this->width;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setHeight($height)
     {
         $this->height = $height;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getHeight()
     {
         return $this->height;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setLength($length)
     {
         $this->length = $length;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getLength()
     {
         return $this->length;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCopyright($copyright)
     {
         $this->copyright = $copyright;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCopyright()
     {
         return $this->copyright;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setAuthorName($authorName)
     {
         $this->authorName = $authorName;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getAuthorName()
     {
         return $this->authorName;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setContext($context)
     {
         $this->context = $context;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getContext()
     {
         return $this->context;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCdnIsFlushable($cdnIsFlushable)
     {
         $this->cdnIsFlushable = $cdnIsFlushable;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdnIsFlushable()
     {
         return $this->cdnIsFlushable;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCdnFlushIdentifier($cdnFlushIdentifier)
     {
         $this->cdnFlushIdentifier = $cdnFlushIdentifier;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdnFlushIdentifier()
     {
         return $this->cdnFlushIdentifier;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCdnFlushAt(?\DateTime $cdnFlushAt = null)
     {
         $this->cdnFlushAt = $cdnFlushAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdnFlushAt()
     {
         return $this->cdnFlushAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setUpdatedAt(?\DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCreatedAt(?\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setContentType($contentType)
     {
         $this->contentType = $contentType;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getContentType()
     {
         return $this->contentType;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getExtension()
     {
         $providerReference = $this->getProviderReference();
@@ -439,26 +574,41 @@ abstract class Media implements MediaInterface
         return preg_replace('{(\?|#).*}', '', pathinfo($providerReference, \PATHINFO_EXTENSION));
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setSize($size)
     {
         $this->size = $size;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getSize()
     {
         return $this->size;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCdnStatus($cdnStatus)
     {
         $this->cdnStatus = $cdnStatus;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdnStatus()
     {
         return $this->cdnStatus;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getBox()
     {
         return new Box($this->width, $this->height);
@@ -474,6 +624,9 @@ abstract class Media implements MediaInterface
         return $this->galleryHasMedias;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getPreviousProviderReference()
     {
         return $this->previousProviderReference;
@@ -503,6 +656,8 @@ abstract class Media implements MediaInterface
     }
 
     /**
+     * @final since sonata-project/media-bundle 3.x
+     *
      * @return CategoryInterface
      */
     public function getCategory()
@@ -511,10 +666,7 @@ abstract class Media implements MediaInterface
     }
 
     // NEXT_MAJOR: Uncomment this method and remove __call and __set
-    // /**
-    //  * @param CategoryInterface|null $category
-    //  */
-    // public function setCategory($category = null)
+    // final public function setCategory(?object $category = null): void
     // {
     //     $this->category = $category;
     // }

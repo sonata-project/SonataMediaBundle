@@ -138,6 +138,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return $this->pool;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getObjectMetadata($object)
     {
         $provider = $this->pool->getProvider($object->getProviderName());

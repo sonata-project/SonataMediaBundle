@@ -90,6 +90,9 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->flushCdn($media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function flushCdn(MediaInterface $media)
     {
         if (null === $media->getId() || !$media->getCdnIsFlushable()) {
@@ -132,31 +135,49 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function addFormat($name, $format)
     {
         $this->formats[$name] = $format;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFormat($name)
     {
         return $this->formats[$name] ?? false;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function requireThumbnails()
     {
         return null !== $this->getResizer();
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function generateThumbnails(MediaInterface $media)
     {
         $this->thumbnail->generate($this, $media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function removeThumbnails(MediaInterface $media, $formats = null)
     {
         $this->thumbnail->delete($this, $media, $formats);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFormatName(MediaInterface $media, $format)
     {
         if (MediaProviderInterface::FORMAT_ADMIN === $format) {
@@ -206,61 +227,97 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function generatePath(MediaInterface $media)
     {
         return $this->pathGenerator->generatePath($media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFormats()
     {
         return $this->formats;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setTemplates(array $templates)
     {
         $this->templates = $templates;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getTemplates()
     {
         return $this->templates;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getTemplate($name)
     {
         return $this->templates[$name] ?? null;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getResizer()
     {
         return $this->resizer;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFilesystem()
     {
         return $this->filesystem;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdn()
     {
         return $this->cdn;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdnPath($relativePath, $isFlushable)
     {
         return $this->getCdn()->getPath($relativePath, $isFlushable);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setResizer(ResizerInterface $resizer)
     {
         $this->resizer = $resizer;
