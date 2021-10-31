@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\DependencyInjection;
 
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
-use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -191,16 +190,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $container->removeDefinition('sonata.media.cdn.server');
         }
 
-        if ($container->hasDefinition('sonata.media.cdn.panther') && isset($config['cdn']['panther'])) {
-            $container->getDefinition('sonata.media.cdn.panther')
-                ->replaceArgument(0, $config['cdn']['panther']['path'])
-                ->replaceArgument(1, $config['cdn']['panther']['username'])
-                ->replaceArgument(2, $config['cdn']['panther']['password'])
-                ->replaceArgument(3, $config['cdn']['panther']['site_id']);
-        } else {
-            $container->removeDefinition('sonata.media.cdn.panther');
-        }
-
         if ($container->hasDefinition('sonata.media.cdn.cloudfront') && isset($config['cdn']['cloudfront'])) {
             $cloudFrontConfig = [];
 
@@ -217,13 +206,10 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
                 'secret' => $config['cdn']['cloudfront']['secret'],
             ];
 
-            $cloudFrontClass = CloudFrontVersion3::class;
-
             $container->getDefinition('sonata.media.cdn.cloudfront.client')
                 ->replaceArgument(0, $cloudFrontConfig);
 
             $container->getDefinition('sonata.media.cdn.cloudfront')
-                ->setClass($cloudFrontClass)
                 ->replaceArgument(0, new Reference('sonata.media.cdn.cloudfront.client'))
                 ->replaceArgument(1, $config['cdn']['cloudfront']['distribution_id'])
                 ->replaceArgument(2, $config['cdn']['cloudfront']['path']);
@@ -234,7 +220,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
         if ($container->hasDefinition('sonata.media.cdn.fallback') && isset($config['cdn']['fallback'])) {
             $container->getDefinition('sonata.media.cdn.fallback')
-                ->replaceArgument(0, new Reference($config['cdn']['fallback']['master']))
+                ->replaceArgument(0, new Reference($config['cdn']['fallback']['primary']))
                 ->replaceArgument(1, new Reference($config['cdn']['fallback']['fallback']));
         } else {
             $container->removeDefinition('sonata.media.cdn.fallback');
@@ -316,8 +302,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
             $container->getDefinition('sonata.media.adapter.filesystem.replicate')
-                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['master']))
-                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['slave']));
+                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['primary']))
+                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['secondary']));
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
             $container->removeDefinition('sonata.media.filesystem.replicate');

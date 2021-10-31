@@ -414,6 +414,35 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('sonata.media.formatter.twig', FormatterMediaExtension::class);
     }
 
+    public function testFallbackCDN(): void
+    {
+        $this->load([
+            'cdn' => [
+                'fallback' => [
+                    'primary' => 'sonata.media.cdn.cloudfront',
+                    'fallback' => 'sonata.media.cdn.server',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.cdn.fallback', 0, 'sonata.media.cdn.cloudfront');
+    }
+
+    public function testReplicateFilesystem(): void
+    {
+        $this->load([
+            'filesystem' => [
+                'replicate' => [
+                    'primary' => 'sonata.media.adapter.filesystem.s3',
+                    'secondary' => 'sonata.media.adapter.filesystem.local',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 0, 'sonata.media.adapter.filesystem.s3');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 1, 'sonata.media.adapter.filesystem.local');
+    }
+
     /**
      * @return array<string, mixed>
      */

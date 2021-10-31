@@ -153,18 +153,6 @@ final class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
-                        ->arrayNode('panther')
-                            ->children()
-                                ->scalarNode('path')
-                                    ->info('e.g. http://domain.pantherportal.com/uploads/media')
-                                    ->isRequired()
-                                ->end()
-                                ->scalarNode('site_id')->isRequired()->end()
-                                ->scalarNode('password')->isRequired()->end()
-                                ->scalarNode('username')->isRequired()->end()
-                            ->end()
-                        ->end()
-
                         ->arrayNode('cloudfront')
                             ->children()
                                 ->scalarNode('path')
@@ -181,7 +169,7 @@ final class Configuration implements ConfigurationInterface
 
                         ->arrayNode('fallback')
                             ->children()
-                                ->scalarNode('master')->isRequired()->end()
+                                ->scalarNode('primary')->isRequired()->end()
                                 ->scalarNode('fallback')->isRequired()->end()
                             ->end()
                         ->end()
@@ -271,8 +259,8 @@ final class Configuration implements ConfigurationInterface
 
                         ->arrayNode('replicate')
                             ->children()
-                                ->scalarNode('master')->isRequired()->end()
-                                ->scalarNode('slave')->isRequired()->end()
+                                ->scalarNode('primary')->isRequired()->end()
+                                ->scalarNode('secondary')->isRequired()->end()
                             ->end()
                         ->end()
                     ->end()
