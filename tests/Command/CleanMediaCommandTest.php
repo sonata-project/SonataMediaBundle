@@ -13,14 +13,18 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
+use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\MockObject;
+use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Command\CleanMediaCommand;
 use Sonata\MediaBundle\Filesystem\Local;
+use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Tests\Fixtures\FilesystemTestCase;
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -44,6 +48,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
      */
     private MockObject $mediaManager;
 
+    private FileProvider $provider;
+
     private Local $fileSystemLocal;
 
     protected function setUp(): void
@@ -53,6 +59,13 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->pool = new Pool('default');
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
         $this->fileSystemLocal = new Local($this->workspace);
+        $this->provider = new FileProvider(
+            'fooprovider',
+            $this->createStub(Filesystem::class),
+            $this->createStub(CDNInterface::class),
+            $this->createStub(GeneratorInterface::class),
+            $this->createStub(ThumbnailInterface::class)
+        );
 
         $this->command = new CleanMediaCommand($this->fileSystemLocal, $this->pool, $this->mediaManager);
 
@@ -92,11 +105,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $provider = $this->createMock(FileProvider::class);
-        $provider->method('getName')->willReturn('fooprovider');
-
         $this->pool->addContext('foo');
-        $this->pool->addProvider('provider', $provider);
+        $this->pool->addProvider('provider', $this->provider);
 
         $media = $this->createMock(MediaInterface::class);
 
@@ -120,11 +130,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $provider = $this->createMock(FileProvider::class);
-        $provider->method('getName')->willReturn('fooprovider');
-
         $this->pool->addContext('foo');
-        $this->pool->addProvider('provider', $provider);
+        $this->pool->addProvider('provider', $this->provider);
 
         $media = $this->createMock(MediaInterface::class);
 
@@ -157,11 +164,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $provider = $this->createMock(FileProvider::class);
-        $provider->method('getName')->willReturn('fooprovider');
-
         $this->pool->addContext('foo');
-        $this->pool->addProvider('provider', $provider);
+        $this->pool->addProvider('provider', $this->provider);
 
         $this->mediaManager->expects(static::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])
@@ -189,11 +193,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'qwertz.ext');
         $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_bar.ext');
 
-        $provider = $this->createMock(FileProvider::class);
-        $provider->method('getName')->willReturn('fooprovider');
-
         $this->pool->addContext('foo');
-        $this->pool->addProvider('provider', $provider);
+        $this->pool->addProvider('provider', $this->provider);
 
         $this->mediaManager->expects(static::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])
