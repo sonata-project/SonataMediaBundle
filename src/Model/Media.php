@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Imagine\Image\Box;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
@@ -80,6 +81,11 @@ abstract class Media implements MediaInterface
      * @var CategoryInterface|null
      */
     protected ?object $category = null;
+
+    public function __construct()
+    {
+        $this->galleryItems = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
