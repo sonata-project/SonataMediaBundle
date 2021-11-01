@@ -260,19 +260,21 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
     public function validate(ErrorElement $errorElement, MediaInterface $media): void
     {
-        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
+        $binaryContent = $media->getBinaryContent();
+
+        if (!$binaryContent instanceof \SplFileInfo) {
             return;
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile) {
-            $fileName = $media->getBinaryContent()->getClientOriginalName();
-        } elseif ($media->getBinaryContent() instanceof File) {
-            $fileName = $media->getBinaryContent()->getFilename();
+        if ($binaryContent instanceof UploadedFile) {
+            $fileName = $binaryContent->getClientOriginalName();
+        } elseif ($binaryContent instanceof File) {
+            $fileName = $binaryContent->getFilename();
         } else {
-            throw new \RuntimeException(sprintf('Invalid binary content type: %s', \get_class($media->getBinaryContent())));
+            throw new \RuntimeException(sprintf('Invalid binary content type: %s', \get_class($binaryContent)));
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile && 0 === ($media->getBinaryContent()->getSize() ?? 0)) {
+        if ($binaryContent instanceof UploadedFile && 0 === $binaryContent->getSize()) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation(

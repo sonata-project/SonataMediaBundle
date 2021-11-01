@@ -55,6 +55,7 @@ final class ThumbnailCompilerPassTest extends TestCase
 
 final class TestUncallableAddResizerMethod
 {
+    // @phpstan-ignore-next-line
     private function addResizer(): void
     {
     }
