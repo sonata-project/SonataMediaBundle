@@ -31,6 +31,8 @@ abstract class AbstractTypeTest extends TypeTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->mediaPool = new Pool('default');
         $this->formType = $this->getTestedInstance();
     }

@@ -284,7 +284,7 @@ final class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('service')->defaultValue('sonata.media.provider.file')->end()
-                                ->scalarNode('resizer')->defaultValue(false)->end()
+                                ->scalarNode('resizer')->defaultNull()->end()
                                 ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()

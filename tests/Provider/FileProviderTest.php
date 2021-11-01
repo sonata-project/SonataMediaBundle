@@ -360,7 +360,7 @@ class FileProviderTest extends AbstractProviderTest
             ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
             ->getMock();
         $upload->method('getSize')
-            ->willReturn(null);
+            ->willReturn(0);
         $upload->method('getFilename')
             ->willReturn('test.txt');
         $upload->method('getClientOriginalName')

@@ -20,6 +20,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @implements DataTransformerInterface<MediaInterface, MediaInterface>
+ */
 final class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
@@ -52,11 +55,18 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
      * @param mixed $value
      *
      * @return mixed
+     *
+     * @phpstan-param MediaInterface|null $value
+     * @phpstan-return MediaInterface|null
      */
     public function transform($value)
     {
         if (null === $value) {
             return new $this->class();
+        }
+
+        if (!$value instanceof MediaInterface) {
+            return null;
         }
 
         return $value;
@@ -66,11 +76,14 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
      * @param mixed $value
      *
      * @return mixed
+     *
+     * @phpstan-param MediaInterface|null $value
+     * @phpstan-return MediaInterface|null
      */
     public function reverseTransform($value)
     {
         if (!$value instanceof MediaInterface) {
-            return $value;
+            return null;
         }
 
         $binaryContent = $value->getBinaryContent();
@@ -79,7 +92,7 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         if (null === $binaryContent) {
             // and no media id
             if (null === $value->getId() && true === $this->options['empty_on_new']) {
-                return;
+                return null;
             }
             if (null !== $value->getId()) {
                 return $value;

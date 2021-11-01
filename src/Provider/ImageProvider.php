@@ -61,7 +61,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
             }
 
             if (null === $this->resizer) {
-                throw new \RuntimeException('Resizer not set on the imageg provider.');
+                throw new \RuntimeException('Resizer not set on the image provider.');
             }
 
             $box = $this->resizer->getBox($media, $resizerFormat);
@@ -143,7 +143,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                     // Check if format belongs to the current media's context
                     if (null !== $context && 0 === strpos($providerFormat, $context)) {
                         if (null === $this->resizer) {
-                            throw new \RuntimeException('Resizer not set on the imageg provider.');
+                            throw new \RuntimeException('Resizer not set on the image provider.');
                         }
 
                         $width = $this->resizer->getBox($media, $settings)->getWidth();
