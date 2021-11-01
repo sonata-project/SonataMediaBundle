@@ -53,6 +53,11 @@ final class ThumbnailCompilerPassTest extends TestCase
     }
 }
 
+/**
+ * Here we create a class with an addResizer method that is not callable on purpose,
+ * we want to test that we will not call it if it can't be called. Please do not remove
+ * this method even if some tools report it as unused, it is intended.
+ */
 final class TestUncallableAddResizerMethod
 {
     // @phpstan-ignore-next-line
