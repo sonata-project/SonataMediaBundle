@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
 use Sonata\MediaBundle\Provider\Pool;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -23,14 +22,14 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 abstract class AbstractTypeTest extends TypeTestCase
 {
-    protected FormBuilder $formBuilder;
-
     protected FormTypeInterface $formType;
 
     protected Pool $mediaPool;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->mediaPool = new Pool('default');
         $this->formType = $this->getTestedInstance();
     }

@@ -13,16 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Model\Media;
 
 abstract class BaseMedia extends Media
 {
-    public function __construct()
-    {
-        $this->galleryItems = new ArrayCollection();
-    }
-
     public function prePersist(): void
     {
         $this->createdAt = new \DateTime();

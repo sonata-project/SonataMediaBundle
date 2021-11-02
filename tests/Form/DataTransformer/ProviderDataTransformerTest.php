@@ -28,7 +28,7 @@ class ProviderDataTransformerTest extends TestCase
         $pool = new Pool('default');
 
         $transformer = new ProviderDataTransformer($pool, MediaInterface::class);
-        static::assertSame('foo', $transformer->reverseTransform('foo'));
+        static::assertNull($transformer->reverseTransform(null));
     }
 
     public function testReverseTransformUnknownProvider(): void

@@ -70,7 +70,7 @@ final class AddProviderCompilerPass implements CompilerPassInterface
                         ->replaceArgument(3, new Reference($provider['generator']))
                         ->replaceArgument(4, new Reference($provider['thumbnail']));
 
-                    if ($provider['resizer']) {
+                    if (null !== $provider['resizer']) {
                         $definition->addMethodCall('setResizer', [new Reference($provider['resizer'])]);
                     }
                 }
