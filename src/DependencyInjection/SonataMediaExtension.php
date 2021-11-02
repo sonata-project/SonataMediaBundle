@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\DependencyInjection;
 
 use Nelmio\ApiDocBundle\Annotation\Operation;
+use OpenApi\Annotations\Operation as OpenApiOperation;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
@@ -69,7 +70,11 @@ class SonataMediaExtension extends Extension implements PrependExtensionInterfac
 
             if ('doctrine_orm' === $config['db_driver']) {
                 // NEXT_MAJOR: remove legacy part
-                if (class_exists(Operation::class)) {
+                if (class_exists(Operation::class) && class_exists(OpenApiOperation::class)) {
+                    // "nelmio/api-doc-bundle" 4.x is not supported and does not provide an API.
+                    // This condition allows to accept setups using "nelmio/api-doc-bundle" 4.x dependency without conflicts.
+                    // @no-op.
+                } elseif (class_exists(Operation::class)) {
                     $loader->load('api_controllers.xml');
                 } else {
                     $loader->load('api_controllers_legacy.xml');
