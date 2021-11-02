@@ -18,6 +18,7 @@ use FOS\RestBundle\FOSRestBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Nelmio\ApiDocBundle\NelmioApiDocBundle;
+use OpenApi\Annotations\Operation as OpenApiOperation;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -73,7 +74,11 @@ final class AppKernel extends Kernel
         $routes->import(__DIR__.'/Resources/config/routing/routes.yml', '/', 'yaml');
 
         // NEXT_MAJOR: remove support for nelmio_v2
-        if (class_exists(Operation::class)) {
+        if (class_exists(Operation::class) && class_exists(OpenApiOperation::class)) {
+            // "nelmio/api-doc-bundle" 4.x is not supported and does not provide an API.
+            // This condition allows to accept setups using "nelmio/api-doc-bundle" 4.x dependency without conflicts.
+            // @no-op.
+        } elseif (class_exists(Operation::class)) {
             $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v3.yml', '/', 'yaml');
         } else {
             $routes->import(__DIR__.'/Resources/config/routing/api_nelmio_v2.yml', '/', 'yaml');
