@@ -46,61 +46,97 @@ abstract class Gallery implements GalleryInterface
         return $this->getName() ?? '-';
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setContext(?string $context): void
     {
         $this->context = $context;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getContext(): ?string
     {
         return $this->context;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setDefaultFormat(string $defaultFormat): void
     {
         $this->defaultFormat = $defaultFormat;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getDefaultFormat(): string
     {
         return $this->defaultFormat;

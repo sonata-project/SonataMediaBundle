@@ -75,6 +75,9 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->flushCdn($media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function flushCdn(MediaInterface $media): void
     {
         if (null === $media->getId() || !$media->getCdnIsFlushable()) {
@@ -121,21 +124,33 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function addFormat(string $name, array $settings): void
     {
         $this->formats[$name] = $settings;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFormat(string $name)
     {
         return $this->formats[$name] ?? false;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function requireThumbnails(): bool
     {
         return null !== $this->getResizer();
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function generateThumbnails(MediaInterface $media): void
     {
         if ($this->thumbnail instanceof GenerableThumbnailInterface) {
@@ -143,6 +158,9 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function removeThumbnails(MediaInterface $media, $formats = null): void
     {
         if ($this->thumbnail instanceof GenerableThumbnailInterface) {
@@ -150,6 +168,9 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFormatName(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_ADMIN === $format) {
@@ -199,61 +220,97 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function generatePath(MediaInterface $media): string
     {
         return $this->pathGenerator->generatePath($media);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFormats(): array
     {
         return $this->formats;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setTemplates(array $templates): void
     {
         $this->templates = $templates;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getTemplates(): array
     {
         return $this->templates;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getTemplate(string $name): ?string
     {
         return $this->templates[$name] ?? null;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getResizer(): ?ResizerInterface
     {
         return $this->resizer;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getFilesystem(): Filesystem
     {
         return $this->filesystem;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdn(): CDNInterface
     {
         return $this->cdn;
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function getCdnPath(string $relativePath, bool $isFlushable = false): string
     {
         return $this->getCdn()->getPath($relativePath, $isFlushable);
     }
 
+    /**
+     * @final since sonata-project/media-bundle 3.x
+     */
     public function setResizer(ResizerInterface $resizer): void
     {
         $this->resizer = $resizer;
