@@ -28,10 +28,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->pool = $pool;
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function postUpdate(LifecycleEventArgs $args): void
+    final public function postUpdate(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -42,10 +39,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postUpdate($media);
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function postRemove(LifecycleEventArgs $args): void
+    final public function postRemove(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -56,10 +50,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postRemove($media);
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function postPersist(LifecycleEventArgs $args): void
+    final public function postPersist(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -70,10 +61,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postPersist($media);
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function preUpdate(LifecycleEventArgs $args): void
+    final public function preUpdate(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -89,10 +77,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->recomputeSingleEntityChangeSet($args);
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function preRemove(LifecycleEventArgs $args): void
+    final public function preRemove(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -103,10 +88,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->preRemove($media);
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function prePersist(LifecycleEventArgs $args): void
+    final public function prePersist(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -124,10 +106,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     abstract protected function getMedia(LifecycleEventArgs $args): ?MediaInterface;
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    protected function getProvider(MediaInterface $media): MediaProviderInterface
+    final protected function getProvider(MediaInterface $media): MediaProviderInterface
     {
         return $this->pool->getProvider($media->getProviderName());
     }

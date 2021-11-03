@@ -59,18 +59,12 @@ abstract class BaseVideoProvider extends BaseProvider
         return new Metadata($this->getName(), $this->getName().'.description', null, 'SonataMediaBundle', ['class' => 'fa fa-video-camera']);
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function getReferenceImage(MediaInterface $media): string
+    final public function getReferenceImage(MediaInterface $media): string
     {
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function getReferenceFile(MediaInterface $media): File
+    final public function getReferenceFile(MediaInterface $media): File
     {
         $key = $this->generatePrivateUrl($media, MediaProviderInterface::FORMAT_REFERENCE);
 
@@ -89,10 +83,7 @@ abstract class BaseVideoProvider extends BaseProvider
         return $referenceFile;
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function generatePublicUrl(MediaInterface $media, string $format): string
+    final public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         $id = $media->getId();
 
@@ -108,10 +99,7 @@ abstract class BaseVideoProvider extends BaseProvider
         ), $media->getCdnIsFlushable());
     }
 
-    /**
-     * @final since sonata-project/media-bundle 3.x
-     */
-    public function generatePrivateUrl(MediaInterface $media, string $format): string
+    final public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
         $id = $media->getId();
 
