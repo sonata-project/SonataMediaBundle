@@ -33,7 +33,7 @@ namespace Sonata\MediaBundle\CDN;
 /**
  * NEXT_MAJOR: Remove this class.
  *
- * @deprecated since sonata-project/media-bundle 3.x, to be removed in 4.0.
+ * @deprecated since sonata-project/media-bundle 3.36.0, to be removed in 4.0.
  */
 class PantherPortal implements CDNInterface
 {

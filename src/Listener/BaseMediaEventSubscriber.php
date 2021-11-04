@@ -41,7 +41,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function postUpdate(EventArgs $args)
     {
@@ -55,7 +55,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function postRemove(EventArgs $args)
     {
@@ -69,7 +69,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function postPersist(EventArgs $args)
     {
@@ -83,7 +83,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function preUpdate(EventArgs $args)
     {
@@ -102,7 +102,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function preRemove(EventArgs $args)
     {
@@ -116,7 +116,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function prePersist(EventArgs $args)
     {
@@ -140,7 +140,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
     abstract protected function getMedia(EventArgs $args);
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      *
      * @return MediaProviderInterface
      */
