@@ -201,7 +201,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setBinaryContent($binaryContent)
     {
@@ -211,7 +211,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function resetBinaryContent()
     {
@@ -219,7 +219,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getBinaryContent()
     {
@@ -227,7 +227,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getMetadataValue($name, $default = null)
     {
@@ -237,7 +237,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setMetadataValue($name, $value)
     {
@@ -247,7 +247,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function unsetMetadataValue($name)
     {
@@ -257,7 +257,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setName($name)
     {
@@ -265,7 +265,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getName()
     {
@@ -273,7 +273,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setDescription($description)
     {
@@ -281,7 +281,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getDescription()
     {
@@ -289,7 +289,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setEnabled($enabled)
     {
@@ -297,7 +297,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getEnabled()
     {
@@ -305,7 +305,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setProviderName($providerName)
     {
@@ -313,7 +313,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getProviderName()
     {
@@ -321,7 +321,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setProviderStatus($providerStatus)
     {
@@ -329,7 +329,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getProviderStatus()
     {
@@ -337,7 +337,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setProviderReference($providerReference)
     {
@@ -345,7 +345,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getProviderReference()
     {
@@ -353,7 +353,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setProviderMetadata(array $providerMetadata = [])
     {
@@ -361,7 +361,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getProviderMetadata()
     {
@@ -369,7 +369,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setWidth($width)
     {
@@ -377,7 +377,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getWidth()
     {
@@ -385,7 +385,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setHeight($height)
     {
@@ -393,7 +393,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getHeight()
     {
@@ -401,7 +401,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setLength($length)
     {
@@ -409,7 +409,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getLength()
     {
@@ -417,7 +417,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setCopyright($copyright)
     {
@@ -425,7 +425,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCopyright()
     {
@@ -433,7 +433,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setAuthorName($authorName)
     {
@@ -441,7 +441,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getAuthorName()
     {
@@ -449,7 +449,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setContext($context)
     {
@@ -457,7 +457,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getContext()
     {
@@ -465,7 +465,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setCdnIsFlushable($cdnIsFlushable)
     {
@@ -473,7 +473,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCdnIsFlushable()
     {
@@ -481,7 +481,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setCdnFlushIdentifier($cdnFlushIdentifier)
     {
@@ -489,7 +489,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCdnFlushIdentifier()
     {
@@ -497,7 +497,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setCdnFlushAt(?\DateTime $cdnFlushAt = null)
     {
@@ -505,7 +505,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCdnFlushAt()
     {
@@ -513,7 +513,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setUpdatedAt(?\DateTime $updatedAt = null)
     {
@@ -521,7 +521,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getUpdatedAt()
     {
@@ -529,7 +529,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setCreatedAt(?\DateTime $createdAt = null)
     {
@@ -537,7 +537,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCreatedAt()
     {
@@ -545,7 +545,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setContentType($contentType)
     {
@@ -553,7 +553,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getContentType()
     {
@@ -561,7 +561,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getExtension()
     {
@@ -575,7 +575,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setSize($size)
     {
@@ -583,7 +583,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getSize()
     {
@@ -591,7 +591,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setCdnStatus($cdnStatus)
     {
@@ -599,7 +599,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCdnStatus()
     {
@@ -607,7 +607,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getBox()
     {
@@ -625,7 +625,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getPreviousProviderReference()
     {
@@ -656,7 +656,7 @@ abstract class Media implements MediaInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      *
      * @return CategoryInterface
      */

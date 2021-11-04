@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.36.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.1...3.36.0) - 2021-11-04
+### Changed
+- [[#2194](https://github.com/sonata-project/SonataMediaBundle/pull/2194)] Final annotation to methods that will be final on 4.x ([@jordisala1991](https://github.com/jordisala1991))
+
+### Deprecated
+- [[#2187](https://github.com/sonata-project/SonataMediaBundle/pull/2187)] PantherPortal CDN ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2186](https://github.com/sonata-project/SonataMediaBundle/pull/2186)] Using `master` and `slave` for filesystem and cdn configuration, use `primary` and `secondary` instead ([@jordisala1991](https://github.com/jordisala1991))
+
+### Removed
+- [[#2197](https://github.com/sonata-project/SonataMediaBundle/pull/2197)] Conflict against "nelmio/api-doc-bundle" >= 4.0 ([@phansys](https://github.com/phansys))
+- [[#2197](https://github.com/sonata-project/SonataMediaBundle/pull/2197)] The ReST API endpoints and documentation if "nelmio/api-doc-bundle" >= 4.0 is installed ([@phansys](https://github.com/phansys))
+
 ## [3.35.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.0...3.35.1) - 2021-10-18
 ### Fixed
 - [[#2175](https://github.com/sonata-project/SonataMediaBundle/pull/2175)] Fixed calling `media_thumbnail` instead of `sonata_thumbnail` ([@jordisala1991](https://github.com/jordisala1991))

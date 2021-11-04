@@ -63,7 +63,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setName($name)
     {
@@ -71,7 +71,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getName()
     {
@@ -79,7 +79,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setEnabled($enabled)
     {
@@ -87,7 +87,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getEnabled()
     {
@@ -95,7 +95,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setUpdatedAt(?\DateTime $updatedAt = null)
     {
@@ -103,7 +103,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getUpdatedAt()
     {
@@ -111,7 +111,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setCreatedAt(?\DateTime $createdAt = null)
     {
@@ -119,7 +119,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCreatedAt()
     {
@@ -127,7 +127,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setDefaultFormat($defaultFormat)
     {
@@ -135,7 +135,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getDefaultFormat()
     {
@@ -185,7 +185,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setContext($context)
     {
@@ -193,7 +193,7 @@ abstract class Gallery implements GalleryInterface, GalleryMediaCollectionInterf
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getContext()
     {

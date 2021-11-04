@@ -91,7 +91,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function flushCdn(MediaInterface $media)
     {
@@ -136,7 +136,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function addFormat($name, $format)
     {
@@ -144,7 +144,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getFormat($name)
     {
@@ -152,7 +152,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function requireThumbnails()
     {
@@ -160,7 +160,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function generateThumbnails(MediaInterface $media)
     {
@@ -168,7 +168,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function removeThumbnails(MediaInterface $media, $formats = null)
     {
@@ -176,7 +176,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getFormatName(MediaInterface $media, $format)
     {
@@ -228,7 +228,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function generatePath(MediaInterface $media)
     {
@@ -236,7 +236,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getFormats()
     {
@@ -244,7 +244,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setName($name)
     {
@@ -252,7 +252,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getName()
     {
@@ -260,7 +260,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setTemplates(array $templates)
     {
@@ -268,7 +268,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getTemplates()
     {
@@ -276,7 +276,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getTemplate($name)
     {
@@ -284,7 +284,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getResizer()
     {
@@ -292,7 +292,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getFilesystem()
     {
@@ -300,7 +300,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCdn()
     {
@@ -308,7 +308,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getCdnPath($relativePath, $isFlushable)
     {
@@ -316,7 +316,7 @@ abstract class BaseProvider implements MediaProviderInterface
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function setResizer(ResizerInterface $resizer)
     {

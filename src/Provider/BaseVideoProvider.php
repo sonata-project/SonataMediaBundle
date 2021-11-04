@@ -101,7 +101,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getReferenceImage(MediaInterface $media)
     {
@@ -109,7 +109,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getReferenceFile(MediaInterface $media)
     {
@@ -131,7 +131,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function generatePublicUrl(MediaInterface $media, $format)
     {
@@ -144,7 +144,7 @@ abstract class BaseVideoProvider extends BaseProvider
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {

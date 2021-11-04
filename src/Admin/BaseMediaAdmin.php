@@ -139,7 +139,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     }
 
     /**
-     * @final since sonata-project/media-bundle 3.x
+     * @final since sonata-project/media-bundle 3.36.0
      */
     public function getObjectMetadata($object)
     {
