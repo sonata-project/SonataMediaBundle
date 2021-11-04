@@ -4,6 +4,17 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### Mark final methods on abstract classes
+
+The following abstract classes have some of their methods marked as final with annotations, on 4.0 they will be final, make sure to not reimplement them:
+
+- `Sonata\MediaBundle\Admin\BaseMediaAdmin`
+- `Sonata\MediaBundle\Listener\BaseMediaEventSubscriber`
+- `Sonata\MediaBundle\Model\Gallery`
+- `Sonata\MediaBundle\Model\Media`
+- `Sonata\MediaBundle\Provider\BaseProvider`
+- `Sonata\MediaBundle\Provider\BaseVideoProvider`
+
 ### Deprecate PantherPortal CDN
 
 PantherPortal CDN no longer exists.

@@ -28,7 +28,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->pool = $pool;
     }
 
-    public function postUpdate(LifecycleEventArgs $args): void
+    final public function postUpdate(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -39,7 +39,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postUpdate($media);
     }
 
-    public function postRemove(LifecycleEventArgs $args): void
+    final public function postRemove(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -50,7 +50,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postRemove($media);
     }
 
-    public function postPersist(LifecycleEventArgs $args): void
+    final public function postPersist(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -61,7 +61,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postPersist($media);
     }
 
-    public function preUpdate(LifecycleEventArgs $args): void
+    final public function preUpdate(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -77,7 +77,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->recomputeSingleEntityChangeSet($args);
     }
 
-    public function preRemove(LifecycleEventArgs $args): void
+    final public function preRemove(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -88,7 +88,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->preRemove($media);
     }
 
-    public function prePersist(LifecycleEventArgs $args): void
+    final public function prePersist(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
 
@@ -106,7 +106,7 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
 
     abstract protected function getMedia(LifecycleEventArgs $args): ?MediaInterface;
 
-    protected function getProvider(MediaInterface $media): MediaProviderInterface
+    final protected function getProvider(MediaInterface $media): MediaProviderInterface
     {
         return $this->pool->getProvider($media->getProviderName());
     }

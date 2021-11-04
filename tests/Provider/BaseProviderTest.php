@@ -68,7 +68,7 @@ class BaseProviderTest extends AbstractProviderTest
             'edit' => 'edit.twig',
         ]);
 
-        static::assertIsArray($this->provider->getTemplates());
+        static::assertSame(['edit' => 'edit.twig'], $this->provider->getTemplates());
         static::assertSame('edit.twig', $this->provider->getTemplate('edit'));
 
         static::assertInstanceOf(CDNInterface::class, $this->provider->getCdn());

@@ -19,9 +19,9 @@ use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Listener\ORM\MediaEventSubscriber;
-use Sonata\MediaBundle\Model\Media;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Sonata\MediaBundle\Tests\App\Entity\Media;
 
 /**
  * @author Mathieu Lemoine <mlemoine@mlemoine.name>
@@ -50,10 +50,9 @@ class MediaEventSubscriberTest extends TestCase
 
         static::assertContains(Events::onClear, $subscriber->getSubscribedEvents());
 
-        $media1 = $this->createMock(Media::class);
-        $media1->method('getProviderName')->willReturn('provider');
-        $media1->method('getContext')->willReturn('context');
-        $media1->method('getProviderName')->willReturn('provider');
+        $media1 = new Media();
+        $media1->setProviderName('provider');
+        $media1->setContext('context');
 
         $args1 = $this->createMock(LifecycleEventArgs::class);
         $args1->method('getObject')->willReturn($media1);
@@ -62,10 +61,9 @@ class MediaEventSubscriberTest extends TestCase
 
         $subscriber->onClear();
 
-        $media2 = $this->createMock(Media::class);
-        $media2->method('getProviderName')->willReturn('provider');
-        $media2->method('getContext')->willReturn('context');
-        $media2->method('getProviderName')->willReturn('provider');
+        $media2 = new Media();
+        $media2->setProviderName('provider');
+        $media2->setContext('context');
 
         $args2 = $this->createMock(LifecycleEventArgs::class);
         $args2->method('getObject')->willReturn($media2);

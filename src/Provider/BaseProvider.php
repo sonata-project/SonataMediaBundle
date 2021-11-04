@@ -75,7 +75,7 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->flushCdn($media);
     }
 
-    public function flushCdn(MediaInterface $media): void
+    final public function flushCdn(MediaInterface $media): void
     {
         if (null === $media->getId() || !$media->getCdnIsFlushable()) {
             // If the medium is new or if it isn't marked as flushable, skip the CDN flush process.
@@ -121,36 +121,36 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    public function addFormat(string $name, array $settings): void
+    final public function addFormat(string $name, array $settings): void
     {
         $this->formats[$name] = $settings;
     }
 
-    public function getFormat(string $name)
+    final public function getFormat(string $name)
     {
         return $this->formats[$name] ?? false;
     }
 
-    public function requireThumbnails(): bool
+    final public function requireThumbnails(): bool
     {
         return null !== $this->getResizer();
     }
 
-    public function generateThumbnails(MediaInterface $media): void
+    final public function generateThumbnails(MediaInterface $media): void
     {
         if ($this->thumbnail instanceof GenerableThumbnailInterface) {
             $this->thumbnail->generate($this, $media);
         }
     }
 
-    public function removeThumbnails(MediaInterface $media, $formats = null): void
+    final public function removeThumbnails(MediaInterface $media, $formats = null): void
     {
         if ($this->thumbnail instanceof GenerableThumbnailInterface) {
             $this->thumbnail->delete($this, $media, $formats);
         }
     }
 
-    public function getFormatName(MediaInterface $media, string $format): string
+    final public function getFormatName(MediaInterface $media, string $format): string
     {
         if (MediaProviderInterface::FORMAT_ADMIN === $format) {
             return MediaProviderInterface::FORMAT_ADMIN;
@@ -199,62 +199,62 @@ abstract class BaseProvider implements MediaProviderInterface
         }
     }
 
-    public function generatePath(MediaInterface $media): string
+    final public function generatePath(MediaInterface $media): string
     {
         return $this->pathGenerator->generatePath($media);
     }
 
-    public function getFormats(): array
+    final public function getFormats(): array
     {
         return $this->formats;
     }
 
-    public function setName(string $name): void
+    final public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function getName(): string
+    final public function getName(): string
     {
         return $this->name;
     }
 
-    public function setTemplates(array $templates): void
+    final public function setTemplates(array $templates): void
     {
         $this->templates = $templates;
     }
 
-    public function getTemplates(): array
+    final public function getTemplates(): array
     {
         return $this->templates;
     }
 
-    public function getTemplate(string $name): ?string
+    final public function getTemplate(string $name): ?string
     {
         return $this->templates[$name] ?? null;
     }
 
-    public function getResizer(): ?ResizerInterface
+    final public function getResizer(): ?ResizerInterface
     {
         return $this->resizer;
     }
 
-    public function getFilesystem(): Filesystem
+    final public function getFilesystem(): Filesystem
     {
         return $this->filesystem;
     }
 
-    public function getCdn(): CDNInterface
+    final public function getCdn(): CDNInterface
     {
         return $this->cdn;
     }
 
-    public function getCdnPath(string $relativePath, bool $isFlushable = false): string
+    final public function getCdnPath(string $relativePath, bool $isFlushable = false): string
     {
         return $this->getCdn()->getPath($relativePath, $isFlushable);
     }
 
-    public function setResizer(ResizerInterface $resizer): void
+    final public function setResizer(ResizerInterface $resizer): void
     {
         $this->resizer = $resizer;
     }

@@ -141,7 +141,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
     }
 
-    public function getObjectMetadata(object $object): MetadataInterface
+    final public function getObjectMetadata(object $object): MetadataInterface
     {
         $provider = $this->pool->getProvider($object->getProviderName());
 
