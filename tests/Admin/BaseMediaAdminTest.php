@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
-use Sonata\MediaBundle\Entity\BaseMedia;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -61,7 +60,7 @@ class BaseMediaAdminTest extends TestCase
 
         $this->mediaAdmin = new TestMediaAdmin(
             'media',
-            BaseMedia::class,
+            Media::class,
             'SonataMediaBundle:MediaAdmin',
             $this->pool,
             $this->categoryManager,
@@ -74,7 +73,6 @@ class BaseMediaAdminTest extends TestCase
 
     public function testAlterNewInstance(): void
     {
-        $media = new Media();
         $category = new Category();
         $context = new Context();
 
@@ -86,7 +84,7 @@ class BaseMediaAdminTest extends TestCase
         $this->categoryManager->method('find')->with(1)->willReturn($category);
         $this->request->setMethod('POST');
 
-        $this->mediaAdmin->alterNewInstance($media);
+        $media = $this->mediaAdmin->getNewInstance();
 
         static::assertSame('context', $media->getContext());
         static::assertSame($category, $media->getCategory());
