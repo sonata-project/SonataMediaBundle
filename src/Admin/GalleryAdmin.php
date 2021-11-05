@@ -40,19 +40,19 @@ final class GalleryAdmin extends AbstractAdmin
         $this->pool = $pool;
     }
 
-    public function prePersist(object $object): void
+    protected function prePersist(object $object): void
     {
         $parameters = $this->getPersistentParameters();
 
         $object->setContext($parameters['context']);
     }
 
-    public function postUpdate(object $object): void
+    protected function postUpdate(object $object): void
     {
         $object->reorderGalleryItems();
     }
 
-    public function configurePersistentParameters(): array
+    protected function configurePersistentParameters(): array
     {
         if (!$this->hasRequest()) {
             return [];
@@ -63,7 +63,7 @@ final class GalleryAdmin extends AbstractAdmin
         ];
     }
 
-    public function alterNewInstance(object $object): void
+    protected function alterNewInstance(object $object): void
     {
         if ($this->hasRequest()) {
             $object->setContext($this->getRequest()->get('context'));

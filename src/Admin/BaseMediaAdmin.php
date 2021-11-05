@@ -57,13 +57,25 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $this->contextManager = $contextManager;
     }
 
-    public function prePersist(object $object): void
+    final public function getObjectMetadata(object $object): MetadataInterface
+    {
+        $provider = $this->pool->getProvider($object->getProviderName());
+
+        $url = $provider->generatePublicUrl(
+            $object,
+            $provider->getFormatName($object, MediaProviderInterface::FORMAT_ADMIN)
+        );
+
+        return new Metadata($this->toString($object), $object->getDescription(), $url);
+    }
+
+    protected function prePersist(object $object): void
     {
         $parameters = $this->getPersistentParameters();
         $object->setContext($parameters['context']);
     }
 
-    public function configurePersistentParameters(): array
+    protected function configurePersistentParameters(): array
     {
         $parameters = [];
 
@@ -112,7 +124,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         ]);
     }
 
-    public function alterNewInstance(object $object): void
+    protected function alterNewInstance(object $object): void
     {
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
@@ -139,18 +151,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
                 }
             }
         }
-    }
-
-    final public function getObjectMetadata(object $object): MetadataInterface
-    {
-        $provider = $this->pool->getProvider($object->getProviderName());
-
-        $url = $provider->generatePublicUrl(
-            $object,
-            $provider->getFormatName($object, MediaProviderInterface::FORMAT_ADMIN)
-        );
-
-        return new Metadata($this->toString($object), $object->getDescription(), $url);
     }
 
     protected function configureListFields(ListMapper $list): void
