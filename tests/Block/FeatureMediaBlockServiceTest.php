@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Block;
 
+use PHPUnit\Framework\MockObject\Stub;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\FeatureMediaBlockService;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
@@ -27,10 +29,13 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
+        /** @var AdminInterface<MediaInterface>&Stub $mediaAdmin */
+        $mediaAdmin = $this->createStub(AdminInterface::class);
+
         $this->blockService = new FeatureMediaBlockService(
             $this->twig,
             new Pool('default'),
-            $this->createStub(AdminInterface::class),
+            $mediaAdmin,
             $this->createStub(MediaManagerInterface::class)
         );
     }
