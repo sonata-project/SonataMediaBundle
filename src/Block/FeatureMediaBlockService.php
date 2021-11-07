@@ -43,19 +43,19 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
     private Pool $pool;
 
     /**
-     * @var AdminInterface<MediaInterface>
+     * @var AdminInterface<MediaInterface>|null
      */
-    private AdminInterface $mediaAdmin;
+    private ?AdminInterface $mediaAdmin;
 
     private MediaManagerInterface $mediaManager;
 
     /**
-     * @param AdminInterface<MediaInterface> $mediaAdmin
+     * @param AdminInterface<MediaInterface>|null $mediaAdmin
      */
     public function __construct(
         Environment $twig,
         Pool $pool,
-        AdminInterface $mediaAdmin,
+        ?AdminInterface $mediaAdmin,
         MediaManagerInterface $mediaManager
     ) {
         parent::__construct($twig);
@@ -220,6 +220,10 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
 
     private function getMediaBuilder(FormMapper $form): FormBuilderInterface
     {
+        if (null === $this->mediaAdmin) {
+            throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
+        }
+
         $fieldDescription = $this->mediaAdmin->createFieldDescription('media', [
             'translation_domain' => 'SonataMediaBundle',
             'edit' => 'list',
