@@ -47,14 +47,6 @@ jobs:
                     - php-version: '8.0'
                       dependencies: highest
                       allowed-to-fail: false
-                      variant: sonata-project/admin-bundle:"3.*"
-                    - php-version: '8.0'
-                      dependencies: highest
-                      allowed-to-fail: false
-                      variant: imagine/imagine:"1.*"
-                    - php-version: '8.0'
-                      dependencies: highest
-                      allowed-to-fail: false
                       symfony-require: 4.4.*
                       variant: symfony/symfony:"4.4.*"
 
