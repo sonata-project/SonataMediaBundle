@@ -27,7 +27,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 new ReferenceConfigurator('twig'),
                 new ReferenceConfigurator('sonata.media.pool'),
-                new ReferenceConfigurator('sonata.media.admin.media'),
+                (new ReferenceConfigurator('sonata.media.admin.media'))->nullOnInvalid(),
                 new ReferenceConfigurator('sonata.media.manager.media'),
             ])
 
@@ -36,7 +36,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 new ReferenceConfigurator('twig'),
                 new ReferenceConfigurator('sonata.media.pool'),
-                new ReferenceConfigurator('sonata.media.admin.media'),
+                (new ReferenceConfigurator('sonata.media.admin.media'))->nullOnInvalid(),
                 new ReferenceConfigurator('sonata.media.manager.media'),
             ])
 
