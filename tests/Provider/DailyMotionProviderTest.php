@@ -30,7 +30,9 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
- * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\DailyMotionProvider>
+ * @phpstan-extends AbstractProviderTest<DailyMotionProvider>
+ *
+ * @property DailyMotionProvider $provider
  */
 class DailyMotionProviderTest extends AbstractProviderTest
 {

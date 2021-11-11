@@ -24,6 +24,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 final class ThumbnailCompilerPassTest extends TestCase
 {
     /**
+     * @phpstan-param class-string $class
+     *
      * @dataProvider processProvider
      *
      * @phpstan-param class-string $class

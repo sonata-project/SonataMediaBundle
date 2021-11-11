@@ -37,6 +37,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
     protected ?ContextManagerInterface $contextManager = null;
 
+    /**
+     * @var string
+     */
     protected $classnameLabel = 'Media';
 
     /**

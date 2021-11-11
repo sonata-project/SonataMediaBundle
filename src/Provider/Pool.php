@@ -33,7 +33,7 @@ final class Pool
     private array $providers = [];
 
     /**
-     * @var array<string, string|array>
+     * @var array<string, array<string, mixed>>
      *
      * @phpstan-var array<string, array{
      *     providers: string[],
