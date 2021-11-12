@@ -13,13 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Gaufrette\Adapter;
-use Gaufrette\File;
+use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
+use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\ImagineInterface;
 use PHPUnit\Framework\MockObject\Stub\Stub;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
@@ -29,6 +26,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 class ImageProviderTest extends AbstractProviderTest
 {
@@ -36,38 +34,19 @@ class ImageProviderTest extends AbstractProviderTest
     {
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('resize')->willReturn(true);
+
         if ($box) {
             $resizer->method('getBox')->will($box);
         }
 
-        $adapter = $this->createMock(Adapter::class);
-
-        $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->onlyMethods(['get'])
-            ->setConstructorArgs([$adapter])
-            ->getMock();
-        $file = $this->getMockBuilder(File::class)
-            ->setConstructorArgs(['foo', $filesystem])
-            ->getMock();
-        $filesystem->method('get')->willReturn($file);
-
+        $filesystem = new Filesystem(new Local(sys_get_temp_dir().'/sonata-media-bundle/var/', true));
         $cdn = new Server('/uploads/media');
-
         $generator = new IdGenerator();
-
         $thumbnail = new FormatThumbnail('jpg');
-
-        $size = $this->createMock(BoxInterface::class);
-        $size->method('getWidth')->willReturn(100);
-        $size->method('getHeight')->willReturn(100);
-
-        $image = $this->createMock(ImageInterface::class);
-        $image->method('getSize')->willReturn($size);
-
-        $adapter = $this->createMock(ImagineInterface::class);
-        $adapter->method('open')->willReturn($image);
+        $adapter = new Imagine();
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $metadata->method('get')->willReturn([]);
 
         $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
         $provider->setResizer($resizer);
@@ -221,7 +200,7 @@ class ImageProviderTest extends AbstractProviderTest
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../Fixtures/logo.png'));
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
 
         $media = new Media();
         $media->setBinaryContent($file);
@@ -236,15 +215,30 @@ class ImageProviderTest extends AbstractProviderTest
 
         // post persist the media
         $provider->postPersist($media);
-
         $provider->postRemove($media);
+    }
+
+    public function testUpdateMetadata(): void
+    {
+        $provider = $this->getProvider();
+
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $provider->updateMetadata($media);
+
+        static::assertNotNull($media->getSize());
+        static::assertSame(132, $media->getHeight());
+        static::assertSame(535, $media->getWidth());
     }
 
     public function testTransformFormatNotSupported(): void
     {
         $provider = $this->getProvider();
 
-        $file = new \Symfony\Component\HttpFoundation\File\File(realpath(__DIR__.'/../Fixtures/logo.png'));
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
 
         $media = new Media();
         $media->setBinaryContent($file);
