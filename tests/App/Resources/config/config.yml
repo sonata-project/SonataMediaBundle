@@ -58,8 +58,8 @@ sonata_media:
 
     filesystem:
         local:
-            directory: "%kernel.project_dir%/public/uploads/media"
-            create: false
+            directory: "%kernel.project_dir%/uploads"
+            create: true
 
         s3:
             bucket: my-bucket
