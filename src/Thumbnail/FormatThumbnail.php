@@ -101,7 +101,7 @@ class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInterface
 
         foreach ($provider->getFormats() as $format => $settings) {
             if (
-                substr($format, 0, \strlen($media->getContext())) === $media->getContext() ||
+                substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext() ||
                 MediaProviderInterface::FORMAT_ADMIN === $format
             ) {
                 $resizer = (isset($settings['resizer']) && ($settings['resizer'])) && $this->hasResizer($settings['resizer']) ?
