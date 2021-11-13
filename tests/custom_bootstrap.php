@@ -33,6 +33,5 @@ $application->run($input, new NullOutput());
 
 $input = new ArrayInput([
     'command' => 'doctrine:schema:create',
-    '--no-interaction' => true,
 ]);
 $application->run($input, new NullOutput());
