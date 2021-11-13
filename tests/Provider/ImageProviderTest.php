@@ -26,6 +26,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 class ImageProviderTest extends AbstractProviderTest
@@ -196,7 +197,7 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testEvent(): void
     {
-        $provider = $this->getProvider();
+        $provider = $this->getProvider(['png'], ['image/png']);
 
         $provider->addFormat('big', ['width' => 200, 'height' => 100, 'constraint' => true]);
 
@@ -234,17 +235,64 @@ class ImageProviderTest extends AbstractProviderTest
         static::assertSame(535, $media->getWidth());
     }
 
-    public function testTransformFormatNotSupported(): void
+    public function testTransformNoExtensions(): void
     {
-        $provider = $this->getProvider();
+        $provider = $this->getProvider([], ['image/png']);
 
         $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
 
         $media = new Media();
         $media->setBinaryContent($file);
 
-        static::assertNull($provider->transform($media));
-        static::assertNull($media->getWidth(), 'Width staid null');
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('There are no allowed extensions for this image.');
+
+        $provider->transform($media);
+    }
+
+    public function testTransformExtensionNotAllowed(): void
+    {
+        $provider = $this->getProvider(['jpg', 'jpeg'], ['image/jpg']);
+
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('The image extension "png" is not one of the allowed ("jpg", "jpeg")');
+
+        $provider->transform($media);
+    }
+
+    public function testTransformNoMimeTypes(): void
+    {
+        $provider = $this->getProvider(['png'], []);
+
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('There are no allowed mime types for this image.');
+
+        $provider->transform($media);
+    }
+
+    public function testTransformMimeTypeNotAllowed(): void
+    {
+        $provider = $this->getProvider(['png'], ['image/jpg', 'image/jpeg']);
+
+        $file = new SymfonyFile(realpath(__DIR__.'/../Fixtures/logo.png'));
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('The image mime type "image/png" is not one of the allowed ("image/jpg", "image/jpeg")');
+
+        $provider->transform($media);
     }
 
     public function testMetadata(): void
