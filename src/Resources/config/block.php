@@ -53,8 +53,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.block')
             ->args([
                 new ReferenceConfigurator('twig'),
-                new ReferenceConfigurator('sonata.media.pool'),
-                new ReferenceConfigurator('sonata.media.admin.gallery'),
                 new ReferenceConfigurator('sonata.media.manager.gallery'),
+                new ReferenceConfigurator('sonata.media.pool'),
             ]);
 };
