@@ -76,6 +76,7 @@
     },
     "require-dev": {
         "aws/aws-sdk-php": "^3.0",
+        "doctrine/doctrine-bundle": "^2.3.2",
         "doctrine/mongodb-odm": "^2.2",
         "doctrine/orm": "^2.9",
         "jackalope/jackalope-doctrine-dbal": "^1.1",
