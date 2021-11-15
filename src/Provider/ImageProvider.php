@@ -20,6 +20,7 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -206,6 +207,18 @@ class ImageProvider extends FileProvider
     {
         parent::doTransform($media);
 
+        if ([] === $this->allowedExtensions) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            throw new UploadException('There are no allowed extensions for this image.');
+        }
+
+        if ([] === $this->allowedMimeTypes) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            throw new UploadException('There are no allowed mime types for this image.');
+        }
+
         if ($media->getBinaryContent() instanceof UploadedFile) {
             $fileName = $media->getBinaryContent()->getClientOriginalName();
         } elseif ($media->getBinaryContent() instanceof File) {
@@ -215,9 +228,28 @@ class ImageProvider extends FileProvider
             return;
         }
 
-        if (!\in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), $this->allowedExtensions, true)
-            || !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes, true)) {
-            return;
+        $extension = strtolower(pathinfo($fileName, \PATHINFO_EXTENSION));
+
+        if (!\in_array($extension, $this->allowedExtensions, true)) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            throw new UploadException(sprintf(
+                'The image extension "%s" is not one of the allowed (%s).',
+                $extension,
+                '"'.implode('", "', $this->allowedExtensions).'"'
+            ));
+        }
+
+        $mimeType = $media->getBinaryContent()->getMimeType();
+
+        if (!\in_array($mimeType, $this->allowedMimeTypes, true)) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            throw new UploadException(sprintf(
+                'The image mime type "%s" is not one of the allowed (%s).',
+                $mimeType,
+                '"'.implode('", "', $this->allowedMimeTypes).'"'
+            ));
         }
 
         try {
