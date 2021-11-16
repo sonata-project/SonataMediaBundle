@@ -13,21 +13,19 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Gaufrette\Adapter;
-use Gaufrette\File;
+use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
+use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\ImagineInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
-use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 /**
@@ -35,8 +33,13 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
  */
 class ImageProviderTest extends AbstractProviderTest
 {
-    public function getProvider(): MediaProviderInterface
+    /**
+     * @param string[] $allowedExtensions
+     * @param string[] $allowedMimeTypes
+     */
+    public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = []): ImageProvider
     {
+        /** @var MockObject&ResizerInterface $resizer */
         $resizer = $this->createMock(ResizerInterface::class);
 
         $adminBox = new Box(100, 100);
@@ -59,37 +62,17 @@ class ImageProviderTest extends AbstractProviderTest
             $largeBox
         ));
 
-        $adapter = $this->createMock(Adapter::class);
-
-        $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->onlyMethods(['get'])
-            ->setConstructorArgs([$adapter])
-            ->getMock();
-        $file = $this->getMockBuilder(File::class)
-            ->setConstructorArgs(['foo', $filesystem])
-            ->getMock();
-        $file->method('getName')->willReturn('name');
-        $filesystem->method('get')->willReturn($file);
-
+        $filesystem = new Filesystem(new Local(sys_get_temp_dir().'/sonata-media-bundle/var/', true));
         $cdn = new Server('/uploads/media');
-
         $generator = new IdGenerator();
-
         $thumbnail = new FormatThumbnail('jpg');
+        $adapter = new Imagine();
 
-        $size = $this->createMock(BoxInterface::class);
-        $size->method('getWidth')->willReturn(100);
-        $size->method('getHeight')->willReturn(100);
-
-        $image = $this->createMock(ImageInterface::class);
-        $image->method('getSize')->willReturn($size);
-
-        $adapter = $this->createMock(ImagineInterface::class);
-        $adapter->method('open')->willReturn($image);
-
+        /** @var MockObject&MetadataBuilderInterface $metadata */
         $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $metadata->method('get')->willReturn([]);
 
-        $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, [], [], $adapter, $metadata);
+        $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -234,7 +217,9 @@ class ImageProviderTest extends AbstractProviderTest
 
     public function testEvent(): void
     {
-        $this->provider->addFormat('big', [
+        $provider = $this->getProvider(['png'], ['image/png']);
+
+        $provider->addFormat('big', [
             'width' => 200,
             'height' => 100,
             'quality' => 80,
@@ -256,18 +241,18 @@ class ImageProviderTest extends AbstractProviderTest
         $media->setId(1023456);
 
         // pre persist the media
-        $this->provider->transform($media);
-        $this->provider->prePersist($media);
+        $provider->transform($media);
+        $provider->prePersist($media);
 
         static::assertSame('logo.png', $media->getName(), '::getName() return the file name');
         static::assertNotNull($media->getProviderReference(), '::getProviderReference() is set');
 
         // post persist the media
-        $this->provider->postPersist($media);
-        $this->provider->postRemove($media);
+        $provider->postPersist($media);
+        $provider->postRemove($media);
     }
 
-    public function testTransformFormatNotSupported(): void
+    public function testUpdateMetadata(): void
     {
         $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
 
@@ -278,9 +263,87 @@ class ImageProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($file);
 
-        $this->provider->transform($media);
+        $this->provider->updateMetadata($media);
 
-        static::assertNull($media->getWidth(), 'Width staid null');
+        static::assertNotNull($media->getSize());
+        static::assertSame(132, $media->getHeight());
+        static::assertSame(535, $media->getWidth());
+    }
+
+    public function testTransformNoExtensions(): void
+    {
+        $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
+
+        static::assertNotFalse($realPath);
+
+        $file = new SymfonyFile($realPath);
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $provider = $this->getProvider([], ['image/png']);
+
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('There are no allowed extensions for this image.');
+
+        $provider->transform($media);
+    }
+
+    public function testTransformExtensionNotAllowed(): void
+    {
+        $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
+
+        static::assertNotFalse($realPath);
+
+        $file = new SymfonyFile($realPath);
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $provider = $this->getProvider(['jpg', 'jpeg'], ['image/jpg']);
+
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('The image extension "png" is not one of the allowed ("jpg", "jpeg")');
+
+        $provider->transform($media);
+    }
+
+    public function testTransformNoMimeTypes(): void
+    {
+        $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
+
+        static::assertNotFalse($realPath);
+
+        $file = new SymfonyFile($realPath);
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $provider = $this->getProvider(['png']);
+
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('There are no allowed mime types for this image.');
+
+        $provider->transform($media);
+    }
+
+    public function testTransformMimeTypeNotAllowed(): void
+    {
+        $realPath = realpath(__DIR__.'/../Fixtures/logo.png');
+
+        static::assertNotFalse($realPath);
+
+        $file = new SymfonyFile($realPath);
+
+        $media = new Media();
+        $media->setBinaryContent($file);
+
+        $provider = $this->getProvider(['png'], ['image/jpg', 'image/jpeg']);
+
+        $this->expectException(UploadException::class);
+        $this->expectExceptionMessage('The image mime type "image/png" is not one of the allowed ("image/jpg", "image/jpeg")');
+
+        $provider->transform($media);
     }
 
     public function testMetadata(): void
