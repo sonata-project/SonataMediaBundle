@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0-RC1](https://github.com/sonata-project/SonataMediaBundle/compare/4.0.0-alpha1...4.0.0-RC1) - 2021-11-17
+### Changed
+- [[#2204](https://github.com/sonata-project/SonataMediaBundle/pull/2204)] Make "sonata-project/admin-bundle" dependency optional for blocks ([@core23](https://github.com/core23))
+- [[#2201](https://github.com/sonata-project/SonataMediaBundle/pull/2201)] Changed visibility for public methods on Admin classes. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Fixed
+- [[#2214](https://github.com/sonata-project/SonataMediaBundle/pull/2214)] Fix block service registration ([@core23](https://github.com/core23))
+
 ## [4.0.0-alpha1](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.1...4.0.0-alpha1) - 2021-10-21
 ### Added
 - [[#2164](https://github.com/sonata-project/SonataMediaBundle/pull/2164)] Added property type hints ([@jordisala1991](https://github.com/jordisala1991))
