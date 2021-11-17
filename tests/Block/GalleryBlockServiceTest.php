@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Block;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\MockObject\Stub;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\Block;
@@ -31,10 +32,13 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
+        /** @var AdminInterface<GalleryInterface>&Stub $galleryAdmin */
+        $galleryAdmin = $this->createStub(AdminInterface::class);
+
         $this->blockService = new GalleryBlockService(
             $this->twig,
             new Pool('default'),
-            $this->createStub(AdminInterface::class),
+            $galleryAdmin,
             $this->createStub(GalleryManagerInterface::class)
         );
     }

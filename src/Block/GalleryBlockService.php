@@ -32,6 +32,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
@@ -44,19 +45,19 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     private Pool $pool;
 
     /**
-     * @var AdminInterface<GalleryInterface>
+     * @var AdminInterface<GalleryInterface>|null
      */
-    private AdminInterface $galleryAdmin;
+    private ?AdminInterface $galleryAdmin;
 
     private GalleryManagerInterface $galleryManager;
 
     /**
-     * @param AdminInterface<GalleryInterface> $galleryAdmin
+     * @param AdminInterface<GalleryInterface>|null $galleryAdmin
      */
     public function __construct(
         Environment $twig,
         Pool $pool,
-        AdminInterface $galleryAdmin,
+        ?AdminInterface $galleryAdmin,
         GalleryManagerInterface $galleryManager
     ) {
         parent::__construct($twig);
@@ -107,18 +108,6 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
             }
         }
 
-        $fieldDescription = $this->galleryAdmin->createFieldDescription('media', [
-            'translation_domain' => 'SonataMediaBundle',
-            'edit' => 'list',
-        ]);
-
-        $builder = $form->create('galleryId', ModelListType::class, [
-            'sonata_field_description' => $fieldDescription,
-            'class' => $this->galleryAdmin->getClass(),
-            'model_manager' => $this->galleryAdmin->getModelManager(),
-            'label' => 'form.label_gallery',
-        ]);
-
         $form->add('settings', ImmutableArrayType::class, [
             'keys' => [
                 ['title', TextType::class, [
@@ -147,7 +136,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],
-                [$builder, null, []],
+                [$this->getGalleryBuilder($form), null, []],
                 ['pauseTime', NumberType::class, [
                     'label' => 'form.label_pause_time',
                 ]],
@@ -205,6 +194,25 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
 
     public function validate(ErrorElement $errorElement, BlockInterface $block): void
     {
+    }
+
+    private function getGalleryBuilder(FormMapper $form): FormBuilderInterface
+    {
+        if (null === $this->galleryAdmin) {
+            throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
+        }
+
+        $fieldDescription = $this->galleryAdmin->createFieldDescription('gallery', [
+            'translation_domain' => 'SonataMediaBundle',
+            'edit' => 'list',
+        ]);
+
+        return $form->create('galleryId', ModelListType::class, [
+            'sonata_field_description' => $fieldDescription,
+            'class' => $this->galleryAdmin->getClass(),
+            'model_manager' => $this->galleryAdmin->getModelManager(),
+            'label' => 'form.label_gallery',
+        ]);
     }
 
     /**
