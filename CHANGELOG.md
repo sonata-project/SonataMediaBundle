@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [[#2177](https://github.com/sonata-project/SonataMediaBundle/pull/2177)] Support for "jms/serializer-bundle" 4.x ([@phansys](https://github.com/phansys))
 
 ### Fixed
-- [[#2211](https://github.com/sonata-project/SonataMediaBundle/pull/2211)] Fixed call to `strlen()` with possible null value. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2211](https://github.com/sonata-project/SonataMediaBundle/pull/2211)] Fixed call to `strlen()` with possible null value ([@jordisala1991](https://github.com/jordisala1991))
 - [[#2211](https://github.com/sonata-project/SonataMediaBundle/pull/2211)] Improved error message for uploaded images that do not have an allowed extension or mime type ([@jordisala1991](https://github.com/jordisala1991))
 - [[#2207](https://github.com/sonata-project/SonataMediaBundle/pull/2207)] Fix creation of galleries, an annotation was incorrectly configured ([@houssemz](https://github.com/houssemz))
 
