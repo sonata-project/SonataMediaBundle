@@ -4,6 +4,12 @@ UPGRADE 3.x
 UPGRADE FROM 3.x to 3.x
 =======================
 
+### ReST API
+
+Conflict against "nelmio/api-doc-bundle" >= 4.0 was removed.
+If this package is installed, the deprecated ReST API will not be built.
+This behavior allows to accept setups using "nelmio/api-doc-bundle" >= 4.0 dependency without conflicts.
+
 ### Mark final methods on abstract classes
 
 The following abstract classes have some of their methods marked as final with annotations, on 4.0 they will be final, make sure to not reimplement them:
