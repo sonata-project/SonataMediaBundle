@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - [[#2211](https://github.com/sonata-project/SonataMediaBundle/pull/2211)] Fixed call to `strlen()` with possible null value. ([@jordisala1991](https://github.com/jordisala1991))
-- [[#2211](https://github.com/sonata-project/SonataMediaBundle/pull/2211)] Improved error message for uploaded images that do not have an allowed extension or mime type. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2211](https://github.com/sonata-project/SonataMediaBundle/pull/2211)] Improved error message for uploaded images that do not have an allowed extension or mime type ([@jordisala1991](https://github.com/jordisala1991))
 - [[#2207](https://github.com/sonata-project/SonataMediaBundle/pull/2207)] Fix creation of galleries, an annotation was incorrectly configured. ([@houssemz](https://github.com/houssemz))
 
 ## [3.36.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.1...3.36.0) - 2021-11-04
