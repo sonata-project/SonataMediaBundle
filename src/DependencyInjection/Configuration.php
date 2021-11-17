@@ -148,7 +148,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('panther')
                             ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
                                 'The node "%node%" is deprecated and will be removed in version 4.0.',
-                                '3.x'
+                                '3.36'
                             ))
                             ->children()
                                 ->scalarNode('path')
@@ -181,7 +181,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('master')
                                     ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
                                         'The "%node%" option is deprecated, use "primary" instead.',
-                                        '3.x'
+                                        '3.36'
                                     ))
                                 ->end()
                                 ->scalarNode('primary')->end()
@@ -313,14 +313,14 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('master')
                                     ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
                                         'The "%node%" option is deprecated, use "primary" instead.',
-                                        '3.x'
+                                        '3.36'
                                     ))
                                 ->end()
                                 ->scalarNode('primary')->end()
                                 ->scalarNode('slave')
                                     ->setDeprecated(...$this->getBackwardCompatibleArgumentsForSetDeprecated(
                                         'The "%node%" option is deprecated, use "secondary" instead.',
-                                        '3.x'
+                                        '3.36'
                                     ))
                                 ->end()
                                 ->scalarNode('secondary')->end()
