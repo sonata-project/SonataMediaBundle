@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.37.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.356...3.37.0) - 2021-11-17
 ### Added
-- [[#2177](https://github.com/sonata-project/SonataMediaBundle/pull/2177)] Support for "jms/serializer-bundle" 4.x. ([@phansys](https://github.com/phansys))
+- [[#2177](https://github.com/sonata-project/SonataMediaBundle/pull/2177)] Support for "jms/serializer-bundle" 4.x ([@phansys](https://github.com/phansys))
 
 ### Fixed
 - [[#2211](https://github.com/sonata-project/SonataMediaBundle/pull/2211)] Fixed call to `strlen()` with possible null value. ([@jordisala1991](https://github.com/jordisala1991))
