@@ -35,6 +35,9 @@ sonata_media:
     default_context: default
     contexts:
         default:
+            download:
+                strategy: sonata.media.security.public_strategy
+                mode: X-Sendfile
             providers:
                 - sonata.media.provider.dailymotion
                 - sonata.media.provider.youtube

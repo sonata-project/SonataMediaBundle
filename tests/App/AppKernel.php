@@ -20,6 +20,7 @@ use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
+use Sonata\Twig\Bridge\Symfony\SonataTwigBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -52,6 +53,7 @@ final class AppKernel extends Kernel
             new FrameworkBundle(),
             new KnpMenuBundle(),
             new SecurityBundle(),
+            new SonataTwigBundle(),
             new SonataAdminBundle(),
             new SonataBlockBundle(),
             new SonataDoctrineBundle(),
@@ -100,6 +102,8 @@ final class AppKernel extends Kernel
 
         if (class_exists(AuthenticatorManager::class)) {
             $loader->load(__DIR__.'/Resources/config/config_symfony_v5.yml');
+        } else {
+            $loader->load(__DIR__.'/Resources/config/config_symfony_v4.yml');
         }
 
         $loader->load(__DIR__.'/Resources/config/services.php');

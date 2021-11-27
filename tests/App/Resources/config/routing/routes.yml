@@ -1,3 +1,16 @@
 test_page:
     path: /u_truncate_test
     controller: Sonata\MediaBundle\Tests\App\Controller\TruncateController::test
+
+admin_area:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+media:
+    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+    prefix: /media
