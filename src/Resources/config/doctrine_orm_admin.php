@@ -11,7 +11,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 use Sonata\MediaBundle\Admin\GalleryItemAdmin;
 use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
@@ -85,7 +84,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 '',
                 '%sonata.media.admin.gallery_item.entity%',
-                CRUDController::class,
+                '%sonata.admin.configuration.default_controller%',
             ])
             ->call('setTranslationDomain', ['SonataMediaBundle']);
 };
