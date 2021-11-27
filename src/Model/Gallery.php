@@ -106,9 +106,9 @@ abstract class Gallery implements GalleryInterface
         return $this->defaultFormat;
     }
 
-    final public function setGalleryItems(Collection $galleryItems): void
+    final public function setGalleryItems(iterable $galleryItems): void
     {
-        $this->galleryItems = new ArrayCollection();
+        $this->galleryItems->clear();
 
         foreach ($galleryItems as $galleryItem) {
             $this->addGalleryItem($galleryItem);
@@ -150,6 +150,6 @@ abstract class Gallery implements GalleryInterface
             return $a->getPosition() <=> $b->getPosition();
         });
 
-        $this->setGalleryItems(new ArrayCollection(iterator_to_array($iterator)));
+        $this->setGalleryItems($iterator);
     }
 }
