@@ -74,7 +74,7 @@ jobs:
                   php-version: ${{ matrix.php-version }}
                   coverage: pcov
                   tools: composer:v2
-                  extensions: mongodb-1.9.0, gd
+                  extensions: mongodb, gd
 
             - name: Add PHPUnit matcher
               run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
@@ -92,7 +92,7 @@ jobs:
 
             - name: Remove dev dependencies not compatible with Symfony 6
               if: matrix.symfony-require == '6.0.*'
-              run: composer remove psalm/plugin-symfony symfony/maker-bundle symfony/panther --dev --no-update --no-interaction
+              run: composer remove psalm/plugin-symfony --dev --no-update --no-interaction
 
             - name: Install Composer dependencies (${{ matrix.dependencies }})
               uses: ramsey/composer-install@v1
