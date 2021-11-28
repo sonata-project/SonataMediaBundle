@@ -17,6 +17,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
+/**
+ * @phpstan-template T of GalleryItemInterface
+ * @phpstan-implements GalleryInterface<T>
+ */
 abstract class Gallery implements GalleryInterface
 {
     protected ?string $context = null;
@@ -33,6 +37,8 @@ abstract class Gallery implements GalleryInterface
 
     /**
      * @var Collection<int, GalleryItemInterface>
+     *
+     * @phpstan-var Collection<int, T>
      */
     protected Collection $galleryItems;
 

@@ -40,7 +40,7 @@ class GalleryAdminControllerTest extends TestCase
     private Container $container;
 
     /**
-     * @var MockObject&AdminInterface<GalleryInterface>
+     * @var MockObject&AdminInterface<GalleryInterface<\Sonata\MediaBundle\Model\GalleryItemInterface>>
      */
     private MockObject $admin;
 

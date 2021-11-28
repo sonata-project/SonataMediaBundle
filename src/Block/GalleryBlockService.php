@@ -25,6 +25,7 @@ use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -45,14 +46,14 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     private Pool $pool;
 
     /**
-     * @var AdminInterface<GalleryInterface>|null
+     * @var AdminInterface<GalleryInterface<GalleryItemInterface>>|null
      */
     private ?AdminInterface $galleryAdmin;
 
     private GalleryManagerInterface $galleryManager;
 
     /**
-     * @param AdminInterface<GalleryInterface>|null $galleryAdmin
+     * @param AdminInterface<GalleryInterface<GalleryItemInterface>>|null $galleryAdmin
      */
     public function __construct(
         Environment $twig,
@@ -217,6 +218,8 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
 
     /**
      * @return array<string, MediaInterface|string|null>
+     *
+     * @phpstan-param GalleryInterface<GalleryItemInterface> $gallery
      *
      * @phpstan-return array{
      *     title: string|null,

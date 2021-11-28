@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
 
+/**
+ * @phpstan-template T of GalleryItemInterface
+ */
 interface GalleryInterface
 {
     public function __toString(): string;
@@ -50,16 +53,26 @@ interface GalleryInterface
 
     /**
      * @param iterable<int, GalleryItemInterface> $galleryItems
+     *
+     * @phpstan-param iterable<int, T> $galleryItems
      */
     public function setGalleryItems(iterable $galleryItems): void;
 
     /**
      * @return Collection<int, GalleryItemInterface>
+     *
+     * @phpstan-return Collection<int, T>
      */
     public function getGalleryItems(): Collection;
 
+    /**
+     * @phpstan-param T $galleryItem
+     */
     public function addGalleryItem(GalleryItemInterface $galleryItem): void;
 
+    /**
+     * @phpstan-param T $galleryItem
+     */
     public function removeGalleryItem(GalleryItemInterface $galleryItem): void;
 
     /**

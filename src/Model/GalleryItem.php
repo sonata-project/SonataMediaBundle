@@ -17,6 +17,9 @@ abstract class GalleryItem implements GalleryItemInterface
 {
     protected ?MediaInterface $media = null;
 
+    /**
+     * @phpstan-var ?GalleryInterface<GalleryItemInterface>
+     */
     protected ?GalleryInterface $gallery = null;
 
     protected int $position = 0;

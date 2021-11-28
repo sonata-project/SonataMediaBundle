@@ -32,7 +32,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
-        /** @var AdminInterface<GalleryInterface>&Stub $galleryAdmin */
+        /** @var AdminInterface<GalleryInterface<\Sonata\MediaBundle\Model\GalleryItemInterface>>&Stub $galleryAdmin */
         $galleryAdmin = $this->createStub(AdminInterface::class);
 
         $this->blockService = new GalleryBlockService(
