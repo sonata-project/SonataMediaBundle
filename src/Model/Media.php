@@ -312,9 +312,13 @@ abstract class Media implements MediaInterface
         $this->category = $category;
     }
 
-    final public function setGalleryItems(Collection $galleryItems): void
+    final public function setGalleryItems(iterable $galleryItems): void
     {
-        $this->galleryItems = $galleryItems;
+        $this->galleryItems->clear();
+
+        foreach ($galleryItems as $galleryItem) {
+            $this->galleryItems->add($galleryItem);
+        }
     }
 
     final public function getGalleryItems(): Collection

@@ -135,9 +135,9 @@ interface MediaInterface
     public function setCategory(?object $category = null): void;
 
     /**
-     * @param Collection<int, GalleryItemInterface> $galleryItems
+     * @param iterable<int, GalleryItemInterface> $galleryItems
      */
-    public function setGalleryItems(Collection $galleryItems): void;
+    public function setGalleryItems(iterable $galleryItems): void;
 
     /**
      * @return Collection<int, GalleryItemInterface>
