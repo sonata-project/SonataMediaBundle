@@ -119,7 +119,7 @@ Full configuration options:
         providers:
             file:
                 service: sonata.media.provider.file
-                resizer: false
+                resizer: null
                 filesystem: sonata.media.filesystem.local
                 cdn: sonata.media.cdn.server
                 generator: sonata.media.generator.default
