@@ -26,8 +26,14 @@ interface GalleryItemInterface
 
     public function getEnabled(): bool;
 
+    /**
+     * @phpstan-param ?GalleryInterface<GalleryItemInterface> $gallery
+     */
     public function setGallery(?GalleryInterface $gallery = null): void;
 
+    /**
+     * @phpstan-return ?GalleryInterface<GalleryItemInterface>
+     */
     public function getGallery(): ?GalleryInterface;
 
     public function setMedia(?MediaInterface $media = null): void;

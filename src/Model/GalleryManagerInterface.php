@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Model;
 use Sonata\Doctrine\Model\ManagerInterface;
 
 /**
- * @phpstan-extends ManagerInterface<\Sonata\MediaBundle\Model\GalleryInterface>
+ * @phpstan-extends ManagerInterface<\Sonata\MediaBundle\Model\GalleryInterface<\Sonata\MediaBundle\Model\GalleryItemInterface>>
  */
 interface GalleryManagerInterface extends ManagerInterface
 {

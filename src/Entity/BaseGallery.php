@@ -15,6 +15,10 @@ namespace Sonata\MediaBundle\Entity;
 
 use Sonata\MediaBundle\Model\Gallery;
 
+/**
+ * @phpstan-template T of \Sonata\MediaBundle\Model\GalleryItemInterface
+ * @phpstan-extends Gallery<T>
+ */
 abstract class BaseGallery extends Gallery
 {
     public function prePersist(): void
