@@ -68,7 +68,7 @@ class BaseMediaAdminTest extends TestCase
         );
         $this->mediaAdmin->setRequest($this->request);
         $this->mediaAdmin->setModelManager($this->modelManager);
-        $this->mediaAdmin->setUniqId('uniqid');
+        $this->mediaAdmin->setUniqId('uniqId');
     }
 
     public function testAlterNewInstance(): void
@@ -133,7 +133,7 @@ class BaseMediaAdminTest extends TestCase
         $this->request->query->set('filter', []);
         $this->request->query->set('hide_context', true);
         $this->request->query->set('context', 'context');
-        $this->request->query->set('uniqid', ['providerName' => 'providerName']);
+        $this->request->request->set('uniqId', ['providerName' => 'providerName']);
 
         $this->pool->addProvider('provider', $provider);
         $this->pool->addContext('context', ['provider']);

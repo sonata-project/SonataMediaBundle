@@ -34,7 +34,7 @@ final class GalleryItemAdmin extends AbstractAdmin
         }
 
         if ($this->hasRequest()) {
-            $context = $this->getRequest()->get('context', null);
+            $context = $this->getRequest()->query->get('context');
 
             if (null !== $context) {
                 $linkParameters['context'] = $context;
