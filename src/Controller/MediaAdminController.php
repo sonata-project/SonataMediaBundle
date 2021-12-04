@@ -39,13 +39,13 @@ final class MediaAdminController extends CRUDController
     {
         $this->admin->checkAccess('create');
 
-        if (null === $request->get('provider') && $request->isMethod('get')) {
+        if ($request->isMethod('get') && null === $request->query->get('provider')) {
             $pool = $this->container->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
             return $this->renderWithExtraParams('@SonataMedia/MediaAdmin/select_provider.html.twig', [
                 'providers' => $pool->getProvidersByContext(
-                    $request->get('context', $pool->getDefaultContext())
+                    $request->query->get('context', $pool->getDefaultContext())
                 ),
                 'action' => 'create',
             ]);
@@ -65,20 +65,21 @@ final class MediaAdminController extends CRUDController
             return $preResponse;
         }
 
-        $this->admin->setListMode($request->get('_list_mode', 'mosaic'));
+        $this->admin->setListMode($request->query->get('_list_mode', 'mosaic'));
 
         $datagrid = $this->admin->getDatagrid();
 
-        $filters = $request->get('filter', []);
+        // TODO: Change to $request->query->all('filter') when support for Symfony < 5.1 is dropped.
+        $filters = $request->query->all()['filter'] ?? [];
 
         // set the default context
-        if ([] === $filters || !\array_key_exists('context', $filters)) {
+        if (\is_array($filters) && \array_key_exists('context', $filters)) {
+            $context = $filters['context']['value'];
+        } else {
             $pool = $this->container->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
             $context = $this->admin->getPersistentParameter('context') ?? $pool->getDefaultContext();
-        } else {
-            $context = $filters['context']['value'];
         }
 
         $datagrid->setValue('context', null, $context);
@@ -103,9 +104,9 @@ final class MediaAdminController extends CRUDController
                 $datagrid->setValue('category', null, $rootCategory->getId());
             }
 
-            if (null !== $request->get('category')) {
+            if (null !== $request->query->get('category')) {
                 $category = $categoryManager->findOneBy([
-                    'id' => (int) $request->get('category'),
+                    'id' => $request->query->getInt('category'),
                     'context' => $context,
                 ]);
 

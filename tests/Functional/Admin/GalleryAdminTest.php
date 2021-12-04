@@ -54,6 +54,9 @@ final class GalleryAdminTest extends WebTestCase
         return AppKernel::class;
     }
 
+    /**
+     * @psalm-suppress UndefinedPropertyFetch
+     */
     private function prepareData(): void
     {
         // TODO: Simplify this when dropping support for Symfony 4.

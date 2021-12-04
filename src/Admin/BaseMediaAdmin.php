@@ -83,15 +83,17 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             return $parameters;
         }
 
-        $filter = $this->getRequest()->get('filter');
-        if (null !== $filter && \array_key_exists('context', $filter)) {
+        // TODO: Change to $request->query->all('filter') when support for Symfony < 5.1 is dropped.
+        $filter = $this->getRequest()->query->all()['filter'] ?? [];
+
+        if (\is_array($filter) && \array_key_exists('context', $filter)) {
             $context = $filter['context']['value'];
         } else {
-            $context = $this->getRequest()->get('context', $this->pool->getDefaultContext());
+            $context = $this->getRequest()->query->get('context', $this->pool->getDefaultContext());
         }
 
         $providers = $this->pool->getProvidersByContext($context);
-        $provider = $this->getRequest()->get('provider');
+        $provider = $this->getRequest()->query->get('provider');
 
         // if the context has only one provider, set it into the request
         // so the intermediate provider selection is skipped
@@ -106,7 +108,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $parameters['provider'] = $provider;
         }
 
-        $categoryId = $this->getRequest()->get('category');
+        $categoryId = $this->getRequest()->query->get('category');
 
         if (null !== $this->categoryManager && null !== $this->contextManager && null === $categoryId) {
             $rootCategories = $this->categoryManager->getRootCategoriesForContext($this->contextManager->find($context));
@@ -120,7 +122,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return array_merge($parameters, [
             'context' => $context,
             'category' => $categoryId,
-            'hide_context' => (bool) $this->getRequest()->get('hide_context'),
+            'hide_context' => $this->getRequest()->query->getBoolean('hide_context'),
         ]);
     }
 
@@ -128,13 +130,18 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     {
         if ($this->hasRequest()) {
             if ($this->getRequest()->isMethod('POST')) {
-                $uniqid = $this->getUniqId();
-                $object->setProviderName($this->getRequest()->get($uniqid)['providerName']);
+                $uniqId = $this->getUniqId();
+
+                // TODO: Change to $request->query->all($uniqid)['providerName'] when support for Symfony < 5.1 is dropped.
+                $data = $this->getRequest()->request->all()[$uniqId];
+                \assert(\is_array($data));
+                $object->setProviderName($data['providerName']);
             } else {
-                $object->setProviderName($this->getRequest()->get('provider'));
+                $object->setProviderName($this->getRequest()->query->get('provider'));
             }
 
-            $object->setContext($context = $this->getRequest()->get('context'));
+            $context = $this->getRequest()->query->get('context');
+            $object->setContext($context);
             $categoryId = $this->getPersistentParameter('category');
 
             if (null !== $this->categoryManager && null !== $categoryId) {
