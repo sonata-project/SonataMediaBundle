@@ -1,7 +1,8 @@
 {
     "name": "sonata-project/media-bundle",
-    "type": "symfony-bundle",
     "description": "Symfony SonataMediaBundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
     "keywords": [
         "media",
         "sonata",
@@ -12,8 +13,6 @@
         "file",
         "upload"
     ],
-    "homepage": "https://docs.sonata-project.org/projects/SonataMediaBundle",
-    "license": "MIT",
     "authors": [
         {
             "name": "Thomas Rabaix",
@@ -25,6 +24,7 @@
             "homepage": "https://github.com/sonata-project/SonataMediaBundle/contributors"
         }
     ],
+    "homepage": "https://docs.sonata-project.org/projects/SonataMediaBundle",
     "require": {
         "php": "^7.4 || ^8.0",
         "doctrine/persistence": "^2.0",
@@ -63,17 +63,6 @@
         "twig/string-extra": "^3.0",
         "twig/twig": "^2.14 || ^3.0"
     },
-    "conflict": {
-        "aws/aws-sdk-php": "<3.0",
-        "doctrine/mongodb-odm": "<2.2",
-        "doctrine/orm": "<2.9",
-        "knplabs/knp-menu-bundle": "<3.0",
-        "liip/imagine-bundle": "<2.0",
-        "sonata-project/admin-bundle": "<4.0",
-        "sonata-project/block-bundle": "<4.0",
-        "sonata-project/classification-bundle": "<4.0",
-        "sonata-project/doctrine-orm-admin-bundle": "<4.0"
-    },
     "require-dev": {
         "aws/aws-sdk-php": "^3.0",
         "doctrine/doctrine-bundle": "^2.3.2",
@@ -102,15 +91,23 @@
         "symfony/security-csrf": "^4.4 || ^5.3 || ^6.0",
         "vimeo/psalm": "^4.7.2"
     },
+    "conflict": {
+        "aws/aws-sdk-php": "<3.0",
+        "doctrine/mongodb-odm": "<2.2",
+        "doctrine/orm": "<2.9",
+        "knplabs/knp-menu-bundle": "<3.0",
+        "liip/imagine-bundle": "<2.0",
+        "sonata-project/admin-bundle": "<4.0",
+        "sonata-project/block-bundle": "<4.0",
+        "sonata-project/classification-bundle": "<4.0",
+        "sonata-project/doctrine-orm-admin-bundle": "<4.0"
+    },
     "suggest": {
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...).",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities.",
         "symfony/messenger": "If you want to generate thumbnails asynchronously.",
         "twig/extra-bundle": "Auto configures the Twig Intl extension."
-    },
-    "config": {
-        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
@@ -121,5 +118,8 @@
         "psr-4": {
             "Sonata\\MediaBundle\\Tests\\": "tests/"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
