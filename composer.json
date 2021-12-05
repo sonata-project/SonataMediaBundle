@@ -1,7 +1,8 @@
 {
     "name": "sonata-project/media-bundle",
-    "type": "symfony-bundle",
     "description": "Symfony SonataMediaBundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
     "keywords": [
         "media",
         "sonata",
@@ -12,8 +13,6 @@
         "file",
         "upload"
     ],
-    "homepage": "https://docs.sonata-project.org/projects/SonataMediaBundle",
-    "license": "MIT",
     "authors": [
         {
             "name": "Thomas Rabaix",
@@ -25,6 +24,7 @@
             "homepage": "https://github.com/sonata-project/SonataMediaBundle/contributors"
         }
     ],
+    "homepage": "https://docs.sonata-project.org/projects/SonataMediaBundle",
     "require": {
         "php": "^7.3 || ^8.0",
         "guzzlehttp/psr7": "^1.0",
@@ -63,29 +63,6 @@
         "twig/string-extra": "^3.0",
         "twig/twig": "^2.12.1"
     },
-    "conflict": {
-        "aws/aws-sdk-php": "<3.0 || >= 4.0",
-        "doctrine/annotations": "<1.11",
-        "doctrine/dbal": "<2.11",
-        "doctrine/mongodb-odm": "<2.0",
-        "doctrine/orm": "<2.5",
-        "doctrine/persistence": "<1.3",
-        "doctrine/phpcr-odm": "<1.5",
-        "friendsofsymfony/rest-bundle": "<2.6",
-        "jms/serializer": "<0.13",
-        "liip/imagine-bundle": "<1.9",
-        "nelmio/api-doc-bundle": "<2.13.5",
-        "rackspace/php-opencloud": "<1.6",
-        "sonata-project/block-bundle": "<3.17 || >=4.0",
-        "sonata-project/classification-bundle": "<3.0 || >= 5.0",
-        "sonata-project/core-bundle": "<3.20",
-        "sonata-project/doctrine-orm-admin-bundle": "<3.0",
-        "sonata-project/formatter-bundle": "<3.4",
-        "sonata-project/notification-bundle": "<3.3",
-        "sonata-project/seo-bundle": "<2.5 || >=3.0",
-        "symfony/monolog-bundle": "<2.4",
-        "tilleuls/ckeditor-sonata-media-bundle": "<1.0"
-    },
     "require-dev": {
         "aws/aws-sdk-php": "^3.0",
         "doctrine/mongodb-odm": "^2.0",
@@ -119,6 +96,29 @@
         "symfony/security-csrf": "^4.4 || ^5.2",
         "vimeo/psalm": "^4.7.2"
     },
+    "conflict": {
+        "aws/aws-sdk-php": "<3.0 || >= 4.0",
+        "doctrine/annotations": "<1.11",
+        "doctrine/dbal": "<2.11",
+        "doctrine/mongodb-odm": "<2.0",
+        "doctrine/orm": "<2.5",
+        "doctrine/persistence": "<1.3",
+        "doctrine/phpcr-odm": "<1.5",
+        "friendsofsymfony/rest-bundle": "<2.6",
+        "jms/serializer": "<0.13",
+        "liip/imagine-bundle": "<1.9",
+        "nelmio/api-doc-bundle": "<2.13.5",
+        "rackspace/php-opencloud": "<1.6",
+        "sonata-project/block-bundle": "<3.17 || >=4.0",
+        "sonata-project/classification-bundle": "<3.0 || >= 5.0",
+        "sonata-project/core-bundle": "<3.20",
+        "sonata-project/doctrine-orm-admin-bundle": "<3.0",
+        "sonata-project/formatter-bundle": "<3.4",
+        "sonata-project/notification-bundle": "<3.3",
+        "sonata-project/seo-bundle": "<2.5 || >=3.0",
+        "symfony/monolog-bundle": "<2.4",
+        "tilleuls/ckeditor-sonata-media-bundle": "<1.0"
+    },
     "suggest": {
         "friendsofsymfony/rest-bundle": "If you want to expose a ReST API.",
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...).",
@@ -133,14 +133,6 @@
         "tilleuls/ckeditor-sonata-media-bundle": "If you want to use CKEditor.",
         "twig/extra-bundle": "Auto configures the Twig Intl extension."
     },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.x-dev"
-        }
-    },
     "autoload": {
         "psr-4": {
             "Sonata\\MediaBundle\\": "src/"
@@ -150,6 +142,14 @@
         "psr-4": {
             "Sonata\\MediaBundle\\Tests\\": "tests/",
             "Sonata\\ClassificationBundle\\": "tests/Fixtures/SonataClassificationBundle"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
         }
     }
 }
