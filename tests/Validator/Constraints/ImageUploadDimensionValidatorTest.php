@@ -86,11 +86,6 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
         $this->assertNoViolation();
     }
 
-    /**
-     * @psalm-suppress InternalMethod
-     *
-     * @see https://github.com/symfony/symfony/issues/42310
-     */
     public function testWithTooSmallImage(): void
     {
         $media = $this->mockMedia();

@@ -29,7 +29,6 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Routing\RouteCollectionBuilder;
 use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
 
 /**
@@ -79,31 +78,23 @@ final class AppKernel extends Kernel
     }
 
     /**
-     * TODO: Drop RouteCollectionBuilder when support for Symfony < 5.1 is dropped.
+     * TODO: Add typehint when support for Symfony < 5.1 is dropped.
      *
-     * @psalm-suppress DeprecatedClass
-     *
-     * @param RoutingConfigurator|RouteCollectionBuilder $routes
+     * @param RoutingConfigurator $routes
      */
     protected function configureRoutes($routes): void
     {
-        if ($routes instanceof RouteCollectionBuilder) {
-            $routes->import(__DIR__.'/Resources/config/routing/routes.yml', '/', 'yaml');
-
-            return;
-        }
-
-        $routes->import(__DIR__.'/Resources/config/routing/routes.yml');
+        $routes->import(__DIR__.'/Resources/config/routing/routes.yaml');
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
-        $loader->load(__DIR__.'/Resources/config/config.yml');
+        $loader->load(__DIR__.'/Resources/config/config.yaml');
 
         if (class_exists(AuthenticatorManager::class)) {
-            $loader->load(__DIR__.'/Resources/config/config_symfony_v5.yml');
+            $loader->load(__DIR__.'/Resources/config/config_symfony_v5.yaml');
         } else {
-            $loader->load(__DIR__.'/Resources/config/config_symfony_v4.yml');
+            $loader->load(__DIR__.'/Resources/config/config_symfony_v4.yaml');
         }
 
         $loader->load(__DIR__.'/Resources/config/services.php');

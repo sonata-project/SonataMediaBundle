@@ -37,7 +37,7 @@ final class GalleryAdminController extends CRUDController
             return $preResponse;
         }
 
-        $listMode = $request->get('_list_mode');
+        $listMode = $request->query->get('_list_mode');
         if (null !== $listMode) {
             $this->admin->setListMode($listMode);
         }

@@ -59,14 +59,14 @@ final class GalleryAdmin extends AbstractAdmin
         }
 
         return [
-            'context' => $this->getRequest()->get('context', $this->pool->getDefaultContext()),
+            'context' => $this->getRequest()->query->get('context', $this->pool->getDefaultContext()),
         ];
     }
 
     protected function alterNewInstance(object $object): void
     {
         if ($this->hasRequest()) {
-            $object->setContext($this->getRequest()->get('context'));
+            $object->setContext($this->getRequest()->query->get('context'));
         }
     }
 
