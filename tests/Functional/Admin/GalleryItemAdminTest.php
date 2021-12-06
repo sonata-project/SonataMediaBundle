@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\ClassificationBundle\Tests\App\Action;
+namespace Sonata\MediaBundle\Tests\Functional\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
