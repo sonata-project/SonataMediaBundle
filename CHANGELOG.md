@@ -15,6 +15,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [[#2214](https://github.com/sonata-project/SonataMediaBundle/pull/2214)] Fix block service registration ([@core23](https://github.com/core23))
 
 ## [4.0.0-alpha1](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.1...4.0.0-alpha1) - 2021-10-21
+
+## [3.37.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.37.0...3.37.1) - 2021-12-09
+### Fixed
+- [[#2245](https://github.com/sonata-project/SonataMediaBundle/pull/2245)] `src/Resources/views/MediaAdmin/inner_row_media.html.twig` ([@cezar77](https://github.com/cezar77))
+
+## [3.37.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.356...3.37.0) - 2021-11-17
 ### Added
 - [[#2164](https://github.com/sonata-project/SonataMediaBundle/pull/2164)] Added property type hints ([@jordisala1991](https://github.com/jordisala1991))
 
