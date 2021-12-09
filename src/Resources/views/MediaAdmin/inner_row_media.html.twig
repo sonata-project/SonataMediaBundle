@@ -15,7 +15,7 @@ file that was distributed with this source code.
     <div class="col-sm-12">
         <div class="pull-left">
             {% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
-                <a href="{{ admin.generateObjectUrl('edit', object) }) }}" style="float: left; margin-right: 6px;">
+                <a href="{{ admin.generateObjectUrl('edit', object) }}" style="float: left; margin-right: 6px;">
                     {{ sonata_thumbnail(object, 'admin', {'width': 90}) }}
                 </a>
             {% else %}
@@ -24,7 +24,7 @@ file that was distributed with this source code.
         </div>
         <span class="badge pull-right">{{ object.providerName|trans({}, 'SonataMediaBundle') }}</span>
         {% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
-            <a href="{{ admin.generateObjectUrl('edit', object }) }}"><strong>{{ object.name }}</strong></a>
+            <a href="{{ admin.generateObjectUrl('edit', object) }}"><strong>{{ object.name }}</strong></a>
         {% else %}
             <strong>{{ object.name }}</strong>
         {% endif %}
