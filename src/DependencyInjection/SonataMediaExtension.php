@@ -165,12 +165,9 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
      */
     public function configureParameterClass(ContainerBuilder $container, array $config): void
     {
-        $container->setParameter('sonata.media.admin.media.entity', $config['class']['media']);
-        $container->setParameter('sonata.media.admin.gallery.entity', $config['class']['gallery']);
-        $container->setParameter('sonata.media.admin.gallery_item.entity', $config['class']['gallery_item']);
-
         $container->setParameter('sonata.media.media.class', $config['class']['media']);
         $container->setParameter('sonata.media.gallery.class', $config['class']['gallery']);
+        $container->setParameter('sonata.media.gallery_item.class', $config['class']['gallery_item']);
 
         $container->getDefinition('sonata.media.form.type.media')->replaceArgument(1, $config['class']['media']);
     }
