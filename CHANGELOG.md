@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.37.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.37.0...3.37.1) - 2021-12-09
+### Fixed
+- [[#2245](https://github.com/sonata-project/SonataMediaBundle/pull/2245)] `src/Resources/views/MediaAdmin/inner_row_media.html.twig` ([@cezar77](https://github.com/cezar77))
+
 ## [3.37.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.356...3.37.0) - 2021-11-17
 ### Added
 - [[#2177](https://github.com/sonata-project/SonataMediaBundle/pull/2177)] Support for "jms/serializer-bundle" 4.x ([@phansys](https://github.com/phansys))
