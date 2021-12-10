@@ -142,10 +142,10 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     /**
      * @return Stub&MediaInterface
      */
-    private function mockMedia(): object
+    private function mockMedia(): Stub
     {
         $binaryContent = $this->createStub(UploadedFile::class);
-        $binaryContent->method('getPathname')->willReturn(tmpfile());
+        $binaryContent->method('getPathname')->willReturn('pathname');
 
         $media = $this->createStub(MediaInterface::class);
         $media->method('getContext')->willReturn(self::TEST_CONTEXT);

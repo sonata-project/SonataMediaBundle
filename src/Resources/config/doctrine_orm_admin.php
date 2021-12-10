@@ -35,7 +35,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
             ->args([
                 '',
-                '%sonata.media.admin.media.entity%',
+                '%sonata.media.media.class%',
                 'sonata.media.controller.media.admin',
                 new ReferenceConfigurator('sonata.media.pool'),
                 (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
@@ -62,7 +62,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
             ->args([
                 '',
-                '%sonata.media.admin.gallery.entity%',
+                '%sonata.media.gallery.class%',
                 'sonata.media.controller.gallery.admin',
                 new ReferenceConfigurator('sonata.media.pool'),
             ])
@@ -83,7 +83,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
             ->args([
                 '',
-                '%sonata.media.admin.gallery_item.entity%',
+                '%sonata.media.gallery_item.class%',
                 '%sonata.admin.configuration.default_controller%',
             ])
             ->call('setTranslationDomain', ['SonataMediaBundle']);
