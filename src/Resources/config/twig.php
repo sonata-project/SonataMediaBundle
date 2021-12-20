@@ -24,11 +24,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.twig.extension', MediaExtension::class)
             ->tag('twig.extension')
-            ->args([
-                new ReferenceConfigurator('sonata.media.pool'),
-                new ReferenceConfigurator('sonata.media.manager.media'),
-                new ReferenceConfigurator('twig'),
-            ])
 
         ->set('sonata.media.twig.runtime', MediaRuntime::class)
             ->tag('twig.runtime')
@@ -43,8 +38,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('sonata.media.pool'),
             ])
 
-        ->set('sonata.media.formatter.twig', FormatterMediaExtension::class)
-            ->args([
-                new ReferenceConfigurator('sonata.media.twig.extension'),
-            ]);
+        ->set('sonata.media.formatter.twig', FormatterMediaExtension::class);
 };
