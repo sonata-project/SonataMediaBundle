@@ -94,9 +94,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $context = $request->query->get('context', $this->pool->getDefaultContext());
         }
 
-        /**
-         * @psalm-suppress PossiblyNullArgument
-         */
         $providers = $this->pool->getProvidersByContext($context);
         $provider = $request->query->get('provider');
 
