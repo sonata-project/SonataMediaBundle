@@ -69,6 +69,9 @@ final class GalleryAdmin extends AbstractAdmin
             return;
         }
 
+        /**
+         * @psalm-suppress InvalidArgument
+         */
         $object->setContext($this->getRequest()->query->get('context'));
     }
 
