@@ -65,9 +65,11 @@ final class GalleryAdmin extends AbstractAdmin
 
     protected function alterNewInstance(object $object): void
     {
-        if ($this->hasRequest()) {
-            $object->setContext($this->getRequest()->query->get('context'));
+        if (!$this->hasRequest()) {
+            return;
         }
+
+        $object->setContext($this->getRequest()->query->get('context'));
     }
 
     protected function configureFormFields(FormMapper $form): void
@@ -76,7 +78,7 @@ final class GalleryAdmin extends AbstractAdmin
             ->with('form_group.gallery', ['class' => 'col-md-9'])->end()
             ->with('form_group.options', ['class' => 'col-md-3'])->end();
 
-        $context = $this->getPersistentParameter('context') ?? $this->pool->getDefaultContext();
+        $context = $this->getPersistentParameter('context', $this->pool->getDefaultContext());
 
         $formats = [];
         foreach ($this->pool->getFormatNamesByContext($context) as $name => $options) {

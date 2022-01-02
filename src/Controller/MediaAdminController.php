@@ -79,7 +79,7 @@ final class MediaAdminController extends CRUDController
             $pool = $this->container->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
-            $context = $this->admin->getPersistentParameter('context') ?? $pool->getDefaultContext();
+            $context = $this->admin->getPersistentParameter('context', $pool->getDefaultContext());
         }
 
         $datagrid->setValue('context', null, $context);
