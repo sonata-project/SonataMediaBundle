@@ -39,9 +39,6 @@ final class GalleryAdminController extends CRUDController
 
         $listMode = $request->query->get('_list_mode');
         if (null !== $listMode) {
-            /**
-             * @psalm-suppress InvalidArgument
-             */
             $this->admin->setListMode($listMode);
         }
 
