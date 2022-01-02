@@ -151,9 +151,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $context = $request->query->get('context');
 
         $object->setProviderName($providerName);
-        /**
-         * @psalm-suppress InvalidArgument
-         */
         $object->setContext($context);
 
         $categoryId = $this->getPersistentParameter('category');
