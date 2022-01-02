@@ -65,9 +65,6 @@ final class MediaAdminController extends CRUDController
             return $preResponse;
         }
 
-        /**
-         * @psalm-suppress InvalidArgument
-         */
         $this->admin->setListMode($request->query->get('_list_mode', 'mosaic'));
 
         $datagrid = $this->admin->getDatagrid();
