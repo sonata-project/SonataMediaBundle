@@ -83,23 +83,25 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             return $parameters;
         }
 
+        $request = $this->getRequest();
+
         // TODO: Change to $request->query->all('filter') when support for Symfony < 5.1 is dropped.
-        $filter = $this->getRequest()->query->all()['filter'] ?? [];
+        $filter = $request->query->all()['filter'] ?? [];
 
         if (\is_array($filter) && \array_key_exists('context', $filter)) {
             $context = $filter['context']['value'];
         } else {
-            $context = $this->getRequest()->query->get('context', $this->pool->getDefaultContext());
+            $context = $request->query->get('context', $this->pool->getDefaultContext());
         }
 
         $providers = $this->pool->getProvidersByContext($context);
-        $provider = $this->getRequest()->query->get('provider');
+        $provider = $request->query->get('provider');
 
         // if the context has only one provider, set it into the request
         // so the intermediate provider selection is skipped
         if (1 === \count($providers) && null === $provider) {
             $provider = array_shift($providers)->getName();
-            $this->getRequest()->query->set('provider', $provider);
+            $request->query->set('provider', $provider);
         }
 
         // if there is a post server error, provider is not posted and in case of
@@ -108,7 +110,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $parameters['provider'] = $provider;
         }
 
-        $categoryId = $this->getRequest()->query->get('category');
+        $categoryId = $request->query->get('category');
 
         if (null !== $this->categoryManager && null !== $this->contextManager && null === $categoryId) {
             $rootCategories = $this->categoryManager->getRootCategoriesForContext($this->contextManager->find($context));
@@ -122,42 +124,54 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         return array_merge($parameters, [
             'context' => $context,
             'category' => $categoryId,
-            'hide_context' => $this->getRequest()->query->getBoolean('hide_context'),
+            'hide_context' => $request->query->getBoolean('hide_context'),
         ]);
     }
 
     protected function alterNewInstance(object $object): void
     {
-        if ($this->hasRequest()) {
-            if ($this->getRequest()->isMethod('POST')) {
-                $uniqId = $this->getUniqId();
-
-                // TODO: Change to $request->query->all($uniqid)['providerName'] when support for Symfony < 5.1 is dropped.
-                $data = $this->getRequest()->request->all()[$uniqId];
-                \assert(\is_array($data));
-                $object->setProviderName($data['providerName']);
-            } else {
-                $object->setProviderName($this->getRequest()->query->get('provider'));
-            }
-
-            $context = $this->getRequest()->query->get('context');
-            $object->setContext($context);
-            $categoryId = $this->getPersistentParameter('category');
-
-            if (null !== $this->categoryManager && null !== $categoryId) {
-                $category = $this->categoryManager->find($categoryId);
-
-                if (null === $category) {
-                    return;
-                }
-
-                $categoryContext = $category->getContext();
-
-                if (null !== $categoryContext && $categoryContext->getId() === $context) {
-                    $object->setCategory($category);
-                }
-            }
+        if (!$this->hasRequest()) {
+            return;
         }
+
+        $request = $this->getRequest();
+
+        if ($request->isMethod('POST')) {
+            $uniqId = $this->getUniqId();
+
+            // TODO: Change to $request->request->all($uniqid)['providerName'] when support for Symfony < 5.1 is dropped.
+            $data = $request->request->all()[$uniqId] ?? [];
+            \assert(\is_array($data));
+
+            $providerName = $data['providerName'];
+        } else {
+            $providerName = $request->query->get('provider');
+        }
+
+        $context = $request->query->get('context');
+
+        $object->setProviderName($providerName);
+        $object->setContext($context);
+
+        $categoryId = $this->getPersistentParameter('category');
+
+        if (null === $this->categoryManager || null === $categoryId) {
+            return;
+        }
+
+        $category = $this->categoryManager->find($categoryId);
+
+        if (null === $category) {
+            return;
+        }
+
+        $categoryContext = $category->getContext();
+
+        if (null === $categoryContext || $categoryContext->getId() !== $context) {
+            return;
+        }
+
+        $object->setCategory($category);
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -189,14 +203,16 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $provider->buildCreateForm($form);
         }
 
-        if (null !== $this->categoryManager) {
-            $form->add('category', ModelListType::class, [], [
-                'link_parameters' => [
-                    'context' => $media->getContext(),
-                    'hide_context' => true,
-                    'mode' => 'tree',
-                ],
-            ]);
+        if (null === $this->categoryManager) {
+            return;
         }
+
+        $form->add('category', ModelListType::class, [], [
+            'link_parameters' => [
+                'context' => $media->getContext(),
+                'hide_context' => true,
+                'mode' => 'tree',
+            ],
+        ]);
     }
 }
