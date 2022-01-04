@@ -55,15 +55,15 @@ lint-symfony-container:
 .PHONY: lint-symfony-container
 
 lint-symfony-twig:
-	run: bin/console lint:twig src tests
+	bin/console lint:twig src tests
 .PHONY: lint-symfony-twig
 
 lint-symfony-xliff:
-	run: bin/console lint:xliff src tests
+	bin/console lint:xliff src tests
 .PHONY: lint-symfony-xliff
 
 lint-symfony-yaml:
-	run: bin/console lint:yaml src tests
+	bin/console lint:yaml src tests
 .PHONY: lint-symfony-yaml
 
 cs-fix: cs-fix-php cs-fix-xml cs-fix-xliff cs-fix-composer
