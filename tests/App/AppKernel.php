@@ -19,8 +19,10 @@ use JMS\SerializerBundle\JMSSerializerBundle;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Nelmio\ApiDocBundle\NelmioApiDocBundle;
 use OpenApi\Annotations\Operation as OpenApiOperation;
+use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\MediaBundle\SonataMediaBundle;
+use Sonata\Twig\Bridge\Symfony\SonataTwigBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -46,8 +48,10 @@ final class AppKernel extends Kernel
             new SecurityBundle(),
             new TwigBundle(),
             new FOSRestBundle(),
+            new SonataBlockBundle(),
             new SonataDoctrineBundle(),
             new SonataMediaBundle(),
+            new SonataTwigBundle(),
             new JMSSerializerBundle(),
             new DoctrineBundle(),
             new NelmioApiDocBundle(),
