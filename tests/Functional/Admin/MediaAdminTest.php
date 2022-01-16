@@ -45,7 +45,21 @@ final class MediaAdminTest extends WebTestCase
         yield 'List Media' => ['/admin/tests/app/media/list'];
         yield 'Create Media' => ['/admin/tests/app/media/create'];
         yield 'Edit Media' => ['/admin/tests/app/media/1/edit'];
+        yield 'Remove Media' => ['/admin/tests/app/media/1/delete'];
         yield 'Download Media' => ['/media/download/1'];
+    }
+
+    public function testDelete(): void
+    {
+        $client = self::createClient();
+
+        $this->prepareData();
+
+        $client->request('GET', '/admin/tests/app/media/1/delete');
+        $client->submitForm('btn_delete');
+        $client->followRedirect();
+
+        self::assertResponseIsSuccessful();
     }
 
     /**
@@ -76,6 +90,7 @@ final class MediaAdminTest extends WebTestCase
         $media->setBinaryContent(realpath(__DIR__.'/../../Fixtures/logo.png'));
 
         $manager->persist($media);
+
         $manager->flush();
     }
 }

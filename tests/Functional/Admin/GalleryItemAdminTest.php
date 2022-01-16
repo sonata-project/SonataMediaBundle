@@ -47,6 +47,20 @@ final class GalleryItemAdminTest extends WebTestCase
         yield 'List Gallery Item' => ['/admin/tests/app/galleryitem/list'];
         yield 'Create Gallery Item' => ['/admin/tests/app/galleryitem/create'];
         yield 'Edit Gallery Item' => ['/admin/tests/app/galleryitem/1/edit'];
+        yield 'Remove Gallery Item' => ['/admin/tests/app/galleryitem/1/delete'];
+    }
+
+    public function testDelete(): void
+    {
+        $client = self::createClient();
+
+        $this->prepareData();
+
+        $client->request('GET', '/admin/tests/app/galleryitem/1/delete');
+        $client->submitForm('btn_delete');
+        $client->followRedirect();
+
+        self::assertResponseIsSuccessful();
     }
 
     /**
@@ -88,6 +102,7 @@ final class GalleryItemAdminTest extends WebTestCase
         $manager->persist($media);
         $manager->persist($gallery);
         $manager->persist($galleryItem);
+
         $manager->flush();
     }
 }
