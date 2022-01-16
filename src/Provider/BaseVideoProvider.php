@@ -179,11 +179,11 @@ abstract class BaseVideoProvider extends BaseProvider
     {
         try {
             $response = $this->sendRequest('GET', $url);
-        } catch (\RuntimeException $e) {
+        } catch (\RuntimeException $exception) {
             throw new \RuntimeException(
                 sprintf('Unable to retrieve the video information for: %s', $url),
-                \is_int($e->getCode()) ? $e->getCode() : 0,
-                $e
+                $exception->getCode(),
+                $exception
             );
         }
 
