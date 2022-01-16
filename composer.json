@@ -65,6 +65,7 @@
     },
     "require-dev": {
         "aws/aws-sdk-php": "^3.0",
+        "dama/doctrine-test-bundle": "^6.7",
         "doctrine/doctrine-bundle": "^2.3.2",
         "doctrine/mongodb-odm": "^2.2",
         "doctrine/orm": "^2.9",
