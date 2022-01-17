@@ -12,16 +12,27 @@ declare(strict_types=1);
  */
 
 use Psr\Container\ContainerInterface;
+use Sonata\MediaBundle\Tests\App\Admin\FooAdmin;
 use Sonata\MediaBundle\Tests\App\Controller\TruncateController;
+use Sonata\MediaBundle\Tests\App\Entity\Foo;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set(TruncateController::class)
-        ->public()
-        ->tag('container.service_subscriber')
-        ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
+        ->set(FooAdmin::class)
+            ->public()
+            ->args([
+                null,
+                Foo::class,
+                null
+            ])
+            ->tag('sonata.admin', ['manager_type' => 'orm'])
+
+        ->set(TruncateController::class)
+            ->public()
+            ->tag('container.service_subscriber')
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 };
