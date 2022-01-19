@@ -35,62 +35,62 @@ abstract class GalleryItem implements GalleryItemInterface
         return $this->getGallery().' | '.$this->getMedia();
     }
 
-    final public function setEnabled(bool $enabled): void
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    final public function getEnabled(): bool
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    final public function setGallery(?GalleryInterface $gallery = null): void
+    public function setGallery(?GalleryInterface $gallery = null): void
     {
         $this->gallery = $gallery;
     }
 
-    final public function getGallery(): ?GalleryInterface
+    public function getGallery(): ?GalleryInterface
     {
         return $this->gallery;
     }
 
-    final public function setMedia(?MediaInterface $media = null): void
+    public function setMedia(?MediaInterface $media = null): void
     {
         $this->media = $media;
     }
 
-    final public function getMedia(): ?MediaInterface
+    public function getMedia(): ?MediaInterface
     {
         return $this->media;
     }
 
-    final public function setPosition(int $position): void
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    final public function getPosition(): int
+    public function getPosition(): int
     {
         return $this->position;
     }
 
-    final public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    final public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    final public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    final public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
