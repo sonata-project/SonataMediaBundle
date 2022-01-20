@@ -71,6 +71,7 @@
         "doctrine/orm": "^2.9",
         "knplabs/knp-menu-bundle": "^3.0",
         "liip/imagine-bundle": "^2.0",
+        "masterminds/html5": "^2.7",
         "matthiasnoback/symfony-config-test": "^4.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.0",
         "phpstan/extension-installer": "^1.0",

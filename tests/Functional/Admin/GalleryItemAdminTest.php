@@ -50,17 +50,40 @@ final class GalleryItemAdminTest extends WebTestCase
         yield 'Remove Gallery Item' => ['/admin/tests/app/galleryitem/1/delete'];
     }
 
-    public function testDelete(): void
+    /**
+     * @dataProvider provideFormUrlsCases
+     *
+     * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $fieldValues
+     */
+    public function testFormsUrls(string $url, array $parameters, string $button, array $fieldValues = []): void
     {
         $client = self::createClient();
 
         $this->prepareData();
 
-        $client->request('GET', '/admin/tests/app/galleryitem/1/delete');
-        $client->submitForm('btn_delete');
+        $client->request('GET', $url, $parameters);
+        $client->submitForm($button, $fieldValues);
         $client->followRedirect();
 
         self::assertResponseIsSuccessful();
+    }
+
+    /**
+     * @return iterable<array<string|array<string, mixed>>>
+     *
+     * @phpstan-return iterable<array{string, array<string, mixed>, string, ?array<string, mixed>}>
+     */
+    public static function provideFormUrlsCases(): iterable
+    {
+        yield 'Create Gallery Item' => ['/admin/tests/app/galleryitem/create', [
+            'uniqid' => 'galleryItem',
+        ], 'btn_create_and_list', [
+            'galleryItem[media]' => 1,
+        ]];
+
+        yield 'Edit Gallery Item' => ['/admin/tests/app/galleryitem/1/edit', [], 'btn_update_and_list'];
+        yield 'Remove Gallery Item' => ['/admin/tests/app/galleryitem/1/delete', [], 'btn_delete'];
     }
 
     /**
