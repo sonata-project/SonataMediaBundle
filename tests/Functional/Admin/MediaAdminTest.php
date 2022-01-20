@@ -23,6 +23,8 @@ final class MediaAdminTest extends WebTestCase
 {
     /**
      * @dataProvider provideCrudUrlsCases
+     *
+     * @param array<string, mixed> $parameters
      */
     public function testCrudUrls(string $url, array $parameters = []): void
     {
@@ -38,7 +40,7 @@ final class MediaAdminTest extends WebTestCase
     /**
      * @return iterable<array<string|array<string, mixed>>>
      *
-     * @phpstan-return iterable<array{string, ?array<string, mixed>}>
+     * @phpstan-return iterable<array{0: string, 1?: array<string, mixed>}>
      */
     public static function provideCrudUrlsCases(): iterable
     {
@@ -92,7 +94,7 @@ final class MediaAdminTest extends WebTestCase
     /**
      * @return iterable<array<string|array<string, mixed>>>
      *
-     * @phpstan-return iterable<array{string, array<string, mixed>, string, ?array<string, mixed>}>
+     * @phpstan-return iterable<array{0: string, 1: array<string, mixed>, 2: string, 3?: array<string, mixed>}>
      */
     public static function provideFormUrlsCases(): iterable
     {
