@@ -92,227 +92,227 @@ abstract class Media implements MediaInterface
         return $this->getName() ?? 'n/a';
     }
 
-    final public function setName(?string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    final public function getName(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    final public function setDescription(?string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    final public function getDescription(): ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    final public function setEnabled(bool $enabled): void
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    final public function getEnabled(): bool
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    final public function setProviderName(?string $providerName): void
+    public function setProviderName(?string $providerName): void
     {
         $this->providerName = $providerName;
     }
 
-    final public function getProviderName(): ?string
+    public function getProviderName(): ?string
     {
         return $this->providerName;
     }
 
-    final public function setProviderStatus(?int $providerStatus): void
+    public function setProviderStatus(?int $providerStatus): void
     {
         $this->providerStatus = $providerStatus;
     }
 
-    final public function getProviderStatus(): ?int
+    public function getProviderStatus(): ?int
     {
         return $this->providerStatus;
     }
 
-    final public function setProviderReference(?string $providerReference): void
+    public function setProviderReference(?string $providerReference): void
     {
         $this->providerReference = $providerReference;
     }
 
-    final public function getProviderReference(): ?string
+    public function getProviderReference(): ?string
     {
         return $this->providerReference;
     }
 
-    final public function setProviderMetadata(array $providerMetadata = []): void
+    public function setProviderMetadata(array $providerMetadata = []): void
     {
         $this->providerMetadata = $providerMetadata;
     }
 
-    final public function getProviderMetadata(): array
+    public function getProviderMetadata(): array
     {
         return $this->providerMetadata;
     }
 
-    final public function setWidth(?int $width): void
+    public function setWidth(?int $width): void
     {
         $this->width = $width;
     }
 
-    final public function getWidth(): ?int
+    public function getWidth(): ?int
     {
         return $this->width;
     }
 
-    final public function setHeight(?int $height): void
+    public function setHeight(?int $height): void
     {
         $this->height = $height;
     }
 
-    final public function getHeight(): ?int
+    public function getHeight(): ?int
     {
         return $this->height;
     }
 
-    final public function setLength(?float $length): void
+    public function setLength(?float $length): void
     {
         $this->length = $length;
     }
 
-    final public function getLength(): ?float
+    public function getLength(): ?float
     {
         return $this->length;
     }
 
-    final public function setCopyright(?string $copyright): void
+    public function setCopyright(?string $copyright): void
     {
         $this->copyright = $copyright;
     }
 
-    final public function getCopyright(): ?string
+    public function getCopyright(): ?string
     {
         return $this->copyright;
     }
 
-    final public function setAuthorName(?string $authorName): void
+    public function setAuthorName(?string $authorName): void
     {
         $this->authorName = $authorName;
     }
 
-    final public function getAuthorName(): ?string
+    public function getAuthorName(): ?string
     {
         return $this->authorName;
     }
 
-    final public function setContext(?string $context): void
+    public function setContext(?string $context): void
     {
         $this->context = $context;
     }
 
-    final public function getContext(): ?string
+    public function getContext(): ?string
     {
         return $this->context;
     }
 
-    final public function setCdnStatus(?int $cdnStatus): void
+    public function setCdnStatus(?int $cdnStatus): void
     {
         $this->cdnStatus = $cdnStatus;
     }
 
-    final public function getCdnStatus(): ?int
+    public function getCdnStatus(): ?int
     {
         return $this->cdnStatus;
     }
 
-    final public function setCdnIsFlushable(bool $cdnIsFlushable): void
+    public function setCdnIsFlushable(bool $cdnIsFlushable): void
     {
         $this->cdnIsFlushable = $cdnIsFlushable;
     }
 
-    final public function getCdnIsFlushable(): bool
+    public function getCdnIsFlushable(): bool
     {
         return $this->cdnIsFlushable;
     }
 
-    final public function setCdnFlushIdentifier(?string $cdnFlushIdentifier): void
+    public function setCdnFlushIdentifier(?string $cdnFlushIdentifier): void
     {
         $this->cdnFlushIdentifier = $cdnFlushIdentifier;
     }
 
-    final public function getCdnFlushIdentifier(): ?string
+    public function getCdnFlushIdentifier(): ?string
     {
         return $this->cdnFlushIdentifier;
     }
 
-    final public function setCdnFlushAt(?\DateTimeInterface $cdnFlushAt): void
+    public function setCdnFlushAt(?\DateTimeInterface $cdnFlushAt): void
     {
         $this->cdnFlushAt = $cdnFlushAt;
     }
 
-    final public function getCdnFlushAt(): ?\DateTimeInterface
+    public function getCdnFlushAt(): ?\DateTimeInterface
     {
         return $this->cdnFlushAt;
     }
 
-    final public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    final public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    final public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    final public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    final public function setContentType(?string $contentType): void
+    public function setContentType(?string $contentType): void
     {
         $this->contentType = $contentType;
     }
 
-    final public function getContentType(): ?string
+    public function getContentType(): ?string
     {
         return $this->contentType;
     }
 
-    final public function setSize(?int $size): void
+    public function setSize(?int $size): void
     {
         $this->size = $size;
     }
 
-    final public function getSize(): ?int
+    public function getSize(): ?int
     {
         return $this->size;
     }
 
-    final public function getCategory(): ?object
+    public function getCategory(): ?object
     {
         return $this->category;
     }
 
-    final public function setCategory(?object $category = null): void
+    public function setCategory(?object $category = null): void
     {
         $this->category = $category;
     }
 
-    final public function setGalleryItems(iterable $galleryItems): void
+    public function setGalleryItems(iterable $galleryItems): void
     {
         $this->galleryItems->clear();
 
@@ -321,17 +321,17 @@ abstract class Media implements MediaInterface
         }
     }
 
-    final public function getGalleryItems(): Collection
+    public function getGalleryItems(): Collection
     {
         return $this->galleryItems;
     }
 
-    final public function getBox(): Box
+    public function getBox(): Box
     {
         return new Box($this->width ?? 0, $this->height ?? 0);
     }
 
-    final public function getExtension(): ?string
+    public function getExtension(): ?string
     {
         $providerReference = $this->getProviderReference();
 
@@ -343,43 +343,43 @@ abstract class Media implements MediaInterface
         return preg_replace('{(\?|#).*}', '', pathinfo($providerReference, \PATHINFO_EXTENSION));
     }
 
-    final public function getPreviousProviderReference(): ?string
+    public function getPreviousProviderReference(): ?string
     {
         return $this->previousProviderReference;
     }
 
-    final public function setBinaryContent($binaryContent): void
+    public function setBinaryContent($binaryContent): void
     {
         $this->previousProviderReference = $this->providerReference;
         $this->providerReference = null;
         $this->binaryContent = $binaryContent;
     }
 
-    final public function resetBinaryContent(): void
+    public function resetBinaryContent(): void
     {
         $this->binaryContent = null;
     }
 
-    final public function getBinaryContent()
+    public function getBinaryContent()
     {
         return $this->binaryContent;
     }
 
-    final public function getMetadataValue(string $name, $default = null)
+    public function getMetadataValue(string $name, $default = null)
     {
         $metadata = $this->getProviderMetadata();
 
         return $metadata[$name] ?? $default;
     }
 
-    final public function setMetadataValue(string $name, $value): void
+    public function setMetadataValue(string $name, $value): void
     {
         $metadata = $this->getProviderMetadata();
         $metadata[$name] = $value;
         $this->setProviderMetadata($metadata);
     }
 
-    final public function unsetMetadataValue(string $name): void
+    public function unsetMetadataValue(string $name): void
     {
         $metadata = $this->getProviderMetadata();
         unset($metadata[$name]);

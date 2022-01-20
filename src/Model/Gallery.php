@@ -52,67 +52,67 @@ abstract class Gallery implements GalleryInterface
         return $this->getName() ?? '-';
     }
 
-    final public function setName(?string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    final public function getName(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    final public function setContext(?string $context): void
+    public function setContext(?string $context): void
     {
         $this->context = $context;
     }
 
-    final public function getContext(): ?string
+    public function getContext(): ?string
     {
         return $this->context;
     }
 
-    final public function setEnabled(bool $enabled): void
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    final public function getEnabled(): bool
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    final public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    final public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    final public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    final public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    final public function setDefaultFormat(string $defaultFormat): void
+    public function setDefaultFormat(string $defaultFormat): void
     {
         $this->defaultFormat = $defaultFormat;
     }
 
-    final public function getDefaultFormat(): string
+    public function getDefaultFormat(): string
     {
         return $this->defaultFormat;
     }
 
-    final public function setGalleryItems(iterable $galleryItems): void
+    public function setGalleryItems(iterable $galleryItems): void
     {
         $this->galleryItems->clear();
 
@@ -121,26 +121,26 @@ abstract class Gallery implements GalleryInterface
         }
     }
 
-    final public function getGalleryItems(): Collection
+    public function getGalleryItems(): Collection
     {
         return $this->galleryItems;
     }
 
-    final public function addGalleryItem(GalleryItemInterface $galleryItem): void
+    public function addGalleryItem(GalleryItemInterface $galleryItem): void
     {
         $galleryItem->setGallery($this);
 
         $this->galleryItems[] = $galleryItem;
     }
 
-    final public function removeGalleryItem(GalleryItemInterface $galleryItem): void
+    public function removeGalleryItem(GalleryItemInterface $galleryItem): void
     {
         if ($this->galleryItems->contains($galleryItem)) {
             $this->galleryItems->removeElement($galleryItem);
         }
     }
 
-    final public function reorderGalleryItems(): void
+    public function reorderGalleryItems(): void
     {
         $iterator = $this->getGalleryItems()->getIterator();
 
