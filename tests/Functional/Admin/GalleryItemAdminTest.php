@@ -47,6 +47,43 @@ final class GalleryItemAdminTest extends WebTestCase
         yield 'List Gallery Item' => ['/admin/tests/app/galleryitem/list'];
         yield 'Create Gallery Item' => ['/admin/tests/app/galleryitem/create'];
         yield 'Edit Gallery Item' => ['/admin/tests/app/galleryitem/1/edit'];
+        yield 'Remove Gallery Item' => ['/admin/tests/app/galleryitem/1/delete'];
+    }
+
+    /**
+     * @dataProvider provideFormUrlsCases
+     *
+     * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $fieldValues
+     */
+    public function testFormsUrls(string $url, array $parameters, string $button, array $fieldValues = []): void
+    {
+        $client = self::createClient();
+
+        $this->prepareData();
+
+        $client->request('GET', $url, $parameters);
+        $client->submitForm($button, $fieldValues);
+        $client->followRedirect();
+
+        self::assertResponseIsSuccessful();
+    }
+
+    /**
+     * @return iterable<array<string|array<string, mixed>>>
+     *
+     * @phpstan-return iterable<array{0: string, 1: array<string, mixed>, 2: string, 3?: array<string, mixed>}>
+     */
+    public static function provideFormUrlsCases(): iterable
+    {
+        yield 'Create Gallery Item' => ['/admin/tests/app/galleryitem/create', [
+            'uniqid' => 'galleryItem',
+        ], 'btn_create_and_list', [
+            'galleryItem[media]' => 1,
+        ]];
+
+        yield 'Edit Gallery Item' => ['/admin/tests/app/galleryitem/1/edit', [], 'btn_update_and_list'];
+        yield 'Remove Gallery Item' => ['/admin/tests/app/galleryitem/1/delete', [], 'btn_delete'];
     }
 
     /**
@@ -88,6 +125,7 @@ final class GalleryItemAdminTest extends WebTestCase
         $manager->persist($media);
         $manager->persist($gallery);
         $manager->persist($galleryItem);
+
         $manager->flush();
     }
 }
