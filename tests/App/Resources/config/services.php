@@ -18,10 +18,10 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    $services = $containerConfigurator->services();
+    $containerConfigurator->services()
 
-    $services->set(TruncateController::class)
-        ->public()
-        ->tag('container.service_subscriber')
-        ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
+        ->set(TruncateController::class)
+            ->public()
+            ->tag('container.service_subscriber')
+            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 };

@@ -65,11 +65,13 @@
     },
     "require-dev": {
         "aws/aws-sdk-php": "^3.0",
+        "dama/doctrine-test-bundle": "^6.7",
         "doctrine/doctrine-bundle": "^2.3.2",
         "doctrine/mongodb-odm": "^2.2",
         "doctrine/orm": "^2.9",
         "knplabs/knp-menu-bundle": "^3.0",
         "liip/imagine-bundle": "^2.0",
+        "masterminds/html5": "^2.7",
         "matthiasnoback/symfony-config-test": "^4.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.0",
         "phpstan/extension-installer": "^1.0",

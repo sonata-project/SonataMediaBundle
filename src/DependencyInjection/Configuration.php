@@ -288,7 +288,7 @@ final class Configuration implements ConfigurationInterface
                                 ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
                                 ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
-                                ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                                ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.file')->end()
                                 ->arrayNode('allowed_extensions')
                                     ->prototype('scalar')->end()
                                     ->defaultValue([
