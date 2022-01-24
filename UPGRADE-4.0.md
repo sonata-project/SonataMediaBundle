@@ -12,6 +12,9 @@ Assuming your media table is called `media__media`, you could execute:
 UPDATE media__media SET cdnIsFlushable = false WHERE cdnIsFlushable IS NULL;
 ```
 
+We also added an option to use `jsonb` for the `providerMetadata` field. This will only affect you if you use PostgreSQL
+database. Please make sure you do the appropiate changes to your schema in order to be in sync.
+
 ### Removed unused JavaScript
 
 SonataMediaBundle 3 included a JavaScript dependency: Nivo Gallery. This dependency is not used on Sonata code,

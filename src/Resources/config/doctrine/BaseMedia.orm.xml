@@ -7,7 +7,11 @@
         <field name="providerName" column="provider_name" type="string" length="255"/>
         <field name="providerStatus" column="provider_status" type="integer"/>
         <field name="providerReference" column="provider_reference" type="string" length="255"/>
-        <field name="providerMetadata" column="provider_metadata" type="json" nullable="true"/>
+        <field name="providerMetadata" column="provider_metadata" type="json" nullable="true">
+            <options>
+                <option name="jsonb">true</option>
+            </options>
+        </field>
         <field name="width" column="width" type="integer" nullable="true"/>
         <field name="height" column="height" type="integer" nullable="true"/>
         <field name="length" column="length" type="decimal" nullable="true"/>
