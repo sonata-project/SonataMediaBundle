@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.0.0-RC2...4.0.0) - 2022-01-25
+### Added
+- [[#2222](https://github.com/sonata-project/SonataMediaBundle/pull/2222)] Added support for Symfony 6. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Changed
+- [[#2227](https://github.com/sonata-project/SonataMediaBundle/pull/2227)] Argument 1 in order to allow any iterable type at `MediaInterface::setGalleryItems()` and `GalleryInterface::setGalleryItems()`. ([@phansys](https://github.com/phansys))
+
+### Fixed
+- [[#2267](https://github.com/sonata-project/SonataMediaBundle/pull/2267)] Fixed usage of this bundle with PostgreSQL. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2266](https://github.com/sonata-project/SonataMediaBundle/pull/2266)] Fixed placeholder for files on media list. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2264](https://github.com/sonata-project/SonataMediaBundle/pull/2264)] Loading Media / Gallery object from the database. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2225](https://github.com/sonata-project/SonataMediaBundle/pull/2225)] Fixed `CRUDController` registration for GalleryItemAdmin. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2225](https://github.com/sonata-project/SonataMediaBundle/pull/2225)] Fixed default values for models to match the explanations on the documentation. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Removed
+- [[#2264](https://github.com/sonata-project/SonataMediaBundle/pull/2264)] Final modifier on all the getters / setters of the entities. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.0.0-RC2](https://github.com/sonata-project/SonataMediaBundle/compare/4.0.0-RC1...4.0.0-RC2) - 2021-11-23
 ### Fixed
 - [[#2219](https://github.com/sonata-project/SonataMediaBundle/pull/2219)] Fix block service registration ([@core23](https://github.com/core23))
