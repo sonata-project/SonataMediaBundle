@@ -530,6 +530,10 @@
         <source>form.label_class</source>
         <target>Classe css</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Media</target>
+      </trans-unit>
       <trans-unit id="form.group_gallery">
         <source>form.group_gallery</source>
         <target>Galeria</target>

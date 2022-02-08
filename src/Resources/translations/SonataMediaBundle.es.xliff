@@ -382,6 +382,10 @@
         <source>list.label_size</source>
         <target>Tamaño</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Multimedia</target>
+      </trans-unit>
       <trans-unit id="form.group_gallery">
         <source>form.group_gallery</source>
         <target>Galería</target>

@@ -94,6 +94,10 @@
         <source>filter.label_provider_name</source>
         <target>Nazwa dostawcy</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Media</target>
+      </trans-unit>
       <trans-unit id="form.label_enabled">
         <source>form.label_enabled</source>
         <target>Włączony</target>

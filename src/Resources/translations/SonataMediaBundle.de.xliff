@@ -554,6 +554,10 @@
         <source>error.image_too_small</source>
         <target>Bild erfordert eine Mindestgröße von %min_width% x %min_height%</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Medien</target>
+      </trans-unit>
       <trans-unit id="form.group_gallery">
         <source>form.group_gallery</source>
         <target>Galerie</target>

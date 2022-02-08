@@ -134,6 +134,10 @@
         <source>filter.label_content_type</source>
         <target>Tipo di contenuto</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Media</target>
+      </trans-unit>
       <trans-unit id="form.label_enabled">
         <source>form.label_enabled</source>
         <target>Pubblicato</target>
