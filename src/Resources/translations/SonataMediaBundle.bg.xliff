@@ -98,6 +98,10 @@
         <source>filter.label_provider_name</source>
         <target>Име на източника</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Медиа</target>
+      </trans-unit>
       <trans-unit id="form.label_enabled">
         <source>form.label_enabled</source>
         <target>Активен</target>

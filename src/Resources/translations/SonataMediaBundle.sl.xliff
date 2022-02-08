@@ -122,6 +122,10 @@
         <source>filter.label_content_type</source>
         <target>Vrsta vsebine</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Medijske vsebine</target>
+      </trans-unit>
       <trans-unit id="form.label_enabled">
         <source>form.label_enabled</source>
         <target>Omogočeno</target>

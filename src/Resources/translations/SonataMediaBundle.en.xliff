@@ -546,12 +546,16 @@
         <source>error.image_too_small</source>
         <target>Image too small, it requires size %min_width% x %min_height% as minimum.</target>
       </trans-unit>
-      <trans-unit id="form_group.gallery">
-        <source>form_group.gallery</source>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Media</target>
+      </trans-unit>
+      <trans-unit id="form.group_gallery">
+        <source>form.group_gallery</source>
         <target>Gallery</target>
       </trans-unit>
-      <trans-unit id="form_group.options">
-        <source>form_group.options</source>
+      <trans-unit id="form.group_options">
+        <source>form.group_options</source>
         <target>Options</target>
       </trans-unit>
     </body>

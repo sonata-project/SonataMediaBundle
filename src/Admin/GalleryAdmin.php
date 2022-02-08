@@ -75,8 +75,8 @@ final class GalleryAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->with('form_group.gallery', ['class' => 'col-md-9'])->end()
-            ->with('form_group.options', ['class' => 'col-md-3'])->end();
+            ->with('gallery', ['class' => 'col-md-9'])->end()
+            ->with('options', ['class' => 'col-md-3'])->end();
 
         $context = $this->getPersistentParameter('context', $this->pool->getDefaultContext());
 
@@ -91,7 +91,7 @@ final class GalleryAdmin extends AbstractAdmin
         }
 
         $form
-            ->with('form_group.options')
+            ->with('options')
                 ->add('context', ChoiceType::class, [
                     'choices' => $contexts,
                     'choice_translation_domain' => 'SonataMediaBundle',
@@ -102,7 +102,7 @@ final class GalleryAdmin extends AbstractAdmin
                     ->add('defaultFormat', ChoiceType::class, ['choices' => $formats])
                 ->ifEnd()
             ->end()
-            ->with('form_group.gallery')
+            ->with('gallery')
                 ->add('galleryItems', CollectionType::class, ['by_reference' => false], [
                     'edit' => 'inline',
                     'inline' => 'table',
