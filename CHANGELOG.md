@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.0.0...4.0.1) - 2022-02-08
+### Fixed
+- [[#2273](https://github.com/sonata-project/SonataMediaBundle/pull/2273)] Fixed admin media translations ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2273](https://github.com/sonata-project/SonataMediaBundle/pull/2273)] Fixed admin gallery translations ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.0.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.0.0-RC2...4.0.0) - 2022-01-25
 ### Added
 - [[#2222](https://github.com/sonata-project/SonataMediaBundle/pull/2222)] Added support for Symfony 6. ([@jordisala1991](https://github.com/jordisala1991))

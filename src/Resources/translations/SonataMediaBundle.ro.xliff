@@ -106,6 +106,10 @@
         <source>filter.label_author_name</source>
         <target>Nume autor</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Media</target>
+      </trans-unit>
       <trans-unit id="form.label_enabled">
         <source>form.label_enabled</source>
         <target>Activat</target>

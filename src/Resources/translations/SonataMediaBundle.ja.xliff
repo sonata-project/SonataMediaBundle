@@ -98,6 +98,10 @@
         <source>filter.label_provider_name</source>
         <target>プロバイダ名</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>メディア</target>
+      </trans-unit>
       <trans-unit id="form.label_enabled">
         <source>form.label_enabled</source>
         <target>Enabled</target>

@@ -486,6 +486,10 @@
         <source>view_all_galleries</source>
         <target>Zobrazit všechny galerie</target>
       </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Média</target>
+      </trans-unit>
       <trans-unit id="form.label_mode">
         <source>form.label_mode</source>
         <target>Mód</target>
