@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.38.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.37.1...3.38.0) - 2021-02-12
+### Added
+- [[#2271](https://github.com/sonata-project/SonataMediaBundle/pull/2271)] `ImageProviderInterface` so `ImageProvider` can be replaced without extending the class. ([@jorrit](https://github.com/jorrit))
+
 ## [3.37.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.37.0...3.37.1) - 2021-12-09
 ### Fixed
 - [[#2245](https://github.com/sonata-project/SonataMediaBundle/pull/2245)] `src/Resources/views/MediaAdmin/inner_row_media.html.twig` ([@cezar77](https://github.com/cezar77))
