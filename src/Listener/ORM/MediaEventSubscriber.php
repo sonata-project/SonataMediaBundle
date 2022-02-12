@@ -98,10 +98,16 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
             throw new \RuntimeException(sprintf('There is no context on media %s', $media->getId() ?? ''));
         }
 
-        if (null === $this->rootCategories || !\array_key_exists($context, $this->rootCategories)) {
-            throw new \RuntimeException(sprintf('There is no main category related to context: %s', $context));
+        if (null !== $this->rootCategories) {
+            foreach ($this->rootCategories as $category) {
+                $categoryContext = $category->getContext();
+
+                if (null !== $categoryContext && $categoryContext->getId() === $context) {
+                    return $category;
+                }
+            }
         }
 
-        return $this->rootCategories[$context];
+        throw new \RuntimeException(sprintf('There is no main category related to context: %s', $context));
     }
 }
