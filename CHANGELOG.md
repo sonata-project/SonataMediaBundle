@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.0...4.1.1) - 2022-02-13
+### Fixed
+- [[#2280](https://github.com/sonata-project/SonataMediaBundle/pull/2280)] Fix root category check ([@core23](https://github.com/core23))
+
 ## [4.1.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.0.1...4.1.0) - 2022-02-12
 ### Added
 - [[#2275](https://github.com/sonata-project/SonataMediaBundle/pull/2275)] Added support for `psr/log` ^3.0 ([@jordisala1991](https://github.com/jordisala1991))
