@@ -18,6 +18,7 @@ use Doctrine\ORM\Events;
 use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
+use Sonata\ClassificationBundle\Model\ContextInterface;
 use Sonata\MediaBundle\Listener\ORM\MediaEventSubscriber;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -39,12 +40,17 @@ class MediaEventSubscriberTest extends TestCase
         $pool = new Pool('default');
         $pool->addProvider('provider', $provider);
 
+        $categoryContext = $this->createMock(ContextInterface::class);
+        $categoryContext->method('getId')->willReturn('context');
+
         $category = $this->createMock(CategoryInterface::class);
+        $category->method('getContext')->willReturn($categoryContext);
+
         $catManager = $this->createMock(CategoryManagerInterface::class);
 
         $catManager->expects(static::exactly(2))
             ->method('getAllRootCategories')
-            ->willReturn(['context' => $category]);
+            ->willReturn([$category]);
 
         $subscriber = new MediaEventSubscriber($pool, $catManager);
 
