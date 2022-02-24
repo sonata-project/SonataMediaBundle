@@ -47,6 +47,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.0.0-alpha1](https://github.com/sonata-project/SonataMediaBundle/compare/3.35.1...4.0.0-alpha1) - 2021-10-21
 
+## [3.38.1](https://github.com/sonata-project/SonataMediaBundle/compare/3.38.0...3.38.1) - 2022-02-24
+### Added
+- [[#2285](https://github.com/sonata-project/SonataMediaBundle/pull/2285)] Fixed auto detect extension if the file does not provide it, for example when dealing with temporal filenames. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.38.0](https://github.com/sonata-project/SonataMediaBundle/compare/3.37.1...3.38.0) - 2021-02-12
 ### Added
 - [[#2271](https://github.com/sonata-project/SonataMediaBundle/pull/2271)] `ImageProviderInterface` so `ImageProvider` can be replaced without extending the class. ([@jorrit](https://github.com/jorrit))
