@@ -220,7 +220,6 @@ class ImageProvider extends FileProvider implements ImageProviderInterface
         }
 
         $binaryContent = $media->getBinaryContent();
-        $extension = null;
 
         if ($binaryContent instanceof UploadedFile) {
             $extension = $binaryContent->getClientOriginalExtension();
