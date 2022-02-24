@@ -220,25 +220,20 @@ class ImageProvider extends FileProvider implements ImageProviderInterface
         }
 
         $binaryContent = $media->getBinaryContent();
-        $extension = null;
 
-        if ($binaryContent instanceof UploadedFile) {
-            $fileName = $binaryContent->getClientOriginalName();
-            $extension = strtolower(pathinfo($fileName, \PATHINFO_EXTENSION));
-        } elseif ($binaryContent instanceof File) {
-            $fileName = $binaryContent->getFilename();
-            $extension = '' === $binaryContent->getExtension() ? $binaryContent->guessExtension() : $binaryContent->getExtension();
-        } else {
+        if (!$binaryContent instanceof File) {
             // Should not happen, FileProvider should throw an exception in that case
             return;
         }
+
+        $extension = '' === $binaryContent->getExtension() ? $binaryContent->guessExtension() : $binaryContent->getExtension();
 
         if (!\in_array($extension, $this->allowedExtensions, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
             throw new UploadException(sprintf(
                 'The image extension "%s" is not one of the allowed (%s).',
-                $extension ?? '',
+                $extension,
                 '"'.implode('", "', $this->allowedExtensions).'"'
             ));
         }
@@ -250,7 +245,7 @@ class ImageProvider extends FileProvider implements ImageProviderInterface
 
             throw new UploadException(sprintf(
                 'The image mime type "%s" is not one of the allowed (%s).',
-                $mimeType,
+                $mimeType ?? '',
                 '"'.implode('", "', $this->allowedMimeTypes).'"'
             ));
         }
