@@ -219,16 +219,19 @@ class ImageProvider extends FileProvider implements ImageProviderInterface
             throw new UploadException('There are no allowed mime types for this image.');
         }
 
-        if ($media->getBinaryContent() instanceof UploadedFile) {
-            $fileName = $media->getBinaryContent()->getClientOriginalName();
-        } elseif ($media->getBinaryContent() instanceof File) {
-            $fileName = $media->getBinaryContent()->getFilename();
+        $binaryContent = $media->getBinaryContent();
+        $extension = null;
+
+        if ($binaryContent instanceof UploadedFile) {
+            $fileName = $binaryContent->getClientOriginalName();
+            $extension = strtolower(pathinfo($fileName, \PATHINFO_EXTENSION));
+        } elseif ($binaryContent instanceof File) {
+            $fileName = $binaryContent->getFilename();
+            $extension = '' === $binaryContent->getExtension() ? $binaryContent->guessExtension() : $binaryContent->getExtension();
         } else {
             // Should not happen, FileProvider should throw an exception in that case
             return;
         }
-
-        $extension = strtolower(pathinfo($fileName, \PATHINFO_EXTENSION));
 
         if (!\in_array($extension, $this->allowedExtensions, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
@@ -240,7 +243,7 @@ class ImageProvider extends FileProvider implements ImageProviderInterface
             ));
         }
 
-        $mimeType = $media->getBinaryContent()->getMimeType();
+        $mimeType = $binaryContent->getMimeType();
 
         if (!\in_array($mimeType, $this->allowedMimeTypes, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
@@ -253,7 +256,7 @@ class ImageProvider extends FileProvider implements ImageProviderInterface
         }
 
         try {
-            $image = $this->imagineAdapter->open($media->getBinaryContent()->getPathname());
+            $image = $this->imagineAdapter->open($binaryContent->getPathname());
         } catch (\RuntimeException $e) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
