@@ -263,7 +263,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
             throw new UploadException(sprintf(
                 'The image extension "%s" is not one of the allowed (%s).',
-                $extension,
+                $extension ?? '',
                 '"'.implode('", "', $this->allowedExtensions).'"'
             ));
         }
@@ -275,7 +275,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
             throw new UploadException(sprintf(
                 'The image mime type "%s" is not one of the allowed (%s).',
-                $mimeType,
+                $mimeType ?? '',
                 '"'.implode('", "', $this->allowedMimeTypes).'"'
             ));
         }
