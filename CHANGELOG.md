@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.2](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.1...4.1.2) - 2022-02-25
+### Fixed
+- [[#2285](https://github.com/sonata-project/SonataMediaBundle/pull/2285)] Fixed auto detect extension if the file does not provide it, for example when dealing with temporal filenames. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.1.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.0...4.1.1) - 2022-02-13
 ### Fixed
 - [[#2280](https://github.com/sonata-project/SonataMediaBundle/pull/2280)] Fix root category check ([@core23](https://github.com/core23))
