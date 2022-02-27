@@ -118,8 +118,8 @@ final class GalleryAdmin extends AbstractAdmin
         $list
             ->addIdentifier('name')
             ->add('enabled', 'boolean', ['editable' => true])
-            ->add('context', 'trans', ['catalogue' => 'SonataMediaBundle'])
-            ->add('defaultFormat', 'trans', ['catalogue' => 'SonataMediaBundle']);
+            ->add('context', 'trans', ['value_translation_domain' => 'SonataMediaBundle'])
+            ->add('defaultFormat', 'trans', ['value_translation_domain' => 'SonataMediaBundle']);
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void

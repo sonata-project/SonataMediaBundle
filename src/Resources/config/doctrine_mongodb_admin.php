@@ -28,7 +28,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.admin', [
                 'manager_type' => 'doctrine_mongodb',
                 'group' => 'sonata_media',
-                'label_catalogue' => 'SonataMediaBundle',
+                'translation_domain' => 'SonataMediaBundle',
                 'label' => 'media',
                 'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
                 'icon' => '<i class=\'fa fa-image\'></i>',
@@ -42,7 +42,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 (new ReferenceConfigurator('sonata.media.manager.context'))->nullOnInvalid(),
             ])
             ->call('setModelManager', [new ReferenceConfigurator('sonata.media.admin.media.manager')])
-            ->call('setTranslationDomain', ['SonataMediaBundle'])
             ->call('setTemplates', [[
                 'inner_list_row' => '@SonataMedia/MediaAdmin/inner_row_media.html.twig',
                 'base_list_field' => '@SonataAdmin/CRUD/base_list_flat_field.html.twig',
@@ -54,7 +53,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.admin', [
                 'manager_type' => 'doctrine_mongodb',
                 'group' => 'sonata_media',
-                'label_catalogue' => 'SonataMediaBundle',
+                'translation_domain' => 'SonataMediaBundle',
                 'label' => 'gallery',
                 'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
                 'icon' => '<i class=\'fa fa-image\'></i>',
@@ -65,7 +64,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'sonata.media.controller.gallery.admin',
                 new ReferenceConfigurator('sonata.media.pool'),
             ])
-            ->call('setTranslationDomain', ['SonataMediaBundle'])
             ->call('setTemplates', [[
                 'list' => '@SonataMedia/GalleryAdmin/list.html.twig',
             ]])
@@ -74,7 +72,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.admin', [
                 'manager_type' => 'doctrine_mongodb',
                 'group' => 'sonata_media',
-                'label_catalogue' => 'SonataMediaBundle',
+                'translation_domain' => 'SonataMediaBundle',
                 'label' => 'gallery_item',
                 'show_in_dashboard' => false,
                 'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
@@ -84,6 +82,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '',
                 '%sonata.media.gallery_item.class%',
                 '%sonata.admin.configuration.default_controller%',
-            ])
-            ->call('setTranslationDomain', ['SonataMediaBundle']);
+            ]);
 };
