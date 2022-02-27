@@ -30,12 +30,9 @@ final class GalleryAdmin extends AbstractAdmin
 
     private Pool $pool;
 
-    /**
-     * @phpstan-param class-string<\Sonata\MediaBundle\Model\GalleryInterface<\Sonata\MediaBundle\Model\GalleryItemInterface>> $class
-     */
-    public function __construct(string $code, string $class, string $baseControllerName, Pool $pool)
+    public function __construct(Pool $pool)
     {
-        parent::__construct($code, $class, $baseControllerName);
+        parent::__construct();
 
         $this->pool = $pool;
     }

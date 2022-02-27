@@ -40,21 +40,43 @@ abstract class BaseMediaAdmin extends AbstractAdmin
     protected $classnameLabel = 'Media';
 
     /**
-     * @phpstan-param class-string<\Sonata\MediaBundle\Model\MediaInterface> $class
+     * NEXT_MAJOR: Change to (Pool, ?CategoryManagerInterface, ?ContextManagerInterface).
+     *
+     * @param Pool|string                          $pool
+     * @param CategoryManagerInterface|string|null $categoryManager
+     * @param ContextManagerInterface|string|null  $contextManager
+     *
+     * @phpstan-param CategoryManagerInterface|class-string<\Sonata\MediaBundle\Model\MediaInterface>|null $categoryManager
      */
     public function __construct(
-        string $code,
-        string $class,
-        string $baseControllerName,
-        Pool $pool,
-        ?CategoryManagerInterface $categoryManager = null,
-        ?ContextManagerInterface $contextManager = null
+        $pool,
+        $categoryManager = null,
+        $contextManager = null,
+        ?Pool $deprecatedPool = null,
+        ?CategoryManagerInterface $deprecatedCategoryManager = null,
+        ?ContextManagerInterface $deprecatedContextManager = null
     ) {
-        parent::__construct($code, $class, $baseControllerName);
+        // NEXT_MAJOR: Keep the if part.
+        if ($pool instanceof Pool) {
+            \assert(!\is_string($categoryManager));
+            \assert(!\is_string($contextManager));
 
-        $this->pool = $pool;
-        $this->categoryManager = $categoryManager;
-        $this->contextManager = $contextManager;
+            parent::__construct();
+
+            $this->pool = $pool;
+            $this->categoryManager = $categoryManager;
+            $this->contextManager = $contextManager;
+        } else {
+            \assert(\is_string($categoryManager));
+            \assert(\is_string($contextManager));
+            \assert(null !== $deprecatedPool);
+
+            parent::__construct($pool, $categoryManager, $contextManager);
+
+            $this->pool = $deprecatedPool;
+            $this->categoryManager = $deprecatedCategoryManager;
+            $this->contextManager = $deprecatedContextManager;
+        }
     }
 
     final public function getObjectMetadata(object $object): MetadataInterface
