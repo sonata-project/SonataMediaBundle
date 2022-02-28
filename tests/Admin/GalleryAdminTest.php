@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
-use Sonata\MediaBundle\Entity\BaseGallery;
 use Sonata\MediaBundle\Provider\Pool;
 
 class GalleryAdminTest extends TestCase
@@ -25,9 +24,6 @@ class GalleryAdminTest extends TestCase
     protected function setUp(): void
     {
         $this->galleryAdmin = new GalleryAdmin(
-            'media',
-            BaseGallery::class,
-            'SonataMediaBundle:GalleryAdmin',
             new Pool('default')
         );
     }

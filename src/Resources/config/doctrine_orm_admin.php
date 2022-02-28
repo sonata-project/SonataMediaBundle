@@ -26,23 +26,21 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.admin.media', MediaAdmin::class)
             ->tag('sonata.admin', [
+                'model_class' => '%sonata.media.media.class%',
+                'controller' => 'sonata.media.controller.media.admin',
                 'manager_type' => 'orm',
                 'group' => 'sonata_media',
-                'label_catalogue' => 'SonataMediaBundle',
+                'translation_domain' => 'SonataMediaBundle',
                 'label' => 'media',
                 'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
                 'icon' => '<i class=\'fa fa-image\'></i>',
             ])
             ->args([
-                '',
-                '%sonata.media.media.class%',
-                'sonata.media.controller.media.admin',
                 new ReferenceConfigurator('sonata.media.pool'),
                 (new ReferenceConfigurator('sonata.media.manager.category'))->nullOnInvalid(),
                 (new ReferenceConfigurator('sonata.media.manager.context'))->nullOnInvalid(),
             ])
             ->call('setModelManager', [new ReferenceConfigurator('sonata.media.admin.media.manager')])
-            ->call('setTranslationDomain', ['SonataMediaBundle'])
             ->call('setTemplates', [[
                 'inner_list_row' => '@SonataMedia/MediaAdmin/inner_row_media.html.twig',
                 'outer_list_rows_mosaic' => '@SonataMedia/MediaAdmin/list_outer_rows_mosaic.html.twig',
@@ -53,38 +51,32 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.admin.gallery', GalleryAdmin::class)
             ->tag('sonata.admin', [
+                'model_class' => '%sonata.media.gallery.class%',
+                'controller' => 'sonata.media.controller.gallery.admin',
                 'manager_type' => 'orm',
                 'group' => 'sonata_media',
                 'label' => 'gallery',
-                'label_catalogue' => 'SonataMediaBundle',
+                'translation_domain' => 'SonataMediaBundle',
                 'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
                 'icon' => '<i class=\'fa fa-image\'></i>',
             ])
             ->args([
-                '',
-                '%sonata.media.gallery.class%',
-                'sonata.media.controller.gallery.admin',
                 new ReferenceConfigurator('sonata.media.pool'),
             ])
-            ->call('setTranslationDomain', ['SonataMediaBundle'])
             ->call('setTemplates', [[
                 'list' => '@SonataMedia/GalleryAdmin/list.html.twig',
             ]])
 
         ->set('sonata.media.admin.gallery_item', GalleryItemAdmin::class)
             ->tag('sonata.admin', [
+                'model_class' => '%sonata.media.gallery_item.class%',
+                'controller' => '%sonata.admin.configuration.default_controller%',
                 'manager_type' => 'orm',
                 'show_in_dashboard' => false,
                 'group' => 'sonata_media',
-                'label_catalogue' => 'SonataMediaBundle',
+                'translation_domain' => 'SonataMediaBundle',
                 'label' => 'gallery_item',
                 'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
                 'icon' => '<i class=\'fa fa-image\'></i>',
-            ])
-            ->args([
-                '',
-                '%sonata.media.gallery_item.class%',
-                '%sonata.admin.configuration.default_controller%',
-            ])
-            ->call('setTranslationDomain', ['SonataMediaBundle']);
+            ]);
 };

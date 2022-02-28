@@ -59,13 +59,11 @@ class BaseMediaAdminTest extends TestCase
         $this->modelManager = $this->createStub(ModelManagerInterface::class);
 
         $this->mediaAdmin = new TestMediaAdmin(
-            'media',
-            Media::class,
-            'SonataMediaBundle:MediaAdmin',
             $this->pool,
             $this->categoryManager,
             $this->contextManager
         );
+        $this->mediaAdmin->setModelClass(Media::class);
         $this->mediaAdmin->setRequest($this->request);
         $this->mediaAdmin->setModelManager($this->modelManager);
         $this->mediaAdmin->setUniqId('uniqId');
