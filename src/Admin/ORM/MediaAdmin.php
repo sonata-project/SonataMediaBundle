@@ -49,16 +49,23 @@ final class MediaAdmin extends BaseMediaAdmin
             ->add('height')
             ->add('contentType');
 
-        $providers = [];
+        $providersChoices = [];
 
-        $providerNames = $this->pool->getProviderNamesByContext($this->getPersistentParameter('context', $this->pool->getDefaultContext()));
-        foreach ($providerNames as $name) {
-            $providers[$name] = $name;
+        $providers = $this->pool->getProvidersByContext($this->getPersistentParameter('context', $this->pool->getDefaultContext()));
+        foreach ($providers as $provider) {
+            $name = $provider->getName();
+            $translatedName = $this->getTranslator()->trans(
+                $name,
+                [],
+                $provider->getProviderMetadata()->getDomain() ?? $this->getTranslationDomain()
+            );
+
+            $providersChoices[$translatedName] = $name;
         }
 
         $filter->add('providerName', ChoiceFilter::class, [
             'field_options' => [
-                'choices' => $providers,
+                'choices' => $providersChoices,
                 'required' => false,
                 'multiple' => false,
                 'expanded' => false,
