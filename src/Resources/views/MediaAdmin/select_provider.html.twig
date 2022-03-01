@@ -27,7 +27,7 @@ file that was distributed with this source code.
                        class="btn btn-app btn-block"
                        data-toggle="tooltip"
                        data-placement="top"
-                       title="{{ provider.providerMetadata.description|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}"
+                       title="{{ provider.providerMetadata.description|trans({}, provider.providerMetadata.domain|default(admin.getTranslationDomain())) }}"
                             >
                         {% if provider.providerMetadata.option('class') %}
                             <i class="{{ provider.providerMetadata.option('class') }}"></i>
@@ -35,7 +35,7 @@ file that was distributed with this source code.
                             <img src="{{ asset(provider.providerMetadata.image) }}" style="max-height: 20px; max-width: 100px;"/>
                             <br/>
                         {% endif %}
-                        {{ provider.providerMetadata.title|trans({}, provider.providerMetadata.domain|default('SonataMediaBundle')) }}
+                        {{ provider.providerMetadata.title|trans({}, provider.providerMetadata.domain|default(admin.getTranslationDomain())) }}
                     </a>
                 </div>
             {% else %}
