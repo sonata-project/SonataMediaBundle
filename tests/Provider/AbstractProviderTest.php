@@ -55,7 +55,8 @@ abstract class AbstractProviderTest extends TestCase
         $this->formBuilder = $this->createMock(FormBuilderInterface::class);
         $this->formBuilder->method('getOption')->willReturn('api');
 
-        $admin = new MediaAdmin('media', Media::class, '', new Pool('default'));
+        $admin = new MediaAdmin(new Pool('default'));
+        $admin->setModelClass(Media::class);
         $admin->setLabelTranslatorStrategy($this->createStub(LabelTranslatorStrategyInterface::class));
         $admin->setFieldDescriptionFactory($this->createStub(FieldDescriptionFactoryInterface::class));
 

@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\GalleryItemAdmin;
-use Sonata\MediaBundle\Entity\BaseGalleryItem;
 
 class GalleryItemAdminTest extends TestCase
 {
@@ -23,11 +22,7 @@ class GalleryItemAdminTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->galleryItemAdmin = new GalleryItemAdmin(
-            'gallery',
-            BaseGalleryItem::class,
-            'SonataMediaBundle:GalleryAdmin'
-        );
+        $this->galleryItemAdmin = new GalleryItemAdmin();
     }
 
     public function testItDoesNotHaveSubject(): void
