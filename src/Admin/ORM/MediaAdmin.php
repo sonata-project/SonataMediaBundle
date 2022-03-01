@@ -57,7 +57,7 @@ final class MediaAdmin extends BaseMediaAdmin
             $translatedName = $this->getTranslator()->trans(
                 $name,
                 [],
-                $provider->getProviderMetadata()->getDomain() ?? 'SonataMediaBundle'
+                $provider->getProviderMetadata()->getDomain() ?? $this->getTranslationDomain()
             );
 
             $providersChoices[$translatedName] = $name;
