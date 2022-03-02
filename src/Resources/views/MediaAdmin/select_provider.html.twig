@@ -35,7 +35,7 @@ file that was distributed with this source code.
                             <img src="{{ asset(provider.providerMetadata.image) }}" style="max-height: 20px; max-width: 100px;"/>
                             <br/>
                         {% endif %}
-                        {{ provider.providerMetadata.title|trans({}, provider.providerMetadata.domain|default(admin.getTranslationDomain())) }}
+                        {{ provider.providerMetadata.title|trans({}, provider.providerMetadata.domain|default(admin.translationDomain)) }}
                     </a>
                 </div>
             {% else %}
