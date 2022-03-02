@@ -27,7 +27,7 @@ file that was distributed with this source code.
                        class="btn btn-app btn-block"
                        data-toggle="tooltip"
                        data-placement="top"
-                       title="{{ provider.providerMetadata.description|trans({}, provider.providerMetadata.domain|default(admin.getTranslationDomain())) }}"
+                       title="{{ provider.providerMetadata.description|trans({}, provider.providerMetadata.domain|default(admin.translationDomain)) }}"
                             >
                         {% if provider.providerMetadata.option('class') %}
                             <i class="{{ provider.providerMetadata.option('class') }}"></i>
