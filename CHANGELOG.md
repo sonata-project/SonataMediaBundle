@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.4](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.3...4.1.4) - 2022-03-02
+### Fixed
+- [[#2291](https://github.com/sonata-project/SonataMediaBundle/pull/2291)] Translate providerName filter choices ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.1.3](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.2...4.1.3) - 2022-02-28
 ### Fixed
 - [[#2289](https://github.com/sonata-project/SonataMediaBundle/pull/2289)] Deprecations introduces by SonataAdminBundle 4.9.0 ([@VincentLanglet](https://github.com/VincentLanglet))
