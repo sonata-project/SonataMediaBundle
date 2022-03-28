@@ -121,7 +121,7 @@ final class RemoveThumbsCommand extends Command
                 if (!$this->processMedia($output, $media, $provider, $context, $format)) {
                     continue;
                 }
-                //clean filesystem registry for saving memory
+                // clean filesystem registry for saving memory
                 $provider->getFilesystem()->clearFileRegister();
             }
 
