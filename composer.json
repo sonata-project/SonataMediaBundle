@@ -69,6 +69,7 @@
         "doctrine/doctrine-bundle": "^2.3.2",
         "doctrine/mongodb-odm": "^2.2",
         "doctrine/orm": "^2.9",
+        "friendsofphp/php-cs-fixer": "^3.4",
         "knplabs/knp-menu-bundle": "^3.0",
         "liip/imagine-bundle": "^2.0",
         "masterminds/html5": "^2.7",
@@ -121,6 +122,10 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "phpstan/extension-installer": true
+        },
         "sort-packages": true
     }
 }

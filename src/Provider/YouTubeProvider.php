@@ -65,7 +65,7 @@ final class YouTubeProvider extends BaseVideoProvider
         // documentation : http://code.google.com/apis/youtube/player_parameters.html
 
         $default_player_url_parameters = [
-            //Values: 0 or 1. Default is 1. Sets whether the player should load related
+            // Values: 0 or 1. Default is 1. Sets whether the player should load related
             // videos once playback of the initial video starts. Related videos are
             // displayed in the "genie menu" when the menu button is pressed. The player
             // search functionality will be disabled if rel is set to 0.
