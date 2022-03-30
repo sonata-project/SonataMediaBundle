@@ -232,7 +232,7 @@ class ImageProvider extends FileProvider implements ImageProviderInterface
 
         $extension = '' !== $extension ? $extension : $binaryContent->guessExtension();
 
-        if (!\in_array($extension, $this->allowedExtensions, true)) {
+        if (!\in_array(strtolower($extension), $this->allowedExtensions, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
             throw new UploadException(sprintf(
