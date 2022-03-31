@@ -291,7 +291,10 @@ class FileProvider extends BaseProvider implements FileProviderInterface
                 ->end();
         }
 
-        if ('' !== $media->getBinaryContent()->getFilename() && !\in_array($media->getBinaryContent()->getMimeType(), $this->allowedMimeTypes, true)) {
+        if (
+            '' !== $media->getBinaryContent()->getFilename()
+            && !\in_array(strtolower($media->getBinaryContent()->getMimeType()), $this->allowedMimeTypes, true)
+        ) {
             $errorElement
                 ->with('binaryContent')
                     ->addViolation('Invalid mime type : %type%', ['%type%' => $media->getBinaryContent()->getMimeType()])
