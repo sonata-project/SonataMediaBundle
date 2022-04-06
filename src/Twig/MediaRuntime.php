@@ -21,7 +21,7 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class MediaRuntime implements RuntimeExtensionInterface
 {
-    const EXCLUDED_FORMATS = ['svg'];
+    private const EXCLUDED_FORMATS = ['svg'];
 
     private Pool $pool;
 
