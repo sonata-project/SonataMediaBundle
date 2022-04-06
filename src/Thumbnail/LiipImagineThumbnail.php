@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 final class LiipImagineThumbnail implements ThumbnailInterface
 {
-    const EXCLUDED_FORMATS = ['svg'];
+    private const EXCLUDED_FORMATS = ['svg'];
     
     private CacheManager $cacheManager;
 
