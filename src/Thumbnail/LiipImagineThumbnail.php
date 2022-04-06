@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 final class LiipImagineThumbnail implements ThumbnailInterface
 {
-    const EXCLUDED_FOMATS = ['svg'];
+    const EXCLUDED_FORMATS = ['svg'];
     
     private CacheManager $cacheManager;
 
@@ -35,7 +35,7 @@ final class LiipImagineThumbnail implements ThumbnailInterface
         if (
             MediaProviderInterface::FORMAT_ADMIN === $format||
             MediaProviderInterface::FORMAT_REFERENCE === $format ||
-            \in_array(strtolower(pathinfo($media->getName(), \PATHINFO_EXTENSION)), self::EXCLUDED_FOMATS, true)
+            \in_array(strtolower(pathinfo($media->getName(), \PATHINFO_EXTENSION)), self::EXCLUDED_FORMATS, true)
         ) {
             return $path;
         }
