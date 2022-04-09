@@ -290,6 +290,12 @@ final class Configuration implements ConfigurationInterface
                                 ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.file')->end()
                                 ->arrayNode('allowed_extensions')
+                                    ->beforeNormalization()
+                                    ->ifArray()
+                                        ->then(static function (array $allowedExtensions): array {
+                                            return array_map('strtolower', $allowedExtensions);
+                                        })
+                                    ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue([
                                         'pdf', 'txt', 'rtf',
@@ -300,6 +306,12 @@ final class Configuration implements ConfigurationInterface
                                     ])
                                 ->end()
                                 ->arrayNode('allowed_mime_types')
+                                    ->beforeNormalization()
+                                        ->ifArray()
+                                        ->then(static function (array $allowedMimeTypes): array {
+                                            return array_map('strtolower', $allowedMimeTypes);
+                                        })
+                                    ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue([
                                         'application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain',
@@ -324,10 +336,22 @@ final class Configuration implements ConfigurationInterface
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
                                 ->scalarNode('adapter')->defaultValue('sonata.media.adapter.image.default')->end()
                                 ->arrayNode('allowed_extensions')
+                                    ->beforeNormalization()
+                                        ->ifArray()
+                                        ->then(static function (array $allowedExtensions): array {
+                                            return array_map('strtolower', $allowedExtensions);
+                                        })
+                                    ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue(['jpg', 'png', 'jpeg'])
                                 ->end()
                                 ->arrayNode('allowed_mime_types')
+                                    ->beforeNormalization()
+                                        ->ifArray()
+                                        ->then(static function (array $allowedMimeTypes): array {
+                                            return array_map('strtolower', $allowedMimeTypes);
+                                        })
+                                    ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue([
                                         'image/pjpeg',
