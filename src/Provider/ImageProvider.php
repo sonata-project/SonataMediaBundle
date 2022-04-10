@@ -258,7 +258,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
         $extension = '' !== $extension ? $extension : $binaryContent->guessExtension();
 
-        if (!\in_array($extension, $this->allowedExtensions, true)) {
+        if (null === $extension || !\in_array(strtolower($extension), $this->allowedExtensions, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
             throw new UploadException(sprintf(
@@ -270,7 +270,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
         $mimeType = $binaryContent->getMimeType();
 
-        if (!\in_array($mimeType, $this->allowedMimeTypes, true)) {
+        if (null === $mimeType || !\in_array(strtolower($mimeType), $this->allowedMimeTypes, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
             throw new UploadException(sprintf(
