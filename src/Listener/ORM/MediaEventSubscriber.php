@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Listener\ORM;
 
-use Doctrine\ORM\Event\LifecycleEventArgs as ORMLifecycleEventArgs;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
@@ -22,6 +22,9 @@ use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
+/**
+ * @phpstan-extends BaseMediaEventSubscriber<EntityManagerInterface>
+ */
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     private ?CategoryManagerInterface $categoryManager = null;
@@ -58,9 +61,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
 
     protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args): void
     {
-        \assert($args instanceof ORMLifecycleEventArgs);
-
-        $em = $args->getEntityManager();
+        $em = $args->getObjectManager();
 
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet(
             $em->getClassMetadata(\get_class($args->getObject())),
