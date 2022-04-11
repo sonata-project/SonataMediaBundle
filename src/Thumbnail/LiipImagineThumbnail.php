@@ -35,7 +35,7 @@ final class LiipImagineThumbnail implements ThumbnailInterface
         if (
             MediaProviderInterface::FORMAT_ADMIN === $format ||
             MediaProviderInterface::FORMAT_REFERENCE === $format ||
-            \in_array(strtolower(pathinfo($media->getName(), \PATHINFO_EXTENSION)), self::EXCLUDED_FORMATS, true)
+            \in_array(strtolower(pathinfo((string) $media->getName(), \PATHINFO_EXTENSION)), self::EXCLUDED_FORMATS, true)
         ) {
             return $path;
         }
