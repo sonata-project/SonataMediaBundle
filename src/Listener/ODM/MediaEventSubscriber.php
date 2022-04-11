@@ -13,12 +13,15 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Listener\ODM;
 
-use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs as ODMLifecycleEventArgs;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sonata\MediaBundle\Listener\BaseMediaEventSubscriber;
 use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * @phpstan-extends BaseMediaEventSubscriber<DocumentManager>
+ */
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
     public function getSubscribedEvents(): array
@@ -35,9 +38,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
 
     protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args): void
     {
-        \assert($args instanceof ODMLifecycleEventArgs);
-
-        $em = $args->getDocumentManager();
+        $em = $args->getObjectManager();
 
         $em->getUnitOfWork()->recomputeSingleDocumentChangeSet(
             $em->getClassMetadata(\get_class($args->getObject())),
