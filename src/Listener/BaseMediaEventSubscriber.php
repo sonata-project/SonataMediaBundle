@@ -15,10 +15,14 @@ namespace Sonata\MediaBundle\Listener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Doctrine\Persistence\ObjectManager;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
+/**
+ * @phpstan-template T of ObjectManager
+ */
 abstract class BaseMediaEventSubscriber implements EventSubscriber
 {
     protected Pool $pool;
@@ -28,6 +32,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->pool = $pool;
     }
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     final public function postUpdate(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
@@ -39,6 +46,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postUpdate($media);
     }
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     final public function postRemove(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
@@ -50,6 +60,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postRemove($media);
     }
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     final public function postPersist(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
@@ -61,6 +74,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->postPersist($media);
     }
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     final public function preUpdate(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
@@ -77,6 +93,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->recomputeSingleEntityChangeSet($args);
     }
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     final public function preRemove(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
@@ -88,6 +107,9 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $this->getProvider($media)->preRemove($media);
     }
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     final public function prePersist(LifecycleEventArgs $args): void
     {
         $media = $this->getMedia($args);
@@ -102,8 +124,14 @@ abstract class BaseMediaEventSubscriber implements EventSubscriber
         $provider->prePersist($media);
     }
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     abstract protected function recomputeSingleEntityChangeSet(LifecycleEventArgs $args): void;
 
+    /**
+     * @param LifecycleEventArgs<T> $args
+     */
     abstract protected function getMedia(LifecycleEventArgs $args): ?MediaInterface;
 
     final protected function getProvider(MediaInterface $media): MediaProviderInterface

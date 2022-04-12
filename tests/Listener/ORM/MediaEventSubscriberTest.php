@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Listener\ORM;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Events;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
@@ -60,6 +62,7 @@ class MediaEventSubscriberTest extends TestCase
         $media1->setProviderName('provider');
         $media1->setContext('context');
 
+        /** @var LifecycleEventArgs<EntityManagerInterface>&MockObject $args1 */
         $args1 = $this->createMock(LifecycleEventArgs::class);
         $args1->method('getObject')->willReturn($media1);
 
@@ -71,6 +74,7 @@ class MediaEventSubscriberTest extends TestCase
         $media2->setProviderName('provider');
         $media2->setContext('context');
 
+        /** @var LifecycleEventArgs<EntityManagerInterface>&MockObject $args2 */
         $args2 = $this->createMock(LifecycleEventArgs::class);
         $args2->method('getObject')->willReturn($media2);
 
