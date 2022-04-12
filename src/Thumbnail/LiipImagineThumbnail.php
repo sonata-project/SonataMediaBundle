@@ -31,9 +31,9 @@ final class LiipImagineThumbnail implements ThumbnailInterface
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
         $path = $provider->getReferenceImage($media);
-        
+
         $fileName = $media->getName();
-        
+
         if (
             MediaProviderInterface::FORMAT_ADMIN === $format ||
             MediaProviderInterface::FORMAT_REFERENCE === $format ||
