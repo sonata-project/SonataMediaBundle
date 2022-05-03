@@ -156,7 +156,7 @@ final class MediaRuntime implements RuntimeExtensionInterface
 
         if (
             MediaInterface::STATUS_OK !== $media->getProviderStatus() &&
-            (null !== $fileName && \in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), self::EXCLUDED_FORMATS, true))
+            (null !== $fileName || \in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), self::EXCLUDED_FORMATS, true))
         ) {
             return null;
         }
