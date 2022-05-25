@@ -311,7 +311,9 @@ class FileProviderTest extends AbstractProviderTest
      */
     public function testValidate(): void
     {
-        $errorElement = $this->createErrorElement($this->createMock(ExecutionContextInterface::class));
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
+        $errorElement = $this->createErrorElement($executionContext);
 
         $media = new Media();
 
@@ -321,6 +323,7 @@ class FileProviderTest extends AbstractProviderTest
     public function testValidateUploadSize(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
             ->expects(static::once())
@@ -349,6 +352,7 @@ class FileProviderTest extends AbstractProviderTest
     public function testValidateUploadNullSize(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
             ->expects(static::once())
@@ -377,6 +381,7 @@ class FileProviderTest extends AbstractProviderTest
     public function testValidateUploadSizeOK(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
         $errorElement = $this->createErrorElement($executionContext);
         $executionContext
             ->expects(static::never())
@@ -403,6 +408,7 @@ class FileProviderTest extends AbstractProviderTest
     public function testValidateUploadType(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
         $errorElement = $this->createErrorElement($executionContext);
         $constraintBuilder = $this->createConstraintBuilder();
         $constraintBuilder
