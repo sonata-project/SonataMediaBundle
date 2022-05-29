@@ -137,7 +137,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],
-                [$this->getGalleryBuilder($form), null, []],
+                [$this->getGalleryBuilder(), null, []],
                 ['pauseTime', NumberType::class, [
                     'label' => 'form.label_pause_time',
                 ]],
@@ -197,7 +197,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     {
     }
 
-    private function getGalleryBuilder(FormMapper $form): FormBuilderInterface
+    private function getGalleryBuilder(): FormBuilderInterface
     {
         if (null === $this->galleryAdmin) {
             throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
@@ -208,7 +208,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
             'edit' => 'list',
         ]);
 
-        return $form->create('galleryId', ModelListType::class, [
+        return $this->galleryAdmin->getFormBuilder()->create('galleryId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->galleryAdmin->getClass(),
             'model_manager' => $this->galleryAdmin->getModelManager(),

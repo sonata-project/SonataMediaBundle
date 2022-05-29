@@ -116,7 +116,7 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
                     ],
                     'label' => 'form.label_orientation',
                 ]],
-                [$this->getMediaBuilder($form), null, []],
+                [$this->getMediaBuilder(), null, []],
                 ['format', ChoiceType::class, [
                     'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
@@ -218,7 +218,7 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
         return $formatChoices;
     }
 
-    private function getMediaBuilder(FormMapper $form): FormBuilderInterface
+    private function getMediaBuilder(): FormBuilderInterface
     {
         if (null === $this->mediaAdmin) {
             throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
@@ -229,7 +229,7 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
             'edit' => 'list',
         ]);
 
-        return $form->create('mediaId', ModelListType::class, [
+        return $this->mediaAdmin->getFormBuilder()->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->mediaAdmin->getClass(),
             'model_manager' => $this->mediaAdmin->getModelManager(),
