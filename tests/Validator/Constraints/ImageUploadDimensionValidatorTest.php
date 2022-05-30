@@ -27,6 +27,9 @@ use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
+/**
+ * @phpstan-extends ConstraintValidatorTestCase<ImageUploadDimensionValidator>
+ */
 final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCase
 {
     public const TEST_CONTEXT = 'test';
