@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.5...4.2.0) - 2022-06-12
+### Changed
+- [[#2310](https://github.com/sonata-project/SonataMediaBundle/pull/2310)] Bump `imagine/imagine` to ^1.3. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Removed
+- [[#2308](https://github.com/sonata-project/SonataMediaBundle/pull/2308)] Support of Symfony 5.3 ([@franmomu](https://github.com/franmomu))
+
 ## [4.1.5](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.4...4.1.5) - 2022-04-27
 ### Fixed
 - [[#2299](https://github.com/sonata-project/SonataMediaBundle/pull/2299)] Check for allowed extensions and mimetypes are case insensitive. ([@VincentLanglet](https://github.com/VincentLanglet))
