@@ -23,7 +23,7 @@ twig:
     exception_controller: null
     paths:
         - '%kernel.project_dir%/Resources/views'
-    strict_variables: "%kernel.debug%"
+    strict_variables: true
 
 sonata_media:
     db_driver: doctrine_orm
