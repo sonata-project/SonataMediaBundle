@@ -50,7 +50,7 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $dataTransformer = new ProviderDataTransformer($this->pool, $this->class, [
+        $dataTransformer = new ProviderDataTransformer($this->pool, $options['data_class'], [
             'provider' => $options['provider'],
             'context' => $options['context'],
             'empty_on_new' => $options['empty_on_new'],
