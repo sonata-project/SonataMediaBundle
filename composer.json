@@ -84,7 +84,7 @@
         "psalm/plugin-phpunit": "^0.16",
         "psalm/plugin-symfony": "^3.0",
         "sonata-project/admin-bundle": "^4.9",
-        "sonata-project/block-bundle": "^4.0",
+        "sonata-project/block-bundle": "^4.11",
         "sonata-project/classification-bundle": "^4.0",
         "sonata-project/doctrine-orm-admin-bundle": "^4.0",
         "symfony/browser-kit": "^4.4 || ^5.4 || ^6.0",
@@ -100,7 +100,7 @@
         "knplabs/knp-menu-bundle": "<3.0",
         "liip/imagine-bundle": "<2.0",
         "sonata-project/admin-bundle": "<4.9",
-        "sonata-project/block-bundle": "<4.0",
+        "sonata-project/block-bundle": "<4.11",
         "sonata-project/classification-bundle": "<4.0",
         "sonata-project/doctrine-orm-admin-bundle": "<4.0"
     },
