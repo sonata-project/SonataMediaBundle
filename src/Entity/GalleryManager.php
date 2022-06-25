@@ -14,10 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Entity;
 
 use Sonata\Doctrine\Entity\BaseEntityManager;
+use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 /**
- * @phpstan-extends BaseEntityManager<\Sonata\MediaBundle\Model\GalleryInterface>
+ * @phpstan-extends BaseEntityManager<GalleryInterface>
  */
 final class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {

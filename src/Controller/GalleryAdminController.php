@@ -15,11 +15,12 @@ namespace Sonata\MediaBundle\Controller;
 
 use Sonata\AdminBundle\Bridge\Exporter\AdminExporter;
 use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\MediaBundle\Model\GalleryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @phpstan-extends CRUDController<\Sonata\MediaBundle\Model\GalleryInterface>
+ * @phpstan-extends CRUDController<GalleryInterface>
  */
 final class GalleryAdminController extends CRUDController
 {

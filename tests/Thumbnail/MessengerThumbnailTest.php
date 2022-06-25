@@ -27,20 +27,14 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 final class MessengerThumbnailTest extends TestCase
 {
-    /**
-     * @var FormatThumbnail
-     */
-    private $innerThumbnail;
+    private FormatThumbnail $innerThumbnail;
 
     /**
      * @var MockObject&MessageBusInterface
      */
     private $bus;
 
-    /**
-     * @var MessengerThumbnail
-     */
-    private $thumbnail;
+    private MessengerThumbnail $thumbnail;
 
     protected function setUp(): void
     {

@@ -17,6 +17,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -35,12 +36,12 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
     private Pool $pool;
 
     /**
-     * @phpstan-var class-string<\Sonata\MediaBundle\Model\MediaInterface>
+     * @phpstan-var class-string<MediaInterface>
      */
     private string $class;
 
     /**
-     * @phpstan-param class-string<\Sonata\MediaBundle\Model\MediaInterface> $class
+     * @phpstan-param class-string<MediaInterface> $class
      */
     public function __construct(Pool $pool, string $class)
     {

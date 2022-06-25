@@ -83,7 +83,7 @@ class ImageProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
         $media->setContext('default');
 
         static::assertSame('default/0011/24/ASDASDAS.png', $this->provider->getReferenceImage($media));
@@ -193,7 +193,7 @@ class ImageProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
         $media->setContext('default');
 
         static::assertTrue($this->provider->requireThumbnails());
@@ -238,7 +238,7 @@ class ImageProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setContext('default');
         $media->setBinaryContent($file);
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         // pre persist the media
         $provider->transform($media);

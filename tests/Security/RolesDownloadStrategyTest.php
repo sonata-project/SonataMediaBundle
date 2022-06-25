@@ -31,9 +31,9 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (string $role): bool {
-                return 'ROLE_ADMIN' === $role;
-            });
+            ->willReturnCallback(
+                static fn (string $role): bool => 'ROLE_ADMIN' === $role
+            );
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
         static::assertTrue($strategy->isGranted($media, $request));
@@ -48,9 +48,7 @@ class RolesDownloadStrategyTest extends TestCase
 
         $security
             ->method('isGranted')
-            ->willReturnCallback(static function (string $role): bool {
-                return 'FOO' === $role;
-            });
+            ->willReturnCallback(static fn (string $role): bool => 'FOO' === $role);
 
         $strategy = new RolesDownloadStrategy($translator, $security, ['ROLE_ADMIN']);
         static::assertFalse($strategy->isGranted($media, $request));

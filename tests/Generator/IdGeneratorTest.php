@@ -32,10 +32,10 @@ final class IdGeneratorTest extends TestCase
         $media->setId(10000);
         static::assertSame('user/0001/11', $generator->generatePath($media));
 
-        $media->setId(12341230);
+        $media->setId(12_341_230);
         static::assertSame('user/0124/42', $generator->generatePath($media));
 
-        $media->setId(999999999);
+        $media->setId(999_999_999);
         static::assertSame('user/10000/100', $generator->generatePath($media));
     }
 }

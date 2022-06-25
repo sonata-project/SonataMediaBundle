@@ -68,7 +68,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         }
 
         if (!\array_key_exists($config['default_context'], $config['contexts'])) {
-            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid default context : %s, available : %s', $config['default_context'], json_encode(array_keys($config['contexts']))));
+            throw new \InvalidArgumentException(sprintf('SonataMediaBundle - Invalid default context : %s, available : %s', $config['default_context'], json_encode(array_keys($config['contexts']), \JSON_THROW_ON_ERROR)));
         }
 
         $loader->load(sprintf('%s.php', $config['db_driver']));

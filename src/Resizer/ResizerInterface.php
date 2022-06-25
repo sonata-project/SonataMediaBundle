@@ -16,9 +16,10 @@ namespace Sonata\MediaBundle\Resizer;
 use Gaufrette\File;
 use Imagine\Image\Box;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 /**
- * @phpstan-import-type FormatOptions from \Sonata\MediaBundle\Provider\MediaProviderInterface
+ * @phpstan-import-type FormatOptions from MediaProviderInterface
  */
 interface ResizerInterface
 {

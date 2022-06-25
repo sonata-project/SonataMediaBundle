@@ -73,7 +73,7 @@ class FileProviderTest extends AbstractProviderTest
         $media->setName('test.txt');
         $media->setProviderReference('ASDASD.txt');
         $media->setContext('default');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         static::assertSame('default/0011/24/ASDASD.txt', $this->provider->getReferenceImage($media));
         static::assertSame('default/0011/24', $this->provider->generatePath($media));
@@ -122,7 +122,7 @@ class FileProviderTest extends AbstractProviderTest
         $media->setName('test.png');
         $media->setProviderReference('ASDASDAS.png');
         $media->setContext('default');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         $this->provider->generateThumbnails($media);
     }
@@ -165,7 +165,7 @@ class FileProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setContext('default');
         $media->setBinaryContent($file);
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         // pre persist the media
         $this->provider->transform($media);
@@ -189,7 +189,7 @@ class FileProviderTest extends AbstractProviderTest
         $media->setBinaryContent($file);
         $media->setProviderReference('file.txt');
         $media->setContext('FileProviderTest');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         $response = $this->provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
 
@@ -229,7 +229,7 @@ class FileProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setBinaryContent($file);
         $media->setContentType('foo');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         yield [File::class, $media];
         yield [File::class, $media];

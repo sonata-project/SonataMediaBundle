@@ -21,6 +21,7 @@ use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\GalleryBlockService;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
@@ -32,7 +33,7 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
     {
         parent::setUp();
 
-        /** @var AdminInterface<GalleryInterface<\Sonata\MediaBundle\Model\GalleryItemInterface>>&Stub $galleryAdmin */
+        /** @var AdminInterface<GalleryInterface<GalleryItemInterface>>&Stub $galleryAdmin */
         $galleryAdmin = $this->createStub(AdminInterface::class);
 
         $this->blockService = new GalleryBlockService(
