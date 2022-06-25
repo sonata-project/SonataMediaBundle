@@ -17,6 +17,7 @@ use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
+use Sonata\BlockBundle\Cache\HttpCacheHandler;
 use Sonata\BlockBundle\SonataBlockBundle;
 use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
 use Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle;
@@ -99,6 +100,10 @@ final class AppKernel extends Kernel
             $loader->load(__DIR__.'/Resources/config/config_symfony_v5.yaml');
         } else {
             $loader->load(__DIR__.'/Resources/config/config_symfony_v4.yaml');
+        }
+
+        if (class_exists(HttpCacheHandler::class)) {
+            $loader->load(__DIR__.'/Resources/config/config_sonata_block_v4.yaml');
         }
 
         $loader->load(__DIR__.'/Resources/config/services.php');
