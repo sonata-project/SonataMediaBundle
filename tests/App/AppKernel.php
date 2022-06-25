@@ -92,6 +92,9 @@ final class AppKernel extends Kernel
         $routes->import(__DIR__.'/Resources/config/routing/routes.yaml');
     }
 
+    /**
+     * @psalm-suppress DeprecatedClass
+     */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $loader->load(__DIR__.'/Resources/config/config.yaml');
