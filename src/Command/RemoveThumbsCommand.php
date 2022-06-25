@@ -34,7 +34,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 #[AsCommand(name: 'sonata:media:remove-thumbnails', description: 'Remove uploaded image thumbs')]
 final class RemoveThumbsCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 6.0 is dropped.
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:remove-thumbnails';
     protected static $defaultDescription = 'Remove uploaded image thumbs';
 
