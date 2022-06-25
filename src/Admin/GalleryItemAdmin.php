@@ -17,10 +17,11 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
- * @phpstan-extends AbstractAdmin<\Sonata\MediaBundle\Model\GalleryItemInterface>
+ * @phpstan-extends AbstractAdmin<GalleryItemInterface>
  */
 final class GalleryItemAdmin extends AbstractAdmin
 {

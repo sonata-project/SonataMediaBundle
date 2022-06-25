@@ -14,10 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Entity;
 
 use Sonata\Doctrine\Entity\BaseEntityManager;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 
 /**
- * @phpstan-extends BaseEntityManager<\Sonata\MediaBundle\Model\MediaInterface>
+ * @phpstan-extends BaseEntityManager<MediaInterface>
  */
 final class MediaManager extends BaseEntityManager implements MediaManagerInterface
 {

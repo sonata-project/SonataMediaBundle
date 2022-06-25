@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 final class AddMediaCommandTest extends KernelTestCase
 {
@@ -43,7 +44,7 @@ final class AddMediaCommandTest extends KernelTestCase
     }
 
     /**
-     * @return class-string<\Symfony\Component\HttpKernel\KernelInterface>
+     * @return class-string<KernelInterface>
      */
     protected static function getKernelClass(): string
     {

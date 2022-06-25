@@ -17,12 +17,13 @@ use Sonata\AdminBundle\Bridge\Exporter\AdminExporter;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @phpstan-extends CRUDController<\Sonata\MediaBundle\Model\MediaInterface>
+ * @phpstan-extends CRUDController<MediaInterface>
  */
 final class MediaAdminController extends CRUDController
 {

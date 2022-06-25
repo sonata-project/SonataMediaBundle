@@ -224,9 +224,11 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
     public function getFormatsForContext(string $context): array
     {
-        return array_filter($this->getFormats(), static function (string $providerFormat) use ($context): bool {
-            return 0 === strpos($providerFormat, $context);
-        }, \ARRAY_FILTER_USE_KEY);
+        return array_filter(
+            $this->getFormats(),
+            static fn (string $providerFormat): bool => 0 === strpos($providerFormat, $context),
+            \ARRAY_FILTER_USE_KEY
+        );
     }
 
     protected function doTransform(MediaInterface $media): void

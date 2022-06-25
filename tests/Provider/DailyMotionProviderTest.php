@@ -30,7 +30,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
- * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\DailyMotionProvider>
+ * @phpstan-extends AbstractProviderTest<DailyMotionProvider>
  */
 class DailyMotionProviderTest extends AbstractProviderTest
 {
@@ -84,7 +84,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         static::assertSame('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $this->provider->getReferenceImage($media));
 
-        $media->setId(1023458);
+        $media->setId(1_023_458);
 
         static::assertSame('default/0011/24', $this->provider->generatePath($media));
         static::assertSame('/uploads/media/default/0011/24/thumb_1023458_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
@@ -109,7 +109,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $media->setContext('default');
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Dailymotion","provider_url":"http:\/\/www.dailymotion.com","title":"Thomas Rabaix - les tests fonctionnels - Symfony Live 2009","author_name":"Guillaume Pon\u00e7on","author_url":"http:\/\/www.dailymotion.com\/phptv","width":480,"height":270,"html":"<iframe src=\"http:\/\/www.dailymotion.com\/embed\/video\/x9wjql\" width=\"480\" height=\"270\" frameborder=\"0\"><\/iframe>","thumbnail_url":"http:\/\/ak2.static.dailymotion.com\/static\/video\/711\/536\/16635117:jpeg_preview_large.jpg?20100801072241","thumbnail_width":426.666666667,"thumbnail_height":240}', true));
 
-        $media->setId(1023458);
+        $media->setId(1_023_458);
 
         static::assertTrue($provider->requireThumbnails());
 
@@ -160,7 +160,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setContext('default');
         $media->setBinaryContent('x9wjql');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         // pre persist the media
         $provider->transform($media);
@@ -202,7 +202,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setContext('default');
         $media->setBinaryContent($url);
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         // pre persist the media
         $provider->transform($media);
@@ -246,7 +246,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
         $media = new Media();
         $media->setBinaryContent('x9wjql');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         $method = new \ReflectionMethod($provider, 'getMetadata');
         $method->setAccessible(true);

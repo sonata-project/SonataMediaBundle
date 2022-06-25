@@ -31,7 +31,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
- * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\VimeoProvider>
+ * @phpstan-extends AbstractProviderTest<VimeoProvider>
  */
 class VimeoProviderTest extends AbstractProviderTest
 {
@@ -83,7 +83,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $media->setContext('default');
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Vimeo","provider_url":"http:\/\/vimeo.com\/","title":"Blinky\u2122","author_name":"Ruairi Robinson","author_url":"http:\/\/vimeo.com\/ruairirobinson","is_plus":"1","html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>","width":"1920","height":"1080","duration":"771","description":"","thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg","thumbnail_width":1280,"thumbnail_height":720,"video_id":"21216091"}', true));
 
-        $media->setId(1023457);
+        $media->setId(1_023_457);
         static::assertSame('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $this->provider->getReferenceImage($media));
 
         static::assertSame('default/0011/24', $this->provider->generatePath($media));
@@ -109,7 +109,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $media->setContext('default');
         $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Vimeo","provider_url":"http:\/\/vimeo.com\/","title":"Blinky\u2122","author_name":"Ruairi Robinson","author_url":"http:\/\/vimeo.com\/ruairirobinson","is_plus":"1","html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>","width":"1920","height":"1080","duration":"771","description":"","thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg","thumbnail_width":1280,"thumbnail_height":720,"video_id":"21216091"}', true));
 
-        $media->setId(1023457);
+        $media->setId(1_023_457);
 
         static::assertTrue($provider->requireThumbnails());
 
@@ -160,7 +160,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setContext('default');
         $media->setBinaryContent('BDYAbAtaDzA');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         // pre persist the media
         $provider->transform($media);
@@ -216,12 +216,12 @@ class VimeoProviderTest extends AbstractProviderTest
         $mediaWebsite = new Media();
         $mediaWebsite->setContext('default');
         $mediaWebsite->setBinaryContent('https://vimeo.com/012341231');
-        $mediaWebsite->setId(1023456);
+        $mediaWebsite->setId(1_023_456);
 
         $mediaPlayer = new Media();
         $mediaPlayer->setContext('default');
         $mediaPlayer->setBinaryContent('https://player.vimeo.com/video/012341231');
-        $mediaPlayer->setId(1023456);
+        $mediaPlayer->setId(1_023_456);
 
         yield 'transform with website url' => [$mediaWebsite];
         yield 'transform with player url' => [$mediaPlayer];
@@ -250,7 +250,7 @@ class VimeoProviderTest extends AbstractProviderTest
 
         $media = new Media();
         $media->setBinaryContent('https://vimeo.com/012341231');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         $method = new \ReflectionMethod($provider, 'getMetadata');
         $method->setAccessible(true);

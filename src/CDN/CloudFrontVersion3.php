@@ -92,9 +92,10 @@ final class CloudFrontVersion3 implements CDNInterface
         }
         // Normalizes paths due possible typos since all the CloudFront's
         // objects starts with a leading slash
-        $normalizedPaths = array_map(static function (string $path): string {
-            return '/'.ltrim($path, '/');
-        }, $paths);
+        $normalizedPaths = array_map(
+            static fn (string $path): string => '/'.ltrim($path, '/'),
+            $paths
+        );
 
         try {
             $result = $this->client->createInvalidation([

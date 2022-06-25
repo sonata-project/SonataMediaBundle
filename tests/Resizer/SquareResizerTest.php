@@ -20,10 +20,11 @@ use Imagine\Image\ManipulatorInterface;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\SquareResizer;
 
 /**
- * @phpstan-import-type FormatOptions from \Sonata\MediaBundle\Provider\MediaProviderInterface
+ * @phpstan-import-type FormatOptions from MediaProviderInterface
  */
 class SquareResizerTest extends TestCase
 {

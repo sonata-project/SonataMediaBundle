@@ -152,9 +152,9 @@ abstract class Gallery implements GalleryInterface
             ));
         }
 
-        $iterator->uasort(static function (GalleryItemInterface $a, GalleryItemInterface $b): int {
-            return $a->getPosition() <=> $b->getPosition();
-        });
+        $iterator->uasort(
+            static fn (GalleryItemInterface $a, GalleryItemInterface $b): int => $a->getPosition() <=> $b->getPosition()
+        );
 
         $this->setGalleryItems($iterator);
     }
