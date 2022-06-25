@@ -9,6 +9,7 @@ framework:
         enable_annotations: false
     router:
         utf8: true
+    http_method_override: false
 
 security:
     role_hierarchy: null
