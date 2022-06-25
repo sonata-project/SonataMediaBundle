@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'sonata:media:add', description: 'Add a media into the database')]
 final class AddMediaCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 6.0 is dropped.
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:add';
     protected static $defaultDescription = 'Add a media into the database';
 

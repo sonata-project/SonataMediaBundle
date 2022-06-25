@@ -34,7 +34,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 #[AsCommand(name: 'sonata:media:sync-thumbnails', description: 'Sync uploaded image thumbs with new media formats')]
 final class SyncThumbsCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 6.0 is dropped.
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:sync-thumbnails';
     protected static $defaultDescription = 'Sync uploaded image thumbs with new media formats';
 

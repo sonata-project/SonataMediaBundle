@@ -29,7 +29,7 @@ use Symfony\Component\Finder\Finder;
 #[AsCommand(name: 'sonata:media:clean-uploads', description: 'Find orphaned files in media upload directory')]
 final class CleanMediaCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 6.0 is dropped.
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:clean-uploads';
     protected static $defaultDescription = 'Find orphaned files in media upload directory';
 
