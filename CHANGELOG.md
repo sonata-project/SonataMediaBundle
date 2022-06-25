@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.2.0...4.3.0) - 2022-06-25
+### Changed
+- [[#2313](https://github.com/sonata-project/SonataMediaBundle/pull/2313)] `MediaType` form type will now allow you to pass your own `data_class` instead of relying on the provided `$this->class`. ([@esserj](https://github.com/esserj))
+
+### Removed
+- [[#2314](https://github.com/sonata-project/SonataMediaBundle/pull/2314)] Avoid deprecations for console commands on Symfony 6.1. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.2.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.1.5...4.2.0) - 2022-06-12
 ### Changed
 - [[#2310](https://github.com/sonata-project/SonataMediaBundle/pull/2310)] Bump `imagine/imagine` to ^1.3. ([@jordisala1991](https://github.com/jordisala1991))
