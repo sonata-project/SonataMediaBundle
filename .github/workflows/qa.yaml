@@ -81,7 +81,7 @@ jobs:
             - name: Install PHP with extensions
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '{{ branch.targetPhpVersion.toString }}'
+                  php-version: '8.1'
                   coverage: none
                   tools: composer:v2
                   extensions: mongodb, gd
