@@ -76,16 +76,18 @@ final class CropResizerTest extends TestCase
         $image = $this->createMock(ImageInterface::class);
         $image->expects(0 === $scaleHeight && 0 === $scaleWidth ? static::never() : static::once())
             ->method('thumbnail')
-            ->with(static::callback(static function (Box $box) use ($scaleWidth, $scaleHeight): bool {
-                return $box->getWidth() === $scaleWidth && $box->getHeight() === $scaleHeight;
-            }), static::equalTo('outbound'))
+            ->with(
+                static::callback(static fn (Box $box): bool => $box->getWidth() === $scaleWidth && $box->getHeight() === $scaleHeight),
+                static::equalTo('outbound')
+            )
             ->willReturnReference($image);
 
         $image->expects(0 === $cropWidth && 0 === $cropHeight ? static::never() : static::once())
             ->method('crop')
-            ->with(static::anything(), static::callback(static function (Box $box) use ($cropWidth, $cropHeight): bool {
-                return $box->getWidth() === $cropWidth && $box->getHeight() === $cropHeight;
-            }))
+            ->with(
+                static::anything(),
+                static::callback(static fn (Box $box): bool => $box->getWidth() === $cropWidth && $box->getHeight() === $cropHeight)
+            )
             ->willReturnReference($image);
 
         $image->method('get')

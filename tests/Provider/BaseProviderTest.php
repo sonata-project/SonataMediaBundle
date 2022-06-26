@@ -25,7 +25,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 
 /**
- * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Tests\App\Provider\TestProvider>
+ * @phpstan-extends AbstractProviderTest<TestProvider>
  */
 class BaseProviderTest extends AbstractProviderTest
 {
@@ -43,7 +43,7 @@ class BaseProviderTest extends AbstractProviderTest
         $filesystem->method('get')->willReturn(new File('my_file.txt', $filesystem));
 
         $cdn = $this->createStub(CDNInterface::class);
-        $cdn->method('flushPaths')->willReturn((string) mt_rand());
+        $cdn->method('flushPaths')->willReturn((string) random_int(0, mt_getrandmax()));
         $cdn->method('getFlushStatus')
             ->will(static::onConsecutiveCalls(
                 CDNInterface::STATUS_OK,
@@ -51,9 +51,7 @@ class BaseProviderTest extends AbstractProviderTest
                 CDNInterface::STATUS_WAITING,
                 CDNInterface::STATUS_OK
             ));
-        $cdn->method('getPath')->willReturnCallback(static function (string $path, bool $isFlushable): string {
-            return '/uploads/media/'.$path;
-        });
+        $cdn->method('getPath')->willReturnCallback(static fn (string $path, bool $isFlushable): string => '/uploads/media/'.$path);
 
         $generator = new IdGenerator();
 

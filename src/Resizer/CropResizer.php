@@ -20,11 +20,12 @@ use Imagine\Image\ImagineInterface;
 use Imagine\Image\Point;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 /**
  * @author Christian Gripp <mail@core23.de>
  *
- * @phpstan-import-type FormatOptions from \Sonata\MediaBundle\Provider\MediaProviderInterface
+ * @phpstan-import-type FormatOptions from MediaProviderInterface
  */
 final class CropResizer implements ResizerInterface
 {

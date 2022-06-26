@@ -18,6 +18,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Tests\App\AppKernel;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 final class MediaAdminTest extends WebTestCase
 {
@@ -138,7 +139,7 @@ final class MediaAdminTest extends WebTestCase
     }
 
     /**
-     * @return class-string<\Symfony\Component\HttpKernel\KernelInterface>
+     * @return class-string<KernelInterface>
      */
     protected static function getKernelClass(): string
     {

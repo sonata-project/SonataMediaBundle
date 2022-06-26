@@ -187,7 +187,7 @@ abstract class BaseVideoProvider extends BaseProvider
             );
         }
 
-        $metadata = json_decode($response, true);
+        $metadata = json_decode($response, true, 512, \JSON_THROW_ON_ERROR);
 
         if (null === $metadata) {
             throw new \RuntimeException(sprintf('Unable to decode the video information for: %s', $url));

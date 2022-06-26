@@ -30,7 +30,7 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
- * @phpstan-extends AbstractProviderTest<\Sonata\MediaBundle\Provider\YouTubeProvider>
+ * @phpstan-extends AbstractProviderTest<YouTubeProvider>
  */
 class YouTubeProviderTest extends AbstractProviderTest
 {
@@ -82,7 +82,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $media->setContext('default');
         $media->setProviderMetadata(json_decode('{"provider_url": "http:\/\/www.youtube.com\/", "title": "Nono le petit robot", "html": "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\"><\/param><param name=\"allowFullScreen\" value=\"true\"><\/param><param name=\"allowscriptaccess\" value=\"always\"><\/param><embed src=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\" type=\"application\/x-shockwave-flash\" width=\"425\" height=\"344\" allowscriptaccess=\"always\" allowfullscreen=\"true\"><\/embed><\/object>", "author_name": "timan38", "height": 344, "thumbnail_width": 480, "width": 425, "version": "1.0", "author_url": "http:\/\/www.youtube.com\/user\/timan38", "provider_name": "YouTube", "thumbnail_url": "http:\/\/i3.ytimg.com\/vi\/BDYAbAtaDzA\/hqdefault.jpg", "type": "video", "thumbnail_height": 360}', true));
 
-        $media->setId(1023457);
+        $media->setId(1_023_457);
 
         static::assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $this->provider->getReferenceImage($media));
 
@@ -108,7 +108,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $media->setContext('default');
         $media->setProviderMetadata(json_decode('{"provider_url": "http:\/\/www.youtube.com\/", "title": "Nono le petit robot", "html": "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\"><\/param><param name=\"allowFullScreen\" value=\"true\"><\/param><param name=\"allowscriptaccess\" value=\"always\"><\/param><embed src=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\" type=\"application\/x-shockwave-flash\" width=\"425\" height=\"344\" allowscriptaccess=\"always\" allowfullscreen=\"true\"><\/embed><\/object>", "author_name": "timan38", "height": 344, "thumbnail_width": 480, "width": 425, "version": "1.0", "author_url": "http:\/\/www.youtube.com\/user\/timan38", "provider_name": "YouTube", "thumbnail_url": "http:\/\/i3.ytimg.com\/vi\/BDYAbAtaDzA\/hqdefault.jpg", "type": "video", "thumbnail_height": 360}', true));
 
-        $media->setId(1023457);
+        $media->setId(1_023_457);
 
         static::assertTrue($provider->requireThumbnails());
 
@@ -161,7 +161,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setContext('default');
         $media->setBinaryContent('BDYAbAtaDzA');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         // pre persist the media
         $provider->transform($media);
@@ -205,7 +205,7 @@ class YouTubeProviderTest extends AbstractProviderTest
         $media = new Media();
         $media->setContext('default');
         $media->setBinaryContent($url);
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         // pre persist the media
         $provider->transform($media);
@@ -255,7 +255,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
         $media = new Media();
         $media->setBinaryContent('BDYAbAtaDzA');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
 
         $method = new \ReflectionMethod($provider, 'getMetadata');
         $method->setAccessible(true);

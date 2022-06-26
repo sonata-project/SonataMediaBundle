@@ -14,14 +14,17 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Command;
 
 use Sonata\MediaBundle\Model\MediaManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'sonata:media:add', description: 'Add a media into the database')]
 final class AddMediaCommand extends Command
 {
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:add';
     protected static $defaultDescription = 'Add a media into the database';
 
@@ -42,6 +45,7 @@ final class AddMediaCommand extends Command
         \assert(null !== static::$defaultDescription);
 
         $this
+            // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
             ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::REQUIRED, 'The provider')
             ->addArgument('context', InputArgument::REQUIRED, 'The context')

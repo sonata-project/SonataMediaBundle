@@ -15,13 +15,16 @@ namespace Sonata\MediaBundle\Command;
 
 use Sonata\Doctrine\Model\ClearableManagerInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'sonata:media:add-multiple', description: 'Add medias in mass into the database')]
 final class AddMassMediaCommand extends Command
 {
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:add-multiple';
     protected static $defaultDescription = 'Add medias in mass into the database';
 
@@ -47,6 +50,7 @@ final class AddMassMediaCommand extends Command
         \assert(null !== static::$defaultDescription);
 
         $this
+            // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
             ->setDescription(static::$defaultDescription)
             ->addOption('file', null, InputOption::VALUE_REQUIRED, 'The file to parse')
             ->addOption('delimiter', null, InputOption::VALUE_REQUIRED, 'Set the field delimiter (one character only)', ',')
@@ -130,7 +134,7 @@ final class AddMassMediaCommand extends Command
             $this->mediaManager->save($media);
             $output->writeln(sprintf(' > %s - %s', $media->getId() ?? '', $media->getName() ?? ''));
         } catch (\Exception $e) {
-            $output->writeln(sprintf('<error>%s</error> : %s', $e->getMessage(), json_encode($data)));
+            $output->writeln(sprintf('<error>%s</error> : %s', $e->getMessage(), json_encode($data, \JSON_THROW_ON_ERROR)));
         }
     }
 }

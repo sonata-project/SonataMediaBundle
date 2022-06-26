@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Model;
 use Sonata\Doctrine\Model\ManagerInterface;
 
 /**
- * @phpstan-extends ManagerInterface<\Sonata\MediaBundle\Model\MediaInterface>
+ * @phpstan-extends ManagerInterface<MediaInterface>
  */
 interface MediaManagerInterface extends ManagerInterface
 {

@@ -23,6 +23,7 @@ use Sonata\AdminBundle\Templating\MutableTemplateRegistryInterface;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Sonata\MediaBundle\Controller\GalleryAdminController;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
@@ -40,7 +41,7 @@ class GalleryAdminControllerTest extends TestCase
     private Container $container;
 
     /**
-     * @var MockObject&AdminInterface<GalleryInterface<\Sonata\MediaBundle\Model\GalleryItemInterface>>
+     * @var MockObject&AdminInterface<GalleryInterface<GalleryItemInterface>>
      */
     private MockObject $admin;
 

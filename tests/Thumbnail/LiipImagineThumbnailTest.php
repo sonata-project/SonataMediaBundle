@@ -43,7 +43,7 @@ class LiipImagineThumbnailTest extends TestCase
         $media = new Media();
         $media->setName('ASDASDAS.png');
         $media->setProviderReference('ASDASDAS.png');
-        $media->setId(1023456);
+        $media->setId(1_023_456);
         $media->setContext('default');
 
         $provider = $this->createMock(MediaProviderInterface::class);

@@ -22,12 +22,13 @@ use Sonata\AdminBundle\Object\MetadataInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
- * @phpstan-extends AbstractAdmin<\Sonata\MediaBundle\Model\MediaInterface>
+ * @phpstan-extends AbstractAdmin<MediaInterface>
  */
 abstract class BaseMediaAdmin extends AbstractAdmin
 {
@@ -46,7 +47,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
      * @param CategoryManagerInterface|string|null $categoryManager
      * @param ContextManagerInterface|string|null  $contextManager
      *
-     * @phpstan-param CategoryManagerInterface|class-string<\Sonata\MediaBundle\Model\MediaInterface>|null $categoryManager
+     * @phpstan-param CategoryManagerInterface|class-string<MediaInterface>|null $categoryManager
      */
     public function __construct(
         $pool,

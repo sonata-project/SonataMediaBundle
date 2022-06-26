@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Command;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,8 +29,10 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  *
  * Useful if you have existing media content and added new formats.
  */
+#[AsCommand(name: 'sonata:media:refresh-metadata', description: 'Refresh meta information')]
 final class RefreshMetadataCommand extends Command
 {
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:refresh-metadata';
     protected static $defaultDescription = 'Refresh meta information';
 
@@ -55,6 +58,7 @@ final class RefreshMetadataCommand extends Command
         \assert(null !== static::$defaultDescription);
 
         $this
+            // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
             ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
             ->addArgument('context', InputArgument::OPTIONAL, 'The context');

@@ -25,10 +25,7 @@ use Twig\Environment;
 
 class MediaRuntimeTest extends TestCase
 {
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
     /**
      * @var MockObject&MediaManagerInterface
@@ -45,10 +42,7 @@ class MediaRuntimeTest extends TestCase
      */
     private $provider;
 
-    /**
-     * @var MediaRuntime
-     */
-    private $mediaRuntime;
+    private MediaRuntime $mediaRuntime;
 
     protected function setUp(): void
     {

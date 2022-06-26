@@ -17,6 +17,7 @@ use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -25,8 +26,10 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+#[AsCommand(name: 'sonata:media:clean-uploads', description: 'Find orphaned files in media upload directory')]
 final class CleanMediaCommand extends Command
 {
+    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
     protected static $defaultName = 'sonata:media:clean-uploads';
     protected static $defaultDescription = 'Find orphaned files in media upload directory';
 
@@ -58,6 +61,7 @@ final class CleanMediaCommand extends Command
         \assert(null !== static::$defaultDescription);
 
         $this
+            // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
             ->setDescription(static::$defaultDescription)
             ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Execute the cleanup as a dry run. This doesn\'t remove any files');
     }

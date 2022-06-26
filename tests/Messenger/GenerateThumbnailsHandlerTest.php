@@ -39,15 +39,9 @@ final class GenerateThumbnailsHandlerTest extends TestCase
      */
     private $mediaManager;
 
-    /**
-     * @var Pool
-     */
-    private $pool;
+    private Pool $pool;
 
-    /**
-     * @var GenerateThumbnailsHandler
-     */
-    private $handler;
+    private GenerateThumbnailsHandler $handler;
 
     protected function setUp(): void
     {
