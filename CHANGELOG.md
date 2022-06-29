@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.4.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.3.0...4.4.0) - 2022-06-28
+### Added
+- [[#2317](https://github.com/sonata-project/SonataMediaBundle/pull/2317)] Add support for `doctrine/persistence` ^3.0. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.3.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.2.0...4.3.0) - 2022-06-25
 ### Changed
 - [[#2313](https://github.com/sonata-project/SonataMediaBundle/pull/2313)] `MediaType` form type will now allow you to pass your own `data_class` instead of relying on the provided `$this->class`. ([@esserj](https://github.com/esserj))
