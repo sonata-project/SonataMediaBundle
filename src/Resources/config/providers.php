@@ -90,7 +90,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '',
                 new ReferenceConfigurator('sonata.media.thumbnail.format'),
                 new ReferenceConfigurator('sonata.media.http.client'),
-                (new ReferenceConfigurator('sonata.media.http.message_factory')),
+                new ReferenceConfigurator('sonata.media.http.message_factory'),
                 new ReferenceConfigurator('sonata.media.metadata.proxy'),
                 '',
             ])
