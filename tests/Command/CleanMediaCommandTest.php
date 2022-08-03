@@ -112,7 +112,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->mediaManager->expects(static::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])
-            ->willReturn([$media]);
+            ->willReturn($media);
         $this->mediaManager->expects(static::once())->method('findBy')
             ->with(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']])
             ->willReturn([$media]);
@@ -137,7 +137,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->mediaManager->expects(static::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])
-            ->willReturn([$media]);
+            ->willReturn($media);
         $this->mediaManager->expects(static::once())->method('findBy')
             ->with(['providerReference' => 'qwertz.ext', 'providerName' => ['fooprovider']])
             ->willReturn([$media]);
