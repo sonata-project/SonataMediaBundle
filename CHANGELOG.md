@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.5.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.4.0...4.5.0) - 2022-08-04
+### Added
+- [[#2326](https://github.com/sonata-project/SonataMediaBundle/pull/2326)] Support for sonata-project/doctrine-extensions ^2 ([@VincentLanglet](https://github.com/VincentLanglet))
+- [[#2326](https://github.com/sonata-project/SonataMediaBundle/pull/2326)] Support for sonata-project/twig-extensions ^2 ([@VincentLanglet](https://github.com/VincentLanglet))
+
 ## [4.4.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.3.0...4.4.0) - 2022-06-28
 ### Added
 - [[#2317](https://github.com/sonata-project/SonataMediaBundle/pull/2317)] Add support for `doctrine/persistence` ^3.0. ([@jordisala1991](https://github.com/jordisala1991))
