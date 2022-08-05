@@ -32,11 +32,26 @@ final class NoDriverMediaManager implements MediaManagerInterface
         throw new NoDriverException();
     }
 
+    /**
+     * TODO: Add typehint with the drop of sonata-project/doctrine-extensions < 2.
+     *
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return MediaInterface[]
+     */
     public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
         throw new NoDriverException();
     }
 
+    /**
+     * TODO: Remove $orderBy param with the drop of sonata-project/doctrine-extensions < 2.
+     *
+     * @param array<string, string>|null $orderBy
+     *
+     * @return MediaInterface|null
+     */
     public function findOneBy(array $criteria, ?array $orderBy = null): ?object
     {
         throw new NoDriverException();
@@ -52,11 +67,23 @@ final class NoDriverMediaManager implements MediaManagerInterface
         throw new NoDriverException();
     }
 
+    /**
+     * TODO: Add typehint with the drop of sonata-project/doctrine-extensions < 2.
+     *
+     * @param MediaInterface $entity
+     * @param bool           $andFlush
+     */
     public function save($entity, $andFlush = true): void
     {
         throw new NoDriverException();
     }
 
+    /**
+     * TODO: Add typehint with the drop of sonata-project/doctrine-extensions < 2.
+     *
+     * @param MediaInterface $entity
+     * @param bool           $andFlush
+     */
     public function delete($entity, $andFlush = true): void
     {
         throw new NoDriverException();
@@ -72,8 +99,12 @@ final class NoDriverMediaManager implements MediaManagerInterface
      * Doctrine DBAL that we do not want here. This method will probably be
      * deprecated on sonata-project/doctrine-extensions because it is only for
      * Doctrine ORM.
+     *
+     * TODO: Remove this with the drop of sonata-project/doctrine-extensions < 2.
+     *
+     * @psalm-suppress MissingReturnType
      */
-    public function getConnection()
+    public function getConnection() // @phpstan-ignore-line
     {
         throw new NoDriverException();
     }
