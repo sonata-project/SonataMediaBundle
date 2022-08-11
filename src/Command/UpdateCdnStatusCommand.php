@@ -65,21 +65,21 @@ final class UpdateCdnStatusCommand extends Command
             ->addArgument('context', InputArgument::OPTIONAL, 'The context')
             ->setHelp(
                 <<<'EOF'
-The <info>%command.name%</info> command helps maintaining your model media in sync
-with the CDN. Since the flush process in a CDN is not an immediate operation, the
-media that is marked as flushable has the status <info>CDNInterface::STATUS_TO_FLUSH</info>
-when it is updated. This command iterates over the media, retrieves the flush status
-from the CDN and performs the update in your model based on the CDN response.
+                    The <info>%command.name%</info> command helps maintaining your model media in sync
+                    with the CDN. Since the flush process in a CDN is not an immediate operation, the
+                    media that is marked as flushable has the status <info>CDNInterface::STATUS_TO_FLUSH</info>
+                    when it is updated. This command iterates over the media, retrieves the flush status
+                    from the CDN and performs the update in your model based on the CDN response.
 
-When you execute the command, it will prompt for a media provider and context:
+                    When you execute the command, it will prompt for a media provider and context:
 
-  <info>php %command.full_name%</info>
+                      <info>php %command.full_name%</info>
 
-You can also pass the media provider and the context as arguments:
+                    You can also pass the media provider and the context as arguments:
 
-  <info>php %command.full_name% sonata.media.provider.file default</info>
+                      <info>php %command.full_name% sonata.media.provider.file default</info>
 
-EOF
+                    EOF
             );
     }
 
