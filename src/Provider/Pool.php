@@ -131,9 +131,9 @@ final class Pool
     }
 
     /**
-     * @throws \LogicException
-     *
      * @return array<string, array|string>
+     *
+     * @throws \LogicException
      *
      * @phpstan-return array{
      *     providers: string[],
