@@ -27,7 +27,7 @@ final class AmazonMetadataBuilderTest extends TestCase
      * @dataProvider provider
      *
      * @param array<string, string|int> $mediaAttributes
-     * @param array<string, mixed> $expected
+     * @param array<string, mixed>      $expected
      *
      * @phpstan-param AmazonSettings $settings
      */
