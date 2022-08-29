@@ -126,6 +126,9 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         return ['contentType' => $mimeType];
     }
 
+    /**
+     * @return array<string, string|int>
+     */
     private function getContentLength(MediaInterface $media): array
     {
         $size = $media->getSize();
