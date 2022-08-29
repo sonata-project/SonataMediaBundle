@@ -34,19 +34,9 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- *
- * @see https://github.com/psalm/psalm-plugin-symfony/pull/220
- */
 final class AppKernel extends Kernel
 {
     use MicroKernelTrait;
-
-    public function __construct()
-    {
-        parent::__construct('test', false);
-    }
 
     public function registerBundles(): iterable
     {

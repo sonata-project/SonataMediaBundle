@@ -15,10 +15,8 @@ namespace Sonata\MediaBundle\Tests\Functional\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Tests\App\AppKernel;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 final class MediaAdminTest extends WebTestCase
 {
@@ -136,14 +134,6 @@ final class MediaAdminTest extends WebTestCase
 
         yield 'Edit Media' => ['/admin/tests/app/media/1/edit', [], 'btn_update_and_list'];
         yield 'Remove Media' => ['/admin/tests/app/media/1/delete', [], 'btn_delete'];
-    }
-
-    /**
-     * @return class-string<KernelInterface>
-     */
-    protected static function getKernelClass(): string
-    {
-        return AppKernel::class;
     }
 
     /**

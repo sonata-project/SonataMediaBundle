@@ -13,20 +13,18 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Functional\Controller;
 
-use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Tests\App\AppKernel;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class TruncateControllerTest extends TestCase
+final class TruncateControllerTest extends WebTestCase
 {
     /**
      * @requires extension gd
      */
     public function testTruncate(): void
     {
-        $client = new KernelBrowser(new AppKernel());
+        $client = static::createClient();
         $client->request(Request::METHOD_GET, '/u_truncate_test');
 
         static::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
