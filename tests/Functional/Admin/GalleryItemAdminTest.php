@@ -15,12 +15,10 @@ namespace Sonata\MediaBundle\Tests\Functional\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Sonata\MediaBundle\Tests\App\AppKernel;
 use Sonata\MediaBundle\Tests\App\Entity\Gallery;
 use Sonata\MediaBundle\Tests\App\Entity\GalleryItem;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 final class GalleryItemAdminTest extends WebTestCase
 {
@@ -85,14 +83,6 @@ final class GalleryItemAdminTest extends WebTestCase
 
         yield 'Edit Gallery Item' => ['/admin/tests/app/galleryitem/1/edit', [], 'btn_update_and_list'];
         yield 'Remove Gallery Item' => ['/admin/tests/app/galleryitem/1/delete', [], 'btn_delete'];
-    }
-
-    /**
-     * @return class-string<KernelInterface>
-     */
-    protected static function getKernelClass(): string
-    {
-        return AppKernel::class;
     }
 
     /**
