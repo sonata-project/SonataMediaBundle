@@ -127,7 +127,9 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     }
 
     /**
-     * @return array<string, string|int>
+     * @return array<string, int>
+     *
+     * @phpstan-return array{contentLength?: int}
      */
     private function getContentLength(MediaInterface $media): array
     {
