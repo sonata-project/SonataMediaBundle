@@ -30,7 +30,7 @@ final class AmazonMetadataBuilderTest extends TestCase
      *
      * @phpstan-param AmazonSettings $settings
      */
-    public function testAmazon(array $settings, array $expected): void
+    public function testAmazon(array $settings, array $mediaAttributes, array $expected): void
     {
         $mimeTypes = $this->createStub(MimeTypesInterface::class);
         $mimeTypes->method('getMimeTypes')->willReturnCallback(
@@ -38,6 +38,9 @@ final class AmazonMetadataBuilderTest extends TestCase
         );
 
         $media = $this->createStub(MediaInterface::class);
+        foreach ($mediaAttributes as $attribute => $value) {
+            $media->method('get'.ucfirst($attribute))->willReturn($value);
+        }
         $filename = '/test/folder/testfile.png';
 
         $amazonmetadatabuilder = new AmazonMetadataBuilder($settings, $mimeTypes);
@@ -58,12 +61,16 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'meta' => [],
             ],
             [
+                'size' => 3000,
+            ],
+            [
                 'ACL' => AmazonMetadataBuilder::PRIVATE_ACCESS,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
                 'meta' => [],
                 'CacheControl' => '',
                 'encryption' => 'AES256',
                 'contentType' => 'image/png',
+                'contentLength' => 3000,
             ],
         ];
 
@@ -75,6 +82,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::PUBLIC_READ_WRITE,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -93,6 +101,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::AUTHENTICATED_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -111,6 +120,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::BUCKET_OWNER_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -129,6 +139,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::BUCKET_OWNER_FULL_CONTROL,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -147,6 +158,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::PUBLIC_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_REDUCED,
@@ -165,6 +177,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::PUBLIC_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -183,6 +196,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::PUBLIC_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -201,6 +215,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::PUBLIC_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -219,6 +234,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::PUBLIC_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
@@ -237,6 +253,7 @@ final class AmazonMetadataBuilderTest extends TestCase
                 'encryption' => 'aes256',
                 'meta' => ['key' => 'value'],
             ],
+            [],
             [
                 'ACL' => AmazonMetadataBuilder::PUBLIC_READ,
                 'storage' => AmazonMetadataBuilder::STORAGE_STANDARD,
