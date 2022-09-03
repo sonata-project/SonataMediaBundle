@@ -171,9 +171,9 @@ abstract class BaseVideoProvider extends BaseProvider
     abstract public function getReferenceUrl(MediaInterface $media): string;
 
     /**
-     * @return mixed
-     *
      * @throws \RuntimeException
+     *
+     * @return mixed
      */
     protected function getMetadata(MediaInterface $media, string $url)
     {
