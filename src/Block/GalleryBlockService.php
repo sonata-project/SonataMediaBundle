@@ -220,7 +220,6 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
      * @return array<string, MediaInterface|string|null>
      *
      * @phpstan-param GalleryInterface<GalleryItemInterface> $gallery
-     *
      * @phpstan-return array{
      *     title: string|null,
      *     caption: string|null,

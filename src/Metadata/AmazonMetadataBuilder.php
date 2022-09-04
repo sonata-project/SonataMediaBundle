@@ -77,7 +77,8 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
     {
         return array_replace_recursive(
             $this->getDefaultMetadata(),
-            $this->getContentType($filename)
+            $this->getContentType($filename),
+            $this->getContentLength($media)
         );
     }
 
@@ -123,5 +124,20 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         }
 
         return ['contentType' => $mimeType];
+    }
+
+    /**
+     * @return array<string, int>
+     *
+     * @phpstan-return array{contentLength?: int}
+     */
+    private function getContentLength(MediaInterface $media): array
+    {
+        $size = $media->getSize();
+        if ($size > 0) {
+            return ['contentLength' => $size];
+        }
+
+        return [];
     }
 }
