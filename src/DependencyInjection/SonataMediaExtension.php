@@ -77,6 +77,10 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $loader->load('controllers.php');
             $loader->load(sprintf('%s_admin.php', $config['db_driver']));
 
+            if ($this->isClassificationEnabled($bundles, $config)) {
+                $loader->load('category_admin.php');
+            }
+
             $sonataRoles = [];
             if (isset($this->sonataAdminConfig['security']['role_admin'])) {
                 $sonataRoles[] = $this->sonataAdminConfig['security']['role_admin'];

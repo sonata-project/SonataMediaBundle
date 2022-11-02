@@ -40,10 +40,6 @@ final class MediaAdmin extends BaseMediaAdmin
                 'show_filter' => true !== $this->getPersistentParameter('hide_context'),
             ]);
 
-        if (null !== $this->categoryManager) {
-            $filter->add('category', null, ['show_filter' => false]);
-        }
-
         $filter
             ->add('width')
             ->add('height')

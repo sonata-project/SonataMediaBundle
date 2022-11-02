@@ -16,11 +16,8 @@ namespace Sonata\MediaBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Object\Metadata;
 use Sonata\AdminBundle\Object\MetadataInterface;
-use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
-use Sonata\ClassificationBundle\Model\ContextManagerInterface;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -34,28 +31,28 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 {
     protected Pool $pool;
 
-    protected ?CategoryManagerInterface $categoryManager = null;
+    protected ?object $categoryManager = null;
 
-    protected ?ContextManagerInterface $contextManager = null;
+    protected ?object $contextManager = null;
 
     protected $classnameLabel = 'Media';
 
     /**
-     * NEXT_MAJOR: Change to (Pool, ?CategoryManagerInterface, ?ContextManagerInterface).
+     * NEXT_MAJOR: Change to (Pool).
      *
-     * @param Pool|string                          $pool
-     * @param CategoryManagerInterface|string|null $categoryManager
-     * @param ContextManagerInterface|string|null  $contextManager
+     * @param Pool|string        $pool
+     * @param object|string|null $categoryManager
+     * @param object|string|null $contextManager
      *
-     * @phpstan-param CategoryManagerInterface|class-string<MediaInterface>|null $categoryManager
+     * @phpstan-param object|class-string<MediaInterface>|null $categoryManager
      */
     public function __construct(
         $pool,
         $categoryManager = null,
         $contextManager = null,
         ?Pool $deprecatedPool = null,
-        ?CategoryManagerInterface $deprecatedCategoryManager = null,
-        ?ContextManagerInterface $deprecatedContextManager = null
+        ?object $deprecatedCategoryManager = null,
+        ?object $deprecatedContextManager = null
     ) {
         // NEXT_MAJOR: Keep the if part.
         if ($pool instanceof Pool) {
@@ -65,7 +62,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             parent::__construct();
 
             $this->pool = $pool;
+            // NEXT_MAJOR: Remove this line
             $this->categoryManager = $categoryManager;
+            // NEXT_MAJOR: Remove this line
             $this->contextManager = $contextManager;
         } else {
             \assert(\is_string($categoryManager));
@@ -133,20 +132,8 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $parameters['provider'] = $provider;
         }
 
-        $categoryId = $request->query->get('category');
-
-        if (null !== $this->categoryManager && null !== $this->contextManager && null === $categoryId) {
-            $rootCategories = $this->categoryManager->getRootCategoriesForContext($this->contextManager->find($context));
-            $rootCategory = current($rootCategories);
-
-            if (false !== $rootCategory) {
-                $categoryId = $rootCategory->getId();
-            }
-        }
-
         return array_merge($parameters, [
             'context' => $context,
-            'category' => $categoryId,
             'hide_context' => $request->query->getBoolean('hide_context'),
         ]);
     }
@@ -175,26 +162,6 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
         $object->setProviderName($providerName);
         $object->setContext($context);
-
-        $categoryId = $this->getPersistentParameter('category');
-
-        if (null === $this->categoryManager || null === $categoryId) {
-            return;
-        }
-
-        $category = $this->categoryManager->find($categoryId);
-
-        if (null === $category) {
-            return;
-        }
-
-        $categoryContext = $category->getContext();
-
-        if (null === $categoryContext || $categoryContext->getId() !== $context) {
-            return;
-        }
-
-        $object->setCategory($category);
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -225,17 +192,5 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         } else {
             $provider->buildCreateForm($form);
         }
-
-        if (null === $this->categoryManager) {
-            return;
-        }
-
-        $form->add('category', ModelListType::class, [], [
-            'link_parameters' => [
-                'context' => $media->getContext(),
-                'hide_context' => true,
-                'mode' => 'tree',
-            ],
-        ]);
     }
 }
