@@ -124,15 +124,9 @@ interface MediaInterface
 
     public function getSize(): ?int;
 
-    /**
-     * @return CategoryInterface|null
-     */
-    public function getCategory(): ?object;
+    public function getCategory(): ?CategoryInterface;
 
-    /**
-     * @param CategoryInterface|null $category
-     */
-    public function setCategory(?object $category = null): void;
+    public function setCategory(?CategoryInterface $category = null): void;
 
     /**
      * @param iterable<int, GalleryItemInterface> $galleryItems

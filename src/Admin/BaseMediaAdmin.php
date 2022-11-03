@@ -40,44 +40,16 @@ abstract class BaseMediaAdmin extends AbstractAdmin
 
     protected $classnameLabel = 'Media';
 
-    /**
-     * NEXT_MAJOR: Change to (Pool, ?CategoryManagerInterface, ?ContextManagerInterface).
-     *
-     * @param Pool|string                          $pool
-     * @param CategoryManagerInterface|string|null $categoryManager
-     * @param ContextManagerInterface|string|null  $contextManager
-     *
-     * @phpstan-param CategoryManagerInterface|class-string<MediaInterface>|null $categoryManager
-     */
     public function __construct(
-        $pool,
-        $categoryManager = null,
-        $contextManager = null,
-        ?Pool $deprecatedPool = null,
-        ?CategoryManagerInterface $deprecatedCategoryManager = null,
-        ?ContextManagerInterface $deprecatedContextManager = null
+        Pool $pool,
+        ?CategoryManagerInterface $categoryManager = null,
+        ?ContextManagerInterface $contextManager = null
     ) {
-        // NEXT_MAJOR: Keep the if part.
-        if ($pool instanceof Pool) {
-            \assert(!\is_string($categoryManager));
-            \assert(!\is_string($contextManager));
+        parent::__construct();
 
-            parent::__construct();
-
-            $this->pool = $pool;
-            $this->categoryManager = $categoryManager;
-            $this->contextManager = $contextManager;
-        } else {
-            \assert(\is_string($categoryManager));
-            \assert(\is_string($contextManager));
-            \assert(null !== $deprecatedPool);
-
-            parent::__construct($pool, $categoryManager, $contextManager);
-
-            $this->pool = $deprecatedPool;
-            $this->categoryManager = $deprecatedCategoryManager;
-            $this->contextManager = $deprecatedContextManager;
-        }
+        $this->pool = $pool;
+        $this->categoryManager = $categoryManager;
+        $this->contextManager = $contextManager;
     }
 
     final public function getObjectMetadata(object $object): MetadataInterface

@@ -77,10 +77,7 @@ abstract class Media implements MediaInterface
      */
     protected Collection $galleryItems;
 
-    /**
-     * @var CategoryInterface|null
-     */
-    protected ?object $category = null;
+    protected ?CategoryInterface $category = null;
 
     public function __construct()
     {
@@ -302,12 +299,12 @@ abstract class Media implements MediaInterface
         return $this->size;
     }
 
-    public function getCategory(): ?object
+    public function getCategory(): ?CategoryInterface
     {
         return $this->category;
     }
 
-    public function setCategory(?object $category = null): void
+    public function setCategory(?CategoryInterface $category = null): void
     {
         $this->category = $category;
     }

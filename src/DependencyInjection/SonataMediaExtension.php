@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use Sonata\ClassificationBundle\Model\CategoryInterface;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
 use Symfony\Component\Config\Definition\Processor;
@@ -36,6 +37,10 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
     public function load(array $configs, ContainerBuilder $container): void
     {
+        // Fix strict type if ClassificationBundle is not installed
+        if (!interface_exists(CategoryInterface::class)) {
+            class_alias(CategoryInterface::class, \stdClass::class);
+        }
         $processor = new Processor();
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
