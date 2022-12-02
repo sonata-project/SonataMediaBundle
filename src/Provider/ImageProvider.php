@@ -102,7 +102,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
             }
 
             unset($options['picture']);
-            $pictureParams['img'] = $params + $options;
+            $pictureParams['img'] = array_merge($params, $options);
             $params = ['picture' => $pictureParams];
         } elseif (MediaProviderInterface::FORMAT_ADMIN !== $format) {
             $srcSetFormats = $this->getFormats();
