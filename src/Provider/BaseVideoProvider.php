@@ -182,7 +182,7 @@ abstract class BaseVideoProvider extends BaseProvider
         } catch (\RuntimeException $exception) {
             throw new \RuntimeException(
                 sprintf('Unable to retrieve the video information for: %s', $url),
-                $exception->getCode(),
+                (int) $exception->getCode(),
                 $exception
             );
         }
