@@ -144,7 +144,7 @@ final class RemoveThumbsCommand extends Command
         $providerName = $input->getArgument('providerName');
 
         if (null === $providerName) {
-            $providerName = $this->getQuestionHelper()->ask(
+            $providerName = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
@@ -159,7 +159,7 @@ final class RemoveThumbsCommand extends Command
         $context = $input->getArgument('context');
 
         if (null === $context) {
-            $context = $this->getQuestionHelper()->ask(
+            $context = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
@@ -177,7 +177,7 @@ final class RemoveThumbsCommand extends Command
             $formats = array_keys($provider->getFormats());
             $formats[] = '<ALL THUMBNAILS>';
 
-            $format = $this->getQuestionHelper()->ask(
+            $format = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the format', $formats)
@@ -228,10 +228,5 @@ final class RemoveThumbsCommand extends Command
         if (false === $this->quiet) {
             $output->writeln($message);
         }
-    }
-
-    private function getQuestionHelper(): QuestionHelper
-    {
-        return $this->getHelper('question');
     }
 }
