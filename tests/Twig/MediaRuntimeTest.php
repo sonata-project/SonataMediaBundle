@@ -30,17 +30,17 @@ class MediaRuntimeTest extends TestCase
     /**
      * @var MockObject&MediaManagerInterface
      */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
     /**
      * @var MockObject&Environment
      */
-    private $twig;
+    private Environment $twig;
 
     /**
      * @var MockObject&MediaProviderInterface
      */
-    private $provider;
+    private MediaProviderInterface $provider;
 
     private MediaRuntime $mediaRuntime;
 
