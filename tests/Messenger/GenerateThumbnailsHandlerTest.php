@@ -32,12 +32,12 @@ final class GenerateThumbnailsHandlerTest extends TestCase
     /**
      * @var MockObject&GenerableThumbnailInterface
      */
-    private $thumbnail;
+    private GenerableThumbnailInterface $thumbnail;
 
     /**
      * @var MockObject&MediaManagerInterface
      */
-    private $mediaManager;
+    private MediaManagerInterface $mediaManager;
 
     private Pool $pool;
 

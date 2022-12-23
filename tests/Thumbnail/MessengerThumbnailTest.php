@@ -32,7 +32,7 @@ final class MessengerThumbnailTest extends TestCase
     /**
      * @var MockObject&MessageBusInterface
      */
-    private $bus;
+    private MessageBusInterface $bus;
 
     private MessengerThumbnail $thumbnail;
 
