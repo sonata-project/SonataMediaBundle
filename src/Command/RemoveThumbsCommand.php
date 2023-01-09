@@ -19,7 +19,6 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -144,7 +143,7 @@ final class RemoveThumbsCommand extends Command
         $providerName = $input->getArgument('providerName');
 
         if (null === $providerName) {
-            $providerName = $this->getQuestionHelper()->ask(
+            $providerName = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
@@ -159,7 +158,7 @@ final class RemoveThumbsCommand extends Command
         $context = $input->getArgument('context');
 
         if (null === $context) {
-            $context = $this->getQuestionHelper()->ask(
+            $context = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
@@ -177,7 +176,7 @@ final class RemoveThumbsCommand extends Command
             $formats = array_keys($provider->getFormats());
             $formats[] = '<ALL THUMBNAILS>';
 
-            $format = $this->getQuestionHelper()->ask(
+            $format = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the format', $formats)
@@ -228,10 +227,5 @@ final class RemoveThumbsCommand extends Command
         if (false === $this->quiet) {
             $output->writeln($message);
         }
-    }
-
-    private function getQuestionHelper(): QuestionHelper
-    {
-        return $this->getHelper('question');
     }
 }

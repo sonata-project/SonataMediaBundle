@@ -21,6 +21,8 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 /**
  * @author Jordi Sala Morales <jordism91@gmail.com>
+ *
+ * @psalm-suppress DeprecatedInterface
  */
 final class GenerateThumbnailsHandler implements MessageHandlerInterface
 {

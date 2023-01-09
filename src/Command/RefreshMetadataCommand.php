@@ -18,7 +18,6 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -135,7 +134,7 @@ final class RefreshMetadataCommand extends Command
         $providerName = $input->getArgument('providerName');
 
         if (null === $providerName) {
-            $providerName = $this->getQuestionHelper()->ask(
+            $providerName = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
@@ -150,7 +149,7 @@ final class RefreshMetadataCommand extends Command
         $context = $input->getArgument('context');
 
         if (null === $context) {
-            $context = $this->getQuestionHelper()->ask(
+            $context = $this->getHelper('question')->ask(
                 $input,
                 $output,
                 new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
@@ -158,10 +157,5 @@ final class RefreshMetadataCommand extends Command
         }
 
         return $context;
-    }
-
-    private function getQuestionHelper(): QuestionHelper
-    {
-        return $this->getHelper('question');
     }
 }
