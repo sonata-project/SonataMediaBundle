@@ -254,6 +254,9 @@ final class Configuration implements ConfigurationInterface
                                     ->prototype('scalar')
                                     ->end()
                                 ->end()
+                                ->booleanNode('async')
+                                    ->defaultFalse()
+                                ->end()
                             ->end()
                         ->end()
 
