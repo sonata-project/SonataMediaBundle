@@ -96,6 +96,7 @@
         "vimeo/psalm": "^4.7.2"
     },
     "conflict": {
+        "async-aws/simple-s3": "<1.0",
         "aws/aws-sdk-php": "<3.0",
         "doctrine/mongodb-odm": "<2.2",
         "doctrine/orm": "<2.9",
