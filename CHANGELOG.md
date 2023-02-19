@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.6.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.5.1...4.6.0) - 2023-02-19
+### Added
+- [[#2358](https://github.com/sonata-project/SonataMediaBundle/pull/2358)] Added new configuration parameter `sonata_media.filesystem.s3.async` ([@ozahorulia](https://github.com/ozahorulia))
+
 ## [4.5.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.5.0...4.5.1) - 2022-08-31
 ### Fixed
 - [[#2333](https://github.com/sonata-project/SonataMediaBundle/pull/2333)] Allow CloudFront to compress files passing ContentLength in the headers. ([@dmitryuk](https://github.com/dmitryuk))
