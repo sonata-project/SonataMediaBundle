@@ -34,6 +34,23 @@ This is a sample configuration to enable amazon S3 as a filesystem and provider:
                 version: '%s3_version%' # defaults to "latest" (cf. https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_configuration.html#cfg-version)
                 endpoint: '%s3_endpoint%' # defaults to null (cf. https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_configuration.html#endpoint)
 
+Async adapter
+-------------
+In order to use async S3 adapter, you will need to require the following package:
+
+.. code-block:: bash
+
+    composer require async-aws/simple-s3
+
+.. code-block:: yaml
+
+    # config/packages/sonata_media.yaml
+
+    sonata_media:
+        filesystem:
+            s3:
+                async: true
+
 .. note::
 
     This bundle is currently using KNP Gaufrette as S3 adapter.
