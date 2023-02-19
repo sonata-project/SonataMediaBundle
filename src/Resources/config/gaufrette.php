@@ -11,6 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use AsyncAws\SimpleS3\SimpleS3Client;
 use Aws\S3\S3Client;
 use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Adapter\Ftp;
@@ -30,9 +31,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.adapter.filesystem.local', Local::class)
         ->set('sonata.media.adapter.filesystem.ftp', Ftp::class)
-
-        ->set('sonata.media.adapter.service.s3', S3Client::class)
-            ->args([[]])
 
         ->set('sonata.media.adapter.filesystem.s3', AwsS3::class)
             ->args(['', '', ''])
@@ -75,4 +73,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([[]])
 
         ->set('sonata.media.metadata.noop', NoopMetadataBuilder::class);
+
+    if (class_exists(S3Client::class)) {
+        $containerConfigurator->services()
+            ->set('sonata.media.adapter.service.s3', S3Client::class)
+            ->args([[]]);
+    }
+
+    if (class_exists(SimpleS3Client::class)) {
+        $containerConfigurator->services()
+            ->set('sonata.media.adapter.service.s3.async', SimpleS3Client::class)
+            ->args([[]]);
+    }
 };

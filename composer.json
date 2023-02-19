@@ -64,6 +64,7 @@
         "twig/twig": "^2.14 || ^3.0"
     },
     "require-dev": {
+        "async-aws/simple-s3": "^1.0",
         "aws/aws-sdk-php": "^3.0",
         "dama/doctrine-test-bundle": "^6.7",
         "doctrine/doctrine-bundle": "^2.3.2",
@@ -89,13 +90,13 @@
         "sonata-project/classification-bundle": "^4.0",
         "sonata-project/doctrine-orm-admin-bundle": "^4.0",
         "symfony/browser-kit": "^4.4 || ^5.4 || ^6.0",
-        "symfony/filesystem": "^4.4 || ^5.4 || ^6.0",
         "symfony/messenger": "^4.4 || ^5.4 || ^6.0",
         "symfony/phpunit-bridge": "^6.1",
         "symfony/security-csrf": "^4.4 || ^5.4 || ^6.0",
         "vimeo/psalm": "^4.7.2"
     },
     "conflict": {
+        "async-aws/simple-s3": "<1.0",
         "aws/aws-sdk-php": "<3.0",
         "doctrine/mongodb-odm": "<2.2",
         "doctrine/orm": "<2.9",
@@ -107,6 +108,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "<4.0"
     },
     "suggest": {
+        "async-aws/simple-s3": "If you want to use async Amazon S3 adapter",
+        "aws/aws-sdk-php": "If you want to use Amazon S3",
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...).",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities.",

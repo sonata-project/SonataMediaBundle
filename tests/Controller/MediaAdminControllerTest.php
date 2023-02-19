@@ -128,6 +128,10 @@ class MediaAdminControllerTest extends TestCase
         $this->configureSetFormTheme($formView, ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
+
+        /**
+         * @psalm-suppress DeprecatedMethod
+         */
         $datagrid->expects(static::exactly(3))->method('setValue')->withConsecutive(
             ['context', null, 'another_context'],
             ['category', null, 1]
