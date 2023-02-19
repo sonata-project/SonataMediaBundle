@@ -130,7 +130,7 @@ class MediaAdminControllerTest extends TestCase
         $this->configureRender('templateList', 'renderResponse');
 
         /**
-         * @psalm-suppress DeprecatedClass
+         * @psalm-suppress DeprecatedMethod
          */
         $datagrid->expects(static::exactly(3))->method('setValue')->withConsecutive(
             ['context', null, 'another_context'],

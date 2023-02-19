@@ -107,7 +107,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "<4.0"
     },
     "suggest": {
-        "async-aws/simple-s3": "If you want to use async AWS S3 adapter",
+        "async-aws/simple-s3": "If you want to use async Amazon S3 adapter",
+        "aws/aws-sdk-php": "If you want to use Amazon S3",
         "liip/imagine-bundle": "If you want on-the-fly thumbnail generation or image filtering (scale, crop, watermark...).",
         "sonata-project/classification-bundle": "If you want to categorize your media items.",
         "sonata-project/doctrine-orm-admin-bundle": "If you want to persist entities.",

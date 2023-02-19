@@ -251,7 +251,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->load($configs);
 
-        static::assertFalse($this->container->hasDefinition('sonata.media.adapter.service.s3.async'));
         static::assertSame(
             S3Client::class,
             $this->container->getDefinition('sonata.media.adapter.service.s3')->getClass()
@@ -390,7 +389,6 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->load($configs);
 
-        static::assertFalse($this->container->hasDefinition('sonata.media.adapter.service.s3'));
         static::assertSame(
             SimpleS3Client::class,
             $this->container->getDefinition('sonata.media.adapter.service.s3.async')->getClass()

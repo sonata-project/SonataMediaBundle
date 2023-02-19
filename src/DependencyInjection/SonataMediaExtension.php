@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
+use AsyncAws\SimpleS3\SimpleS3Client;
+use Aws\S3\S3Client;
 use Gaufrette\Adapter\AsyncAwsS3;
 use Gaufrette\Adapter\AwsS3;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
@@ -262,7 +264,13 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
         // add the default configuration for the S3 filesystem
         if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['s3'])) {
-            $async = (bool) $config['filesystem']['s3']['async'];
+            $async = true === $config['filesystem']['s3']['async'];
+            if (true === $async && !class_exists(SimpleS3Client::class)) {
+                throw new \RuntimeException('You must install "async-aws/simple-s3" to use async adapter');
+            } elseif (false === $async && !class_exists(S3Client::class)) {
+                throw new \RuntimeException('You must install "aws/aws-sdk-php" to use async adapter');
+            }
+
             $adapterClass = $async ? AsyncAwsS3::class : AwsS3::class;
             $clientReference = new Reference(
                 $async ? 'sonata.media.adapter.service.s3.async' : 'sonata.media.adapter.service.s3'
@@ -285,36 +293,33 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
             $arguments = [
                 'region' => $config['filesystem']['s3']['region'],
+                'version' => $config['filesystem']['s3']['version'],
             ];
-
-            if (!$async) {
-                $arguments['version'] = $config['filesystem']['s3']['version'];
-            }
 
             if (isset($config['filesystem']['s3']['endpoint'])) {
                 $arguments['endpoint'] = $config['filesystem']['s3']['endpoint'];
             }
 
             if (isset($config['filesystem']['s3']['secretKey'], $config['filesystem']['s3']['accessKey'])) {
-                if ($async) {
-                    $arguments['accessKeyId'] = $config['filesystem']['s3']['accessKey'];
-                    $arguments['accessKeySecret'] = $config['filesystem']['s3']['secretKey'];
-                } else {
-                    $arguments['credentials'] = [
-                        'secret' => $config['filesystem']['s3']['secretKey'],
-                        'key' => $config['filesystem']['s3']['accessKey'],
-                    ];
-                }
+                $arguments['credentials'] = [
+                    'secret' => $config['filesystem']['s3']['secretKey'],
+                    'key' => $config['filesystem']['s3']['accessKey'],
+                ];
             }
 
+            $container->getDefinition('sonata.media.adapter.service.s3')
+                ->replaceArgument(0, $arguments);
+
             if ($async) {
+                if (isset($arguments['credentials']['key'], $arguments['credentials']['secret'])) {
+                    $arguments['accessKeyId'] = $arguments['credentials']['key'];
+                    $arguments['accessKeySecret'] = $arguments['credentials']['secret'];
+                    unset($arguments['credentials']);
+                }
+
+                unset($arguments['version']);
                 $container->getDefinition('sonata.media.adapter.service.s3.async')
                     ->replaceArgument(0, $arguments);
-                $container->removeDefinition('sonata.media.adapter.service.s3');
-            } else {
-                $container->getDefinition('sonata.media.adapter.service.s3')
-                    ->replaceArgument(0, $arguments);
-                $container->removeDefinition('sonata.media.adapter.service.s3.async');
             }
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.s3');

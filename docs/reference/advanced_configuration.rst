@@ -111,7 +111,7 @@ Full configuration options:
                 cache_control: max-age=86400 # or any other
                 meta:
                     key1: value1 #any amount of metas(sent as x-amz-meta-key1 = value1)
-                async: true
+                async: false
 
             replicate:
                 primary: sonata.media.adapter.filesystem.s3
