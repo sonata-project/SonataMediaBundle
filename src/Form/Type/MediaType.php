@@ -29,6 +29,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @psalm-suppress MissingTemplateParam Phpstan does not support generics on AbstractType
+ */
 final class MediaType extends AbstractType implements LoggerAwareInterface
 {
     use LoggerAwareTrait;

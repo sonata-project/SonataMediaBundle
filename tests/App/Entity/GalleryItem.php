@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Entity\BaseGalleryItem;
 
@@ -20,6 +21,8 @@ use Sonata\MediaBundle\Entity\BaseGalleryItem;
  * @ORM\Entity
  * @ORM\Table(name="media__gallery_item")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'media__gallery_item')]
 class GalleryItem extends BaseGalleryItem
 {
     /**
@@ -29,6 +32,9 @@ class GalleryItem extends BaseGalleryItem
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\GeneratedValue]
     protected $id;
 
     public function getId()

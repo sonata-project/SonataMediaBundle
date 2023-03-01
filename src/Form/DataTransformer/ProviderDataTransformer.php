@@ -59,6 +59,7 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
      * @phpstan-param MediaInterface|null $value
      * @phpstan-return MediaInterface|null
      */
+    #[\ReturnTypeWillChange]
     public function transform($value)
     {
         if (null === $value) {
@@ -80,6 +81,7 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
      * @phpstan-param MediaInterface|null $value
      * @phpstan-return MediaInterface|null
      */
+    #[\ReturnTypeWillChange]
     public function reverseTransform($value)
     {
         if (!$value instanceof MediaInterface) {
