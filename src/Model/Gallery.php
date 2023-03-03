@@ -140,6 +140,9 @@ abstract class Gallery implements GalleryInterface
         }
     }
 
+    /**
+     * @psalm-suppress RedundantCondition
+     */
     public function reorderGalleryItems(): void
     {
         $iterator = $this->getGalleryItems()->getIterator();
