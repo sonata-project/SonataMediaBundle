@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<doctrine-mongo-mapping xmlns="https://doctrine-project.org/schemas/odm/doctrine-mongo-mapping" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping                         https://www.doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+<doctrine-mongo-mapping xmlns="https://doctrine-project.org/schemas/odm/doctrine-mongo-mapping" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping https://www.doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseGalleryItem">
         <field name="position" type="int"/>
         <field name="enabled" type="boolean"/>
