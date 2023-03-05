@@ -49,7 +49,7 @@ final class AmazonMetadataBuilderTest extends TestCase
     }
 
     /**
-     * @phpstan-return iterable<array{AmazonSettings, array<string, mixed>}>
+     * @phpstan-return iterable<array{AmazonSettings, array<string, string|int>, array<string, mixed>}>
      */
     public function provider(): iterable
     {

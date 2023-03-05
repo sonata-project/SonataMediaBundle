@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\ClassificationBundle\Entity\BaseCategory;
 
@@ -20,6 +21,8 @@ use Sonata\ClassificationBundle\Entity\BaseCategory;
  * @ORM\Entity
  * @ORM\Table(name="classification__category")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'classification__category')]
 class Category extends BaseCategory
 {
     /**
@@ -29,6 +32,9 @@ class Category extends BaseCategory
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\GeneratedValue]
     protected $id;
 
     public function setId(?int $id): void
