@@ -22,8 +22,6 @@ security:
 
 twig:
     exception_controller: null
-    paths:
-        - '%kernel.project_dir%/Resources/views'
     strict_variables: true
 
 sonata_media:
@@ -77,13 +75,3 @@ doctrine:
     dbal:
         driver: pdo_sqlite
         path: "%app.base_dir%sonata_media_test.db3"
-    orm:
-        entity_managers:
-            default:
-                mappings:
-                    SonataMediaBundle: null
-                    SonataMediaTest:
-                        type: annotation
-                        dir: "%kernel.project_dir%/Entity"
-                        is_bundle: false
-                        prefix: Sonata\MediaBundle\Tests\App\Entity
