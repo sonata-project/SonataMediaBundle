@@ -19,11 +19,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class PublicDownloadStrategy implements DownloadStrategyInterface
 {
-    private TranslatorInterface $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     public function isGranted(MediaInterface $media, Request $request): bool

@@ -25,11 +25,8 @@ use Sonata\MediaBundle\Provider\Pool;
  */
 abstract class BaseMediaEventSubscriber implements EventSubscriber
 {
-    protected Pool $pool;
-
-    public function __construct(Pool $pool)
+    public function __construct(protected Pool $pool)
     {
-        $this->pool = $pool;
     }
 
     /**

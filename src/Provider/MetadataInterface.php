@@ -33,5 +33,5 @@ interface MetadataInterface
      *
      * @return mixed
      */
-    public function getOption(string $name, $default = null);
+    public function getOption(string $name, mixed $default = null);
 }

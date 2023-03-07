@@ -20,11 +20,8 @@ use Sonata\MediaBundle\Provider\Pool;
  */
 final class GlobalVariables
 {
-    private Pool $pool;
-
-    public function __construct(Pool $pool)
+    public function __construct(private Pool $pool)
     {
-        $this->pool = $pool;
     }
 
     public function getPool(): Pool

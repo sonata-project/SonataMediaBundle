@@ -30,17 +30,11 @@ use Sonata\MediaBundle\Model\MediaInterface;
  */
 final class SquareResizer implements ResizerInterface
 {
-    private ImagineInterface $adapter;
-
-    private int $mode;
-
-    private MetadataBuilderInterface $metadata;
-
-    public function __construct(ImagineInterface $adapter, int $mode, MetadataBuilderInterface $metadata)
-    {
-        $this->adapter = $adapter;
-        $this->mode = $mode;
-        $this->metadata = $metadata;
+    public function __construct(
+        private ImagineInterface $adapter,
+        private int $mode,
+        private MetadataBuilderInterface $metadata
+    ) {
     }
 
     public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void

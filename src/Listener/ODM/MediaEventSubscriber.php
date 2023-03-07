@@ -41,7 +41,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         $em = $args->getObjectManager();
 
         $em->getUnitOfWork()->recomputeSingleDocumentChangeSet(
-            $em->getClassMetadata(\get_class($args->getObject())),
+            $em->getClassMetadata($args->getObject()::class),
             $args->getObject()
         );
     }

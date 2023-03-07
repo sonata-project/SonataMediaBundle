@@ -60,7 +60,7 @@ class MediaTest extends TestCase
 
         try {
             $media->unsetMetadataValue('bullshit');
-        } catch (\InvalidArgumentException $expected) {
+        } catch (\InvalidArgumentException) {
             static::fail('an invalid key should be ignored');
         }
     }
@@ -74,10 +74,7 @@ class MediaTest extends TestCase
         return $property;
     }
 
-    /**
-     * @param mixed $id
-     */
-    protected function getMedia($id): Media
+    protected function getMedia(mixed $id): Media
     {
         $media = $this->getMockForAbstractClass(Media::class);
         $media

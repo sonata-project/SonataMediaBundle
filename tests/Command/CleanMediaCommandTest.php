@@ -253,7 +253,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     private function containsAll(string $haystack, array $needles): bool
     {
         foreach ($needles as $needle) {
-            if (false === strpos($haystack, $needle)) {
+            if (!str_contains($haystack, $needle)) {
                 return false;
             }
         }

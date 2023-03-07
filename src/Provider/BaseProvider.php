@@ -41,28 +41,18 @@ abstract class BaseProvider implements MediaProviderInterface
 
     protected ?ResizerInterface $resizer = null;
 
-    protected Filesystem $filesystem;
-
-    protected GeneratorInterface $pathGenerator;
-
-    protected CDNInterface $cdn;
-
-    protected ThumbnailInterface $thumbnail;
-
-    protected string $name;
-
     /**
      * @var MediaInterface[]
      */
     private array $clones = [];
 
-    public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail)
-    {
-        $this->name = $name;
-        $this->filesystem = $filesystem;
-        $this->cdn = $cdn;
-        $this->pathGenerator = $pathGenerator;
-        $this->thumbnail = $thumbnail;
+    public function __construct(
+        protected string $name,
+        protected Filesystem $filesystem,
+        protected CDNInterface $cdn,
+        protected GeneratorInterface $pathGenerator,
+        protected ThumbnailInterface $thumbnail
+    ) {
     }
 
     final public function transform(MediaInterface $media): void
@@ -161,7 +151,7 @@ abstract class BaseProvider implements MediaProviderInterface
         }
 
         $baseName = $media->getContext().'_';
-        if (substr($format, 0, \strlen($baseName)) === $baseName) {
+        if (str_starts_with($format, $baseName)) {
             return $format;
         }
 

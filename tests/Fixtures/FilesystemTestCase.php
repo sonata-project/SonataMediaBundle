@@ -45,7 +45,7 @@ class FilesystemTestCase extends TestCase
 
             if (true !== @link($originFile, $targetFile)) {
                 $report = error_get_last();
-                if (\is_array($report) && false !== strpos($report['message'], 'error code(1314)')) {
+                if (\is_array($report) && str_contains($report['message'], 'error code(1314)')) {
                     self::$linkOnWindows = false;
                 }
             } else {
@@ -61,7 +61,7 @@ class FilesystemTestCase extends TestCase
 
             if (true !== @symlink($originDir, $targetDir)) {
                 $report = error_get_last();
-                if (\is_array($report) && false !== strpos($report['message'], 'error code(1314)')) {
+                if (\is_array($report) && str_contains($report['message'], 'error code(1314)')) {
                     self::$symlinkOnWindows = false;
                 }
             } else {

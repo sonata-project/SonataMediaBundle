@@ -21,27 +21,17 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class MediaRuntime implements RuntimeExtensionInterface
 {
-    private Pool $pool;
-
-    private MediaManagerInterface $mediaManager;
-
-    private Environment $twig;
-
     public function __construct(
-        Pool $pool,
-        MediaManagerInterface $mediaManager,
-        Environment $twig
+        private Pool $pool,
+        private MediaManagerInterface $mediaManager,
+        private Environment $twig
     ) {
-        $this->pool = $pool;
-        $this->mediaManager = $mediaManager;
-        $this->twig = $twig;
     }
 
     /**
-     * @param int|string|MediaInterface $media
-     * @param array<string, mixed>      $options
+     * @param array<string, mixed> $options
      */
-    public function media($media, string $format, array $options = []): string
+    public function media(int|string|MediaInterface $media, string $format, array $options = []): string
     {
         $media = $this->getMedia($media);
 
@@ -69,10 +59,9 @@ final class MediaRuntime implements RuntimeExtensionInterface
     /**
      * Returns the thumbnail for the provided media.
      *
-     * @param int|string|MediaInterface $media
-     * @param array<string, mixed>      $options
+     * @param array<string, mixed> $options
      */
-    public function thumbnail($media, string $format, array $options = []): string
+    public function thumbnail(int|string|MediaInterface $media, string $format, array $options = []): string
     {
         $media = $this->getMedia($media);
 
@@ -112,10 +101,7 @@ final class MediaRuntime implements RuntimeExtensionInterface
         ]);
     }
 
-    /**
-     * @param int|string|MediaInterface $media
-     */
-    public function path($media, string $format): string
+    public function path(int|string|MediaInterface $media, string $format): string
     {
         $media = $this->getMedia($media);
 
@@ -130,18 +116,8 @@ final class MediaRuntime implements RuntimeExtensionInterface
         return $provider->generatePublicUrl($media, $format);
     }
 
-    /**
-     * @param int|string|MediaInterface $media
-     */
-    private function getMedia($media): ?MediaInterface
+    private function getMedia(int|string|MediaInterface $media): ?MediaInterface
     {
-        if (!\is_int($media) && !\is_string($media) && !$media instanceof MediaInterface) {
-            throw new \TypeError(sprintf(
-                'Media parameter must be either an identifier or the media itself for Twig functions, "%s" given.',
-                \is_object($media) ? 'instance of '.\get_class($media) : \gettype($media)
-            ));
-        }
-
         if (!$media instanceof MediaInterface) {
             $media = $this->mediaManager->find($media);
         }

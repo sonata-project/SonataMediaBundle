@@ -21,7 +21,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
  * @phpstan-template T of GalleryItemInterface
  * @phpstan-implements GalleryInterface<T>
  */
-abstract class Gallery implements GalleryInterface
+abstract class Gallery implements GalleryInterface, \Stringable
 {
     protected ?string $context = null;
 

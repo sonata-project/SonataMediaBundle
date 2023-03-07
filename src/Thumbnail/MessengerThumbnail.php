@@ -20,14 +20,10 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class MessengerThumbnail implements ThumbnailInterface, GenerableThumbnailInterface
 {
-    private ThumbnailInterface $thumbnail;
-
-    private MessageBusInterface $bus;
-
-    public function __construct(ThumbnailInterface $thumbnail, MessageBusInterface $bus)
-    {
-        $this->thumbnail = $thumbnail;
-        $this->bus = $bus;
+    public function __construct(
+        private ThumbnailInterface $thumbnail,
+        private MessageBusInterface $bus
+    ) {
     }
 
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string

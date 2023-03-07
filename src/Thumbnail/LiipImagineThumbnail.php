@@ -19,11 +19,8 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
 final class LiipImagineThumbnail implements ThumbnailInterface
 {
-    private CacheManager $cacheManager;
-
-    public function __construct(CacheManager $cacheManager)
+    public function __construct(private CacheManager $cacheManager)
     {
-        $this->cacheManager = $cacheManager;
     }
 
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string

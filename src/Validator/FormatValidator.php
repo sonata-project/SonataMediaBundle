@@ -21,11 +21,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 final class FormatValidator extends ConstraintValidator
 {
-    private Pool $pool;
-
-    public function __construct(Pool $pool)
+    public function __construct(private Pool $pool)
     {
-        $this->pool = $pool;
     }
 
     /**

@@ -39,29 +39,16 @@ use Twig\Environment;
  */
 final class MediaBlockService extends AbstractBlockService implements EditableBlockService
 {
-    private Pool $pool;
-
-    /**
-     * @var AdminInterface<MediaInterface>|null
-     */
-    private ?AdminInterface $mediaAdmin;
-
-    private MediaManagerInterface $mediaManager;
-
     /**
      * @param AdminInterface<MediaInterface>|null $mediaAdmin
      */
     public function __construct(
         Environment $twig,
-        Pool $pool,
-        ?AdminInterface $mediaAdmin,
-        MediaManagerInterface $mediaManager
+        private Pool $pool,
+        private ?AdminInterface $mediaAdmin,
+        private MediaManagerInterface $mediaManager
     ) {
         parent::__construct($twig);
-
-        $this->pool = $pool;
-        $this->mediaAdmin = $mediaAdmin;
-        $this->mediaManager = $mediaManager;
     }
 
     public function configureSettings(OptionsResolver $resolver): void
