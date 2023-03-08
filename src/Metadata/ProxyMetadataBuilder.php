@@ -21,20 +21,11 @@ use Sonata\MediaBundle\Provider\Pool;
 
 final class ProxyMetadataBuilder implements MetadataBuilderInterface
 {
-    private Pool $pool;
-
-    private ?MetadataBuilderInterface $noopMetadataBuilder = null;
-
-    private ?MetadataBuilderInterface $amazonMetadataBuilder = null;
-
     public function __construct(
-        Pool $pool,
-        ?MetadataBuilderInterface $noopMetadataBuilder = null,
-        ?MetadataBuilderInterface $amazonMetadataBuilder = null
+        private Pool $pool,
+        private ?MetadataBuilderInterface $noopMetadataBuilder = null,
+        private ?MetadataBuilderInterface $amazonMetadataBuilder = null
     ) {
-        $this->pool = $pool;
-        $this->noopMetadataBuilder = $noopMetadataBuilder;
-        $this->amazonMetadataBuilder = $amazonMetadataBuilder;
     }
 
     public function get(MediaInterface $media, string $filename): array
@@ -69,7 +60,7 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
         if ($adapter instanceof Replicate) {
             $adapterClassNames = $adapter->getAdapterClassNames();
         } else {
-            $adapterClassNames = [\get_class($adapter)];
+            $adapterClassNames = [$adapter::class];
         }
 
         // For amazon s3

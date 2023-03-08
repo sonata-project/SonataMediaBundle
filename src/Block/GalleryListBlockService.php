@@ -33,16 +33,12 @@ use Twig\Environment;
 
 final class GalleryListBlockService extends AbstractBlockService implements EditableBlockService
 {
-    private GalleryManagerInterface $galleryManager;
-
-    private Pool $pool;
-
-    public function __construct(Environment $twig, GalleryManagerInterface $galleryManager, Pool $pool)
-    {
+    public function __construct(
+        Environment $twig,
+        private GalleryManagerInterface $galleryManager,
+        private Pool $pool
+    ) {
         parent::__construct($twig);
-
-        $this->galleryManager = $galleryManager;
-        $this->pool = $pool;
     }
 
     public function configureEditForm(FormMapper $form, BlockInterface $block): void

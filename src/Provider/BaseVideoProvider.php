@@ -31,27 +31,17 @@ use Symfony\Component\Validator\Constraints\NotNull;
 
 abstract class BaseVideoProvider extends BaseProvider
 {
-    protected ?MetadataBuilderInterface $metadata = null;
-
-    private ClientInterface $client;
-
-    private RequestFactoryInterface $requestFactory;
-
     public function __construct(
         string $name,
         Filesystem $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
-        ClientInterface $client,
-        RequestFactoryInterface $requestFactory,
-        ?MetadataBuilderInterface $metadata = null
+        private ClientInterface $client,
+        private RequestFactoryInterface $requestFactory,
+        protected ?MetadataBuilderInterface $metadata = null
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
-
-        $this->metadata = $metadata;
-        $this->requestFactory = $requestFactory;
-        $this->client = $client;
     }
 
     public function getProviderMetadata(): MetadataInterface

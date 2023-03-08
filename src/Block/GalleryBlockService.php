@@ -43,29 +43,16 @@ use Twig\Environment;
  */
 final class GalleryBlockService extends AbstractBlockService implements EditableBlockService
 {
-    private Pool $pool;
-
-    /**
-     * @var AdminInterface<GalleryInterface<GalleryItemInterface>>|null
-     */
-    private ?AdminInterface $galleryAdmin;
-
-    private GalleryManagerInterface $galleryManager;
-
     /**
      * @param AdminInterface<GalleryInterface<GalleryItemInterface>>|null $galleryAdmin
      */
     public function __construct(
         Environment $twig,
-        Pool $pool,
-        ?AdminInterface $galleryAdmin,
-        GalleryManagerInterface $galleryManager
+        private Pool $pool,
+        private ?AdminInterface $galleryAdmin,
+        private GalleryManagerInterface $galleryManager
     ) {
         parent::__construct($twig);
-
-        $this->pool = $pool;
-        $this->galleryAdmin = $galleryAdmin;
-        $this->galleryManager = $galleryManager;
     }
 
     public function configureSettings(OptionsResolver $resolver): void
@@ -270,7 +257,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
             return 'video';
         }
 
-        if ('image' === substr($contentType, 0, 5)) {
+        if (str_starts_with($contentType, 'image')) {
             return 'image';
         }
 

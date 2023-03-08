@@ -17,21 +17,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\ClassificationBundle\Entity\BaseContext;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="classification__context")
- */
 #[ORM\Entity]
 #[ORM\Table(name: 'classification__context')]
 class Context extends BaseContext
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="string")
-     */
     #[ORM\Id]
     #[ORM\Column(type: Types::STRING)]
-    #[ORM\GeneratedValue]
     protected ?string $id = null;
 }

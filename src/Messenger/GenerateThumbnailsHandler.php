@@ -26,20 +26,11 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
  */
 final class GenerateThumbnailsHandler implements MessageHandlerInterface
 {
-    private GenerableThumbnailInterface $thumbnail;
-
-    private MediaManagerInterface $mediaManager;
-
-    private Pool $pool;
-
     public function __construct(
-        GenerableThumbnailInterface $thumbnail,
-        MediaManagerInterface $mediaManager,
-        Pool $pool
+        private GenerableThumbnailInterface $thumbnail,
+        private MediaManagerInterface $mediaManager,
+        private Pool $pool
     ) {
-        $this->thumbnail = $thumbnail;
-        $this->mediaManager = $mediaManager;
-        $this->pool = $pool;
     }
 
     public function __invoke(GenerateThumbnailsMessage $message): void
@@ -59,7 +50,7 @@ final class GenerateThumbnailsHandler implements MessageHandlerInterface
 
         try {
             $provider = $this->pool->getProvider($providerName);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             throw new UnrecoverableMessageHandlingException(sprintf('Provider "%s" not found.', $providerName));
         }
 

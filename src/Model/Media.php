@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Imagine\Image\Box;
 use Sonata\ClassificationBundle\Model\CategoryInterface;
 
-abstract class Media implements MediaInterface
+abstract class Media implements MediaInterface, \Stringable
 {
     protected ?string $name = null;
 
@@ -348,7 +348,7 @@ abstract class Media implements MediaInterface
         return $this->previousProviderReference;
     }
 
-    public function setBinaryContent($binaryContent): void
+    public function setBinaryContent(mixed $binaryContent): void
     {
         $this->previousProviderReference = $this->providerReference;
         $this->providerReference = null;
@@ -365,14 +365,14 @@ abstract class Media implements MediaInterface
         return $this->binaryContent;
     }
 
-    public function getMetadataValue(string $name, $default = null)
+    public function getMetadataValue(string $name, mixed $default = null)
     {
         $metadata = $this->getProviderMetadata();
 
         return $metadata[$name] ?? $default;
     }
 
-    public function setMetadataValue(string $name, $value): void
+    public function setMetadataValue(string $name, mixed $value): void
     {
         $metadata = $this->getProviderMetadata();
         $metadata[$name] = $value;

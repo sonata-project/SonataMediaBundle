@@ -30,13 +30,9 @@ final class GalleryAdmin extends AbstractAdmin
 {
     protected $classnameLabel = 'Gallery';
 
-    private Pool $pool;
-
-    public function __construct(Pool $pool)
+    public function __construct(private Pool $pool)
     {
         parent::__construct();
-
-        $this->pool = $pool;
     }
 
     protected function prePersist(object $object): void

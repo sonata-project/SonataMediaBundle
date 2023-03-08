@@ -89,7 +89,7 @@ final class VimeoProvider extends BaseVideoProvider
 
         try {
             $metadata = $this->getMetadata($media, $url);
-        } catch (\RuntimeException $e) {
+        } catch (\RuntimeException) {
             $media->setEnabled(false);
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 

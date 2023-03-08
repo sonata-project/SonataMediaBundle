@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Model;
 
-abstract class GalleryItem implements GalleryItemInterface
+abstract class GalleryItem implements GalleryItemInterface, \Stringable
 {
     protected ?MediaInterface $media = null;
 

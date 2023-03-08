@@ -22,11 +22,8 @@ use Symfony\Component\Asset\Packages;
  */
 final class FileThumbnail implements ThumbnailInterface
 {
-    private Packages $packages;
-
-    public function __construct(Packages $packages)
+    public function __construct(private Packages $packages)
     {
-        $this->packages = $packages;
     }
 
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string

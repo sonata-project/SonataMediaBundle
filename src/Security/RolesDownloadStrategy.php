@@ -22,22 +22,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class RolesDownloadStrategy implements DownloadStrategyInterface
 {
     /**
-     * @var string[]
-     */
-    private array $roles;
-
-    private AuthorizationCheckerInterface $security;
-
-    private TranslatorInterface $translator;
-
-    /**
      * @param string[] $roles
      */
-    public function __construct(TranslatorInterface $translator, AuthorizationCheckerInterface $security, array $roles = [])
-    {
-        $this->roles = $roles;
-        $this->security = $security;
-        $this->translator = $translator;
+    public function __construct(
+        private TranslatorInterface $translator,
+        private AuthorizationCheckerInterface $security,
+        private array $roles = []
+    ) {
     }
 
     public function isGranted(MediaInterface $media, Request $request): bool
@@ -48,7 +39,7 @@ final class RolesDownloadStrategy implements DownloadStrategyInterface
                     return true;
                 }
             }
-        } catch (AuthenticationCredentialsNotFoundException $e) {
+        } catch (AuthenticationCredentialsNotFoundException) {
             // The token is not set in an AuthorizationCheckerInterface object
         }
 

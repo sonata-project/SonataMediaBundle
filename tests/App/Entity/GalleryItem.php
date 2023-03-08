@@ -17,25 +17,14 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Entity\BaseGalleryItem;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="media__gallery_item")
- */
 #[ORM\Entity]
 #[ORM\Table(name: 'media__gallery_item')]
 class GalleryItem extends BaseGalleryItem
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
-    protected $id;
+    protected ?int $id = null;
 
     public function getId()
     {

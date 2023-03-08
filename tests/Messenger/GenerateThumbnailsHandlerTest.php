@@ -85,10 +85,8 @@ final class GenerateThumbnailsHandlerTest extends TestCase
 
     /**
      * @dataProvider provideMediaIds
-     *
-     * @param int|string $id
      */
-    public function testGenerateThumbnails($id): void
+    public function testGenerateThumbnails(int|string $id): void
     {
         $media = new Media();
         $media->setProviderName('provider_name');

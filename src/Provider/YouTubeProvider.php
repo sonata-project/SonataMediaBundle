@@ -26,8 +26,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class YouTubeProvider extends BaseVideoProvider
 {
-    private bool $html5;
-
     public function __construct(
         string $name,
         Filesystem $filesystem,
@@ -37,11 +35,9 @@ final class YouTubeProvider extends BaseVideoProvider
         ClientInterface $client,
         RequestFactoryInterface $requestFactory,
         ?MetadataBuilderInterface $metadata = null,
-        bool $html5 = false
+        private bool $html5 = false
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $requestFactory, $metadata);
-
-        $this->html5 = $html5;
     }
 
     public function getProviderMetadata(): MetadataInterface
@@ -203,7 +199,7 @@ final class YouTubeProvider extends BaseVideoProvider
 
         try {
             $metadata = $this->getMetadata($media, $url);
-        } catch (\RuntimeException $e) {
+        } catch (\RuntimeException) {
             $media->setEnabled(false);
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 

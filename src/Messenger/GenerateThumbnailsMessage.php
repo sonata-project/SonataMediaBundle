@@ -20,23 +20,11 @@ namespace Sonata\MediaBundle\Messenger;
  */
 final class GenerateThumbnailsMessage
 {
-    /**
-     * @var int|string
-     */
-    private $mediaId;
-
-    /**
-     * @param int|string $mediaId
-     */
-    public function __construct($mediaId)
+    public function __construct(private int|string $mediaId)
     {
-        $this->mediaId = $mediaId;
     }
 
-    /**
-     * @return int|string
-     */
-    public function getMediaId()
+    public function getMediaId(): int|string
     {
         return $this->mediaId;
     }
