@@ -33,12 +33,6 @@ final class CleanMediaCommand extends Command
     protected static $defaultName = 'sonata:media:clean-uploads';
     protected static $defaultDescription = 'Find orphaned files in media upload directory';
 
-    private Pool $mediaPool;
-
-    private Local $filesystemLocal;
-
-    private MediaManagerInterface $mediaManager;
-
     /**
      * @var string[]|null
      */
@@ -47,13 +41,12 @@ final class CleanMediaCommand extends Command
     /**
      * @internal This class should only be used through the console
      */
-    public function __construct(Local $filesystemLocal, Pool $mediaPool, MediaManagerInterface $mediaManager)
-    {
+    public function __construct(
+        private Local $filesystemLocal,
+        private Pool $mediaPool,
+        private MediaManagerInterface $mediaManager
+    ) {
         parent::__construct();
-
-        $this->filesystemLocal = $filesystemLocal;
-        $this->mediaPool = $mediaPool;
-        $this->mediaManager = $mediaManager;
     }
 
     protected function configure(): void

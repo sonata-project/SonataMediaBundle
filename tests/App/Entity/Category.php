@@ -17,25 +17,14 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\ClassificationBundle\Entity\BaseCategory;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="classification__category")
- */
 #[ORM\Entity]
 #[ORM\Table(name: 'classification__category')]
 class Category extends BaseCategory
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
-    protected $id;
+    protected ?int $id = null;
 
     public function setId(?int $id): void
     {

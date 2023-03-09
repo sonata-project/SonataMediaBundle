@@ -56,25 +56,6 @@ class MediaRuntimeTest extends TestCase
         $this->mediaRuntime = new MediaRuntime($this->pool, $this->mediaManager, $this->twig);
     }
 
-    /**
-     * @psalm-suppress NullArgument
-     *
-     * This is to ensure we throw an exception when null value is provided.
-     * It is enforced with a test because we can't add typehint with unions yet.
-     */
-    public function testWithNullInput(): void
-    {
-        $this->expectException(\TypeError::class);
-        $this->expectExceptionMessage('Media parameter must be either an identifier or the media itself for Twig functions, "NULL" given.');
-
-        // @phpstan-ignore-next-line
-        static::assertSame('', $this->mediaRuntime->media(null, 'big'));
-        // @phpstan-ignore-next-line
-        static::assertSame('', $this->mediaRuntime->thumbnail(null, 'big'));
-        // @phpstan-ignore-next-line
-        static::assertSame('', $this->mediaRuntime->path(null, 'big'));
-    }
-
     public function testWithNonMediaInput(): void
     {
         $media = new Media();

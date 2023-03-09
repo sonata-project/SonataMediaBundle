@@ -17,10 +17,7 @@ use Gaufrette\Adapter\Local as BaseLocal;
 
 final class Local extends BaseLocal
 {
-    /**
-     * @return string|false
-     */
-    public function getDirectory()
+    public function getDirectory(): string|false
     {
         return $this->directory;
     }

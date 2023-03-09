@@ -102,12 +102,6 @@ final class AppKernel extends Kernel
             $loader->load(__DIR__.'/config/config_sonata_block_v4.yaml');
         }
 
-        if (version_compare(\PHP_VERSION, '8.0.0', '>=')) {
-            $loader->load(__DIR__.'/config/config_php8.yaml');
-        } else {
-            $loader->load(__DIR__.'/config/config_php7.yaml');
-        }
-
         $loader->load(__DIR__.'/config/services.php');
         $container->setParameter('app.base_dir', $this->getBaseDir());
     }

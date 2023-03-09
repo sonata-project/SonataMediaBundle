@@ -27,18 +27,16 @@ use Sonata\MediaBundle\Provider\Pool;
  */
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
-    private ?CategoryManagerInterface $categoryManager = null;
-
     /**
      * @var CategoryInterface[]|null
      */
     private ?array $rootCategories = null;
 
-    public function __construct(Pool $pool, ?CategoryManagerInterface $categoryManager = null)
-    {
+    public function __construct(
+        Pool $pool,
+        private ?CategoryManagerInterface $categoryManager = null
+    ) {
         parent::__construct($pool);
-
-        $this->categoryManager = $categoryManager;
     }
 
     public function getSubscribedEvents(): array
@@ -64,7 +62,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         $em = $args->getObjectManager();
 
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet(
-            $em->getClassMetadata(\get_class($args->getObject())),
+            $em->getClassMetadata($args->getObject()::class),
             $args->getObject()
         );
     }

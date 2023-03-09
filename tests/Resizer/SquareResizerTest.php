@@ -52,7 +52,7 @@ class SquareResizerTest extends TestCase
     /**
      * @dataProvider getBoxSettings
      *
-     * @param array<string, int|string|bool|array|null>|false $settings
+     * @param array<string, int|string|bool|array|null> $settings
      *
      * @phpstan-param FormatOptions $settings
      */

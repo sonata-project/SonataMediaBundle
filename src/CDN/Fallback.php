@@ -15,14 +15,10 @@ namespace Sonata\MediaBundle\CDN;
 
 final class Fallback implements CDNInterface
 {
-    private CDNInterface $cdn;
-
-    private CDNInterface $fallback;
-
-    public function __construct(CDNInterface $cdn, CDNInterface $fallback)
-    {
-        $this->cdn = $cdn;
-        $this->fallback = $fallback;
+    public function __construct(
+        private CDNInterface $cdn,
+        private CDNInterface $fallback
+    ) {
     }
 
     public function getPath(string $relativePath, bool $isFlushable = false): string

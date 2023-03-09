@@ -17,14 +17,10 @@ use Sonata\MediaBundle\Model\MediaInterface;
 
 final class IdGenerator implements GeneratorInterface
 {
-    private int $firstLevel;
-
-    private int $secondLevel;
-
-    public function __construct(int $firstLevel = 100000, int $secondLevel = 1000)
-    {
-        $this->firstLevel = $firstLevel;
-        $this->secondLevel = $secondLevel;
+    public function __construct(
+        private int $firstLevel = 100000,
+        private int $secondLevel = 1000
+    ) {
     }
 
     public function generatePath(MediaInterface $media): string

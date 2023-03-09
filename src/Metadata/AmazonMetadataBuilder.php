@@ -53,13 +53,6 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         'reduced' => self::STORAGE_REDUCED,
     ];
 
-    /**
-     * @var array<string, mixed>
-     *
-     * @phpstan-var AmazonSettings
-     */
-    private array $settings;
-
     private MimeTypesInterface $mimeTypes;
 
     /**
@@ -67,9 +60,10 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      *
      * @phpstan-param AmazonSettings $settings
      */
-    public function __construct(array $settings, ?MimeTypesInterface $mimeTypes = null)
-    {
-        $this->settings = $settings;
+    public function __construct(
+        private array $settings,
+        ?MimeTypesInterface $mimeTypes = null
+    ) {
         $this->mimeTypes = $mimeTypes ?? new MimeTypes();
     }
 

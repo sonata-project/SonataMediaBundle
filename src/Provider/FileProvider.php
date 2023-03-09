@@ -37,28 +37,20 @@ use Symfony\Component\Validator\Constraints\NotNull;
 class FileProvider extends BaseProvider implements FileProviderInterface
 {
     /**
-     * @var string[]
-     */
-    protected array $allowedExtensions;
-
-    /**
-     * @var string[]
-     */
-    protected array $allowedMimeTypes;
-
-    protected ?MetadataBuilderInterface $metadata = null;
-
-    /**
      * @param string[] $allowedExtensions
      * @param string[] $allowedMimeTypes
      */
-    public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = [], array $allowedMimeTypes = [], ?MetadataBuilderInterface $metadata = null)
-    {
+    public function __construct(
+        string $name,
+        Filesystem $filesystem,
+        CDNInterface $cdn,
+        GeneratorInterface $pathGenerator,
+        ThumbnailInterface $thumbnail,
+        protected array $allowedExtensions = [],
+        protected array $allowedMimeTypes = [],
+        protected ?MetadataBuilderInterface $metadata = null
+    ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
-
-        $this->allowedExtensions = $allowedExtensions;
-        $this->allowedMimeTypes = $allowedMimeTypes;
-        $this->metadata = $metadata;
     }
 
     public function getProviderMetadata(): MetadataInterface
@@ -271,7 +263,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         } elseif ($binaryContent instanceof File) {
             $fileName = $binaryContent->getFilename();
         } else {
-            throw new \RuntimeException(sprintf('Invalid binary content type: %s', \get_class($binaryContent)));
+            throw new \RuntimeException(sprintf('Invalid binary content type: %s', $binaryContent::class));
         }
 
         if ($binaryContent instanceof UploadedFile && 0 === $binaryContent->getSize()) {

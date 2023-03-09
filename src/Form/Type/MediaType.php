@@ -36,20 +36,13 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    private Pool $pool;
-
-    /**
-     * @phpstan-var class-string<MediaInterface>
-     */
-    private string $class;
-
     /**
      * @phpstan-param class-string<MediaInterface> $class
      */
-    public function __construct(Pool $pool, string $class)
-    {
-        $this->pool = $pool;
-        $this->class = $class;
+    public function __construct(
+        private Pool $pool,
+        private string $class
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

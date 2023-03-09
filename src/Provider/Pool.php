@@ -48,11 +48,8 @@ final class Pool
      */
     private array $downloadStrategies = [];
 
-    private string $defaultContext;
-
-    public function __construct(string $context)
+    public function __construct(private string $defaultContext)
     {
-        $this->defaultContext = $context;
     }
 
     /**

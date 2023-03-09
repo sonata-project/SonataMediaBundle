@@ -26,13 +26,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class ImageProvider extends FileProvider implements ImageProviderInterface
 {
-    private ImagineInterface $imagineAdapter;
-
-    public function __construct(string $name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions, array $allowedMimeTypes, ImagineInterface $adapter, ?MetadataBuilderInterface $metadata = null)
-    {
+    public function __construct(
+        string $name,
+        Filesystem $filesystem,
+        CDNInterface $cdn,
+        GeneratorInterface $pathGenerator,
+        ThumbnailInterface $thumbnail,
+        array $allowedExtensions,
+        array $allowedMimeTypes,
+        private ImagineInterface $imagineAdapter,
+        ?MetadataBuilderInterface $metadata = null
+    ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
-
-        $this->imagineAdapter = $adapter;
     }
 
     public function getProviderMetadata(): MetadataInterface
@@ -142,7 +147,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                     $context = $media->getContext();
 
                     // Check if format belongs to the current media's context
-                    if (null !== $context && 0 === strpos($providerFormat, $context)) {
+                    if (null !== $context && str_starts_with($providerFormat, $context)) {
                         if (null === $this->resizer) {
                             throw new \RuntimeException('Resizer not set on the image provider.');
                         }
@@ -192,7 +197,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
             $media->setSize($fileObject->getSize());
             $media->setWidth($size->getWidth());
             $media->setHeight($size->getHeight());
-        } catch (\LogicException $e) {
+        } catch (\LogicException) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
             $media->setSize(0);
@@ -226,7 +231,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
     {
         return array_filter(
             $this->getFormats(),
-            static fn (string $providerFormat): bool => 0 === strpos($providerFormat, $context),
+            static fn (string $providerFormat): bool => str_starts_with($providerFormat, $context),
             \ARRAY_FILTER_USE_KEY
         );
     }
@@ -284,7 +289,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
         try {
             $image = $this->imagineAdapter->open($binaryContent->getPathname());
-        } catch (\RuntimeException $e) {
+        } catch (\RuntimeException) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
             return;

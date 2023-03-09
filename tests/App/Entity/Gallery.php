@@ -19,26 +19,16 @@ use Sonata\MediaBundle\Entity\BaseGallery;
 use Sonata\MediaBundle\Model\GalleryItemInterface;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="media__gallery")
- *
  * @phpstan-extends BaseGallery<GalleryItemInterface>
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'media__gallery')]
 class Gallery extends BaseGallery
 {
-    /**
-     * @var int|null
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
-    protected $id;
+    protected ?int $id = null;
 
     public function getId()
     {

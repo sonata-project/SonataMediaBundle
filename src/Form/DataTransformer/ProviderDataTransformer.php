@@ -27,13 +27,6 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
 {
     use LoggerAwareTrait;
 
-    private Pool $pool;
-
-    /**
-     * @phpstan-var class-string<MediaInterface>
-     */
-    private string $class;
-
     /**
      * @var array<string, mixed>
      */
@@ -44,11 +37,12 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
      *
      * @phpstan-param class-string<MediaInterface> $class
      */
-    public function __construct(Pool $pool, string $class, array $options = [])
-    {
-        $this->pool = $pool;
+    public function __construct(
+        private Pool $pool,
+        private string $class,
+        array $options = []
+    ) {
         $this->options = $this->getOptions($options);
-        $this->class = $class;
     }
 
     /**
@@ -132,7 +126,7 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
             // An exception here would prevent us to provide meaningful errors through the Form
             // Error message inspired from Monolog\ErrorHandler
             $logger->error(
-                sprintf('Caught Exception %s: "%s" at %s line %s', \get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()),
+                sprintf('Caught Exception %s: "%s" at %s line %s', $e::class, $e->getMessage(), $e->getFile(), $e->getLine()),
                 ['exception' => $e]
             );
         }

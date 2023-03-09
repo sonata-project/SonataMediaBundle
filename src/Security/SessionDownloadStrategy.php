@@ -25,19 +25,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class SessionDownloadStrategy implements DownloadStrategyInterface
 {
-    private TranslatorInterface $translator;
-
-    private RequestStack $requestStack;
-
-    private int $times;
-
     private string $sessionKey = 'sonata/media/session/times';
 
-    public function __construct(TranslatorInterface $translator, RequestStack $requestStack, int $times)
-    {
-        $this->translator = $translator;
-        $this->requestStack = $requestStack;
-        $this->times = $times;
+    public function __construct(
+        private TranslatorInterface $translator,
+        private RequestStack $requestStack,
+        private int $times
+    ) {
     }
 
     public function isGranted(MediaInterface $media, Request $request): bool

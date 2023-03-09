@@ -38,21 +38,16 @@ final class SyncThumbsCommand extends Command
     protected static $defaultName = 'sonata:media:sync-thumbnails';
     protected static $defaultDescription = 'Sync uploaded image thumbs with new media formats';
 
-    private Pool $mediaPool;
-
-    private MediaManagerInterface $mediaManager;
-
     private bool $quiet = false;
 
     /**
      * @internal This class should only be used through the console
      */
-    public function __construct(Pool $mediaPool, MediaManagerInterface $mediaManager)
-    {
+    public function __construct(
+        private Pool $mediaPool,
+        private MediaManagerInterface $mediaManager
+    ) {
         parent::__construct();
-
-        $this->mediaPool = $mediaPool;
-        $this->mediaManager = $mediaManager;
     }
 
     protected function configure(): void

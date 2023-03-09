@@ -28,22 +28,15 @@ final class FixMediaContextCommand extends Command
     protected static $defaultName = 'sonata:media:fix-media-context';
     protected static $defaultDescription = 'Generate the default category for each media context';
 
-    private Pool $mediaPool;
-
-    private ?CategoryManagerInterface $categoryManager = null;
-
-    private ?ContextManagerInterface $contextManager = null;
-
     /**
      * @internal This class should only be used through the console
      */
-    public function __construct(Pool $mediaPool, ?CategoryManagerInterface $categoryManager = null, ?ContextManagerInterface $contextManager = null)
-    {
+    public function __construct(
+        private Pool $mediaPool,
+        private ?CategoryManagerInterface $categoryManager = null,
+        private ?ContextManagerInterface $contextManager = null
+    ) {
         parent::__construct();
-
-        $this->mediaPool = $mediaPool;
-        $this->categoryManager = $categoryManager;
-        $this->contextManager = $contextManager;
     }
 
     protected function configure(): void

@@ -150,10 +150,7 @@ interface MediaInterface
 
     public function getPreviousProviderReference(): ?string;
 
-    /**
-     * @param mixed $binaryContent
-     */
-    public function setBinaryContent($binaryContent): void;
+    public function setBinaryContent(mixed $binaryContent): void;
 
     /**
      * @return mixed
@@ -163,16 +160,11 @@ interface MediaInterface
     public function resetBinaryContent(): void;
 
     /**
-     * @param mixed $default
-     *
      * @return mixed
      */
-    public function getMetadataValue(string $name, $default = null);
+    public function getMetadataValue(string $name, mixed $default = null);
 
-    /**
-     * @param mixed $value
-     */
-    public function setMetadataValue(string $name, $value): void;
+    public function setMetadataValue(string $name, mixed $value): void;
 
     public function unsetMetadataValue(string $name): void;
 }

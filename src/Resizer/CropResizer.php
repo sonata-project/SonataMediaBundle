@@ -29,14 +29,10 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
  */
 final class CropResizer implements ResizerInterface
 {
-    private ImagineInterface $adapter;
-
-    private MetadataBuilderInterface $metadata;
-
-    public function __construct(ImagineInterface $adapter, MetadataBuilderInterface $metadata)
-    {
-        $this->adapter = $adapter;
-        $this->metadata = $metadata;
+    public function __construct(
+        private ImagineInterface $adapter,
+        private MetadataBuilderInterface $metadata
+    ) {
     }
 
     public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void
@@ -86,7 +82,7 @@ final class CropResizer implements ResizerInterface
     }
 
     /**
-     * @param array<string, int|string|bool|array|null>|false $settings
+     * @param array<string, int|string|bool|array|null> $settings
      *
      * @phpstan-param FormatOptions $settings
      */

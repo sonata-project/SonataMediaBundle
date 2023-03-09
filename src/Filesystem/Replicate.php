@@ -25,16 +25,13 @@ use Psr\Log\NullLogger;
 
 final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSupporter
 {
-    private Adapter $primary;
-
-    private Adapter $secondary;
-
     private LoggerInterface $logger;
 
-    public function __construct(Adapter $primary, Adapter $secondary, ?LoggerInterface $logger = null)
-    {
-        $this->primary = $primary;
-        $this->secondary = $secondary;
+    public function __construct(
+        private Adapter $primary,
+        private Adapter $secondary,
+        ?LoggerInterface $logger = null
+    ) {
         $this->logger = $logger ?? new NullLogger();
     }
 
@@ -198,8 +195,8 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     public function getAdapterClassNames(): array
     {
         return [
-            \get_class($this->primary),
-            \get_class($this->secondary),
+            $this->primary::class,
+            $this->secondary::class,
         ];
     }
 
@@ -243,7 +240,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
             throw new \BadMethodCallException(sprintf(
                 'Method "%s()" is not supported by the primary adapter "%s".',
                 __METHOD__,
-                \get_class($this->primary)
+                $this->primary::class
             ));
         }
 
