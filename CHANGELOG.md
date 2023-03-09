@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.7.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.6.0...4.7.0) - 2023-03-09
+### Added
+- [[#2360](https://github.com/sonata-project/SonataMediaBundle/pull/2360)] Added support for `knplabs/gaufrette` ^0.11. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Removed
+- [[#2360](https://github.com/sonata-project/SonataMediaBundle/pull/2360)] Drop support for `doctrine/persistence` ^2.0. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.6.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.5.1...4.6.0) - 2023-02-19
 ### Added
 - [[#2358](https://github.com/sonata-project/SonataMediaBundle/pull/2358)] Added new configuration parameter `sonata_media.filesystem.s3.async` ([@ozahorulia](https://github.com/ozahorulia))
