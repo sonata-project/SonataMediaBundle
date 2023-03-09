@@ -8,6 +8,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - [[#2360](https://github.com/sonata-project/SonataMediaBundle/pull/2360)] Drop support for `doctrine/persistence` ^2.0. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2361](https://github.com/sonata-project/SonataMediaBundle/pull/2361)] Support for PHP 7.4
+- [[#2361](https://github.com/sonata-project/SonataMediaBundle/pull/2361)] Support for Symfony 6.0 and 6.1
 
 ## [4.6.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.5.1...4.6.0) - 2023-02-19
 ### Added
