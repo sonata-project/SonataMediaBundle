@@ -26,11 +26,6 @@ class Category extends BaseCategory
     #[ORM\GeneratedValue]
     protected ?int $id = null;
 
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
     public function getId()
     {
         return $this->id;
