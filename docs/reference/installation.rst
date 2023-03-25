@@ -138,7 +138,7 @@ And then create the corresponding entities, ``src/Entity/SonataMediaMedia``::
         #[ORM\GeneratedValue]
         protected ?int $id = null;
 
-        public function getId()
+        public function getId(): ?int
         {
             return $this->id;
         }
@@ -161,7 +161,7 @@ And then create the corresponding entities, ``src/Entity/SonataMediaMedia``::
         #[ORM\GeneratedValue]
         protected ?int $id = null;
 
-        public function getId()
+        public function getId(): ?int
         {
             return $this->id;
         }
@@ -184,7 +184,7 @@ and ``src/Entity/SonataMediaGalleryItem``::
         #[ORM\GeneratedValue]
         protected ?int $id = null;
 
-        public function getId()
+        public function getId(): ?int
         {
             return $this->id;
         }
