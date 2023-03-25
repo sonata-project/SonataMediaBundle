@@ -125,63 +125,69 @@ And then create the corresponding entities, ``src/Entity/SonataMediaMedia``::
 
     // src/Entity/SonataMediaMedia.php
 
+    use Doctrine\DBAL\Types\Types;
     use Doctrine\ORM\Mapping as ORM;
     use Sonata\MediaBundle\Entity\BaseMedia;
 
-    /**
-     * @ORM\Entity
-     * @ORM\Table(name="media__media")
-     */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'media__media')]
     class SonataMediaMedia extends BaseMedia
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(type="integer")
-         */
-        protected $id;
+        #[ORM\Id]
+        #[ORM\Column(type: Types::INTEGER)]
+        #[ORM\GeneratedValue]
+        protected ?int $id = null;
+
+        public function getId()
+        {
+            return $this->id;
+        }
     }
 
 ``src/Entity/SonataMediaGallery``::
 
     // src/Entity/SonataMediaGallery.php
 
+    use Doctrine\DBAL\Types\Types;
     use Doctrine\ORM\Mapping as ORM;
     use Sonata\MediaBundle\Entity\BaseGallery;
 
-    /**
-     * @ORM\Entity
-     * @ORM\Table(name="media__gallery")
-     */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'media__gallery')]
     class SonataMediaGallery extends BaseGallery
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(type="integer")
-         */
-        protected $id;
+        #[ORM\Id]
+        #[ORM\Column(type: Types::INTEGER)]
+        #[ORM\GeneratedValue]
+        protected ?int $id = null;
+
+        public function getId()
+        {
+            return $this->id;
+        }
     }
 
 and ``src/Entity/SonataMediaGalleryItem``::
 
     // src/Entity/SonataMediaGalleryItem.php
 
+    use Doctrine\DBAL\Types\Types;
     use Doctrine\ORM\Mapping as ORM;
     use Sonata\MediaBundle\Entity\BaseGalleryItem;
 
-    /**
-     * @ORM\Entity
-     * @ORM\Table(name="media__gallery_item")
-     */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'media__gallery_item')]
     class SonataMediaGalleryItem extends BaseGalleryItem
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(type="integer")
-         */
-        protected $id;
+        #[ORM\Id]
+        #[ORM\Column(type: Types::INTEGER)]
+        #[ORM\GeneratedValue]
+        protected ?int $id = null;
+
+        public function getId()
+        {
+            return $this->id;
+        }
     }
 
 The only thing left is to update your schema::
