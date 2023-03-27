@@ -210,17 +210,13 @@ Then you have to create the corresponding documents, ``src/Document/SonataMediaM
 
     // src/Document/SonataMediaMedia.php
 
-    use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+    use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
     use Sonata\MediaBundle\Document\BaseMedia;
 
-    /**
-     * @MongoDB\Document
-     */
+    #[ODM\Document]
     class SonataMediaMedia extends BaseMedia
     {
-        /**
-         * @MongoDB\Id
-         */
+        #[ODM\Id]
         protected $id;
     }
 
@@ -228,17 +224,13 @@ Then you have to create the corresponding documents, ``src/Document/SonataMediaM
 
     // src/Document/SonataMediaGallery.php
 
-    use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+    use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
     use Sonata\MediaBundle\Document\BaseGallery;
 
-    /**
-     * @MongoDB\Document
-     */
+    #[ODM\Document]
     class SonataMediaGallery extends BaseGallery
     {
-        /**
-         * @MongoDB\Id
-         */
+        #[ODM\Id]
         protected $id;
     }
 
@@ -246,17 +238,13 @@ and ``src/Document/SonataMediaGalleryItem``::
 
     // src/Document/SonataMediaGalleryItem.php
 
-    use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+    use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
     use Sonata\MediaBundle\Document\BaseGalleryItem;
 
-    /**
-     * @MongoDB\Document
-     */
+    #[ODM\Document]
     class SonataMediaGalleryItem extends BaseGalleryItem
     {
-        /**
-         * @MongoDB\Id
-         */
+        #[ODM\Id]
         protected $id;
     }
 
