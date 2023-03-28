@@ -192,6 +192,7 @@ final class Configuration implements ConfigurationInterface
                         ->arrayNode('local')
                             ->addDefaultsIfNotSet()
                             ->children()
+                                // NEXT_MAJOR: Change 'web' directory for 'public'.
                                 ->scalarNode('directory')->defaultValue('%kernel.project_dir%/web/uploads/media')->end()
                                 ->scalarNode('create')->defaultValue(false)->end()
                             ->end()
