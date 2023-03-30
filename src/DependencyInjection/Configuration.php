@@ -28,6 +28,8 @@ final class Configuration implements ConfigurationInterface
     private const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'no_driver'];
 
     /**
+     * @psalm-suppress PossiblyUndefinedMethod
+     *
      * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
      */
     public function getConfigTreeBuilder(): TreeBuilder
