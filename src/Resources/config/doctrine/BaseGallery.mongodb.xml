@@ -4,7 +4,7 @@
         <field name="name" field-name="name" type="string"/>
         <field name="context" field-name="context" type="string"/>
         <field name="defaultFormat" field-name="defaultFormat" type="string"/>
-        <field name="enabled" field-name="enabled" type="boolean"/>
+        <field name="enabled" field-name="enabled" type="bool"/>
         <field name="updatedAt" field-name="updatedAt" type="date"/>
         <field name="createdAt" field-name="createdAt" type="date"/>
         <lifecycle-callbacks>

@@ -2,7 +2,7 @@
 <doctrine-mongo-mapping xmlns="https://doctrine-project.org/schemas/odm/doctrine-mongo-mapping" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping https://www.doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseGalleryItem">
         <field name="position" type="int"/>
-        <field name="enabled" type="boolean"/>
+        <field name="enabled" type="bool"/>
         <field name="updatedAt" type="date"/>
         <field name="createdAt" type="date"/>
         <lifecycle-callbacks>

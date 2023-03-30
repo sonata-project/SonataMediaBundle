@@ -3,7 +3,7 @@
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseMedia">
         <field name="name" field-name="name" type="string"/>
         <field name="description" field-name="description" type="string"/>
-        <field name="enabled" field-name="enabled" type="boolean"/>
+        <field name="enabled" field-name="enabled" type="bool"/>
         <field name="providerName" field-name="providerName" type="string"/>
         <field name="providerStatus" field-name="providerStatus" type="int"/>
         <field name="providerReference" field-name="providerReference" type="string"/>
@@ -16,7 +16,7 @@
         <field name="copyright" field-name="copyright" type="string"/>
         <field name="authorName" field-name="authorName" type="string"/>
         <field name="context" field-name="context" type="string"/>
-        <field name="cdnIsFlushable" field-name="cdnIsFlushable" type="boolean"/>
+        <field name="cdnIsFlushable" field-name="cdnIsFlushable" type="bool"/>
         <field name="cdnFlushIdentifier" field-name="cdnFlushIdentifier" type="string"/>
         <field name="cdnFlushAt" field-name="cdnFlushAt" type="date"/>
         <field name="cdnStatus" field-name="cdnStatus" type="int"/>
