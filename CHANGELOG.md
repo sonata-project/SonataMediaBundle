@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.7.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.7.0...4.7.1) - 2023-04-12
+### Changed
+- [[#2364](https://github.com/sonata-project/SonataMediaBundle/pull/2364)] Italian translations updated (missing keys, keys ordering) ([@gremo](https://github.com/gremo))
+
+### Fixed
+- [[#2363](https://github.com/sonata-project/SonataMediaBundle/pull/2363)] `gallery_item` translation key (english) ([@gremo](https://github.com/gremo))
+- [[#2379](https://github.com/sonata-project/SonataMediaBundle/pull/2379)] ORM schema mapping does not give errors about validation root ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2374](https://github.com/sonata-project/SonataMediaBundle/pull/2374)] Deprecation for boolean field on MongoDB ODM ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.7.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.6.0...4.7.0) - 2023-03-09
 ### Added
 - [[#2360](https://github.com/sonata-project/SonataMediaBundle/pull/2360)] Added support for `knplabs/gaufrette` ^0.11. ([@jordisala1991](https://github.com/jordisala1991))
