@@ -14,10 +14,8 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Security;
 
 use Sonata\MediaBundle\Model\MediaInterface;
-use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -36,7 +34,7 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
 
     public function isGranted(MediaInterface $media, Request $request): bool
     {
-        $session = $this->getSession();
+        $session = $this->requestStack->getSession();
 
         $times = $session->get($this->sessionKey, 0);
 
@@ -61,22 +59,5 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
             ],
             'SonataMediaBundle'
         );
-    }
-
-    private function getSession(): SessionInterface
-    {
-        // TODO: Remove this condition when Symfony < 5.3 support is removed
-        // @phpstan-ignore-next-line
-        if (method_exists($this->requestStack, 'getSession')) {
-            return $this->requestStack->getSession();
-        }
-
-        $currentRequest = $this->requestStack->getCurrentRequest();
-
-        if (null === $currentRequest) {
-            throw new SessionNotFoundException();
-        }
-
-        return $currentRequest->getSession();
     }
 }

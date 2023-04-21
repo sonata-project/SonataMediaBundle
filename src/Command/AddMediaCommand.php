@@ -24,10 +24,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'sonata:media:add', description: 'Add a media into the database')]
 final class AddMediaCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
-    protected static $defaultName = 'sonata:media:add';
-    protected static $defaultDescription = 'Add a media into the database';
-
     /**
      * @internal This class should only be used through the console
      */
@@ -38,11 +34,7 @@ final class AddMediaCommand extends Command
 
     protected function configure(): void
     {
-        \assert(null !== static::$defaultDescription);
-
         $this
-            // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
-            ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::REQUIRED, 'The provider')
             ->addArgument('context', InputArgument::REQUIRED, 'The context')
             ->addArgument('binaryContent', InputArgument::REQUIRED, 'The content')

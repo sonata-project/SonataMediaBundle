@@ -33,7 +33,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
 
 final class AppKernel extends Kernel
 {
@@ -73,12 +72,7 @@ final class AppKernel extends Kernel
         return __DIR__;
     }
 
-    /**
-     * TODO: Add typehint when support for Symfony < 5.1 is dropped.
-     *
-     * @param RoutingConfigurator $routes
-     */
-    protected function configureRoutes($routes): void
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
         $routes->import(__DIR__.'/config/routes.yaml');
     }
@@ -90,12 +84,9 @@ final class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config.yaml');
 
-        if (class_exists(IsGranted::class)) {
-            $loader->load(__DIR__.'/config/config_symfony_v6.yaml');
-        } elseif (class_exists(AuthenticatorManager::class)) {
+        // TODO: Simplify this when dropping support for Symfony 5.4
+        if (!class_exists(IsGranted::class)) {
             $loader->load(__DIR__.'/config/config_symfony_v5.yaml');
-        } else {
-            $loader->load(__DIR__.'/config/config_symfony_v4.yaml');
         }
 
         if (class_exists(HttpCacheHandler::class)) {

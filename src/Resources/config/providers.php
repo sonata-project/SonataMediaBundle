@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
 use Sonata\MediaBundle\Provider\DailyMotionProvider;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\ImageProvider;
@@ -20,16 +22,13 @@ use Sonata\MediaBundle\Provider\YouTubeProvider;
 use Sonata\MediaBundle\Thumbnail\FileThumbnail;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 use Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $containerConfigurator->services()
 
         ->set('sonata.media.pool', Pool::class)
             ->public()
-            ->args([''])
+            ->args([abstract_arg('default context')])
 
         ->alias(Pool::class, 'sonata.media.pool')
 
@@ -38,26 +37,26 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.thumbnail.liip_imagine', LiipImagineThumbnail::class)
             ->args([
-                new ReferenceConfigurator('liip_imagine.cache.manager'),
+                service('liip_imagine.cache.manager'),
             ])
 
         ->set('sonata.media.thumbnail.file', FileThumbnail::class)
             ->args([
-                new ReferenceConfigurator('assets.packages'),
+                service('assets.packages'),
             ])
 
         ->set('sonata.media.provider.image', ImageProvider::class)
             ->tag('sonata.media.provider')
             ->args([
                 'sonata.media.provider.image',
-                '',
-                '',
-                '',
-                new ReferenceConfigurator('sonata.media.thumbnail.format'),
-                '',
-                '',
-                '',
-                new ReferenceConfigurator('sonata.media.metadata.proxy'),
+                abstract_arg('filesystem'),
+                abstract_arg('cdn'),
+                abstract_arg('path generator'),
+                service('sonata.media.thumbnail.format'),
+                abstract_arg('allowed extensions'),
+                abstract_arg('allowed mime types'),
+                abstract_arg('imagine adapter'),
+                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
@@ -68,13 +67,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.media.provider')
             ->args([
                 'sonata.media.provider.file',
-                '',
-                '',
-                '',
-                new ReferenceConfigurator('sonata.media.thumbnail.file'),
-                '',
-                '',
-                new ReferenceConfigurator('sonata.media.metadata.proxy'),
+                abstract_arg('filesystem'),
+                abstract_arg('cdn'),
+                abstract_arg('path generator'),
+                service('sonata.media.thumbnail.file'),
+                abstract_arg('allowed extensions'),
+                abstract_arg('allowed mime types'),
+                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
@@ -85,14 +84,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.media.provider')
             ->args([
                 'sonata.media.provider.youtube',
-                '',
-                '',
-                '',
-                new ReferenceConfigurator('sonata.media.thumbnail.format'),
-                new ReferenceConfigurator('sonata.media.http.client'),
-                new ReferenceConfigurator('sonata.media.http.message_factory'),
-                new ReferenceConfigurator('sonata.media.metadata.proxy'),
-                '',
+                abstract_arg('filesystem'),
+                abstract_arg('cdn'),
+                abstract_arg('path generator'),
+                service('sonata.media.thumbnail.format'),
+                service('sonata.media.http.client'),
+                service('sonata.media.http.message_factory'),
+                service('sonata.media.metadata.proxy'),
+                abstract_arg('is html5 player enabled'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
@@ -103,13 +102,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.media.provider')
             ->args([
                 'sonata.media.provider.dailymotion',
-                '',
-                '',
-                '',
-                new ReferenceConfigurator('sonata.media.thumbnail.format'),
-                new ReferenceConfigurator('sonata.media.http.client'),
-                new ReferenceConfigurator('sonata.media.http.message_factory'),
-                new ReferenceConfigurator('sonata.media.metadata.proxy'),
+                abstract_arg('filesystem'),
+                abstract_arg('cdn'),
+                abstract_arg('path generator'),
+                service('sonata.media.thumbnail.format'),
+                service('sonata.media.http.client'),
+                service('sonata.media.http.message_factory'),
+                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
@@ -120,13 +119,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.media.provider')
             ->args([
                 'sonata.media.provider.vimeo',
-                '',
-                '',
-                '',
-                new ReferenceConfigurator('sonata.media.thumbnail.format'),
-                new ReferenceConfigurator('sonata.media.http.client'),
-                new ReferenceConfigurator('sonata.media.http.message_factory'),
-                new ReferenceConfigurator('sonata.media.metadata.proxy'),
+                abstract_arg('filesystem'),
+                abstract_arg('cdn'),
+                abstract_arg('path generator'),
+                service('sonata.media.thumbnail.format'),
+                service('sonata.media.http.client'),
+                service('sonata.media.http.message_factory'),
+                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',

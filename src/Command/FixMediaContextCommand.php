@@ -24,10 +24,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'sonata:media:fix-media-context', description: 'Generate the default category for each media context')]
 final class FixMediaContextCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
-    protected static $defaultName = 'sonata:media:fix-media-context';
-    protected static $defaultDescription = 'Generate the default category for each media context';
-
     /**
      * @internal This class should only be used through the console
      */
@@ -37,14 +33,6 @@ final class FixMediaContextCommand extends Command
         private ?ContextManagerInterface $contextManager = null
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        \assert(null !== static::$defaultDescription);
-
-        // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
-        $this->setDescription(static::$defaultDescription);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -11,30 +11,28 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
 use Sonata\MediaBundle\Document\GalleryManager;
 use Sonata\MediaBundle\Document\MediaManager;
 use Sonata\MediaBundle\Generator\UuidGenerator;
 use Sonata\MediaBundle\Listener\ODM\MediaEventSubscriber;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
         ->alias('sonata.media.document_manager', 'doctrine_mongodb.odm.document_manager')
 
         ->set('sonata.media.manager.media', MediaManager::class)
             ->args([
-                '%sonata.media.media.class%',
-                new ReferenceConfigurator('doctrine_mongodb'),
+                param('sonata.media.media.class'),
+                service('doctrine_mongodb'),
             ])
 
         ->set('sonata.media.manager.gallery', GalleryManager::class)
             ->args([
-                '%sonata.media.gallery.class%',
-                new ReferenceConfigurator('doctrine_mongodb'),
+                param('sonata.media.gallery.class'),
+                service('doctrine_mongodb'),
             ])
 
         ->set('sonata.media.generator.default', UuidGenerator::class)
@@ -42,6 +40,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.doctrine.event_subscriber', MediaEventSubscriber::class)
             ->tag('doctrine_mongodb.odm.event_subscriber')
             ->args([
-                new ReferenceConfigurator('sonata.media.pool'),
+                service('sonata.media.pool'),
             ]);
 };
