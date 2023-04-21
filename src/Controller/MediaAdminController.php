@@ -70,11 +70,10 @@ final class MediaAdminController extends CRUDController
 
         $datagrid = $this->admin->getDatagrid();
 
-        // TODO: Change to $request->query->all('filter') when support for Symfony < 5.1 is dropped.
-        $filters = $request->query->all()['filter'] ?? [];
+        $filters = $request->query->all('filter');
 
         // set the default context
-        if (\is_array($filters) && \array_key_exists('context', $filters)) {
+        if (\array_key_exists('context', $filters)) {
             $context = $filters['context']['value'];
         } else {
             $pool = $this->container->get('sonata.media.pool');

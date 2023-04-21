@@ -31,10 +31,6 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 #[AsCommand(name: 'sonata:media:refresh-metadata', description: 'Refresh meta information')]
 final class RefreshMetadataCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
-    protected static $defaultName = 'sonata:media:refresh-metadata';
-    protected static $defaultDescription = 'Refresh meta information';
-
     private bool $quiet = false;
 
     /**
@@ -49,11 +45,7 @@ final class RefreshMetadataCommand extends Command
 
     protected function configure(): void
     {
-        \assert(null !== static::$defaultDescription);
-
         $this
-            // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
-            ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
             ->addArgument('context', InputArgument::OPTIONAL, 'The context');
     }

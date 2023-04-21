@@ -107,11 +107,9 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         $request = $this->getRequest();
+        $filter = $request->query->all('filter');
 
-        // TODO: Change to $request->query->all('filter') when support for Symfony < 5.1 is dropped.
-        $filter = $request->query->all()['filter'] ?? [];
-
-        if (\is_array($filter) && \array_key_exists('context', $filter)) {
+        if (\array_key_exists('context', $filter)) {
             $context = $filter['context']['value'];
         } else {
             $context = $request->query->get('context', $this->pool->getDefaultContext());
@@ -162,11 +160,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         if ($request->isMethod('POST')) {
             $uniqId = $this->getUniqId();
 
-            // TODO: Change to $request->request->all($uniqid)['providerName'] when support for Symfony < 5.1 is dropped.
-            $data = $request->request->all()[$uniqId] ?? [];
-            \assert(\is_array($data));
-
-            $providerName = $data['providerName'];
+            $providerName = $request->request->all($uniqId)['providerName'];
         } else {
             $providerName = $request->query->get('provider');
         }
