@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.7.1...4.8.0) - 2023-04-24
+### Removed
+- [[#2382](https://github.com/sonata-project/SonataMediaBundle/pull/2382)] Support for Symfony 4.4 ([@jordisala1991](https://github.com/jordisala1991))
+- [[#2382](https://github.com/sonata-project/SonataMediaBundle/pull/2382)] Support for Twig 2 ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.7.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.7.0...4.7.1) - 2023-04-12
 ### Changed
 - [[#2364](https://github.com/sonata-project/SonataMediaBundle/pull/2364)] Italian translations updated (missing keys, keys ordering) ([@gremo](https://github.com/gremo))
