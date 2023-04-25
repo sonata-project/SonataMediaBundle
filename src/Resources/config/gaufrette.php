@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
 use AsyncAws\SimpleS3\SimpleS3Client;
 use Aws\S3\S3Client;
 use Gaufrette\Adapter\AwsS3;
@@ -21,68 +23,68 @@ use Sonata\MediaBundle\Filesystem\Replicate;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
 use Sonata\MediaBundle\Metadata\ProxyMetadataBuilder;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
         ->set('sonata.media.adapter.filesystem.local', Local::class)
         ->set('sonata.media.adapter.filesystem.ftp', Ftp::class)
 
         ->set('sonata.media.adapter.filesystem.s3', AwsS3::class)
-            ->args(['', '', ''])
+            ->args([
+                abstract_arg('s3 client'),
+                abstract_arg('bucket'),
+                abstract_arg('options'),
+            ])
 
         ->set('sonata.media.adapter.filesystem.replicate', Replicate::class)
             ->args([
-                '',
-                '',
-                (new ReferenceConfigurator('logger'))->nullOnInvalid(),
+                abstract_arg('primary adapter'),
+                abstract_arg('secondary adapter'),
+                service('logger')->nullOnInvalid(),
             ])
 
         ->set('sonata.media.filesystem.local', Filesystem::class)
             ->args([
-                new ReferenceConfigurator('sonata.media.adapter.filesystem.local'),
+                service('sonata.media.adapter.filesystem.local'),
             ])
 
         ->set('sonata.media.filesystem.s3', Filesystem::class)
             ->args([
-                new ReferenceConfigurator('sonata.media.adapter.filesystem.s3'),
+                service('sonata.media.adapter.filesystem.s3'),
             ])
 
         ->set('sonata.media.filesystem.ftp', Filesystem::class)
             ->args([
-                new ReferenceConfigurator('sonata.media.adapter.filesystem.ftp'),
+                service('sonata.media.adapter.filesystem.ftp'),
             ])
 
         ->set('sonata.media.filesystem.replicate', Filesystem::class)
             ->args([
-                new ReferenceConfigurator('sonata.media.adapter.filesystem.replicate'),
+                service('sonata.media.adapter.filesystem.replicate'),
             ])
 
         ->set('sonata.media.metadata.proxy', ProxyMetadataBuilder::class)
             ->args([
-                new ReferenceConfigurator('sonata.media.pool'),
-                (new ReferenceConfigurator('sonata.media.metadata.noop'))->nullOnInvalid(),
-                (new ReferenceConfigurator('sonata.media.metadata.amazon'))->nullOnInvalid(),
+                service('sonata.media.pool'),
+                service('sonata.media.metadata.noop')->nullOnInvalid(),
+                service('sonata.media.metadata.amazon')->nullOnInvalid(),
             ])
 
         ->set('sonata.media.metadata.amazon', AmazonMetadataBuilder::class)
-            ->args([[]])
+            ->args([abstract_arg('settings')])
 
         ->set('sonata.media.metadata.noop', NoopMetadataBuilder::class);
 
     if (class_exists(S3Client::class)) {
         $containerConfigurator->services()
             ->set('sonata.media.adapter.service.s3', S3Client::class)
-            ->args([[]]);
+            ->args([abstract_arg('settings')]);
     }
 
     if (class_exists(SimpleS3Client::class)) {
         $containerConfigurator->services()
             ->set('sonata.media.adapter.service.s3.async', SimpleS3Client::class)
-            ->args([[]]);
+            ->args([abstract_arg('settings')]);
     }
 };

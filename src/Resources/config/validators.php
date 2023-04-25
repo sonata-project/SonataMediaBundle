@@ -11,25 +11,24 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
 use Sonata\MediaBundle\Validator\Constraints\ImageUploadDimensionValidator;
 use Sonata\MediaBundle\Validator\FormatValidator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $containerConfigurator->services()
 
         ->set('sonata.media.validator.format', FormatValidator::class)
             ->tag('validator.constraint_validator', ['alias' => 'sonata.media.validator.format'])
             ->args([
-                new ReferenceConfigurator('sonata.media.pool'),
+                service('sonata.media.pool'),
             ])
 
         ->set(ImageUploadDimensionValidator::class)
             ->tag('validator.constraint_validator')
             ->args([
-                new ReferenceConfigurator('sonata.media.adapter.image.default'),
-                new ReferenceConfigurator('sonata.media.provider.image'),
+                service('sonata.media.adapter.image.default'),
+                service('sonata.media.provider.image'),
             ]);
 };

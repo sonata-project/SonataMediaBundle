@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<doctrine-mongo-mapping xmlns="https://doctrine-project.org/schemas/odm/doctrine-mongo-mapping" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping https://www.doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping https://www.doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <mapped-superclass name="Sonata\MediaBundle\Document\BaseMedia">
         <field name="name" field-name="name" type="string"/>
         <field name="description" field-name="description" type="string"/>
-        <field name="enabled" field-name="enabled" type="boolean"/>
+        <field name="enabled" field-name="enabled" type="bool"/>
         <field name="providerName" field-name="providerName" type="string"/>
         <field name="providerStatus" field-name="providerStatus" type="int"/>
         <field name="providerReference" field-name="providerReference" type="string"/>
@@ -16,7 +16,7 @@
         <field name="copyright" field-name="copyright" type="string"/>
         <field name="authorName" field-name="authorName" type="string"/>
         <field name="context" field-name="context" type="string"/>
-        <field name="cdnIsFlushable" field-name="cdnIsFlushable" type="boolean"/>
+        <field name="cdnIsFlushable" field-name="cdnIsFlushable" type="bool"/>
         <field name="cdnFlushIdentifier" field-name="cdnFlushIdentifier" type="string"/>
         <field name="cdnFlushAt" field-name="cdnFlushAt" type="date"/>
         <field name="cdnStatus" field-name="cdnStatus" type="int"/>

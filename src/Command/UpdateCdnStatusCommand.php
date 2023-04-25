@@ -33,10 +33,6 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 #[AsCommand(name: 'sonata:media:update-cdn-status', description: 'Updates model media with the current CDN status')]
 final class UpdateCdnStatusCommand extends Command
 {
-    // TODO: Remove static properties when support for Symfony < 5.4 is dropped.
-    protected static $defaultName = 'sonata:media:update-cdn-status';
-    protected static $defaultDescription = 'Updates model media with the current CDN status';
-
     private bool $quiet = false;
 
     /**
@@ -51,11 +47,7 @@ final class UpdateCdnStatusCommand extends Command
 
     protected function configure(): void
     {
-        \assert(null !== static::$defaultDescription);
-
         $this
-            // TODO: Remove setDescription when support for Symfony < 5.4 is dropped.
-            ->setDescription(static::$defaultDescription)
             ->addArgument('providerName', InputArgument::OPTIONAL, 'The provider')
             ->addArgument('context', InputArgument::OPTIONAL, 'The context')
             ->setHelp(
