@@ -72,7 +72,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
 
         ->set('sonata.media.metadata.amazon', AmazonMetadataBuilder::class)
-            ->args([abstract_arg('')])
+            ->args([abstract_arg('settings')])
 
         ->set('sonata.media.metadata.noop', NoopMetadataBuilder::class);
 

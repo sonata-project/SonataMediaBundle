@@ -324,6 +324,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         } else {
             $container->removeDefinition('sonata.media.adapter.filesystem.s3');
             $container->removeDefinition('sonata.media.filesystem.s3');
+            $container->removeDefinition('sonata.media.metadata.amazon');
         }
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
