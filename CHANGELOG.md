@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.8.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.8.0...4.8.1) - 2023-04-25
+### Fixed
+- [[#2384](https://github.com/sonata-project/SonataMediaBundle/pull/2384)] `sonata.media.metadata.amazon` is removed from the container if the configuration for S3 is not enabled ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [4.8.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.7.1...4.8.0) - 2023-04-24
 ### Removed
 - [[#2382](https://github.com/sonata-project/SonataMediaBundle/pull/2382)] Support for Symfony 4.4 ([@jordisala1991](https://github.com/jordisala1991))
