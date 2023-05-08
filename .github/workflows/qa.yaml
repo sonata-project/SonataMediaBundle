@@ -38,7 +38,6 @@ jobs:
               uses: ramsey/composer-install@v2
               with:
                   dependency-versions: highest
-                  composer-options: --prefer-dist --prefer-stable
 
             - name: PHPStan
               run: vendor/bin/phpstan --no-progress --memory-limit=1G analyse --error-format=github
@@ -64,7 +63,6 @@ jobs:
               uses: ramsey/composer-install@v2
               with:
                   dependency-versions: highest
-                  composer-options: --prefer-dist --prefer-stable
 
             - name: Psalm
               run: vendor/bin/psalm --no-progress --show-info=false --stats --output-format=github --threads=$(nproc) --shepherd --php-version=8.2
@@ -90,7 +88,6 @@ jobs:
               uses: ramsey/composer-install@v2
               with:
                   dependency-versions: highest
-                  composer-options: --prefer-dist --prefer-stable
 
             - name: Rector
               run: vendor/bin/rector --no-progress-bar --dry-run
