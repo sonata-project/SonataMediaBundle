@@ -116,6 +116,8 @@
         "symfony/messenger": "If you want to generate thumbnails asynchronously.",
         "twig/extra-bundle": "Auto configures the Twig Intl extension."
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Sonata\\MediaBundle\\": "src/"
