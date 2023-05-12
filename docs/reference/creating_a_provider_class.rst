@@ -299,7 +299,7 @@ The ``MediaBundle`` comes with 2 helper methods:
 
 The thumbnail template is common to all media and it is quite simple:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <img {% for name, value in options %}{{ name ~ '="' ~ value ~ '"' }} {% endfor %}/>
 
@@ -359,7 +359,7 @@ of options that need to be passed to the ``view_vimeo.html.twig`` template file:
 
 From the vimeo's documentation, a video can be included like this:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <iframe
         id="{{ options.id }}"
