@@ -55,7 +55,7 @@ For the context ``default`` the user need to be a Super Admin to retrieve the fi
 
 The related download route name is ``sonata_media_download``.
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     <a href="{{ path('sonata_media_download', {'id': media|sonata_urlsafeid }) }}">Download file</a>
 
@@ -122,29 +122,14 @@ Let's explain a bit:
 
 The last important part is declaring the service.
 
-.. configuration-block::
+.. code-block:: yaml
 
-    .. code-block:: yaml
+    # config/services.yaml
 
-        # config/services.yaml
-
-        services:
-            sonata.media.security.users_strategy:
-                class: Sonata\MediaBundle\Security\UsersDownloadStrategy
-                arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-
-        <service id="sonata.media.security.users_strategy" class="Sonata\MediaBundle\Security\'UsersDownloadStrategy">
-            <argument type="service" id="security.token_storage"/>
-            <argument type="service" id="translator"/>
-            <argument  type="collection">
-                <argument>mozart</argument>
-                <argument>chopin</argument>
-            </argument>
-        </service>
+    services:
+        sonata.media.security.users_strategy:
+            class: Sonata\MediaBundle\Security\UsersDownloadStrategy
+            arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
 
 Now the service can be used with a context:
 

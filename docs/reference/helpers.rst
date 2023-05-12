@@ -11,7 +11,7 @@ Twig usage
 
 Render the thumbnail:
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_thumbnail(media, 'small') }}
 
@@ -19,7 +19,7 @@ Render the thumbnail:
 
 Render the media:
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_media(media, 'small') }}
 
@@ -27,13 +27,13 @@ Render the media:
 
 Render the path:
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_path(media, 'small') }}
 
 Render the path to a ``sonata.media.provider.file`` context:
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_path(media, 'reference') }}
 
@@ -45,27 +45,27 @@ The size configured will be the one used for the default fallback ``src``.
 
 To override the ``sizes`` to fit your particular design, just pass a ``sizes`` option to the helper.
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_media(media, 'large', {'sizes': '(min-width: 20em) 50vw, 100vw'}) }}
 
 To override the ``srcset`` attribute, just pass a ``srcset`` option to the
 helper. The option expects either a string or an array of formats.
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_media(media, 'large', {'srcset': ['small', 'big']}) }}
 
 To render the image as ``<picture>`` element instead of ``<img>``, pass a ``picture`` key instead of ``srcset`` above:
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_media(media, 'large', {'picture': ['small', 'big']}) }}
 
 Media queries for ``<source>`` tags will default to a ``max-width`` equal to the image size.
 If you need to specify media queries explicitly, do so with an object as follows:
 
-.. code-block:: jinja
+.. code-block:: html+twig
 
     {{ sonata_media(media, 'large', {'srcset': {'(max-width: 500px)': 'small', '(max-width: 1200px)': 'big'}}) }}
 
