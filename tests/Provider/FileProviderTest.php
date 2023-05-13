@@ -17,6 +17,7 @@ use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\Form\Validator\ErrorElement;
+use Sonata\Form\Twig\CanonicalizeRuntime;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\IdGenerator;
@@ -450,12 +451,21 @@ class FileProviderTest extends AbstractProviderTest
 
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
     {
-        return new ErrorElement(
-            '',
-            $this->createStub(ConstraintValidatorFactoryInterface::class),
-            $executionContext,
-            'group'
-        );
+        // TODO: Remove if and keep else when dropping support for `sonata-project/form-extensions` 2.0.
+        if (class_exists(CanonicalizeRuntime::class)) {
+            return new ErrorElement(
+                '',
+                $this->createStub(ConstraintValidatorFactoryInterface::class),
+                $executionContext,
+                'group'
+            );
+        } else {
+            return new ErrorElement(
+                '',
+                $executionContext,
+                'group'
+            );
+        }
     }
 
     /**
