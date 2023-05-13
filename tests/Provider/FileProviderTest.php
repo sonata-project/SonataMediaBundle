@@ -460,7 +460,8 @@ class FileProviderTest extends AbstractProviderTest
                 'group'
             );
         }
-            
+
+        // @phpstan-ignore-next-line
         return new ErrorElement(
             '',
             $executionContext,
