@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Tests\Provider;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\MockObject;
+use Sonata\Form\Twig\CanonicalizeRuntime;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
@@ -448,14 +449,23 @@ class FileProviderTest extends AbstractProviderTest
         static::assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 
+    /**
+     * @psalm-suppress TooFewArguments, InvalidArgument
+     */
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
     {
-        return new ErrorElement(
-            '',
-            $this->createStub(ConstraintValidatorFactoryInterface::class),
-            $executionContext,
-            'group'
-        );
+        // TODO: Remove if when dropping support for `sonata-project/form-extensions` 2.0.
+        if (class_exists(CanonicalizeRuntime::class)) {
+            return new ErrorElement(
+                '',
+                $this->createStub(ConstraintValidatorFactoryInterface::class),
+                $executionContext,
+                'group'
+            );
+        }
+
+        // @phpstan-ignore-next-line
+        return new ErrorElement('', $executionContext, 'group');
     }
 
     /**
