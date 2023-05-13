@@ -16,8 +16,8 @@ namespace Sonata\MediaBundle\Tests\Provider;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\MockObject;
-use Sonata\Form\Validator\ErrorElement;
 use Sonata\Form\Twig\CanonicalizeRuntime;
+use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\IdGenerator;
@@ -459,13 +459,13 @@ class FileProviderTest extends AbstractProviderTest
                 $executionContext,
                 'group'
             );
-        } else {
-            return new ErrorElement(
-                '',
-                $executionContext,
-                'group'
-            );
         }
+            
+        return new ErrorElement(
+            '',
+            $executionContext,
+            'group'
+        );
     }
 
     /**
