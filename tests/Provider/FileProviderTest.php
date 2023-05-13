@@ -451,7 +451,7 @@ class FileProviderTest extends AbstractProviderTest
 
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
     {
-        // TODO: Remove if and keep else when dropping support for `sonata-project/form-extensions` 2.0.
+        // TODO: Remove if when dropping support for `sonata-project/form-extensions` 2.0.
         if (class_exists(CanonicalizeRuntime::class)) {
             return new ErrorElement(
                 '',
