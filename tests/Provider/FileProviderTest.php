@@ -450,7 +450,7 @@ class FileProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @psalm-suppress TooFewArguments InvalidArgument
+     * @psalm-suppress TooFewArguments, InvalidArgument
      */
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
     {
