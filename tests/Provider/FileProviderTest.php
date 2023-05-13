@@ -449,6 +449,9 @@ class FileProviderTest extends AbstractProviderTest
         static::assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 
+    /**
+     * @psalm-suppress TooFewArguments InvalidArgument
+     */
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
     {
         // TODO: Remove if when dropping support for `sonata-project/form-extensions` 2.0.
