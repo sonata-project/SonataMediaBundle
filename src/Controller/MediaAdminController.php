@@ -86,8 +86,8 @@ final class MediaAdminController extends CRUDController
 
         $rootCategory = null;
         if (
-            $this->container->has('sonata.media.manager.category') &&
-            $this->container->has('sonata.media.manager.context')
+            $this->container->has('sonata.media.manager.category')
+            && $this->container->has('sonata.media.manager.context')
         ) {
             $categoryManager = $this->container->get('sonata.media.manager.category');
             \assert($categoryManager instanceof CategoryManagerInterface);
