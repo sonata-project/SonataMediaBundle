@@ -341,8 +341,8 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         // this is the name used to store the file
-        if (null === $media->getProviderReference() ||
-            MediaInterface::MISSING_BINARY_REFERENCE === $media->getProviderReference()
+        if (null === $media->getProviderReference()
+            || MediaInterface::MISSING_BINARY_REFERENCE === $media->getProviderReference()
         ) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
