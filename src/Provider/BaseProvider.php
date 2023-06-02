@@ -97,8 +97,8 @@ abstract class BaseProvider implements MediaProviderInterface
 
         foreach ($this->getFormats() as $format => $settings) {
             if (
-                MediaProviderInterface::FORMAT_ADMIN === $format ||
-                substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext()
+                MediaProviderInterface::FORMAT_ADMIN === $format
+                || substr($format, 0, \strlen($media->getContext() ?? '')) === $media->getContext()
             ) {
                 $flushPaths[] = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true)->getKey();
             }
