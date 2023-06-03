@@ -59,7 +59,8 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
             'icon' => null,
             'class' => null,
         ];
-        
+
+        // TODO: Remove if when dropping support for sonata-project/block-bundle < 5.0
         if (class_exists(HttpCacheHandler::class)) {
             $settings['extra_cache_keys'] = [];
             $settings['ttl'] = 0;
