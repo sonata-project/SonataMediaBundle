@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\MockObject\Stub;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Cache\HttpCacheHandler;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\GalleryBlockService;
