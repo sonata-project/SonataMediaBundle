@@ -41,6 +41,9 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
         );
     }
 
+    /**
+     * @psalm-suppress DeprecatedClass
+     */
     public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);
