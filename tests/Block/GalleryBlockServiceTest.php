@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\MockObject\Stub;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Cache\HttpCacheHandler;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\GalleryBlockService;
@@ -69,14 +70,16 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         $this->blockService->execute($blockContext);
     }
 
+    /**
+     * @psalm-suppress DeprecatedClass
+     */
     public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);
 
-        $this->assertSettings([
+        $settings = [
             'attr' => [],
             'context' => false,
-            'extra_cache_keys' => [],
             'format' => false,
             'gallery' => false,
             'galleryId' => null,
@@ -87,8 +90,15 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
             'translation_domain' => null,
             'icon' => null,
             'class' => null,
-            'ttl' => 0,
-            'use_cache' => true,
-        ], $blockContext);
+        ];
+
+        // TODO: Remove if when dropping support for sonata-project/block-bundle < 5.0
+        if (class_exists(HttpCacheHandler::class)) {
+            $settings['extra_cache_keys'] = [];
+            $settings['ttl'] = 0;
+            $settings['use_cache'] = true;
+        }
+
+        $this->assertSettings($settings, $blockContext);
     }
 }
