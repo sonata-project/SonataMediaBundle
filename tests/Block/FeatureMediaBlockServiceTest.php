@@ -15,6 +15,7 @@ namespace Sonata\MediaBundle\Tests\Block;
 
 use PHPUnit\Framework\MockObject\Stub;
 use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\BlockBundle\Cache\HttpCacheHandler;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
 use Sonata\MediaBundle\Block\FeatureMediaBlockService;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -40,15 +41,17 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
         );
     }
 
+    /**
+     * @psalm-suppress DeprecatedClass
+     */
     public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);
 
-        $this->assertSettings([
+        $settings = [
             'attr' => [],
             'content' => false,
             'context' => false,
-            'extra_cache_keys' => [],
             'format' => false,
             'media' => false,
             'mediaId' => null,
@@ -58,8 +61,15 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
             'translation_domain' => null,
             'icon' => null,
             'class' => null,
-            'ttl' => 0,
-            'use_cache' => true,
-        ], $blockContext);
+        ];
+
+        // TODO: Remove if when dropping support for sonata-project/block-bundle < 5.0
+        if (class_exists(HttpCacheHandler::class)) {
+            $settings['extra_cache_keys'] = [];
+            $settings['ttl'] = 0;
+            $settings['use_cache'] = true;
+        }
+
+        $this->assertSettings($settings, $blockContext);
     }
 }
