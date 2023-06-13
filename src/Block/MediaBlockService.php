@@ -27,6 +27,7 @@ use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -204,11 +205,17 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
             'edit' => 'list',
         ]);
 
-        return $this->mediaAdmin->getFormBuilder()->create('mediaId', ModelListType::class, [
+        $fieldDescription->setAssociationAdmin($this->mediaAdmin);
+
+        $formBuilder = $this->mediaAdmin->getFormBuilder()->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->mediaAdmin->getClass(),
             'model_manager' => $this->mediaAdmin->getModelManager(),
             'label' => 'form.label_media',
         ]);
+
+        // Add ModelTransformer ?
+
+        return $formBuilder;
     }
 }
