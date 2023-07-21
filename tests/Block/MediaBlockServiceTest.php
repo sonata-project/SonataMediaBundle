@@ -77,9 +77,6 @@ class MediaBlockServiceTest extends BlockServiceTestCase
         $this->blockService->execute($blockContext);
     }
 
-    /**
-     * @psalm-suppress DeprecatedClass
-     */
     public function testDefaultSettings(): void
     {
         $blockContext = $this->getBlockContext($this->blockService);

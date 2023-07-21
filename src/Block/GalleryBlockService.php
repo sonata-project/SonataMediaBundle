@@ -141,7 +141,6 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     {
         $gallery = $blockContext->getBlock()->getSetting('galleryId');
         $template = $blockContext->getTemplate();
-        \assert(\is_string($template));
 
         return $this->renderResponse($template, [
             'gallery' => $gallery,
