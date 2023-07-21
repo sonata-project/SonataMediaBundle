@@ -94,12 +94,16 @@ class SimpleResizerTest extends TestCase
             ['inset', ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
             ['inset', ['width' => 90, 'height' => null], new Box(567, 200), new Box(90, 32)],
             ['inset', ['width' => 100, 'height' => 100], new Box(567, 200), new Box(100, 35)],
+            ['inset', ['width' => 1060, 'height' => 1], new Box(567, 200), new Box(3, 1)],
+            ['inset', ['width' => 1, 'height' => 1060], new Box(567, 200), new Box(1, 1)],
 
             ['outbound', ['width' => 90, 'height' => 90], new Box(100, 120), new Box(90, 90)],
             ['outbound', ['width' => 90, 'height' => 90], new Box(120, 100), new Box(90, 90)],
             ['outbound', ['width' => 90, 'height' => 90], new Box(50, 50), new Box(90, 90)],
             ['outbound', ['width' => 90, 'height' => null], new Box(50, 50), new Box(90, 90)],
             ['outbound', ['width' => 90, 'height' => null], new Box(567, 50), new Box(90, 8)],
+            ['outbound', ['width' => 1060, 'height' => 1], new Box(567, 200), new Box(1060, 1)],
+            ['outbound', ['width' => 1, 'height' => 1060], new Box(567, 200), new Box(1, 1060)],
         ];
     }
 }

@@ -77,11 +77,11 @@ class SimpleResizer implements ResizerInterface
         }
 
         if (null === $settings['height']) {
-            $settings['height'] = (int) round($settings['width'] * $size->getHeight() / $size->getWidth());
+            $settings['height'] = max((int) round($settings['width'] * $size->getHeight() / $size->getWidth()), 1);
         }
 
         if (null === $settings['width']) {
-            $settings['width'] = (int) round($settings['height'] * $size->getWidth() / $size->getHeight());
+            $settings['width'] = max((int) round($settings['height'] * $size->getWidth() / $size->getHeight()), 1);
         }
 
         return $this->computeBox($media, $settings);
