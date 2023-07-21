@@ -133,7 +133,6 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
         }
 
         $template = $blockContext->getTemplate();
-        \assert(\is_string($template));
 
         return $this->renderResponse($template, [
             'media' => $blockContext->getSetting('mediaId'),

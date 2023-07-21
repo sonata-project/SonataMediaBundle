@@ -450,21 +450,21 @@ class FileProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @psalm-suppress TooFewArguments, InvalidArgument
+     * @psalm-suppress TooManyArguments, InvalidArgument
      */
     private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
     {
         // TODO: Remove if when dropping support for `sonata-project/form-extensions` 2.0.
         if (class_exists(CanonicalizeRuntime::class)) {
+            // @phpstan-ignore-next-line
             return new ErrorElement(
                 '',
-                $this->createStub(ConstraintValidatorFactoryInterface::class),
-                $executionContext,
+                $this->createStub(ConstraintValidatorFactoryInterface::class), // @phpstan-ignore-line
+                $executionContext, // @phpstan-ignore-line
                 'group'
             );
         }
 
-        // @phpstan-ignore-next-line
         return new ErrorElement('', $executionContext, 'group');
     }
 
