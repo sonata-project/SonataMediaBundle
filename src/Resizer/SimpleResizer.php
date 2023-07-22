@@ -65,11 +65,11 @@ final class SimpleResizer implements ResizerInterface
         }
 
         if (null === $height) {
-            $height = (int) round($width * $size->getHeight() / $size->getWidth());
+            $height = max((int) round($width * $size->getHeight() / $size->getWidth()), 1);
         }
 
         if (null === $width) {
-            $width = (int) round($height * $size->getWidth() / $size->getHeight());
+            $width = max((int) round($height * $size->getWidth() / $size->getHeight()), 1);
         }
 
         return $this->computeBox($media, $width, $height);
