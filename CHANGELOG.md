@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.10.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.0...4.10.1) - 2023-07-22
+### Fixed
+- [[#2405](https://github.com/sonata-project/SonataMediaBundle/pull/2405)] * `round()` can return 0 which is invalid for image resizing. ([@silasjoisten](https://github.com/silasjoisten))
+
 ## [4.10.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.9.0...4.10.0) - 2023-06-04
 ### Added
 - [[#2396](https://github.com/sonata-project/SonataMediaBundle/pull/2396)] Support for SonataBlockBundle 5.0 ([@jordisala1991](https://github.com/jordisala1991))
