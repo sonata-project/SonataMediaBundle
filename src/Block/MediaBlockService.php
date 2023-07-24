@@ -70,6 +70,10 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
 
     public function configureEditForm(FormMapper $form, BlockInterface $block): void
     {
+        if (!$form instanceof AdminFormMapper) {
+            throw new \InvalidArgumentException('Media Block requires to be used in the Admin context');
+        }
+
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
             $this->load($block);
         }
@@ -200,10 +204,6 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
      */
     private function getMediaBuilder(AdminFormMapper $form): FormBuilderInterface
     {
-        if (!$form instanceof AdminFormMapper) {
-            throw new \InvalidArgumentException('Media Block requires to be used in the Admin context');
-        }
-
         if (null === $this->mediaAdmin) {
             throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
         }
