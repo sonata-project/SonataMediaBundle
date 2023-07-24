@@ -19,6 +19,8 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\Service\EditableBlockService;
 use Sonata\BlockBundle\Form\Mapper\FormMapper;
+use Sonata\AdminBundle\Form\FormMapper as AdminFormMapper;
+use Sonata\PageBundle\Model\PageBlockInterface;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
@@ -197,8 +199,12 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
     /**
      * @param AdminFormMapper<object> $form
      */
-    private function getMediaBuilder(FormMapper $form): FormBuilderInterface
+    private function getMediaBuilder(AdminFormMapper $form): FormBuilderInterface
     {
+        if (!$form instanceof AdminFormMapper) {
+            throw new \InvalidArgumentException('Media Block requires to be used in the Admin context');
+        }
+
         if (null === $this->mediaAdmin) {
             throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
         }
