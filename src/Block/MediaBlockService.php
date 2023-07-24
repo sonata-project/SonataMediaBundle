@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Form\FormMapper as AdminFormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\Service\EditableBlockService;
 use Sonata\BlockBundle\Form\Mapper\FormMapper;
-use Sonata\AdminBundle\Form\FormMapper as AdminFormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
@@ -223,7 +223,7 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
         ]);
 
         $formBuilder->addModelTransformer(new CallbackTransformer(
-            static fn (mixed $value): ?MediaInterface => $value,
+            static fn (MediaInterface $value): ?MediaInterface => $value,
             static fn (?MediaInterface $value) => $value instanceof MediaInterface ? $value->getId() : $value
         ));
 
