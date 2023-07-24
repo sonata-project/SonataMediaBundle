@@ -223,7 +223,7 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
         ]);
 
         $formBuilder->addModelTransformer(new CallbackTransformer(
-            static fn (MediaInterface $value): ?MediaInterface => $value,
+            static fn (?MediaInterface $value): ?MediaInterface => $value,
             static fn (?MediaInterface $value) => $value instanceof MediaInterface ? $value->getId() : $value
         ));
 
