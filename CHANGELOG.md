@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.10.2](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.1...4.10.2) - 2023-07-29
+### Changed
+- [[#2402](https://github.com/sonata-project/SonataMediaBundle/pull/2402)] Resole "Admin has no subject" error from the getMediaBuilder ([@Elkawaie](https://github.com/Elkawaie))
+
 ## [4.10.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.0...4.10.1) - 2023-07-22
 ### Fixed
 - [[#2405](https://github.com/sonata-project/SonataMediaBundle/pull/2405)] * `round()` can return 0 which is invalid for image resizing. ([@silasjoisten](https://github.com/silasjoisten))

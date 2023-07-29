@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Form\FormMapper as AdminFormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
@@ -27,6 +28,7 @@ use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -68,6 +70,10 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
 
     public function configureEditForm(FormMapper $form, BlockInterface $block): void
     {
+        if (!$form instanceof AdminFormMapper) {
+            throw new \InvalidArgumentException('Media Block requires to be used in the Admin context');
+        }
+
         if (!$block->getSetting('mediaId') instanceof MediaInterface) {
             $this->load($block);
         }
@@ -92,7 +98,7 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
                     'label' => 'form.label_class',
                     'required' => false,
                 ]],
-                [$this->getMediaBuilder(), null, []],
+                [$this->getMediaBuilder($form), null, []],
                 ['format', ChoiceType::class, [
                     'required' => \count($formatChoices) > 0,
                     'choices' => $formatChoices,
@@ -193,7 +199,10 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
         return $formatChoices;
     }
 
-    private function getMediaBuilder(): FormBuilderInterface
+    /**
+     * @param AdminFormMapper<object> $form
+     */
+    private function getMediaBuilder(AdminFormMapper $form): FormBuilderInterface
     {
         if (null === $this->mediaAdmin) {
             throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
@@ -204,11 +213,20 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
             'edit' => 'list',
         ]);
 
-        return $this->mediaAdmin->getFormBuilder()->create('mediaId', ModelListType::class, [
+        $fieldDescription->setAssociationAdmin($this->mediaAdmin);
+
+        $formBuilder = $form->getFormBuilder()->create('mediaId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->mediaAdmin->getClass(),
             'model_manager' => $this->mediaAdmin->getModelManager(),
             'label' => 'form.label_media',
         ]);
+
+        $formBuilder->addModelTransformer(new CallbackTransformer(
+            static fn (?MediaInterface $value): ?MediaInterface => $value,
+            static fn (?MediaInterface $value) => $value instanceof MediaInterface ? $value->getId() : $value
+        ));
+
+        return $formBuilder;
     }
 }
