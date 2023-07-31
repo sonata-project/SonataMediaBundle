@@ -24,6 +24,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
  */
 final class MediaEventSubscriber extends BaseMediaEventSubscriber
 {
+    /**
+     * NEXT_MAJOR: remove this method.
+     */
     public function getSubscribedEvents(): array
     {
         return [
