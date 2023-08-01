@@ -39,6 +39,9 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
         parent::__construct($pool);
     }
 
+    /**
+     * NEXT_MAJOR: remove this method.
+     */
     public function getSubscribedEvents(): array
     {
         return [

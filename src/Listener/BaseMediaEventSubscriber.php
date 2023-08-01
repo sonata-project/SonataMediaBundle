@@ -22,6 +22,7 @@ use Sonata\MediaBundle\Provider\Pool;
 
 /**
  * @phpstan-template T of ObjectManager
+ * NEXT_MAJOR: do not implement EventSubscriber interface anymore
  */
 abstract class BaseMediaEventSubscriber implements EventSubscriber
 {
