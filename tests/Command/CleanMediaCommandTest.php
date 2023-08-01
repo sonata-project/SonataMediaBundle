@@ -219,7 +219,8 @@ class CleanMediaCommandTest extends FilesystemTestCase
     /**
      * Asserts whether all expected texts can be found in the output within a given context.
      *
-     * @param string[] $expected
+     * @param non-empty-string $extractor
+     * @param string[]         $expected
      */
     private function assertOutputFoundInContext(
         string $extractor,
