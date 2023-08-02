@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Doctrine\ORM\Events;
 use Sonata\MediaBundle\Entity\GalleryManager;
 use Sonata\MediaBundle\Entity\MediaManager;
 use Sonata\MediaBundle\Generator\IdGenerator;
@@ -36,7 +37,27 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.generator.default', IdGenerator::class)
 
         ->set('sonata.media.doctrine.event_subscriber', MediaEventSubscriber::class)
-            ->tag('doctrine.event_subscriber')
+            ->tag('doctrine.event_listener', [
+                'event' => Events::prePersist,
+            ])
+            ->tag('doctrine.event_listener', [
+                'event' => Events::preUpdate,
+            ])
+            ->tag('doctrine.event_listener', [
+                'event' => Events::preRemove,
+            ])
+            ->tag('doctrine.event_listener', [
+                'event' => Events::postUpdate,
+            ])
+            ->tag('doctrine.event_listener', [
+                'event' => Events::postRemove,
+            ])
+            ->tag('doctrine.event_listener', [
+                'event' => Events::postPersist,
+            ])
+            ->tag('doctrine.event_listener', [
+                'event' => Events::onClear,
+            ])
             ->args([
                 service('sonata.media.pool'),
                 service('sonata.media.manager.category')->nullOnInvalid(),

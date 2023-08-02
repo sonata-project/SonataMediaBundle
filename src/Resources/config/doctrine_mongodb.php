@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Doctrine\ODM\MongoDB\Events;
 use Sonata\MediaBundle\Document\GalleryManager;
 use Sonata\MediaBundle\Document\MediaManager;
 use Sonata\MediaBundle\Generator\UuidGenerator;
@@ -38,7 +39,24 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.generator.default', UuidGenerator::class)
 
         ->set('sonata.media.doctrine.event_subscriber', MediaEventSubscriber::class)
-            ->tag('doctrine_mongodb.odm.event_subscriber')
+            ->tag('doctrine_mongodb.odm.event_listener', [
+                'event' => Events::prePersist,
+            ])
+            ->tag('doctrine_mongodb.odm.event_listener', [
+                'event' => Events::preUpdate,
+            ])
+            ->tag('doctrine_mongodb.odm.event_listener', [
+                'event' => Events::preRemove,
+            ])
+            ->tag('doctrine_mongodb.odm.event_listener', [
+                'event' => Events::postUpdate,
+            ])
+            ->tag('doctrine_mongodb.odm.event_listener', [
+                'event' => Events::postRemove,
+            ])
+            ->tag('doctrine_mongodb.odm.event_listener', [
+                'event' => Events::postPersist,
+            ])
             ->args([
                 service('sonata.media.pool'),
             ]);
