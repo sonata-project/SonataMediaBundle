@@ -548,7 +548,7 @@
       </trans-unit>
       <trans-unit id="form.group_gallery">
         <source>form.group_gallery</source>
-        <target>Gallerie</target>
+        <target>Galerie</target>
       </trans-unit>
       <trans-unit id="form.group_options">
         <source>form.group_options</source>

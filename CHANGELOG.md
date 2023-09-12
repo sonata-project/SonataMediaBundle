@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.10.4](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.3...4.10.4) - 2023-09-11
+### Fixed
+- [[#2414](https://github.com/sonata-project/SonataMediaBundle/pull/2414)] Improve French translation ([@antoinemineau](https://github.com/antoinemineau))
+
 ## [4.10.3](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.2...4.10.3) - 2023-08-01
 ### Fixed
 - [[#2411](https://github.com/sonata-project/SonataMediaBundle/pull/2411)] Deprecation of Event Subscribers on Symfony 6.3. The MediaEventSubscriber now uses Event Listeners ([@Hanmac](https://github.com/Hanmac))
