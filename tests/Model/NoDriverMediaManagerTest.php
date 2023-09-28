@@ -21,7 +21,7 @@ use Sonata\MediaBundle\Model\NoDriverMediaManager;
 class NoDriverMediaManagerTest extends TestCase
 {
     /**
-     * @dataProvider providerMethods
+     * @dataProvider provideExceptionCases
      *
      * @param mixed[] $arguments
      */
@@ -40,7 +40,7 @@ class NoDriverMediaManagerTest extends TestCase
     /**
      * @phpstan-return iterable<array{string, mixed[]}>
      */
-    public function providerMethods(): iterable
+    public function provideExceptionCases(): iterable
     {
         yield ['getClass', []];
         yield ['findAll', []];

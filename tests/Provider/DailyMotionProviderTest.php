@@ -170,7 +170,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @dataProvider dataTransformWithUrl
+     * @dataProvider provideTransformWithUrlCases
      */
     public function testTransformWithUrl(string $url): void
     {
@@ -214,7 +214,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
     /**
      * @phpstan-return iterable<array{string}>
      */
-    public function dataTransformWithUrl(): iterable
+    public function provideTransformWithUrlCases(): iterable
     {
         yield ['http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds'];
         yield ['http://www.dailymotion.com/video/x9wjql'];

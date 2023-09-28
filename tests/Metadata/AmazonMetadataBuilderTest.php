@@ -24,7 +24,7 @@ use Symfony\Component\Mime\MimeTypesInterface;
 final class AmazonMetadataBuilderTest extends TestCase
 {
     /**
-     * @dataProvider provider
+     * @dataProvider provideAmazonCases
      *
      * @param array<string, string|int> $mediaAttributes
      * @param array<string, mixed>      $expected
@@ -51,7 +51,7 @@ final class AmazonMetadataBuilderTest extends TestCase
     /**
      * @phpstan-return iterable<array{AmazonSettings, array<string, string|int>, array<string, mixed>}>
      */
-    public function provider(): iterable
+    public function provideAmazonCases(): iterable
     {
         yield [
             [

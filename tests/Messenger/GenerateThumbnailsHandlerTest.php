@@ -84,7 +84,7 @@ final class GenerateThumbnailsHandlerTest extends TestCase
     }
 
     /**
-     * @dataProvider provideMediaIds
+     * @dataProvider provideGenerateThumbnailsCases
      */
     public function testGenerateThumbnails(int|string $id): void
     {
@@ -104,7 +104,7 @@ final class GenerateThumbnailsHandlerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int|string}>
      */
-    public function provideMediaIds(): iterable
+    public function provideGenerateThumbnailsCases(): iterable
     {
         yield [25];
         yield ['25'];

@@ -171,7 +171,7 @@ class VimeoProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @dataProvider getTransformWithUrlMedia
+     * @dataProvider provideTransformWithUrlCases
      */
     public function testTransformWithUrl(MediaInterface $media): void
     {
@@ -211,7 +211,7 @@ class VimeoProviderTest extends AbstractProviderTest
     /**
      * @phpstan-return iterable<array{MediaInterface}>
      */
-    public function getTransformWithUrlMedia(): iterable
+    public function provideTransformWithUrlCases(): iterable
     {
         $mediaWebsite = new Media();
         $mediaWebsite->setContext('default');

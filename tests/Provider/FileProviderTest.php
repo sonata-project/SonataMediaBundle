@@ -198,7 +198,7 @@ class FileProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @dataProvider mediaProvider
+     * @dataProvider provideTransformCases
      *
      * @phpstan-param class-string $expected
      */
@@ -215,7 +215,7 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @phpstan-return iterable<array{class-string, MediaInterface}>
      */
-    public function mediaProvider(): iterable
+    public function provideTransformCases(): iterable
     {
         $realPath = realpath(__DIR__.'/../Fixtures/file.txt');
 
