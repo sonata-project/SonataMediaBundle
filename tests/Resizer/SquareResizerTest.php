@@ -50,7 +50,7 @@ class SquareResizerTest extends TestCase
     }
 
     /**
-     * @dataProvider getBoxSettings
+     * @dataProvider provideGetBoxCases
      *
      * @param array<string, int|string|bool|array|null> $settings
      *
@@ -78,7 +78,7 @@ class SquareResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{FormatOptions, Box, Box}>
      */
-    public static function getBoxSettings(): iterable
+    public static function provideGetBoxCases(): iterable
     {
         yield [[
             'width' => 90,

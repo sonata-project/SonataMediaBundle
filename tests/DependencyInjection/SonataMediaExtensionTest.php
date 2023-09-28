@@ -91,7 +91,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider dataAdapter
+     * @dataProvider provideAdapterCases
      *
      * @phpstan-param class-string $type
      */
@@ -105,7 +105,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @phpstan-return iterable<array{string, class-string}>
      */
-    public function dataAdapter(): iterable
+    public function provideAdapterCases(): iterable
     {
         yield ['sonata.media.adapter.image.gd', GdImagine::class];
         yield ['sonata.media.adapter.image.gmagick', GmagicImagine::class];
@@ -147,7 +147,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider dataResizer
+     * @dataProvider provideResizerCases
      *
      * @phpstan-param class-string $type
      */
@@ -161,7 +161,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @phpstan-return iterable<array{string, class-string}>
      */
-    public function dataResizer(): iterable
+    public function provideResizerCases(): iterable
     {
         yield ['sonata.media.resizer.simple', SimpleResizer::class];
         yield ['sonata.media.resizer.square', SquareResizer::class];
@@ -236,7 +236,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider dataFilesystemConfigurationAwsV3
+     * @dataProvider provideLoadWithFilesystemConfigurationV3Cases
      *
      * @param array<string, mixed> $expected
      * @param array<string, mixed> $configs
@@ -270,7 +270,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @phpstan-return iterable<array{array<string, mixed>, array<string, mixed>}>
      */
-    public function dataFilesystemConfigurationAwsV3(): iterable
+    public function provideLoadWithFilesystemConfigurationV3Cases(): iterable
     {
         yield [
             [

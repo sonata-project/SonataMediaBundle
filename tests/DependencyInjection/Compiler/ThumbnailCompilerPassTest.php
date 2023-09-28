@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 final class ThumbnailCompilerPassTest extends TestCase
 {
     /**
-     * @dataProvider processProvider
+     * @dataProvider provideProcessCases
      *
      * @phpstan-param class-string $class
      */
@@ -44,7 +44,7 @@ final class ThumbnailCompilerPassTest extends TestCase
     /**
      * @phpstan-return iterable<array{0: bool, 1: class-string|string, 2?: ParameterBagInterface}>
      */
-    public function processProvider(): iterable
+    public function provideProcessCases(): iterable
     {
         yield [true, FormatThumbnail::class];
         yield [false, MessengerThumbnail::class];

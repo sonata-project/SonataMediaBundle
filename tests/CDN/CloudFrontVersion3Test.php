@@ -36,7 +36,7 @@ final class CloudFrontVersion3Test extends TestCase
     }
 
     /**
-     * @dataProvider provideCloudFrontTestCases
+     * @dataProvider provideCloudFrontCases
      */
     public function testCloudFront(
         string $expectedPath,
@@ -85,7 +85,7 @@ final class CloudFrontVersion3Test extends TestCase
     /**
      * @phpstan-return iterable<array{string, string, string, string, int, string}>
      */
-    public function provideCloudFrontTestCases(): iterable
+    public function provideCloudFrontCases(): iterable
     {
         yield ['/foo/bar.jpg', '/foo', '/bar.jpg', 'ivalidation_id_42', CloudFrontVersion3::STATUS_WAITING, 'InProgress'];
         yield ['/foo/bar.jpg', '/foo', 'bar.jpg', 'ivalidation_a', CloudFrontVersion3::STATUS_OK, 'Completed'];
