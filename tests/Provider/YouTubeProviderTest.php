@@ -171,7 +171,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @dataProvider getUrls
+     * @dataProvider provideTransformWithUrlCases
      */
     public function testTransformWithUrl(string $url): void
     {
@@ -217,7 +217,7 @@ class YouTubeProviderTest extends AbstractProviderTest
     /**
      * @phpstan-return iterable<array{string}>
      */
-    public static function getUrls(): iterable
+    public static function provideTransformWithUrlCases(): iterable
     {
         yield ['BDYAbAtaDzA'];
         yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'];

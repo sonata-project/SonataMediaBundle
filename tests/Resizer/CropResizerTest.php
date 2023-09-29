@@ -52,7 +52,7 @@ final class CropResizerTest extends TestCase
     }
 
     /**
-     * @dataProvider getResizeProvider
+     * @dataProvider provideResizeCases
      */
     public function testResize(
         int $srcWidth,
@@ -113,7 +113,7 @@ final class CropResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int, int, int, int, int, int, int, int}>
      */
-    public function getResizeProvider(): iterable
+    public function provideResizeCases(): iterable
     {
         yield 'landscape: resize, no crop' => [800, 200, 400, 100, 400, 100, 0, 0];
         yield 'landscape: resize, crop' => [800, 200, 600, 100, 600, 150, 600, 100];
@@ -134,7 +134,7 @@ final class CropResizerTest extends TestCase
     }
 
     /**
-     * @dataProvider getResizeNoChangeProvider
+     * @dataProvider provideResizeNoChangeCases
      */
     public function testResizeNoChange(
         int $srcWidth,
@@ -178,7 +178,7 @@ final class CropResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int, int, int, int}>
      */
-    public function getResizeNoChangeProvider(): iterable
+    public function provideResizeNoChangeCases(): iterable
     {
         yield 'landscape: match' => [800, 200, 800, 200];
         yield 'landscape: small width' => [800, 100, 800, 200];
@@ -193,7 +193,7 @@ final class CropResizerTest extends TestCase
     }
 
     /**
-     * @dataProvider getBoxProvider
+     * @dataProvider provideGetBoxCases
      */
     public function testGetBox(int $srcWidth, int $srcHeight, int $targetWidth, int $targetHeight, int $expectWidth, int $expectHeight): void
     {
@@ -223,7 +223,7 @@ final class CropResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int, int, int, int, int, int}>
      */
-    public function getBoxProvider(): iterable
+    public function provideGetBoxCases(): iterable
     {
         yield 'source = target' => [800, 800, 800, 800, 800, 800];
 

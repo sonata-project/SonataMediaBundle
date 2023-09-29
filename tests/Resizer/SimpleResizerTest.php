@@ -121,7 +121,7 @@ class SimpleResizerTest extends TestCase
     }
 
     /**
-     * @dataProvider getBoxSettings
+     * @dataProvider provideGetBoxCases
      *
      * @param array<string, int|string|bool|array|null> $settings
      *
@@ -149,7 +149,7 @@ class SimpleResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int, FormatOptions, Box, Box}>
      */
-    public static function getBoxSettings(): iterable
+    public static function provideGetBoxCases(): iterable
     {
         yield [ManipulatorInterface::THUMBNAIL_INSET, [
             'width' => 90,
