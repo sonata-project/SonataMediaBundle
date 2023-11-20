@@ -41,7 +41,7 @@ abstract class Media implements MediaInterface, \Stringable
 
     protected ?int $height = null;
 
-    protected ?float $length = null;
+    protected ?string $length = null;
 
     protected ?string $copyright = null;
 
@@ -184,12 +184,12 @@ abstract class Media implements MediaInterface, \Stringable
 
     public function setLength(?float $length): void
     {
-        $this->length = $length;
+        $this->length = null !== $length ? (string) $length : null;
     }
 
     public function getLength(): ?float
     {
-        return $this->length;
+        return null !== $this->length ? (float) $this->length : null;
     }
 
     public function setCopyright(?string $copyright): void
