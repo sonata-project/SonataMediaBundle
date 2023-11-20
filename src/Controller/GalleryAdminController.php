@@ -56,7 +56,7 @@ final class GalleryAdminController extends CRUDController
             $exportFormats = $exporter->getAvailableFormats($this->admin);
         }
 
-        return $this->renderWithExtraParams($this->admin->getTemplateRegistry()->getTemplate('list'), [
+        return $this->render($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
