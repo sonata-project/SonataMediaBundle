@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.10.5](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.4...4.10.5) - 2023-11-21
+### Changed
+- [[#2351](https://github.com/sonata-project/SonataMediaBundle/pull/2351)] How `picture` element twig options are merged, making them work same way as `srcset` ([@haivala](https://github.com/haivala))
+
+### Fixed
+- [[#2420](https://github.com/sonata-project/SonataMediaBundle/pull/2420)] Fix doctrine mapping for media length ([@core23](https://github.com/core23))
+- [[#2423](https://github.com/sonata-project/SonataMediaBundle/pull/2423)] Usage of deprecated `renderWithExtraParams` method ([@VincentLanglet](https://github.com/VincentLanglet))
+
 ## [4.10.4](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.3...4.10.4) - 2023-09-11
 ### Fixed
 - [[#2414](https://github.com/sonata-project/SonataMediaBundle/pull/2414)] Improve French translation ([@antoinemineau](https://github.com/antoinemineau))
