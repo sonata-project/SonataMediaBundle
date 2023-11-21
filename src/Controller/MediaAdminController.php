@@ -44,7 +44,7 @@ final class MediaAdminController extends CRUDController
             $pool = $this->container->get('sonata.media.pool');
             \assert($pool instanceof Pool);
 
-            return $this->renderWithExtraParams('@SonataMedia/MediaAdmin/select_provider.html.twig', [
+            return $this->render('@SonataMedia/MediaAdmin/select_provider.html.twig', [
                 'providers' => $pool->getProvidersByContext(
                     $request->query->get('context', $pool->getDefaultContext())
                 ),
@@ -128,7 +128,7 @@ final class MediaAdminController extends CRUDController
             $exportFormats = $exporter->getAvailableFormats($this->admin);
         }
 
-        return $this->renderWithExtraParams($this->admin->getTemplateRegistry()->getTemplate('list'), [
+        return $this->render($this->admin->getTemplateRegistry()->getTemplate('list'), [
             'action' => 'list',
             'form' => $formView,
             'datagrid' => $datagrid,
