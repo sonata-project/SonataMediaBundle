@@ -471,7 +471,7 @@ class FileProviderTest extends AbstractProviderTest
     /**
      * @return MockObject&ConstraintViolationBuilderInterface
      */
-    private function createConstraintBuilder(): object
+    private function createConstraintBuilder(): MockObject&ConstraintViolationBuilderInterface
     {
         $constraintBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $constraintBuilder

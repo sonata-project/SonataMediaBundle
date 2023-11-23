@@ -32,7 +32,7 @@ class BaseProviderTest extends AbstractProviderTest
     /**
      * @return TestProvider
      */
-    public function getProvider(): MediaProviderInterface
+    public function getProvider(): TestProvider
     {
         $adapter = $this->createMock(Adapter::class);
 

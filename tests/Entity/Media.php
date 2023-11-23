@@ -27,7 +27,7 @@ class Media extends BaseMedia
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId(): int|string|null
     {
         return $this->id;
     }

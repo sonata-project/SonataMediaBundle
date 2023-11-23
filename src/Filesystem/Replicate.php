@@ -63,7 +63,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      *
      * @return int|bool
      */
-    public function mtime($key)
+    public function mtime($key): int|bool
     {
         return $this->primary->mtime($key);
     }
@@ -87,7 +87,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      *
      * @return int|bool
      */
-    public function write($key, $content)
+    public function write($key, $content): int|bool
     {
         $ok = true;
         $return = false;
@@ -116,7 +116,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      *
      * @return string|bool
      */
-    public function read($key)
+    public function read($key): string|bool
     {
         return $this->primary->read($key);
     }
@@ -172,7 +172,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      *
      * @return mixed[]
      */
-    public function getMetadata($key)
+    public function getMetadata($key): array
     {
         if ($this->primary instanceof MetadataSupporter) {
             return $this->primary->getMetadata($key);

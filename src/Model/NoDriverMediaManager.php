@@ -52,7 +52,7 @@ final class NoDriverMediaManager implements MediaManagerInterface
      *
      * @return MediaInterface|null
      */
-    public function findOneBy(array $criteria, ?array $orderBy = null): ?object
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?MediaInterface
     {
         throw new NoDriverException();
     }

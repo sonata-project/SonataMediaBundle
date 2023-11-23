@@ -52,7 +52,7 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
      *
      * @return GalleryInterface<GalleryItemInterface>|null
      */
-    public function findOneBy(array $criteria, ?array $orderBy = null): ?object
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?GalleryInterface
     {
         throw new NoDriverException();
     }

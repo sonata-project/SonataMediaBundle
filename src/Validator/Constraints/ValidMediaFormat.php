@@ -31,7 +31,7 @@ final class ValidMediaFormat extends Constraint
      * @return string|string[]
      */
     #[\ReturnTypeWillChange]
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

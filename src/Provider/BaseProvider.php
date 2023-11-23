@@ -116,7 +116,7 @@ abstract class BaseProvider implements MediaProviderInterface
         $this->formats[$name] = $settings;
     }
 
-    final public function getFormat(string $name)
+    final public function getFormat(string $name): array|false
     {
         return $this->formats[$name] ?? false;
     }

@@ -130,7 +130,7 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     /**
      * @return Stub&ImageInterface
      */
-    private function mockImage(int $width, int $height): object
+    private function mockImage(int $width, int $height): Stub&ImageInterface
     {
         $box = $this->createStub(BoxInterface::class);
         $box->method('getWidth')->willReturn($width);
@@ -145,7 +145,7 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
     /**
      * @return Stub&MediaInterface
      */
-    private function mockMedia(): Stub
+    private function mockMedia(): Stub&MediaInterface
     {
         $binaryContent = $this->createStub(UploadedFile::class);
         $binaryContent->method('getPathname')->willReturn('pathname');
