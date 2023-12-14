@@ -64,7 +64,11 @@ final class GalleryAdmin extends AbstractAdmin
             return;
         }
 
-        $object->setContext($this->getRequest()->query->get('context'));
+        $context = $this->getRequest()->query->get('context');
+
+        \assert(null === $context || \is_string($context));
+
+        $object->setContext($context);
     }
 
     protected function configureFormFields(FormMapper $form): void

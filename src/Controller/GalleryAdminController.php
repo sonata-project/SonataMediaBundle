@@ -39,7 +39,7 @@ final class GalleryAdminController extends CRUDController
         }
 
         $listMode = $request->query->get('_list_mode');
-        if (null !== $listMode) {
+        if (\is_string($listMode)) {
             $this->admin->setListMode($listMode);
         }
 
