@@ -16,15 +16,16 @@ namespace Sonata\MediaBundle\Messenger;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Thumbnail\GenerableThumbnailInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 /**
  * @author Jordi Sala Morales <jordism91@gmail.com>
  *
- * @psalm-suppress DeprecatedInterface
+ * NEXT_MAJOR: Stop implementing `BackwardCompatibleMessageHandlerInterface`.
  */
-final class GenerateThumbnailsHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class GenerateThumbnailsHandler implements BackwardCompatibleMessageHandlerInterface
 {
     public function __construct(
         private GenerableThumbnailInterface $thumbnail,

@@ -48,13 +48,11 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     /**
      * @param mixed $value
      *
-     * @return mixed
-     *
      * @phpstan-param MediaInterface|null $value
      * @phpstan-return MediaInterface|null
      */
     #[\ReturnTypeWillChange]
-    public function transform($value)
+    public function transform($value): mixed
     {
         if (null === $value) {
             return new $this->class();
@@ -70,13 +68,11 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     /**
      * @param mixed $value
      *
-     * @return mixed
-     *
      * @phpstan-param MediaInterface|null $value
      * @phpstan-return MediaInterface|null
      */
     #[\ReturnTypeWillChange]
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         if (!$value instanceof MediaInterface) {
             return null;

@@ -28,9 +28,7 @@ final class Configuration implements ConfigurationInterface
     private const DB_DRIVERS = ['doctrine_orm', 'doctrine_mongodb', 'no_driver'];
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -86,9 +84,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addContextsSection(ArrayNodeDefinition $node): void
     {
@@ -136,9 +132,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addCdnSection(ArrayNodeDefinition $node): void
     {
@@ -179,9 +173,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addFilesystemSection(ArrayNodeDefinition $node): void
     {
@@ -273,9 +265,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addProvidersSection(ArrayNodeDefinition $node): void
     {
@@ -401,9 +391,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addModelSection(ArrayNodeDefinition $node): void
     {
@@ -422,9 +410,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addHttpClientSection(ArrayNodeDefinition $node): void
     {
@@ -447,9 +433,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addResizerSection(ArrayNodeDefinition $node): void
     {
@@ -482,9 +466,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addAdapterSection(ArrayNodeDefinition $node): void
     {
@@ -500,9 +482,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod
-     *
-     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     private function addMessengerSection(ArrayNodeDefinition $node): void
     {

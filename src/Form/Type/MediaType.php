@@ -95,7 +95,7 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
             ->setAllowedValues('context', array_keys($this->pool->getContexts()));
     }
 
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return FormType::class;
     }

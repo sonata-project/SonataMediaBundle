@@ -85,7 +85,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      * @param string $key
      * @param string $content
      *
-     * @return int|bool
+     * @return bool
      */
     public function write($key, $content)
     {
