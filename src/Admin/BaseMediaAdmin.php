@@ -115,6 +115,8 @@ abstract class BaseMediaAdmin extends AbstractAdmin
             $context = $request->query->get('context', $this->pool->getDefaultContext());
         }
 
+        \assert(\is_string($context));
+
         $providers = $this->pool->getProvidersByContext($context);
         $provider = $request->query->get('provider');
 
@@ -166,6 +168,8 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         }
 
         $context = $request->query->get('context');
+
+        \assert(null === $context || \is_string($context));
 
         $object->setProviderName($providerName);
         $object->setContext($context);
