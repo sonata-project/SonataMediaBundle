@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.11.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.5...4.11.0) - 2023-12-15
+### Added
+- [[#2430](https://github.com/sonata-project/SonataMediaBundle/pull/2430)] Support for packages from `symfony/*` 7.x ([@phansys](https://github.com/phansys))
+
 ## [4.10.5](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.4...4.10.5) - 2023-11-21
 ### Changed
 - [[#2351](https://github.com/sonata-project/SonataMediaBundle/pull/2351)] How `picture` element twig options are merged, making them work same way as `srcset` ([@haivala](https://github.com/haivala))
