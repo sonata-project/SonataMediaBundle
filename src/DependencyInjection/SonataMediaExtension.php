@@ -267,7 +267,8 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $async = true === $config['filesystem']['s3']['async'];
             if ($async && !class_exists(SimpleS3Client::class)) {
                 throw new \RuntimeException('You must install "async-aws/simple-s3" to use async S3 adapter');
-            } elseif (!$async && !class_exists(S3Client::class)) {
+            }
+            if (!$async && !class_exists(S3Client::class)) {
                 throw new \RuntimeException('You must install "aws/aws-sdk-php" to use Amazon S3 filesystem');
             }
 
