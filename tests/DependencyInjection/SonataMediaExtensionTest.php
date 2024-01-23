@@ -41,6 +41,7 @@ use Sonata\MediaBundle\Twig\GlobalVariables;
 use Sonata\MediaBundle\Twig\MediaRuntime;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Reference;
 
 class SonataMediaExtensionTest extends AbstractExtensionTestCase
 {
@@ -486,7 +487,13 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
             ],
         ]);
 
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.cdn.fallback', 0, 'sonata.media.cdn.cloudfront');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'sonata.media.cdn.fallback',
+            0,
+            new Reference(
+                'sonata.media.cdn.cloudfront'
+            )
+        );
     }
 
     public function testReplicateFilesystem(): void
@@ -500,8 +507,16 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
             ],
         ]);
 
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 0, 'sonata.media.adapter.filesystem.s3');
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.replicate', 1, 'sonata.media.adapter.filesystem.local');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'sonata.media.adapter.filesystem.replicate',
+            0,
+            new Reference('sonata.media.adapter.filesystem.s3')
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'sonata.media.adapter.filesystem.replicate',
+            1,
+            new Reference('sonata.media.adapter.filesystem.local')
+        );
     }
 
     /**
