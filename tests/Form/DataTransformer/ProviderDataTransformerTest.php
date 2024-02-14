@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProviderDataTransformerTest extends TestCase
@@ -124,8 +124,10 @@ class ProviderDataTransformerTest extends TestCase
         $transformer->reverseTransform($media);
     }
 
-    public function testReverseTransformWithThrowingProviderNoThrow(): void
+    public function testReverseTransformWithThrowingProviderThrowTransformationFailedException(): void
     {
+        $this->expectException(TransformationFailedException::class);
+
         $provider = $this->createMock(MediaProviderInterface::class);
         $provider->expects(static::once())->method('transform')->will(static::throwException(new \Exception()));
 
@@ -140,29 +142,6 @@ class ProviderDataTransformerTest extends TestCase
         $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
             'new_on_update' => false,
         ]);
-        $transformer->reverseTransform($media);
-    }
-
-    public function testReverseTransformWithThrowingProviderLogsException(): void
-    {
-        $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(static::once())->method('transform')->will(static::throwException(new \Exception()));
-
-        $pool = new Pool('default');
-        $pool->addProvider('default', $provider);
-
-        $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects(static::once())->method('error');
-
-        $media = $this->createMock(MediaInterface::class);
-        $media->expects(static::exactly(3))->method('getProviderName')->willReturn('default');
-        $media->method('getId')->willReturn(1);
-        $media->method('getBinaryContent')->willReturn(new UploadedFile(__FILE__, 'ProviderDataTransformerTest'));
-
-        $transformer = new ProviderDataTransformer($pool, MediaInterface::class, [
-            'new_on_update' => false,
-        ]);
-        $transformer->setLogger($logger);
         $transformer->reverseTransform($media);
     }
 }

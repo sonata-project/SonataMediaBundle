@@ -15,7 +15,6 @@ namespace Sonata\MediaBundle\Form\Type;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -53,7 +52,6 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
             'empty_on_new' => $options['empty_on_new'],
             'new_on_update' => $options['new_on_update'],
         ]);
-        $dataTransformer->setLogger($this->logger ?? new NullLogger());
 
         $builder->addModelTransformer($dataTransformer);
 
