@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.11.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.11.0...4.11.1) - 2024-02-18
+### Fixed
+- [[#2442](https://github.com/sonata-project/SonataMediaBundle/pull/2442)] Resolve "Admin has no subject" error from the getMediaBuilder ([@VincentLanglet](https://github.com/VincentLanglet))
+- [[#2442](https://github.com/sonata-project/SonataMediaBundle/pull/2442)] Resolve "Admin has no subject" error from the getGalleryBuilder ([@VincentLanglet](https://github.com/VincentLanglet))
+
 ## [4.11.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.10.5...4.11.0) - 2023-12-15
 ### Added
 - [[#2430](https://github.com/sonata-project/SonataMediaBundle/pull/2430)] Support for packages from `symfony/*` 7.x ([@phansys](https://github.com/phansys))
