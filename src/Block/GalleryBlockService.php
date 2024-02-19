@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Block;
 
 use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Form\FormMapper as AdminFormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
@@ -29,6 +30,7 @@ use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -74,6 +76,10 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
 
     public function configureEditForm(FormMapper $form, BlockInterface $block): void
     {
+        if (!$form instanceof AdminFormMapper) {
+            throw new \InvalidArgumentException('Gallery block requires to be used in the Admin context');
+        }
+
         $contextChoices = [];
 
         foreach ($this->pool->getContexts() as $name => $context) {
@@ -124,7 +130,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
                     'choices' => $formatChoices,
                     'label' => 'form.label_format',
                 ]],
-                [$this->getGalleryBuilder(), null, []],
+                [$this->getGalleryBuilder($form), null, []],
                 ['pauseTime', NumberType::class, [
                     'label' => 'form.label_pause_time',
                 ]],
@@ -183,7 +189,10 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
     {
     }
 
-    private function getGalleryBuilder(): FormBuilderInterface
+    /**
+     * @param AdminFormMapper<object> $form
+     */
+    private function getGalleryBuilder(AdminFormMapper $form): FormBuilderInterface
     {
         if (null === $this->galleryAdmin) {
             throw new \LogicException('The SonataAdminBundle is required to render the edit form.');
@@ -193,13 +202,21 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
             'translation_domain' => 'SonataMediaBundle',
             'edit' => 'list',
         ]);
+        $fieldDescription->setAssociationAdmin($this->galleryAdmin);
 
-        return $this->galleryAdmin->getFormBuilder()->create('galleryId', ModelListType::class, [
+        $formBuilder = $form->getFormBuilder()->create('galleryId', ModelListType::class, [
             'sonata_field_description' => $fieldDescription,
             'class' => $this->galleryAdmin->getClass(),
             'model_manager' => $this->galleryAdmin->getModelManager(),
             'label' => 'form.label_gallery',
         ]);
+
+        $formBuilder->addModelTransformer(new CallbackTransformer(
+            static fn (?MediaInterface $value): ?MediaInterface => $value,
+            static fn (?MediaInterface $value) => $value instanceof MediaInterface ? $value->getId() : $value
+        ));
+
+        return $formBuilder;
     }
 
     /**
