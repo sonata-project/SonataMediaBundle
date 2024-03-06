@@ -17,7 +17,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 // `Symfony\Component\Messenger\Handler\MessageHandlerInterface` was removed in "symfony/messenger" 7.
 // @todo: Remove this interface when dropping support for "symfony/messenger" < 7.
-/** @psalm-suppress UndefinedClass */
 if (interface_exists(MessageHandlerInterface::class)) {
     class_alias(MessageHandlerInterface::class, __NAMESPACE__.'\BackwardCompatibleMessageHandlerInterface');
 } else {

@@ -57,7 +57,7 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
         throw new NoDriverException();
     }
 
-    public function find($id): ?object
+    public function find(mixed $id): ?object
     {
         throw new NoDriverException();
     }
