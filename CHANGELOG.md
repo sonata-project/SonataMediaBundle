@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.12.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.11.1...4.12.0) - 2024-03-08
+### Changed
+- [[#2444](https://github.com/sonata-project/SonataMediaBundle/pull/2444)] Throw TransformationFailedException when reverse transformation fails in ProviderDataTransformer. ([@jorrit](https://github.com/jorrit))
+
 ## [4.11.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.11.0...4.11.1) - 2024-02-18
 ### Fixed
 - [[#2442](https://github.com/sonata-project/SonataMediaBundle/pull/2442)] Resolve "Admin has no subject" error from the getMediaBuilder ([@VincentLanglet](https://github.com/VincentLanglet))
