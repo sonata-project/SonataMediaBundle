@@ -15,16 +15,21 @@ namespace Sonata\MediaBundle\Form\DataTransformer;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * @implements DataTransformerInterface<MediaInterface, MediaInterface>
+ *
+ * NEXT_MAJOR: remove LoggerAwareInterface interface
  */
 final class ProviderDataTransformer implements DataTransformerInterface, LoggerAwareInterface
 {
+    /**
+     * NEXT_MAJOR: remove this trait.
+     */
     use LoggerAwareTrait;
 
     /**
@@ -67,6 +72,8 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
 
     /**
      * @param mixed $value
+     *
+     * @throws TransformationFailedException when the transformation fails
      *
      * @phpstan-param MediaInterface|null $value
      * @phpstan-return MediaInterface|null
@@ -116,15 +123,7 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
         try {
             $provider->transform($newMedia);
         } catch (\Throwable $e) {
-            $logger = $this->logger ?? new NullLogger();
-
-            // #1107 We must never throw an exception here.
-            // An exception here would prevent us to provide meaningful errors through the Form
-            // Error message inspired from Monolog\ErrorHandler
-            $logger->error(
-                sprintf('Caught Exception %s: "%s" at %s line %s', $e::class, $e->getMessage(), $e->getFile(), $e->getLine()),
-                ['exception' => $e]
-            );
+            throw new TransformationFailedException($e->getMessage(), 0, $e, $e->getMessage());
         }
 
         return $newMedia;
