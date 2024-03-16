@@ -14,7 +14,7 @@
         </field>
         <field name="width" column="width" type="integer" nullable="true"/>
         <field name="height" column="height" type="integer" nullable="true"/>
-        <field name="length" column="length" type="decimal" nullable="true"/>
+        <field name="length" column="length" type="decimal" nullable="true" precision="2"/>
         <field name="contentType" column="content_type" type="string" nullable="true" length="255"/>
         <field name="size" column="content_size" type="integer" nullable="true"/>
         <field name="copyright" column="copyright" type="string" nullable="true"/>
