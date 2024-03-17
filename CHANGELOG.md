@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.13.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.12.0...4.13.0) - 2024-03-17
+### Added
+- [[#2448](https://github.com/sonata-project/SonataMediaBundle/pull/2448)] Compatibility with ORM 3 ([@dmaicher](https://github.com/dmaicher))
+
 ## [4.12.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.11.1...4.12.0) - 2024-03-08
 ### Changed
 - [[#2444](https://github.com/sonata-project/SonataMediaBundle/pull/2444)] Throw TransformationFailedException when reverse transformation fails in ProviderDataTransformer. ([@jorrit](https://github.com/jorrit))
