@@ -20,16 +20,11 @@ use Symfony\Component\Filesystem\Filesystem;
 $kernel = new AppKernel($_SERVER['APP_ENV'] ?? 'test', (bool) ($_SERVER['APP_DEBUG'] ?? false));
 $application = new Application($kernel);
 $application->setAutoExit(false);
+$application->setCatchExceptions(false);
 
 $input = new ArrayInput([
     'command' => 'doctrine:database:drop',
     '--force' => true,
-]);
-$application->run($input, new NullOutput());
-
-$input = new ArrayInput([
-    'command' => 'doctrine:database:create',
-    '--no-interaction' => true,
 ]);
 $application->run($input, new NullOutput());
 
