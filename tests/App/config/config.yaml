@@ -80,6 +80,7 @@ doctrine:
     orm:
         entity_managers:
             default:
+                report_fields_where_declared: true
                 mappings:
                     SonataMediaBundle: null
                     SonataMediaTest:
