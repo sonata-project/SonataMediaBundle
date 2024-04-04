@@ -32,9 +32,9 @@ class FormatThumbnailTest extends TestCase
         $referenceFile = new File('myfile', $filesystem);
 
         $formats = [
-           'admin' => ['height' => 50, 'width' => 50, 'quality' => 100, 'resizer' => null],
-           'mycontext_medium' => ['height' => 500, 'width' => 500, 'quality' => 100, 'resizer' => null],
-           'anothercontext_large' => ['height' => 500, 'width' => 500, 'quality' => 100, 'resizer' => null],
+            'admin' => ['height' => 50, 'width' => 50, 'quality' => 100, 'resizer' => null],
+            'mycontext_medium' => ['height' => 500, 'width' => 500, 'quality' => 100, 'resizer' => null],
+            'anothercontext_large' => ['height' => 500, 'width' => 500, 'quality' => 100, 'resizer' => null],
         ];
 
         $resizer = $this->createMock(ResizerInterface::class);
