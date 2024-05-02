@@ -21,5 +21,7 @@
                 <referencedMethod name="Symfony\Component\Console\Helper\HelperInterface::ask"/>
             </errorLevel>
         </UndefinedInterfaceMethod>
+        <!-- Until we drop PHP < 8.3 support -->
+        <MissingClassConstType errorLevel="suppress"/>
     </issueHandlers>
 </psalm>
