@@ -28,10 +28,6 @@ final class FileThumbnail implements ThumbnailInterface
 
     public function generatePublicUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
     {
-        if (MediaProviderInterface::FORMAT_ADMIN !== $format) {
-            throw new \InvalidArgumentException(sprintf('Unsupported format "%s".', $format));
-        }
-
         return $this->packages->getUrl('bundles/sonatamedia/file.png');
     }
 
