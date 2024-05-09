@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sonata\MediaBundle\Tests\Security;
+namespace Sonata\MediaBundle\Tests\Thumbnail;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -47,10 +47,9 @@ final class FileThumbnailTest extends TestCase
 
         static::assertSame('bundles/sonatamedia/file.png', $publicUrl);
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unsupported format "random".');
+        $publicUrl = $this->thumbnail->generatePublicUrl($provider, $media, 'random');
 
-        $this->thumbnail->generatePublicUrl($provider, $media, 'random');
+        static::assertSame('bundles/sonatamedia/file.png', $publicUrl);
     }
 
     public function testGeneratePrivateUrl(): void
