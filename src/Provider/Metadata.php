@@ -55,7 +55,7 @@ final class Metadata implements MetadataInterface
         return $this->options;
     }
 
-    public function getOption(string $name, $default = null)
+    public function getOption(string $name, mixed $default = null)
     {
         return \array_key_exists($name, $this->options) ? $this->options[$name] : $default;
     }
