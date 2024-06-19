@@ -84,7 +84,7 @@
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.18",
         "psalm/plugin-symfony": "^5.0",
-        "rector/rector": "^0.19",
+        "rector/rector": "^1.1",
         "sonata-project/admin-bundle": "^4.28",
         "sonata-project/block-bundle": "^4.11 || ^5.0",
         "sonata-project/classification-bundle": "^4.0",
