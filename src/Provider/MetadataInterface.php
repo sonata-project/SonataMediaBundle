@@ -29,8 +29,6 @@ interface MetadataInterface
     public function getOptions(): array;
 
     /**
-     * @param mixed $default The default value if option not found
-     *
      * @return mixed
      */
     public function getOption(string $name, mixed $default = null);
