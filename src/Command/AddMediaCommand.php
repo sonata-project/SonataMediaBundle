@@ -50,7 +50,7 @@ final class AddMediaCommand extends Command
         $context = $input->getArgument('context');
         $binaryContent = $input->getArgument('binaryContent');
 
-        $output->writeln(sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));
+        $output->writeln(\sprintf('Add a new media - context: %s, provider: %s, content: %s', $context, $provider, $binaryContent));
 
         $media = $this->mediaManager->create();
         $media->setBinaryContent($binaryContent);

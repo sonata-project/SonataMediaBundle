@@ -43,7 +43,7 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
     public function getResizer(string $id): ResizerInterface
     {
         if (!isset($this->resizers[$id])) {
-            throw new \LogicException(sprintf('Resizer with id: "%s" is not attached.', $id));
+            throw new \LogicException(\sprintf('Resizer with id: "%s" is not attached.', $id));
         }
 
         return $this->resizers[$id];
@@ -61,7 +61,7 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
             throw new \InvalidArgumentException('Unable to generate public url for image without id.');
         }
 
-        return sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));
+        return \sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));
     }
 
     public function generatePrivateUrl(MediaProviderInterface $provider, MediaInterface $media, string $format): string
@@ -76,7 +76,7 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
             throw new \InvalidArgumentException('Unable to generate private url for image without id.');
         }
 
-        return sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));
+        return \sprintf('%s/thumb_%s_%s.%s', $provider->generatePath($media), $id, $format, $this->getExtension($media));
     }
 
     public function generate(MediaProviderInterface $provider, MediaInterface $media): void

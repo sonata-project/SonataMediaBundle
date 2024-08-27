@@ -63,11 +63,11 @@ final class Pool
         }
 
         if ([] === $this->providers) {
-            throw new \RuntimeException(sprintf('Unable to retrieve provider named "%s" since there are no providers configured yet.', $name));
+            throw new \RuntimeException(\sprintf('Unable to retrieve provider named "%s" since there are no providers configured yet.', $name));
         }
 
         if (!isset($this->providers[$name])) {
-            throw new \InvalidArgumentException(sprintf('Unable to retrieve the provider named "%s". Available providers are %s.', $name, '"'.implode('", "', $this->getProviderList()).'"'));
+            throw new \InvalidArgumentException(\sprintf('Unable to retrieve the provider named "%s". Available providers are %s.', $name, '"'.implode('", "', $this->getProviderList()).'"'));
         }
 
         return $this->providers[$name];
@@ -141,7 +141,7 @@ final class Pool
     public function getContext(string $name): array
     {
         if (!$this->hasContext($name)) {
-            throw new \LogicException(sprintf('Pool does not have context %s, did you configure all your contexts?', $name));
+            throw new \LogicException(\sprintf('Pool does not have context %s, did you configure all your contexts?', $name));
         }
 
         return $this->contexts[$name];
@@ -217,19 +217,19 @@ final class Pool
         $mediaContext = $media->getContext();
 
         if (null === $mediaContext) {
-            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId() ?? ''));
+            throw new \RuntimeException(\sprintf('Media %s does not have context', $media->getId() ?? ''));
         }
 
         $download = $this->getContext($mediaContext)['download'];
 
         if (!isset($download['strategy'])) {
-            throw new \RuntimeException(sprintf('Unable to retrieve the download strategy from context %s.', $mediaContext));
+            throw new \RuntimeException(\sprintf('Unable to retrieve the download strategy from context %s.', $mediaContext));
         }
 
         $strategy = $download['strategy'];
 
         if (!isset($this->downloadStrategies[$strategy])) {
-            throw new \RuntimeException(sprintf('Unable to retrieve the download security %s', $strategy));
+            throw new \RuntimeException(\sprintf('Unable to retrieve the download security %s', $strategy));
         }
 
         return $this->downloadStrategies[$strategy];
@@ -243,13 +243,13 @@ final class Pool
         $mediaContext = $media->getContext();
 
         if (null === $mediaContext) {
-            throw new \RuntimeException(sprintf('Media %s does not have context', $media->getId() ?? ''));
+            throw new \RuntimeException(\sprintf('Media %s does not have context', $media->getId() ?? ''));
         }
 
         $download = $this->getContext($mediaContext)['download'];
 
         if (!isset($download['mode'])) {
-            throw new \RuntimeException(sprintf('Unable to retrieve the download mode from context %s.', $mediaContext));
+            throw new \RuntimeException(\sprintf('Unable to retrieve the download mode from context %s.', $mediaContext));
         }
 
         return $download['mode'];

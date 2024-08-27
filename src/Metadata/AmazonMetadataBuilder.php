@@ -114,7 +114,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         $mimeType = current($mimeTypes);
 
         if (false === $mimeType) {
-            throw new \RuntimeException(sprintf('Unable to determine the mime type for file %s', $filename));
+            throw new \RuntimeException(\sprintf('Unable to determine the mime type for file %s', $filename));
         }
 
         return ['contentType' => $mimeType];

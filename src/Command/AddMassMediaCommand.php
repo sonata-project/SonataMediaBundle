@@ -101,7 +101,7 @@ final class AddMassMediaCommand extends Command
         $filePointer = fopen($file, 'r');
 
         if (false === $filePointer) {
-            throw new \RuntimeException(sprintf('The provided CSV file %s could not be opened', $file));
+            throw new \RuntimeException(\sprintf('The provided CSV file %s could not be opened', $file));
         }
 
         return $filePointer;
@@ -120,9 +120,9 @@ final class AddMassMediaCommand extends Command
 
         try {
             $this->mediaManager->save($media);
-            $output->writeln(sprintf(' > %s - %s', $media->getId() ?? '', $media->getName() ?? ''));
+            $output->writeln(\sprintf(' > %s - %s', $media->getId() ?? '', $media->getName() ?? ''));
         } catch (\Exception $e) {
-            $output->writeln(sprintf('<error>%s</error> : %s', $e->getMessage(), json_encode($data, \JSON_THROW_ON_ERROR)));
+            $output->writeln(\sprintf('<error>%s</error> : %s', $e->getMessage(), json_encode($data, \JSON_THROW_ON_ERROR)));
         }
     }
 }

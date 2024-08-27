@@ -87,7 +87,7 @@ final class RemoveThumbsCommand extends Command
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log($output, sprintf('Error: %s', $e->getMessage()));
+                $this->log($output, \sprintf('Error: %s', $e->getMessage()));
 
                 break;
             }
@@ -98,7 +98,7 @@ final class RemoveThumbsCommand extends Command
             }
 
             $totalMediasCount += $batchMediasCount;
-            $this->log($output, sprintf(
+            $this->log($output, \sprintf(
                 'Loaded %s medias (batch #%d, offset %d) for removing thumbs (provider: %s, format: %s)',
                 $batchMediasCount,
                 $batchCounter,
@@ -120,7 +120,7 @@ final class RemoveThumbsCommand extends Command
             }
         }
 
-        $this->log($output, sprintf('Done (total medias processed: %s).', $totalMediasCount));
+        $this->log($output, \sprintf('Done (total medias processed: %s).', $totalMediasCount));
 
         return 0;
     }
@@ -181,7 +181,7 @@ final class RemoveThumbsCommand extends Command
 
     private function processMedia(OutputInterface $output, MediaInterface $media, MediaProviderInterface $provider, string $context, string $format): bool
     {
-        $this->log($output, sprintf(
+        $this->log($output, \sprintf(
             'Deleting thumbs for %s - %s',
             $media->getName() ?? '',
             $media->getId() ?? ''
@@ -194,7 +194,7 @@ final class RemoveThumbsCommand extends Command
 
             $provider->removeThumbnails($media, $format);
         } catch (\Exception $e) {
-            $this->log($output, sprintf(
+            $this->log($output, \sprintf(
                 '<error>Unable to remove thumbnails, media: %s - %s </error>',
                 $media->getId() ?? '',
                 $e->getMessage()

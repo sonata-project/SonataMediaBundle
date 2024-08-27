@@ -238,7 +238,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
             }
         }
 
-        static::assertTrue($found, sprintf(
+        static::assertTrue($found, \sprintf(
             'Unable to find "%s" in "%s" with extractor "%s"',
             implode('", "', $expected),
             $output,

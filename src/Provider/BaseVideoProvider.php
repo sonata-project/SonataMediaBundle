@@ -81,7 +81,7 @@ abstract class BaseVideoProvider extends BaseProvider
             throw new \InvalidArgumentException('Unable to generate public url for media without id.');
         }
 
-        return $this->getCdn()->getPath(sprintf(
+        return $this->getCdn()->getPath(\sprintf(
             '%s/thumb_%s_%s.jpg',
             $this->generatePath($media),
             $id,
@@ -97,7 +97,7 @@ abstract class BaseVideoProvider extends BaseProvider
             throw new \InvalidArgumentException('Unable to generate public url for media without id.');
         }
 
-        return sprintf(
+        return \sprintf(
             '%s/thumb_%s_%s.jpg',
             $this->generatePath($media),
             $id,
@@ -171,7 +171,7 @@ abstract class BaseVideoProvider extends BaseProvider
             $response = $this->sendRequest('GET', $url);
         } catch (\RuntimeException $exception) {
             throw new \RuntimeException(
-                sprintf('Unable to retrieve the video information for: %s', $url),
+                \sprintf('Unable to retrieve the video information for: %s', $url),
                 (int) $exception->getCode(),
                 $exception
             );
@@ -180,7 +180,7 @@ abstract class BaseVideoProvider extends BaseProvider
         $metadata = json_decode($response, true, 512, \JSON_THROW_ON_ERROR);
 
         if (null === $metadata) {
-            throw new \RuntimeException(sprintf('Unable to decode the video information for: %s', $url));
+            throw new \RuntimeException(\sprintf('Unable to decode the video information for: %s', $url));
         }
 
         return $metadata;
@@ -209,7 +209,7 @@ abstract class BaseVideoProvider extends BaseProvider
             $settings = $this->getFormat($format);
 
             if (false === $settings) {
-                throw new \RuntimeException(sprintf('Unable to retrieve format settings for format %s.', $format));
+                throw new \RuntimeException(\sprintf('Unable to retrieve format settings for format %s.', $format));
             }
         }
 

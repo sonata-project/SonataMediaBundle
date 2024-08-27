@@ -48,7 +48,7 @@ final class FixMediaContextCommand extends Command
             $defaultContext = $this->contextManager->find($context);
 
             if (null === $defaultContext) {
-                $output->writeln(sprintf(" > default context for '%s' is missing, creating one", $context));
+                $output->writeln(\sprintf(" > default context for '%s' is missing, creating one", $context));
                 $defaultContext = $this->contextManager->create();
                 $defaultContext->setId($context);
                 $defaultContext->setName(ucfirst($context));

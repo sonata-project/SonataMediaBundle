@@ -85,7 +85,7 @@ final class VimeoProvider extends BaseVideoProvider
 
     public function updateMetadata(MediaInterface $media, bool $force = false): void
     {
-        $url = sprintf('https://vimeo.com/api/oembed.json?url=%s', $this->getReferenceUrl($media));
+        $url = \sprintf('https://vimeo.com/api/oembed.json?url=%s', $this->getReferenceUrl($media));
 
         try {
             $metadata = $this->getMetadata($media, $url);
@@ -125,7 +125,7 @@ final class VimeoProvider extends BaseVideoProvider
             throw new \InvalidArgumentException('Unable to generate reference url for media without provider reference.');
         }
 
-        return sprintf('https://vimeo.com/%s', $providerReference);
+        return \sprintf('https://vimeo.com/%s', $providerReference);
     }
 
     protected function fixBinaryContent(MediaInterface $media): void

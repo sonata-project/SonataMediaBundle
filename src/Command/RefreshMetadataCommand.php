@@ -62,7 +62,7 @@ final class RefreshMetadataCommand extends Command
             'context' => $context,
         ]);
 
-        $this->log($output, sprintf(
+        $this->log($output, \sprintf(
             'Loaded %s medias for generating thumbs (provider: %s, context: %s)',
             \count($medias),
             $provider->getName(),
@@ -70,7 +70,7 @@ final class RefreshMetadataCommand extends Command
         ));
 
         foreach ($medias as $media) {
-            $this->log($output, sprintf(
+            $this->log($output, \sprintf(
                 'Refresh media %s - %s',
                 $media->getName() ?? '',
                 $media->getId() ?? ''
@@ -79,7 +79,7 @@ final class RefreshMetadataCommand extends Command
             try {
                 $provider->updateMetadata($media, false);
             } catch (\Exception $e) {
-                $this->log($output, sprintf(
+                $this->log($output, \sprintf(
                     '<error>Unable to update metadata, media: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()
@@ -91,7 +91,7 @@ final class RefreshMetadataCommand extends Command
             try {
                 $this->mediaManager->save($media);
             } catch (\Exception $e) {
-                $this->log($output, sprintf(
+                $this->log($output, \sprintf(
                     '<error>Unable saving media, media: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()

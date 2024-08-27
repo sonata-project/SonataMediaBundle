@@ -66,7 +66,7 @@ final class CloudFrontVersion3 implements CDNInterface
 
     public function getPath(string $relativePath, bool $isFlushable = false): string
     {
-        return sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
+        return \sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
     }
 
     public function flushByString(string $string): string
@@ -115,7 +115,7 @@ final class CloudFrontVersion3 implements CDNInterface
             }
 
             if (!\in_array($status, self::AVAILABLE_STATUSES, true)) {
-                throw new \RuntimeException(sprintf('Unable to determine the flush status from the given response: "%s".', $status));
+                throw new \RuntimeException(\sprintf('Unable to determine the flush status from the given response: "%s".', $status));
             }
 
             $id = $invalidation['Id'] ?? null;
@@ -126,7 +126,7 @@ final class CloudFrontVersion3 implements CDNInterface
 
             return $id;
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException(sprintf('Unable to flush paths "%s".', implode('", "', $paths)), 0, $ex);
+            throw new \RuntimeException(\sprintf('Unable to flush paths "%s".', implode('", "', $paths)), 0, $ex);
         }
     }
 
@@ -148,7 +148,7 @@ final class CloudFrontVersion3 implements CDNInterface
 
             throw new \RuntimeException('Unable to determine the flush status from the given response.');
         } catch (CloudFrontException $ex) {
-            throw new \RuntimeException(sprintf('Unable to retrieve flush status for identifier %s.', $identifier), 0, $ex);
+            throw new \RuntimeException(\sprintf('Unable to retrieve flush status for identifier %s.', $identifier), 0, $ex);
         }
     }
 

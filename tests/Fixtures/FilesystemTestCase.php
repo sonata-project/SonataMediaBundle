@@ -99,11 +99,11 @@ class FilesystemTestCase extends TestCase
 
     protected function assertFilePermissions(int $expectedFilePerms, string $filePath): void
     {
-        $actualFilePerms = (int) substr(sprintf('%o', fileperms($filePath)), -3);
+        $actualFilePerms = (int) substr(\sprintf('%o', fileperms($filePath)), -3);
         static::assertSame(
             $expectedFilePerms,
             $actualFilePerms,
-            sprintf('File permissions for %s must be %s. Actual %s', $filePath, $expectedFilePerms, $actualFilePerms)
+            \sprintf('File permissions for %s must be %s. Actual %s', $filePath, $expectedFilePerms, $actualFilePerms)
         );
     }
 
