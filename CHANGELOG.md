@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.14.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.13.0...4.14.0) - 2024-08-27
+### Added
+- [[#2461](https://github.com/sonata-project/SonataMediaBundle/pull/2461)] Support for psr/http-message 2 ([@VincentLanglet](https://github.com/VincentLanglet))
+
+### Fixed
+- [[#2455](https://github.com/sonata-project/SonataMediaBundle/pull/2455)] Symfony 7.1 deprecation about `Symfony\Component\HttpKernel\DependencyInjection\Extension` usage ([@VincentLanglet](https://github.com/VincentLanglet))
+- [[#2452](https://github.com/sonata-project/SonataMediaBundle/pull/2452)] Remove format restriction on `FileThumbnail` service ([@VincentLanglet](https://github.com/VincentLanglet))
+
 ## [4.13.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.12.0...4.13.0) - 2024-03-17
 ### Added
 - [[#2448](https://github.com/sonata-project/SonataMediaBundle/pull/2448)] Compatibility with ORM 3 ([@dmaicher](https://github.com/dmaicher))
