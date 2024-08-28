@@ -63,7 +63,7 @@ class TestProvider extends BaseProvider
             throw new \InvalidArgumentException('Unable to generate reference image for media without provider reference.');
         }
 
-        $this->prevReferenceImage = sprintf('%s/%s', $this->generatePath($media), $providerReference);
+        $this->prevReferenceImage = \sprintf('%s/%s', $this->generatePath($media), $providerReference);
 
         return $this->prevReferenceImage;
     }

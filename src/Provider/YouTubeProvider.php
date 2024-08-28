@@ -195,7 +195,7 @@ final class YouTubeProvider extends BaseVideoProvider
 
     public function updateMetadata(MediaInterface $media, bool $force = false): void
     {
-        $url = sprintf('https://www.youtube.com/oembed?url=%s&format=json', $this->getReferenceUrl($media));
+        $url = \sprintf('https://www.youtube.com/oembed?url=%s&format=json', $this->getReferenceUrl($media));
 
         try {
             $metadata = $this->getMetadata($media, $url);
@@ -231,7 +231,7 @@ final class YouTubeProvider extends BaseVideoProvider
             throw new \InvalidArgumentException('Unable to generate reference url for media without provider reference.');
         }
 
-        return sprintf('https://www.youtube.com/watch?v=%s', $providerReference);
+        return \sprintf('https://www.youtube.com/watch?v=%s', $providerReference);
     }
 
     protected function doTransform(MediaInterface $media): void

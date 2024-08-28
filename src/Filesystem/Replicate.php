@@ -42,7 +42,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->secondary->delete($key);
         } catch (\Exception $e) {
-            $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
+            $this->logger->critical(\sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -50,7 +50,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->primary->delete($key);
         } catch (\Exception $e) {
-            $this->logger->critical(sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
+            $this->logger->critical(\sprintf('Unable to delete %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -95,7 +95,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $return = $this->primary->write($key, $content);
         } catch (\Exception $e) {
-            $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
+            $this->logger->critical(\sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -103,7 +103,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $return = $this->secondary->write($key, $content);
         } catch (\Exception $e) {
-            $this->logger->critical(sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
+            $this->logger->critical(\sprintf('Unable to write %s, error: %s', $key, $e->getMessage()));
 
             $ok = false;
         }
@@ -128,7 +128,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->primary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
-            $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
+            $this->logger->critical(\sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
 
             $ok = false;
         }
@@ -136,7 +136,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         try {
             $this->secondary->rename($sourceKey, $targetKey);
         } catch (\Exception $e) {
-            $this->logger->critical(sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
+            $this->logger->critical(\sprintf('Unable to rename %s, error: %s', $sourceKey, $e->getMessage()));
 
             $ok = false;
         }
@@ -210,7 +210,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
             return $this->secondary->createFile($key, $filesystem);
         }
 
-        throw new \LogicException(sprintf('None of the adapters implement %s.', FileFactory::class));
+        throw new \LogicException(\sprintf('None of the adapters implement %s.', FileFactory::class));
     }
 
     /**
@@ -226,7 +226,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
             return $this->secondary->createStream($key);
         }
 
-        throw new \LogicException(sprintf('None of the adapters implement %s.', StreamFactory::class));
+        throw new \LogicException(\sprintf('None of the adapters implement %s.', StreamFactory::class));
     }
 
     /**
@@ -237,7 +237,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     public function listDirectory(string $directory = ''): array
     {
         if (!method_exists($this->primary, 'listDirectory')) {
-            throw new \BadMethodCallException(sprintf(
+            throw new \BadMethodCallException(\sprintf(
                 'Method "%s()" is not supported by the primary adapter "%s".',
                 __METHOD__,
                 $this->primary::class

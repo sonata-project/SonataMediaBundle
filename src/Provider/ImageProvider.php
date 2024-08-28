@@ -62,7 +62,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
         } else {
             $resizerFormat = $this->getFormat($format);
             if (false === $resizerFormat) {
-                throw new \RuntimeException(sprintf('The image format "%s" is not defined.
+                throw new \RuntimeException(\sprintf('The image format "%s" is not defined.
                         Is the format registered in your ``sonata_media`` configuration?', $format));
             }
 
@@ -90,7 +90,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                 $settings = $this->getFormat($formatName);
 
                 if (false === $settings) {
-                    throw new \RuntimeException(sprintf('The image format "%s" is not defined.
+                    throw new \RuntimeException(\sprintf('The image format "%s" is not defined.
                             Is the format registered in your ``sonata_media`` configuration?', $formatName));
                 }
 
@@ -101,7 +101,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                 $src = $this->generatePublicUrl($media, $formatName);
                 $mediaQuery = \is_string($key)
                     ? $key
-                    : sprintf('(max-width: %dpx)', $this->resizer->getBox($media, $settings)->getWidth());
+                    : \sprintf('(max-width: %dpx)', $this->resizer->getBox($media, $settings)->getWidth());
 
                 $pictureParams['source'][] = ['media' => $mediaQuery, 'srcset' => $src];
             }
@@ -119,7 +119,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                     $settings = $this->getFormat($formatName);
 
                     if (false === $settings) {
-                        throw new \RuntimeException(sprintf('The image format "%s" is not defined.
+                        throw new \RuntimeException(\sprintf('The image format "%s" is not defined.
                                 Is the format registered in your ``sonata_media`` configuration?', $formatName));
                     }
 
@@ -132,7 +132,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                     $settings = $this->getFormat($format);
 
                     if (false === $settings) {
-                        throw new \RuntimeException(sprintf('The image format "%s" is not defined.
+                        throw new \RuntimeException(\sprintf('The image format "%s" is not defined.
                                 Is the format registered in your ``sonata_media`` configuration?', $format));
                     }
 
@@ -154,12 +154,12 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
                         $width = $this->resizer->getBox($media, $settings)->getWidth();
 
-                        $srcSet[] = sprintf('%s %dw', $this->generatePublicUrl($media, $providerFormat), $width);
+                        $srcSet[] = \sprintf('%s %dw', $this->generatePublicUrl($media, $providerFormat), $width);
                     }
                 }
 
                 // The reference format is not in the formats list
-                $srcSet[] = sprintf(
+                $srcSet[] = \sprintf(
                     '%s %dw',
                     $this->generatePublicUrl($media, MediaProviderInterface::FORMAT_REFERENCE),
                     $media->getBox()->getWidth()
@@ -168,7 +168,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                 $params['srcset'] = implode(', ', $srcSet);
             }
 
-            $params['sizes'] = sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);
+            $params['sizes'] = \sprintf('(max-width: %1$dpx) 100vw, %1$dpx', $mediaWidth);
         }
 
         return array_merge($params, $options);
@@ -182,7 +182,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                 $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
 
                 if (false === $path) {
-                    throw new \LogicException(sprintf('Unable to update metadata for media %s.', $media->getId() ?? ''));
+                    throw new \LogicException(\sprintf('Unable to update metadata for media %s.', $media->getId() ?? ''));
                 }
 
                 $fileObject = new \SplFileObject($path, 'w');
@@ -268,7 +268,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
         if (null === $extension || !\in_array(strtolower($extension), $this->allowedExtensions, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
-            throw new UploadException(sprintf(
+            throw new UploadException(\sprintf(
                 'The image extension "%s" is not one of the allowed (%s).',
                 $extension ?? '',
                 '"'.implode('", "', $this->allowedExtensions).'"'
@@ -280,7 +280,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
         if (null === $mimeType || !\in_array(strtolower($mimeType), $this->allowedMimeTypes, true)) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 
-            throw new UploadException(sprintf(
+            throw new UploadException(\sprintf(
                 'The image mime type "%s" is not one of the allowed (%s).',
                 $mimeType ?? '',
                 '"'.implode('", "', $this->allowedMimeTypes).'"'

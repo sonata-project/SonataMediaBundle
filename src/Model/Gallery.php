@@ -148,7 +148,7 @@ abstract class Gallery implements GalleryInterface, \Stringable
         $iterator = $this->getGalleryItems()->getIterator();
 
         if (!$iterator instanceof \ArrayIterator) {
-            throw new \RuntimeException(sprintf(
+            throw new \RuntimeException(\sprintf(
                 'The gallery %s cannot be reordered, $galleryItems should implement %s',
                 $this->getId() ?? '',
                 \ArrayIterator::class

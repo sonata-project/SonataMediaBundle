@@ -64,16 +64,16 @@ final class CleanMediaCommand extends Command
             throw new \RuntimeException('Unable to find upload directory, did you configure it?');
         }
 
-        $output->writeln(sprintf('<info>Scanning upload directory: %s</info>', $baseDirectory));
+        $output->writeln(\sprintf('<info>Scanning upload directory: %s</info>', $baseDirectory));
 
         foreach ($this->mediaPool->getContexts() as $contextName => $context) {
             if (!$filesystem->exists($baseDirectory.'/'.$contextName)) {
-                $output->writeln(sprintf("<info>'%s' does not exist</info>", $baseDirectory.'/'.$contextName));
+                $output->writeln(\sprintf("<info>'%s' does not exist</info>", $baseDirectory.'/'.$contextName));
 
                 continue;
             }
 
-            $output->writeln(sprintf('<info>Context: %s</info>', $contextName));
+            $output->writeln(\sprintf('<info>Context: %s</info>', $contextName));
 
             $files = $finder->files()->in($baseDirectory.'/'.$contextName);
 
@@ -82,7 +82,7 @@ final class CleanMediaCommand extends Command
 
                 if (!$this->mediaExists($filename, $contextName)) {
                     if ($dryRun) {
-                        $output->writeln(sprintf("<info>'%s' is orphanend</info>", $filename));
+                        $output->writeln(\sprintf("<info>'%s' is orphanend</info>", $filename));
                     } else {
                         try {
                             $realPath = $file->getRealPath();
@@ -91,13 +91,13 @@ final class CleanMediaCommand extends Command
                                 $filesystem->remove($realPath);
                             }
 
-                            $output->writeln(sprintf("<info>'%s' was successfully removed</info>", $filename));
+                            $output->writeln(\sprintf("<info>'%s' was successfully removed</info>", $filename));
                         } catch (IOException $ioe) {
-                            $output->writeln(sprintf('<error>%s</error>', $ioe->getMessage()));
+                            $output->writeln(\sprintf('<error>%s</error>', $ioe->getMessage()));
                         }
                     }
                 } elseif ($verbose) {
-                    $output->writeln(sprintf("'%s' found", $filename));
+                    $output->writeln(\sprintf("'%s' found", $filename));
                 }
             }
         }

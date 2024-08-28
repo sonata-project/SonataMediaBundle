@@ -91,7 +91,7 @@ final class SyncThumbsCommand extends Command
                     $batchOffset
                 );
             } catch (\Exception $e) {
-                $this->log($output, sprintf('Error: %s', $e->getMessage()));
+                $this->log($output, \sprintf('Error: %s', $e->getMessage()));
 
                 break;
             }
@@ -102,7 +102,7 @@ final class SyncThumbsCommand extends Command
             }
 
             $totalMediasCount += $batchMediasCount;
-            $this->log($output, sprintf(
+            $this->log($output, \sprintf(
                 'Loaded %s medias (batch #%d, offset %d) for generating thumbs (provider: %s, context: %s)',
                 $batchMediasCount,
                 $batchCounter,
@@ -130,14 +130,14 @@ final class SyncThumbsCommand extends Command
             }
         }
 
-        $this->log($output, sprintf('Done (total medias processed: %s).', $totalMediasCount));
+        $this->log($output, \sprintf('Done (total medias processed: %s).', $totalMediasCount));
 
         return 0;
     }
 
     private function processMedia(OutputInterface $output, MediaInterface $media, MediaProviderInterface $provider): bool
     {
-        $this->log($output, sprintf(
+        $this->log($output, \sprintf(
             'Generating thumbs for %s - %s',
             $media->getName() ?? '',
             $media->getId() ?? ''
@@ -146,7 +146,7 @@ final class SyncThumbsCommand extends Command
         try {
             $provider->removeThumbnails($media);
         } catch (\Exception $e) {
-            $this->log($output, sprintf(
+            $this->log($output, \sprintf(
                 '<error>Unable to remove old thumbnails, media: %s - %s </error>',
                 $media->getId() ?? '',
                 $e->getMessage()
@@ -158,7 +158,7 @@ final class SyncThumbsCommand extends Command
         try {
             $provider->generateThumbnails($media);
         } catch (\Exception $e) {
-            $this->log($output, sprintf(
+            $this->log($output, \sprintf(
                 '<error>Unable to generate new thumbnails, media: %s - %s </error>',
                 $media->getId() ?? '',
                 $e->getMessage()

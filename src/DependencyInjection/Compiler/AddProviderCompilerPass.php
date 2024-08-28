@@ -91,7 +91,7 @@ final class AddProviderCompilerPass implements CompilerPassInterface
                 $definition = $container->getDefinition($id);
 
                 foreach ($context['formats'] as $format => $formatConfig) {
-                    $definition->addMethodCall('addFormat', [sprintf('%s_%s', $name, $format), $formatConfig]);
+                    $definition->addMethodCall('addFormat', [\sprintf('%s_%s', $name, $format), $formatConfig]);
                 }
             }
         }

@@ -91,7 +91,7 @@ final class DailyMotionProvider extends BaseVideoProvider
 
     public function updateMetadata(MediaInterface $media, bool $force = false): void
     {
-        $url = sprintf('http://www.dailymotion.com/services/oembed?url=%s&format=json', $this->getReferenceUrl($media));
+        $url = \sprintf('http://www.dailymotion.com/services/oembed?url=%s&format=json', $this->getReferenceUrl($media));
 
         try {
             $metadata = $this->getMetadata($media, $url);
@@ -126,7 +126,7 @@ final class DailyMotionProvider extends BaseVideoProvider
             throw new \InvalidArgumentException('Unable to generate reference url for media without provider reference.');
         }
 
-        return sprintf('http://www.dailymotion.com/video/%s', $providerReference);
+        return \sprintf('http://www.dailymotion.com/video/%s', $providerReference);
     }
 
     protected function doTransform(MediaInterface $media): void

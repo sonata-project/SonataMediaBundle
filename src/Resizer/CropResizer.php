@@ -38,7 +38,7 @@ final class CropResizer implements ResizerInterface
     public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void
     {
         if (!isset($settings['width'])) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'The "width" parameter is missing in context "%s" for provider "%s".',
                 $media->getContext() ?? '',
                 $media->getProviderName() ?? ''
@@ -46,7 +46,7 @@ final class CropResizer implements ResizerInterface
         }
 
         if (!isset($settings['height'])) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'The "height" parameter is missing in context "%s" for provider "%s".',
                 $media->getContext() ?? '',
                 $media->getProviderName() ?? ''

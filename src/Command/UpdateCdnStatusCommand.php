@@ -83,13 +83,13 @@ final class UpdateCdnStatusCommand extends Command
             'cdnIsFlushable' => true,
         ]);
 
-        $this->log($output, sprintf('Loaded %s media for CDN status update (provider: %s, context: %s)', \count($medias), $provider->getName(), $context));
+        $this->log($output, \sprintf('Loaded %s media for CDN status update (provider: %s, context: %s)', \count($medias), $provider->getName(), $context));
 
         foreach ($medias as $media) {
             $cdn = $provider->getCdn();
             $flushIdentifier = $media->getCdnFlushIdentifier();
 
-            $this->log($output, sprintf(
+            $this->log($output, \sprintf(
                 'Refresh CDN status for media "%s" (%s) ',
                 $media->getName() ?? '',
                 $media->getId() ?? ''
@@ -118,15 +118,15 @@ final class UpdateCdnStatusCommand extends Command
 
                 if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
                     if ($previousStatus === $cdnStatus) {
-                        $this->log($output, sprintf('No changes (%u)', $cdnStatus));
+                        $this->log($output, \sprintf('No changes (%u)', $cdnStatus));
                     } elseif (CDNInterface::STATUS_OK === $cdnStatus) {
-                        $this->log($output, sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
+                        $this->log($output, \sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
                     } else {
-                        $this->log($output, sprintf('Updated status (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
+                        $this->log($output, \sprintf('Updated status (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
                     }
                 }
             } catch (\Throwable $e) {
-                $this->log($output, sprintf(
+                $this->log($output, \sprintf(
                     '<error>Unable update CDN status, media: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()
@@ -138,7 +138,7 @@ final class UpdateCdnStatusCommand extends Command
             try {
                 $this->mediaManager->save($media);
             } catch (\Throwable $e) {
-                $this->log($output, sprintf(
+                $this->log($output, \sprintf(
                     '<error>Unable to update medium: %s - %s </error>',
                     $media->getId() ?? '',
                     $e->getMessage()

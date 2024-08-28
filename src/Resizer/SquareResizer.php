@@ -40,7 +40,7 @@ final class SquareResizer implements ResizerInterface
     public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void
     {
         if (!isset($settings['width'])) {
-            throw new \RuntimeException(sprintf(
+            throw new \RuntimeException(\sprintf(
                 'Width parameter is missing in context "%s" for provider "%s"',
                 $media->getContext() ?? '',
                 $media->getProviderName() ?? ''

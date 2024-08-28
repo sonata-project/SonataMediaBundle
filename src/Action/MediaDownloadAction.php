@@ -41,7 +41,7 @@ final class MediaDownloadAction
         $media = $this->mediaManager->find($id);
 
         if (null === $media) {
-            throw new NotFoundHttpException(sprintf('unable to find the media with the id : %s', $id));
+            throw new NotFoundHttpException(\sprintf('unable to find the media with the id : %s', $id));
         }
 
         if (!$this->pool->getDownloadStrategy($media)->isGranted($media, $request)) {

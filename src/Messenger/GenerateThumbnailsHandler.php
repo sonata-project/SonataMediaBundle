@@ -40,19 +40,19 @@ final class GenerateThumbnailsHandler implements BackwardCompatibleMessageHandle
         $media = $this->mediaManager->find($mediaId);
 
         if (null === $media) {
-            throw new UnrecoverableMessageHandlingException(sprintf('Media "%s" not found.', $mediaId));
+            throw new UnrecoverableMessageHandlingException(\sprintf('Media "%s" not found.', $mediaId));
         }
 
         $providerName = $media->getProviderName();
 
         if (null === $providerName) {
-            throw new UnrecoverableMessageHandlingException(sprintf('Media "%s" does not have a provider name.', $mediaId));
+            throw new UnrecoverableMessageHandlingException(\sprintf('Media "%s" does not have a provider name.', $mediaId));
         }
 
         try {
             $provider = $this->pool->getProvider($providerName);
         } catch (\Exception) {
-            throw new UnrecoverableMessageHandlingException(sprintf('Provider "%s" not found.', $providerName));
+            throw new UnrecoverableMessageHandlingException(\sprintf('Provider "%s" not found.', $providerName));
         }
 
         $this->thumbnail->generate($provider, $media);

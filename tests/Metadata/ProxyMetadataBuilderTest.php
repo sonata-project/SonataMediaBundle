@@ -70,6 +70,7 @@ final class ProxyMetadataBuilderTest extends TestCase
             ],
             'region' => 'us-west-1',
             'version' => '2006-03-01',
+            'suppress_php_deprecation_warning' => true,
         ]);
         $adapter = new AwsS3($amazonclient, '');
         $media = new Media();
@@ -137,6 +138,7 @@ final class ProxyMetadataBuilderTest extends TestCase
             ],
             'region' => 'us-west-1',
             'version' => '2006-03-01',
+            'suppress_php_deprecation_warning' => true,
         ]);
         $adapter = new Replicate(
             new AwsS3($amazonclient, ''),

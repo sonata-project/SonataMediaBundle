@@ -23,12 +23,12 @@ class UuidGenerator implements GeneratorInterface
         $context = $media->getContext();
 
         if (null === $context) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'Unable to generate path for media without context using %s.',
                 self::class
             ));
         }
 
-        return sprintf('%s/%04s/%02s', $context, substr($id, 0, 4), substr($id, 4, 2));
+        return \sprintf('%s/%04s/%02s', $context, substr($id, 0, 4), substr($id, 4, 2));
     }
 }

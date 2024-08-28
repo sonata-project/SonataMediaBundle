@@ -24,7 +24,7 @@ final class Server implements CDNInterface
 
     public function getPath(string $relativePath, bool $isFlushable = false): string
     {
-        return sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
+        return \sprintf('%s/%s', $this->path, ltrim($relativePath, '/'));
     }
 
     public function flushByString(string $string): string
