@@ -125,12 +125,12 @@ interface MediaInterface
     public function getSize(): ?int;
 
     /**
-     * @return CategoryInterface|null
+     * @phpstan-return CategoryInterface|null
      */
     public function getCategory(): ?object;
 
     /**
-     * @param CategoryInterface|null $category
+     * @phpstan-param CategoryInterface|null $category
      */
     public function setCategory(?object $category = null): void;
 
