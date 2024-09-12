@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.14.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.14.0...4.14.1) - 2024-09-12
+### Fixed
+- [[#2460](https://github.com/sonata-project/SonataMediaBundle/pull/2460)] Fixed the callback transformers of media/gallery block services. ([@lemorragia](https://github.com/lemorragia))
+
 ## [4.14.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.13.0...4.14.0) - 2024-08-27
 ### Added
 - [[#2461](https://github.com/sonata-project/SonataMediaBundle/pull/2461)] Support for psr/http-message 2 ([@VincentLanglet](https://github.com/VincentLanglet))
