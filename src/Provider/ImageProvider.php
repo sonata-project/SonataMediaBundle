@@ -35,7 +35,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
         array $allowedExtensions,
         array $allowedMimeTypes,
         private ImagineInterface $imagineAdapter,
-        ?MetadataBuilderInterface $metadata = null
+        ?MetadataBuilderInterface $metadata = null,
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
     }

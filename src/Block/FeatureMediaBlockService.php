@@ -49,7 +49,7 @@ final class FeatureMediaBlockService extends AbstractBlockService implements Edi
         Environment $twig,
         private Pool $pool,
         private ?AdminInterface $mediaAdmin,
-        private MediaManagerInterface $mediaManager
+        private MediaManagerInterface $mediaManager,
     ) {
         parent::__construct($twig);
     }

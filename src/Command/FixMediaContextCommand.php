@@ -30,7 +30,7 @@ final class FixMediaContextCommand extends Command
     public function __construct(
         private Pool $mediaPool,
         private ?CategoryManagerInterface $categoryManager = null,
-        private ?ContextManagerInterface $contextManager = null
+        private ?ContextManagerInterface $contextManager = null,
     ) {
         parent::__construct();
     }

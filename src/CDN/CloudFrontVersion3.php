@@ -59,7 +59,7 @@ final class CloudFrontVersion3 implements CDNInterface
     public function __construct(
         private CloudFrontClient $client,
         private string $distributionId,
-        string $path
+        string $path,
     ) {
         $this->path = rtrim($path, '/');
     }

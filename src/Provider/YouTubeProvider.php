@@ -35,7 +35,7 @@ final class YouTubeProvider extends BaseVideoProvider
         ClientInterface $client,
         RequestFactoryInterface $requestFactory,
         ?MetadataBuilderInterface $metadata = null,
-        private bool $html5 = false
+        private bool $html5 = false,
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $requestFactory, $metadata);
     }

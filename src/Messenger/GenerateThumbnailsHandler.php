@@ -30,7 +30,7 @@ final class GenerateThumbnailsHandler implements BackwardCompatibleMessageHandle
     public function __construct(
         private GenerableThumbnailInterface $thumbnail,
         private MediaManagerInterface $mediaManager,
-        private Pool $pool
+        private Pool $pool,
     ) {
     }
 

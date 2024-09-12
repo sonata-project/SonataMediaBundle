@@ -24,7 +24,7 @@ final class ImageUploadDimensionValidator extends ConstraintValidator
 {
     public function __construct(
         private ImagineInterface $imagineAdapter,
-        private ImageProviderInterface $imageProvider
+        private ImageProviderInterface $imageProvider,
     ) {
     }
 

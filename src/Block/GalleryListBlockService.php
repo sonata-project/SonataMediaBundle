@@ -36,7 +36,7 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
     public function __construct(
         Environment $twig,
         private GalleryManagerInterface $galleryManager,
-        private Pool $pool
+        private Pool $pool,
     ) {
         parent::__construct($twig);
     }

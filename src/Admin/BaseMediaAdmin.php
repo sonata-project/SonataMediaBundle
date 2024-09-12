@@ -55,7 +55,7 @@ abstract class BaseMediaAdmin extends AbstractAdmin
         $contextManager = null,
         ?Pool $deprecatedPool = null,
         ?CategoryManagerInterface $deprecatedCategoryManager = null,
-        ?ContextManagerInterface $deprecatedContextManager = null
+        ?ContextManagerInterface $deprecatedContextManager = null,
     ) {
         // NEXT_MAJOR: Keep the if part.
         if ($pool instanceof Pool) {

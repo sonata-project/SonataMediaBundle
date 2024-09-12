@@ -49,7 +49,7 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
         Environment $twig,
         private Pool $pool,
         private ?AdminInterface $mediaAdmin,
-        private MediaManagerInterface $mediaManager
+        private MediaManagerInterface $mediaManager,
     ) {
         parent::__construct($twig);
     }

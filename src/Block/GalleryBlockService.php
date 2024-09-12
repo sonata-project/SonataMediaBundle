@@ -52,7 +52,7 @@ final class GalleryBlockService extends AbstractBlockService implements Editable
         Environment $twig,
         private Pool $pool,
         private ?AdminInterface $galleryAdmin,
-        private GalleryManagerInterface $galleryManager
+        private GalleryManagerInterface $galleryManager,
     ) {
         parent::__construct($twig);
     }

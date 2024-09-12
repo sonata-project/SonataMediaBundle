@@ -22,7 +22,7 @@ final class MessengerThumbnail implements ThumbnailInterface, GenerableThumbnail
 {
     public function __construct(
         private ThumbnailInterface $thumbnail,
-        private MessageBusInterface $bus
+        private MessageBusInterface $bus,
     ) {
     }
 

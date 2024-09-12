@@ -44,7 +44,7 @@ final class CloudFrontVersion3Test extends TestCase
         string $relativePath,
         string $invalidationId,
         int $expectedStatus,
-        string $invalidationStatus
+        string $invalidationStatus,
     ): void {
         $client = $this->getMockBuilder(CloudFrontClient::class)
             ->addMethods(['createInvalidation', 'getInvalidation'])

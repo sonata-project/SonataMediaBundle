@@ -48,7 +48,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         ThumbnailInterface $thumbnail,
         protected array $allowedExtensions = [],
         protected array $allowedMimeTypes = [],
-        protected ?MetadataBuilderInterface $metadata = null
+        protected ?MetadataBuilderInterface $metadata = null,
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
     }

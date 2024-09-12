@@ -19,7 +19,7 @@ final class IdGenerator implements GeneratorInterface
 {
     public function __construct(
         private int $firstLevel = 100000,
-        private int $secondLevel = 1000
+        private int $secondLevel = 1000,
     ) {
     }
 

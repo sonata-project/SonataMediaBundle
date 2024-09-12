@@ -28,7 +28,7 @@ final class SessionDownloadStrategy implements DownloadStrategyInterface
     public function __construct(
         private TranslatorInterface $translator,
         private RequestStack $requestStack,
-        private int $times
+        private int $times,
     ) {
     }
 

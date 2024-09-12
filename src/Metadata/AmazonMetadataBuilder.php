@@ -62,7 +62,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     public function __construct(
         private array $settings,
-        ?MimeTypesInterface $mimeTypes = null
+        ?MimeTypesInterface $mimeTypes = null,
     ) {
         $this->mimeTypes = $mimeTypes ?? new MimeTypes();
     }

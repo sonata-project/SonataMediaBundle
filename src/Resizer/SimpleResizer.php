@@ -26,7 +26,7 @@ final class SimpleResizer implements ResizerInterface
     public function __construct(
         private ImagineInterface $adapter,
         private int $mode,
-        private MetadataBuilderInterface $metadata
+        private MetadataBuilderInterface $metadata,
     ) {
     }
 

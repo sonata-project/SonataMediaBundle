@@ -40,7 +40,7 @@ final class CleanMediaCommand extends Command
     public function __construct(
         private Local $filesystemLocal,
         private Pool $mediaPool,
-        private MediaManagerInterface $mediaManager
+        private MediaManagerInterface $mediaManager,
     ) {
         parent::__construct();
     }

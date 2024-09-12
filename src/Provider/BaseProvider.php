@@ -51,7 +51,7 @@ abstract class BaseProvider implements MediaProviderInterface
         protected Filesystem $filesystem,
         protected CDNInterface $cdn,
         protected GeneratorInterface $pathGenerator,
-        protected ThumbnailInterface $thumbnail
+        protected ThumbnailInterface $thumbnail,
     ) {
     }
 
