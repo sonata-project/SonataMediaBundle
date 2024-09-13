@@ -244,7 +244,7 @@ class SonataMediaExtensionTest extends AbstractExtensionTestCase
      */
     public function testLoadWithFilesystemConfigurationV3(
         array $expected,
-        array $configs
+        array $configs,
     ): void {
         if (!class_exists(Sdk::class)) {
             static::markTestSkipped('This test requires aws/aws-sdk-php 3.x.');

@@ -92,7 +92,7 @@ final class MediaDownloadActionTest extends TestCase
     private function configureDownloadSecurity(
         Media $media,
         Request $request,
-        bool $isGranted
+        bool $isGranted,
     ): void {
         $strategy = $this->createMock(DownloadStrategyInterface::class);
         $strategy->method('isGranted')->with($media, $request)->willReturn($isGranted);

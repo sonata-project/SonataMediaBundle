@@ -17,7 +17,7 @@ final class Fallback implements CDNInterface
 {
     public function __construct(
         private CDNInterface $cdn,
-        private CDNInterface $fallback
+        private CDNInterface $fallback,
     ) {
     }
 

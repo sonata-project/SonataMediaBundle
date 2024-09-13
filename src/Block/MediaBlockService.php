@@ -25,7 +25,6 @@ use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
-use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -49,7 +48,7 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
         Environment $twig,
         private Pool $pool,
         private ?AdminInterface $mediaAdmin,
-        private MediaManagerInterface $mediaManager
+        private MediaManagerInterface $mediaManager,
     ) {
         parent::__construct($twig);
     }
@@ -224,8 +223,8 @@ final class MediaBlockService extends AbstractBlockService implements EditableBl
         ]);
 
         $formBuilder->addModelTransformer(new CallbackTransformer(
-            static fn (?GalleryInterface $value): ?GalleryInterface => $value,
-            static fn (?GalleryInterface $value) => $value instanceof GalleryInterface ? $value->getId() : $value
+            static fn (?MediaInterface $value): ?MediaInterface => $value,
+            static fn (?MediaInterface $value) => $value instanceof MediaInterface ? $value->getId() : $value
         ));
 
         return $formBuilder;

@@ -78,7 +78,7 @@ abstract class Media implements MediaInterface, \Stringable
     protected Collection $galleryItems;
 
     /**
-     * @var CategoryInterface|null
+     * @phpstan-var CategoryInterface|null
      */
     protected ?object $category = null;
 

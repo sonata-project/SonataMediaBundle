@@ -62,7 +62,7 @@ final class CropResizerTest extends TestCase
         int $scaleWidth,
         int $scaleHeight,
         int $cropWidth,
-        int $cropHeight
+        int $cropHeight,
     ): void {
         $media = $this->createMock(MediaInterface::class);
         $media->method('getContext')->willReturn('sample');
@@ -140,7 +140,7 @@ final class CropResizerTest extends TestCase
         int $srcWidth,
         int $srcHeight,
         int $targetWidth,
-        int $targetHeight
+        int $targetHeight,
     ): void {
         $media = $this->createMock(MediaInterface::class);
         $media->method('getContext')->willReturn('sample');

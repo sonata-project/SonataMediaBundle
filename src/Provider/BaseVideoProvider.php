@@ -39,7 +39,7 @@ abstract class BaseVideoProvider extends BaseProvider
         ThumbnailInterface $thumbnail,
         private ClientInterface $client,
         private RequestFactoryInterface $requestFactory,
-        protected ?MetadataBuilderInterface $metadata = null
+        protected ?MetadataBuilderInterface $metadata = null,
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
     }

@@ -225,7 +225,7 @@ class CleanMediaCommandTest extends FilesystemTestCase
     private function assertOutputFoundInContext(
         string $extractor,
         array $expected,
-        string $output
+        string $output,
     ): void {
         preg_match_all($extractor, $output, $matches);
 

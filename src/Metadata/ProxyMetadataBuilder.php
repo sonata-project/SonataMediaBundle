@@ -24,7 +24,7 @@ final class ProxyMetadataBuilder implements MetadataBuilderInterface
     public function __construct(
         private Pool $pool,
         private ?MetadataBuilderInterface $noopMetadataBuilder = null,
-        private ?MetadataBuilderInterface $amazonMetadataBuilder = null
+        private ?MetadataBuilderInterface $amazonMetadataBuilder = null,
     ) {
     }
 

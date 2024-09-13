@@ -27,7 +27,7 @@ final class RolesDownloadStrategy implements DownloadStrategyInterface
     public function __construct(
         private TranslatorInterface $translator,
         private AuthorizationCheckerInterface $security,
-        private array $roles = []
+        private array $roles = [],
     ) {
     }
 

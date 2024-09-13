@@ -40,7 +40,7 @@ final class MediaType extends AbstractType implements LoggerAwareInterface
      */
     public function __construct(
         private Pool $pool,
-        private string $class
+        private string $class,
     ) {
     }
 

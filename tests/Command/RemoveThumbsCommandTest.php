@@ -102,7 +102,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             array $criteria,
             ?array $orderBy = null,
             ?int $limit = null,
-            ?int $offset = null
+            ?int $offset = null,
         ) use ($medias): array {
             if (null !== $offset && $offset > 0) {
                 return [];

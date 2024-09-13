@@ -34,7 +34,7 @@ final class MediaEventSubscriber extends BaseMediaEventSubscriber
 
     public function __construct(
         Pool $pool,
-        private ?CategoryManagerInterface $categoryManager = null
+        private ?CategoryManagerInterface $categoryManager = null,
     ) {
         parent::__construct($pool);
     }

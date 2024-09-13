@@ -41,7 +41,7 @@ final class SyncThumbsCommand extends Command
      */
     public function __construct(
         private Pool $mediaPool,
-        private MediaManagerInterface $mediaManager
+        private MediaManagerInterface $mediaManager,
     ) {
         parent::__construct();
     }

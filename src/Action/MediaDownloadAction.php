@@ -26,7 +26,7 @@ final class MediaDownloadAction
 {
     public function __construct(
         private MediaManagerInterface $mediaManager,
-        private Pool $pool
+        private Pool $pool,
     ) {
     }
 

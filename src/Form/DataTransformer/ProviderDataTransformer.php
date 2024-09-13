@@ -45,7 +45,7 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     public function __construct(
         private Pool $pool,
         private string $class,
-        array $options = []
+        array $options = [],
     ) {
         $this->options = $this->getOptions($options);
     }

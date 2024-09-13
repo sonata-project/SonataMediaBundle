@@ -24,7 +24,7 @@ final class MediaRuntime implements RuntimeExtensionInterface
     public function __construct(
         private Pool $pool,
         private MediaManagerInterface $mediaManager,
-        private Environment $twig
+        private Environment $twig,
     ) {
     }
 

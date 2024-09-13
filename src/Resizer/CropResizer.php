@@ -31,7 +31,7 @@ final class CropResizer implements ResizerInterface
 {
     public function __construct(
         private ImagineInterface $adapter,
-        private MetadataBuilderInterface $metadata
+        private MetadataBuilderInterface $metadata,
     ) {
     }
 
