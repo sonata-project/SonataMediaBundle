@@ -44,13 +44,7 @@ class BaseProviderTest extends AbstractProviderTest
 
         $cdn = $this->createStub(CDNInterface::class);
         $cdn->method('flushPaths')->willReturn((string) random_int(0, mt_getrandmax()));
-        $cdn->method('getFlushStatus')
-            ->will(static::onConsecutiveCalls(
-                CDNInterface::STATUS_OK,
-                CDNInterface::STATUS_TO_FLUSH,
-                CDNInterface::STATUS_WAITING,
-                CDNInterface::STATUS_OK
-            ));
+        $cdn->method('getFlushStatus')->willReturnOnConsecutiveCalls(CDNInterface::STATUS_OK, CDNInterface::STATUS_TO_FLUSH, CDNInterface::STATUS_WAITING, CDNInterface::STATUS_OK);
         $cdn->method('getPath')->willReturnCallback(static fn (string $path, bool $isFlushable): string => '/uploads/media/'.$path);
 
         $generator = new IdGenerator();
