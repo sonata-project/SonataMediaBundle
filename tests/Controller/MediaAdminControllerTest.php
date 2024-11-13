@@ -128,24 +128,27 @@ class MediaAdminControllerTest extends TestCase
         $this->configureSetFormTheme($formView, ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
-        /**
-         * @psalm-suppress DeprecatedMethod
-         */
-        $matcher = static::exactly(3);
 
+        $matcher = static::exactly(3);
         /**
-         * @psalm-suppress DeprecatedMethod
+         * @psalm-suppress MissingClosureParamType
          */
         $datagrid->expects($matcher)->method('setValue')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
-                $this->assertSame('context', $parameters[0]);
-                $this->assertSame(null, $parameters[1]);
-                $this->assertSame('another_context', $parameters[2]);
+            /**
+             * @psalm-suppress InternalMethod
+             */
+            if (1 === $matcher->getInvocationCount()) {
+                self::assertSame('context', $parameters[0]);
+                self::assertNull($parameters[1]);
+                self::assertSame('another_context', $parameters[2]);
             }
-            if ($matcher->getInvocationCount() === 2) {
-                $this->assertSame('category', $parameters[0]);
-                $this->assertSame(null, $parameters[1]);
-                $this->assertSame(1, $parameters[2]);
+            /**
+             * @psalm-suppress InternalMethod
+             */
+            if (2 === $matcher->getInvocationCount()) {
+                self::assertSame('category', $parameters[0]);
+                self::assertNull($parameters[1]);
+                self::assertSame(1, $parameters[2]);
             }
         });
         $datagrid->method('getForm')->willReturn($form);
