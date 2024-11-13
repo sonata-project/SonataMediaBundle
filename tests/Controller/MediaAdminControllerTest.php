@@ -133,7 +133,7 @@ class MediaAdminControllerTest extends TestCase
         /**
          * @psalm-suppress MissingClosureParamType
          */
-        $datagrid->expects($matcher)->method('setValue')->willReturnCallback(function (...$parameters) use ($matcher) {
+        $datagrid->expects($matcher)->method('setValue')->willReturnCallback(static function (...$parameters) use ($matcher) {
             /**
              * @psalm-suppress InternalMethod
              */
