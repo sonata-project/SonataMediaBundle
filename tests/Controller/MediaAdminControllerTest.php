@@ -128,14 +128,26 @@ class MediaAdminControllerTest extends TestCase
         $this->configureSetFormTheme($formView, ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
+        /**
+         * @psalm-suppress DeprecatedMethod
+         */
+        $matcher = static::exactly(3);
 
         /**
          * @psalm-suppress DeprecatedMethod
          */
-        $datagrid->expects(static::exactly(3))->method('setValue')->withConsecutive(
-            ['context', null, 'another_context'],
-            ['category', null, 1]
-        );
+        $datagrid->expects($matcher)->method('setValue')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('context', $parameters[0]);
+                $this->assertSame(null, $parameters[1]);
+                $this->assertSame('another_context', $parameters[2]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('category', $parameters[0]);
+                $this->assertSame(null, $parameters[1]);
+                $this->assertSame(1, $parameters[2]);
+            }
+        });
         $datagrid->method('getForm')->willReturn($form);
         $contextManager->method('find')->with('another_context')->willReturn($context);
         $categoryManager->method('getRootCategoriesForContext')->with($context)->willReturn([$category]);

@@ -24,8 +24,8 @@ class MediaTest extends TestCase
 
         $media->setProviderMetadata(['thumbnail_url' => 'http://pasloin.com/thumb.png']);
 
-        static::assertSame($media->getMetadataValue('thumbnail_url'), 'http://pasloin.com/thumb.png', '::getMetadataValue() return the good value');
-        static::assertSame($media->getMetadataValue('thumbnail_url1', 'default'), 'default', '::getMetadataValue() return the default');
+        static::assertSame('http://pasloin.com/thumb.png', $media->getMetadataValue('thumbnail_url'), '::getMetadataValue() return the good value');
+        static::assertSame('default', $media->getMetadataValue('thumbnail_url1', 'default'), '::getMetadataValue() return the default');
         static::assertNull($media->getMetadataValue('thumbnail_url1'), '::getMetadataValue() return the null value');
     }
 

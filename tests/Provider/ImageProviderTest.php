@@ -46,21 +46,26 @@ class ImageProviderTest extends AbstractProviderTest
         $mediumBox = new Box(500, 250);
         $largeBox = new Box(1000, 500);
 
-        $resizer->method('getBox')->will(static::onConsecutiveCalls(
-            $largeBox, // first properties call
+        $resizer->method('getBox')->willReturnOnConsecutiveCalls(
+            $largeBox,
+            // first properties call
             $mediumBox,
             $largeBox,
-            $mediumBox, // second call
+            $mediumBox,
+            // second call
             $mediumBox,
             $largeBox,
-            $adminBox, // Third call
-            $largeBox, // Fourth call
+            $adminBox,
+            // Third call
+            $largeBox,
+            // Fourth call
             $mediumBox,
             $largeBox,
-            $largeBox, // Fifth call
+            $largeBox,
+            // Fifth call
             $mediumBox,
             $largeBox
-        ));
+        );
 
         $filesystem = new Filesystem(new Local(sys_get_temp_dir().'/sonata-media-bundle/var/', true));
         $cdn = new Server('/uploads/media');

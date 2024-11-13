@@ -129,7 +129,7 @@ class ProviderDataTransformerTest extends TestCase
         $this->expectException(TransformationFailedException::class);
 
         $provider = $this->createMock(MediaProviderInterface::class);
-        $provider->expects(static::once())->method('transform')->will(static::throwException(new \Exception()));
+        $provider->expects(static::once())->method('transform')->willThrowException(new \Exception());
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
