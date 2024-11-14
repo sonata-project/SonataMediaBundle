@@ -129,13 +129,28 @@ class MediaAdminControllerTest extends TestCase
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
 
+        $matcher = static::exactly(3);
         /**
-         * @psalm-suppress DeprecatedMethod
+         * @psalm-suppress MissingClosureParamType
          */
-        $datagrid->expects(static::exactly(3))->method('setValue')->withConsecutive(
-            ['context', null, 'another_context'],
-            ['category', null, 1]
-        );
+        $datagrid->expects($matcher)->method('setValue')->willReturnCallback(static function (...$parameters) use ($matcher) {
+            /**
+             * @psalm-suppress InternalMethod
+             */
+            if (1 === $matcher->getInvocationCount()) {
+                self::assertSame('context', $parameters[0]);
+                self::assertNull($parameters[1]);
+                self::assertSame('another_context', $parameters[2]);
+            }
+            /**
+             * @psalm-suppress InternalMethod
+             */
+            if (2 === $matcher->getInvocationCount()) {
+                self::assertSame('category', $parameters[0]);
+                self::assertNull($parameters[1]);
+                self::assertSame(1, $parameters[2]);
+            }
+        });
         $datagrid->method('getForm')->willReturn($form);
         $contextManager->method('find')->with('another_context')->willReturn($context);
         $categoryManager->method('getRootCategoriesForContext')->with($context)->willReturn([$category]);

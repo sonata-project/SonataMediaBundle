@@ -234,7 +234,7 @@ class VimeoProviderTest extends AbstractProviderTest
         $this->expectExceptionCode(12);
 
         $client = $this->createMock(ClientInterface::class);
-        $client->expects(static::once())->method('sendRequest')->will(static::throwException(new \RuntimeException('First error on get', 12)));
+        $client->expects(static::once())->method('sendRequest')->willThrowException(new \RuntimeException('First error on get', 12));
 
         $provider = $this->getProvider($client);
 
