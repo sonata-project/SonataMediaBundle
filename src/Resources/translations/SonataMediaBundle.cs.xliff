@@ -14,6 +14,10 @@
         <source>gallery</source>
         <target>Galerie</target>
       </trans-unit>
+      <trans-unit id="gallery_item">
+        <source>gallery_item</source>
+        <target>Položka galerie</target>
+      </trans-unit>
       <trans-unit id="sonata_media">
         <source>sonata_media</source>
         <target>Knihovna médií</target>
@@ -88,7 +92,7 @@
       </trans-unit>
       <trans-unit id="filter.label_provider_reference">
         <source>filter.label_provider_reference</source>
-        <target>Provider Reference</target>
+        <target>Reference zdroje</target>
       </trans-unit>
       <trans-unit id="filter.label_enabled">
         <source>filter.label_enabled</source>
@@ -268,7 +272,7 @@
       </trans-unit>
       <trans-unit id="link.test_protected_url">
         <source>link.test_protected_url</source>
-        <target>Preview odkazu</target>
+        <target>Náhled odkazu</target>
       </trans-unit>
       <trans-unit id="list.label_enabled">
         <source>list.label_enabled</source>
@@ -296,7 +300,11 @@
       </trans-unit>
       <trans-unit id="list.label_custom">
         <source>list.label_custom</source>
-        <target>Custom</target>
+        <target>Vlastní</target>
+      </trans-unit>
+      <trans-unit id="list.label_author">
+        <source>list.label_author</source>
+        <target>Autor</target>
       </trans-unit>
       <trans-unit id="sidemenu.link_edit_media">
         <source>sidemenu.link_edit_media</source>
@@ -348,11 +356,11 @@
       </trans-unit>
       <trans-unit id="title.media_preview">
         <source>title.media_preview</source>
-        <target>Preview</target>
+        <target>Náhled</target>
       </trans-unit>
       <trans-unit id="title.media_thumbnail">
         <source>title.media_thumbnail</source>
-        <target>Náhled</target>
+        <target>Miniatura</target>
       </trans-unit>
       <trans-unit id="title.informations">
         <source>title.informations</source>
@@ -412,7 +420,7 @@
       </trans-unit>
       <trans-unit id="form.label_provider_reference">
         <source>form.label_provider_reference</source>
-        <target>Provider Reference</target>
+        <target>Reference zdroje</target>
       </trans-unit>
       <trans-unit id="sonata.media.block.media">
         <source>sonata.media.block.media</source>
@@ -454,10 +462,6 @@
         <source>form.label_start_paused</source>
         <target>Pozastavit na začátku</target>
       </trans-unit>
-      <trans-unit id="form.label_wrap">
-        <source>form.label_wrap</source>
-        <target>Wrap</target>
-      </trans-unit>
       <trans-unit id="form.label_orientation_left">
         <source>form.label_orientation_left</source>
         <target>Vlevo</target>
@@ -485,10 +489,6 @@
       <trans-unit id="view_all_galleries">
         <source>view_all_galleries</source>
         <target>Zobrazit všechny galerie</target>
-      </trans-unit>
-      <trans-unit id="form.group_media">
-        <source>form.group_media</source>
-        <target>Média</target>
       </trans-unit>
       <trans-unit id="form.label_mode">
         <source>form.label_mode</source>
@@ -540,11 +540,27 @@
       </trans-unit>
       <trans-unit id="form.label_translation_domain">
         <source>form.label_translation_domain</source>
-        <target>Translation domain</target>
+        <target>Překladová doména</target>
       </trans-unit>
       <trans-unit id="form.label_icon">
         <source>form.label_icon</source>
         <target>Ikona</target>
+      </trans-unit>
+      <trans-unit id="error.image_too_small">
+        <source>error.image_too_small</source>
+        <target>Obrázek je příliš malý, vyžaduje minimální velikost %min_width% x %min_height%.</target>
+      </trans-unit>
+      <trans-unit id="form.group_media">
+        <source>form.group_media</source>
+        <target>Média</target>
+      </trans-unit>
+      <trans-unit id="form.group_gallery">
+        <source>form.group_gallery</source>
+        <target>Galerie</target>
+      </trans-unit>
+      <trans-unit id="form.group_options">
+        <source>form.group_options</source>
+        <target>Možnosti</target>
       </trans-unit>
     </body>
   </file>
