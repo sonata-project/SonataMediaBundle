@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.15.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.14.1...4.15.0) - 2024-11-14
+### Added
+- [[#2466](https://github.com/sonata-project/SonataMediaBundle/pull/2466)] Slovak translations ([@fbuchlak](https://github.com/fbuchlak))
+
+### Changed
+- [[#2465](https://github.com/sonata-project/SonataMediaBundle/pull/2465)] Czech translations updated (key order, incomplete values, missing keys) ([@fbuchlak](https://github.com/fbuchlak))
+
 ## [4.14.1](https://github.com/sonata-project/SonataMediaBundle/compare/4.14.0...4.14.1) - 2024-09-12
 ### Fixed
 - [[#2460](https://github.com/sonata-project/SonataMediaBundle/pull/2460)] Fixed the callback transformers of media/gallery block services. ([@lemorragia](https://github.com/lemorragia))
