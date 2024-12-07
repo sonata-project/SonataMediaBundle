@@ -285,7 +285,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
         if (
             '' !== $media->getBinaryContent()->getFilename()
-            && !\in_array(strtolower($media->getBinaryContent()->getMimeType()), $this->allowedMimeTypes, true)
+            && !\in_array(strtolower((string) $media->getBinaryContent()->getMimeType()), $this->allowedMimeTypes, true)
         ) {
             $errorElement
                 ->with('binaryContent')

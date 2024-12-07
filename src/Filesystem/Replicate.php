@@ -25,14 +25,11 @@ use Psr\Log\NullLogger;
 
 final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSupporter
 {
-    private LoggerInterface $logger;
-
     public function __construct(
         private Adapter $primary,
         private Adapter $secondary,
-        ?LoggerInterface $logger = null,
+        private LoggerInterface $logger = new NullLogger(),
     ) {
-        $this->logger = $logger ?? new NullLogger();
     }
 
     public function delete($key): bool

@@ -95,16 +95,9 @@ final class NoDriverGalleryManager implements GalleryManagerInterface
     }
 
     /**
-     * Do not add return typehint to this method, it forces a dependency with
-     * Doctrine DBAL that we do not want here. This method will probably be
-     * deprecated on sonata-project/doctrine-extensions because it is only for
-     * Doctrine ORM.
-     *
      * TODO: Remove this with the drop of sonata-project/doctrine-extensions < 2.
-     *
-     * @psalm-suppress MissingReturnType
      */
-    public function getConnection() // @phpstan-ignore-line
+    public function getConnection(): never
     {
         throw new NoDriverException();
     }
