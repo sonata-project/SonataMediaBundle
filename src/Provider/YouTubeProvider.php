@@ -255,13 +255,13 @@ final class YouTubeProvider extends BaseVideoProvider
             return;
         }
 
-        if (11 === \strlen($media->getBinaryContent())) {
+        if (11 === \strlen((string) $media->getBinaryContent())) {
             return;
         }
 
         if (1 === preg_match(
             '{^(?:https?://)?(?:www\.)?(?:m\.)?(?:youtu\.be/|youtube\.com/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)/))(?<video_id>[^\#\?&\'>]+)}',
-            $media->getBinaryContent(),
+            (string) $media->getBinaryContent(),
             $matches
         )) {
             $media->setBinaryContent($matches['video_id']);

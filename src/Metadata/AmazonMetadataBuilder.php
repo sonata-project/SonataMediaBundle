@@ -53,8 +53,6 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
         'reduced' => self::STORAGE_REDUCED,
     ];
 
-    private MimeTypesInterface $mimeTypes;
-
     /**
      * @param array<string, mixed> $settings
      *
@@ -62,9 +60,8 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     public function __construct(
         private array $settings,
-        ?MimeTypesInterface $mimeTypes = null,
+        private MimeTypesInterface $mimeTypes = new MimeTypes()
     ) {
-        $this->mimeTypes = $mimeTypes ?? new MimeTypes();
     }
 
     public function get(MediaInterface $media, string $filename): array
