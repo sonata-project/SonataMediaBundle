@@ -57,7 +57,7 @@ final class AddMassMediaCommand extends Command
         $readHeaders = false;
 
         while (!feof($fp)) {
-            $data = fgetcsv($fp, 0, $delimiter, $enclosure, (string) $escape);
+            $data = fgetcsv($fp, 0, $delimiter, $enclosure, $escape);
 
             if (!\is_array($data)) {
                 continue;

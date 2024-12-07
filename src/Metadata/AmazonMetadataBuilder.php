@@ -60,7 +60,7 @@ final class AmazonMetadataBuilder implements MetadataBuilderInterface
      */
     public function __construct(
         private array $settings,
-        private MimeTypesInterface $mimeTypes = new MimeTypes()
+        private MimeTypesInterface $mimeTypes = new MimeTypes(),
     ) {
     }
 

@@ -28,7 +28,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     public function __construct(
         private Adapter $primary,
         private Adapter $secondary,
-        private LoggerInterface $logger = new NullLogger()
+        private LoggerInterface $logger = new NullLogger(),
     ) {
     }
 
