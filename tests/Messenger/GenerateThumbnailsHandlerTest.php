@@ -91,7 +91,7 @@ final class GenerateThumbnailsHandlerTest extends TestCase
         $media = new Media();
         $media->setProviderName('provider_name');
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
 
         $this->pool->addProvider('provider_name', $provider);
         $this->mediaManager->method('find')->with($id)->willReturn($media);

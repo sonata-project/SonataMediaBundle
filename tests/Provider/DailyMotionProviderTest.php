@@ -37,11 +37,11 @@ class DailyMotionProviderTest extends AbstractProviderTest
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
         if (null === $client) {
-            $client = $this->createStub(ClientInterface::class);
+            $client = static::createStub(ClientInterface::class);
         }
 
         if (null === $requestFactory) {
-            $requestFactory = $this->createStub(RequestFactoryInterface::class);
+            $requestFactory = static::createStub(RequestFactoryInterface::class);
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
@@ -92,7 +92,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
     public function testThumbnail(): void
     {
-        $request = $this->createStub(RequestInterface::class);
+        $request = static::createStub(RequestInterface::class);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
         $requestFactory->expects(static::once())->method('createRequest')->willReturn($request);
@@ -132,7 +132,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
 
     public function testTransformWithSig(): void
     {
-        $request = $this->createStub(RequestInterface::class);
+        $request = static::createStub(RequestInterface::class);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
         $requestFactory->expects(static::once())->method('createRequest')->willReturn($request);
@@ -174,7 +174,7 @@ class DailyMotionProviderTest extends AbstractProviderTest
      */
     public function testTransformWithUrl(string $url): void
     {
-        $request = $this->createStub(RequestInterface::class);
+        $request = static::createStub(RequestInterface::class);
 
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);

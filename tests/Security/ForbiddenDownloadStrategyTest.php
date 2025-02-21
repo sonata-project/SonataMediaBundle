@@ -23,9 +23,9 @@ class ForbiddenDownloadStrategyTest extends TestCase
 {
     public function testIsGranted(): void
     {
-        $media = $this->createStub(MediaInterface::class);
-        $request = $this->createStub(Request::class);
-        $translator = $this->createStub(TranslatorInterface::class);
+        $media = static::createStub(MediaInterface::class);
+        $request = static::createStub(Request::class);
+        $translator = static::createStub(TranslatorInterface::class);
 
         $strategy = new ForbiddenDownloadStrategy($translator);
         static::assertFalse($strategy->isGranted($media, $request));

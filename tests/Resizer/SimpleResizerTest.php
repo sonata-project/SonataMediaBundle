@@ -34,11 +34,11 @@ class SimpleResizerTest extends TestCase
 {
     public function testResizeWithIncorrectMode(): void
     {
-        $image = $this->createStub(ImageInterface::class);
-        $adapter = $this->createStub(ImagineInterface::class);
+        $image = static::createStub(ImageInterface::class);
+        $adapter = static::createStub(ImagineInterface::class);
         $media = $this->createMock(MediaInterface::class);
-        $metadata = $this->createStub(MetadataBuilderInterface::class);
-        $file = $this->createStub(File::class);
+        $metadata = static::createStub(MetadataBuilderInterface::class);
+        $file = static::createStub(File::class);
 
         $media->expects(static::once())->method('getBox')->willReturn(new Box(535, 132));
 
@@ -63,10 +63,10 @@ class SimpleResizerTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $adapter = $this->createStub(ImagineInterface::class);
-        $media = $this->createStub(MediaInterface::class);
-        $metadata = $this->createStub(MetadataBuilderInterface::class);
-        $file = $this->createStub(File::class);
+        $adapter = static::createStub(ImagineInterface::class);
+        $media = static::createStub(MediaInterface::class);
+        $metadata = static::createStub(MetadataBuilderInterface::class);
+        $file = static::createStub(File::class);
 
         $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
         $resizer->resize($media, $file, $file, 'bar', [
@@ -86,7 +86,7 @@ class SimpleResizerTest extends TestCase
         $image->expects(static::once())->method('thumbnail')->willReturn($image);
         $image->expects(static::once())->method('get')->willReturn(file_get_contents(__DIR__.'/../Fixtures/logo.png'));
 
-        $adapter = $this->createStub(ImagineInterface::class);
+        $adapter = static::createStub(ImagineInterface::class);
         $adapter->method('load')->willReturn($image);
 
         $media = $this->createMock(MediaInterface::class);
@@ -129,12 +129,12 @@ class SimpleResizerTest extends TestCase
      */
     public function testGetBox(int $mode, array $settings, Box $mediaSize, Box $result): void
     {
-        $adapter = $this->createStub(ImagineInterface::class);
+        $adapter = static::createStub(ImagineInterface::class);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects(static::exactly(2))->method('getBox')->willReturn($mediaSize);
 
-        $metadata = $this->createStub(MetadataBuilderInterface::class);
+        $metadata = static::createStub(MetadataBuilderInterface::class);
 
         $resizer = new SimpleResizer($adapter, $mode, $metadata);
 

@@ -50,7 +50,7 @@ final class MessengerThumbnailTest extends TestCase
         $media->setId(25);
 
         $publicUrl = $this->thumbnail->generatePublicUrl(
-            $this->createStub(MediaProviderInterface::class),
+            static::createStub(MediaProviderInterface::class),
             $media,
             'format'
         );
@@ -64,7 +64,7 @@ final class MessengerThumbnailTest extends TestCase
         $media->setId(25);
 
         $publicUrl = $this->thumbnail->generatePrivateUrl(
-            $this->createStub(MediaProviderInterface::class),
+            static::createStub(MediaProviderInterface::class),
             $media,
             'format'
         );
@@ -78,7 +78,7 @@ final class MessengerThumbnailTest extends TestCase
         $this->expectExceptionMessage('Cannot generate thumbnails for media without id.');
 
         $this->thumbnail->generate(
-            $this->createStub(MediaProviderInterface::class),
+            static::createStub(MediaProviderInterface::class),
             new Media()
         );
     }
@@ -91,7 +91,7 @@ final class MessengerThumbnailTest extends TestCase
         $this->bus->expects(static::once())->method('dispatch')->willReturn(new Envelope(new \stdClass()));
 
         $this->thumbnail->generate(
-            $this->createStub(MediaProviderInterface::class),
+            static::createStub(MediaProviderInterface::class),
             $media
         );
     }
@@ -102,7 +102,7 @@ final class MessengerThumbnailTest extends TestCase
     public function testDeleteThumbnails(): void
     {
         $this->thumbnail->delete(
-            $this->createStub(MediaProviderInterface::class),
+            static::createStub(MediaProviderInterface::class),
             new Media(),
             'format'
         );

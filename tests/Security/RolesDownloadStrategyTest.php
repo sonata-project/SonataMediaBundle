@@ -24,9 +24,9 @@ class RolesDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedTrue(): void
     {
-        $media = $this->createStub(MediaInterface::class);
-        $request = $this->createStub(Request::class);
-        $translator = $this->createStub(TranslatorInterface::class);
+        $media = static::createStub(MediaInterface::class);
+        $request = static::createStub(Request::class);
+        $translator = static::createStub(TranslatorInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security
@@ -41,9 +41,9 @@ class RolesDownloadStrategyTest extends TestCase
 
     public function testIsGrantedFalse(): void
     {
-        $media = $this->createStub(MediaInterface::class);
-        $request = $this->createStub(Request::class);
-        $translator = $this->createStub(TranslatorInterface::class);
+        $media = static::createStub(MediaInterface::class);
+        $request = static::createStub(Request::class);
+        $translator = static::createStub(TranslatorInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
 
         $security

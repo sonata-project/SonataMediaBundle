@@ -46,7 +46,7 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
 
     protected function setUp(): void
     {
-        $this->imagineAdapter = $this->createStub(ImagineInterface::class);
+        $this->imagineAdapter = static::createStub(ImagineInterface::class);
         $this->imageProvider = $this->createMock(ImageProviderInterface::class);
 
         parent::setUp();
@@ -132,11 +132,11 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
      */
     private function mockImage(int $width, int $height): object
     {
-        $box = $this->createStub(BoxInterface::class);
+        $box = static::createStub(BoxInterface::class);
         $box->method('getWidth')->willReturn($width);
         $box->method('getHeight')->willReturn($height);
 
-        $image = $this->createStub(ImageInterface::class);
+        $image = static::createStub(ImageInterface::class);
         $image->method('getSize')->willReturn($box);
 
         return $image;
@@ -147,10 +147,10 @@ final class ImageUploadDimensionValidatorTest extends ConstraintValidatorTestCas
      */
     private function mockMedia(): Stub
     {
-        $binaryContent = $this->createStub(UploadedFile::class);
+        $binaryContent = static::createStub(UploadedFile::class);
         $binaryContent->method('getPathname')->willReturn('pathname');
 
-        $media = $this->createStub(MediaInterface::class);
+        $media = static::createStub(MediaInterface::class);
         $media->method('getContext')->willReturn(self::TEST_CONTEXT);
         $media->method('getBinaryContent')->willReturn($binaryContent);
 

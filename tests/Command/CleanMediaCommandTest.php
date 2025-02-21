@@ -61,10 +61,10 @@ class CleanMediaCommandTest extends FilesystemTestCase
         $this->fileSystemLocal = new Local($this->workspace);
         $this->provider = new FileProvider(
             'fooprovider',
-            $this->createStub(Filesystem::class),
-            $this->createStub(CDNInterface::class),
-            $this->createStub(GeneratorInterface::class),
-            $this->createStub(ThumbnailInterface::class)
+            static::createStub(Filesystem::class),
+            static::createStub(CDNInterface::class),
+            static::createStub(GeneratorInterface::class),
+            static::createStub(ThumbnailInterface::class)
         );
 
         $this->command = new CleanMediaCommand($this->fileSystemLocal, $this->pool, $this->mediaManager);

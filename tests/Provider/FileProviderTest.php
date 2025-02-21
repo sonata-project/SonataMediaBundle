@@ -42,9 +42,9 @@ class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider(): MediaProviderInterface
     {
-        $resizer = $this->createStub(ResizerInterface::class);
-        $thumbnail = $this->createStub(ThumbnailInterface::class);
-        $metadata = $this->createStub(MetadataBuilderInterface::class);
+        $resizer = static::createStub(ResizerInterface::class);
+        $thumbnail = static::createStub(ThumbnailInterface::class);
+        $metadata = static::createStub(MetadataBuilderInterface::class);
 
         $adapter = new Local(realpath(__DIR__).'/../Fixtures');
         $cdn = new Server('/uploads/media');
@@ -459,7 +459,7 @@ class FileProviderTest extends AbstractProviderTest
             // @phpstan-ignore-next-line
             return new ErrorElement(
                 '',
-                $this->createStub(ConstraintValidatorFactoryInterface::class), // @phpstan-ignore-line
+                static::createStub(ConstraintValidatorFactoryInterface::class), // @phpstan-ignore-line
                 $executionContext, // @phpstan-ignore-line
                 'group'
             );
