@@ -38,13 +38,13 @@ class MediaBlockServiceTest extends BlockServiceTestCase
         $this->pool = new Pool('default');
 
         /** @var AdminInterface<MediaInterface>&Stub $mediaAdmin */
-        $mediaAdmin = $this->createStub(AdminInterface::class);
+        $mediaAdmin = static::createStub(AdminInterface::class);
 
         $this->blockService = new MediaBlockService(
             $this->twig,
             $this->pool,
             $mediaAdmin,
-            $this->createStub(MediaManagerInterface::class)
+            static::createStub(MediaManagerInterface::class)
         );
     }
 

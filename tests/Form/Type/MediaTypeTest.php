@@ -39,8 +39,8 @@ class MediaTypeTest extends AbstractTypeTest
         $this->mediaPool = new Pool('default');
         $this->mediaType = new MediaType($this->mediaPool, Media::class);
 
-        $this->mediaPool->addProvider('provider_a', $this->createStub(MediaProviderInterface::class));
-        $this->mediaPool->addProvider('provider_b', $this->createStub(MediaProviderInterface::class));
+        $this->mediaPool->addProvider('provider_a', static::createStub(MediaProviderInterface::class));
+        $this->mediaPool->addProvider('provider_b', static::createStub(MediaProviderInterface::class));
         $this->mediaPool->addContext('video');
         $this->mediaPool->addContext('pic');
 

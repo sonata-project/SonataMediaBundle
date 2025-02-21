@@ -37,11 +37,11 @@ class YouTubeProviderTest extends AbstractProviderTest
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {
         if (null === $client) {
-            $client = $this->createStub(ClientInterface::class);
+            $client = static::createStub(ClientInterface::class);
         }
 
         if (null === $messageFactory) {
-            $messageFactory = $this->createStub(RequestFactoryInterface::class);
+            $messageFactory = static::createStub(RequestFactoryInterface::class);
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
@@ -92,7 +92,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public function testThumbnail(): void
     {
-        $request = $this->createStub(RequestInterface::class);
+        $request = static::createStub(RequestInterface::class);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
         $requestFactory->expects(static::once())->method('createRequest')->willReturn($request);
@@ -131,7 +131,7 @@ class YouTubeProviderTest extends AbstractProviderTest
 
     public function testTransformWithSig(): void
     {
-        $request = $this->createStub(RequestInterface::class);
+        $request = static::createStub(RequestInterface::class);
 
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);
@@ -175,7 +175,7 @@ class YouTubeProviderTest extends AbstractProviderTest
      */
     public function testTransformWithUrl(string $url): void
     {
-        $request = $this->createStub(RequestInterface::class);
+        $request = static::createStub(RequestInterface::class);
 
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);

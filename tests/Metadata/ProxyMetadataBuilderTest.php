@@ -48,11 +48,11 @@ final class ProxyMetadataBuilderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->filesystem = $this->createStub(Filesystem::class);
+        $this->filesystem = static::createStub(Filesystem::class);
         $this->noop = $this->createMock(MetadataBuilderInterface::class);
         $this->amazon = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
         $provider->method('getFilesystem')->willReturn($this->filesystem);
 
         $pool = new Pool('default_context');

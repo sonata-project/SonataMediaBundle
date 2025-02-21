@@ -35,21 +35,21 @@ class GalleryBlockServiceTest extends BlockServiceTestCase
         parent::setUp();
 
         /** @var AdminInterface<GalleryInterface<GalleryItemInterface>>&Stub $galleryAdmin */
-        $galleryAdmin = $this->createStub(AdminInterface::class);
+        $galleryAdmin = static::createStub(AdminInterface::class);
 
         $this->blockService = new GalleryBlockService(
             $this->twig,
             new Pool('default'),
             $galleryAdmin,
-            $this->createStub(GalleryManagerInterface::class)
+            static::createStub(GalleryManagerInterface::class)
         );
     }
 
     public function testExecute(): void
     {
         $block = $this->createMock(Block::class);
-        $gallery = $this->createStub(GalleryInterface::class);
-        $blockContext = $this->createStub(BlockContextInterface::class);
+        $gallery = static::createStub(GalleryInterface::class);
+        $blockContext = static::createStub(BlockContextInterface::class);
 
         $blockContext->method('getBlock')->willReturn($block);
         $blockContext->method('getSettings')->willReturn(['settings']);

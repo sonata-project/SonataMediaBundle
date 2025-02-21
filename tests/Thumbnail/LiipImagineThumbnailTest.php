@@ -26,7 +26,7 @@ class LiipImagineThumbnailTest extends TestCase
 {
     public function testGenerate(): void
     {
-        $cacheManager = $this->createStub(CacheManager::class);
+        $cacheManager = static::createStub(CacheManager::class);
         $cacheManager->method('getBrowserPath')->willReturn('cache/media/default/0011/24/ASDASDAS.png');
 
         $thumbnail = new LiipImagineThumbnail($cacheManager);

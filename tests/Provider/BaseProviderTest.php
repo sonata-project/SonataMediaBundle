@@ -42,14 +42,14 @@ class BaseProviderTest extends AbstractProviderTest
 
         $filesystem->method('get')->willReturn(new File('my_file.txt', $filesystem));
 
-        $cdn = $this->createStub(CDNInterface::class);
+        $cdn = static::createStub(CDNInterface::class);
         $cdn->method('flushPaths')->willReturn((string) random_int(0, mt_getrandmax()));
         $cdn->method('getFlushStatus')->willReturnOnConsecutiveCalls(CDNInterface::STATUS_OK, CDNInterface::STATUS_TO_FLUSH, CDNInterface::STATUS_WAITING, CDNInterface::STATUS_OK);
         $cdn->method('getPath')->willReturnCallback(static fn (string $path, bool $isFlushable): string => '/uploads/media/'.$path);
 
         $generator = new IdGenerator();
 
-        $thumbnail = $this->createStub(ThumbnailInterface::class);
+        $thumbnail = static::createStub(ThumbnailInterface::class);
 
         $provider = new TestProvider('test', $filesystem, $cdn, $generator, $thumbnail);
         static::assertInstanceOf(BaseProvider::class, $provider);
