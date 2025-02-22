@@ -26,7 +26,7 @@ class MediaAdminTest extends TestCase
     {
         $this->mediaAdmin = new MediaAdmin(
             new Pool('default'),
-            $this->createStub(CategoryManagerInterface::class)
+            static::createStub(CategoryManagerInterface::class)
         );
     }
 

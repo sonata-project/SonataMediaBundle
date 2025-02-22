@@ -83,7 +83,7 @@ class MediaAdminControllerTest extends TestCase
             '@SonataMedia/MediaAdmin/select_provider.html.twig',
             'renderResponse'
         );
-        $pool->addProvider('provider', $this->createStub(MediaProviderInterface::class));
+        $pool->addProvider('provider', static::createStub(MediaProviderInterface::class));
         $pool->addContext('context', ['provider']);
         $this->admin->expects(static::once())->method('checkAccess')->with('create');
         $this->container->set('sonata.media.pool', $pool);
@@ -122,8 +122,8 @@ class MediaAdminControllerTest extends TestCase
         $category = new Category();
         $category->setId(1);
         $context = new Context();
-        $form = $this->createStub(Form::class);
-        $formView = $this->createStub(FormView::class);
+        $form = static::createStub(Form::class);
+        $formView = static::createStub(FormView::class);
 
         $this->configureSetFormTheme($formView, ['filterTheme']);
         $this->configureSetCsrfToken('sonata.batch');
@@ -182,8 +182,8 @@ class MediaAdminControllerTest extends TestCase
             'admin_code' => 'admin_code',
         ]);
         $adminFetcher = new AdminFetcher($pool);
-        $templateRegistry = $this->createStub(TemplateRegistryInterface::class);
-        $mutableTemplateRegistry = $this->createStub(MutableTemplateRegistryInterface::class);
+        $templateRegistry = static::createStub(TemplateRegistryInterface::class);
+        $mutableTemplateRegistry = static::createStub(MutableTemplateRegistryInterface::class);
 
         $mutableTemplateRegistry->method('getTemplate')->willReturnMap([
             ['layout', 'layout.html.twig'],
@@ -213,9 +213,9 @@ class MediaAdminControllerTest extends TestCase
      */
     private function configureCreateAction(string $class): void
     {
-        $object = $this->createStub(Media::class);
+        $object = static::createStub(Media::class);
         $form = $this->createMock(Form::class);
-        $formView = $this->createStub(FormView::class);
+        $formView = static::createStub(FormView::class);
 
         $this->configureSetFormTheme($formView, ['formTheme']);
         $this->admin->method('hasActiveSubClass')->willReturn(false);
@@ -233,7 +233,7 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureGetCurrentRequest(Request $request): void
     {
-        $requestStack = $this->createStub(RequestStack::class);
+        $requestStack = static::createStub(RequestStack::class);
 
         $this->container->set('request_stack', $requestStack);
         $requestStack->method('getCurrentRequest')->willReturn($request);
@@ -253,7 +253,7 @@ class MediaAdminControllerTest extends TestCase
     private function configureSetCsrfToken(string $intention): void
     {
         $tokenManager = $this->createMock(CsrfTokenManagerInterface::class);
-        $token = $this->createStub(CsrfToken::class);
+        $token = static::createStub(CsrfToken::class);
 
         $tokenManager->method('getToken')->with($intention)->willReturn($token);
         $token->method('getValue')->willReturn('token');
@@ -262,7 +262,7 @@ class MediaAdminControllerTest extends TestCase
 
     private function configureRender(string $template, string $rendered): void
     {
-        $response = $this->createStub(Response::class);
+        $response = static::createStub(Response::class);
         $pool = new Pool('context');
 
         $response->method('getContent')->willReturn($rendered);

@@ -33,12 +33,12 @@ final class AmazonMetadataBuilderTest extends TestCase
      */
     public function testAmazon(array $settings, array $mediaAttributes, array $expected): void
     {
-        $mimeTypes = $this->createStub(MimeTypesInterface::class);
+        $mimeTypes = static::createStub(MimeTypesInterface::class);
         $mimeTypes->method('getMimeTypes')->willReturnCallback(
             static fn (string $ext): array => 'png' === $ext ? ['image/png'] : []
         );
 
-        $media = $this->createStub(MediaInterface::class);
+        $media = static::createStub(MediaInterface::class);
         foreach ($mediaAttributes as $attribute => $value) {
             $media->method('get'.ucfirst($attribute))->willReturn($value);
         }

@@ -48,7 +48,7 @@ final class CropResizerTest extends TestCase
         parent::setUp();
 
         $this->adapter = $this->createMock(ImagineInterface::class);
-        $this->metadata = $this->createStub(MetadataBuilderInterface::class);
+        $this->metadata = static::createStub(MetadataBuilderInterface::class);
     }
 
     /**
@@ -69,8 +69,8 @@ final class CropResizerTest extends TestCase
         $media->method('getProviderName')->willReturn('acme.sample.provider');
         $media->method('getBox')->willReturn(new Box($srcWidth, $srcHeight));
 
-        $input = $this->createStub(File::class);
-        $output = $this->createStub(File::class);
+        $input = static::createStub(File::class);
+        $output = static::createStub(File::class);
         $output->method('getName')->willReturn('output');
 
         $image = $this->createMock(ImageInterface::class);
@@ -147,8 +147,8 @@ final class CropResizerTest extends TestCase
         $media->method('getProviderName')->willReturn('acme.sample.provider');
         $media->method('getBox')->willReturn(new Box($srcWidth, $srcHeight));
 
-        $input = $this->createStub(File::class);
-        $output = $this->createStub(File::class);
+        $input = static::createStub(File::class);
+        $output = static::createStub(File::class);
         $output->method('getName')->willReturn('output');
 
         $image = $this->createMock(ImageInterface::class);

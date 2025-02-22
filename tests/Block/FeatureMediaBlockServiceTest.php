@@ -31,13 +31,13 @@ class FeatureMediaBlockServiceTest extends BlockServiceTestCase
         parent::setUp();
 
         /** @var AdminInterface<MediaInterface>&Stub $mediaAdmin */
-        $mediaAdmin = $this->createStub(AdminInterface::class);
+        $mediaAdmin = static::createStub(AdminInterface::class);
 
         $this->blockService = new FeatureMediaBlockService(
             $this->twig,
             new Pool('default'),
             $mediaAdmin,
-            $this->createStub(MediaManagerInterface::class)
+            static::createStub(MediaManagerInterface::class)
         );
     }
 

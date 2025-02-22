@@ -56,7 +56,7 @@ class BaseMediaAdminTest extends TestCase
         $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
         $this->contextManager = $this->createMock(ContextManagerInterface::class);
         $this->request = new Request();
-        $this->modelManager = $this->createStub(ModelManagerInterface::class);
+        $this->modelManager = static::createStub(ModelManagerInterface::class);
 
         $this->mediaAdmin = new TestMediaAdmin(
             $this->pool,
@@ -96,7 +96,7 @@ class BaseMediaAdminTest extends TestCase
 
         $context = new Context();
 
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
 
         $this->request->setMethod('POST');
         $this->request->query->set('filter', []);
@@ -122,7 +122,7 @@ class BaseMediaAdminTest extends TestCase
 
     private function configureGetPersistentParameters(): void
     {
-        $provider = $this->createStub(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
         $category = new Category();
         $category->setId(1);
 

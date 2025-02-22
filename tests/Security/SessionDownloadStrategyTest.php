@@ -28,8 +28,8 @@ final class SessionDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedFalse(): void
     {
-        $translator = $this->createStub(TranslatorInterface::class);
-        $media = $this->createStub(MediaInterface::class);
+        $translator = static::createStub(TranslatorInterface::class);
+        $media = static::createStub(MediaInterface::class);
         $session = $this->createMock(Session::class);
 
         $request = new Request();
@@ -49,8 +49,8 @@ final class SessionDownloadStrategyTest extends TestCase
 
     public function testIsGrantedTrue(): void
     {
-        $translator = $this->createStub(TranslatorInterface::class);
-        $media = $this->createStub(MediaInterface::class);
+        $translator = static::createStub(TranslatorInterface::class);
+        $media = static::createStub(MediaInterface::class);
         $session = $this->createMock(Session::class);
 
         $request = new Request();

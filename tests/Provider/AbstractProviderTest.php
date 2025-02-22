@@ -57,11 +57,11 @@ abstract class AbstractProviderTest extends TestCase
 
         $admin = new MediaAdmin(new Pool('default'));
         $admin->setModelClass(Media::class);
-        $admin->setLabelTranslatorStrategy($this->createStub(LabelTranslatorStrategyInterface::class));
-        $admin->setFieldDescriptionFactory($this->createStub(FieldDescriptionFactoryInterface::class));
+        $admin->setLabelTranslatorStrategy(static::createStub(LabelTranslatorStrategyInterface::class));
+        $admin->setFieldDescriptionFactory(static::createStub(FieldDescriptionFactoryInterface::class));
 
         $this->form = new FormMapper(
-            $this->createStub(FormContractorInterface::class),
+            static::createStub(FormContractorInterface::class),
             $this->formBuilder,
             $admin
         );
@@ -105,7 +105,7 @@ abstract class AbstractProviderTest extends TestCase
 
     final protected function createResponse(string $content): ResponseInterface
     {
-        $stream = $this->createStub(StreamInterface::class);
+        $stream = static::createStub(StreamInterface::class);
         $stream->method('getContents')->willReturn($content);
 
         $response = $this->createMock(ResponseInterface::class);

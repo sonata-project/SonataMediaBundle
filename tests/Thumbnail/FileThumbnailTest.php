@@ -38,7 +38,7 @@ final class FileThumbnailTest extends TestCase
 
     public function testGeneratePublicUrl(): void
     {
-        $provider = $this->createStub(FileProviderInterface::class);
+        $provider = static::createStub(FileProviderInterface::class);
         $media = new Media();
 
         $this->packages->method('getUrl')->with('bundles/sonatamedia/file.png')->willReturnArgument(0);
@@ -57,6 +57,6 @@ final class FileThumbnailTest extends TestCase
         $this->expectException(\BadMethodCallException::class);
         $this->expectExceptionMessage('Unable to generate private thumbnail url for media files.');
 
-        $this->thumbnail->generatePrivateUrl($this->createStub(FileProviderInterface::class), new Media(), 'random');
+        $this->thumbnail->generatePrivateUrl(static::createStub(FileProviderInterface::class), new Media(), 'random');
     }
 }

@@ -73,8 +73,8 @@ class GalleryAdminControllerTest extends TestCase
     public function testListAction(): void
     {
         $datagrid = $this->createMock(DatagridInterface::class);
-        $form = $this->createStub(Form::class);
-        $formView = $this->createStub(FormView::class);
+        $form = static::createStub(Form::class);
+        $formView = static::createStub(FormView::class);
         $pool = new Pool('default');
 
         $this->configureSetFormTheme($formView, ['filterTheme']);
@@ -99,8 +99,8 @@ class GalleryAdminControllerTest extends TestCase
             'admin_code' => 'admin_code',
         ]);
         $adminFetcher = new AdminFetcher($pool);
-        $templateRegistry = $this->createStub(TemplateRegistryInterface::class);
-        $mutableTemplateRegistry = $this->createStub(MutableTemplateRegistryInterface::class);
+        $templateRegistry = static::createStub(TemplateRegistryInterface::class);
+        $mutableTemplateRegistry = static::createStub(MutableTemplateRegistryInterface::class);
 
         $mutableTemplateRegistry->method('getTemplate')->willReturnMap([
             ['layout', 'layout.html.twig'],
@@ -127,7 +127,7 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureGetCurrentRequest(Request $request): void
     {
-        $requestStack = $this->createStub(RequestStack::class);
+        $requestStack = static::createStub(RequestStack::class);
 
         $this->container->set('request_stack', $requestStack);
         $requestStack->method('getCurrentRequest')->willReturn($request);
@@ -136,7 +136,7 @@ class GalleryAdminControllerTest extends TestCase
     private function configureSetCsrfToken(string $intention): void
     {
         $tokenManager = $this->createMock(CsrfTokenManagerInterface::class);
-        $token = $this->createStub(CsrfToken::class);
+        $token = static::createStub(CsrfToken::class);
 
         $tokenManager->method('getToken')->with($intention)->willReturn($token);
         $token->method('getValue')->willReturn('token');
@@ -156,7 +156,7 @@ class GalleryAdminControllerTest extends TestCase
 
     private function configureRender(string $template, string $rendered): void
     {
-        $response = $this->createStub(Response::class);
+        $response = static::createStub(Response::class);
         $pool = new Pool('default');
 
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
