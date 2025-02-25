@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.16.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.15.0...4.16.0) - 2025-02-24
+### Changed
+- [[#2476](https://github.com/sonata-project/SonataMediaBundle/pull/2476)] Use BIGINT for Media::$contentSize ([@OskarStark](https://github.com/OskarStark))
+
 ## [4.15.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.14.1...4.15.0) - 2024-11-14
 ### Added
 - [[#2466](https://github.com/sonata-project/SonataMediaBundle/pull/2466)] Slovak translations ([@fbuchlak](https://github.com/fbuchlak))
