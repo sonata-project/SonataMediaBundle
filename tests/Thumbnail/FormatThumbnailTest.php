@@ -22,7 +22,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
-class FormatThumbnailTest extends TestCase
+final class FormatThumbnailTest extends TestCase
 {
     public function testGenerate(): void
     {

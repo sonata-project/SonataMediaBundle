@@ -21,7 +21,7 @@ use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ProviderDataTransformerTest extends TestCase
+final class ProviderDataTransformerTest extends TestCase
 {
     public function testReverseTransformFakeValue(): void
     {

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 use Sonata\MediaBundle\Provider\Pool;
 
-class GalleryAdminTest extends TestCase
+final class GalleryAdminTest extends TestCase
 {
     private GalleryAdmin $galleryAdmin;
 

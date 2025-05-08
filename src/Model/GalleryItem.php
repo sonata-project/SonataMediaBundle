@@ -32,7 +32,7 @@ abstract class GalleryItem implements GalleryItemInterface, \Stringable
 
     public function __toString(): string
     {
-        return $this->getGallery().' | '.$this->getMedia();
+        return ((string) $this->getGallery()).' | '.((string) $this->getMedia());
     }
 
     public function setEnabled(bool $enabled): void

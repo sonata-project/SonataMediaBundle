@@ -23,7 +23,7 @@ use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Sonata\MediaBundle\Twig\MediaRuntime;
 use Twig\Environment;
 
-class MediaRuntimeTest extends TestCase
+final class MediaRuntimeTest extends TestCase
 {
     private Pool $pool;
 

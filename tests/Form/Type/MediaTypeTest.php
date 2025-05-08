@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
  * @author Virgile Vivier <virgilevivier@gmail.com>
  * @author Christian Gripp <mail@core23.de>
  */
-class MediaTypeTest extends AbstractTypeTest
+final class MediaTypeTest extends AbstractTypeTest
 {
     protected Pool $mediaPool;
 

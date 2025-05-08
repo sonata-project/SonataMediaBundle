@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Exception\NoDriverException;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Model\NoDriverMediaManager;
 
-class NoDriverMediaManagerTest extends TestCase
+final class NoDriverMediaManagerTest extends TestCase
 {
     /**
      * @dataProvider provideExceptionCases

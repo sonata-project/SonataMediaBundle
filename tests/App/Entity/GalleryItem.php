@@ -17,6 +17,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Entity\BaseGalleryItem;
 
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 #[ORM\Entity]
 #[ORM\Table(name: 'media__gallery_item')]
 class GalleryItem extends BaseGalleryItem

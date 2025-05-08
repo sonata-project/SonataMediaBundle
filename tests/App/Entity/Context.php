@@ -17,6 +17,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\ClassificationBundle\Entity\BaseContext;
 
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 #[ORM\Entity]
 #[ORM\Table(name: 'classification__context')]
 class Context extends BaseContext

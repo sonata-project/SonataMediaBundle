@@ -15,6 +15,9 @@ namespace Sonata\MediaBundle\Tests\Document;
 
 use Sonata\MediaBundle\Document\BaseMedia;
 
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 class Media extends BaseMedia
 {
     /**

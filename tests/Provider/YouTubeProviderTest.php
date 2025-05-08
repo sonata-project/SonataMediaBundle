@@ -32,7 +32,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 /**
  * @phpstan-extends AbstractProviderTest<YouTubeProvider>
  */
-class YouTubeProviderTest extends AbstractProviderTest
+final class YouTubeProviderTest extends AbstractProviderTest
 {
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {

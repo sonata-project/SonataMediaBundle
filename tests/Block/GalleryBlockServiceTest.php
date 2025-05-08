@@ -26,7 +26,7 @@ use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
-class GalleryBlockServiceTest extends BlockServiceTestCase
+final class GalleryBlockServiceTest extends BlockServiceTestCase
 {
     private GalleryBlockService $blockService;
 

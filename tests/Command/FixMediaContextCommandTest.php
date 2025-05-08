@@ -23,7 +23,7 @@ use Sonata\MediaBundle\Tests\App\Entity\Context;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class FixMediaContextCommandTest extends TestCase
+final class FixMediaContextCommandTest extends TestCase
 {
     private Application $application;
 

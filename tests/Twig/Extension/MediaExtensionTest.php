@@ -22,7 +22,7 @@ use Twig\TwigFunction;
 /**
  * @author Geza Buza <bghome@gmail.com>
  */
-class MediaExtensionTest extends TestCase
+final class MediaExtensionTest extends TestCase
 {
     private MediaExtension $mediaExtension;
 

@@ -32,7 +32,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 /**
  * @phpstan-extends AbstractProviderTest<DailyMotionProvider>
  */
-class DailyMotionProviderTest extends AbstractProviderTest
+final class DailyMotionProviderTest extends AbstractProviderTest
 {
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {

@@ -43,8 +43,8 @@ final class IdGenerator implements GeneratorInterface
             ));
         }
 
-        $repFirstLevel = (int) ($id / $this->firstLevel);
-        $repSecondLevel = (int) (($id - ($repFirstLevel * $this->firstLevel)) / $this->secondLevel);
+        $repFirstLevel = (int) ((int) $id / $this->firstLevel);
+        $repSecondLevel = (int) (((int) $id - ($repFirstLevel * $this->firstLevel)) / $this->secondLevel);
 
         return \sprintf('%s/%04s/%02s', $context, $repFirstLevel + 1, $repSecondLevel + 1);
     }

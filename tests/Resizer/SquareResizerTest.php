@@ -26,7 +26,7 @@ use Sonata\MediaBundle\Resizer\SquareResizer;
 /**
  * @phpstan-import-type FormatOptions from MediaProviderInterface
  */
-class SquareResizerTest extends TestCase
+final class SquareResizerTest extends TestCase
 {
     public function testResizeWithNoWidth(): void
     {

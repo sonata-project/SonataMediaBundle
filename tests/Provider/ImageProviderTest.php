@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 /**
  * @phpstan-extends AbstractProviderTest<ImageProvider>
  */
-class ImageProviderTest extends AbstractProviderTest
+final class ImageProviderTest extends AbstractProviderTest
 {
     /**
      * @param string[] $allowedExtensions
@@ -360,7 +360,9 @@ class ImageProviderTest extends AbstractProviderTest
         $tmp = tempnam('/tmp', 'tmp');
         \assert(false !== $tmp);
 
-        file_put_contents($tmp, base64_decode($imageBase64, true));
+        $decoded = base64_decode($imageBase64, true);
+        \assert(false !== $decoded);
+        file_put_contents($tmp, $decoded);
 
         $media = new Media();
         $media->setBinaryContent($tmp);

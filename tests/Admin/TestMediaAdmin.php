@@ -15,6 +15,6 @@ namespace Sonata\MediaBundle\Tests\Admin;
 
 use Sonata\MediaBundle\Admin\BaseMediaAdmin;
 
-class TestMediaAdmin extends BaseMediaAdmin
+final class TestMediaAdmin extends BaseMediaAdmin
 {
 }

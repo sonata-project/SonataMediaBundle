@@ -23,5 +23,6 @@
         </UndefinedInterfaceMethod>
         <!-- Until we drop PHP < 8.3 support -->
         <MissingClassConstType errorLevel="suppress"/>
+        <MissingOverrideAttribute errorLevel="suppress"/>
     </issueHandlers>
 </psalm>
