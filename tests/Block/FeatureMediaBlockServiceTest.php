@@ -22,7 +22,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
-class FeatureMediaBlockServiceTest extends BlockServiceTestCase
+final class FeatureMediaBlockServiceTest extends BlockServiceTestCase
 {
     private FeatureMediaBlockService $blockService;
 

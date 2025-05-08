@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Security\ForbiddenDownloadStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ForbiddenDownloadStrategyTest extends TestCase
+final class ForbiddenDownloadStrategyTest extends TestCase
 {
     public function testIsGranted(): void
     {

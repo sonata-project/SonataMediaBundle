@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 /**
  * @phpstan-extends AbstractProviderTest<FileProvider>
  */
-class FileProviderTest extends AbstractProviderTest
+final class FileProviderTest extends AbstractProviderTest
 {
     public function getProvider(): MediaProviderInterface
     {
@@ -46,7 +46,7 @@ class FileProviderTest extends AbstractProviderTest
         $thumbnail = static::createStub(ThumbnailInterface::class);
         $metadata = static::createStub(MetadataBuilderInterface::class);
 
-        $adapter = new Local(realpath(__DIR__).'/../Fixtures');
+        $adapter = new Local(__DIR__.'/../Fixtures');
         $cdn = new Server('/uploads/media');
         $generator = new IdGenerator();
 

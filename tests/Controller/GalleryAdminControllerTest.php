@@ -36,7 +36,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
 
-class GalleryAdminControllerTest extends TestCase
+final class GalleryAdminControllerTest extends TestCase
 {
     private Container $container;
 

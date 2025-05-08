@@ -25,7 +25,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 
-class MediaBlockServiceTest extends BlockServiceTestCase
+final class MediaBlockServiceTest extends BlockServiceTestCase
 {
     private Pool $pool;
 

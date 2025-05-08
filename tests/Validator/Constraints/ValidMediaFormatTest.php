@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Tests\Validator\Constraints;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 
-class ValidMediaFormatTest extends TestCase
+final class ValidMediaFormatTest extends TestCase
 {
     public function testInstance(): void
     {

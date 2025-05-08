@@ -29,7 +29,7 @@ use Sonata\MediaBundle\Tests\App\Entity\Media;
 /**
  * @author Mathieu Lemoine <mlemoine@mlemoine.name>
  */
-class MediaEventSubscriberTest extends TestCase
+final class MediaEventSubscriberTest extends TestCase
 {
     /**
      * @see https://github.com/sonata-project/SonataClassificationBundle/issues/60

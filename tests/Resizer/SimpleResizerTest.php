@@ -30,7 +30,7 @@ use Sonata\MediaBundle\Resizer\SimpleResizer;
 /**
  * @phpstan-import-type FormatOptions from MediaProviderInterface
  */
-class SimpleResizerTest extends TestCase
+final class SimpleResizerTest extends TestCase
 {
     public function testResizeWithIncorrectMode(): void
     {

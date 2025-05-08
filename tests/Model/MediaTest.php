@@ -16,7 +16,7 @@ namespace Sonata\MediaBundle\Tests\Media;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Model\Media;
 
-class MediaTest extends TestCase
+final class MediaTest extends TestCase
 {
     public function testSetMetadataValue(): Media
     {

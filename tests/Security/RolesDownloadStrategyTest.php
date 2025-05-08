@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class RolesDownloadStrategyTest extends TestCase
+final class RolesDownloadStrategyTest extends TestCase
 {
     public function testIsGrantedTrue(): void
     {

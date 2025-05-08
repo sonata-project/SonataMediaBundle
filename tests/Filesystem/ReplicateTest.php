@@ -17,7 +17,7 @@ use Gaufrette\Adapter;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Filesystem\Replicate;
 
-class ReplicateTest extends TestCase
+final class ReplicateTest extends TestCase
 {
     public function testReplicate(): void
     {

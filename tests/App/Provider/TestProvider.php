@@ -20,7 +20,7 @@ use Sonata\MediaBundle\Provider\BaseProvider;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class TestProvider extends BaseProvider
+final class TestProvider extends BaseProvider
 {
     public ?string $prevReferenceImage = null;
 

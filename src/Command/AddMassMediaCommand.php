@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class AddMassMediaCommand extends Command
 {
     /**
-     * @var string[]
+     * @var array<string|null>
      */
     private array $setters = [];
 

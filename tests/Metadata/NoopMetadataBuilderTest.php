@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\NoopMetadataBuilder;
 use Sonata\MediaBundle\Model\MediaInterface;
 
-class NoopMetadataBuilderTest extends TestCase
+final class NoopMetadataBuilderTest extends TestCase
 {
     public function testNoop(): void
     {

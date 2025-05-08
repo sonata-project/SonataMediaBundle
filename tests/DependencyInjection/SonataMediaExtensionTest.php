@@ -43,7 +43,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class SonataMediaExtensionTest extends AbstractExtensionTestCase
+final class SonataMediaExtensionTest extends AbstractExtensionTestCase
 {
     protected function setUp(): void
     {
