@@ -19,7 +19,7 @@ use Sonata\MediaBundle\Security\PublicDownloadStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class PublicDownloadStrategyTest extends TestCase
+final class PublicDownloadStrategyTest extends TestCase
 {
     public function testIsGranted(): void
     {

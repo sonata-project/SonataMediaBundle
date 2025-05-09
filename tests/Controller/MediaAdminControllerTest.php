@@ -41,7 +41,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
 
-class MediaAdminControllerTest extends TestCase
+final class MediaAdminControllerTest extends TestCase
 {
     private Container $container;
 
@@ -130,22 +130,17 @@ class MediaAdminControllerTest extends TestCase
         $this->configureRender('templateList', 'renderResponse');
 
         $matcher = static::exactly(3);
+        $callNumber = 0;
         /**
          * @psalm-suppress MissingClosureParamType
          */
-        $datagrid->expects($matcher)->method('setValue')->willReturnCallback(static function (...$parameters) use ($matcher) {
-            /**
-             * @psalm-suppress InternalMethod
-             */
-            if (1 === $matcher->getInvocationCount()) {
+        $datagrid->expects(static::exactly(3))->method('setValue')->willReturnCallback(static function (...$parameters) use (&$callNumber) {
+            ++$callNumber;
+            if (1 === $callNumber) {
                 self::assertSame('context', $parameters[0]);
                 self::assertNull($parameters[1]);
                 self::assertSame('another_context', $parameters[2]);
-            }
-            /**
-             * @psalm-suppress InternalMethod
-             */
-            if (2 === $matcher->getInvocationCount()) {
+            } elseif (2 === $callNumber) {
                 self::assertSame('category', $parameters[0]);
                 self::assertNull($parameters[1]);
                 self::assertSame(1, $parameters[2]);

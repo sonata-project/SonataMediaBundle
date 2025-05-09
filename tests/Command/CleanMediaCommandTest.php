@@ -33,7 +33,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class CleanMediaCommandTest extends FilesystemTestCase
+final class CleanMediaCommandTest extends FilesystemTestCase
 {
     private Application $application;
 

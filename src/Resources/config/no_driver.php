@@ -20,9 +20,12 @@ use Sonata\MediaBundle\Model\NoDriverMediaManager;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
+        // @phpstan-ignore-next-line classConstant.internalClass
         ->set('sonata.media.manager.media', NoDriverMediaManager::class)
 
+        // @phpstan-ignore-next-line classConstant.internalClass
         ->set('sonata.media.manager.gallery', NoDriverGalleryManager::class)
 
+        // @phpstan-ignore-next-line classConstant.internalClass
         ->set('sonata.media.generator.default', NoDriverGenerator::class);
 };

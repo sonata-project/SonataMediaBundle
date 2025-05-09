@@ -15,6 +15,11 @@ namespace Sonata\MediaBundle\Generator;
 
 use Sonata\MediaBundle\Model\MediaInterface;
 
+/**
+ * NEXT_MAJOR: Change this class to final.
+ *
+ * @final since 4.9.0
+ */
 class UuidGenerator implements GeneratorInterface
 {
     public function generatePath(MediaInterface $media): string

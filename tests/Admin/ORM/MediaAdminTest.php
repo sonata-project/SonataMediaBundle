@@ -18,7 +18,7 @@ use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
 use Sonata\MediaBundle\Admin\ORM\MediaAdmin;
 use Sonata\MediaBundle\Provider\Pool;
 
-class MediaAdminTest extends TestCase
+final class MediaAdminTest extends TestCase
 {
     private MediaAdmin $mediaAdmin;
 

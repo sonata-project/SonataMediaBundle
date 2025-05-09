@@ -22,7 +22,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\LiipImagineThumbnail;
 
-class LiipImagineThumbnailTest extends TestCase
+final class LiipImagineThumbnailTest extends TestCase
 {
     public function testGenerate(): void
     {

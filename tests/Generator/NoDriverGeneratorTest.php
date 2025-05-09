@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Exception\NoDriverException;
 use Sonata\MediaBundle\Generator\NoDriverGenerator;
 use Sonata\MediaBundle\Model\MediaInterface;
 
-class NoDriverGeneratorTest extends TestCase
+final class NoDriverGeneratorTest extends TestCase
 {
     public function testException(): void
     {

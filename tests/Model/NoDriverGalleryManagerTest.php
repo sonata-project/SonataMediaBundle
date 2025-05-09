@@ -18,7 +18,7 @@ use Sonata\MediaBundle\Exception\NoDriverException;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Model\NoDriverGalleryManager;
 
-class NoDriverGalleryManagerTest extends TestCase
+final class NoDriverGalleryManagerTest extends TestCase
 {
     /**
      * @dataProvider provideExceptionCases

@@ -18,9 +18,9 @@ use Sonata\MediaBundle\Model\GalleryInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Validator\Constraints\ValidMediaFormat;
 use Sonata\MediaBundle\Validator\FormatValidator;
-use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class FormatValidatorTest extends TestCase
+final class FormatValidatorTest extends TestCase
 {
     public function testValidate(): void
     {
@@ -39,7 +39,7 @@ class FormatValidatorTest extends TestCase
         $gallery->expects(static::once())->method('getDefaultFormat')->willReturn('format1');
         $gallery->expects(static::once())->method('getContext')->willReturn('test');
 
-        $context = $this->createMock(ExecutionContext::class);
+        $context = $this->createMock(ExecutionContextInterface::class);
         $context->expects(static::never())->method('addViolation');
 
         $validator = new FormatValidator($pool);
@@ -65,7 +65,7 @@ class FormatValidatorTest extends TestCase
         $gallery->expects(static::once())->method('getDefaultFormat')->willReturn('non_existing_format');
         $gallery->expects(static::once())->method('getContext')->willReturn('test');
 
-        $context = $this->createMock(ExecutionContext::class);
+        $context = $this->createMock(ExecutionContextInterface::class);
         $context->expects(static::once())->method('addViolation');
 
         $validator = new FormatValidator($pool);
@@ -83,7 +83,7 @@ class FormatValidatorTest extends TestCase
         $gallery->expects(static::once())->method('getDefaultFormat')->willReturn('format_that_is_not_reference');
         $gallery->expects(static::once())->method('getContext')->willReturn('test');
 
-        $context = $this->createMock(ExecutionContext::class);
+        $context = $this->createMock(ExecutionContextInterface::class);
         $context->expects(static::once())->method('addViolation');
 
         $validator = new FormatValidator($pool);

@@ -27,7 +27,7 @@ use Sonata\MediaBundle\Tests\App\Entity\Context;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Component\HttpFoundation\Request;
 
-class BaseMediaAdminTest extends TestCase
+final class BaseMediaAdminTest extends TestCase
 {
     private Pool $pool;
 

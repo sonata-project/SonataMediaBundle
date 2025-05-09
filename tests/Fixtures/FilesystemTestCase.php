@@ -74,7 +74,8 @@ class FilesystemTestCase extends TestCase
     {
         $this->umask = umask(0);
         $this->filesystem = new Filesystem();
-        $this->workspace = sys_get_temp_dir().'/'.microtime(true).'.'.random_int(0, mt_getrandmax());
+        $microtime = (string) microtime(true);
+        $this->workspace = sys_get_temp_dir().'/'.$microtime.'.'.random_int(0, mt_getrandmax());
         mkdir($this->workspace, 0777, true);
 
         $realpath = realpath($this->workspace);
@@ -99,7 +100,9 @@ class FilesystemTestCase extends TestCase
 
     protected function assertFilePermissions(int $expectedFilePerms, string $filePath): void
     {
-        $actualFilePerms = (int) substr(\sprintf('%o', fileperms($filePath)), -3);
+        $perms = fileperms($filePath);
+        \assert(false !== $perms);
+        $actualFilePerms = (int) substr(\sprintf('%o', $perms), -3);
         static::assertSame(
             $expectedFilePerms,
             $actualFilePerms,

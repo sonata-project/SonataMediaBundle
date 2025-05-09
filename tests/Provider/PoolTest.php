@@ -26,7 +26,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 /**
  * @author Javier Spagnoletti <phansys@gmail.com>
  */
-class PoolTest extends TestCase
+final class PoolTest extends TestCase
 {
     private Pool $mediaPool;
 

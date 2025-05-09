@@ -18,7 +18,7 @@ use Sonata\MediaBundle\DependencyInjection\Compiler\AddProviderCompilerPass;
 use Sonata\MediaBundle\DependencyInjection\SonataMediaExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class AddProviderCompilerPassTest extends TestCase
+final class AddProviderCompilerPassTest extends TestCase
 {
     public function testProcess(): void
     {
