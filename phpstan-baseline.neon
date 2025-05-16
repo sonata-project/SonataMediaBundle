@@ -6,6 +6,3 @@ parameters:
         - # https://github.com/phpstan/phpstan-strict-rules/issues/130
             message: '#^Call to static method PHPUnit\\Framework\\Assert::.* will always evaluate to true\.$#'
             path: tests/
-        -
-            message: '#^Call to method get\(\) of internal class Symfony\\Bundle\\FrameworkBundle\\Test\\TestContainer from outside its root namespace Symfony.$#'
-            path: tests/
