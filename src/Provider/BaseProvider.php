@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\Filesystem;
+use Gaufrette\FilesystemInterface;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -48,7 +48,7 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function __construct(
         protected string $name,
-        protected Filesystem $filesystem,
+        protected FilesystemInterface $filesystem,
         protected CDNInterface $cdn,
         protected GeneratorInterface $pathGenerator,
         protected ThumbnailInterface $thumbnail,
@@ -229,7 +229,7 @@ abstract class BaseProvider implements MediaProviderInterface
         return $this->resizer;
     }
 
-    final public function getFilesystem(): Filesystem
+    final public function getFilesystem(): FilesystemInterface
     {
         return $this->filesystem;
     }

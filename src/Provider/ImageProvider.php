@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\Filesystem;
+use Gaufrette\FilesystemInterface;
 use Imagine\Image\ImagineInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -28,7 +28,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 {
     public function __construct(
         string $name,
-        Filesystem $filesystem,
+        FilesystemInterface $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
