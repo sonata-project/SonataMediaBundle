@@ -76,13 +76,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sonata.media.metadata.noop', NoopMetadataBuilder::class);
 
-    if (class_exists(S3Client::class)) {
+    if (
+        class_exists(S3Client::class)
+        && ($_ENV['PHPUNIT_TESTS_SONATA_MEDIA_FORCE_DISABLE_S3_CLIENT'] ?? 'false') !== 'true'
+    ) {
         $containerConfigurator->services()
             ->set('sonata.media.adapter.service.s3', S3Client::class)
             ->args([abstract_arg('settings')]);
     }
 
-    if (class_exists(SimpleS3Client::class)) {
+    if (
+        class_exists(SimpleS3Client::class)
+        && ($_ENV['PHPUNIT_TESTS_SONATA_MEDIA_FORCE_DISABLE_S3_ASYNC_CLIENT'] ?? 'false') !== 'true'
+    ) {
         $containerConfigurator->services()
             ->set('sonata.media.adapter.service.s3.async', SimpleS3Client::class)
             ->args([abstract_arg('settings')]);

@@ -56,6 +56,16 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ]);
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        unset(
+            $_ENV['PHPUNIT_TESTS_SONATA_MEDIA_FORCE_DISABLE_S3_CLIENT'],
+            $_ENV['PHPUNIT_TESTS_SONATA_MEDIA_FORCE_DISABLE_S3_ASYNC_CLIENT'],
+        );
+    }
+
     public function testLoadWithForceDisableTrue(): void
     {
         $this->load([
@@ -236,6 +246,30 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
+    public function testLoadWithFilesystemConfigurationS3DoesNotRequireS3AsyncLibrary(): void
+    {
+        if (!class_exists(Sdk::class)) {
+            static::markTestSkipped('This test requires aws/aws-sdk-php 3.x.');
+        }
+
+        $_ENV['PHPUNIT_TESTS_SONATA_MEDIA_FORCE_DISABLE_S3_ASYNC_CLIENT'] = 'true';
+
+        $this->load([
+            'filesystem' => [
+                's3' => [
+                    'bucket' => 'bucket_name',
+                    'region' => 'region',
+                    'version' => 'version',
+                    'secretKey' => 'secret',
+                    'accessKey' => 'access',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasService('sonata.media.adapter.service.s3', S3Client::class);
+        $this->assertContainerBuilderNotHasService('sonata.media.adapter.service.s3.async');
+    }
+
     /**
      * @dataProvider provideLoadWithFilesystemConfigurationS3Cases
      *
@@ -359,6 +393,31 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
                 ],
             ],
         ];
+    }
+
+    public function testLoadWithFilesystemConfigurationS3AsyncDoesNotRequireS3Library(): void
+    {
+        if (!class_exists(SimpleS3Client::class)) {
+            static::markTestSkipped('This test requires async-aws/simple-s3.');
+        }
+
+        $_ENV['PHPUNIT_TESTS_SONATA_MEDIA_FORCE_DISABLE_S3_CLIENT'] = 'true';
+
+        $this->load([
+            'filesystem' => [
+                's3' => [
+                    'async' => true,
+                    'bucket' => 'bucket_name',
+                    'region' => 'region',
+                    'version' => 'version',
+                    'secretKey' => 'secret',
+                    'accessKey' => 'access',
+                ],
+            ],
+        ]);
+
+        $this->assertContainerBuilderHasService('sonata.media.adapter.service.s3.async', SimpleS3Client::class);
+        $this->assertContainerBuilderNotHasService('sonata.media.adapter.service.s3');
     }
 
     public function testLoadWithFilesystemConfigurationS3ASync(): void
