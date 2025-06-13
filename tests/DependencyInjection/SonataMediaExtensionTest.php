@@ -237,12 +237,12 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider provideLoadWithFilesystemConfigurationV3Cases
+     * @dataProvider provideLoadWithFilesystemConfigurationS3Cases
      *
      * @param array<string, mixed> $expected
      * @param array<string, mixed> $configs
      */
-    public function testLoadWithFilesystemConfigurationV3(
+    public function testLoadWithFilesystemConfigurationS3(
         array $expected,
         array $configs,
     ): void {
@@ -271,7 +271,7 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @phpstan-return iterable<array{array<string, mixed>, array<string, mixed>}>
      */
-    public function provideLoadWithFilesystemConfigurationV3Cases(): iterable
+    public function provideLoadWithFilesystemConfigurationS3Cases(): iterable
     {
         yield [
             [
@@ -361,7 +361,7 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    public function testLoadWithFilesystemConfigurationV3ASync(): void
+    public function testLoadWithFilesystemConfigurationS3ASync(): void
     {
         if (!class_exists(SimpleS3Client::class)) {
             static::markTestSkipped('This test requires async-aws/simple-s3.');
