@@ -19,10 +19,13 @@ use Aws\S3\S3Client;
 use Aws\Sdk;
 use Gaufrette\Adapter\AsyncAwsS3;
 use Gaufrette\Adapter\AwsS3;
+use Gaufrette\Adapter\AzureBlobStorage;
+use Gaufrette\Adapter\AzureBlobStorage\BlobProxyFactory;
 use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagicImagine;
 use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 use Sonata\MediaBundle\Admin\GalleryItemAdmin;
@@ -213,12 +216,14 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $fakeContainer->expects(static::once())
             ->method('getExtensionConfig')
             ->with('sonata_admin')
-            ->willReturn([[
-                'security' => [
-                    'role_admin' => 'ROLE_FOO',
-                    'role_super_admin' => 'ROLE_BAR',
+            ->willReturn([
+                [
+                    'security' => [
+                        'role_admin' => 'ROLE_FOO',
+                        'role_super_admin' => 'ROLE_BAR',
+                    ],
                 ],
-            ]]);
+            ]);
 
         $configs = [$this->getMinimalConfiguration()];
         foreach ($this->getContainerExtensions() as $extension) {
@@ -515,6 +520,39 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
             1,
             new Reference('sonata.media.adapter.filesystem.local')
         );
+    }
+
+    public function testLoadWithFilesystemConfigurationAzure(): void
+    {
+        if (!class_exists(BlobRestProxy::class)) {
+            static::markTestSkipped('This test requires microsoft/azure-storage-blob.');
+        }
+
+        $configs = [
+            'filesystem' => [
+                'azure' => [
+                    'container_name' => 'container_name',
+                    'create_container' => false,
+                    'connection_string' => 'connectionstring',
+                ],
+            ],
+        ];
+
+        $this->load($configs);
+
+        $this->assertContainerBuilderHasService('sonata.media.adapter.filesystem.azure', AzureBlobStorage::class);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.service.azure', 0, 'connectionstring');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.azure', 1, 'container_name');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.azure', 2, false);
+
+        $this->assertContainerBuilderHasService('sonata.media.adapter.service.azure', BlobProxyFactory::class);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.service.azure', 0, 'connectionstring');
+
+        static::assertFalse($this->container->hasDefinition('sonata.media.adapter.filesystem.s3'));
+        static::assertFalse($this->container->hasDefinition('sonata.media.filesystem.s3'));
+        static::assertFalse($this->container->hasDefinition('sonata.media.metadata.amazon'));
     }
 
     /**

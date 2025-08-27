@@ -16,6 +16,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use AsyncAws\SimpleS3\SimpleS3Client;
 use Aws\S3\S3Client;
 use Gaufrette\Adapter\AwsS3;
+use Gaufrette\Adapter\AzureBlobStorage;
+use Gaufrette\Adapter\AzureBlobStorage\BlobProxyFactory;
 use Gaufrette\Adapter\Ftp;
 use Gaufrette\Filesystem;
 use Sonata\MediaBundle\Filesystem\Local;
@@ -31,11 +33,18 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.adapter.filesystem.ftp', Ftp::class)
 
         ->set('sonata.media.adapter.filesystem.s3', AwsS3::class)
-            ->args([
-                abstract_arg('s3 client'),
-                abstract_arg('bucket'),
-                abstract_arg('options'),
-            ])
+        ->args([
+            abstract_arg('s3 client'),
+            abstract_arg('bucket'),
+            abstract_arg('options'),
+        ])
+
+        ->set('sonata.media.adapter.filesystem.azure', AzureBlobStorage::class)
+        ->args([
+            abstract_arg('blob proxy factory'),
+            abstract_arg('container name'),
+            abstract_arg('create'),
+        ])
 
         ->set('sonata.media.adapter.filesystem.replicate', Replicate::class)
             ->args([
@@ -50,9 +59,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
 
         ->set('sonata.media.filesystem.s3', Filesystem::class)
-            ->args([
-                service('sonata.media.adapter.filesystem.s3'),
-            ])
+        ->args([
+            service('sonata.media.adapter.filesystem.s3'),
+        ])
+
+        ->set('sonata.media.filesystem.azure', Filesystem::class)
+        ->args([
+            service('sonata.media.adapter.filesystem.azure'),
+        ])
 
         ->set('sonata.media.filesystem.ftp', Filesystem::class)
             ->args([
@@ -86,5 +100,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         $containerConfigurator->services()
             ->set('sonata.media.adapter.service.s3.async', SimpleS3Client::class)
             ->args([abstract_arg('settings')]);
+    }
+
+    if (class_exists(BlobProxyFactory::class)) {
+        $containerConfigurator->services()
+            ->set('sonata.media.adapter.service.azure', BlobProxyFactory::class)
+            ->args([abstract_arg('connection string')]);
     }
 };
