@@ -66,7 +66,6 @@ final class SyncThumbsCommand extends Command
         $filesystem = $provider->getFilesystem();
         $fsReflection = new \ReflectionClass($filesystem);
         $fsRegister = $fsReflection->getProperty('fileRegister');
-        $fsRegister->setAccessible(true);
 
         $batchCounter = 0;
         $batchSize = (int) $input->getOption('batchSize');

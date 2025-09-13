@@ -249,7 +249,6 @@ final class DailyMotionProviderTest extends AbstractProviderTest
         $media->setId(1_023_456);
 
         $method = new \ReflectionMethod($provider, 'getMetadata');
-        $method->setAccessible(true);
 
         $method->invokeArgs($provider, [$media, 'x9wjql']);
     }

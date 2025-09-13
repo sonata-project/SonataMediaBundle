@@ -266,7 +266,6 @@ final class FileProviderTest extends AbstractProviderTest
             ->willReturn($binaryContent);
 
         $setFileContents = new \ReflectionMethod(FileProvider::class, 'setFileContents');
-        $setFileContents->setAccessible(true);
 
         $setFileContents->invoke($this->provider, $media);
     }
@@ -302,7 +301,6 @@ final class FileProviderTest extends AbstractProviderTest
             ->willReturn($binaryContent);
 
         $setFileContents = new \ReflectionMethod(FileProvider::class, 'setFileContents');
-        $setFileContents->setAccessible(true);
 
         $setFileContents->invoke($this->provider, $media);
     }

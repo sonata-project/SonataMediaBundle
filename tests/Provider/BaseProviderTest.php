@@ -155,7 +155,6 @@ final class BaseProviderTest extends AbstractProviderTest
     {
         $reflect = new \ReflectionClass(BaseProvider::class);
         $prop = $reflect->getProperty('clones');
-        $prop->setAccessible(true);
 
         $provider = $this->getProvider();
         $media = new Media();
@@ -173,7 +172,5 @@ final class BaseProviderTest extends AbstractProviderTest
 
         static::assertArrayNotHasKey($hash, $prop->getValue($provider));
         static::assertSame('default/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
-
-        $prop->setAccessible(false);
     }
 }
