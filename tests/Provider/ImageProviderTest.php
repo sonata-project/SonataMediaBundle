@@ -17,7 +17,6 @@ use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
