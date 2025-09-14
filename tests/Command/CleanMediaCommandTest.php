@@ -43,10 +43,7 @@ final class CleanMediaCommandTest extends FilesystemTestCase
 
     private Pool $pool;
 
-    /**
-     * @var MockObject&MediaManagerInterface
-     */
-    private MockObject $mediaManager;
+    private MediaManagerInterface&MockObject $mediaManager;
 
     private FileProvider $provider;
 

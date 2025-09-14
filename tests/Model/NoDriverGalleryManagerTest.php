@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Exception\NoDriverException;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
@@ -21,10 +22,9 @@ use Sonata\MediaBundle\Model\NoDriverGalleryManager;
 final class NoDriverGalleryManagerTest extends TestCase
 {
     /**
-     * @dataProvider provideExceptionCases
-     *
      * @param mixed[] $arguments
      */
+    #[DataProvider('provideExceptionCases')]
     public function testException(string $method, array $arguments): void
     {
         $this->expectException(NoDriverException::class);
@@ -40,7 +40,7 @@ final class NoDriverGalleryManagerTest extends TestCase
     /**
      * @phpstan-return iterable<array{string, mixed[]}>
      */
-    public function provideExceptionCases(): iterable
+    public static function provideExceptionCases(): iterable
     {
         yield ['getClass', []];
         yield ['findAll', []];

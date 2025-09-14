@@ -33,15 +33,9 @@ final class FixMediaContextCommandTest extends TestCase
 
     private Pool $pool;
 
-    /**
-     * @var MockObject&ContextManagerInterface
-     */
-    private MockObject $contextManager;
+    private ContextManagerInterface&MockObject $contextManager;
 
-    /**
-     * @var MockObject&CategoryManagerInterface
-     */
-    private MockObject $categoryManager;
+    private CategoryManagerInterface&MockObject $categoryManager;
 
     protected function setUp(): void
     {

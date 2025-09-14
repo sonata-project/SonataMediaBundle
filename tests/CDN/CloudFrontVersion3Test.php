@@ -18,6 +18,7 @@ use Aws\CloudFront\Exception\CloudFrontException;
 use Aws\Command;
 use Aws\Result;
 use Aws\Sdk;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 
@@ -35,9 +36,7 @@ final class CloudFrontVersion3Test extends TestCase
         parent::setUp();
     }
 
-    /**
-     * @dataProvider provideCloudFrontCases
-     */
+    #[DataProvider('provideCloudFrontCases')]
     public function testCloudFront(
         string $expectedPath,
         string $path,
@@ -46,10 +45,7 @@ final class CloudFrontVersion3Test extends TestCase
         int $expectedStatus,
         string $invalidationStatus,
     ): void {
-        $client = $this->getMockBuilder(CloudFrontClient::class)
-            ->addMethods(['createInvalidation', 'getInvalidation'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(CloudFrontClient::class);
 
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', $path);
 
@@ -57,8 +53,8 @@ final class CloudFrontVersion3Test extends TestCase
 
         $flushPath = '/mypath/file.jpg';
 
-        $client->expects(static::exactly(3))
-            ->method('createInvalidation')
+        $client->expects(static::exactly(4))
+            ->method('__call')
             ->willReturn(new Result([
                 'Invalidation' => [
                     'Id' => $invalidationId,
@@ -69,23 +65,13 @@ final class CloudFrontVersion3Test extends TestCase
         static::assertSame($invalidationId, $cloudFront->flushByString($flushPath));
         static::assertSame($invalidationId, $cloudFront->flush($flushPath));
         static::assertSame($invalidationId, $cloudFront->flushPaths([$flushPath]));
-
-        $client->expects(static::once())
-            ->method('getInvalidation')
-            ->willReturn(new Result([
-                'Invalidation' => [
-                    'Id' => $invalidationId,
-                    'Status' => $invalidationStatus,
-                ],
-            ]));
-
         static::assertSame($expectedStatus, $cloudFront->getFlushStatus($invalidationId));
     }
 
     /**
      * @phpstan-return iterable<array{string, string, string, string, int, string}>
      */
-    public function provideCloudFrontCases(): iterable
+    public static function provideCloudFrontCases(): iterable
     {
         yield ['/foo/bar.jpg', '/foo', '/bar.jpg', 'ivalidation_id_42', CloudFrontVersion3::STATUS_WAITING, 'InProgress'];
         yield ['/foo/bar.jpg', '/foo', 'bar.jpg', 'ivalidation_a', CloudFrontVersion3::STATUS_OK, 'Completed'];
@@ -93,13 +79,11 @@ final class CloudFrontVersion3Test extends TestCase
 
     public function testCreateInvalidationException(): void
     {
-        $client = $this->getMockBuilder(CloudFrontClient::class)
-            ->addMethods(['createInvalidation'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(CloudFrontClient::class);
 
         $client->expects(static::once())
-            ->method('createInvalidation')
+            ->method('__call')
+            ->with('createInvalidation')
             ->willThrowException(new CloudFrontException('An exception occurred.', new Command('command_name')));
 
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
@@ -112,14 +96,12 @@ final class CloudFrontVersion3Test extends TestCase
 
     public function testNoStatusException(): void
     {
-        $client = $this->getMockBuilder(CloudFrontClient::class)
-            ->addMethods(['createInvalidation'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(CloudFrontClient::class);
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
 
         $client->expects(static::once())
-            ->method('createInvalidation')
+            ->method('__call')
+            ->with('createInvalidation')
             ->willReturn(new Result([
                 'Invalidation' => [
                     'Id' => 'invalidation_id',
@@ -134,14 +116,12 @@ final class CloudFrontVersion3Test extends TestCase
 
     public function testUnknownStatusException(): void
     {
-        $client = $this->getMockBuilder(CloudFrontClient::class)
-            ->addMethods(['createInvalidation'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(CloudFrontClient::class);
         $cloudFront = new CloudFrontVersion3($client, 'xxxxxxxxxxxxxx', '/foo');
 
         $client->expects(static::once())
-            ->method('createInvalidation')
+            ->method('__call')
+            ->with('createInvalidation')
             ->willReturn(new Result([
                 'Invalidation' => [
                     'Id' => 'invalidation_id',

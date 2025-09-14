@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Thumbnail;
 
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -29,10 +30,7 @@ final class MessengerThumbnailTest extends TestCase
 {
     private FormatThumbnail $innerThumbnail;
 
-    /**
-     * @var MockObject&MessageBusInterface
-     */
-    private MessageBusInterface $bus;
+    private MessageBusInterface&MockObject $bus;
 
     private MessengerThumbnail $thumbnail;
 
@@ -96,9 +94,7 @@ final class MessengerThumbnailTest extends TestCase
         );
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testDeleteThumbnails(): void
     {
         $this->thumbnail->delete(

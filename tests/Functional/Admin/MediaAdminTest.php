@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Functional\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -21,10 +22,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 final class MediaAdminTest extends WebTestCase
 {
     /**
-     * @dataProvider provideCrudUrlsCases
-     *
      * @param array<string, mixed> $parameters
      */
+    #[DataProvider('provideCrudUrlsCases')]
     public function testCrudUrls(string $url, array $parameters = []): void
     {
         $client = self::createClient();
@@ -72,11 +72,10 @@ final class MediaAdminTest extends WebTestCase
     }
 
     /**
-     * @dataProvider provideFormsUrlsCases
-     *
      * @param array<string, mixed> $parameters
      * @param array<string, mixed> $fieldValues
      */
+    #[DataProvider('provideFormsUrlsCases')]
     public function testFormsUrls(string $url, array $parameters, string $button, array $fieldValues = []): void
     {
         $client = self::createClient();

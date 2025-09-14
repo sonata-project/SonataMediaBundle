@@ -25,9 +25,9 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 
 /**
- * @phpstan-extends AbstractProviderTest<TestProvider>
+ * @phpstan-extends AbstractProviderTestCase<TestProvider>
  */
-final class BaseProviderTest extends AbstractProviderTest
+final class BaseProviderTestCase extends AbstractProviderTestCase
 {
     /**
      * @return TestProvider

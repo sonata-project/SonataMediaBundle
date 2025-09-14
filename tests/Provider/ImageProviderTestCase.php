@@ -17,7 +17,6 @@ use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
-use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
@@ -29,9 +28,9 @@ use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 /**
- * @phpstan-extends AbstractProviderTest<ImageProvider>
+ * @phpstan-extends AbstractProviderTestCase<ImageProvider>
  */
-final class ImageProviderTest extends AbstractProviderTest
+final class ImageProviderTestCase extends AbstractProviderTestCase
 {
     /**
      * @param string[] $allowedExtensions
@@ -39,7 +38,6 @@ final class ImageProviderTest extends AbstractProviderTest
      */
     public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = []): ImageProvider
     {
-        /** @var MockObject&ResizerInterface $resizer */
         $resizer = $this->createMock(ResizerInterface::class);
 
         $adminBox = new Box(100, 100);
@@ -73,7 +71,6 @@ final class ImageProviderTest extends AbstractProviderTest
         $thumbnail = new FormatThumbnail('jpg');
         $adapter = new Imagine();
 
-        /** @var MockObject&MetadataBuilderInterface $metadata */
         $metadata = $this->createMock(MetadataBuilderInterface::class);
         $metadata->method('get')->willReturn([]);
 

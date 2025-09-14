@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Metadata;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\AmazonMetadataBuilder;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -24,13 +25,12 @@ use Symfony\Component\Mime\MimeTypesInterface;
 final class AmazonMetadataBuilderTest extends TestCase
 {
     /**
-     * @dataProvider provideAmazonCases
-     *
      * @param array<string, string|int> $mediaAttributes
      * @param array<string, mixed>      $expected
      *
      * @phpstan-param AmazonSettings $settings
      */
+    #[DataProvider('provideAmazonCases')]
     public function testAmazon(array $settings, array $mediaAttributes, array $expected): void
     {
         $mimeTypes = static::createStub(MimeTypesInterface::class);
@@ -51,7 +51,7 @@ final class AmazonMetadataBuilderTest extends TestCase
     /**
      * @phpstan-return iterable<array{AmazonSettings, array<string, string|int>, array<string, mixed>}>
      */
-    public function provideAmazonCases(): iterable
+    public static function provideAmazonCases(): iterable
     {
         yield [
             [

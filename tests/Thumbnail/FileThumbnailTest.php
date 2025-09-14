@@ -22,10 +22,7 @@ use Symfony\Component\Asset\Packages;
 
 final class FileThumbnailTest extends TestCase
 {
-    /**
-     * @var MockObject&Packages
-     */
-    private MockObject $packages;
+    private Packages&MockObject $packages;
 
     private FileThumbnail $thumbnail;
 
