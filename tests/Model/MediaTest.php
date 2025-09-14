@@ -69,7 +69,6 @@ final class MediaTest extends TestCase
     {
         $rc = new \ReflectionClass(Media::class);
         $property = $rc->getProperty($propertyName);
-        $property->setAccessible(true);
 
         return $property;
     }

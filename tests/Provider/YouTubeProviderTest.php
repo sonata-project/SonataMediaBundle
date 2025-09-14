@@ -258,7 +258,6 @@ final class YouTubeProviderTest extends AbstractProviderTest
         $media->setId(1_023_456);
 
         $method = new \ReflectionMethod($provider, 'getMetadata');
-        $method->setAccessible(true);
 
         $method->invokeArgs($provider, [$media, 'BDYAbAtaDzA']);
     }
