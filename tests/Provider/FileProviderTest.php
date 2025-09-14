@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\Form\Twig\CanonicalizeRuntime;
 use Sonata\Form\Validator\ErrorElement;
@@ -463,10 +463,7 @@ final class FileProviderTest extends AbstractProviderTest
         return new ErrorElement('', $executionContext, 'group');
     }
 
-    /**
-     * @return MockObject&ConstraintViolationBuilderInterface
-     */
-    private function createConstraintBuilder(): object
+    private function createConstraintBuilder(): ConstraintViolationBuilderInterface&MockObject
     {
         $constraintBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $constraintBuilder

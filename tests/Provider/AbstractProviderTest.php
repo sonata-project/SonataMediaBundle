@@ -35,10 +35,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 abstract class AbstractProviderTest extends TestCase
 {
-    /**
-     * @var MockObject&FormBuilderInterface
-     */
-    protected MockObject $formBuilder;
+    protected FormBuilderInterface&MockObject $formBuilder;
 
     /**
      * @var FormMapper<MediaInterface>

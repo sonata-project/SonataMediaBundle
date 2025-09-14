@@ -30,15 +30,9 @@ use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
  */
 final class GenerateThumbnailsHandlerTest extends TestCase
 {
-    /**
-     * @var MockObject&GenerableThumbnailInterface
-     */
-    private GenerableThumbnailInterface $thumbnail;
+    private GenerableThumbnailInterface&MockObject $thumbnail;
 
-    /**
-     * @var MockObject&MediaManagerInterface
-     */
-    private MediaManagerInterface $mediaManager;
+    private MediaManagerInterface&MockObject $mediaManager;
 
     private Pool $pool;
 

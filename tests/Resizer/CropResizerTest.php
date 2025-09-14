@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Resizer;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -34,15 +34,9 @@ final class CropResizerTest extends TestCase
 
     private const QUALITY = 75;
 
-    /**
-     * @var MockObject&ImagineInterface
-     */
-    private MockObject $adapter;
+    private ImagineInterface&MockObject $adapter;
 
-    /**
-     * @var Stub&MetadataBuilderInterface
-     */
-    private Stub $metadata;
+    private MetadataBuilderInterface&Stub $metadata;
 
     protected function setUp(): void
     {

@@ -41,18 +41,15 @@ final class GalleryAdminControllerTest extends TestCase
     private Container $container;
 
     /**
-     * @var MockObject&AdminInterface<GalleryInterface<GalleryItemInterface>>
+     * @var AdminInterface<GalleryInterface<GalleryItemInterface>>&MockObject
      */
-    private MockObject $admin;
+    private AdminInterface&MockObject $admin;
 
     private Request $request;
 
     private GalleryAdminController $controller;
 
-    /**
-     * @var MockObject&Environment
-     */
-    private MockObject $twig;
+    private Environment&MockObject $twig;
 
     protected function setUp(): void
     {
@@ -162,6 +159,6 @@ final class GalleryAdminControllerTest extends TestCase
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
         $this->container->set('sonata.media.pool', $pool);
         $response->method('getContent')->willReturn($rendered);
-        $this->twig->method('render')->with($template, static::isType('array'))->willReturn($rendered);
+        $this->twig->method('render')->with($template, static::isArray())->willReturn($rendered);
     }
 }

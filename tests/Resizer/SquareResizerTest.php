@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Resizer;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\ManipulatorInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -51,8 +51,8 @@ final class SquareResizerTest extends TestCase
     }
 
     /**
-     *
      * @param array<string, int|string|bool|array|null> $settings
+     *
      * @phpstan-param FormatOptions $settings
      */
     #[DataProvider('provideGetBoxCases')]

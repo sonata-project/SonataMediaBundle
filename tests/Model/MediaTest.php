@@ -74,7 +74,7 @@ final class MediaTest extends TestCase
 
     protected function getMedia(mixed $id): Media
     {
-        $media = $this->getMockForAbstractClass(Media::class);
+        $media = $this->createMock(Media::class);
         $media
             ->method('getId')
             ->willReturn($id);

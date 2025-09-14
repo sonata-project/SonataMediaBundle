@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
-use PHPUnit\Framework\Attributes\RequiresMethod;
 use Gaufrette\Filesystem;
+use PHPUnit\Framework\Attributes\RequiresMethod;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Command\RemoveThumbsCommand;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
@@ -28,7 +28,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * @author Anton Dyshkant <vyshkant@gmail.com>
  */
-#[RequiresMethod(Symfony\Component\Console\Tester\CommandTester::class, 'setInputs')]
+#[RequiresMethod(CommandTester::class, 'setInputs')]
 final class RemoveThumbsCommandTest extends FilesystemTestCase
 {
     private Application $application;
@@ -39,10 +39,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
 
     private Pool $pool;
 
-    /**
-     * @var MockObject&MediaManagerInterface
-     */
-    private MockObject $mediaManager;
+    private MediaManagerInterface&MockObject $mediaManager;
 
     protected function setUp(): void
     {

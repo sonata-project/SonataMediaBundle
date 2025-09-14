@@ -25,9 +25,9 @@ use Symfony\Component\Mime\MimeTypesInterface;
 final class AmazonMetadataBuilderTest extends TestCase
 {
     /**
-     *
      * @param array<string, string|int> $mediaAttributes
      * @param array<string, mixed>      $expected
+     *
      * @phpstan-param AmazonSettings $settings
      */
     #[DataProvider('provideAmazonCases')]

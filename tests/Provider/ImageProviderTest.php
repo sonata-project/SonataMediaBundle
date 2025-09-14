@@ -39,7 +39,6 @@ final class ImageProviderTest extends AbstractProviderTest
      */
     public function getProvider(array $allowedExtensions = [], array $allowedMimeTypes = []): ImageProvider
     {
-        /** @var MockObject&ResizerInterface $resizer */
         $resizer = $this->createMock(ResizerInterface::class);
 
         $adminBox = new Box(100, 100);
@@ -73,7 +72,6 @@ final class ImageProviderTest extends AbstractProviderTest
         $thumbnail = new FormatThumbnail('jpg');
         $adapter = new Imagine();
 
-        /** @var MockObject&MetadataBuilderInterface $metadata */
         $metadata = $this->createMock(MetadataBuilderInterface::class);
         $metadata->method('get')->willReturn([]);
 

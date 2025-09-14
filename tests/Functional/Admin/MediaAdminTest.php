@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Functional\Admin;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Tests\App\Entity\Media;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -72,7 +72,6 @@ final class MediaAdminTest extends WebTestCase
     }
 
     /**
-     *
      * @param array<string, mixed> $parameters
      * @param array<string, mixed> $fieldValues
      */

@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\CDN;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\Exception\CloudFrontException;
 use Aws\Command;
 use Aws\Result;
 use Aws\Sdk;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\CDN\CloudFrontVersion3;
 

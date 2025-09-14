@@ -31,22 +31,16 @@ final class BaseMediaAdminTest extends TestCase
 {
     private Pool $pool;
 
-    /**
-     * @var MockObject&CategoryManagerInterface
-     */
-    private MockObject $categoryManager;
+    private CategoryManagerInterface&MockObject $categoryManager;
 
-    /**
-     * @var MockObject&ContextManagerInterface
-     */
-    private MockObject $contextManager;
+    private ContextManagerInterface&MockObject $contextManager;
 
     private Request $request;
 
     /**
-     * @var Stub&ModelManagerInterface<MediaInterface>
+     * @var ModelManagerInterface<MediaInterface>&MockObject
      */
-    private Stub $modelManager;
+    private ModelManagerInterface&MockObject $modelManager;
 
     private TestMediaAdmin $mediaAdmin;
 
@@ -56,7 +50,7 @@ final class BaseMediaAdminTest extends TestCase
         $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
         $this->contextManager = $this->createMock(ContextManagerInterface::class);
         $this->request = new Request();
-        $this->modelManager = static::createStub(ModelManagerInterface::class);
+        $this->modelManager = $this->createMock(ModelManagerInterface::class);
 
         $this->mediaAdmin = new TestMediaAdmin(
             $this->pool,

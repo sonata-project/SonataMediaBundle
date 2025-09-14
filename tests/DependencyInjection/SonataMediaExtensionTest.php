@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use AsyncAws\SimpleS3\SimpleS3Client;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\S3\S3Client;
@@ -24,6 +23,7 @@ use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagicImagine;
 use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 use Sonata\MediaBundle\Admin\GalleryItemAdmin;
 use Sonata\MediaBundle\Admin\ODM\MediaAdmin as ODMMediaAdmin;
@@ -236,7 +236,6 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     *
      * @param array<string, mixed> $expected
      * @param array<string, mixed> $configs
      */
