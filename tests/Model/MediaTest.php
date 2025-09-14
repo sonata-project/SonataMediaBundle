@@ -74,7 +74,7 @@ final class MediaTest extends TestCase
 
     protected function getMedia(mixed $id): Media
     {
-        return new class ($id) extends Media {
+        return new class($id) extends Media {
             public function __construct(private mixed $id)
             {
                 parent::__construct();
