@@ -159,6 +159,6 @@ final class GalleryAdminControllerTest extends TestCase
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
         $this->container->set('sonata.media.pool', $pool);
         $response->method('getContent')->willReturn($rendered);
-        $this->twig->method('render')->with($template, static::isArray())->willReturn($rendered);
+        $this->twig->method('render')->with($template, static::isType('array'))->willReturn($rendered);
     }
 }

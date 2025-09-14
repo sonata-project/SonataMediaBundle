@@ -33,7 +33,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @phpstan-template T of MediaProviderInterface
  */
-abstract class AbstractProviderTest extends TestCase
+abstract class AbstractProviderTestCase extends TestCase
 {
     protected FormBuilderInterface&MockObject $formBuilder;
 

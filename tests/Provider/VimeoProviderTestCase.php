@@ -24,25 +24,26 @@ use Psr\Http\Message\RequestInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
-use Sonata\MediaBundle\Provider\YouTubeProvider;
+use Sonata\MediaBundle\Provider\VimeoProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
- * @phpstan-extends AbstractProviderTest<YouTubeProvider>
+ * @phpstan-extends AbstractProviderTestCase<VimeoProvider>
  */
-final class YouTubeProviderTest extends AbstractProviderTest
+final class VimeoProviderTestCase extends AbstractProviderTestCase
 {
-    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
+    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
         if (null === $client) {
             $client = static::createStub(ClientInterface::class);
         }
 
-        if (null === $messageFactory) {
-            $messageFactory = static::createStub(RequestFactoryInterface::class);
+        if (null === $requestFactory) {
+            $requestFactory = static::createStub(RequestFactoryInterface::class);
         }
 
         $resizer = $this->createMock(ResizerInterface::class);
@@ -68,7 +69,7 @@ final class YouTubeProviderTest extends AbstractProviderTest
 
         $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        $provider = new YouTubeProvider('youtube', $filesystem, $cdn, $generator, $thumbnail, $client, $messageFactory, $metadata, false);
+        $provider = new VimeoProvider('vimeo', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, $metadata);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -77,15 +78,14 @@ final class YouTubeProviderTest extends AbstractProviderTest
     public function testProvider(): void
     {
         $media = new Media();
-        $media->setName('Nono le petit robot');
-        $media->setProviderName('youtube');
-        $media->setProviderReference('BDYAbAtaDzA');
+        $media->setName('Blinky™');
+        $media->setProviderName('vimeo');
+        $media->setProviderReference('21216091');
         $media->setContext('default');
-        $media->setProviderMetadata(json_decode('{"provider_url": "http:\/\/www.youtube.com\/", "title": "Nono le petit robot", "html": "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\"><\/param><param name=\"allowFullScreen\" value=\"true\"><\/param><param name=\"allowscriptaccess\" value=\"always\"><\/param><embed src=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\" type=\"application\/x-shockwave-flash\" width=\"425\" height=\"344\" allowscriptaccess=\"always\" allowfullscreen=\"true\"><\/embed><\/object>", "author_name": "timan38", "height": 344, "thumbnail_width": 480, "width": 425, "version": "1.0", "author_url": "http:\/\/www.youtube.com\/user\/timan38", "provider_name": "YouTube", "thumbnail_url": "http:\/\/i3.ytimg.com\/vi\/BDYAbAtaDzA\/hqdefault.jpg", "type": "video", "thumbnail_height": 360}', true));
+        $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Vimeo","provider_url":"http:\/\/vimeo.com\/","title":"Blinky\u2122","author_name":"Ruairi Robinson","author_url":"http:\/\/vimeo.com\/ruairirobinson","is_plus":"1","html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>","width":"1920","height":"1080","duration":"771","description":"","thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg","thumbnail_width":1280,"thumbnail_height":720,"video_id":"21216091"}', true));
 
         $media->setId(1_023_457);
-
-        static::assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $this->provider->getReferenceImage($media));
+        static::assertSame('http://b.vimeocdn.com/ts/136/375/136375440_1280.jpg', $this->provider->getReferenceImage($media));
 
         static::assertSame('default/0011/24', $this->provider->generatePath($media));
         static::assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
@@ -95,19 +95,20 @@ final class YouTubeProviderTest extends AbstractProviderTest
     {
         $request = static::createStub(RequestInterface::class);
 
-        $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects(static::once())->method('createRequest')->willReturn($request);
+        $messageFactory = $this->createMock(RequestFactoryInterface::class);
+        $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects(static::once())->method('sendRequest')->with($request)->willReturn($this->createResponse('content'));
 
-        $provider = $this->getProvider($client, $requestFactory);
+        $provider = $this->getProvider($client, $messageFactory);
 
         $media = new Media();
-        $media->setProviderName('youtube');
-        $media->setProviderReference('BDYAbAtaDzA');
+        $media->setName('Blinky™');
+        $media->setProviderName('vimeo');
+        $media->setProviderReference('21216091');
         $media->setContext('default');
-        $media->setProviderMetadata(json_decode('{"provider_url": "http:\/\/www.youtube.com\/", "title": "Nono le petit robot", "html": "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\"><\/param><param name=\"allowFullScreen\" value=\"true\"><\/param><param name=\"allowscriptaccess\" value=\"always\"><\/param><embed src=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\" type=\"application\/x-shockwave-flash\" width=\"425\" height=\"344\" allowscriptaccess=\"always\" allowfullscreen=\"true\"><\/embed><\/object>", "author_name": "timan38", "height": 344, "thumbnail_width": 480, "width": 425, "version": "1.0", "author_url": "http:\/\/www.youtube.com\/user\/timan38", "provider_name": "YouTube", "thumbnail_url": "http:\/\/i3.ytimg.com\/vi\/BDYAbAtaDzA\/hqdefault.jpg", "type": "video", "thumbnail_height": 360}', true));
+        $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Vimeo","provider_url":"http:\/\/vimeo.com\/","title":"Blinky\u2122","author_name":"Ruairi Robinson","author_url":"http:\/\/vimeo.com\/ruairirobinson","is_plus":"1","html":"<iframe src=\"http:\/\/player.vimeo.com\/video\/21216091\" width=\"1920\" height=\"1080\" frameborder=\"0\"><\/iframe>","width":"1920","height":"1080","duration":"771","description":"","thumbnail_url":"http:\/\/b.vimeocdn.com\/ts\/136\/375\/136375440_1280.jpg","thumbnail_width":1280,"thumbnail_height":720,"video_id":"21216091"}', true));
 
         $media->setId(1_023_457);
 
@@ -134,20 +135,18 @@ final class YouTubeProviderTest extends AbstractProviderTest
     {
         $request = static::createStub(RequestInterface::class);
 
-        $messageFactory = $this->createMock(RequestFactoryInterface::class);
-        $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory->expects(static::once())->method('createRequest')->willReturn($request);
 
-        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
+        $fileContent = file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt');
 
-        if (false === $fileContents) {
-            static::fail('Unable to read "valid_youtube.txt" file.');
-        }
+        static::assertNotFalse($fileContent);
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects(static::once())->method('sendRequest')->with($request)
-            ->willReturn($this->createResponse($fileContents));
+            ->willReturn($this->createResponse($fileContent));
 
-        $provider = $this->getProvider($client, $messageFactory);
+        $provider = $this->getProvider($client, $requestFactory);
 
         $provider->addFormat('big', [
             'width' => 200,
@@ -166,28 +165,27 @@ final class YouTubeProviderTest extends AbstractProviderTest
 
         // pre persist the media
         $provider->transform($media);
+        $provider->prePersist($media);
 
-        static::assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
+        static::assertSame('Blinky™', $media->getName(), '::getName() return the file name');
         static::assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     #[DataProvider('provideTransformWithUrlCases')]
-    public function testTransformWithUrl(string $url): void
+    public function testTransformWithUrl(MediaInterface $media): void
     {
         $request = static::createStub(RequestInterface::class);
 
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);
 
-        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
+        $fileContent = file_get_contents(__DIR__.'/../Fixtures/valid_vimeo.txt');
 
-        if (false === $fileContents) {
-            static::fail('Unable to read "valid_youtube.txt" file.');
-        }
+        static::assertNotFalse($fileContent);
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects(static::once())->method('sendRequest')->with($request)
-            ->willReturn($this->createResponse($fileContents));
+            ->willReturn($this->createResponse($fileContent));
 
         $provider = $this->getProvider($client, $messageFactory);
 
@@ -201,40 +199,37 @@ final class YouTubeProviderTest extends AbstractProviderTest
             'resizer_options' => [],
         ]);
 
-        $media = new Media();
-        $media->setContext('default');
-        $media->setBinaryContent($url);
-        $media->setId(1_023_456);
-
         // pre persist the media
         $provider->transform($media);
+        $provider->prePersist($media);
 
-        static::assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
-        static::assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
+        static::assertSame('Blinky™', $media->getName(), '::getName() return the file name');
+        static::assertSame('012341231', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     /**
-     * @phpstan-return iterable<array{string}>
+     * @phpstan-return iterable<array{MediaInterface}>
      */
     public static function provideTransformWithUrlCases(): iterable
     {
-        yield ['BDYAbAtaDzA'];
-        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'];
-        yield ['http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'];
-        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'];
-        yield ['http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'];
-        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA'];
-        yield ['http://www.m.youtube.com/watch?v=BDYAbAtaDzA'];
-        yield ['http://m.youtube.com/watch?v=BDYAbAtaDzA'];
-        yield ['https://www.m.youtube.com/watch?v=BDYAbAtaDzA'];
-        yield ['https://m.youtube.com/watch?v=BDYAbAtaDzA'];
-        yield ['http://youtu.be/BDYAbAtaDzA'];
+        $mediaWebsite = new Media();
+        $mediaWebsite->setContext('default');
+        $mediaWebsite->setBinaryContent('https://vimeo.com/012341231');
+        $mediaWebsite->setId(1_023_456);
+
+        $mediaPlayer = new Media();
+        $mediaPlayer->setContext('default');
+        $mediaPlayer->setBinaryContent('https://player.vimeo.com/video/012341231');
+        $mediaPlayer->setId(1_023_456);
+
+        yield 'transform with website url' => [$mediaWebsite];
+        yield 'transform with player url' => [$mediaPlayer];
     }
 
     public function testGetMetadataException(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to retrieve the video information for: BDYAbAtaDzA');
+        $this->expectExceptionMessage('Unable to retrieve the video information for: 012341231');
         $this->expectExceptionCode(12);
 
         $client = $this->createMock(ClientInterface::class);
@@ -253,12 +248,12 @@ final class YouTubeProviderTest extends AbstractProviderTest
         ]);
 
         $media = new Media();
-        $media->setBinaryContent('BDYAbAtaDzA');
+        $media->setBinaryContent('https://vimeo.com/012341231');
         $media->setId(1_023_456);
 
         $method = new \ReflectionMethod($provider, 'getMetadata');
 
-        $method->invokeArgs($provider, [$media, 'BDYAbAtaDzA']);
+        $method->invokeArgs($provider, [$media, '012341231']);
     }
 
     public function testForm(): void
@@ -271,7 +266,7 @@ final class YouTubeProviderTest extends AbstractProviderTest
         $this->provider->buildEditForm($this->form);
     }
 
-    public function testHelperProperties(): void
+    public function testHelperProperies(): void
     {
         $this->provider->addFormat('admin', [
             'width' => 100,
@@ -282,6 +277,7 @@ final class YouTubeProviderTest extends AbstractProviderTest
             'resizer' => null,
             'resizer_options' => [],
         ]);
+
         $media = new Media();
         $media->setName('Les tests');
         $media->setProviderReference('ASDASDAS.png');
@@ -291,23 +287,23 @@ final class YouTubeProviderTest extends AbstractProviderTest
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        static::assertSame(100, $properties['player_parameters']['height']);
-        static::assertSame(100, $properties['player_parameters']['width']);
+        static::assertSame(100, $properties['height']);
+        static::assertSame(100, $properties['width']);
     }
 
     public function testGetReferenceUrl(): void
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        static::assertSame('https://www.youtube.com/watch?v=123456', $this->provider->getReferenceUrl($media));
+        static::assertSame('https://vimeo.com/123456', $this->provider->getReferenceUrl($media));
     }
 
     public function testMetadata(): void
     {
-        static::assertSame('youtube', $this->provider->getProviderMetadata()->getTitle());
-        static::assertSame('youtube.description', $this->provider->getProviderMetadata()->getDescription());
+        static::assertSame('vimeo', $this->provider->getProviderMetadata()->getTitle());
+        static::assertSame('vimeo.description', $this->provider->getProviderMetadata()->getDescription());
         static::assertNotNull($this->provider->getProviderMetadata()->getImage());
-        static::assertSame('fa fa-youtube', $this->provider->getProviderMetadata()->getOption('class'));
+        static::assertSame('fa fa-vimeo-square', $this->provider->getProviderMetadata()->getOption('class'));
         static::assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 }

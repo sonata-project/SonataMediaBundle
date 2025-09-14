@@ -28,9 +28,9 @@ use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 /**
- * @phpstan-extends AbstractProviderTest<ImageProvider>
+ * @phpstan-extends AbstractProviderTestCase<ImageProvider>
  */
-final class ImageProviderTest extends AbstractProviderTest
+final class ImageProviderTestCase extends AbstractProviderTestCase
 {
     /**
      * @param string[] $allowedExtensions

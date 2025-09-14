@@ -31,9 +31,9 @@ use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
- * @phpstan-extends AbstractProviderTest<DailyMotionProvider>
+ * @phpstan-extends AbstractProviderTestCase<DailyMotionProvider>
  */
-final class DailyMotionProviderTest extends AbstractProviderTest
+final class DailyMotionProviderTestCase extends AbstractProviderTestCase
 {
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {

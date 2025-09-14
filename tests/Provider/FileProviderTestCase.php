@@ -38,9 +38,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
- * @phpstan-extends AbstractProviderTest<FileProvider>
+ * @phpstan-extends AbstractProviderTestCase<FileProvider>
  */
-final class FileProviderTest extends AbstractProviderTest
+final class FileProviderTestCase extends AbstractProviderTestCase
 {
     public function getProvider(): MediaProviderInterface
     {
