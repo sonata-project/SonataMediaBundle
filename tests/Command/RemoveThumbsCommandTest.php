@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
+use PHPUnit\Framework\Attributes\RequiresMethod;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Command\RemoveThumbsCommand;
@@ -26,9 +27,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author Anton Dyshkant <vyshkant@gmail.com>
- *
- * @requires function Symfony\Component\Console\Tester\CommandTester::setInputs
  */
+#[RequiresMethod(Symfony\Component\Console\Tester\CommandTester::class, 'setInputs')]
 final class RemoveThumbsCommandTest extends FilesystemTestCase
 {
     private Application $application;

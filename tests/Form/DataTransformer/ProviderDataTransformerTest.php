@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Form\DataTransformer;
 
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -103,9 +104,7 @@ final class ProviderDataTransformerTest extends TestCase
         static::assertSame($media, $transformer->reverseTransform($media));
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testReverseTransformWithMediaAndUploadFileInstance(): void
     {
         $provider = $this->createMock(MediaProviderInterface::class);

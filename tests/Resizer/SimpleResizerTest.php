@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Resizer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Gaufrette\Adapter\InMemory;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
@@ -121,12 +122,11 @@ final class SimpleResizerTest extends TestCase
     }
 
     /**
-     * @dataProvider provideGetBoxCases
      *
      * @param array<string, int|string|bool|array|null> $settings
-     *
      * @phpstan-param FormatOptions $settings
      */
+    #[DataProvider('provideGetBoxCases')]
     public function testGetBox(int $mode, array $settings, Box $mediaSize, Box $result): void
     {
         $adapter = static::createStub(ImagineInterface::class);

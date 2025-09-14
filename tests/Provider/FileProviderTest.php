@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -114,9 +116,7 @@ final class FileProviderTest extends AbstractProviderTest
         $this->provider->buildEditForm($this->form);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testThumbnail(): void
     {
         $media = new Media();
@@ -198,10 +198,9 @@ final class FileProviderTest extends AbstractProviderTest
     }
 
     /**
-     * @dataProvider provideTransformCases
-     *
      * @phpstan-param class-string $expected
      */
+    #[DataProvider('provideTransformCases')]
     public function testTransform(string $expected, MediaInterface $media): void
     {
         $closure = function () use ($expected, $media): void {
@@ -215,7 +214,7 @@ final class FileProviderTest extends AbstractProviderTest
     /**
      * @phpstan-return iterable<array{class-string, MediaInterface}>
      */
-    public function provideTransformCases(): iterable
+    public static function provideTransformCases(): iterable
     {
         $realPath = realpath(__DIR__.'/../Fixtures/file.txt');
 
@@ -305,9 +304,7 @@ final class FileProviderTest extends AbstractProviderTest
         $setFileContents->invoke($this->provider, $media);
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testValidate(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);

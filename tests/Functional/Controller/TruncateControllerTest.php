@@ -13,15 +13,14 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Functional\Controller;
 
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class TruncateControllerTest extends WebTestCase
 {
-    /**
-     * @requires extension gd
-     */
+    #[RequiresPhpExtension('gd')]
     public function testTruncate(): void
     {
         $client = static::createClient();

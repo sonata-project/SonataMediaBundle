@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Messenger;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Messenger\GenerateThumbnailsHandler;
@@ -83,9 +84,7 @@ final class GenerateThumbnailsHandlerTest extends TestCase
         $this->handler->__invoke(new GenerateThumbnailsMessage(25));
     }
 
-    /**
-     * @dataProvider provideGenerateThumbnailsCases
-     */
+    #[DataProvider('provideGenerateThumbnailsCases')]
     public function testGenerateThumbnails(int|string $id): void
     {
         $media = new Media();
@@ -104,7 +103,7 @@ final class GenerateThumbnailsHandlerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int|string}>
      */
-    public function provideGenerateThumbnailsCases(): iterable
+    public static function provideGenerateThumbnailsCases(): iterable
     {
         yield [25];
         yield ['25'];

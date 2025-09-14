@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Form\Type;
 
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -60,9 +61,7 @@ final class MediaTypeTest extends AbstractTypeTest
         $this->factory->create($this->getFormType(), null);
     }
 
-    /**
-     * @requires extension gd
-     */
+    #[RequiresPhpExtension('gd')]
     public function testMissingFormContextOption(): void
     {
         $this->expectException(MissingOptionsException::class);
@@ -94,9 +93,7 @@ final class MediaTypeTest extends AbstractTypeTest
         ]);
     }
 
-    /**
-     * @requires extension gd
-     */
+    #[RequiresPhpExtension('gd')]
     public function testInvalidFormContextOption(): void
     {
         $this->expectException(InvalidOptionsException::class);

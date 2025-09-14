@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Gaufrette\Adapter;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
@@ -170,9 +171,7 @@ final class VimeoProviderTest extends AbstractProviderTest
         static::assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    /**
-     * @dataProvider provideTransformWithUrlCases
-     */
+    #[DataProvider('provideTransformWithUrlCases')]
     public function testTransformWithUrl(MediaInterface $media): void
     {
         $request = static::createStub(RequestInterface::class);
@@ -211,7 +210,7 @@ final class VimeoProviderTest extends AbstractProviderTest
     /**
      * @phpstan-return iterable<array{MediaInterface}>
      */
-    public function provideTransformWithUrlCases(): iterable
+    public static function provideTransformWithUrlCases(): iterable
     {
         $mediaWebsite = new Media();
         $mediaWebsite->setContext('default');

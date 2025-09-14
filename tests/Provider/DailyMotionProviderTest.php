@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Gaufrette\Adapter;
 use Gaufrette\File;
 use Gaufrette\Filesystem;
@@ -169,9 +170,7 @@ final class DailyMotionProviderTest extends AbstractProviderTest
         static::assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
-    /**
-     * @dataProvider provideTransformWithUrlCases
-     */
+    #[DataProvider('provideTransformWithUrlCases')]
     public function testTransformWithUrl(string $url): void
     {
         $request = static::createStub(RequestInterface::class);
@@ -214,7 +213,7 @@ final class DailyMotionProviderTest extends AbstractProviderTest
     /**
      * @phpstan-return iterable<array{string}>
      */
-    public function provideTransformWithUrlCases(): iterable
+    public static function provideTransformWithUrlCases(): iterable
     {
         yield ['http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds'];
         yield ['http://www.dailymotion.com/video/x9wjql'];

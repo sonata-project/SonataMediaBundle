@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\CDN;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\Exception\CloudFrontException;
 use Aws\Command;
@@ -35,9 +36,7 @@ final class CloudFrontVersion3Test extends TestCase
         parent::setUp();
     }
 
-    /**
-     * @dataProvider provideCloudFrontCases
-     */
+    #[DataProvider('provideCloudFrontCases')]
     public function testCloudFront(
         string $expectedPath,
         string $path,
@@ -85,7 +84,7 @@ final class CloudFrontVersion3Test extends TestCase
     /**
      * @phpstan-return iterable<array{string, string, string, string, int, string}>
      */
-    public function provideCloudFrontCases(): iterable
+    public static function provideCloudFrontCases(): iterable
     {
         yield ['/foo/bar.jpg', '/foo', '/bar.jpg', 'ivalidation_id_42', CloudFrontVersion3::STATUS_WAITING, 'InProgress'];
         yield ['/foo/bar.jpg', '/foo', 'bar.jpg', 'ivalidation_a', CloudFrontVersion3::STATUS_OK, 'Completed'];

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use AsyncAws\SimpleS3\SimpleS3Client;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\S3\S3Client;
@@ -92,10 +93,9 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider provideAdapterCases
-     *
      * @phpstan-param class-string $type
      */
+    #[DataProvider('provideAdapterCases')]
     public function testAdapter(string $serviceId, string $type): void
     {
         $this->load();
@@ -106,7 +106,7 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @phpstan-return iterable<array{string, class-string}>
      */
-    public function provideAdapterCases(): iterable
+    public static function provideAdapterCases(): iterable
     {
         yield ['sonata.media.adapter.image.gd', GdImagine::class];
         yield ['sonata.media.adapter.image.gmagick', GmagicImagine::class];
@@ -148,10 +148,9 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider provideResizerCases
-     *
      * @phpstan-param class-string $type
      */
+    #[DataProvider('provideResizerCases')]
     public function testResizer(string $serviceId, string $type): void
     {
         $this->load();
@@ -162,7 +161,7 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @phpstan-return iterable<array{string, class-string}>
      */
-    public function provideResizerCases(): iterable
+    public static function provideResizerCases(): iterable
     {
         yield ['sonata.media.resizer.simple', SimpleResizer::class];
         yield ['sonata.media.resizer.square', SquareResizer::class];
@@ -237,11 +236,11 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * @dataProvider provideLoadWithFilesystemConfigurationV3Cases
      *
      * @param array<string, mixed> $expected
      * @param array<string, mixed> $configs
      */
+    #[DataProvider('provideLoadWithFilesystemConfigurationV3Cases')]
     public function testLoadWithFilesystemConfigurationV3(
         array $expected,
         array $configs,
@@ -271,7 +270,7 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @phpstan-return iterable<array{array<string, mixed>, array<string, mixed>}>
      */
-    public function provideLoadWithFilesystemConfigurationV3Cases(): iterable
+    public static function provideLoadWithFilesystemConfigurationV3Cases(): iterable
     {
         yield [
             [
