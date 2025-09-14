@@ -74,11 +74,16 @@ final class MediaTest extends TestCase
 
     protected function getMedia(mixed $id): Media
     {
-        $media = $this->createMock(Media::class);
-        $media
-            ->method('getId')
-            ->willReturn($id);
+        return new class ($id) extends Media {
+            public function __construct(private mixed $id)
+            {
+                parent::__construct();
+            }
 
-        return $media;
+            public function getId()
+            {
+                return $this->id;
+            }
+        };
     }
 }
