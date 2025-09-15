@@ -29,20 +29,11 @@ use Sonata\MediaBundle\Tests\App\Entity\Media;
 
 final class ProxyMetadataBuilderTest extends TestCase
 {
-    /**
-     * @var Stub&Filesystem
-     */
-    private Stub $filesystem;
+    private Filesystem&Stub $filesystem;
 
-    /**
-     * @var MockObject&MetadataBuilderInterface
-     */
-    private MockObject $noop;
+    private MetadataBuilderInterface&MockObject $noop;
 
-    /**
-     * @var MockObject&MetadataBuilderInterface
-     */
-    private MockObject $amazon;
+    private MetadataBuilderInterface&MockObject $amazon;
 
     private ProxyMetadataBuilder $proxyMetadataBuilder;
 

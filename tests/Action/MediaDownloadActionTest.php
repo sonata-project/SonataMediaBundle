@@ -28,10 +28,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 final class MediaDownloadActionTest extends TestCase
 {
-    /**
-     * @var MockObject&MediaManagerInterface
-     */
-    private object $mediaManager;
+    private MediaManagerInterface&MockObject $mediaManager;
 
     private Pool $pool;
 

@@ -20,7 +20,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 /**
  * @author Virgile Vivier <virgilevivier@gmail.com>
  */
-abstract class AbstractTypeTest extends TypeTestCase
+abstract class AbstractTypeTestCase extends TypeTestCase
 {
     protected FormTypeInterface $formType;
 

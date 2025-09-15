@@ -17,6 +17,7 @@ use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -33,15 +34,9 @@ final class CropResizerTest extends TestCase
 
     private const QUALITY = 75;
 
-    /**
-     * @var MockObject&ImagineInterface
-     */
-    private MockObject $adapter;
+    private ImagineInterface&MockObject $adapter;
 
-    /**
-     * @var Stub&MetadataBuilderInterface
-     */
-    private Stub $metadata;
+    private MetadataBuilderInterface&Stub $metadata;
 
     protected function setUp(): void
     {
@@ -51,9 +46,7 @@ final class CropResizerTest extends TestCase
         $this->metadata = static::createStub(MetadataBuilderInterface::class);
     }
 
-    /**
-     * @dataProvider provideResizeCases
-     */
+    #[DataProvider('provideResizeCases')]
     public function testResize(
         int $srcWidth,
         int $srcHeight,
@@ -113,7 +106,7 @@ final class CropResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int, int, int, int, int, int, int, int}>
      */
-    public function provideResizeCases(): iterable
+    public static function provideResizeCases(): iterable
     {
         yield 'landscape: resize, no crop' => [800, 200, 400, 100, 400, 100, 0, 0];
         yield 'landscape: resize, crop' => [800, 200, 600, 100, 600, 150, 600, 100];
@@ -133,9 +126,7 @@ final class CropResizerTest extends TestCase
         yield 'square: no resize, no crop' => [200, 200, 200, 200, 0, 0, 0, 0];
     }
 
-    /**
-     * @dataProvider provideResizeNoChangeCases
-     */
+    #[DataProvider('provideResizeNoChangeCases')]
     public function testResizeNoChange(
         int $srcWidth,
         int $srcHeight,
@@ -178,7 +169,7 @@ final class CropResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int, int, int, int}>
      */
-    public function provideResizeNoChangeCases(): iterable
+    public static function provideResizeNoChangeCases(): iterable
     {
         yield 'landscape: match' => [800, 200, 800, 200];
         yield 'landscape: small width' => [800, 100, 800, 200];
@@ -192,9 +183,7 @@ final class CropResizerTest extends TestCase
         yield 'square: small' => [100, 100, 200, 200];
     }
 
-    /**
-     * @dataProvider provideGetBoxCases
-     */
+    #[DataProvider('provideGetBoxCases')]
     public function testGetBox(int $srcWidth, int $srcHeight, int $targetWidth, int $targetHeight, int $expectWidth, int $expectHeight): void
     {
         $media = $this->createMock(MediaInterface::class);
@@ -223,7 +212,7 @@ final class CropResizerTest extends TestCase
     /**
      * @phpstan-return iterable<array{int, int, int, int, int, int}>
      */
-    public function provideGetBoxCases(): iterable
+    public static function provideGetBoxCases(): iterable
     {
         yield 'source = target' => [800, 800, 800, 800, 800, 800];
 

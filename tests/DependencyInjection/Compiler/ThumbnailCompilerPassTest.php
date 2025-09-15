@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\DependencyInjection\Compiler\ThumbnailCompilerPass;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
@@ -24,10 +25,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 final class ThumbnailCompilerPassTest extends TestCase
 {
     /**
-     * @dataProvider provideProcessCases
-     *
      * @phpstan-param class-string $class
      */
+    #[DataProvider('provideProcessCases')]
     public function testProcess(bool $expected, string $class, ?ParameterBagInterface $parameterBag = null): void
     {
         $container = new ContainerBuilder($parameterBag);
@@ -44,7 +44,7 @@ final class ThumbnailCompilerPassTest extends TestCase
     /**
      * @phpstan-return iterable<array{0: bool, 1: class-string|string, 2?: ParameterBagInterface}>
      */
-    public function provideProcessCases(): iterable
+    public static function provideProcessCases(): iterable
     {
         yield [true, FormatThumbnail::class];
         yield [false, MessengerThumbnail::class];

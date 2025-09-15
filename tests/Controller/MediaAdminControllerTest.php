@@ -46,18 +46,15 @@ final class MediaAdminControllerTest extends TestCase
     private Container $container;
 
     /**
-     * @var MockObject&AdminInterface<MediaInterface>
+     * @var AdminInterface<MediaInterface>&MockObject
      */
-    private MockObject $admin;
+    private AdminInterface&MockObject $admin;
 
     private Request $request;
 
     private MediaAdminController $controller;
 
-    /**
-     * @var MockObject&Environment
-     */
-    private MockObject $twig;
+    private Environment&MockObject $twig;
 
     protected function setUp(): void
     {
@@ -264,6 +261,7 @@ final class MediaAdminControllerTest extends TestCase
 
         $this->admin->method('getPersistentParameters')->willReturn(['param' => 'param']);
         $this->container->set('sonata.media.pool', $pool);
+        /** @psalm-suppress DeprecatedMethod */
         $this->twig->method('render')->with($template, static::isType('array'))->willReturn($rendered);
     }
 }

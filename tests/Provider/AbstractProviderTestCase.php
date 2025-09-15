@@ -33,12 +33,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @phpstan-template T of MediaProviderInterface
  */
-abstract class AbstractProviderTest extends TestCase
+abstract class AbstractProviderTestCase extends TestCase
 {
-    /**
-     * @var MockObject&FormBuilderInterface
-     */
-    protected MockObject $formBuilder;
+    protected FormBuilderInterface&MockObject $formBuilder;
 
     /**
      * @var FormMapper<MediaInterface>

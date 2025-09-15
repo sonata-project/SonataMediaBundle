@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Media;
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Model\Media;
 
@@ -43,9 +44,7 @@ final class MediaTest extends TestCase
         return $media;
     }
 
-    /**
-     * @depends testSetMetadataValue
-     */
+    #[Depends('testSetMetadataValue')]
     public function testUnsetMetadataValue(Media $media): void
     {
         $metadataProperty = $this->getMediaPropertyReflection('providerMetadata');
@@ -75,11 +74,16 @@ final class MediaTest extends TestCase
 
     protected function getMedia(mixed $id): Media
     {
-        $media = $this->getMockForAbstractClass(Media::class);
-        $media
-            ->method('getId')
-            ->willReturn($id);
+        return new class($id) extends Media {
+            public function __construct(private mixed $id)
+            {
+                parent::__construct();
+            }
 
-        return $media;
+            public function getId()
+            {
+                return $this->id;
+            }
+        };
     }
 }

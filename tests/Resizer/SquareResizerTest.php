@@ -17,6 +17,7 @@ use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\ManipulatorInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -50,12 +51,11 @@ final class SquareResizerTest extends TestCase
     }
 
     /**
-     * @dataProvider provideGetBoxCases
-     *
      * @param array<string, int|string|bool|array|null> $settings
      *
      * @phpstan-param FormatOptions $settings
      */
+    #[DataProvider('provideGetBoxCases')]
     public function testGetBox(array $settings, Box $mediaSize, Box $expected): void
     {
         $adapter = $this->createMock(ImagineInterface::class);
