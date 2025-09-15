@@ -113,6 +113,11 @@ Full configuration options:
                     key1: value1 #any amount of metas(sent as x-amz-meta-key1 = value1)
                 async: false
 
+            azure:
+                container_name:
+                connection_string:
+                create_container: false
+
             replicate:
                 primary: sonata.media.adapter.filesystem.s3
                 secondary: sonata.media.adapter.filesystem.local
