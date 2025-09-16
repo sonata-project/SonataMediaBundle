@@ -35,6 +35,7 @@ As the infrastructure is not standard, the ``MediaBundle`` abstracts the
    reference/command_line
    reference/advanced_configuration
    reference/amazon_s3
+   reference/azure_blob_storage
    reference/messenger
    reference/extra
    reference/troubleshooting
@@ -55,6 +56,7 @@ Available services
     - ``sonata.media.filesystem.local``: The local filesystem (default)
     - ``sonata.media.filesystem.ftp``: FTP
     - ``sonata.media.filesystem.s3``: Amazon S3
+    - ``sonata.media.filesystem.azure``: Azure Blob Storage
     - ``sonata.media.filesystem.replicate``: Replicate file to a primary and a secondary
 
  - CDN

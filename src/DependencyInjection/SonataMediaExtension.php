@@ -17,6 +17,8 @@ use AsyncAws\SimpleS3\SimpleS3Client;
 use Aws\S3\S3Client;
 use Gaufrette\Adapter\AsyncAwsS3;
 use Gaufrette\Adapter\AwsS3;
+use Gaufrette\Adapter\AzureBlobStorage;
+use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
 use Symfony\Component\Config\Definition\Processor;
@@ -326,6 +328,29 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             $container->removeDefinition('sonata.media.adapter.filesystem.s3');
             $container->removeDefinition('sonata.media.filesystem.s3');
             $container->removeDefinition('sonata.media.metadata.amazon');
+        }
+
+        // add the default configuration for the Azure Blob Storage filesystem
+        if ($container->hasDefinition('sonata.media.adapter.filesystem.azure') && isset($config['filesystem']['azure'])) {
+            if (!class_exists(BlobRestProxy::class)) {
+                throw new \RuntimeException('You must install "microsoft/azure-storage-blob" to use Azure Blob Storage filesystem');
+            }
+
+            $adapterClass = AzureBlobStorage::class;
+            $clientReference = new Reference('sonata.media.adapter.service.azure');
+
+            $container->getDefinition('sonata.media.adapter.filesystem.azure')
+                ->setClass($adapterClass)
+                ->replaceArgument(0, $clientReference)
+                ->replaceArgument(1, $config['filesystem']['azure']['container_name'])
+                ->replaceArgument(2, $config['filesystem']['azure']['create_container']);
+
+            $connection_string = $config['filesystem']['azure']['connection_string'];
+            $container->getDefinition('sonata.media.adapter.service.azure')
+                ->replaceArgument(0, $connection_string);
+        } else {
+            $container->removeDefinition('sonata.media.adapter.filesystem.azure');
+            $container->removeDefinition('sonata.media.filesystem.azure');
         }
 
         if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
