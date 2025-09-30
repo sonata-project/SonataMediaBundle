@@ -16,6 +16,7 @@ namespace Sonata\MediaBundle\Provider;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Security\DownloadStrategyInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @phpstan-import-type FormatOptions from MediaProviderInterface
@@ -260,14 +261,52 @@ final class Pool
         return $this->defaultContext;
     }
 
-    public function validate(ErrorElement $errorElement, MediaInterface $media): void
+    // NEXT_MAJOR: remove ErrorElement union type
+    public function validate(ExecutionContextInterface|ErrorElement $contextOrErrorElement, MediaInterface $media): void
     {
+        // NEXT_MAJOR: remove BC layer
+        if ($contextOrErrorElement instanceof ErrorElement) {
+            trigger_deprecation(
+                'sonata-admin/media-bundle',
+                '4.19',
+                'Passing an instance of "%s" to "%s" is deprecated. Pass an instance of "%s" instead.',
+                ErrorElement::class,
+                __CLASS__,
+                ExecutionContextInterface::class,
+            );
+        }
+
         if (null === $media->getProviderName()) {
             return;
         }
 
         $provider = $this->getProvider($media->getProviderName());
 
-        $provider->validate($errorElement, $media);
+        /* @phpstan-ignore function.alreadyNarrowedType */
+        if (\is_callable([$provider, 'validateMedia'])) {
+            if ($contextOrErrorElement instanceof ErrorElement) {
+                $contextOrErrorElement = (new \ReflectionClass($contextOrErrorElement))
+                    ->getProperty('context')
+                    ->getValue($contextOrErrorElement);
+            }
+
+            $provider->validateMedia($contextOrErrorElement, $media);
+
+            return;
+        }
+
+        trigger_deprecation(
+            'sonata-admin/media-bundle',
+            '4.19',
+            'Not implementing method "validateMedia()" on provider class "%s" is deprecated.',
+            $provider::class,
+        );
+
+        $provider->validate(
+            $contextOrErrorElement instanceof ExecutionContextInterface
+                ? new ErrorElement($media, $contextOrErrorElement, $contextOrErrorElement->getGroup())
+                : $contextOrErrorElement,
+            $media,
+        );
     }
 }

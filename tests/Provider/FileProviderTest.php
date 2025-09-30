@@ -17,11 +17,13 @@ use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\MockObject\MockObject;
-use Sonata\Form\Twig\CanonicalizeRuntime;
 use Sonata\Form\Validator\ErrorElement;
+use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Filesystem\Local;
+use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
@@ -33,14 +35,13 @@ use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
  * @phpstan-extends AbstractProviderTestCase<FileProvider>
  */
-final class FileProviderTestCase extends AbstractProviderTestCase
+final class FileProviderTest extends AbstractProviderTestCase
 {
     public function getProvider(): MediaProviderInterface
     {
@@ -305,22 +306,81 @@ final class FileProviderTestCase extends AbstractProviderTestCase
     }
 
     #[DoesNotPerformAssertions]
-    public function testValidate(): void
+    public function testValidateWithoutBinaryContent(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $executionContext->method('getPropertyPath')->willReturn('foo');
-        $errorElement = $this->createErrorElement($executionContext);
+        $this->provider->validateMedia($executionContext, new Media());
+    }
+
+    // NEXT_MAJOR: remove test
+    #[IgnoreDeprecations]
+    public function testValidateWithOverwrittenValidateMethodInChildClass(): void
+    {
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
+
+        $provider = new class('foo', $this->createMock(Filesystem::class), $this->createMock(CDNInterface::class), $this->createMock(GeneratorInterface::class), $this->createMock(ThumbnailInterface::class)) extends FileProvider {
+            public bool $called = false;
+
+            public function validate(ErrorElement $errorElement, MediaInterface $media): void
+            {
+                $this->called = true;
+                parent::validate($errorElement, $media);
+            }
+        };
+
+        $provider->validateMedia($executionContext, new Media());
+
+        static::assertTrue($provider->called);
+        /** @phpstan-ignore function.alreadyNarrowedType */
+        $expectDeprecationMethod = method_exists(self::class, 'expectUserDeprecationMessage') ? 'expectUserDeprecationMessage' : 'expectDeprecationMessage';
+        /* @phpstan-ignore staticMethod.notFound, staticMethod.dynamicName */
+        self::{$expectDeprecationMethod}('Since sonata-admin/media-bundle 4.19: Overwriting "Sonata\MediaBundle\Provider\BaseProvider::validate()" is deprecated since sonata-admin/media-bundle 4.19. Override "validateMedia()" instead.');
+    }
+
+    // NEXT_MAJOR: remove test
+    #[IgnoreDeprecations]
+    public function testValidateUploadSizeUsingDeprecatedMethod(): void
+    {
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
+
+        $executionContext = $this->createMock(ExecutionContextInterface::class);
+        $executionContext->method('getPropertyPath')->willReturn('foo');
+        $executionContext
+            ->expects(static::once())
+            ->method('buildViolation')
+            ->with(static::stringContains('The file is too big, max size:'))
+            ->willReturn($this->createConstraintBuilder());
+
+        $upload = $this->getMockBuilder(UploadedFile::class)
+            ->setConstructorArgs([tempnam(sys_get_temp_dir(), ''), 'dummy'])
+            ->getMock();
+        $upload->method('getSize')
+            ->willReturn(0);
+        $upload->method('getFilename')
+            ->willReturn('test.txt');
+        $upload->method('getClientOriginalName')
+            ->willReturn('test.txt');
+        $upload->method('getMimeType')
+            ->willReturn('foo/bar');
 
         $media = new Media();
+        $media->setBinaryContent($upload);
 
-        $this->provider->validate($errorElement, $media);
+        $this->provider->validate(new ErrorElement($media, $executionContext, null), $media);
+
+        /** @phpstan-ignore function.alreadyNarrowedType */
+        $expectDeprecationMethod = method_exists(self::class, 'expectUserDeprecationMessage') ? 'expectUserDeprecationMessage' : 'expectDeprecationMessage';
+        /* @phpstan-ignore staticMethod.notFound, staticMethod.dynamicName */
+        self::{$expectDeprecationMethod}('Since sonata-admin/media-bundle 4.19: Calling "Sonata\MediaBundle\Provider\BaseProvider::validate()" is deprecated, use "Sonata\MediaBundle\Provider\BaseProvider::validateMedia()" instead.');
     }
 
     public function testValidateUploadSize(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $executionContext->method('getPropertyPath')->willReturn('foo');
-        $errorElement = $this->createErrorElement($executionContext);
         $executionContext
             ->expects(static::once())
             ->method('buildViolation')
@@ -342,14 +402,13 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $this->provider->validate($errorElement, $media);
+        $this->provider->validateMedia($executionContext, $media);
     }
 
     public function testValidateUploadNullSize(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $executionContext->method('getPropertyPath')->willReturn('foo');
-        $errorElement = $this->createErrorElement($executionContext);
         $executionContext
             ->expects(static::once())
             ->method('buildViolation')
@@ -371,14 +430,13 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $this->provider->validate($errorElement, $media);
+        $this->provider->validateMedia($executionContext, $media);
     }
 
     public function testValidateUploadSizeOK(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $executionContext->method('getPropertyPath')->willReturn('foo');
-        $errorElement = $this->createErrorElement($executionContext);
         $executionContext
             ->expects(static::never())
             ->method('buildViolation');
@@ -398,23 +456,18 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $this->provider->validate($errorElement, $media);
+        $this->provider->validateMedia($executionContext, $media);
     }
 
     public function testValidateUploadType(): void
     {
         $executionContext = $this->createMock(ExecutionContextInterface::class);
         $executionContext->method('getPropertyPath')->willReturn('foo');
-        $errorElement = $this->createErrorElement($executionContext);
         $constraintBuilder = $this->createConstraintBuilder();
-        $constraintBuilder
-            ->expects(static::once())
-            ->method('setParameters')
-            ->with(['%type%' => 'bar/baz']);
         $executionContext
             ->expects(static::once())
             ->method('buildViolation')
-            ->with('Invalid mime type : %type%')
+            ->with('Invalid mime type : %type%', ['%type%' => 'bar/baz'])
             ->willReturn($constraintBuilder);
 
         $upload = $this->getMockBuilder(UploadedFile::class)
@@ -432,7 +485,7 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         $media = new Media();
         $media->setBinaryContent($upload);
 
-        $this->provider->validate($errorElement, $media);
+        $this->provider->validateMedia($executionContext, $media);
     }
 
     public function testMetadata(): void
@@ -442,25 +495,6 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         static::assertNotNull($this->provider->getProviderMetadata()->getImage());
         static::assertSame('fa fa-file-text-o', $this->provider->getProviderMetadata()->getOption('class'));
         static::assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
-    }
-
-    /**
-     * @psalm-suppress TooManyArguments, InvalidArgument
-     */
-    private function createErrorElement(ExecutionContextInterface $executionContext): ErrorElement
-    {
-        // TODO: Remove if when dropping support for `sonata-project/form-extensions` 2.0.
-        if (class_exists(CanonicalizeRuntime::class)) {
-            // @phpstan-ignore-next-line
-            return new ErrorElement(
-                '',
-                static::createStub(ConstraintValidatorFactoryInterface::class), // @phpstan-ignore-line
-                $executionContext, // @phpstan-ignore-line
-                'group'
-            );
-        }
-
-        return new ErrorElement('', $executionContext, 'group');
     }
 
     private function createConstraintBuilder(): ConstraintViolationBuilderInterface&MockObject

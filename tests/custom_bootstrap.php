@@ -33,4 +33,8 @@ $input = new ArrayInput([
 ]);
 $application->run($input, new NullOutput());
 
+$kernel->shutdown();
+
 (new Filesystem())->remove([$kernel->getCacheDir()]);
+
+restore_error_handler();

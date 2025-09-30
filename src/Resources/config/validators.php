@@ -15,12 +15,19 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Sonata\MediaBundle\Validator\Constraints\ImageUploadDimensionValidator;
 use Sonata\MediaBundle\Validator\FormatValidator;
+use Sonata\MediaBundle\Validator\MediaValidator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
         ->set('sonata.media.validator.format', FormatValidator::class)
             ->tag('validator.constraint_validator', ['alias' => 'sonata.media.validator.format'])
+            ->args([
+                service('sonata.media.pool'),
+            ])
+
+        ->set(MediaValidator::class)
+            ->tag('validator.constraint_validator')
             ->args([
                 service('sonata.media.pool'),
             ])

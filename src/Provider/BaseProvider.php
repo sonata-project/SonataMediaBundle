@@ -21,6 +21,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Thumbnail\GenerableThumbnailInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @phpstan-import-type FormatOptions from MediaProviderInterface
@@ -45,6 +46,9 @@ abstract class BaseProvider implements MediaProviderInterface
      * @var MediaInterface[]
      */
     private array $clones = [];
+
+    // NEXT_MAJOR: remove
+    private bool $validateMediaCalled = false;
 
     public function __construct(
         protected string $name,
@@ -260,8 +264,52 @@ abstract class BaseProvider implements MediaProviderInterface
         $media->setUpdatedAt(new \DateTime());
     }
 
+    // NEXT_MAJOR: remove method
     public function validate(ErrorElement $errorElement, MediaInterface $media): void
     {
+        if ($this->validateMediaCalled) {
+            return;
+        }
+
+        trigger_deprecation(
+            'sonata-admin/media-bundle',
+            '4.19',
+            'Calling "%s()" is deprecated, use "%s::validateMedia()" instead.',
+            __METHOD__,
+            __CLASS__,
+        );
+
+        $context = (new \ReflectionClass($errorElement))
+            ->getProperty('context')
+            ->getValue($errorElement);
+
+        $this->validateMedia($context, $media);
+    }
+
+    public function validateMedia(ExecutionContextInterface $context, MediaInterface $media): void
+    {
+        // NEXT_MAJOR: remove all of this and leave method body empty
+        if (__CLASS__ === static::class
+            || __CLASS__ === (new \ReflectionClass($this))->getMethod('validate')->getDeclaringClass()->name
+        ) {
+            // not a child class or child class does not overwrite validate()
+            return;
+        }
+
+        if ($this->validateMediaCalled) {
+            return;
+        }
+
+        $this->validateMediaCalled = true;
+
+        trigger_deprecation(
+            'sonata-admin/media-bundle',
+            '4.19',
+            'Overwriting "%s::validate()" is deprecated since sonata-admin/media-bundle 4.19. Override "validateMedia()" instead.',
+            __CLASS__,
+        );
+
+        $this->validate(new ErrorElement($media, $context, $context->getGroup()), $media);
     }
 
     abstract protected function doTransform(MediaInterface $media): void;

@@ -16,7 +16,6 @@ namespace Sonata\MediaBundle\Provider;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
@@ -33,6 +32,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class FileProvider extends BaseProvider implements FileProviderInterface
 {
@@ -250,8 +250,11 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         );
     }
 
-    public function validate(ErrorElement $errorElement, MediaInterface $media): void
+    public function validateMedia(ExecutionContextInterface $context, MediaInterface $media): void
     {
+        // NEXT_MAJOR: remove this call
+        parent::validateMedia($context, $media);
+
         $binaryContent = $media->getBinaryContent();
 
         if (!$binaryContent instanceof \SplFileInfo) {
@@ -267,30 +270,30 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         }
 
         if ($binaryContent instanceof UploadedFile && 0 === $binaryContent->getSize()) {
-            $errorElement
-                ->with('binaryContent')
-                    ->addViolation(
-                        'The file is too big, max size: %maxFileSize%',
-                        ['%maxFileSize%' => \ini_get('upload_max_filesize')]
-                    )
-                ->end();
+            $context
+                ->buildViolation(
+                    'The file is too big, max size: %maxFileSize%',
+                    ['%maxFileSize%' => \ini_get('upload_max_filesize')]
+                )
+                ->atPath('binaryContent')
+                ->addViolation();
         }
 
         if (!\in_array(strtolower(pathinfo($fileName, \PATHINFO_EXTENSION)), $this->allowedExtensions, true)) {
-            $errorElement
-                ->with('binaryContent')
-                    ->addViolation('Invalid extensions')
-                ->end();
+            $context
+                ->buildViolation('Invalid extensions')
+                ->atPath('binaryContent')
+                ->addViolation();
         }
 
         if (
             '' !== $media->getBinaryContent()->getFilename()
             && !\in_array(strtolower((string) $media->getBinaryContent()->getMimeType()), $this->allowedMimeTypes, true)
         ) {
-            $errorElement
-                ->with('binaryContent')
-                    ->addViolation('Invalid mime type : %type%', ['%type%' => $media->getBinaryContent()->getMimeType()])
-                ->end();
+            $context
+                ->buildViolation('Invalid mime type : %type%', ['%type%' => $media->getBinaryContent()->getMimeType()])
+                ->atPath('binaryContent')
+                ->addViolation();
         }
     }
 
@@ -392,8 +395,6 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             }
 
             $file->setContent($fileContents, $metadata);
-
-            return;
         }
     }
 

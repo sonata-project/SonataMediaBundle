@@ -22,6 +22,7 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @phpstan-type FormatOptions = array{
@@ -33,6 +34,8 @@ use Symfony\Component\HttpFoundation\Response;
  *  resizer: string|null,
  *  resizer_options: array<string, string|bool|int|null>,
  * }
+ *
+ * @method void validateMedia(ExecutionContextInterface $context, MediaInterface $media)
  */
 interface MediaProviderInterface
 {
@@ -183,7 +186,13 @@ interface MediaProviderInterface
 
     public function transform(MediaInterface $media): void;
 
+    /**
+     * @deprecated since sonata-admin/media-bundle 4.19. Implement "validateMedia" instead.
+     */
     public function validate(ErrorElement $errorElement, MediaInterface $media): void;
+
+    // NEXT_MAJOR: uncomment
+    // public function validateMedia(ExecutionContextInterface $context, MediaInterface $media): void;
 
     public function buildMediaType(FormBuilderInterface $formBuilder): void;
 
