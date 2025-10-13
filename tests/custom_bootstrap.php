@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Filesystem\Filesystem;
 
 $kernel = new AppKernel($_SERVER['APP_ENV'] ?? 'test', (bool) ($_SERVER['APP_DEBUG'] ?? false));
+
 $application = new Application($kernel);
 $application->setAutoExit(false);
 $application->setCatchExceptions(false);
@@ -33,4 +34,8 @@ $input = new ArrayInput([
 ]);
 $application->run($input, new NullOutput());
 
+$kernel->shutdown();
+
 (new Filesystem())->remove([$kernel->getCacheDir()]);
+
+restore_error_handler();

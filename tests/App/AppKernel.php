@@ -32,7 +32,6 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\StimulusBundle\StimulusBundle;
 
 final class AppKernel extends Kernel
@@ -82,11 +81,6 @@ final class AppKernel extends Kernel
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $loader->load(__DIR__.'/config/config.yaml');
-
-        // TODO: Simplify this when dropping support for Symfony 5.4
-        if (!class_exists(IsGranted::class)) {
-            $loader->load(__DIR__.'/config/config_symfony_v5.yaml');
-        }
 
         if (class_exists(HttpCacheHandler::class)) {
             $loader->load(__DIR__.'/config/config_sonata_block_v4.yaml');
