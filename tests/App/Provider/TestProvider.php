@@ -68,11 +68,17 @@ final class TestProvider extends BaseProvider
         return $this->prevReferenceImage;
     }
 
+    /**
+     * @phpstan-throws void
+     */
     public function generatePrivateUrl(MediaInterface $media, string $format): string
     {
         return '';
     }
 
+    /**
+     * @phpstan-throws void
+     */
     public function generatePublicUrl(MediaInterface $media, string $format): string
     {
         return '';
