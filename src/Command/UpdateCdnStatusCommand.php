@@ -120,9 +120,9 @@ final class UpdateCdnStatusCommand extends Command
                     if ($previousStatus === $cdnStatus) {
                         $this->log($output, \sprintf('No changes (%u)', $cdnStatus));
                     } elseif (CDNInterface::STATUS_OK === $cdnStatus) {
-                        $this->log($output, \sprintf('<info>Flush completed</info> (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
+                        $this->log($output, \sprintf('<info>Flush completed</info> (%s => %u)', $previousStatus ?? 'null', $cdnStatus));
                     } else {
-                        $this->log($output, \sprintf('Updated status (%u => %u)', $previousStatus ?? 'null', $cdnStatus));
+                        $this->log($output, \sprintf('Updated status (%s => %u)', $previousStatus ?? 'null', $cdnStatus));
                     }
                 }
             } catch (\Throwable $e) {

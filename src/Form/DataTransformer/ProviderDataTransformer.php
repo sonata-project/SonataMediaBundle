@@ -53,6 +53,8 @@ final class ProviderDataTransformer implements DataTransformerInterface, LoggerA
     /**
      * @param mixed $value
      *
+     * @phpstan-throws void
+     *
      * @phpstan-param MediaInterface|null $value
      * @phpstan-return MediaInterface|null
      */
