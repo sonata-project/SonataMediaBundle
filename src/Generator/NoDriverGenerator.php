@@ -23,6 +23,9 @@ use Sonata\MediaBundle\Model\MediaInterface;
  */
 final class NoDriverGenerator implements GeneratorInterface
 {
+    /**
+     * @throws NoDriverException
+     */
     public function generatePath(MediaInterface $media): string
     {
         throw new NoDriverException();

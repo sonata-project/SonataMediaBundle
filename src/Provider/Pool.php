@@ -109,17 +109,11 @@ final class Pool
      */
     public function addContext(string $name, array $providers = [], array $formats = [], array $download = []): void
     {
-        if (!$this->hasContext($name)) {
-            $this->contexts[$name] = [
-                'providers' => [],
-                'formats' => [],
-                'download' => [],
-            ];
-        }
-
-        $this->contexts[$name]['providers'] = $providers;
-        $this->contexts[$name]['formats'] = $formats;
-        $this->contexts[$name]['download'] = $download;
+        $this->contexts[$name] = [
+            'providers' => $providers,
+            'formats' => $formats,
+            'download' => $download,
+        ];
     }
 
     public function hasContext(string $name): bool

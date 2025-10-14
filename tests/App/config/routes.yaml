@@ -12,5 +12,5 @@ _sonata_admin:
     prefix: /admin
 
 media:
-    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+    resource: '@SonataMediaBundle/Resources/config/routing/media.php'
     prefix: /media
