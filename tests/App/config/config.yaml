@@ -75,12 +75,9 @@ doctrine:
     dbal:
         driver: pdo_sqlite
         path: "%app.base_dir%sonata_media_test.db3"
-        # "dama/doctrine-test-bundle" relies on savepoints.
-        use_savepoints: true
     orm:
         entity_managers:
             default:
-                report_fields_where_declared: true
                 mappings:
                     SonataMediaBundle: null
                     SonataMediaTest:
