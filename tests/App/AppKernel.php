@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\App;
 
 use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\CacheCompatibilityPass;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
@@ -81,6 +82,27 @@ final class AppKernel extends Kernel
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $loader->load(__DIR__.'/config/config.yaml');
+
+        if (\PHP_VERSION_ID >= 80400) {
+            $container->loadFromExtension('doctrine', [
+                'orm' => [
+                    'enable_native_lazy_objects' => true,
+                ],
+            ]);
+        }
+
+        if (class_exists(CacheCompatibilityPass::class)) {
+            // doctrine-bundle v2
+            $container->loadFromExtension('doctrine', [
+                'dbal' => [
+                    'use_savepoints' => true,
+                ],
+                'orm' => [
+                    'auto_generate_proxy_classes' => true,
+                    'report_fields_where_declared' => true,
+                ],
+            ]);
+        }
 
         if (class_exists(HttpCacheHandler::class)) {
             $loader->load(__DIR__.'/config/config_sonata_block_v4.yaml');

@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.19.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.18.0...4.19.0) - 2025-10-18
+### Added
+- [[#2500](https://github.com/sonata-project/SonataMediaBundle/pull/2500)] Added `media.php` routing config ([@dmaicher](https://github.com/dmaicher))
+
+### Deprecated
+- [[#2500](https://github.com/sonata-project/SonataMediaBundle/pull/2500)] Deprecated `media.xml` routing config ([@dmaicher](https://github.com/dmaicher))
+
 ## [4.18.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.17.0...4.18.0) - 2025-09-23
 ### Added
 - [[#2497](https://github.com/sonata-project/SonataMediaBundle/pull/2497)] Support for `doctrine/persistence` 4.0. ([@jordisala1991](https://github.com/jordisala1991))
