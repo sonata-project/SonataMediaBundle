@@ -10,7 +10,6 @@ Symfony SonataMediaBundle
 
 [![Latest Stable Version](https://poser.pugx.org/sonata-project/media-bundle/v/stable)](https://packagist.org/packages/sonata-project/media-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/sonata-project/media-bundle/v/unstable)](https://packagist.org/packages/sonata-project/media-bundle)
-[![Psalm Type Coverage][shepherd_stable_badge]][shepherd_stable_link]
 [![License](https://poser.pugx.org/sonata-project/media-bundle/license)](https://packagist.org/packages/sonata-project/media-bundle)
 
 [![Total Downloads](https://poser.pugx.org/sonata-project/media-bundle/downloads)](https://packagist.org/packages/sonata-project/media-bundle)
