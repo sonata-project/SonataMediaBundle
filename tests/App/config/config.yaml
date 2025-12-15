@@ -21,7 +21,6 @@ security:
     access_control: null
 
 twig:
-    exception_controller: null
     strict_variables: true
 
 sonata_media:
