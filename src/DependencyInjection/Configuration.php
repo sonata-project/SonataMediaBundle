@@ -300,7 +300,7 @@ final class Configuration implements ConfigurationInterface
                                 ->arrayNode('allowed_extensions')
                                     ->beforeNormalization()
                                     ->ifArray()
-                                        ->then(static fn (array $allowedExtensions): array => array_map('strtolower', $allowedExtensions))
+                                        ->then(static fn (array $allowedExtensions): array => array_map(strtolower(...), $allowedExtensions))
                                     ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue([
@@ -314,7 +314,7 @@ final class Configuration implements ConfigurationInterface
                                 ->arrayNode('allowed_mime_types')
                                     ->beforeNormalization()
                                         ->ifArray()
-                                        ->then(static fn (array $allowedMimeTypes): array => array_map('strtolower', $allowedMimeTypes))
+                                        ->then(static fn (array $allowedMimeTypes): array => array_map(strtolower(...), $allowedMimeTypes))
                                     ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue([
@@ -342,7 +342,7 @@ final class Configuration implements ConfigurationInterface
                                 ->arrayNode('allowed_extensions')
                                     ->beforeNormalization()
                                         ->ifArray()
-                                        ->then(static fn (array $allowedExtensions): array => array_map('strtolower', $allowedExtensions))
+                                        ->then(static fn (array $allowedExtensions): array => array_map(strtolower(...), $allowedExtensions))
                                     ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue(['jpg', 'png', 'jpeg'])
@@ -350,7 +350,7 @@ final class Configuration implements ConfigurationInterface
                                 ->arrayNode('allowed_mime_types')
                                     ->beforeNormalization()
                                         ->ifArray()
-                                        ->then(static fn (array $allowedMimeTypes): array => array_map('strtolower', $allowedMimeTypes))
+                                        ->then(static fn (array $allowedMimeTypes): array => array_map(strtolower(...), $allowedMimeTypes))
                                     ->end()
                                     ->prototype('scalar')->end()
                                     ->defaultValue([

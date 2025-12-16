@@ -155,7 +155,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
     public function configureProviders(ContainerBuilder $container, array $config): void
     {
         $container->getDefinition('sonata.media.provider.image')
-            ->replaceArgument(5, array_map('strtolower', $config['providers']['image']['allowed_extensions']))
+            ->replaceArgument(5, array_map(strtolower(...), $config['providers']['image']['allowed_extensions']))
             ->replaceArgument(6, $config['providers']['image']['allowed_mime_types'])
             ->replaceArgument(7, new Reference($config['providers']['image']['adapter']));
 
