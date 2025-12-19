@@ -67,7 +67,7 @@ final class CleanMediaCommandTest extends FilesystemTestCase
         $this->command = new CleanMediaCommand($this->fileSystemLocal, $this->pool, $this->mediaManager);
 
         $this->application = new Application();
-        $this->application->add($this->command);
+        $this->application->addCommands([$this->command]);
 
         $this->tester = new CommandTester($this->application->find('sonata:media:clean-uploads'));
     }
