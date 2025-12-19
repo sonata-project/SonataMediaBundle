@@ -46,7 +46,7 @@ final class FixMediaContextCommandTest extends TestCase
         $this->command = new FixMediaContextCommand($this->pool, $this->categoryManager, $this->contextManager);
 
         $this->application = new Application();
-        $this->application->add($this->command);
+        $this->application->addCommands([$this->command]);
 
         $this->tester = new CommandTester($this->application->find('sonata:media:fix-media-context'));
     }
@@ -58,7 +58,7 @@ final class FixMediaContextCommandTest extends TestCase
         $command = new FixMediaContextCommand($pool, null, null);
 
         $application = new Application();
-        $application->add($command);
+        $application->addCommands([$command]);
 
         $this->expectException(\LogicException::class);
 

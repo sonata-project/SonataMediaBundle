@@ -51,7 +51,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
         $this->command = new RemoveThumbsCommand($this->pool, $this->mediaManager);
 
         $this->application = new Application();
-        $this->application->add($this->command);
+        $this->application->addCommands([$this->command]);
 
         $this->tester = new CommandTester($this->application->find('sonata:media:remove-thumbnails'));
     }
