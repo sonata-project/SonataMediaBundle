@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.20.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.19.0...4.20.0) - 2025-12-19
+### Added
+- [[#2507](https://github.com/sonata-project/SonataMediaBundle/pull/2507)] Symfony 8 support ([@VincentLanglet](https://github.com/VincentLanglet))
+
+### Removed
+- [[#2505](https://github.com/sonata-project/SonataMediaBundle/pull/2505)] Support for PHP 8.1 ([@dmaicher](https://github.com/dmaicher))
+- [[#2505](https://github.com/sonata-project/SonataMediaBundle/pull/2505)] Support for Symfony 7.1 and 7.2 ([@dmaicher](https://github.com/dmaicher))
+
 ## [4.19.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.18.0...4.19.0) - 2025-10-18
 ### Added
 - [[#2500](https://github.com/sonata-project/SonataMediaBundle/pull/2500)] Added `media.php` routing config ([@dmaicher](https://github.com/dmaicher))
