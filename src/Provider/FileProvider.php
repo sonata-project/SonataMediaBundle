@@ -13,19 +13,15 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\File as GaufretteFile;
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
-use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -42,13 +38,12 @@ class FileProvider extends BaseProvider implements FileProviderInterface
      */
     public function __construct(
         string $name,
-        Filesystem $filesystem,
+        FilesystemOperator $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
         protected array $allowedExtensions = [],
         protected array $allowedMimeTypes = [],
-        protected ?MetadataBuilderInterface $metadata = null,
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
     }
@@ -75,9 +70,9 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return \sprintf('%s/%s', $this->generatePath($media), $providerReference);
     }
 
-    public function getReferenceFile(MediaInterface $media): GaufretteFile
+    public function getReferenceFile(MediaInterface $media): string
     {
-        return $this->getFilesystem()->get($this->getReferenceImage($media), true);
+        return $this->getReferenceImage($media);
     }
 
     public function getAllowedExtensions(): array
@@ -172,7 +167,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             }
 
             $fileObject = new \SplFileObject($path, 'w');
-            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            $fileObject->fwrite($this->getFilesystem()->read($this->getReferenceFile($media)));
         } else {
             $fileObject = $media->getBinaryContent();
         }
@@ -207,7 +202,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         return $this->thumbnail->generatePrivateUrl($this, $media, $format);
     }
 
-    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
+    public function getDownloadResponse(MediaInterface $media, string $format, array $headers = []): Response
     {
         // build the default headers
         $headers = array_merge([
@@ -215,39 +210,15 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             'Content-Disposition' => \sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
         ], $headers);
 
-        if (!\in_array($mode, ['http', 'X-Sendfile', 'X-Accel-Redirect'], true)) {
-            throw new \RuntimeException('Invalid mode provided');
+        if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
+            $filepath = $this->getReferenceFile($media);
+        } else {
+            $filepath = $this->generatePrivateUrl($media, $format);
         }
 
-        if ('http' === $mode) {
-            if (MediaProviderInterface::FORMAT_REFERENCE === $format) {
-                $file = $this->getReferenceFile($media);
-            } else {
-                $file = $this->getFilesystem()->get($this->generatePrivateUrl($media, $format));
-            }
-
-            return new StreamedResponse(static function () use ($file): void {
-                echo $file->getContent();
-            }, 200, $headers);
-        }
-
-        $adapter = $this->getFilesystem()->getAdapter();
-
-        if (!$adapter instanceof Local) {
-            throw new \RuntimeException(\sprintf('Cannot use X-Sendfile or X-Accel-Redirect with non %s.', Local::class));
-        }
-
-        $directory = $adapter->getDirectory();
-
-        if (false === $directory) {
-            throw new \RuntimeException('Cannot retrieve directory from the adapter.');
-        }
-
-        return new BinaryFileResponse(
-            \sprintf('%s/%s', $directory, $this->generatePrivateUrl($media, $format)),
-            200,
-            $headers
-        );
+        return new StreamedResponse(function () use ($filepath): void {
+            echo $this->filesystem->read($filepath);
+        }, 200, $headers);
     }
 
     public function validate(ErrorElement $errorElement, MediaInterface $media): void
@@ -369,15 +340,10 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             ));
         }
 
-        $file = $this->getFilesystem()->get(
-            \sprintf('%s/%s', $this->generatePath($media), $providerReference),
-            true
-        );
-
-        $metadata = null !== $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
+        $file = \sprintf('%s/%s', $this->generatePath($media), $providerReference);
 
         if (null !== $contents) {
-            $file->setContent($contents, $metadata);
+            $this->getFilesystem()->write($file, $contents);
 
             return;
         }
@@ -391,7 +357,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
                 throw new \RuntimeException(\sprintf('Unable to get file contents for media %s', $media->getId() ?? ''));
             }
 
-            $file->setContent($fileContents, $metadata);
+            $this->getFilesystem()->write($file, $fileContents);
 
             return;
         }

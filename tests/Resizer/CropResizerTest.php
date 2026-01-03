@@ -13,15 +13,13 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Resizer;
 
-use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\CropResizer;
 
@@ -36,14 +34,11 @@ final class CropResizerTest extends TestCase
 
     private ImagineInterface&MockObject $adapter;
 
-    private MetadataBuilderInterface&Stub $metadata;
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->adapter = $this->createMock(ImagineInterface::class);
-        $this->metadata = static::createStub(MetadataBuilderInterface::class);
     }
 
     #[DataProvider('provideResizeCases')]
@@ -62,9 +57,9 @@ final class CropResizerTest extends TestCase
         $media->method('getProviderName')->willReturn('acme.sample.provider');
         $media->method('getBox')->willReturn(new Box($srcWidth, $srcHeight));
 
-        $input = static::createStub(File::class);
-        $output = static::createStub(File::class);
-        $output->method('getName')->willReturn('output');
+        $filesystem = $this->createMock(FilesystemOperator::class);
+        $input = 'in.jpg';
+        $output = 'out.jpg';
 
         $image = $this->createMock(ImageInterface::class);
         $image->expects(0 === $scaleHeight && 0 === $scaleWidth ? static::never() : static::once())
@@ -91,8 +86,8 @@ final class CropResizerTest extends TestCase
 
         $this->adapter->method('load')->willReturn($image);
 
-        $resizer = new CropResizer($this->adapter, $this->metadata);
-        $resizer->resize($media, $input, $output, self::FORMAT, [
+        $resizer = new CropResizer($this->adapter);
+        $resizer->resize($filesystem, $media, $input, $output, self::FORMAT, [
             'width' => $targetWidth,
             'height' => $targetHeight,
             'quality' => self::QUALITY,
@@ -138,9 +133,9 @@ final class CropResizerTest extends TestCase
         $media->method('getProviderName')->willReturn('acme.sample.provider');
         $media->method('getBox')->willReturn(new Box($srcWidth, $srcHeight));
 
-        $input = static::createStub(File::class);
-        $output = static::createStub(File::class);
-        $output->method('getName')->willReturn('output');
+        $filesystem = $this->createMock(FilesystemOperator::class);
+        $input = 'in.jpg';
+        $output = 'out.jpg';
 
         $image = $this->createMock(ImageInterface::class);
         $image->expects(static::never())->method('thumbnail');
@@ -154,8 +149,8 @@ final class CropResizerTest extends TestCase
 
         $this->adapter->method('load')->willReturn($image);
 
-        $resizer = new CropResizer($this->adapter, $this->metadata);
-        $resizer->resize($media, $input, $output, self::FORMAT, [
+        $resizer = new CropResizer($this->adapter);
+        $resizer->resize($filesystem, $media, $input, $output, self::FORMAT, [
             'width' => $targetWidth,
             'height' => $targetHeight,
             'quality' => self::QUALITY,
@@ -194,7 +189,7 @@ final class CropResizerTest extends TestCase
         $media->expects(static::once())->method('getBox')
             ->willReturn(new Box($srcWidth, $srcHeight));
 
-        $resizer = new CropResizer($this->adapter, $this->metadata);
+        $resizer = new CropResizer($this->adapter);
         $box = $resizer->getBox($media, [
             'width' => $targetWidth,
             'height' => $targetHeight,

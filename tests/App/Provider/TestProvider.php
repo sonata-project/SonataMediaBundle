@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\App\Provider;
 
-use Gaufrette\File;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\BaseProvider;
@@ -84,7 +83,7 @@ final class TestProvider extends BaseProvider
         return '';
     }
 
-    public function getReferenceFile(MediaInterface $media): File
+    public function getReferenceFile(MediaInterface $media): string
     {
         throw new \BadMethodCallException('Not implemented.');
     }
@@ -99,7 +98,7 @@ final class TestProvider extends BaseProvider
         // TODO: Implement prePersist() method.
     }
 
-    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
+    public function getDownloadResponse(MediaInterface $media, string $format, array $headers = []): Response
     {
         return new Response();
     }

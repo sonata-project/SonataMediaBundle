@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Resizer;
 
-use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Point;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use League\Flysystem\FilesystemOperator;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
@@ -33,11 +32,10 @@ final class SquareResizer implements ResizerInterface
     public function __construct(
         private ImagineInterface $adapter,
         private int $mode,
-        private MetadataBuilderInterface $metadata,
     ) {
     }
 
-    public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void
+    public function resize(FilesystemOperator $filesystem, MediaInterface $media, string $in, string $out, string $format, array $settings): void
     {
         if (!isset($settings['width'])) {
             throw new \RuntimeException(\sprintf(
@@ -47,7 +45,7 @@ final class SquareResizer implements ResizerInterface
             ));
         }
 
-        $image = $this->adapter->load($in->getContent());
+        $image = $this->adapter->load($filesystem->read($in));
         $size = $media->getBox();
 
         if (null !== $settings['height']) {
@@ -78,7 +76,7 @@ final class SquareResizer implements ResizerInterface
             $content = $image->get($format, ['quality' => $settings['quality']]);
         }
 
-        $out->setContent($content, $this->metadata->get($media, $out->getName()));
+        $filesystem->write($out, $content);
     }
 
     public function getBox(MediaInterface $media, array $settings): Box

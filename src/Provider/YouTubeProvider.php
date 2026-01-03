@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,16 +27,15 @@ final class YouTubeProvider extends BaseVideoProvider
 {
     public function __construct(
         string $name,
-        Filesystem $filesystem,
+        FilesystemOperator $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
         ClientInterface $client,
         RequestFactoryInterface $requestFactory,
-        ?MetadataBuilderInterface $metadata = null,
         private bool $html5 = false,
     ) {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $requestFactory, $metadata);
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $client, $requestFactory);
     }
 
     public function getProviderMetadata(): MetadataInterface
@@ -218,7 +216,7 @@ final class YouTubeProvider extends BaseVideoProvider
         $media->setContentType('video/x-flv');
     }
 
-    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
+    public function getDownloadResponse(MediaInterface $media, string $format, array $headers = []): Response
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
     }

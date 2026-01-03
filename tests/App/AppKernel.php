@@ -17,6 +17,7 @@ use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\CacheCompatibilityPass;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
+use League\FlysystemBundle\FlysystemBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
 use Sonata\BlockBundle\Cache\HttpCacheHandler;
 use Sonata\BlockBundle\SonataBlockBundle;
@@ -56,6 +57,7 @@ final class AppKernel extends Kernel
             new SonataDoctrineORMAdminBundle(),
             new SonataMediaBundle(),
             new TwigBundle(),
+            new FlysystemBundle(),
         ];
     }
 

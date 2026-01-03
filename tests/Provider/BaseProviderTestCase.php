@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Gaufrette\Adapter;
-use Gaufrette\File;
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Provider\BaseProvider;
@@ -34,13 +32,7 @@ final class BaseProviderTestCase extends AbstractProviderTestCase
      */
     public function getProvider(): MediaProviderInterface
     {
-        $adapter = $this->createMock(Adapter::class);
-
-        $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->setConstructorArgs([$adapter])
-            ->getMock();
-
-        $filesystem->method('get')->willReturn(new File('my_file.txt', $filesystem));
+        $filesystem = static::createStub(FilesystemOperator::class);
 
         $cdn = static::createStub(CDNInterface::class);
         $cdn->method('flushPaths')->willReturn((string) random_int(0, mt_getrandmax()));

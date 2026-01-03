@@ -17,7 +17,7 @@ asset:
 * storing the media information (metadata)
 
 A provider class is always linked to a ``Filesystem`` and a ``CDN``. The
-filesystem abstraction uses the ``Gaufrette`` library. For now there is
+filesystem abstraction uses the ``Flysystem`` library. For now there is
 only 2 abstracted filesystem available: ``Local`` and ``FTP``. The ``CDN``
 is used to generated the media asset public URL.
 
@@ -263,12 +263,11 @@ added to the provider pool.
         class: Sonata\MediaBundle\Provider\VimeoProvider
         arguments:
             - sonata.media.provider.vimeo
-            - '@sonata.media.filesystem.local'
+            - '@default.storage'
             - '@sonata.media.cdn.server'
             - '@sonata.media.generator.default'
             - '@sonata.media.thumbnail.format'
             # - '@sonata.media.http.client' // It's an optional parameter.
-            # - '@sonata.media.metadata.proxy' // This parameter is required when you are using PSR client.
         calls:
             -
                 - setTemplates

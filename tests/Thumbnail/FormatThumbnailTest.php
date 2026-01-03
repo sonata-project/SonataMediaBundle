@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Thumbnail;
 
-use Gaufrette\Adapter\InMemory;
-use Gaufrette\File;
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -28,8 +26,14 @@ final class FormatThumbnailTest extends TestCase
     {
         $thumbnail = new FormatThumbnail('foo');
 
-        $filesystem = new Filesystem(new InMemory(['myfile' => 'content']));
-        $referenceFile = new File('myfile', $filesystem);
+        $referenceFile = 'myfile.png';
+
+        $filesystem = static::createMock(FilesystemOperator::class);
+        $filesystem
+            ->expects(static::once())
+            ->method('has')
+            ->with($referenceFile)
+            ->willReturn(true);
 
         $formats = [
             'admin' => ['height' => 50, 'width' => 50, 'quality' => 100, 'resizer' => null],
@@ -46,7 +50,7 @@ final class FormatThumbnailTest extends TestCase
         $provider->expects(static::once())->method('getFormats')->willReturn($formats);
         $provider->expects(static::exactly(2))->method('getResizer')->willReturn($resizer);
         $provider->expects(static::exactly(2))->method('generatePrivateUrl')->willReturn('/my/private/path');
-        $provider->expects(static::exactly(2))->method('getFilesystem')->willReturn($filesystem);
+        $provider->expects(static::once())->method('getFilesystem')->willReturn($filesystem);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects(static::exactly(6))->method('getContext')->willReturn('mycontext');

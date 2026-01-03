@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Resizer;
 
-use Gaufrette\File;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\ManipulatorInterface;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+use League\Flysystem\FilesystemOperator;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 final class SimpleResizer implements ResizerInterface
@@ -26,11 +25,10 @@ final class SimpleResizer implements ResizerInterface
     public function __construct(
         private ImagineInterface $adapter,
         private int $mode,
-        private MetadataBuilderInterface $metadata,
     ) {
     }
 
-    public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void
+    public function resize(FilesystemOperator $filesystem, MediaInterface $media, string $in, string $out, string $format, array $settings): void
     {
         if (!isset($settings['width']) && !isset($settings['height'])) {
             throw new \RuntimeException(\sprintf(
@@ -40,13 +38,13 @@ final class SimpleResizer implements ResizerInterface
             ));
         }
 
-        $image = $this->adapter->load($in->getContent());
+        $image = $this->adapter->load($filesystem->read($in));
 
         $content = $image
             ->thumbnail($this->getBox($media, $settings), $this->mode)
             ->get($format, ['quality' => $settings['quality']]);
 
-        $out->setContent($content, $this->metadata->get($media, $out->getName()));
+        $filesystem->write($out, $content);
     }
 
     public function getBox(MediaInterface $media, array $settings): Box

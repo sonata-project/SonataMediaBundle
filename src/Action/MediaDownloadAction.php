@@ -51,7 +51,6 @@ final class MediaDownloadAction
         $response = $this->pool->getProvider($media->getProviderName())->getDownloadResponse(
             $media,
             $format,
-            $this->pool->getDownloadMode($media)
         );
 
         if ($response instanceof BinaryFileResponse) {

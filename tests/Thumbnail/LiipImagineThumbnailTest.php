@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Thumbnail;
 
-use Gaufrette\Adapter\InMemory;
-use Gaufrette\File;
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
@@ -30,9 +28,9 @@ final class LiipImagineThumbnailTest extends TestCase
         $cacheManager->method('getBrowserPath')->willReturn('cache/media/default/0011/24/ASDASDAS.png');
 
         $thumbnail = new LiipImagineThumbnail($cacheManager);
+        $referenceFile = 'myfile.png';
 
-        $filesystem = new Filesystem(new InMemory(['myfile' => 'content']));
-        $referenceFile = new File('myfile', $filesystem);
+        $filesystem = static::createStub(FilesystemOperator::class);
 
         $formats = [
             'admin' => ['height' => 50, 'width' => 50, 'quality' => 100],
@@ -46,7 +44,7 @@ final class LiipImagineThumbnailTest extends TestCase
         $media->setId(1_023_456);
         $media->setContext('default');
 
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
         $provider->method('requireThumbnails')->willReturn(true);
         $provider->method('getReferenceFile')->willReturn($referenceFile);
         $provider->method('getFormats')->willReturn($formats);

@@ -112,7 +112,7 @@ final class VimeoProvider extends BaseVideoProvider
         $media->setContentType('video/x-flv');
     }
 
-    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response
+    public function getDownloadResponse(MediaInterface $media, string $format, array $headers = []): Response
     {
         return new RedirectResponse($this->getReferenceUrl($media), 302, $headers);
     }

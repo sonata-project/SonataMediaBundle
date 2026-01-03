@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Resizer;
 
-use Gaufrette\File;
 use Imagine\Image\Box;
+use League\Flysystem\FilesystemOperator;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 
@@ -28,7 +28,7 @@ interface ResizerInterface
      *
      * @phpstan-param FormatOptions $settings
      */
-    public function resize(MediaInterface $media, File $in, File $out, string $format, array $settings): void;
+    public function resize(FilesystemOperator $filesystem, MediaInterface $media, string $in, string $out, string $format, array $settings): void;
 
     /**
      * @param array<string, int|string|bool|array|null>|false $settings

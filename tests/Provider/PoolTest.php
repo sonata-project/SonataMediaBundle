@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
@@ -65,12 +64,11 @@ final class PoolTest extends TestCase
 
     private function createProvider(string $name): MediaProviderInterface
     {
-        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem = static::createStub(FilesystemOperator::class);
         $cdn = new Server('/uploads/media');
         $generator = new IdGenerator();
         $thumbnail = new FormatThumbnail('jpg');
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        return new FileProvider($name, $filesystem, $cdn, $generator, $thumbnail, [], [], $metadata);
+        return new FileProvider($name, $filesystem, $cdn, $generator, $thumbnail, [], []);
     }
 }

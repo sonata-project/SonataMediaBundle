@@ -13,12 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\DependencyInjection;
 
-use AsyncAws\SimpleS3\SimpleS3Client;
-use Aws\S3\S3Client;
-use Gaufrette\Adapter\AsyncAwsS3;
-use Gaufrette\Adapter\AwsS3;
-use Gaufrette\Adapter\AzureBlobStorage;
-use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use Sonata\Doctrine\Mapper\Builder\OptionsBuilder;
 use Sonata\Doctrine\Mapper\DoctrineCollector;
 use Symfony\Component\Config\Definition\Processor;
@@ -54,7 +48,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
         $loader->load('twig.php');
         $loader->load('security.php');
         $loader->load('form.php');
-        $loader->load('gaufrette.php');
         $loader->load('validators.php');
         $loader->load('commands.php');
 
@@ -163,7 +156,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             ->replaceArgument(5, $config['providers']['file']['allowed_extensions'])
             ->replaceArgument(6, $config['providers']['file']['allowed_mime_types']);
 
-        $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(8, $config['providers']['youtube']['html5']);
+        $container->getDefinition('sonata.media.provider.youtube')->replaceArgument(7, $config['providers']['youtube']['html5']);
     }
 
     /**
@@ -237,130 +230,7 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
      */
     public function configureFilesystemAdapter(ContainerBuilder $container, array $config): void
     {
-        // add the default configuration for the local filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.local') && isset($config['filesystem']['local'])) {
-            $container->getDefinition('sonata.media.adapter.filesystem.local')
-                ->addArgument($config['filesystem']['local']['directory'])
-                ->addArgument($config['filesystem']['local']['create']);
-        } else {
-            $container->removeDefinition('sonata.media.adapter.filesystem.local');
-        }
-
-        // add the default configuration for the FTP filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.ftp') && isset($config['filesystem']['ftp'])) {
-            $container->getDefinition('sonata.media.adapter.filesystem.ftp')
-                ->addArgument($config['filesystem']['ftp']['directory'])
-                ->addArgument($config['filesystem']['ftp']['host'])
-                ->addArgument([
-                    'port' => $config['filesystem']['ftp']['port'],
-                    'username' => $config['filesystem']['ftp']['username'],
-                    'password' => $config['filesystem']['ftp']['password'],
-                    'passive' => $config['filesystem']['ftp']['passive'],
-                    'create' => $config['filesystem']['ftp']['create'],
-                    'mode' => $config['filesystem']['ftp']['mode'],
-                ]);
-        } else {
-            $container->removeDefinition('sonata.media.adapter.filesystem.ftp');
-            $container->removeDefinition('sonata.media.filesystem.ftp');
-        }
-
-        // add the default configuration for the S3 filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.s3') && isset($config['filesystem']['s3'])) {
-            $async = true === $config['filesystem']['s3']['async'];
-            if ($async && !class_exists(SimpleS3Client::class)) {
-                throw new \RuntimeException('You must install "async-aws/simple-s3" to use async S3 adapter');
-            }
-            if (!$async && !class_exists(S3Client::class)) {
-                throw new \RuntimeException('You must install "aws/aws-sdk-php" to use Amazon S3 filesystem');
-            }
-
-            $adapterClass = $async ? AsyncAwsS3::class : AwsS3::class;
-            $clientReference = new Reference(
-                $async ? 'sonata.media.adapter.service.s3.async' : 'sonata.media.adapter.service.s3'
-            );
-
-            $container->getDefinition('sonata.media.adapter.filesystem.s3')
-                ->setClass($adapterClass)
-                ->replaceArgument(0, $clientReference)
-                ->replaceArgument(1, $config['filesystem']['s3']['bucket'])
-                ->replaceArgument(2, ['create' => $config['filesystem']['s3']['create'], 'region' => $config['filesystem']['s3']['region'], 'directory' => $config['filesystem']['s3']['directory'], 'ACL' => $config['filesystem']['s3']['acl']]);
-
-            $container->getDefinition('sonata.media.metadata.amazon')
-                ->replaceArgument(0, [
-                    'acl' => $config['filesystem']['s3']['acl'],
-                    'storage' => $config['filesystem']['s3']['storage'],
-                    'encryption' => $config['filesystem']['s3']['encryption'],
-                    'meta' => $config['filesystem']['s3']['meta'],
-                    'cache_control' => $config['filesystem']['s3']['cache_control'],
-                ]);
-
-            $arguments = [
-                'region' => $config['filesystem']['s3']['region'],
-                'version' => $config['filesystem']['s3']['version'],
-            ];
-
-            if (isset($config['filesystem']['s3']['endpoint'])) {
-                $arguments['endpoint'] = $config['filesystem']['s3']['endpoint'];
-            }
-
-            if (isset($config['filesystem']['s3']['secretKey'], $config['filesystem']['s3']['accessKey'])) {
-                $arguments['credentials'] = [
-                    'secret' => $config['filesystem']['s3']['secretKey'],
-                    'key' => $config['filesystem']['s3']['accessKey'],
-                ];
-            }
-
-            $container->getDefinition('sonata.media.adapter.service.s3')
-                ->replaceArgument(0, $arguments);
-
-            if ($async) {
-                if (isset($arguments['credentials']['key'], $arguments['credentials']['secret'])) {
-                    $arguments['accessKeyId'] = $arguments['credentials']['key'];
-                    $arguments['accessKeySecret'] = $arguments['credentials']['secret'];
-                    unset($arguments['credentials']);
-                }
-
-                unset($arguments['version']);
-                $container->getDefinition('sonata.media.adapter.service.s3.async')
-                    ->replaceArgument(0, $arguments);
-            }
-        } else {
-            $container->removeDefinition('sonata.media.adapter.filesystem.s3');
-            $container->removeDefinition('sonata.media.filesystem.s3');
-            $container->removeDefinition('sonata.media.metadata.amazon');
-        }
-
-        // add the default configuration for the Azure Blob Storage filesystem
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.azure') && isset($config['filesystem']['azure'])) {
-            if (!class_exists(BlobRestProxy::class)) {
-                throw new \RuntimeException('You must install "microsoft/azure-storage-blob" to use Azure Blob Storage filesystem');
-            }
-
-            $adapterClass = AzureBlobStorage::class;
-            $clientReference = new Reference('sonata.media.adapter.service.azure');
-
-            $container->getDefinition('sonata.media.adapter.filesystem.azure')
-                ->setClass($adapterClass)
-                ->replaceArgument(0, $clientReference)
-                ->replaceArgument(1, $config['filesystem']['azure']['container_name'])
-                ->replaceArgument(2, $config['filesystem']['azure']['create_container']);
-
-            $connection_string = $config['filesystem']['azure']['connection_string'];
-            $container->getDefinition('sonata.media.adapter.service.azure')
-                ->replaceArgument(0, $connection_string);
-        } else {
-            $container->removeDefinition('sonata.media.adapter.filesystem.azure');
-            $container->removeDefinition('sonata.media.filesystem.azure');
-        }
-
-        if ($container->hasDefinition('sonata.media.adapter.filesystem.replicate') && isset($config['filesystem']['replicate'])) {
-            $container->getDefinition('sonata.media.adapter.filesystem.replicate')
-                ->replaceArgument(0, new Reference($config['filesystem']['replicate']['primary']))
-                ->replaceArgument(1, new Reference($config['filesystem']['replicate']['secondary']));
-        } else {
-            $container->removeDefinition('sonata.media.adapter.filesystem.replicate');
-            $container->removeDefinition('sonata.media.filesystem.replicate');
-        }
+        // FIXME: implement flysystem connection
     }
 
     /**

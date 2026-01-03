@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
-use Gaufrette\Filesystem;
 use PHPUnit\Framework\Attributes\RequiresMethod;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\Command\RemoveThumbsCommand;
@@ -76,9 +75,6 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             ->willReturn($formats);
         $fileProvider->expects(static::exactly(2))
             ->method('removeThumbnails');
-        $fileProvider->expects(static::exactly(2))
-            ->method('getFilesystem')
-            ->willReturn($this->createMock(Filesystem::class));
 
         $this->pool->addContext('foo');
         $this->pool->addProvider('fooprovider', $fileProvider);

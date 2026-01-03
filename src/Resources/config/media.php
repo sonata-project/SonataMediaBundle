@@ -37,7 +37,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('sonata.media.resizer')
             ->args([
                 service('sonata.media.adapter.image.default'),
-                service('sonata.media.metadata.proxy'),
             ])
 
         ->set('sonata.media.resizer.simple', SimpleResizer::class)
@@ -45,7 +44,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 service('sonata.media.adapter.image.default'),
                 param('sonata.media.resizer.simple.adapter.mode'),
-                service('sonata.media.metadata.proxy'),
             ])
 
         ->set('sonata.media.resizer.square', SquareResizer::class)
@@ -53,7 +51,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 service('sonata.media.adapter.image.default'),
                 param('sonata.media.resizer.square.adapter.mode'),
-                service('sonata.media.metadata.proxy'),
             ])
 
         ->set('sonata.media.cdn.server', Server::class)

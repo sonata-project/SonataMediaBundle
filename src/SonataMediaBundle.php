@@ -30,12 +30,4 @@ final class SonataMediaBundle extends Bundle
         $container->addCompilerPass(new ThumbnailCompilerPass());
         $container->addCompilerPass(new TwigStringExtensionCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
     }
-
-    public function boot(): void
-    {
-        // this is required by the AWS SDK (see: https://github.com/knplabs/Gaufrette)
-        if (!\defined('AWS_CERTIFICATE_AUTHORITY')) {
-            \define('AWS_CERTIFICATE_AUTHORITY', true);
-        }
-    }
 }

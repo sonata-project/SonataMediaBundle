@@ -78,7 +78,7 @@ final class MediaDownloadActionTest extends TestCase
 
         $this->pool->addProvider('provider', $provider);
         $this->mediaManager->method('find')->with(1)->willReturn($media);
-        $provider->method('getDownloadResponse')->with($media, 'format', 'mode')->willReturn($response);
+        $provider->method('getDownloadResponse')->with($media, 'format')->willReturn($response);
         $response->expects(static::once())->method('prepare')->with($request);
 
         $result = $this->mediaDownloadAction->__invoke($request, 1, 'format');
@@ -95,7 +95,6 @@ final class MediaDownloadActionTest extends TestCase
         $strategy->method('isGranted')->with($media, $request)->willReturn($isGranted);
 
         $this->pool->addContext('default_context', [], [], [
-            'mode' => 'mode',
             'strategy' => 'download_strategy',
         ]);
         $this->pool->addDownloadStrategy('download_strategy', $strategy);

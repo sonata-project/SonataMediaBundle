@@ -13,19 +13,11 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\DependencyInjection;
 
-use AsyncAws\SimpleS3\SimpleS3Client;
 use Aws\CloudFront\CloudFrontClient;
-use Aws\S3\S3Client;
-use Aws\Sdk;
-use Gaufrette\Adapter\AsyncAwsS3;
-use Gaufrette\Adapter\AwsS3;
-use Gaufrette\Adapter\AzureBlobStorage;
-use Gaufrette\Adapter\AzureBlobStorage\BlobProxyFactory;
 use Imagine\Gd\Imagine as GdImagine;
 use Imagine\Gmagick\Imagine as GmagicImagine;
 use Imagine\Imagick\Imagine as ImagicImagine;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
-use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Sonata\MediaBundle\Admin\GalleryAdmin;
 use Sonata\MediaBundle\Admin\GalleryItemAdmin;
@@ -240,175 +232,6 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
-    /**
-     * @param array<string, mixed> $expected
-     * @param array<string, mixed> $configs
-     */
-    #[DataProvider('provideLoadWithFilesystemConfigurationV3Cases')]
-    public function testLoadWithFilesystemConfigurationV3(
-        array $expected,
-        array $configs,
-    ): void {
-        if (!class_exists(Sdk::class)) {
-            static::markTestSkipped('This test requires aws/aws-sdk-php 3.x.');
-        }
-
-        $this->load($configs);
-
-        static::assertSame(
-            S3Client::class,
-            $this->container->getDefinition('sonata.media.adapter.service.s3')->getClass()
-        );
-
-        static::assertSame(
-            $expected,
-            $this->container->getDefinition('sonata.media.adapter.service.s3')->getArgument(0)
-        );
-
-        static::assertSame(
-            AwsS3::class,
-            $this->container->getDefinition('sonata.media.adapter.filesystem.s3')->getClass()
-        );
-    }
-
-    /**
-     * @phpstan-return iterable<array{array<string, mixed>, array<string, mixed>}>
-     */
-    public static function provideLoadWithFilesystemConfigurationV3Cases(): iterable
-    {
-        yield [
-            [
-                'region' => 'region',
-                'version' => 'version',
-                'credentials' => [
-                    'secret' => 'secret',
-                    'key' => 'access',
-                ],
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'region' => 'region',
-                        'version' => 'version',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'region' => 'region',
-                'version' => 'version',
-                'endpoint' => 'endpoint',
-                'credentials' => [
-                    'secret' => 'secret',
-                    'key' => 'access',
-                ],
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'region' => 'region',
-                        'version' => 'version',
-                        'endpoint' => 'endpoint',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'region' => 's3.amazonaws.com',
-                'version' => 'latest',
-                'credentials' => [
-                    'secret' => 'secret',
-                    'key' => 'access',
-                ],
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-
-        yield [
-            [
-                'region' => 's3.amazonaws.com',
-                'version' => null,
-                'credentials' => [
-                    'secret' => 'secret',
-                    'key' => 'access',
-                ],
-            ],
-            [
-                'filesystem' => [
-                    's3' => [
-                        'bucket' => 'bucket_name',
-                        'version' => null,
-                        'secretKey' => 'secret',
-                        'accessKey' => 'access',
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    public function testLoadWithFilesystemConfigurationV3ASync(): void
-    {
-        if (!class_exists(SimpleS3Client::class)) {
-            static::markTestSkipped('This test requires async-aws/simple-s3.');
-        }
-
-        $expected = [
-            'region' => 'region',
-            'endpoint' => 'endpoint',
-            'accessKeyId' => 'access',
-            'accessKeySecret' => 'secret',
-        ];
-
-        $configs = [
-            'filesystem' => [
-                's3' => [
-                    'async' => true,
-                    'bucket' => 'bucket_name',
-                    'region' => 'region',
-                    'version' => 'version',
-                    'endpoint' => 'endpoint',
-                    'secretKey' => 'secret',
-                    'accessKey' => 'access',
-                ],
-            ],
-        ];
-
-        $this->load($configs);
-
-        static::assertSame(
-            SimpleS3Client::class,
-            $this->container->getDefinition('sonata.media.adapter.service.s3.async')->getClass()
-        );
-
-        static::assertSame(
-            $expected,
-            $this->container->getDefinition('sonata.media.adapter.service.s3.async')->getArgument(0)
-        );
-
-        static::assertSame(
-            AsyncAwsS3::class,
-            $this->container->getDefinition('sonata.media.adapter.filesystem.s3')->getClass()
-        );
-    }
-
     public function testMediaPool(): void
     {
         $this->load();
@@ -499,62 +322,6 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
-    public function testReplicateFilesystem(): void
-    {
-        $this->load([
-            'filesystem' => [
-                'replicate' => [
-                    'primary' => 'sonata.media.adapter.filesystem.s3',
-                    'secondary' => 'sonata.media.adapter.filesystem.local',
-                ],
-            ],
-        ]);
-
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
-            'sonata.media.adapter.filesystem.replicate',
-            0,
-            new Reference('sonata.media.adapter.filesystem.s3')
-        );
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
-            'sonata.media.adapter.filesystem.replicate',
-            1,
-            new Reference('sonata.media.adapter.filesystem.local')
-        );
-    }
-
-    public function testLoadWithFilesystemConfigurationAzure(): void
-    {
-        if (!class_exists(BlobRestProxy::class)) {
-            static::markTestSkipped('This test requires microsoft/azure-storage-blob.');
-        }
-
-        $configs = [
-            'filesystem' => [
-                'azure' => [
-                    'container_name' => 'container_name',
-                    'create_container' => false,
-                    'connection_string' => 'connectionstring',
-                ],
-            ],
-        ];
-
-        $this->load($configs);
-
-        $this->assertContainerBuilderHasService('sonata.media.adapter.filesystem.azure', AzureBlobStorage::class);
-
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.service.azure', 0, 'connectionstring');
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.azure', 1, 'container_name');
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.filesystem.azure', 2, false);
-
-        $this->assertContainerBuilderHasService('sonata.media.adapter.service.azure', BlobProxyFactory::class);
-
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('sonata.media.adapter.service.azure', 0, 'connectionstring');
-
-        static::assertFalse($this->container->hasDefinition('sonata.media.adapter.filesystem.s3'));
-        static::assertFalse($this->container->hasDefinition('sonata.media.filesystem.s3'));
-        static::assertFalse($this->container->hasDefinition('sonata.media.metadata.amazon'));
-    }
-
     /**
      * @return array<string, mixed>
      */
@@ -571,11 +338,6 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
                             'quality' => 50,
                         ],
                     ],
-                ],
-            ],
-            'filesystem' => [
-                'local' => [
-                    'directory' => '/tmp/',
                 ],
             ],
         ];

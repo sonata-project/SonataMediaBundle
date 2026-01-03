@@ -56,7 +56,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 abstract_arg('allowed extensions'),
                 abstract_arg('allowed mime types'),
                 abstract_arg('imagine adapter'),
-                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
@@ -73,7 +72,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('sonata.media.thumbnail.file'),
                 abstract_arg('allowed extensions'),
                 abstract_arg('allowed mime types'),
-                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
@@ -90,7 +88,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('sonata.media.thumbnail.format'),
                 service('sonata.media.http.client'),
                 service('sonata.media.http.message_factory'),
-                service('sonata.media.metadata.proxy'),
                 abstract_arg('is html5 player enabled'),
             ])
             ->call('setTemplates', [[
@@ -108,7 +105,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('sonata.media.thumbnail.format'),
                 service('sonata.media.http.client'),
                 service('sonata.media.http.message_factory'),
-                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',
@@ -125,7 +121,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('sonata.media.thumbnail.format'),
                 service('sonata.media.http.client'),
                 service('sonata.media.http.message_factory'),
-                service('sonata.media.metadata.proxy'),
             ])
             ->call('setTemplates', [[
                 'helper_thumbnail' => '@SonataMedia/Provider/thumbnail.html.twig',

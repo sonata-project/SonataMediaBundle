@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\Filesystem;
 use Imagine\Image\ImagineInterface;
+use League\Flysystem\FilesystemOperator;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
@@ -28,16 +27,15 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 {
     public function __construct(
         string $name,
-        Filesystem $filesystem,
+        FilesystemOperator $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
         array $allowedExtensions,
         array $allowedMimeTypes,
         private ImagineInterface $imagineAdapter,
-        ?MetadataBuilderInterface $metadata = null,
     ) {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes);
     }
 
     public function getProviderMetadata(): MetadataInterface
@@ -186,7 +184,7 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
                 }
 
                 $fileObject = new \SplFileObject($path, 'w');
-                $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+                $fileObject->fwrite($this->getFilesystem()->read($this->getReferenceFile($media)));
             } else {
                 $fileObject = $media->getBinaryContent();
             }

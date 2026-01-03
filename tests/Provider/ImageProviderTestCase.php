@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Gaufrette\Adapter\Local;
-use Gaufrette\Filesystem;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Provider\ImageProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
@@ -65,16 +64,14 @@ final class ImageProviderTestCase extends AbstractProviderTestCase
             $largeBox
         );
 
-        $filesystem = new Filesystem(new Local(sys_get_temp_dir().'/sonata-media-bundle/var/', true));
+        // $filesystem = new Filesystem(new Local(sys_get_temp_dir().'/sonata-media-bundle/var/', true));
+        $filesystem = static::createStub(FilesystemOperator::class);
         $cdn = new Server('/uploads/media');
         $generator = new IdGenerator();
         $thumbnail = new FormatThumbnail('jpg');
         $adapter = new Imagine();
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-        $metadata->method('get')->willReturn([]);
-
-        $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter, $metadata);
+        $provider = new ImageProvider('image', $filesystem, $cdn, $generator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $adapter);
         $provider->setResizer($resizer);
 
         return $provider;
