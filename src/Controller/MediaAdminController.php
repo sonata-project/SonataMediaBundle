@@ -88,41 +88,33 @@ final class MediaAdminController extends CRUDController
         $datagrid->setValue('context', null, $context);
 
         $rootCategory = null;
-        try {
-            if (
-                $this->container->has('sonata.media.manager.category')
-                && $this->container->has('sonata.media.manager.context')
-            ) {
-                $categoryManager = $this->container->get('sonata.media.manager.category');
-                \assert($categoryManager instanceof CategoryManagerInterface);
-                $contextManager = $this->container->get('sonata.media.manager.context');
-                \assert($contextManager instanceof ContextManagerInterface);
+        $categoryManager = $this->container->get('sonata.media.manager.category');
+        $contextManager = $this->container->get('sonata.media.manager.context');
 
-                $rootCategories = $categoryManager->getRootCategoriesForContext($contextManager->find($context));
+        if ($categoryManager instanceof CategoryManagerInterface && $contextManager instanceof ContextManagerInterface) {
+            $rootCategories = $categoryManager->getRootCategoriesForContext($contextManager->find($context));
 
-                if ([] !== $rootCategories) {
-                    $rootCategory = current($rootCategories);
-                }
+            if ([] !== $rootCategories) {
+                $rootCategory = current($rootCategories);
+            }
 
-                if (null !== $rootCategory && [] === $filters) {
+            if (null !== $rootCategory && [] === $filters) {
+                $datagrid->setValue('category', null, $rootCategory->getId());
+            }
+
+            $categoryParam = $request->query->get('category');
+            if (null !== $categoryParam && '' !== $categoryParam) {
+                $category = $categoryManager->findOneBy([
+                    'id' => $request->query->getInt('category'),
+                    'context' => $context,
+                ]);
+
+                if (null !== $category) {
+                    $datagrid->setValue('category', null, $category->getId());
+                } elseif (null !== $rootCategory) {
                     $datagrid->setValue('category', null, $rootCategory->getId());
                 }
-
-                if (null !== $request->query->get('category') && '' !== $request->query->get('category')) {
-                    $category = $categoryManager->findOneBy([
-                        'id' => $request->query->getInt('category'),
-                        'context' => $context,
-                    ]);
-
-                    if (null !== $category) {
-                        $datagrid->setValue('category', null, $category->getId());
-                    } elseif (null !== $rootCategory) {
-                        $datagrid->setValue('category', null, $rootCategory->getId());
-                    }
-                }
             }
-        } catch (\Throwable) {
-            // Category services not available - continue without category filtering
         }
 
         $formView = $datagrid->getForm()->createView();
