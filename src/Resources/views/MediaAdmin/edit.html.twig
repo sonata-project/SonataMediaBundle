@@ -12,18 +12,16 @@ file that was distributed with this source code.
 {% import _self as macros %}
 
 {% macro bytesToSize(bytes) %}
-{% apply spaceless %}
-    {% set kilobyte = 1024 %}
-    {% set megabyte = kilobyte * 1024 %}
+    {%- set kilobyte = 1024 -%}
+    {%- set megabyte = kilobyte * 1024 -%}
 
-    {% if bytes < kilobyte %}
+    {%- if bytes < kilobyte -%}
         {{ bytes ~ ' B' }}
-    {% elseif bytes < megabyte %}
+    {%- elseif bytes < megabyte -%}
         {{ (bytes / kilobyte)|number_format(2) ~ ' KB' }}
-    {% else %}
+    {%- else -%}
         {{ (bytes / megabyte)|number_format(2) ~ ' MB' }}
-    {% endif %}
-{% endapply %}
+    {%- endif -%}
 {% endmacro %}
 
 {% extends '@SonataAdmin/CRUD/base_edit.html.twig' %}
