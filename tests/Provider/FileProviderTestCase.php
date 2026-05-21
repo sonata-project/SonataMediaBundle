@@ -13,26 +13,23 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Gaufrette\File as GaufretteFile;
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\Form\Twig\CanonicalizeRuntime;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\Server;
-use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\IdGenerator;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
@@ -46,25 +43,15 @@ final class FileProviderTestCase extends AbstractProviderTestCase
     {
         $resizer = static::createStub(ResizerInterface::class);
         $thumbnail = static::createStub(ThumbnailInterface::class);
-        $metadata = static::createStub(MetadataBuilderInterface::class);
 
-        $adapter = new Local(__DIR__.'/../Fixtures');
         $cdn = new Server('/uploads/media');
         $generator = new IdGenerator();
 
-        $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->onlyMethods(['get'])
-            ->setConstructorArgs([$adapter])
-            ->getMock();
-        $file = $this->getMockBuilder(GaufretteFile::class)
-            ->setConstructorArgs(['foo', $filesystem])
-            ->getMock();
+        $filesystem = static::createStub(FilesystemOperator::class);
 
-        $file->method('getName')->willReturn('name');
-        $filesystem->method('get')->willReturn($file);
         $thumbnail->method('generatePublicUrl')->willReturn('/bundles/sonatamedia/file.png');
 
-        $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail, ['txt'], ['foo/bar'], $metadata);
+        $provider = new FileProvider('file', $filesystem, $cdn, $generator, $thumbnail, ['txt'], ['foo/bar']);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -192,9 +179,9 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         $media->setContext('FileProviderTest');
         $media->setId(1_023_456);
 
-        $response = $this->provider->getDownloadResponse($media, 'reference', 'X-Accel-Redirect');
+        $response = $this->provider->getDownloadResponse($media, 'reference');
 
-        static::assertInstanceOf(BinaryFileResponse::class, $response);
+        static::assertInstanceOf(StreamedResponse::class, $response);
     }
 
     /**

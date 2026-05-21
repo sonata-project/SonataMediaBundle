@@ -13,15 +13,13 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\File;
-use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use League\Flysystem\FilesystemOperator;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,13 +31,12 @@ abstract class BaseVideoProvider extends BaseProvider
 {
     public function __construct(
         string $name,
-        Filesystem $filesystem,
+        FilesystemOperator $filesystem,
         CDNInterface $cdn,
         GeneratorInterface $pathGenerator,
         ThumbnailInterface $thumbnail,
         private ClientInterface $client,
         private RequestFactoryInterface $requestFactory,
-        protected ?MetadataBuilderInterface $metadata = null,
     ) {
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
     }
@@ -54,23 +51,17 @@ abstract class BaseVideoProvider extends BaseProvider
         return $media->getMetadataValue('thumbnail_url');
     }
 
-    final public function getReferenceFile(MediaInterface $media): File
+    final public function getReferenceFile(MediaInterface $media): string
     {
         $key = $this->generatePrivateUrl($media, MediaProviderInterface::FORMAT_REFERENCE);
 
         // the reference file is remote, get it and store it with the 'reference' format
-        if ($this->getFilesystem()->has($key)) {
-            $referenceFile = $this->getFilesystem()->get($key);
-        } else {
-            $referenceFile = $this->getFilesystem()->get($key, true);
-            $metadata = null !== $this->metadata ? $this->metadata->get($media, $referenceFile->getName()) : [];
-
+        if (!$this->getFilesystem()->has($key)) {
             $response = $this->sendRequest('GET', $this->getReferenceImage($media));
-
-            $referenceFile->setContent($response, $metadata);
+            $this->getFilesystem()->write($key, $response);
         }
 
-        return $referenceFile;
+        return $key;
     }
 
     final public function generatePublicUrl(MediaInterface $media, string $format): string

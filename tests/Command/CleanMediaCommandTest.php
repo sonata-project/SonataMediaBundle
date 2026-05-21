@@ -13,11 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Command;
 
-use Gaufrette\Filesystem;
+use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\MediaBundle\CDN\CDNInterface;
 use Sonata\MediaBundle\Command\CleanMediaCommand;
-use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
@@ -47,7 +48,7 @@ final class CleanMediaCommandTest extends FilesystemTestCase
 
     private FileProvider $provider;
 
-    private Local $fileSystemLocal;
+    private FilesystemOperator $fileSystemLocal;
 
     protected function setUp(): void
     {
@@ -55,7 +56,7 @@ final class CleanMediaCommandTest extends FilesystemTestCase
 
         $this->pool = new Pool('default');
         $this->mediaManager = $this->createMock(MediaManagerInterface::class);
-        $this->fileSystemLocal = new Local($this->workspace);
+        $this->fileSystemLocal = new Filesystem(new LocalFilesystemAdapter($this->workspace));
         $this->provider = new FileProvider(
             'fooprovider',
             static::createStub(Filesystem::class),
@@ -176,8 +177,8 @@ final class CleanMediaCommandTest extends FilesystemTestCase
         $this->assertOutputFoundInContext(
             '/Context: foo\s+(.+)\s+done!/ms',
             [
-                '\'qwertz.ext\' is orphanend',
-                '\'thumb_1_bar.ext\' is orphanend',
+                '\'qwertz.ext\' is orphaned',
+                '\'thumb_1_bar.ext\' is orphaned',
             ],
             $this->tester->getDisplay()
         );

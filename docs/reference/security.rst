@@ -14,23 +14,6 @@ Built-in security strategy:
 * ``sonata.media.security.connected_strategy``: the user needs to have one of the following roles:
   ``IS_AUTHENTICATED_FULLY`` or ``IS_AUTHENTICATED_REMEMBERED``
 
-On top of that, there are 3 download modes which can be configured to download the media. The download mode depends on
-the HTTP server you used:
-
-* http: DEFAULT - use php to send the file
-* X-Sendfile: use the ``X-Sendfile`` flag (Apache + mod_xsendfile: https://tn123.org/mod_xsendfile/)
-* X-Accel-Redirect: use the ``X-Accel-Redirect`` flag (Nginx: https://www.nginx.com/resources/wiki/start/topics/examples/x-accel/#x-accel-redirect)
-
-.. note::
-
-    Some file storage abstractions might not be compatible with some specific server flag,
-    if you are not sure always use ``http``.
-
-.. note::
-
-    If you use ``X-Sendfile`` or ``X-Accel-Redirect`` download mode, don't forget to specify that you trust this
-    header by adding ``BinaryFileResponse::trustXSendfileTypeHeader();`` in your app controller.
-
 Configuration Example
 ---------------------
 
@@ -46,7 +29,6 @@ For the context ``default`` the user need to be a Super Admin to retrieve the fi
             default: # the default context is mandatory
                 download:
                     strategy: sonata.media.security.superadmin_strategy
-                    mode: http
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube

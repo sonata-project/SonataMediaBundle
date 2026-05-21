@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Resizer;
 
-use Gaufrette\File;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\ManipulatorInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\SquareResizer;
@@ -35,11 +34,11 @@ final class SquareResizerTest extends TestCase
 
         $adapter = $this->createMock(ImagineInterface::class);
         $media = $this->createMock(MediaInterface::class);
-        $file = $this->createMock(File::class);
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $filesystem = $this->createMock(FilesystemOperator::class);
+        $file = 'in.jpg';
 
-        $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
-        $resizer->resize($media, $file, $file, 'bar', [
+        $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET);
+        $resizer->resize($filesystem, $media, $file, $file, 'bar', [
             'width' => null,
             'height' => null,
             'quality' => 80,
@@ -63,9 +62,7 @@ final class SquareResizerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
         $media->expects(static::once())->method('getBox')->willReturn($mediaSize);
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-
-        $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
+        $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET);
 
         $box = $resizer->getBox($media, $settings);
 

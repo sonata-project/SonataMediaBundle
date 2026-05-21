@@ -229,26 +229,6 @@ final class Pool
         return $this->downloadStrategies[$strategy];
     }
 
-    /**
-     * @throws \RuntimeException
-     */
-    public function getDownloadMode(MediaInterface $media): string
-    {
-        $mediaContext = $media->getContext();
-
-        if (null === $mediaContext) {
-            throw new \RuntimeException(\sprintf('Media %s does not have context', $media->getId() ?? ''));
-        }
-
-        $download = $this->getContext($mediaContext)['download'];
-
-        if (!isset($download['mode'])) {
-            throw new \RuntimeException(\sprintf('Unable to retrieve the download mode from context %s.', $mediaContext));
-        }
-
-        return $download['mode'];
-    }
-
     public function getDefaultContext(): string
     {
         return $this->defaultContext;

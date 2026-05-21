@@ -34,8 +34,6 @@ As the infrastructure is not standard, the ``MediaBundle`` abstracts the
    reference/security
    reference/command_line
    reference/advanced_configuration
-   reference/amazon_s3
-   reference/azure_blob_storage
    reference/messenger
    reference/extra
    reference/troubleshooting
@@ -50,14 +48,6 @@ Available services
     - ``sonata.media.provider.dailymotion``: [Dailymotion](https://www.dailymotion.com/)
     - ``sonata.media.provider.vimeo``: [Vimeo](https://vimeo.com/)
     - ``sonata.media.provider.youtube``: [YouTube](https://www.youtube.com/)
-
- -  Filesystem
-
-    - ``sonata.media.filesystem.local``: The local filesystem (default)
-    - ``sonata.media.filesystem.ftp``: FTP
-    - ``sonata.media.filesystem.s3``: Amazon S3
-    - ``sonata.media.filesystem.azure``: Azure Blob Storage
-    - ``sonata.media.filesystem.replicate``: Replicate file to a primary and a secondary
 
  - CDN
 

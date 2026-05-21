@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Command;
 
-use Sonata\MediaBundle\Filesystem\Local;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\StorageAttributes;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
 use Sonata\MediaBundle\Provider\FileProvider;
 use Sonata\MediaBundle\Provider\Pool;
@@ -22,9 +24,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 #[AsCommand(name: 'sonata:media:clean-uploads', description: 'Find orphaned files in media upload directory')]
 final class CleanMediaCommand extends Command
@@ -38,7 +37,7 @@ final class CleanMediaCommand extends Command
      * @internal This class should only be used through the console
      */
     public function __construct(
-        private Local $filesystemLocal,
+        private FilesystemOperator $filesystemLocal,
         private Pool $mediaPool,
         private MediaManagerInterface $mediaManager,
     ) {
@@ -56,43 +55,37 @@ final class CleanMediaCommand extends Command
         $dryRun = $input->getOption('dry-run');
         $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
 
-        $finder = Finder::create();
-        $filesystem = new Filesystem();
-        $baseDirectory = $this->filesystemLocal->getDirectory();
+        $filesystem = $this->filesystemLocal;
 
-        if (false === $baseDirectory) {
-            throw new \RuntimeException('Unable to find upload directory, did you configure it?');
-        }
-
-        $output->writeln(\sprintf('<info>Scanning upload directory: %s</info>', $baseDirectory));
+        /** @var StorageAttributes[] $subdirectories */
+        $subdirectories = $filesystem->listContents('.')->toArray();
 
         foreach ($this->mediaPool->getContexts() as $contextName => $context) {
-            if (!$filesystem->exists($baseDirectory.'/'.$contextName)) {
-                $output->writeln(\sprintf("<info>'%s' does not exist</info>", $baseDirectory.'/'.$contextName));
+            $contextDirectory = current(array_filter($subdirectories, static fn ($d) => $d->isDir() && $d->path() === $contextName));
+
+            if (false === $contextDirectory) {
+                $output->writeln(\sprintf("<info>'%s' does not exist</info>", $contextName));
 
                 continue;
             }
 
             $output->writeln(\sprintf('<info>Context: %s</info>', $contextName));
 
-            $files = $finder->files()->in($baseDirectory.'/'.$contextName);
+            /** @var \Traversable<StorageAttributes> $files */
+            $files = $filesystem->listContents($contextDirectory->path());
 
             foreach ($files as $file) {
-                $filename = $file->getFilename();
+                $filepath = $file->path();
+                $filename = basename($filepath);
 
                 if (!$this->mediaExists($filename, $contextName)) {
                     if ($dryRun) {
-                        $output->writeln(\sprintf("<info>'%s' is orphanend</info>", $filename));
+                        $output->writeln(\sprintf("<info>'%s' is orphaned</info>", $filename));
                     } else {
                         try {
-                            $realPath = $file->getRealPath();
-
-                            if (false !== $realPath) {
-                                $filesystem->remove($realPath);
-                            }
-
+                            $filesystem->delete($filepath);
                             $output->writeln(\sprintf("<info>'%s' was successfully removed</info>", $filename));
-                        } catch (IOException $ioe) {
+                        } catch (FilesystemException $ioe) {
                             $output->writeln(\sprintf('<error>%s</error>', $ioe->getMessage()));
                         }
                     }

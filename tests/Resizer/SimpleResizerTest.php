@@ -13,20 +13,19 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Resizer;
 
-use Gaufrette\Adapter\InMemory;
-use Gaufrette\File;
-use Gaufrette\Filesystem;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\ManipulatorInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Resizer\SimpleResizer;
+
+use function PHPUnit\Framework\isString;
 
 /**
  * @phpstan-import-type FormatOptions from MediaProviderInterface
@@ -38,18 +37,18 @@ final class SimpleResizerTest extends TestCase
         $image = static::createStub(ImageInterface::class);
         $adapter = static::createStub(ImagineInterface::class);
         $media = $this->createMock(MediaInterface::class);
-        $metadata = static::createStub(MetadataBuilderInterface::class);
-        $file = static::createStub(File::class);
+        $filesystem = static::createStub(FilesystemOperator::class);
+        $file = 'a.jpg';
 
         $media->expects(static::once())->method('getBox')->willReturn(new Box(535, 132));
 
         $adapter->method('load')->willReturn($image);
 
-        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_FLAG_NOCLONE, $metadata);
+        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_FLAG_NOCLONE);
 
         $this->expectException(InvalidArgumentException::class);
 
-        $resizer->resize($media, $file, $file, 'bar', [
+        $resizer->resize($filesystem, $media, $file, $file, 'bar', [
             'height' => null,
             'width' => 90,
             'quality' => 100,
@@ -66,11 +65,11 @@ final class SimpleResizerTest extends TestCase
 
         $adapter = static::createStub(ImagineInterface::class);
         $media = static::createStub(MediaInterface::class);
-        $metadata = static::createStub(MetadataBuilderInterface::class);
-        $file = static::createStub(File::class);
+        $filesystem = static::createStub(FilesystemOperator::class);
+        $file = 'a.jpg';
 
-        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
-        $resizer->resize($media, $file, $file, 'bar', [
+        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET);
+        $resizer->resize($filesystem, $media, $file, $file, 'bar', [
             'width' => null,
             'height' => null,
             'quality' => 80,
@@ -93,24 +92,31 @@ final class SimpleResizerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
         $media->expects(static::exactly(2))->method('getBox')->willReturn(new Box(535, 132));
 
-        $filesystem = new Filesystem(new InMemory());
-        $in = $filesystem->get('in', true);
-
         $fileContents = file_get_contents(__DIR__.'/../Fixtures/logo.png');
 
         if (false === $fileContents) {
             static::fail('Unable to read "logo.png" file.');
         }
 
-        $in->setContent($fileContents);
+        $filesystem = static::createMock(FilesystemOperator::class);
 
-        $out = $filesystem->get('out', true);
+        $in = 'logo.png';
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-        $metadata->expects(static::once())->method('get')->willReturn([]);
+        $filesystem
+            ->expects(static::once())
+            ->method('read')
+            ->with($in)
+            ->willReturn($fileContents);
 
-        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_OUTBOUND, $metadata);
-        $resizer->resize($media, $in, $out, 'bar', [
+        $out = 'out.png';
+
+        $filesystem
+            ->expects(static::once())
+            ->method('write')
+            ->with($out, isString());
+
+        $resizer = new SimpleResizer($adapter, ManipulatorInterface::THUMBNAIL_OUTBOUND);
+        $resizer->resize($filesystem, $media, $in, $out, 'bar', [
             'height' => null,
             'width' => 90,
             'quality' => 100,
@@ -134,9 +140,7 @@ final class SimpleResizerTest extends TestCase
         $media = $this->createMock(MediaInterface::class);
         $media->expects(static::exactly(2))->method('getBox')->willReturn($mediaSize);
 
-        $metadata = static::createStub(MetadataBuilderInterface::class);
-
-        $resizer = new SimpleResizer($adapter, $mode, $metadata);
+        $resizer = new SimpleResizer($adapter, $mode);
 
         $box = $resizer->getBox($media, $settings);
 

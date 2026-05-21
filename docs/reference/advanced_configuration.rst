@@ -21,7 +21,6 @@ Full configuration options:
             default:  # the default context is mandatory
                 download:
                     strategy: sonata.media.security.superadmin_strategy
-                    mode: http
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -37,7 +36,6 @@ Full configuration options:
             tv:
                 download:
                     strategy: sonata.media.security.superadmin_strategy
-                    mode: http
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -50,7 +48,6 @@ Full configuration options:
             news:
                 download:
                     strategy: sonata.media.security.superadmin_strategy
-                    mode: http
                 providers:
                     - sonata.media.provider.dailymotion
                     - sonata.media.provider.youtube
@@ -83,50 +80,11 @@ Full configuration options:
                 primary: sonata.media.cdn.panther
                 fallback: sonata.media.cdn.server
 
-        filesystem:
-            local:
-                directory: '%kernel.project_dir%/web/uploads/media'
-                create: false
-
-            ftp:
-                directory:
-                host:
-                username:
-                password:
-                port: 21
-                passive: false
-                create: false
-                mode: !php/const FTP_BINARY # @see: https://www.php.net/manual/en/ftp.constants.php
-
-            s3:
-                bucket:
-                accessKey:
-                secretKey:
-                create: false
-                region: s3.amazonaws.com # change if not using US Standard region
-                version: 2006-03-01 # change according the API version you are using
-                storage: standard # can be one of: standard or reduced
-                acl: public # can be one of: public, private, open, auth_read, owner_read, owner_full_control
-                encryption: aes256 # can be aes256 or not set
-                cache_control: max-age=86400 # or any other
-                meta:
-                    key1: value1 #any amount of metas(sent as x-amz-meta-key1 = value1)
-                async: false
-
-            azure:
-                container_name:
-                connection_string:
-                create_container: false
-
-            replicate:
-                primary: sonata.media.adapter.filesystem.s3
-                secondary: sonata.media.adapter.filesystem.local
-
         providers:
             file:
                 service: sonata.media.provider.file
                 resizer: null
-                filesystem: sonata.media.filesystem.local
+                filesystem: default.storage # from your Flysystem configuration
                 cdn: sonata.media.cdn.server
                 generator: sonata.media.generator.default
                 thumbnail: sonata.media.thumbnail.format
@@ -136,7 +94,7 @@ Full configuration options:
             image:
                 service: sonata.media.provider.image
                 resizer: sonata.media.resizer.simple # sonata.media.resizer.square, sonata.media.resizer.crop
-                filesystem: sonata.media.filesystem.local
+                filesystem: default.storage # from your Flysystem configuration
                 cdn: sonata.media.cdn.server
                 generator: sonata.media.generator.default
                 thumbnail: sonata.media.thumbnail.format
@@ -146,7 +104,7 @@ Full configuration options:
             youtube:
                 service: sonata.media.provider.youtube
                 resizer: sonata.media.resizer.simple
-                filesystem: sonata.media.filesystem.local
+                filesystem: default.storage # from your Flysystem configuration
                 cdn: sonata.media.cdn.server
                 generator: sonata.media.generator.default
                 thumbnail: sonata.media.thumbnail.format
@@ -155,7 +113,7 @@ Full configuration options:
             dailymotion:
                 service: sonata.media.provider.dailymotion
                 resizer: sonata.media.resizer.simple
-                filesystem: sonata.media.filesystem.local
+                filesystem: default.storage # from your Flysystem configuration
                 cdn: sonata.media.cdn.server
                 generator: sonata.media.generator.default
                 thumbnail: sonata.media.thumbnail.format

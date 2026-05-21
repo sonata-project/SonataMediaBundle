@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Provider;
 
-use Gaufrette\File;
-use Gaufrette\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 use Sonata\MediaBundle\CDN\CDNInterface;
@@ -56,7 +55,7 @@ interface MediaProviderInterface
      *
      * @phpstan-return FormatOptions|false
      */
-    public function getFormat(string $name);
+    public function getFormat(string $name): array|false;
 
     /**
      * return true if the media related to the provider required thumbnails (generation).
@@ -75,7 +74,7 @@ interface MediaProviderInterface
      */
     public function removeThumbnails(MediaInterface $media, $formats = null): void;
 
-    public function getReferenceFile(MediaInterface $media): File;
+    public function getReferenceFile(MediaInterface $media): string;
 
     /**
      * return the correct format name : providerName_format.
@@ -171,11 +170,11 @@ interface MediaProviderInterface
      *
      * @param array<string, mixed> $headers
      */
-    public function getDownloadResponse(MediaInterface $media, string $format, string $mode, array $headers = []): Response;
+    public function getDownloadResponse(MediaInterface $media, string $format, array $headers = []): Response;
 
     public function getResizer(): ?ResizerInterface;
 
-    public function getFilesystem(): Filesystem;
+    public function getFilesystem(): FilesystemOperator;
 
     public function getCdn(): CDNInterface;
 

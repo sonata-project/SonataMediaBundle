@@ -85,9 +85,10 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
             return;
         }
 
+        $filesystem = $provider->getFilesystem();
         $referenceFile = $provider->getReferenceFile($media);
 
-        if (!$referenceFile->exists()) {
+        if (!$filesystem->has($referenceFile)) {
             return;
         }
 
@@ -105,9 +106,10 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
                 }
 
                 $resizer->resize(
+                    $filesystem,
                     $media,
                     $referenceFile,
-                    $provider->getFilesystem()->get($provider->generatePrivateUrl($media, $format), true),
+                    $provider->generatePrivateUrl($media, $format),
                     $this->getExtension($media),
                     $settings
                 );

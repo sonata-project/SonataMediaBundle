@@ -13,17 +13,14 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
-use Gaufrette\Adapter;
-use Gaufrette\File;
-use Gaufrette\Filesystem;
 use Imagine\Image\Box;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
-use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Provider\VimeoProvider;
@@ -46,20 +43,10 @@ final class VimeoProviderTestCase extends AbstractProviderTestCase
             $requestFactory = static::createStub(RequestFactoryInterface::class);
         }
 
-        $resizer = $this->createMock(ResizerInterface::class);
+        $resizer = static::createStub(ResizerInterface::class);
         $resizer->method('getBox')->willReturn(new Box(100, 100));
 
-        $adapter = $this->createMock(Adapter::class);
-
-        $filesystem = $this->getMockBuilder(Filesystem::class)
-            ->onlyMethods(['get'])
-            ->setConstructorArgs([$adapter])
-            ->getMock();
-        $file = $this->getMockBuilder(File::class)
-            ->setConstructorArgs(['foo', $filesystem])
-            ->getMock();
-        $file->method('getName')->willReturn('name');
-        $filesystem->method('get')->willReturn($file);
+        $filesystem = static::createStub(FilesystemOperator::class);
 
         $cdn = new Server('/uploads/media');
 
@@ -67,9 +54,7 @@ final class VimeoProviderTestCase extends AbstractProviderTestCase
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-
-        $provider = new VimeoProvider('vimeo', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, $metadata);
+        $provider = new VimeoProvider('vimeo', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory);
         $provider->setResizer($resizer);
 
         return $provider;

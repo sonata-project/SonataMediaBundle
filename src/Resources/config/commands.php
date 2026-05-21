@@ -40,7 +40,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('sonata.media.command.clean_media', CleanMediaCommand::class)
             ->tag('console.command')
             ->args([
-                service('sonata.media.adapter.filesystem.local'),
+                service('default.storage'),
                 service('sonata.media.pool'),
                 service('sonata.media.manager.media'),
             ])
