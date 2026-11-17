@@ -29,8 +29,8 @@ final class ReplicateTest extends TestCase
         $secondary->expects(static::never())->method('mtime');
         static::assertSame(25, $replicate->mtime('foo'));
 
-        $primary->expects(static::once())->method('delete')->willReturn('primary');
-        $secondary->expects(static::once())->method('delete')->willReturn('primary');
+        $primary->expects(static::once())->method('delete')->willReturn(true);
+        $secondary->expects(static::once())->method('delete')->willReturn(true);
         $replicate->delete('foo');
 
         $primary->expects(static::once())->method('keys')->willReturn([]);

@@ -32,6 +32,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
     ) {
     }
 
+    /**
+     * @param string $key
+     */
     public function delete($key): bool
     {
         $ok = true;
@@ -57,22 +60,23 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
 
     /**
      * @param string $key
-     *
-     * @return int|bool
      */
-    public function mtime($key)
+    public function mtime($key): int|bool
     {
         return $this->primary->mtime($key);
     }
 
     /**
-     * @return string[]
+     * @return array<int, string>
      */
     public function keys(): array
     {
         return $this->primary->keys();
     }
 
+    /**
+     * @param string $key
+     */
     public function exists($key): bool
     {
         return $this->primary->exists($key);
@@ -80,11 +84,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
 
     /**
      * @param string $key
-     * @param string $content
-     *
-     * @return bool
+     * @param mixed  $content
      */
-    public function write($key, $content)
+    public function write($key, $content): bool
     {
         $ok = true;
         $return = false;
@@ -110,14 +112,16 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
 
     /**
      * @param string $key
-     *
-     * @return string|bool
      */
-    public function read($key)
+    public function read($key): string|bool
     {
         return $this->primary->read($key);
     }
 
+    /**
+     * @param string $sourceKey
+     * @param string $targetKey
+     */
     public function rename($sourceKey, $targetKey): bool
     {
         $ok = true;
@@ -169,7 +173,7 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
      *
      * @return mixed[]
      */
-    public function getMetadata($key)
+    public function getMetadata($key): array
     {
         if ($this->primary instanceof MetadataSupporter) {
             return $this->primary->getMetadata($key);
@@ -197,6 +201,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         ];
     }
 
+    /**
+     * @param string $key
+     */
     public function createFile($key, Filesystem $filesystem): File
     {
         if ($this->primary instanceof FileFactory) {
@@ -244,6 +251,9 @@ final class Replicate implements Adapter, FileFactory, StreamFactory, MetadataSu
         return $this->primary->listDirectory($directory);
     }
 
+    /**
+     * @param string $key
+     */
     public function isDirectory($key): bool
     {
         return $this->primary->isDirectory($key);
