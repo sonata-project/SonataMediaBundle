@@ -91,7 +91,6 @@ final class AppKernel extends Kernel
             ]);
         }
 
-        // @phpstan-ignore-next-line classConstant.internalClass
         if (class_exists(CacheCompatibilityPass::class)) {
             // doctrine-bundle v2
             $container->loadFromExtension('doctrine', [
