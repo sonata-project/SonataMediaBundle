@@ -75,7 +75,7 @@ class FilesystemTestCase extends TestCase
         $this->umask = umask(0);
         $this->filesystem = new Filesystem();
         $microtime = (string) microtime(true);
-        $this->workspace = sys_get_temp_dir().'/'.$microtime.'.'.random_int(0, mt_getrandmax());
+        $this->workspace = sys_get_temp_dir().'/'.$microtime.'.'.random_int(0, \PHP_INT_MAX);
         mkdir($this->workspace, 0777, true);
 
         $realpath = realpath($this->workspace);
