@@ -37,13 +37,9 @@ final class YouTubeProviderTestCase extends AbstractProviderTestCase
 {
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {
-        if (null === $client) {
-            $client = static::createStub(ClientInterface::class);
-        }
+        $client ??= static::createStub(ClientInterface::class);
 
-        if (null === $messageFactory) {
-            $messageFactory = static::createStub(RequestFactoryInterface::class);
-        }
+        $messageFactory ??= static::createStub(RequestFactoryInterface::class);
 
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('getBox')->willReturn(new Box(100, 100));
@@ -66,9 +62,7 @@ final class YouTubeProviderTestCase extends AbstractProviderTestCase
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-
-        $provider = new YouTubeProvider('youtube', $filesystem, $cdn, $generator, $thumbnail, $client, $messageFactory, $metadata, false);
+        $provider = new YouTubeProvider('youtube', $filesystem, $cdn, $generator, $thumbnail, $client, $messageFactory, static::createStub(MetadataBuilderInterface::class), false);
         $provider->setResizer($resizer);
 
         return $provider;

@@ -374,7 +374,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
             true
         );
 
-        $metadata = null !== $this->metadata ? $this->metadata->get($media, $file->getName()) : [];
+        $metadata = $this->metadata?->get($media, $file->getName()) ?? [];
 
         if (null !== $contents) {
             $file->setContent($contents, $metadata);

@@ -21,7 +21,7 @@ final class NoopMetadataBuilderTest extends TestCase
 {
     public function testNoop(): void
     {
-        $media = $this->createMock(MediaInterface::class);
+        $media = static::createStub(MediaInterface::class);
         $filename = '/test/folder/testfile.png';
 
         $noopmetadatabuilder = new NoopMetadataBuilder();

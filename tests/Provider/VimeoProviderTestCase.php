@@ -38,13 +38,9 @@ final class VimeoProviderTestCase extends AbstractProviderTestCase
 {
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
-        if (null === $client) {
-            $client = static::createStub(ClientInterface::class);
-        }
+        $client ??= static::createStub(ClientInterface::class);
 
-        if (null === $requestFactory) {
-            $requestFactory = static::createStub(RequestFactoryInterface::class);
-        }
+        $requestFactory ??= static::createStub(RequestFactoryInterface::class);
 
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('getBox')->willReturn(new Box(100, 100));
@@ -67,9 +63,7 @@ final class VimeoProviderTestCase extends AbstractProviderTestCase
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-
-        $provider = new VimeoProvider('vimeo', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, $metadata);
+        $provider = new VimeoProvider('vimeo', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, static::createStub(MetadataBuilderInterface::class));
         $provider->setResizer($resizer);
 
         return $provider;

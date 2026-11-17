@@ -65,12 +65,10 @@ final class PoolTest extends TestCase
 
     private function createProvider(string $name): MediaProviderInterface
     {
-        $filesystem = $this->createMock(Filesystem::class);
         $cdn = new Server('/uploads/media');
         $generator = new IdGenerator();
         $thumbnail = new FormatThumbnail('jpg');
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
 
-        return new FileProvider($name, $filesystem, $cdn, $generator, $thumbnail, [], [], $metadata);
+        return new FileProvider($name, static::createStub(Filesystem::class), $cdn, $generator, $thumbnail, [], [], static::createStub(MetadataBuilderInterface::class));
     }
 }

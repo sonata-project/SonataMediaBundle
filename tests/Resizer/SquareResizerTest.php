@@ -33,10 +33,10 @@ final class SquareResizerTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $adapter = $this->createMock(ImagineInterface::class);
-        $media = $this->createMock(MediaInterface::class);
-        $file = $this->createMock(File::class);
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $adapter = static::createStub(ImagineInterface::class);
+        $media = static::createStub(MediaInterface::class);
+        $file = static::createStub(File::class);
+        $metadata = static::createStub(MetadataBuilderInterface::class);
 
         $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
         $resizer->resize($media, $file, $file, 'bar', [
@@ -58,12 +58,12 @@ final class SquareResizerTest extends TestCase
     #[DataProvider('provideGetBoxCases')]
     public function testGetBox(array $settings, Box $mediaSize, Box $expected): void
     {
-        $adapter = $this->createMock(ImagineInterface::class);
+        $adapter = static::createStub(ImagineInterface::class);
 
         $media = $this->createMock(MediaInterface::class);
         $media->expects(static::once())->method('getBox')->willReturn($mediaSize);
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
+        $metadata = static::createStub(MetadataBuilderInterface::class);
 
         $resizer = new SquareResizer($adapter, ManipulatorInterface::THUMBNAIL_INSET, $metadata);
 

@@ -56,7 +56,7 @@ final class MediaBlockServiceTest extends BlockServiceTestCase
 
         $this->configureFormat($media, 'format1');
         $blockContext->method('getBlock')->willReturn($block);
-        $blockContext->method('getSetting')->willReturnMap([
+        $blockContext->expects(static::atLeast(2))->method('getSetting')->willReturnMap([
             ['format', 'format'],
             ['mediaId', $media],
         ]);

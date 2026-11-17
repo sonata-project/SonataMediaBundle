@@ -173,13 +173,11 @@ final class SyncThumbsCommand extends Command
     {
         $providerName = $input->getArgument('providerName');
 
-        if (null === $providerName) {
-            $providerName = $this->getHelper('question')->ask(
-                $input,
-                $output,
-                new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
-            );
-        }
+        $providerName ??= $this->getHelper('question')->ask(
+            $input,
+            $output,
+            new ChoiceQuestion('Please select the provider', array_keys($this->mediaPool->getProviders()))
+        );
 
         return $this->mediaPool->getProvider($providerName);
     }
@@ -188,13 +186,11 @@ final class SyncThumbsCommand extends Command
     {
         $context = $input->getArgument('context');
 
-        if (null === $context) {
-            $context = $this->getHelper('question')->ask(
-                $input,
-                $output,
-                new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
-            );
-        }
+        $context ??= $this->getHelper('question')->ask(
+            $input,
+            $output,
+            new ChoiceQuestion('Please select the context', array_keys($this->mediaPool->getContexts()))
+        );
 
         return $context;
     }

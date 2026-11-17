@@ -30,9 +30,7 @@ final class FormatThumbnail implements ThumbnailInterface, ResizableThumbnailInt
 
     public function addResizer(string $id, ResizerInterface $resizer): void
     {
-        if (!isset($this->resizers[$id])) {
-            $this->resizers[$id] = $resizer;
-        }
+        $this->resizers[$id] ??= $resizer;
     }
 
     public function hasResizer(string $id): bool

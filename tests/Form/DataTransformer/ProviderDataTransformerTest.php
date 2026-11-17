@@ -70,7 +70,7 @@ final class ProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformWithNewMediaAndNoBinaryContent(): void
     {
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
@@ -91,7 +91,7 @@ final class ProviderDataTransformerTest extends TestCase
 
     public function testReverseTransformWithMediaAndNoBinaryContent(): void
     {
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
@@ -107,7 +107,7 @@ final class ProviderDataTransformerTest extends TestCase
     #[DoesNotPerformAssertions]
     public function testReverseTransformWithMediaAndUploadFileInstance(): void
     {
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
 
         $pool = new Pool('default');
         $pool->addProvider('default', $provider);
