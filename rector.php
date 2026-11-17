@@ -18,7 +18,6 @@ declare(strict_types=1);
  */
 
 use Rector\Config\RectorConfig;
-use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FunctionLike\ExceptionHandlerTypehintRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
@@ -48,7 +47,5 @@ return static function (RectorConfig $rectorConfig): void {
         PreferPHPUnitThisCallRector::class,
         NarrowUnusedSetUpDefinedPropertyRector::class,
         RemoveNeverUsedMockPropertyRector::class,
-        // The class is internal in doctrine/doctrine-bundle, so PHPStan rejects the class constant.
-        StringClassNameToClassConstantRector::class => [__DIR__.'/tests/App/AppKernel.php'],
     ]);
 };
