@@ -40,7 +40,7 @@ jobs:
                   dependency-versions: highest
 
             - name: PHPStan
-              run: vendor/bin/phpstan --no-progress --memory-limit=1G analyse --error-format=github
+              run: vendor/bin/phpstan --no-progress --memory-limit=1500M analyse --error-format=github
 
     rector:
         name: Rector
