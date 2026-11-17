@@ -126,7 +126,6 @@ final class MediaAdminControllerTest extends TestCase
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
 
-        $matcher = static::exactly(3);
         $callNumber = 0;
         /**
          * @psalm-suppress MissingClosureParamType

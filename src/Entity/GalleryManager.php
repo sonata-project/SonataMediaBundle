@@ -15,10 +15,11 @@ namespace Sonata\MediaBundle\Entity;
 
 use Sonata\Doctrine\Entity\BaseEntityManager;
 use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 
 /**
- * @phpstan-extends BaseEntityManager<GalleryInterface>
+ * @phpstan-extends BaseEntityManager<GalleryInterface<GalleryItemInterface>>
  */
 final class GalleryManager extends BaseEntityManager implements GalleryManagerInterface
 {

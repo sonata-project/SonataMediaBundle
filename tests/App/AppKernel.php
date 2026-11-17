@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\App;
 
 use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\CacheCompatibilityPass;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
@@ -91,7 +90,7 @@ final class AppKernel extends Kernel
             ]);
         }
 
-        if (class_exists(CacheCompatibilityPass::class)) {
+        if (class_exists('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\CacheCompatibilityPass')) {
             // doctrine-bundle v2
             $container->loadFromExtension('doctrine', [
                 'dbal' => [

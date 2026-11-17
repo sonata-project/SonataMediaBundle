@@ -55,7 +55,7 @@ final class MediaTest extends TestCase
 
         $media->unsetMetadataValue('name');
         $metadata = $metadataProperty->getValue($media);
-        static::assertEmpty($metadata, 'crop should not be in the metadata');
+        static::assertSame([], $metadata, 'crop should not be in the metadata');
 
         try {
             $media->unsetMetadataValue('bullshit');

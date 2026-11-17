@@ -118,7 +118,7 @@ final class VimeoProviderTestCase extends AbstractProviderTestCase
             'resizer_options' => [],
         ]);
 
-        static::assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
+        static::assertNotSame([], $provider->getFormats(), '::getFormats() return an array');
 
         $provider->generateThumbnails($media);
 
