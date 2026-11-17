@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Admin;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\ClassificationBundle\Model\CategoryManagerInterface;
@@ -37,9 +38,9 @@ final class BaseMediaAdminTest extends TestCase
     private Request $request;
 
     /**
-     * @var ModelManagerInterface<MediaInterface>&MockObject
+     * @var ModelManagerInterface<MediaInterface>&Stub
      */
-    private ModelManagerInterface&MockObject $modelManager;
+    private ModelManagerInterface&Stub $modelManager;
 
     private TestMediaAdmin $mediaAdmin;
 
@@ -49,7 +50,7 @@ final class BaseMediaAdminTest extends TestCase
         $this->categoryManager = $this->createMock(CategoryManagerInterface::class);
         $this->contextManager = $this->createMock(ContextManagerInterface::class);
         $this->request = new Request();
-        $this->modelManager = $this->createMock(ModelManagerInterface::class);
+        $this->modelManager = static::createStub(ModelManagerInterface::class);
 
         $this->mediaAdmin = new TestMediaAdmin(
             $this->pool,

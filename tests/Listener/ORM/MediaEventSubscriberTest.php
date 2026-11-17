@@ -37,7 +37,7 @@ final class MediaEventSubscriberTest extends TestCase
      */
     public function testRefetchCategoriesAfterClear(): void
     {
-        $provider = $this->createMock(MediaProviderInterface::class);
+        $provider = static::createStub(MediaProviderInterface::class);
 
         $pool = new Pool('default');
         $pool->addProvider('provider', $provider);

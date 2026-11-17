@@ -54,9 +54,7 @@ final class YouTubeProvider extends BaseVideoProvider
     public function getHelperProperties(MediaInterface $media, string $format, array $options = []): array
     {
         // Override html5 value if $options['html5'] is a boolean
-        if (!isset($options['html5'])) {
-            $options['html5'] = $this->html5;
-        }
+        $options['html5'] ??= $this->html5;
 
         // documentation : http://code.google.com/apis/youtube/player_parameters.html
 

@@ -126,12 +126,11 @@ final class MediaAdminControllerTest extends TestCase
         $this->configureSetCsrfToken('sonata.batch');
         $this->configureRender('templateList', 'renderResponse');
 
-        $matcher = static::exactly(3);
         $callNumber = 0;
         /**
          * @psalm-suppress MissingClosureParamType
          */
-        $datagrid->expects(static::exactly(3))->method('setValue')->willReturnCallback(static function (...$parameters) use (&$callNumber) {
+        $datagrid->expects(static::exactly(3))->method('setValue')->willReturnCallback(static function (...$parameters) use (&$callNumber): void {
             ++$callNumber;
             if (1 === $callNumber) {
                 self::assertSame('context', $parameters[0]);

@@ -25,6 +25,6 @@ final class NoDriverGeneratorTest extends TestCase
         $this->expectException(NoDriverException::class);
 
         $manager = new NoDriverGenerator();
-        $manager->generatePath($this->createMock(MediaInterface::class));
+        $manager->generatePath(static::createStub(MediaInterface::class));
     }
 }

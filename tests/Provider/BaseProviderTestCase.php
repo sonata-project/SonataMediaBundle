@@ -43,7 +43,7 @@ final class BaseProviderTestCase extends AbstractProviderTestCase
         $filesystem->method('get')->willReturn(new File('my_file.txt', $filesystem));
 
         $cdn = static::createStub(CDNInterface::class);
-        $cdn->method('flushPaths')->willReturn((string) random_int(0, mt_getrandmax()));
+        $cdn->method('flushPaths')->willReturn((string) random_int(0, \PHP_INT_MAX));
         $cdn->method('getFlushStatus')->willReturnOnConsecutiveCalls(CDNInterface::STATUS_OK, CDNInterface::STATUS_TO_FLUSH, CDNInterface::STATUS_WAITING, CDNInterface::STATUS_OK);
         $cdn->method('getPath')->willReturnCallback(static fn (string $path, bool $isFlushable): string => '/uploads/media/'.$path);
 

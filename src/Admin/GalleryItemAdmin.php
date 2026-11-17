@@ -47,7 +47,7 @@ final class GalleryItemAdmin extends AbstractAdmin
                 'link_parameters' => $linkParameters,
             ])
             ->add('enabled', null, ['required' => false])
-            ->add('position', HiddenType::class);
+            ->add('position', HiddenType::class, ['empty_data' => '0']);
     }
 
     protected function configureListFields(ListMapper $list): void

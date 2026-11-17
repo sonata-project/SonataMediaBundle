@@ -48,7 +48,7 @@ final class AddMassMediaCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $fp = $this->getFilePointer($input, $output);
+        $fp = $this->getFilePointer($input);
 
         $delimiter = $input->getOption('delimiter');
         $enclosure = $input->getOption('enclosure');
@@ -86,7 +86,7 @@ final class AddMassMediaCommand extends Command
     /**
      * @return resource
      */
-    private function getFilePointer(InputInterface $input, OutputInterface $output)
+    private function getFilePointer(InputInterface $input)
     {
         if (false !== ftell(\STDIN)) {
             return \STDIN;

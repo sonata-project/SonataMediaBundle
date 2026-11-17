@@ -175,8 +175,8 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->load(['db_driver' => 'no_driver']);
 
         static::assertSame(
-            $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
-            ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
+            ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'],
+            $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2)
         );
 
         $this->assertContainerBuilderHasService('sonata.media.controller.media.admin', MediaAdminController::class);
@@ -235,8 +235,8 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         }
 
         static::assertSame(
-            $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2),
-            ['ROLE_FOO', 'ROLE_BAR']
+            ['ROLE_FOO', 'ROLE_BAR'],
+            $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2)
         );
     }
 
@@ -433,7 +433,6 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront.client', CloudFrontClient::class);
         static::assertSame(
-            $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getArgument(0),
             [
                 'region' => 'cloudfront_region',
                 'version' => 'cloudfront_version',
@@ -441,7 +440,8 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
                     'key' => 'cloudfront_key',
                     'secret' => 'cloudfront_secret',
                 ],
-            ]
+            ],
+            $this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getArgument(0)
         );
         static::assertNull($this->container->getDefinition('sonata.media.cdn.cloudfront.client')->getFactory());
         $this->assertContainerBuilderHasService('sonata.media.cdn.cloudfront', CloudFrontVersion3::class);

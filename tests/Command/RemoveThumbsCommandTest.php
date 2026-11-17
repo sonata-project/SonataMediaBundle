@@ -78,7 +78,7 @@ final class RemoveThumbsCommandTest extends FilesystemTestCase
             ->method('removeThumbnails');
         $fileProvider->expects(static::exactly(2))
             ->method('getFilesystem')
-            ->willReturn($this->createMock(Filesystem::class));
+            ->willReturn(static::createStub(Filesystem::class));
 
         $this->pool->addContext('foo');
         $this->pool->addProvider('fooprovider', $fileProvider);

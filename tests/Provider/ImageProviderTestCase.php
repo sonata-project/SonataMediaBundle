@@ -210,7 +210,7 @@ final class ImageProviderTestCase extends AbstractProviderTestCase
             'resizer_options' => [],
         ]);
 
-        static::assertNotEmpty($this->provider->getFormats(), '::getFormats() return an array');
+        static::assertNotSame([], $this->provider->getFormats(), '::getFormats() return an array');
 
         $this->provider->generateThumbnails($media);
 

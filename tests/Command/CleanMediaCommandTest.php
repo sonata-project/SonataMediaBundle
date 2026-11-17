@@ -105,7 +105,7 @@ final class CleanMediaCommandTest extends FilesystemTestCase
         $this->pool->addContext('foo');
         $this->pool->addProvider('provider', $this->provider);
 
-        $media = $this->createMock(MediaInterface::class);
+        $media = static::createStub(MediaInterface::class);
 
         $this->mediaManager->expects(static::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])
@@ -130,7 +130,7 @@ final class CleanMediaCommandTest extends FilesystemTestCase
         $this->pool->addContext('foo');
         $this->pool->addProvider('provider', $this->provider);
 
-        $media = $this->createMock(MediaInterface::class);
+        $media = static::createStub(MediaInterface::class);
 
         $this->mediaManager->expects(static::once())->method('findOneBy')
             ->with(['id' => 1, 'context' => 'foo'])

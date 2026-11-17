@@ -37,13 +37,9 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
 {
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
-        if (null === $client) {
-            $client = static::createStub(ClientInterface::class);
-        }
+        $client ??= static::createStub(ClientInterface::class);
 
-        if (null === $requestFactory) {
-            $requestFactory = static::createStub(RequestFactoryInterface::class);
-        }
+        $requestFactory ??= static::createStub(RequestFactoryInterface::class);
 
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('getBox')->willReturn(new Box(100, 100));
@@ -66,9 +62,7 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $metadata = $this->createMock(MetadataBuilderInterface::class);
-
-        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, $metadata);
+        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, static::createStub(MetadataBuilderInterface::class));
         $provider->setResizer($resizer);
 
         return $provider;
@@ -124,7 +118,7 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
             'resizer_options' => [],
         ]);
 
-        static::assertNotEmpty($provider->getFormats(), '::getFormats() return an array');
+        static::assertNotSame([], $provider->getFormats(), '::getFormats() return an array');
 
         $provider->generateThumbnails($media);
 
