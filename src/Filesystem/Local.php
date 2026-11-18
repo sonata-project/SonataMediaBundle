@@ -19,6 +19,6 @@ final class Local extends BaseLocal
 {
     public function getDirectory(): string|false
     {
-        return $this->directory;
+        return '' !== $this->directory ? $this->directory : false;
     }
 }
