@@ -310,9 +310,6 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
                 ];
             }
 
-            $container->getDefinition('sonata.media.adapter.service.s3')
-                ->replaceArgument(0, $arguments);
-
             if ($async) {
                 if (isset($arguments['credentials']['key'], $arguments['credentials']['secret'])) {
                     $arguments['accessKeyId'] = $arguments['credentials']['key'];
@@ -322,6 +319,9 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
 
                 unset($arguments['version']);
                 $container->getDefinition('sonata.media.adapter.service.s3.async')
+                    ->replaceArgument(0, $arguments);
+            } else {
+                $container->getDefinition('sonata.media.adapter.service.s3')
                     ->replaceArgument(0, $arguments);
             }
         } else {
