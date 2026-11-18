@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.21.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.20.0...4.21.0) - 2026-11-18
+### Added
+- [[#2519](https://github.com/sonata-project/SonataMediaBundle/pull/2519)] `knplabs/gaufrette` v1.0 support ([@mvhirsch](https://github.com/mvhirsch))
+
+### Removed
+- [[#2521](https://github.com/sonata-project/SonataMediaBundle/pull/2521)] Support for Symfony 7.3 and 8.0 ([@mvhirsch](https://github.com/mvhirsch))
+
 ## [4.20.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.19.0...4.20.0) - 2025-12-19
 ### Added
 - [[#2507](https://github.com/sonata-project/SonataMediaBundle/pull/2507)] Symfony 8 support ([@VincentLanglet](https://github.com/VincentLanglet))
