@@ -15,7 +15,7 @@ namespace Sonata\MediaBundle\Command;
 
 use Sonata\MediaBundle\Filesystem\Local;
 use Sonata\MediaBundle\Model\MediaManagerInterface;
-use Sonata\MediaBundle\Provider\FileProvider;
+use Sonata\MediaBundle\Provider\FileProviderInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -116,7 +116,7 @@ final class CleanMediaCommand extends Command
             $this->providers = [];
 
             foreach ($this->mediaPool->getProviders() as $provider) {
-                if ($provider instanceof FileProvider) {
+                if ($provider instanceof FileProviderInterface) {
                     $this->providers[] = $provider->getName();
                 }
             }
