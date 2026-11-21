@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.22.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.21.0...4.22.0) - 2026-11-21
+### Changed
+- [[#2518](https://github.com/sonata-project/SonataMediaBundle/pull/2518)] Replace deprecated Twig `spaceless` tag with whitespace-control modifiers ([@lacatoire](https://github.com/lacatoire))
+
+### Fixed
+- [[#2514](https://github.com/sonata-project/SonataMediaBundle/pull/2514)] Check FileProviderInterface instead of FileProvider when adding providers in CleanMediaCommand ([@jorenMartens](https://github.com/jorenMartens))
+
 ## [4.21.0](https://github.com/sonata-project/SonataMediaBundle/compare/4.20.0...4.21.0) - 2026-11-18
 ### Added
 - [[#2519](https://github.com/sonata-project/SonataMediaBundle/pull/2519)] `knplabs/gaufrette` v1.0 support ([@mvhirsch](https://github.com/mvhirsch))
