@@ -240,6 +240,40 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         );
     }
 
+    public function testLoadWithSonataAdminConfigurationsOfSeveralSources(): void
+    {
+        $fakeContainer = $this->createMock(ContainerBuilder::class);
+
+        $fakeContainer->expects(static::once())
+            ->method('getParameter')
+            ->with('kernel.bundles')
+            ->willReturn($this->container->getParameter('kernel.bundles'));
+
+        // a configuration prepended by another bundle comes first, the application's ones after it
+        $fakeContainer->expects(static::once())
+            ->method('getExtensionConfig')
+            ->with('sonata_admin')
+            ->willReturn([
+                ['options' => ['skin' => null]],
+                ['security' => ['role_admin' => 'ROLE_FOO', 'role_super_admin' => 'ROLE_BAR']],
+                ['security' => ['role_admin' => 'ROLE_BAZ']],
+            ]);
+
+        $configs = [$this->getMinimalConfiguration()];
+        foreach ($this->getContainerExtensions() as $extension) {
+            if ($extension instanceof PrependExtensionInterface) {
+                $extension->prepend($fakeContainer);
+            }
+
+            $extension->load($configs, $this->container);
+        }
+
+        static::assertSame(
+            ['ROLE_BAZ', 'ROLE_BAR'],
+            $this->container->getDefinition('sonata.media.security.superadmin_strategy')->getArgument(2)
+        );
+    }
+
     /**
      * @param array<string, mixed> $expected
      * @param array<string, mixed> $configs
