@@ -50,8 +50,8 @@ You also need to alter the ``sonata_media`` configuration to use the ``sonata.me
                 thumbnail: sonata.media.thumbnail.liip_imagine
 
         cdn:
-            # The CDN part must point to the base root of your application with a valid htaccess to match non existant
-            # file. The non existant image will be send to the SonataMediaBundle:Media:liipImagineFilter controller.
+            # The CDN part must point to the base root of your application with a valid htaccess to match non-existent
+            # file. The non-existent image will be send to the SonataMediaBundle:Media:liipImagineFilter controller.
             server:
                 path: 'http://mydomain.com'
 
