@@ -54,5 +54,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('twig'),
                 service('sonata.media.manager.gallery'),
                 service('sonata.media.pool'),
+                service('sonata.media.admin.gallery')->nullOnInvalid(),
             ]);
 };

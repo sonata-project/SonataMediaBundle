@@ -31,8 +31,8 @@ file that was distributed with this source code.
         <div class="panel-body">
             <div class="list-group">
                 {% for gallery in galleries %}
-                    {% if settings.mode == 'admin' and sonata_admin is defined %}
-                        <a href="{{ sonata_admin.url('sonata.media.admin.gallery', 'edit', { 'id': gallery.id, 'context': gallery.context }) }}" class="list-group-item">
+                    {% if settings.mode == 'admin' and admin is not null %}
+                        <a href="{{ admin.generateObjectUrl('edit', gallery, { 'context': gallery.context }) }}" class="list-group-item">
                             {% if gallery.enabled %}
                                 <span class="label label-success pull-right">{{ 'label_gallery_enabled'|trans({}, 'SonataMediaBundle') }}</span>
                             {% else %}
@@ -41,21 +41,19 @@ file that was distributed with this source code.
                             {{ gallery.name }}
                         </a>
                     {% else %}
-                        <a href="{{ url('sonata_media_gallery_view', { 'id': gallery.id }) }}" class="list-group-item">
-                            {{ gallery.name }}
-                        </a>
+                        <span class="list-group-item">{{ gallery.name }}</span>
                     {% endif %}
                 {% else %}
                     <span class="list-group-item">{{ 'no_galleries_found'|trans({}, 'SonataMediaBundle') }}</span>
                 {% endfor %}
             </div>
 
-            {% if settings.mode == 'admin' and sonata_admin is defined %}
+            {% if settings.mode == 'admin' and admin is not null %}
                 {% if settings.context %}
-                    <a href="{{ sonata_admin.url('sonata.media.admin.gallery', 'list', {context:settings.context }) }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> {{ 'view_all_galleries'|trans({}, 'SonataMediaBundle') }}
+                    <a href="{{ admin.generateUrl('list', { 'context': settings.context }) }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> {{ 'view_all_galleries'|trans({}, 'SonataMediaBundle') }}
                     </a>
                 {% else %}
-                    <a href="{{ sonata_admin.url('sonata.media.admin.gallery', 'list') }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> {{ 'view_all_galleries'|trans({}, 'SonataMediaBundle') }}
+                    <a href="{{ admin.generateUrl('list') }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> {{ 'view_all_galleries'|trans({}, 'SonataMediaBundle') }}
                     </a>
                 {% endif %}
             {% endif %}
