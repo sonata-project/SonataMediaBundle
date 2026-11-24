@@ -28,7 +28,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ])
 
         ->set('sonata.media.thumbnail.messenger', MessengerThumbnail::class)
-            ->tag('sonata.block')
             ->args([
                 service('sonata.media.thumbnail.format'),
                 service('sonata.media.messenger.generate_thumbnails_bus'),

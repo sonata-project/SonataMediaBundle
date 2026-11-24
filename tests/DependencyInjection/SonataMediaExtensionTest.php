@@ -459,6 +459,9 @@ final class SonataMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('sonata.media.messenger.generate_thumbnails', GenerateThumbnailsHandler::class);
         $this->assertContainerBuilderHasService('sonata.media.thumbnail.messenger', MessengerThumbnail::class);
         $this->assertContainerBuilderHasAlias('sonata.media.messenger.generate_thumbnails_bus', 'my.custom.bus');
+
+        // the thumbnail service is not a block, SonataBlockBundle must not register it as a block type
+        static::assertFalse($this->container->getDefinition('sonata.media.thumbnail.messenger')->hasTag('sonata.block'));
     }
 
     public function testMessengerDisabled(): void
