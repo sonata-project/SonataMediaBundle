@@ -98,6 +98,7 @@
         "aws/aws-sdk-php": "<3.0",
         "doctrine/mongodb-odm": "<2.4",
         "doctrine/orm": "<2.14",
+        "knplabs/gaufrette": "1.0.0",
         "knplabs/knp-menu-bundle": "<3.0",
         "liip/imagine-bundle": "<2.0",
         "sonata-project/admin-bundle": "<4.9",
