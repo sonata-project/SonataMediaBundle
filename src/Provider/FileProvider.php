@@ -163,21 +163,32 @@ class FileProvider extends BaseProvider implements FileProviderInterface
 
     public function updateMetadata(MediaInterface $media, bool $force = true): void
     {
-        if (!$media->getBinaryContent() instanceof \SplFileInfo) {
-            // this is now optimized at all!!!
-            $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
+        $binaryContent = $media->getBinaryContent();
 
-            if (false === $path) {
-                throw new \InvalidArgumentException(\sprintf('Unable to generate temporary file name for media %s.', $media->getId() ?? ''));
-            }
+        if ($binaryContent instanceof \SplFileInfo) {
+            $media->setSize($binaryContent->getSize());
 
-            $fileObject = new \SplFileObject($path, 'w');
-            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
-        } else {
-            $fileObject = $media->getBinaryContent();
+            return;
         }
 
-        $media->setSize($fileObject->getSize());
+        // this is now optimized at all!!!
+        $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata_');
+
+        if (false === $path) {
+            throw new \InvalidArgumentException(\sprintf('Unable to generate temporary file name for media %s.', $media->getId() ?? ''));
+        }
+
+        try {
+            $fileObject = new \SplFileObject($path, 'w');
+            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+            $fileObject->fflush();
+
+            $media->setSize($fileObject->getSize());
+        } finally {
+            // close the file before removing it
+            unset($fileObject);
+            unlink($path);
+        }
     }
 
     public function generatePublicUrl(MediaInterface $media, string $format): string

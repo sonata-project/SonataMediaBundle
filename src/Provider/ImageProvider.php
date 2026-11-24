@@ -176,6 +176,8 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
 
     public function updateMetadata(MediaInterface $media, bool $force = true): void
     {
+        $path = false;
+
         try {
             if (!$media->getBinaryContent() instanceof \SplFileInfo) {
                 // this is now optimized at all!!!
@@ -203,6 +205,12 @@ final class ImageProvider extends FileProvider implements ImageProviderInterface
             $media->setSize(0);
             $media->setWidth(0);
             $media->setHeight(0);
+        } finally {
+            if (false !== $path) {
+                // close the temporary file before removing it
+                unset($fileObject);
+                unlink($path);
+            }
         }
     }
 
