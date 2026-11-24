@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 /**
  * @phpstan-extends AbstractProviderTestCase<FileProvider>
  */
-final class FileProviderTestCase extends AbstractProviderTestCase
+final class FileProviderTest extends AbstractProviderTestCase
 {
     public function getProvider(): MediaProviderInterface
     {

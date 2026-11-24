@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 /**
  * @phpstan-extends AbstractProviderTestCase<ImageProvider>
  */
-final class ImageProviderTestCase extends AbstractProviderTestCase
+final class ImageProviderTest extends AbstractProviderTestCase
 {
     /**
      * @param string[] $allowedExtensions
