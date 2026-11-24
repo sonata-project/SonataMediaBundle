@@ -49,12 +49,26 @@ final class MediaDownloadActionTest extends TestCase
         $this->mediaDownloadAction->__invoke(new Request(), 1);
     }
 
+    public function testDownloadActionWithIdThatOnlyStartsWithTheMediaId(): void
+    {
+        $media = new Media();
+        $media->setId(1);
+
+        // some databases cast "1abc" to 1 when looking up an integer id
+        $this->mediaManager->method('find')->with('1abc')->willReturn($media);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $this->mediaDownloadAction->__invoke(new Request(), '1abc');
+    }
+
     public function testDownloadActionAccessDenied(): void
     {
         $this->expectException(AccessDeniedException::class);
 
         $request = new Request();
         $media = new Media();
+        $media->setId(1);
         $media->setContext('default_context');
 
         $this->configureDownloadSecurity($media, $request, false);
@@ -66,6 +80,7 @@ final class MediaDownloadActionTest extends TestCase
     public function testDownloadActionBinaryFile(): void
     {
         $media = new Media();
+        $media->setId(1);
         $media->setContext('default_context');
         $media->setProviderName('provider');
 

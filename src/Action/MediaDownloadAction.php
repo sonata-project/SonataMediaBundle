@@ -40,7 +40,9 @@ final class MediaDownloadAction
     {
         $media = $this->mediaManager->find($id);
 
-        if (null === $media) {
+        // The route accepts any string as id and some databases cast it while looking it up
+        // (e.g. "1abc" or "1/foo" finds the media 1), so make sure the requested media was found.
+        if (null === $media || (string) $media->getId() !== (string) $id) {
             throw new NotFoundHttpException(\sprintf('unable to find the media with the id : %s', $id));
         }
 
