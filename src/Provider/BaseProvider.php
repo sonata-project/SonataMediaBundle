@@ -42,9 +42,13 @@ abstract class BaseProvider implements MediaProviderInterface
     protected ?ResizerInterface $resizer = null;
 
     /**
-     * @var MediaInterface[]
+     * Copies of the media taken before their removal, the identifier is needed to find the files
+     * to delete once the media has been removed. A WeakMap is used so that an entry disappears with
+     * its media, even if the removal failed and postRemove() was never called.
+     *
+     * @var \WeakMap<MediaInterface, MediaInterface>|null
      */
-    private array $clones = [];
+    private ?\WeakMap $clones = null;
 
     public function __construct(
         protected string $name,
@@ -165,8 +169,8 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function preRemove(MediaInterface $media): void
     {
-        $hash = spl_object_hash($media);
-        $this->clones[$hash] = clone $media;
+        $this->clones ??= new \WeakMap();
+        $this->clones[$media] = clone $media;
 
         if ($this->requireThumbnails()) {
             $this->removeThumbnails($media);
@@ -175,11 +179,10 @@ abstract class BaseProvider implements MediaProviderInterface
 
     public function postRemove(MediaInterface $media): void
     {
-        $hash = spl_object_hash($media);
-
-        if (isset($this->clones[$hash])) {
-            $media = $this->clones[$hash];
-            unset($this->clones[$hash]);
+        if (null !== $this->clones && isset($this->clones[$media])) {
+            $clone = $this->clones[$media];
+            unset($this->clones[$media]);
+            $media = $clone;
         }
 
         $path = $this->getReferenceImage($media);
