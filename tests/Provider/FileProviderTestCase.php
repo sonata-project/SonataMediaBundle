@@ -197,6 +197,34 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         static::assertInstanceOf(BinaryFileResponse::class, $response);
     }
 
+    #[DataProvider('provideDownloadContentDispositionCases')]
+    public function testDownloadContentDisposition(?string $filename, string $expected): void
+    {
+        $media = new Media();
+        $media->setProviderReference('file.txt');
+        $media->setContext('FileProviderTest');
+        $media->setId(1_023_456);
+
+        if (null !== $filename) {
+            $media->setMetadataValue('filename', $filename);
+        }
+
+        $response = $this->provider->getDownloadResponse($media, 'reference', 'X-Sendfile');
+
+        static::assertSame($expected, $response->headers->get('Content-Disposition'));
+    }
+
+    /**
+     * @return iterable<string, array{string|null, string}>
+     */
+    public static function provideDownloadContentDispositionCases(): iterable
+    {
+        yield 'simple name' => ['report.pdf', 'attachment; filename=report.pdf'];
+        yield 'quotes can not add parameters' => ['a"; filename*=UTF-8\'\'evil.exe; x=".txt', 'attachment; filename="a\\"; filename*=UTF-8\'\'evil.exe; x=\\".txt"'];
+        yield 'non ascii name' => ['résumé.pdf', "attachment; filename=r_sum_.pdf; filename*=utf-8''r%C3%A9sum%C3%A9.pdf"];
+        yield 'no original name' => [null, 'attachment; filename=file.txt'];
+    }
+
     /**
      * @phpstan-param class-string $expected
      */
