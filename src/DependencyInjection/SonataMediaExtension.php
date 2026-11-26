@@ -376,13 +376,11 @@ final class SonataMediaExtension extends Extension implements PrependExtensionIn
             return;
         }
 
-        $sonataAdminConfig = current($container->getExtensionConfig('sonata_admin'));
-
-        if (false === $sonataAdminConfig) {
-            return;
+        // every configuration counts, the later ones override the earlier ones: other bundles may have prepended a
+        // configuration of their own in front of the application's
+        foreach ($container->getExtensionConfig('sonata_admin') as $sonataAdminConfig) {
+            $this->sonataAdminConfig = array_replace_recursive($this->sonataAdminConfig, $sonataAdminConfig);
         }
-
-        $this->sonataAdminConfig = $sonataAdminConfig;
     }
 
     /**
