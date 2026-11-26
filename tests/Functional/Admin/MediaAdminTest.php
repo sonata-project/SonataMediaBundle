@@ -44,6 +44,7 @@ final class MediaAdminTest extends WebTestCase
     public static function provideCrudUrlsCases(): iterable
     {
         yield 'List Media' => ['/admin/tests/app/media/list'];
+        yield 'List Media as list' => ['/admin/tests/app/media/list', ['_list_mode' => 'list']];
         yield 'Create Media' => ['/admin/tests/app/media/create'];
 
         yield 'Create Media Image' => ['/admin/tests/app/media/create', [
