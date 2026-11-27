@@ -130,7 +130,9 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
         $request = static::createStub(RequestInterface::class);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects(static::once())->method('createRequest')->willReturn($request);
+        $requestFactory->expects(static::once())->method('createRequest')
+            ->with('GET', 'https://www.dailymotion.com/services/oembed?url=https://www.dailymotion.com/video/x9wjql&format=json')
+            ->willReturn($request);
 
         $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt');
 
@@ -284,6 +286,6 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        static::assertSame('http://www.dailymotion.com/video/123456', $this->provider->getReferenceUrl($media));
+        static::assertSame('https://www.dailymotion.com/video/123456', $this->provider->getReferenceUrl($media));
     }
 }
