@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Gaufrette\Adapter\InMemory;
 use Gaufrette\File as GaufretteFile;
 use Gaufrette\Filesystem;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -433,6 +434,29 @@ final class FileProviderTestCase extends AbstractProviderTestCase
         $media->setBinaryContent($upload);
 
         $this->provider->validate($errorElement, $media);
+    }
+
+    public function testUpdateMetadataFromReferenceFileRemovesTemporaryFile(): void
+    {
+        $provider = new FileProvider(
+            'file',
+            new Filesystem(new InMemory(['default/0001/01/file.txt' => 'hello'])),
+            new Server('/uploads/media'),
+            new IdGenerator(),
+            static::createStub(ThumbnailInterface::class)
+        );
+
+        $media = new Media();
+        $media->setId(1);
+        $media->setContext('default');
+        $media->setProviderReference('file.txt');
+
+        $temporaryFiles = glob(sys_get_temp_dir().'/sonata_update_metadata*');
+
+        $provider->updateMetadata($media);
+
+        static::assertSame(5, $media->getSize());
+        static::assertSame($temporaryFiles, glob(sys_get_temp_dir().'/sonata_update_metadata*'));
     }
 
     public function testMetadata(): void

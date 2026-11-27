@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Tests\Provider;
 
+use Gaufrette\Adapter\InMemory;
 use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
 use Imagine\Gd\Imagine;
@@ -270,6 +271,35 @@ final class ImageProviderTestCase extends AbstractProviderTestCase
         static::assertNotNull($media->getSize());
         static::assertSame(132, $media->getHeight());
         static::assertSame(535, $media->getWidth());
+    }
+
+    public function testUpdateMetadataFromReferenceFileRemovesTemporaryFile(): void
+    {
+        $logo = file_get_contents(__DIR__.'/../Fixtures/logo.png');
+        static::assertNotFalse($logo);
+
+        $provider = new ImageProvider(
+            'image',
+            new Filesystem(new InMemory(['default/0001/01/logo.png' => $logo])),
+            new Server('/uploads/media'),
+            new IdGenerator(),
+            new FormatThumbnail('jpg'),
+            ['png'],
+            ['image/png'],
+            new Imagine()
+        );
+
+        $media = new Media();
+        $media->setId(1);
+        $media->setContext('default');
+        $media->setProviderReference('logo.png');
+
+        $temporaryFiles = glob(sys_get_temp_dir().'/sonata_update_metadata*');
+
+        $provider->updateMetadata($media);
+
+        static::assertSame(535, $media->getWidth());
+        static::assertSame($temporaryFiles, glob(sys_get_temp_dir().'/sonata_update_metadata*'));
     }
 
     public function testTransformNoExtensions(): void
