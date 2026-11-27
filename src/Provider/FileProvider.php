@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -212,7 +213,7 @@ class FileProvider extends BaseProvider implements FileProviderInterface
         // build the default headers
         $headers = array_merge([
             'Content-Type' => $media->getContentType(),
-            'Content-Disposition' => \sprintf('attachment; filename="%s"', $media->getMetadataValue('filename')),
+            'Content-Disposition' => $this->getContentDisposition($media),
         ], $headers);
 
         if (!\in_array($mode, ['http', 'X-Sendfile', 'X-Accel-Redirect'], true)) {
@@ -405,5 +406,34 @@ class FileProvider extends BaseProvider implements FileProviderInterface
     protected function generateMediaUniqId(MediaInterface $media): string
     {
         return sha1($media->getName().uniqid().random_int(11111, 99999));
+    }
+
+    /**
+     * The file name comes from the client that uploaded the file, so it must be escaped:
+     * a quote in it could otherwise add parameters (e.g. another "filename*") to the header.
+     */
+    private function getContentDisposition(MediaInterface $media): string
+    {
+        $filename = $media->getMetadataValue('filename');
+
+        if (!\is_string($filename) || '' === $filename) {
+            $filename = (string) $media->getProviderReference();
+        }
+
+        $filename = str_replace(['/', '\\'], '_', $filename);
+        $fallback = '';
+
+        // same as BinaryFileResponse::setContentDisposition()
+        if (1 !== preg_match('/^[\x20-\x7e]*$/', $filename) || str_contains($filename, '%')) {
+            $encoding = mb_detect_encoding($filename, null, true);
+            $encoding = false !== $encoding ? $encoding : '8bit';
+
+            for ($i = 0, $length = mb_strlen($filename, $encoding); $i < $length; ++$i) {
+                $char = mb_substr($filename, $i, 1, $encoding);
+                $fallback .= '%' === $char || \ord($char) < 32 || \ord($char) > 126 ? '_' : $char;
+            }
+        }
+
+        return HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, $filename, $fallback);
     }
 }
