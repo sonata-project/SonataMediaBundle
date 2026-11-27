@@ -161,16 +161,45 @@ final class BaseProviderTestCase extends AbstractProviderTestCase
         $media->setId(1399);
         $media->setContext('default');
         $media->setProviderReference('1f981a048e7d8b671415d17e9633abc0059df394.png');
-        $hash = spl_object_hash($media);
 
         $provider->preRemove($media);
 
-        static::assertArrayHasKey($hash, $prop->getValue($provider));
+        $clones = $prop->getValue($provider);
+        static::assertInstanceOf(\WeakMap::class, $clones);
+        static::assertTrue(isset($clones[$media]));
 
         $media->setId(null); // Emulate an object detached from the EntityManager.
         $provider->postRemove($media);
 
-        static::assertArrayNotHasKey($hash, $prop->getValue($provider));
+        static::assertFalse(isset($clones[$media]));
         static::assertSame('default/0001/02/1f981a048e7d8b671415d17e9633abc0059df394.png', $provider->prevReferenceImage);
+    }
+
+    public function testFailedRemovalDoesNotLeakIntoAnotherMedia(): void
+    {
+        $provider = $this->getProvider();
+
+        $media = new Media();
+        $media->setId(1399);
+        $media->setContext('default');
+        $media->setProviderReference('old.png');
+
+        // the removal fails after preRemove(), postRemove() is never called for this media
+        $provider->preRemove($media);
+        unset($media);
+
+        $clones = (new \ReflectionProperty(BaseProvider::class, 'clones'))->getValue($provider);
+        static::assertInstanceOf(\WeakMap::class, $clones);
+        static::assertCount(0, $clones);
+
+        // a new media object may reuse the memory (and the object hash) of the previous one
+        $other = new Media();
+        $other->setId(2500);
+        $other->setContext('default');
+        $other->setProviderReference('other.png');
+
+        $provider->postRemove($other);
+
+        static::assertSame('default/0001/03/other.png', $provider->prevReferenceImage);
     }
 }
