@@ -24,22 +24,22 @@ use Psr\Http\Message\RequestInterface;
 use Sonata\MediaBundle\CDN\Server;
 use Sonata\MediaBundle\Generator\IdGenerator;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
-use Sonata\MediaBundle\Provider\DailyMotionProvider;
 use Sonata\MediaBundle\Provider\MediaProviderInterface;
+use Sonata\MediaBundle\Provider\YouTubeProvider;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Sonata\MediaBundle\Tests\Entity\Media;
 use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 
 /**
- * @phpstan-extends AbstractProviderTestCase<DailyMotionProvider>
+ * @phpstan-extends AbstractProviderTestCase<YouTubeProvider>
  */
-final class DailyMotionProviderTestCase extends AbstractProviderTestCase
+final class YouTubeProviderTest extends AbstractProviderTestCase
 {
-    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
+    public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $messageFactory = null): MediaProviderInterface
     {
         $client ??= static::createStub(ClientInterface::class);
 
-        $requestFactory ??= static::createStub(RequestFactoryInterface::class);
+        $messageFactory ??= static::createStub(RequestFactoryInterface::class);
 
         $resizer = $this->createMock(ResizerInterface::class);
         $resizer->method('getBox')->willReturn(new Box(100, 100));
@@ -62,7 +62,7 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
 
         $thumbnail = new FormatThumbnail('jpg');
 
-        $provider = new DailyMotionProvider('file', $filesystem, $cdn, $generator, $thumbnail, $client, $requestFactory, static::createStub(MetadataBuilderInterface::class));
+        $provider = new YouTubeProvider('youtube', $filesystem, $cdn, $generator, $thumbnail, $client, $messageFactory, static::createStub(MetadataBuilderInterface::class), false);
         $provider->setResizer($resizer);
 
         return $provider;
@@ -71,18 +71,18 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
     public function testProvider(): void
     {
         $media = new Media();
-        $media->setName('les tests fonctionnels - Symfony Live 2009');
-        $media->setProviderName('dailymotion');
-        $media->setProviderReference('x9wjql');
+        $media->setName('Nono le petit robot');
+        $media->setProviderName('youtube');
+        $media->setProviderReference('BDYAbAtaDzA');
         $media->setContext('default');
-        $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Dailymotion","provider_url":"http:\/\/www.dailymotion.com","title":"Thomas Rabaix - les tests fonctionnels - Symfony Live 2009","author_name":"Guillaume Pon\u00e7on","author_url":"http:\/\/www.dailymotion.com\/phptv","width":480,"height":270,"html":"<iframe src=\"http:\/\/www.dailymotion.com\/embed\/video\/x9wjql\" width=\"480\" height=\"270\" frameborder=\"0\"><\/iframe>","thumbnail_url":"http:\/\/ak2.static.dailymotion.com\/static\/video\/711\/536\/16635117:jpeg_preview_large.jpg?20100801072241","thumbnail_width":426.666666667,"thumbnail_height":240}', true));
+        $media->setProviderMetadata(json_decode('{"provider_url": "http:\/\/www.youtube.com\/", "title": "Nono le petit robot", "html": "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\"><\/param><param name=\"allowFullScreen\" value=\"true\"><\/param><param name=\"allowscriptaccess\" value=\"always\"><\/param><embed src=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\" type=\"application\/x-shockwave-flash\" width=\"425\" height=\"344\" allowscriptaccess=\"always\" allowfullscreen=\"true\"><\/embed><\/object>", "author_name": "timan38", "height": 344, "thumbnail_width": 480, "width": 425, "version": "1.0", "author_url": "http:\/\/www.youtube.com\/user\/timan38", "provider_name": "YouTube", "thumbnail_url": "http:\/\/i3.ytimg.com\/vi\/BDYAbAtaDzA\/hqdefault.jpg", "type": "video", "thumbnail_height": 360}', true));
 
-        static::assertSame('http://ak2.static.dailymotion.com/static/video/711/536/16635117:jpeg_preview_large.jpg?20100801072241', $this->provider->getReferenceImage($media));
+        $media->setId(1_023_457);
 
-        $media->setId(1_023_458);
+        static::assertSame('http://i3.ytimg.com/vi/BDYAbAtaDzA/hqdefault.jpg', $this->provider->getReferenceImage($media));
 
         static::assertSame('default/0011/24', $this->provider->generatePath($media));
-        static::assertSame('/uploads/media/default/0011/24/thumb_1023458_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
+        static::assertSame('/uploads/media/default/0011/24/thumb_1023457_big.jpg', $this->provider->generatePublicUrl($media, 'big'));
     }
 
     public function testThumbnail(): void
@@ -98,13 +98,12 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
         $provider = $this->getProvider($client, $requestFactory);
 
         $media = new Media();
-        $media->setName('les tests fonctionnels - Symfony Live 2009');
-        $media->setProviderName('dailymotion');
-        $media->setProviderReference('x9wjql');
+        $media->setProviderName('youtube');
+        $media->setProviderReference('BDYAbAtaDzA');
         $media->setContext('default');
-        $media->setProviderMetadata(json_decode('{"type":"video","version":"1.0","provider_name":"Dailymotion","provider_url":"http:\/\/www.dailymotion.com","title":"Thomas Rabaix - les tests fonctionnels - Symfony Live 2009","author_name":"Guillaume Pon\u00e7on","author_url":"http:\/\/www.dailymotion.com\/phptv","width":480,"height":270,"html":"<iframe src=\"http:\/\/www.dailymotion.com\/embed\/video\/x9wjql\" width=\"480\" height=\"270\" frameborder=\"0\"><\/iframe>","thumbnail_url":"http:\/\/ak2.static.dailymotion.com\/static\/video\/711\/536\/16635117:jpeg_preview_large.jpg?20100801072241","thumbnail_width":426.666666667,"thumbnail_height":240}', true));
+        $media->setProviderMetadata(json_decode('{"provider_url": "http:\/\/www.youtube.com\/", "title": "Nono le petit robot", "html": "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\"><\/param><param name=\"allowFullScreen\" value=\"true\"><\/param><param name=\"allowscriptaccess\" value=\"always\"><\/param><embed src=\"http:\/\/www.youtube.com\/v\/BDYAbAtaDzA?fs=1\" type=\"application\/x-shockwave-flash\" width=\"425\" height=\"344\" allowscriptaccess=\"always\" allowfullscreen=\"true\"><\/embed><\/object>", "author_name": "timan38", "height": 344, "thumbnail_width": 480, "width": 425, "version": "1.0", "author_url": "http:\/\/www.youtube.com\/user\/timan38", "provider_name": "YouTube", "thumbnail_url": "http:\/\/i3.ytimg.com\/vi\/BDYAbAtaDzA\/hqdefault.jpg", "type": "video", "thumbnail_height": 360}', true));
 
-        $media->setId(1_023_458);
+        $media->setId(1_023_457);
 
         static::assertTrue($provider->requireThumbnails());
 
@@ -122,25 +121,27 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
 
         $provider->generateThumbnails($media);
 
-        static::assertSame('default/0011/24/thumb_1023458_big.jpg', $provider->generatePrivateUrl($media, 'big'));
+        static::assertSame('default/0011/24/thumb_1023457_big.jpg', $provider->generatePrivateUrl($media, 'big'));
     }
 
     public function testTransformWithSig(): void
     {
         $request = static::createStub(RequestInterface::class);
 
-        $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects(static::once())->method('createRequest')->willReturn($request);
+        $messageFactory = $this->createMock(RequestFactoryInterface::class);
+        $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);
 
-        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt');
+        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
 
-        static::assertNotFalse($fileContents);
+        if (false === $fileContents) {
+            static::fail('Unable to read "valid_youtube.txt" file.');
+        }
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects(static::once())->method('sendRequest')->with($request)
             ->willReturn($this->createResponse($fileContents));
 
-        $provider = $this->getProvider($client, $requestFactory);
+        $provider = $this->getProvider($client, $messageFactory);
 
         $provider->addFormat('big', [
             'width' => 200,
@@ -154,14 +155,14 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
 
         $media = new Media();
         $media->setContext('default');
-        $media->setBinaryContent('x9wjql');
+        $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1_023_456);
 
         // pre persist the media
         $provider->transform($media);
 
-        static::assertSame('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
-        static::assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
+        static::assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
+        static::assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     #[DataProvider('provideTransformWithUrlCases')]
@@ -172,9 +173,11 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
         $messageFactory = $this->createMock(RequestFactoryInterface::class);
         $messageFactory->expects(static::once())->method('createRequest')->willReturn($request);
 
-        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_dailymotion.txt');
+        $fileContents = file_get_contents(__DIR__.'/../Fixtures/valid_youtube.txt');
 
-        static::assertNotFalse($fileContents);
+        if (false === $fileContents) {
+            static::fail('Unable to read "valid_youtube.txt" file.');
+        }
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects(static::once())->method('sendRequest')->with($request)
@@ -200,8 +203,8 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
         // pre persist the media
         $provider->transform($media);
 
-        static::assertSame('Thomas Rabaix - les tests fonctionnels - Symfony Live 2009', $media->getName(), '::getName() return the file name');
-        static::assertSame('x9wjql', $media->getProviderReference(), '::getProviderReference() is set');
+        static::assertSame('Nono le petit robot', $media->getName(), '::getName() return the file name');
+        static::assertSame('BDYAbAtaDzA', $media->getProviderReference(), '::getProviderReference() is set');
     }
 
     /**
@@ -209,17 +212,23 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
      */
     public static function provideTransformWithUrlCases(): iterable
     {
-        yield ['http://www.dailymotion.com/video/x9wjql_asdasdasdsa_asdsds'];
-        yield ['http://www.dailymotion.com/video/x9wjql'];
-        yield ['https://www.dailymotion.com/video/x9wjql'];
-        yield ['www.dailymotion.com/video/x9wjql'];
-        yield ['x9wjql'];
+        yield ['BDYAbAtaDzA'];
+        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA&feature=feedrec_grec_index'];
+        yield ['http://www.youtube.com/v/BDYAbAtaDzA?fs=1&amp;hl=en_US&amp;rel=0'];
+        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA#t=0m10s'];
+        yield ['http://www.youtube.com/embed/BDYAbAtaDzA?rel=0'];
+        yield ['http://www.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['http://www.m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['http://m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['https://www.m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['https://m.youtube.com/watch?v=BDYAbAtaDzA'];
+        yield ['http://youtu.be/BDYAbAtaDzA'];
     }
 
     public function testGetMetadataException(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Unable to retrieve the video information for: x9wjql');
+        $this->expectExceptionMessage('Unable to retrieve the video information for: BDYAbAtaDzA');
         $this->expectExceptionCode(12);
 
         $client = $this->createMock(ClientInterface::class);
@@ -238,12 +247,12 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
         ]);
 
         $media = new Media();
-        $media->setBinaryContent('x9wjql');
+        $media->setBinaryContent('BDYAbAtaDzA');
         $media->setId(1_023_456);
 
         $method = new \ReflectionMethod($provider, 'getMetadata');
 
-        $method->invokeArgs($provider, [$media, 'x9wjql']);
+        $method->invokeArgs($provider, [$media, 'BDYAbAtaDzA']);
     }
 
     public function testForm(): void
@@ -276,14 +285,23 @@ final class DailyMotionProviderTestCase extends AbstractProviderTestCase
 
         $properties = $this->provider->getHelperProperties($media, 'admin');
 
-        static::assertSame(100, $properties['height']);
-        static::assertSame(100, $properties['width']);
+        static::assertSame(100, $properties['player_parameters']['height']);
+        static::assertSame(100, $properties['player_parameters']['width']);
     }
 
     public function testGetReferenceUrl(): void
     {
         $media = new Media();
         $media->setProviderReference('123456');
-        static::assertSame('http://www.dailymotion.com/video/123456', $this->provider->getReferenceUrl($media));
+        static::assertSame('https://www.youtube.com/watch?v=123456', $this->provider->getReferenceUrl($media));
+    }
+
+    public function testMetadata(): void
+    {
+        static::assertSame('youtube', $this->provider->getProviderMetadata()->getTitle());
+        static::assertSame('youtube.description', $this->provider->getProviderMetadata()->getDescription());
+        static::assertNotNull($this->provider->getProviderMetadata()->getImage());
+        static::assertSame('fa fa-youtube', $this->provider->getProviderMetadata()->getOption('class'));
+        static::assertSame('SonataMediaBundle', $this->provider->getProviderMetadata()->getDomain());
     }
 }

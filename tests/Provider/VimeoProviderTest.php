@@ -34,7 +34,7 @@ use Sonata\MediaBundle\Thumbnail\FormatThumbnail;
 /**
  * @phpstan-extends AbstractProviderTestCase<VimeoProvider>
  */
-final class VimeoProviderTestCase extends AbstractProviderTestCase
+final class VimeoProviderTest extends AbstractProviderTestCase
 {
     public function getProvider(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null): MediaProviderInterface
     {
