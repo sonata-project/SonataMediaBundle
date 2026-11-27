@@ -56,7 +56,6 @@ final class CleanMediaCommand extends Command
         $dryRun = $input->getOption('dry-run');
         $verbose = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
 
-        $finder = Finder::create();
         $filesystem = new Filesystem();
         $baseDirectory = $this->filesystemLocal->getDirectory();
 
@@ -75,7 +74,9 @@ final class CleanMediaCommand extends Command
 
             $output->writeln(\sprintf('<info>Context: %s</info>', $contextName));
 
-            $files = $finder->files()->in($baseDirectory.'/'.$contextName);
+            // A new finder per context: Finder::in() adds directories, so reusing one finder would scan
+            // the previous contexts again and check their files against the current context.
+            $files = Finder::create()->files()->in($baseDirectory.'/'.$contextName);
 
             foreach ($files as $file) {
                 $filename = $file->getFilename();

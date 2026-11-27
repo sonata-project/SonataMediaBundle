@@ -155,6 +155,31 @@ final class CleanMediaCommandTest extends FilesystemTestCase
         static::assertSame(0, $output);
     }
 
+    public function testExecuteWithMultipleContextsKeepsValidThumbnails(): void
+    {
+        foreach (['foo' => 1, 'bar' => 2] as $context => $id) {
+            $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.$context);
+            $this->filesystem->touch($this->workspace.\DIRECTORY_SEPARATOR.$context.\DIRECTORY_SEPARATOR.\sprintf('thumb_%d_%s_small.png', $id, $context));
+        }
+
+        $this->pool->addContext('foo');
+        $this->pool->addContext('bar');
+        $this->pool->addProvider('provider', $this->provider);
+
+        $media = static::createStub(MediaInterface::class);
+
+        // media 1 lives in the "foo" context, media 2 in the "bar" context
+        $this->mediaManager->method('findOneBy')->willReturnCallback(
+            static fn (array $criteria): ?MediaInterface => \in_array([$criteria['id'], $criteria['context']], [['1', 'foo'], ['2', 'bar']], true) ? $media : null
+        );
+
+        $output = $this->tester->execute(['command' => $this->command->getName()]);
+
+        static::assertSame(0, $output);
+        static::assertFileExists($this->workspace.\DIRECTORY_SEPARATOR.'foo'.\DIRECTORY_SEPARATOR.'thumb_1_foo_small.png');
+        static::assertFileExists($this->workspace.\DIRECTORY_SEPARATOR.'bar'.\DIRECTORY_SEPARATOR.'thumb_2_bar_small.png');
+    }
+
     public function testExecuteDryRun(): void
     {
         $this->filesystem->mkdir($this->workspace.\DIRECTORY_SEPARATOR.'foo');
