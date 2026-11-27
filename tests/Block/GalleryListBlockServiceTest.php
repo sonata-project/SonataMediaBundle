@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sonata\MediaBundle\Tests\Block;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContext;
 use Sonata\BlockBundle\Model\Block;
 use Sonata\BlockBundle\Test\BlockServiceTestCase;
@@ -40,7 +41,9 @@ final class GalleryListBlockServiceTest extends BlockServiceTestCase
 
     public function testExecute(): void
     {
-        $this->galleryManager->expects(static::once())->method('findBy')->willReturn([]);
+        $this->galleryManager->expects(static::once())->method('findBy')
+            ->with([], ['createdAt' => 'desc'], 15)
+            ->willReturn([]);
 
         $block = new Block();
 
@@ -65,6 +68,44 @@ final class GalleryListBlockServiceTest extends BlockServiceTestCase
                 'galleries' => [],
                 'block' => $block,
                 'settings' => $settings,
+                'admin' => null,
+            ]);
+
+        $blockService->execute($blockContext);
+    }
+
+    public function testExecuteWithContextInAdminMode(): void
+    {
+        $this->galleryManager->expects(static::once())->method('findBy')
+            ->with(['context' => 'default'], ['name' => 'asc'], 5)
+            ->willReturn([]);
+
+        $galleryAdmin = static::createStub(AdminInterface::class);
+
+        $block = new Block();
+
+        $settings = [
+            'number' => 5,
+            'mode' => 'admin',
+            'order' => 'name',
+            'sort' => 'asc',
+            'context' => 'default',
+            'template' => '@SonataMedia/Block/block_gallery_list.html.twig',
+        ];
+
+        $blockContext = new BlockContext($block, $settings);
+
+        $blockService = new GalleryListBlockService($this->twig, $this->galleryManager, $this->pool, $galleryAdmin);
+
+        $this->twig
+            ->expects(static::once())
+            ->method('render')
+            ->with('@SonataMedia/Block/block_gallery_list.html.twig', [
+                'context' => $blockContext,
+                'galleries' => [],
+                'block' => $block,
+                'settings' => $settings,
+                'admin' => $galleryAdmin,
             ]);
 
         $blockService->execute($blockContext);

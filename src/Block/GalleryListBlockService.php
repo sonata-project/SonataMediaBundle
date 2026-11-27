@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sonata\MediaBundle\Block;
 
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\Service\EditableBlockService;
@@ -22,6 +23,8 @@ use Sonata\BlockBundle\Meta\MetadataInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\Form\Type\ImmutableArrayType;
 use Sonata\Form\Validator\ErrorElement;
+use Sonata\MediaBundle\Model\GalleryInterface;
+use Sonata\MediaBundle\Model\GalleryItemInterface;
 use Sonata\MediaBundle\Model\GalleryManagerInterface;
 use Sonata\MediaBundle\Provider\Pool;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -33,10 +36,14 @@ use Twig\Environment;
 
 final class GalleryListBlockService extends AbstractBlockService implements EditableBlockService
 {
+    /**
+     * @param AdminInterface<GalleryInterface<GalleryItemInterface>>|null $galleryAdmin
+     */
     public function __construct(
         Environment $twig,
         private GalleryManagerInterface $galleryManager,
         private Pool $pool,
+        private ?AdminInterface $galleryAdmin = null,
     ) {
         parent::__construct($twig);
     }
@@ -105,12 +112,12 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
 
     public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
-        $context = $blockContext->getBlock()->getSetting('context');
+        $criteria = [];
 
-        $criteria = [
-            'mode' => $blockContext->getSetting('mode'),
-            'context' => $context,
-        ];
+        $context = $blockContext->getSetting('context');
+        if (\is_string($context) && '' !== $context) {
+            $criteria['context'] = $context;
+        }
 
         $order = $blockContext->getSetting('order');
         \assert(\is_string($order));
@@ -122,6 +129,7 @@ final class GalleryListBlockService extends AbstractBlockService implements Edit
             'context' => $blockContext,
             'settings' => $blockContext->getSettings(),
             'block' => $blockContext->getBlock(),
+            'admin' => $this->galleryAdmin,
             'galleries' => $this->galleryManager->findBy(
                 $criteria,
                 [$order => $sortDirection],
